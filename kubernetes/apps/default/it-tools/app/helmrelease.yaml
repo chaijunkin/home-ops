@@ -32,6 +32,14 @@ spec:
             image:
               repository: ghcr.io/corentinth/it-tools
               tag: 2023.5.14-77f2efc
+              pullPolicy: IfNotPresent
+            resources:
+              requests:
+                memory: 10Mi
+                cpu: 10m
+              limits:
+                memory: 50Mi
+        strategy: Recreate
     service:
       main:
         ports:
@@ -60,15 +68,3 @@ spec:
         tls:
           - hosts:
               - *host
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: it-tools-settings
-    persistence:
-      data:
-        enabled: true
-        type: emptyDir
-    resources:
-      requests:
-        cpu: 100m
-        memory: 100Mi
-      limits:
-        memory: 500Mi
