@@ -120,7 +120,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
       kubelet: /var/lib/kubelet
       krb5CacheDirectory: ""
-      krb5Prefix: ""
+      krb5Prefix: "krb5cc_"
       tolerations:
         - operator: "Exists"
       resources:
