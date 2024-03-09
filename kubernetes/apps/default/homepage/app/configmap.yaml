@@ -1,0 +1,267 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: default
+  labels:
+    app.kubernetes.io/name: homepage
+data:
+  # To use an existing ConfigMap uncomment this line and specify the name
+  # useExistingConfigMap: existing-homepage-configmap
+  bookmarks.yaml: |
+    - Developer:
+        - Github:
+            - abbr: GitHub
+              href: https://github.com/chaijunkin
+        - k8s-at-home:
+            - icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kubernetes.png
+              href: 'https://nanne.dev/k8s-at-home-search/'
+        - k3s-home-cluster:
+            - icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/github.png
+              href: 'https://github.com/chaijunkin/home-ops'
+    # - My Service:
+    #     - Myself:
+    #         - abbr: ME
+    #           href: https://me.${SECRET_DOMAIN}
+  services.yaml: |
+    - Calendar:
+        - Calendar:
+            widget:
+              type: calendar
+              firstDayInWeek: sunday # optional - defaults to monday
+              #view: monthly # optional - possible values monthly, agenda
+              maxEvents: 10 # optional - defaults to 10
+            #   integrations: # optional
+            #     - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+            #       service_group: Downloads # group name where widget exists
+            #       service_name: Sonarr # service name for that widget
+            #     - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+            #       service_group: Downloads # group name where widget exists
+            #       service_name: Radarr # service name for that widget
+            #     - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+            #       service_group: Downloads # group name where widget exists
+            #       service_name: Readarr # service name for that widget
+    - Application Service:
+        - VaultWarden:
+            description: Primary Password manager
+            href: https://vw.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/vaultwarden.png
+        - BitWarden:
+            description: Backup Password manager
+            href: https://vault.bitwarden.com/#/login
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/bitwarden.png
+
+    - Home Service:
+        - Home Assistant:
+            description: Home automation service
+            href: https://hass.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/home-assistant.png
+        - Odoo:
+            description: ERP service
+            href: https://odoo.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/odoo.png
+        # - Wikijs:
+        #     description: Wiki service
+        #     href: https://wikijs.${SECRET_DOMAIN}
+        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/wikijs.png
+        # - Calibre-web:
+        #     description: Book service
+        #     href: https://book.${SECRET_DOMAIN}
+        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/calibre-web.png
+        # - Immich:
+        #     description: Mobile media backup service
+        #     href: https://immich.${SECRET_DOMAIN}
+        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/immich.png
+
+    - Compute/Storage Infrastructure:
+        - Proxmox (Dashy):
+            description: Compute hypervisor
+            href: https://dashy.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
+        - NAS:
+            description: SMB service provider
+            href: https://nas.${SECRET_DOMAIN}/login
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cockpit.png
+    
+    - Network Infrastructure:
+        - Opnsense:
+            description: Router & Firewall Appliance
+            href: https://gateway.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/opnsense.png
+        - Pihole:
+            description: Local DNS Server and Adblocker
+            href: https://pihole.${SECRET_DOMAIN}/admin
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/pi-hole.png
+            widget:
+              type: pihole
+              url: https://pihole.${SECRET_DOMAIN}
+        - Switch:
+            description: Managed switch
+            href: https://switch.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/tp-link.png
+        - Access point:
+            description: Wifi provider
+            href: https://ap.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/omada.png
+        # - Kutt:
+        #     description: URL shortner
+        #     href: https://kutt.${SECRET_DOMAIN}
+        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kutt.png
+
+    - Monitoring Service:
+        - AlertManager:
+            description: Alert manager server
+            href: https://alertmanager.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/alertmanager.png
+        - Loki:
+            description: Log management server
+            href: https://grafana.${SECRET_DOMAIN}/explore?orgId=1&left=%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/loki.png
+        # - Jaeger:
+        #     description: Distributed tracing server
+        #     href: https://jaeger.${SECRET_DOMAIN}
+        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/jaeger.png
+
+    - External Service:
+        - Cloudflare:
+            description: Cloudflare dashboard
+            href: https://dash.cloudflare.com/
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cloudflare.png
+        - Zohomail:
+            description: Mail provider
+            href: https://mailadmin.zoho.com/hosting?domain=${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/zohomail.png
+        - Fly.io:
+            description: Edge computing platform
+            href: https://fly.io/dashboard
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/fly-io.png
+        - Tailscale:
+            description: Mesh VPN provider
+            href: https://login.tailscale.com/admin/machines
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/tailscale.png
+        - BackBlaze:
+            description: External backup provider
+            href: https://secure.backblaze.com/user_overview.htm
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/backblaze.png
+        - Porkbun:
+            description: DNS registrar
+            href: https://porkbun.com/
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/porkbun.png
+        - Proton VPN:
+            description: Proton VPN
+            href: https://account.protonvpn.com/login
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proton-vpn.png
+        - Uptime Kuma:
+            description: External Uptime monitoring
+            href: https://ext-uptime.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/uptime-kuma.png
+        
+
+    - Management Tools:
+        - VsCode:
+            description: Coding services
+            href: https://coder.${SECRET_DOMAIN}/
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/vscode.png
+        - JumpServer:
+            description: Bastion Host
+            href: https://jumpserver.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/guacamole.png
+        - PiKVM:
+            description: PiKVM services
+            href: https://pikvm.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/pikvm.png
+        - RustDesk:
+            description: Remote Desktop services
+            href: https://rustdesk.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/rustdesk.svg
+        - Tabby:
+            description: AI Recommendation Developer tools (Copilot)
+            href: https://tabby.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/hajimari.png
+        - Hajimari:
+            description: Second homepage (Temp)
+            href: https://hajimari.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/hajimari.png
+
+  widgets.yaml: |
+    # - resources:
+    #     # change backend to 'kubernetes' to use Kubernetes integration. Requires RBAC.
+    #     backend: resources
+    #     expanded: true
+    #     cpu: true
+    #     memory: true
+    ## Uncomment to enable Kubernetes integration
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "cluster"
+        nodes:
+          show: false
+          cpu: false
+          memory: false
+          showLabel: false
+    - search:
+        provider: [duckduckgo, google] # google, duckduckgo, bing, baidu, brave or custom
+        focus: true # Optional, will set focus to the search bar on page load
+        target: _blank # One of _self, _blank, _parent or _top  
+    - datetime:
+        locale: nl
+        text_size: l
+        format:
+          dateStyle: long
+          timeStyle: short
+          hourCycle: h23
+  kubernetes.yaml: |
+    # change mode to 'cluster' to use RBAC service account
+    mode: cluster
+  docker.yaml: ""
+  settings.yaml: |
+    title: Dashboard
+    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    theme: dark
+    color: slate
+    headerStyle: clean
+    layout:
+      Calendar:
+        style: column
+        icon: mdi-calendar
+      Application Service:
+        style: column
+        icon: mdi-application
+      Home Service:
+        style: column
+        icon: mdi-home-automation
+      Media Service:
+        style: column
+        icon: mdi-play-circle
+      Downloads Service:
+        style: column
+        icon: mdi-download-circle
+      Compute/Storage Infrastructure:
+        style: column
+        icon: mdi-server
+      Network Infrastructure:
+        style: column
+        icon: mdi-access-point-network
+      Monitoring Service:
+        style: column
+        icon: mdi-chart-line
+      External Service:
+        style: column
+        icon: mdi-cloud
+      Utility Service:
+        style: column
+        icon: mdi-tools
+      Platform Service:
+        style: column
+        icon: mdi-cellphone-link
+      Management Tools:
+        style: column
+        icon: mdi-toolbox
+      Developer:
+        style: column
+        icon: mdi-toolbox

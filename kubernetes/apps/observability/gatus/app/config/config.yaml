@@ -1,0 +1,14 @@
+---
+web:
+  port: ${CUSTOM_WEB_PORT}
+metrics: true
+debug: false
+ui:
+  title: Health Status
+  header: Health Status
+  logo: https://avatars.githubusercontent.com/u/88609082?v=4
+connectivity:
+  checker:
+    target: 1.1.1.1:53
+    interval: 1m
+
