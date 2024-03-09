@@ -27,43 +27,45 @@ spec:
   values:
     controllers:
       main:
-        image:
-          repository: ghcr.io/corentinth/it-tools
-          tag: 2023.5.14-77f2efc
-        service:
+        containers:
           main:
-            ports:
-              http:
-                port: 80
-        env:
-          TZ: ${TIMEZONE}
-        ingress:
-          main:
-            enabled: true
-            annotations:
-              gethomepage.dev/enabled: "true"
-              gethomepage.dev/group: Utility Service
-              gethomepage.dev/name: It-Tools
-              gethomepage.dev/description: Developer utility tools
-              gethomepage.dev/icon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/it-tools.png
-            ingressClassName: internal
-            hosts:
-              - host: &host "it-tools.${SECRET_DOMAIN}"
-                paths:
-                  - path: /
-                    pathType: Prefix
-            tls:
-              - hosts:
-                  - *host
-        podAnnotations:
-          configmap.reloader.stakater.com/reload: it-tools-settings
-        persistence:
-          data:
-            enabled: true
-            type: emptyDir
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
-            memory: 500Mi
+            image:
+              repository: ghcr.io/corentinth/it-tools
+              tag: 2023.5.14-77f2efc
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    env:
+      TZ: ${TIMEZONE}
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: It-Tools
+          gethomepage.dev/description: Developer utility tools
+          gethomepage.dev/icon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/it-tools.png
+        ingressClassName: internal
+        hosts:
+          - host: &host "it-tools.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: it-tools-settings
+    persistence:
+      data:
+        enabled: true
+        type: emptyDir
+    resources:
+      requests:
+        cpu: 100m
+        memory: 100Mi
+      limits:
+        memory: 500Mi

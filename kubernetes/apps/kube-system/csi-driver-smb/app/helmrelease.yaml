@@ -119,6 +119,8 @@ spec:
       dsName: csi-smb-node # daemonset name
       dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
       kubelet: /var/lib/kubelet
+      krb5CacheDirectory: ""
+      krb5Prefix: ""
       tolerations:
         - operator: "Exists"
       resources:
