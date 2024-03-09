@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: cloudnative-pg
-      version: 0.19.1
+      version: 0.20.1
       sourceRef:
         kind: HelmRepository
         name: cloudnative-pg
@@ -26,8 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: local-path-provisioner
-      namespace: kube-system
+    - name: openebs
+      namespace: openebs-system
   values:
     crds:
       create: true
