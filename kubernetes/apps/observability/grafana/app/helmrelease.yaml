@@ -171,7 +171,7 @@ spec:
             isDefault: true
             access: proxy
             # url: http://thanos-query-frontend.observability.svc.cluster.local:9090
-            url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
             jsonData:
               prometheusType: Prometheus
               timeInterval: 1m
@@ -179,7 +179,7 @@ spec:
             type: loki
             uid: loki
             access: proxy
-            url: http://loki-gateway.monitoring.svc.cluster.local
+            url: http://loki-gateway.observability.svc.cluster.local
             jsonData:
               maxLines: 250
           - name: Alertmanager
