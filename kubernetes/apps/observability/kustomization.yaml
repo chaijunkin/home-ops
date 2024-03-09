@@ -5,6 +5,12 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./alertmanager-silencer/ks.yaml
   - ./gatus/ks.yaml
-  # - ./kube-prometheus-stack/ks.yaml
-  # - ./smartctl-exporter/ks.yaml
+  - ./grafana/ks.yaml
+  - ./karma/ks.yaml
+  - ./kromgo/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  # - ./kubetail/ks.yaml
+  # - ./thanos/ks.yaml
+  # - ./exporters

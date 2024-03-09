@@ -3,12 +3,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./prometheusrules
 configMapGenerator:
-  - name: alertmanager-config-tpl
+  - name: karma-configmap
     files:
-      - alertmanager.yaml=./resources/alertmanager.yaml
+      - ./config/config.yaml
 generatorOptions:
   disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
