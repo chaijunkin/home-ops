@@ -1,0 +1,115 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authentik
+  namespace: security
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: authentik
+      version: 2024.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: authentik-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    annotations:
+      secret.reloader.stakater.com/reload: authentik-secret
+
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-init:14.9
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: authentik-secret
+
+    authentik:
+      log_level: info
+      email:
+        port: 465
+        use_ssl: true
+      error_reporting:
+        enabled: false
+        send_pii: false
+      redis:
+        host: dragonfly.database.svc.cluster.local
+
+    envValueFrom:
+      AUTHENTIK_SECRET_KEY:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_SECRET_KEY
+      AUTHENTIK_EMAIL__HOST:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_EMAIL__HOST
+      AUTHENTIK_EMAIL__USERNAME:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_EMAIL__USERNAME
+      AUTHENTIK_EMAIL__PASSWORD:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_EMAIL__PASSWORD
+      AUTHENTIK_EMAIL__FROM:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_EMAIL__FROM
+      AUTHENTIK_POSTGRESQL__HOST:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_POSTGRESQL__HOST
+      AUTHENTIK_POSTGRESQL__NAME:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_POSTGRESQL__NAME
+      AUTHENTIK_POSTGRESQL__USER:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_POSTGRESQL__USER
+      AUTHENTIK_POSTGRESQL__PASSWORD:
+        secretKeyRef:
+          name: authentik-secret
+          key: AUTHENTIK_POSTGRESQL__PASSWORD
+      # AUTHENTIK_REDIS__PASSWORD:
+      #   secretKeyRef:
+      #     name: authentik-secret
+      #     key: AUTHENTIK_REDIS__PASSWORD
+
+    ingress:
+      enabled: true
+      ingressClassName: external
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Platform Service
+        gethomepage.dev/name: Authentik
+        gethomepage.dev/description: Authentication provider
+        gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/authentik.png
+        external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+      hosts:
+        - host: &host auth.${SECRET_DOMAIN}
+          paths:
+            - path: /
+      https: false
+      tls:
+        - hosts:
+            - *host
+
+    postgresql:
+      enabled: false
+
+    prometheus:
+      rules:
+        create: true
+      serviceMonitor:
+        create: true
+
+    redis:
+      enabled: false
