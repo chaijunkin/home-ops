@@ -7,5 +7,4 @@ resources:
   - ./hypervisor.yaml
   - ./nas.yaml
   - ./smb.yaml
-  - ./pfsense.yaml
   - ./switch.yaml
