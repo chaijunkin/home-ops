@@ -1,0 +1,85 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app external-secrets
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/kube-system/external-secrets/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-secrets-bitwarden
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/kube-system/external-secrets/bitwarden
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  dependsOn:
+    - name: external-secrets
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-secrets-stores
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/kube-system/external-secrets/stores
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  dependsOn:
+    - name: external-secrets
+    - name: external-secrets-bitwarden
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-secrets-cluster-secrets
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/kube-system/external-secrets/cluster-secrets
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  dependsOn:
+    - name: external-secrets
+    - name: external-secrets-bitwarden
+    - name: external-secrets-stores
