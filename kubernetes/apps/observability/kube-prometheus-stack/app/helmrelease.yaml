@@ -154,7 +154,7 @@ spec:
         ingressClassName: internal
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Observability
+          gethomepage.dev/group: Observability Service
           gethomepage.dev/name: Prometheus
           gethomepage.dev/description: Monitoring Scrape Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/prometheus.png
