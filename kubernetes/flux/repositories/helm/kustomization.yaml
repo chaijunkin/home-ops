@@ -3,12 +3,15 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./actions-runner-controller.yaml
+  - ./authentik-charts.yaml
   - ./backube.yaml
+  - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cilium.yaml
   - ./cloudnative-pg.yaml
   - ./coredns.yaml
   - ./csi-driver-smb.yaml
+  - ./descheduler.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./grafana.yaml
@@ -21,5 +24,6 @@ resources:
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./stakater.yaml
+  - ./tf-controller.yaml
   - ./weave-gitops.yaml
   - ./xenitab.yaml
