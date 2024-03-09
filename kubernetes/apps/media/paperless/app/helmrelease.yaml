@@ -10,13 +10,15 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.0.3
+      version: 2.6.0
       interval: 30m
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-
+  dependsOn:
+  - name: volsync
+    namespace: volsync-system
   values:
     controllers:
       main:
@@ -72,7 +74,7 @@ spec:
 
             resources:
               requests:
-                cpu: 11m
+                cpu: 15m
                 memory: 1812M
               limits:
                 memory: 1812M
