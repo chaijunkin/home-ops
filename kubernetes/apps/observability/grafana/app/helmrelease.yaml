@@ -170,14 +170,22 @@ spec:
             uid: prometheus
             isDefault: true
             access: proxy
-            url: http://thanos-query-frontend.observability.svc.cluster.local:9090
+            # url: http://thanos-query-frontend.observability.svc.cluster.local:9090
+            url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
             jsonData:
-              prometheusType: Thanos
+              prometheusType: Prometheus
               timeInterval: 1m
+          - name: Loki
+            type: loki
+            uid: loki
+            access: proxy
+            url: http://loki-gateway.monitoring.svc.cluster.local
+            jsonData:
+              maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy
-            url: http://alertmanager.observability.svc.cluster.local:9093
+            url: http://kube-prometheus-stack-alertmanager.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
     dashboards:
@@ -287,12 +295,12 @@ spec:
           gnetId: 15038
           revision: 3
           datasource: Prometheus
-        speedtest-exporter-hub:
-          # renovate: depName="Speedtest Exporter"
-          gnetId: 16541
-          revision: 1
-          datasource:
-            - { name: datasource, value: Prometheus }
+        # speedtest-exporter-hub:
+        #   # renovate: depName="Speedtest Exporter"
+        #   gnetId: 16541
+        #   revision: 1
+        #   datasource:
+        #     - { name: datasource, value: Prometheus }
         # unifi-network-sites:
         #   # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
         #   gnetId: 11311
