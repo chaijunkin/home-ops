@@ -24,7 +24,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/onedr0p/postgres-init
-              tag: 14
+              tag: 16
               pullPolicy: IfNotPresent
             envFrom: &envFrom
               - secretRef:
@@ -43,7 +43,6 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 128Mi
               limits:
                 memory: 256Mi
 
