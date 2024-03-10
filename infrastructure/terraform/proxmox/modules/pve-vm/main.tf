@@ -21,6 +21,7 @@ resource "proxmox_vm_qemu" "qemu_vm" {
   cpu          = var.cpu
   pool         = var.pool
   tags         = var.tags
+  hotplug      = var.hotplug
 
   dynamic "network" {
     for_each = var.vm_network

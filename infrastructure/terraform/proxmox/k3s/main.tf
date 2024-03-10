@@ -19,6 +19,8 @@ module "k3sserver_vm" {
   vm_disk     = local.k3sserver_vm_disk
   onboot      = local.onboot
   full_clone  = local.full_clone
+  # hotplug     = local.hotplug
+  # numa        = local.numa
 
   nameserver             = local.nameserver
   searchdomain           = local.searchdomain
@@ -49,6 +51,8 @@ module "k3sworker_nodes" {
   vm_disk     = local.k3sworker_vm_disk
   onboot      = local.onboot
   full_clone  = local.full_clone
+  # hotplug     = local.hotplug
+  # numa        = local.numa
 
   nameserver             = local.nameserver
   searchdomain           = local.searchdomain

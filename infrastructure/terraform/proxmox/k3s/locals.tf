@@ -12,7 +12,8 @@ locals {
   boot       = "order=scsi0;ide2;net0"
   agent      = 1
   vm_sockets = 1
-
+  hotplug    = "network,disk,cpu,memory,usb"
+  numa       = true
 
   # -- k3s Server Node VM Variables -- #
   k3sserver_target_node    = var.k3sserver_target_node
