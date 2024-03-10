@@ -18,7 +18,7 @@ spec:
     storageClass: openebs-hostpath
   enableSuperuserAccess: true
   superuserSecret:
-    name: postgres-superuser
+    name: cloudnative-pg-secret
   # bootstrap:
   #   recovery:
   #     source: &previousCluster postgres-v3
@@ -31,11 +31,13 @@ spec:
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
+      data:
+        compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
+      endpointURL: "https://s3.${SECRET_DOMAIN}"
       serverName: &currentCluster postgres-v4
       s3Credentials:
         accessKeyId:
