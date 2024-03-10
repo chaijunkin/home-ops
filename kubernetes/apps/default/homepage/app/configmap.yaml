@@ -228,9 +228,6 @@ data:
       Application Service:
         style: column
         icon: mdi-application
-      Home Service:
-        style: column
-        icon: mdi-home-automation
       Media Service:
         style: column
         icon: mdi-play-circle
@@ -243,7 +240,7 @@ data:
       Network Infrastructure:
         style: column
         icon: mdi-access-point-network
-      Monitoring Service:
+      Observability Service:
         style: column
         icon: mdi-chart-line
       External Service:
