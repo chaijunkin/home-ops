@@ -50,10 +50,10 @@ spec:
                 repository: ghcr.io/buroa/qbittools
                 tag: v0.10.0
               args: ["reannounce", "-s", "localhost", "-p", "8080"]
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities: { drop: ["ALL"] }
             probes:
               liveness: &probes
                 enabled: true
