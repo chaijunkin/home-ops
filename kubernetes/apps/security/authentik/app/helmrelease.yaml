@@ -25,43 +25,6 @@ spec:
       envFrom:
         - secretRef:
             name: authentik-secret
-      env:
-      AUTHENTIK_SECRET_KEY:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_SECRET_KEY
-      AUTHENTIK_EMAIL__HOST:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_EMAIL__HOST
-      AUTHENTIK_EMAIL__USERNAME:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_EMAIL__USERNAME
-      AUTHENTIK_EMAIL__PASSWORD:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_EMAIL__PASSWORD
-      AUTHENTIK_EMAIL__FROM:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_EMAIL__FROM
-      AUTHENTIK_POSTGRESQL__HOST:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_POSTGRESQL__HOST
-      AUTHENTIK_POSTGRESQL__NAME:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_POSTGRESQL__NAME
-      AUTHENTIK_POSTGRESQL__USER:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_POSTGRESQL__USER
-      AUTHENTIK_POSTGRESQL__PASSWORD:
-        secretKeyRef:
-          name: authentik-secret
-          key: AUTHENTIK_POSTGRESQL__PASSWORD
     server:
       initContainers:
         init-db:
