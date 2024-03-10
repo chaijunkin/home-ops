@@ -145,7 +145,11 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/icon: "router-wireless-settings"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Network Infrastructure
+          gethomepage.dev/name: Omada Controller
+          gethomepage.dev/description: Physical network device manager
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/omada.svg
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
           nginx.ingress.kubernetes.io/use-regex: "true"
@@ -161,28 +165,28 @@ spec:
         tls:
           - hosts:
               - *host
-    persistence:
-      data:
-        existingClaim: ${VOLSYNC_CLAIM}
-        globalMounts:
-          - path: /opt/tplink/EAPController/data
-      work:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        globalMounts:
-          - path: /opt/tplink/EAPController/work
-      logs:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        globalMounts:
-          - path: /opt/tplink/EAPController/logs
-      backup:
-        enabled: true
-        type: nfs
-        server: "${SECRET_BACKUP_SERVER:=fnord}"
-        path: /backup/data/k8s/omada
-        globalMounts:
-          - path: /opt/tplink/EAPController/data/autobackup
-        readOnly: false
+    # persistence:
+    #   data:
+    #     existingClaim: ${VOLSYNC_CLAIM}
+    #     globalMounts:
+    #       - path: /opt/tplink/EAPController/data
+    #   work:
+    #     type: persistentVolumeClaim
+    #     accessMode: ReadWriteOnce
+    #     size: 10Gi
+    #     globalMounts:
+    #       - path: /opt/tplink/EAPController/work
+    #   logs:
+    #     type: persistentVolumeClaim
+    #     accessMode: ReadWriteOnce
+    #     size: 10Gi
+    #     globalMounts:
+    #       - path: /opt/tplink/EAPController/logs
+    #   backup:
+    #     enabled: true
+    #     type: nfs
+    #     server: "${SECRET_BACKUP_SERVER:=fnord}"
+    #     path: /backup/data/k8s/omada
+    #     globalMounts:
+    #       - path: /opt/tplink/EAPController/data/autobackup
+    #     readOnly: false
