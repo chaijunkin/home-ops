@@ -70,7 +70,7 @@ spec:
           gethomepage.dev/description: Change detection tools
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/changedetection-io.png
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN_NAME}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
