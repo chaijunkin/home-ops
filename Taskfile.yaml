@@ -41,7 +41,6 @@ includes:
     optional: true
   volsync: .taskfiles/VolSync/Taskfile.yaml
   external-secrets: .taskfiles/ExternalSecrets/Taskfile.yaml
-  postgres: .taskfiles/Postgresql/Taskfile.yaml
 
 
 tasks:

@@ -1,0 +1,71 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cross-seed
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.3.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  dependsOn:
+    - name: qbittorrent
+  values:
+    controllers:
+      main:
+        annotations:
+          secret.reloader.stakater.com/reload: cross-seed-secret
+
+        # pod:
+        #   securityContext:
+        #     runAsUser: ${APP_UID}
+        #     runAsGroup: ${APP_GID}
+        #     fsGroup: ${APP_GID}
+        #     fsGroupChangePolicy: "OnRootMismatch"
+        #     supplementalGroups:
+        #       - 65542 # gladius:external-services
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/cross-seed/cross-seed
+              tag: 5.8.3
+            args:
+              - daemon
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
+
+    service:
+      main:
+        ports:
+          http:
+            port: 2468
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: qbittorrent-config
+        globalMounts:
+          - path: /config
+      config-file:
+        type: secret
+        name: cross-seed-secret
+        globalMounts:
+          - path: /config/config.js
+            subPath: config.js
+            readOnly: true
+      media:
+        existingClaim: nas-media
+        globalMounts:
+          - path: /data/nas-media
