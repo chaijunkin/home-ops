@@ -80,9 +80,9 @@ spec:
         pod:
           securityContext:
             runAsUser: 1002
-            runAsGroup: 1002
+            runAsGroup: 1004
             runAsNonRoot: true
-            fsGroup: 1002
+            fsGroup: 1004
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups: [10000]
     service:

@@ -80,8 +80,8 @@ spec:
                   topologyKey: kubernetes.io/hostname
           # securityContext:
           #   runAsUser: 1002
-          #   runAsGroup: 1002
-          #   fsGroup: 1002
+          #   runAsGroup: 1004
+          #   fsGroup: 1004
           #   fsGroupChangePolicy: OnRootMismatch
     service:
       main:

@@ -72,7 +72,7 @@ spec:
             securityContext:
               privileged: true
               runAsUser: 0
-              # fsGroup: 1002  # 1004
+              # fsGroup: 1004  # 1004
               # fsGroupChangePolicy: OnRootMismatch
             probes:
               liveness: &probes

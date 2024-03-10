@@ -63,7 +63,7 @@ spec:
         pod:
           securityContext:
             runAsUser: 1002
-            runAsGroup: 1002
+            runAsGroup: 1004
             runAsNonRoot: true
     service:
       main:

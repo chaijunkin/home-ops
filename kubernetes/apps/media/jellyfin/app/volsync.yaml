@@ -38,8 +38,8 @@ spec:
     repository: jellyfin-restic-secret
     moverSecurityContext:
       runAsUser: 1002
-      runAsGroup: 1002
-      fsGroup: 1002
+      runAsGroup: 1004
+      fsGroup: 1004
     retain:
       daily: 14
     volumeSnapshotClassName: csi-ceph-blockpool

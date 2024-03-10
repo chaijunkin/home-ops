@@ -39,8 +39,8 @@ spec:
       daily: 14
     moverSecurityContext:
       runAsUser: 1002
-      runAsGroup: 1002
-      fsGroup: 1002
+      runAsGroup: 1004
+      fsGroup: 1004
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: ceph-block
     cacheStorageClassName: local-hostpath
