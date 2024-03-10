@@ -50,10 +50,10 @@ spec:
                 repository: ghcr.io/buroa/qbittools
                 tag: v0.10.0
               args: ["reannounce", "-s", "localhost", "-p", "8080"]
-            # securityContext:
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities: { drop: ["ALL"] }
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             probes:
               liveness: &probes
                 enabled: true
@@ -80,10 +80,10 @@ spec:
                         values: ["sabnzbd"]
                   topologyKey: kubernetes.io/hostname
           securityContext:
-            runAsUser: 0
-            runAsGroup: 0
+            runAsUser: 568
+            runAsGroup: 568
             runAsNonRoot: true
-            fsGroup: 0
+            fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups: [10000]
     service:
