@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/lidarr-develop
-              tag: 2.0.3.3791@sha256:559eef1be3f244175c4568e82df16a05c95bff1f7e3a17b9c0522870c4610666
+              tag: 2.0.3.3791@sha256:559eef1be3f244175c41002e82df16a05c95bff1f7e3a17b9c0522870c4610666
             env:
               TZ: ${TIMEZONE}
               # LIDARR__AUTHENTICATION_METHOD: External
@@ -74,9 +74,9 @@ spec:
                 memory: 1Gi
         # pod:
         #   securityContext:
-        #     runAsUser: 568
-        #     runAsGroup: 568
-        #     fsGroup: 568
+        #     runAsUser: 1002
+        #     runAsGroup: 1002
+        #     fsGroup: 1002
         #     fsGroupChangePolicy: OnRootMismatch
     service:
       main:

@@ -80,10 +80,10 @@ spec:
                         values: ["sabnzbd"]
                   topologyKey: kubernetes.io/hostname
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 1002
+            runAsGroup: 1002
             runAsNonRoot: true
-            fsGroup: 568
+            fsGroup: 1002
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups: [10000]
     service:
