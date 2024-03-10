@@ -4,9 +4,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-configMapGenerator:
-  - name: autobrr-configmap
-    files:
-      - ./config/config.toml
-generatorOptions:
-  disableNameSuffixHash: true
+  - ../../../../templates/gatus/guarded

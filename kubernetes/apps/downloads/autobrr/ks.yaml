@@ -3,13 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname autobrr
+  name: &app autobrr
   namespace: flux-system
 spec:
   targetNamespace: downloads
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *appname
+      app.kubernetes.io/name: *app
   interval: 10m
   path: "./kubernetes/apps/downloads/autobrr/app"
   prune: true
@@ -19,6 +19,7 @@ spec:
   wait: false
   dependsOn:
     - name: external-secrets-stores
-    # - name: rook-ceph-cluster
     - name: cloudnative-pg
-    # - name: qbittorrent
+  postBuild:
+    substitute:
+      APP: *app
