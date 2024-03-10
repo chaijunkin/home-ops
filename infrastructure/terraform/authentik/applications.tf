@@ -116,114 +116,70 @@
 
 ### Oauth2 Providers ###
 ## Grafana ##
-resource "authentik_provider_oauth2" "grafana_oauth2" {
-  name                  = "grafana"
-  client_id             = var.grafana_id
-  client_secret         = var.grafana_secret
-  authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  property_mappings     = data.authentik_scope_mapping.oauth2.ids
-  access_token_validity = "hours=4"
-  redirect_uris         = ["https://grafana.${var.cluster_domain}/login/generic_oauth"]
-}
+# resource "authentik_provider_oauth2" "grafana_oauth2" {
+#   name                  = "grafana"
+#   client_id             = var.grafana_id
+#   client_secret         = var.grafana_secret
+#   authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+#   property_mappings     = data.authentik_scope_mapping.oauth2.ids
+#   access_token_validity = "hours=4"
+#   redirect_uris         = ["https://grafana.${var.cluster_domain}/login/generic_oauth"]
+# }
 
-resource "authentik_application" "grafana_application" {
-  name               = "Grafana"
-  slug               = authentik_provider_oauth2.grafana_oauth2.name
-  protocol_provider  = authentik_provider_oauth2.grafana_oauth2.id
-  group              = authentik_group.monitoring.name
-  open_in_new_tab    = true
-  meta_icon          = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
-  meta_launch_url    = "https://grafana.${var.cluster_domain}/login/generic_oauth"
-  policy_engine_mode = "all"
-}
+# resource "authentik_application" "grafana_application" {
+#   name               = "Grafana"
+#   slug               = authentik_provider_oauth2.grafana_oauth2.name
+#   protocol_provider  = authentik_provider_oauth2.grafana_oauth2.id
+#   group              = authentik_group.monitoring.name
+#   open_in_new_tab    = true
+#   meta_icon          = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/grafana.png"
+#   meta_launch_url    = "https://grafana.${var.cluster_domain}/login/generic_oauth"
+#   policy_engine_mode = "all"
+# }
 
-## LubeLog ##
-resource "authentik_provider_oauth2" "lubelog_oauth2" {
-  name                  = "lubelog"
-  client_id             = var.lubelog_id
-  client_secret         = var.lubelog_secret
-  authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  property_mappings     = data.authentik_scope_mapping.oauth2.ids
-  access_token_validity = "hours=4"
-  redirect_uris         = ["https://lubelog.${var.cluster_domain}/Login/RemoteAuth"]
-}
+# ## Paperless ##
+# resource "authentik_provider_oauth2" "paperless_oauth2" {
+#   name                  = "paperless"
+#   client_id             = var.paperless_id
+#   client_secret         = var.paperless_secret
+#   authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+#   property_mappings     = data.authentik_scope_mapping.oauth2.ids
+#   access_token_validity = "hours=4"
+#   redirect_uris         = ["https://paperless.${var.cluster_domain}/accounts/oidc/authentik/login/callback/"]
+# }
 
-resource "authentik_application" "lubelog_application" {
-  name               = "lubelog"
-  slug               = authentik_provider_oauth2.lubelog_oauth2.name
-  protocol_provider  = authentik_provider_oauth2.lubelog_oauth2.id
-  group              = authentik_group.monitoring.name
-  open_in_new_tab    = true
-  meta_icon          = "https://demo.lubelogger.com/defaults/lubelogger_icon_72.png"
-  meta_launch_url    = "https://lubelog.${var.cluster_domain}"
-  policy_engine_mode = "all"
-}
+# resource "authentik_application" "paperless_application" {
+#   name               = "Paperless"
+#   slug               = authentik_provider_oauth2.paperless_oauth2.name
+#   protocol_provider  = authentik_provider_oauth2.paperless_oauth2.id
+#   group              = authentik_group.home.name
+#   open_in_new_tab    = true
+#   meta_icon          = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/paperless.png"
+#   meta_launch_url    = "https://paperless.${var.cluster_domain}/"
+#   policy_engine_mode = "all"
+# }
 
-## Paperless ##
-resource "authentik_provider_oauth2" "paperless_oauth2" {
-  name                  = "paperless"
-  client_id             = var.paperless_id
-  client_secret         = var.paperless_secret
-  authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  property_mappings     = data.authentik_scope_mapping.oauth2.ids
-  access_token_validity = "hours=4"
-  redirect_uris         = ["https://paperless.${var.cluster_domain}/accounts/oidc/authentik/login/callback/"]
-}
+# ## Weave-Gitops ##
+# resource "authentik_provider_oauth2" "gitops_oauth2" {
+#   name                  = "gitops"
+#   client_id             = var.gitops_id
+#   client_secret         = var.gitops_secret
+#   authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+#   property_mappings     = data.authentik_scope_mapping.oauth2.ids
+#   access_token_validity = "hours=4"
+#   redirect_uris         = ["https://gitops.${var.cluster_domain}/oauth2/callback"]
+# }
 
-resource "authentik_application" "paperless_application" {
-  name               = "Paperless"
-  slug               = authentik_provider_oauth2.paperless_oauth2.name
-  protocol_provider  = authentik_provider_oauth2.paperless_oauth2.id
-  group              = authentik_group.home.name
-  open_in_new_tab    = true
-  meta_icon          = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/paperless.png"
-  meta_launch_url    = "https://paperless.${var.cluster_domain}/"
-  policy_engine_mode = "all"
-}
-
-## Portainer ##
-resource "authentik_provider_oauth2" "portainer_oauth2" {
-  name                  = "portainer"
-  client_id             = var.portainer_id
-  client_secret         = var.portainer_secret
-  authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  property_mappings     = data.authentik_scope_mapping.oauth2.ids
-  access_token_validity = "hours=4"
-  redirect_uris         = ["https://portainer.${var.pi_cluster_domain}/"]
-}
-
-resource "authentik_application" "portainer_application" {
-  name               = "Portainer"
-  slug               = authentik_provider_oauth2.portainer_oauth2.name
-  protocol_provider  = authentik_provider_oauth2.portainer_oauth2.id
-  group              = authentik_group.infrastructure.name
-  open_in_new_tab    = true
-  meta_icon          = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/portainer.png"
-  meta_launch_url    = "https://portainer.${var.pi_cluster_domain}/"
-  policy_engine_mode = "all"
-}
-
-## Weave-Gitops ##
-resource "authentik_provider_oauth2" "gitops_oauth2" {
-  name                  = "gitops"
-  client_id             = var.gitops_id
-  client_secret         = var.gitops_secret
-  authorization_flow    = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  property_mappings     = data.authentik_scope_mapping.oauth2.ids
-  access_token_validity = "hours=4"
-  redirect_uris         = ["https://gitops.${var.cluster_domain}/oauth2/callback"]
-}
-
-resource "authentik_application" "gitops_application" {
-  name               = "Gitops"
-  slug               = authentik_provider_oauth2.gitops_oauth2.name
-  protocol_provider  = authentik_provider_oauth2.gitops_oauth2.id
-  group              = authentik_group.infrastructure.name
-  open_in_new_tab    = true
-  meta_icon          = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/weave.png"
-  meta_launch_url    = "https://gitops.${var.cluster_domain}/"
-  policy_engine_mode = "all"
-}
+# resource "authentik_application" "gitops_application" {
+#   name               = "Gitops"
+#   slug               = authentik_provider_oauth2.gitops_oauth2.name
+#   protocol_provider  = authentik_provider_oauth2.gitops_oauth2.id
+#   group              = authentik_group.infrastructure.name
+#   open_in_new_tab    = true
+#   meta_icon          = "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/weave.png"
+#   meta_launch_url    = "https://gitops.${var.cluster_domain}/"
+#   policy_engine_mode = "all"
+# }
 
 ### Outpost ###
 # resource "authentik_outpost" "proxyoutpost" {
