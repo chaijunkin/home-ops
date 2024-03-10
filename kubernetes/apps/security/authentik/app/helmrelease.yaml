@@ -33,6 +33,33 @@ spec:
           envFrom:
             - secretRef:
                 name: authentik-secret
+      metrics:
+        # -- deploy metrics service
+        enabled: true
+        serviceMonitor:
+        # -- enable a prometheus ServiceMonitor
+          enabled: true
+
+      ingress:
+        enabled: true
+        ingressClassName: external
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Platform Service
+          gethomepage.dev/name: Authentik
+          gethomepage.dev/description: Authentication provider
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/authentik.png
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+        hosts:
+          - host: &host auth.${SECRET_DOMAIN}
+            paths:
+              - path: /
+        https: false
+        tls:
+          - hosts:
+              - *host
     worker:
       resources:
         requests:
@@ -50,47 +77,21 @@ spec:
         send_pii: false
       redis:
         host: dragonfly.database.svc.cluster.local
-
+    prometheus:
+      rules:
+        enabled: true
     
       # AUTHENTIK_REDIS__PASSWORD:
       #   secretKeyRef:
       #     name: authentik-secret
       #     key: AUTHENTIK_REDIS__PASSWORD
 
-    ingress:
-      enabled: true
-      ingressClassName: external
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Platform Service
-        gethomepage.dev/name: Authentik
-        gethomepage.dev/description: Authentication provider
-        gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/authentik.png
-        external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-        nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-        nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-      hosts:
-        - host: &host auth.${SECRET_DOMAIN}
-          paths:
-            - path: /
-      https: false
-      tls:
-        - hosts:
-            - *host
+
 
     postgresql:
       enabled: false
 
-    metrics:
-    # -- deploy metrics service
-      enabled: true
-      serviceMonitor:
-      # -- enable a prometheus ServiceMonitor
-        enabled: true
-
-    prometheus:
-      rules:
-        enabled: true
+    
 
     redis:
       enabled: false
