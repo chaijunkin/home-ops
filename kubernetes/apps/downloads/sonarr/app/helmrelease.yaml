@@ -53,9 +53,14 @@ spec:
               SONARR__LOG_LEVEL: info
               SONARR__THEME: dark
             envFrom: *envFrom
-            securityContext:
-              privileged: true
-              runAsUser: 0
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
       main:
         ports:
@@ -87,8 +92,9 @@ spec:
         existingClaim: pvc-smb-media
         globalMounts:
           - path: /data
-      # config:  ## to be continue
-      #   enabled: true
+      config:
+        enabled: true
+        storageClass: openebs-hostpath
       #   existingClaim: pvc-smb-sonarr
       #   globalMounts:
       #     - path: /config

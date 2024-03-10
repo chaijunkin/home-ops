@@ -61,11 +61,13 @@ spec:
                         operator: In
                         values: ["sabnzbd"]
                   topologyKey: kubernetes.io/hostname
-          # securityContext:
-          #   runAsUser: 568
-          #   runAsGroup: 568
-          #   fsGroup: 568
-          #   fsGroupChangePolicy: OnRootMismatch
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [10000]
     service:
       main:
         ports:
@@ -75,7 +77,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: ${SVC_QBITTTORENT_ADDR}
+          io.cilium/lb-ipam-ips: 10.10.30.13
         ports:
           bittorrent:
             enabled: true
@@ -110,8 +112,8 @@ spec:
               - *host
     persistence:
       config:
-        enabled: false
-        # existingClaim: qbittorrent-config
+        enabled: true
+        storageClass: openebs-hostpath
       media:
         enabled: true
         existingClaim: pvc-smb-media
