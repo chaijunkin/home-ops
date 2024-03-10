@@ -129,7 +129,7 @@ spec:
                 service:
                   name: main
                   port: http
-                tls:
+        tls:
           - hosts:
               - *host
       api:
