@@ -37,6 +37,9 @@ spec:
               TZ: ${TIMEZONE}
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
               HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
             probes: &probes
               liveness:
                 enabled: false
