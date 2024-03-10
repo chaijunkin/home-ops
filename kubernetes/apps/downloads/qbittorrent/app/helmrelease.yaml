@@ -42,15 +42,33 @@ spec:
               QBITTORRENT__BT_PORT: &port-bt 50413
             resources:
               requests:
-                cpu: 25m
-                memory: 1G
+                cpu: 100m
               limits:
-                memory: 10G
-          reannounce:
-            image:
-              repository: ghcr.io/buroa/qbittools
-              tag: v0.10.0
-            args: ["reannounce", "-s", "localhost", "-p", "8080"]
+                memory: 16Gi
+            reannounce:
+              image:
+                repository: ghcr.io/buroa/qbittools
+                tag: v0.10.0
+              args: ["reannounce", "-s", "localhost", "-p", "8080"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v2/app/version
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
         pod:
           affinity:
             podAntiAffinity:
