@@ -2,11 +2,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-qbittorrent
+  name: qbittorrent
   namespace: flux-system
 spec:
   # dependsOn:
-  #   - name: cluster-apps-qbittorrent-pod-gateway-downloads
+  #   - name: qbittorrent-pod-gateway-downloads
   path: ./kubernetes/apps/downloads/qbittorrent/app
   prune: true
   sourceRef:
