@@ -81,11 +81,16 @@ spec:
     postgresql:
       enabled: false
 
+    metrics:
+    # -- deploy metrics service
+      enabled: true
+      serviceMonitor:
+      # -- enable a prometheus ServiceMonitor
+        enabled: true
+
     prometheus:
       rules:
-        create: true
-      serviceMonitor:
-        create: true
+        enabled: true
 
     redis:
       enabled: false
