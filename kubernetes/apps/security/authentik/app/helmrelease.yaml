@@ -24,15 +24,14 @@ spec:
         type: RollingUpdate
       envFrom:
         - secretRef:
-            name: authentik-secret
+            name: &envFrom authentik-secret
     server:
       initContainers:
-        init-db:
-          image: ghcr.io/onedr0p/postgres-init:14.9
-          imagePullPolicy: IfNotPresent
+        - name: init-db
+          image: ghcr.io/onedr0p/postgres-init:16
           envFrom:
             - secretRef:
-                name: authentik-secret
+                name: *envFrom
       metrics:
         # -- deploy metrics service
         enabled: true
