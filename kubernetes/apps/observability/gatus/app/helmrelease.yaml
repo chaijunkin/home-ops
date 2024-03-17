@@ -77,9 +77,9 @@ spec:
             resources: *configSyncResources
         pod:
           securityContext:
-            runAsUser: 1002
-            runAsGroup: 1004
-            fsGroup: 1004
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
       main:

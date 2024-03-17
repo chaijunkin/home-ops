@@ -51,8 +51,8 @@ spec:
                 memory: 64M
         pod:
           securityContext:
-            runAsUser: 1002
-            runAsGroup: 1004
+            runAsUser: 568
+            runAsGroup: 568
             runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1

@@ -62,8 +62,8 @@ spec:
                 memory: 128Mi
         pod:
           securityContext:
-            runAsUser: 1002
-            runAsGroup: 1004
+            runAsUser: 568
+            runAsGroup: 568
             runAsNonRoot: true
     service:
       main:

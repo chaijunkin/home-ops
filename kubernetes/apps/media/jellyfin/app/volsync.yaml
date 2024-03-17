@@ -37,9 +37,9 @@ spec:
     pruneIntervalDays: 14
     repository: jellyfin-restic-secret
     moverSecurityContext:
-      runAsUser: 1002
-      runAsGroup: 1004
-      fsGroup: 1004
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
     retain:
       daily: 14
     volumeSnapshotClassName: csi-ceph-blockpool
