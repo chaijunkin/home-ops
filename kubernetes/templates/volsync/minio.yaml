@@ -64,9 +64,9 @@ spec:
     storageClassName: "${VOLSYNC_STORAGECLASS:-democratic-csi-local-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:-1000}"
-      runAsGroup: "${VOLSYNC_GID:-1000}"
-      fsGroup: "${VOLSYNC_GID:-1000}"
+      runAsUser: "${VOLSYNC_UID:-0}"  # RISK!
+      runAsGroup: "${VOLSYNC_GID:-0}"
+      fsGroup: "${VOLSYNC_GID:-0}"
     capacity: "${VOLSYNC_CAPACITY}"
 ---
 apiVersion: volsync.backube/v1alpha1
