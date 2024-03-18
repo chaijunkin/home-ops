@@ -34,11 +34,11 @@ spec:
         reclaimPolicy: Delete
         volumeBindingMode: WaitForFirstConsumer
         allowVolumeExpansion: false
-    # volumeSnapshotClasses:
-    #   - name: local-hostpath
-    #     deletionPolicy: Delete
-    #     parameters:
-    #       cluster: k8s
+    volumeSnapshotClasses:
+      - name: local-hostpath
+        deletionPolicy: Delete
+        parameters:
+          cluster: k8s
     controller:
       enabled: true
       strategy: node
