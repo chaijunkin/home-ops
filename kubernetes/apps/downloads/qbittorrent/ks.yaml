@@ -5,6 +5,10 @@ metadata:
   name: qbittorrent
   namespace: flux-system
 spec:
+  targetNamespace: downloads
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   # dependsOn:
   #   - name: qbittorrent-pod-gateway-downloads
   path: ./kubernetes/apps/downloads/qbittorrent/app
@@ -15,4 +19,8 @@ spec:
   wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 5m
+   postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 2Gi
