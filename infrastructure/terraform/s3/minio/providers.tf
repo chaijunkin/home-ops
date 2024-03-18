@@ -19,6 +19,6 @@ terraform {
 provider "minio" {
   alias          = "nas"
   minio_server   = var.minio_server
-  minio_user     = var.owner_access_key
-  minio_password = var.owner_secret_key
+  minio_user     = var.minio_user
+  minio_password = var.minio_password
 }
