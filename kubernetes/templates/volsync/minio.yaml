@@ -56,11 +56,11 @@ spec:
     manual: restore-once
   restic:
     repository: "${APP}-volsync"
-    copyMethod: Snapshot
+    copyMethod: ${VOLSYNC_COPYMETHOD:-Copy}
     # volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-openebs-hostpath}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
-    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    # cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
+    # cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    # cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
     # storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath-snapshot}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
@@ -79,13 +79,13 @@ spec:
   trigger:
     schedule: "0 * * * *"
   restic:
-    copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
+    copyMethod: "${VOLSYNC_COPYMETHOD:-Copy}"
     pruneIntervalDays: 10
     repository: "${APP}-volsync"
     # volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-openebs-hostpath}"
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
-    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    # cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    # cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
+    # cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
     # storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath-snapshot}"
     storageClassName: "${VOLSYNC_STORAGECLASS:-openebs-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
