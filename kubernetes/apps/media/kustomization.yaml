@@ -9,8 +9,8 @@ resources:
   # - ./bonob/ks.yaml
   # - ./calibre-web/ks.yaml
   - ./jellyfin/ks.yaml
-  - ./kavita/ks.yaml
-  - ./komga/ks.yaml
+  # - ./kavita/ks.yaml
+  # - ./komga/ks.yaml
   - ./minio/ks.yaml
   # - ./navidrome/ks.yaml
   # - ./nextcloud/ks.yaml
