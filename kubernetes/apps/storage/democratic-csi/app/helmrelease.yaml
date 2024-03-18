@@ -46,6 +46,7 @@ spec:
           - --leader-election=false
           - --node-deployment=true
           - --node-deployment-immediate-binding=false
+          - --enable-distributed-snapshotting=true
           - --feature-gates=Topology=true
           - --strict-topology=true
           - --enable-capacity=true
