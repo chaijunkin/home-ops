@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app kavita
+  name: &app tautulli
 spec:
   interval: 30m
   chart:
@@ -26,44 +26,49 @@ spec:
       namespace: volsync-system
   values:
     controllers:
-      kavita:
+      tautulli:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: kizaing/kavita
-              tag: 0.7.8@sha256:48b3c2c07f90feb4641ddb791f96a1bf6e70a2b27da8c8b2ca0cc2c627b91d72
+              repository:  ghcr.io/joryirving/tautulli
+              tag: 2.13.4@sha256:62569d9d27c007c0788ff3edf8331604dfcf5246094827d885b72c32f36ed85d
             env:
               TZ: ${TIMEZONE}
             resources:
               requests:
-                cpu: 15m
-                memory: 300Mi
+                cpu: 20m
+                memory: 100M
               limits:
-                memory: 1Gi
+                memory: 250M
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 5000
+            port: 8181
     ingress:
       app:
         className: external
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Books
-          gethomepage.dev/name: Kavita
-          gethomepage.dev/icon: kavita.png
-          gethomepage.dev/description: Comic/Ebook Web Reader
-          # gethomepage.dev/widget.type: kavita
-          # gethomepage.dev/widget.url: http://kavita.media:5000
-          # gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_KAVITA_USERNAME}}"
-          # gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_KAVITA_PASSWORD}}"
+          gethomepage.dev/group: Video
+          gethomepage.dev/name: Tautulli
+          gethomepage.dev/icon: tautulli.png
+          gethomepage.dev/description: Plex Stream Monitoring
+          # gethomepage.dev/widget.type: tautulli
+          # gethomepage.dev/widget.url: http://tautulli.media:8181
+          # gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}"
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: &host comics.${SECRET_DOMAIN}
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -75,10 +80,3 @@ spec:
     persistence:
       config:
         existingClaim: *app
-        globalMounts:
-          - path: /kavita/config
-      media:
-        existingClaim: pvc-smb-media
-        globalMounts:
-          - path: /data
-            subPath: media

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app kavita
+  name: &app komga
 spec:
   interval: 30m
   chart:
@@ -26,44 +26,45 @@ spec:
       namespace: volsync-system
   values:
     controllers:
-      kavita:
+      komga:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: kizaing/kavita
-              tag: 0.7.8@sha256:48b3c2c07f90feb4641ddb791f96a1bf6e70a2b27da8c8b2ca0cc2c627b91d72
+              repository: gotson/komga
+              tag: "1.10.4@sha256:5b4f581be33141f07abed7bb665077352fb046183f3614b0a647530588784735"
             env:
               TZ: ${TIMEZONE}
+              SERVER_PORT: &port 8080
             resources:
               requests:
                 cpu: 15m
-                memory: 300Mi
-              limits:
                 memory: 1Gi
+              limits:
+                memory: 4Gi
     service:
       app:
         controller: *app
         ports:
           http:
-            port: 5000
+            port: *port
     ingress:
       app:
         className: external
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Books
-          gethomepage.dev/name: Kavita
-          gethomepage.dev/icon: kavita.png
+          gethomepage.dev/name: Komga
+          gethomepage.dev/icon: komga.png
           gethomepage.dev/description: Comic/Ebook Web Reader
-          # gethomepage.dev/widget.type: kavita
-          # gethomepage.dev/widget.url: http://kavita.media:5000
-          # gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_KAVITA_USERNAME}}"
-          # gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_KAVITA_PASSWORD}}"
+          # gethomepage.dev/widget.type: komga
+          # gethomepage.dev/widget.url: http://komga.media:8080
+          # gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_KOMGA_USERNAME}}"
+          # gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_KOMGA_PASSWORD}}"
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
-          - host: &host comics.${SECRET_DOMAIN}
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
@@ -75,10 +76,10 @@ spec:
     persistence:
       config:
         existingClaim: *app
-        globalMounts:
-          - path: /kavita/config
       media:
-        existingClaim: pvc-smb-media
+        type: nfs
+        server: ${NAS_IP:=temp}
+        path: ${SECRET_NFS_DATA:=temp}
         globalMounts:
           - path: /data
             subPath: media

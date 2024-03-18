@@ -10,8 +10,12 @@ resources:
   # - ./calibre-web/ks.yaml
   - ./jellyfin/ks.yaml
   - ./kavita/ks.yaml
+  - ./komga/ks.yaml
   - ./minio/ks.yaml
   # - ./navidrome/ks.yaml
   # - ./nextcloud/ks.yaml
+  - ./overseerr/ks.yaml
   # - ./paperless/ks.yaml
+  - ./plex/ks.yaml
+  - ./tautulli/ks.yaml
   # - ./wikijs/ks.yaml
