@@ -221,3 +221,14 @@ variable "tags" {
   type        = string
   default     = ""
 }
+
+# variable "machine" {
+#   description = "Definition of the virtual machine"
+#   type        = string
+#   default     = "i440fx"
+# }
+
+# variable "vm_hostpci" {
+#   description = "List of PCI devices to pass through to the virtual machine"
+#   type        = any
+# }

@@ -2,8 +2,10 @@ terraform {
   required_providers {
     proxmox = {
       source  = "Telmate/proxmox"
-      version = "2.9.11"
+      version = "3.0.1-rc1"
     }
   }
   required_version = ">= 0.13"
 }
+
+### DONT APPLY, breaking change

@@ -23,6 +23,17 @@ resource "proxmox_vm_qemu" "qemu_vm" {
   tags         = var.tags
   hotplug      = var.hotplug
 
+  # machine      = var.machine
+
+  # dynamic "hostpci" {
+  #   for_each = var.vm_hostpci
+  #   content {
+  #     host   = hostpci.value.host
+  #     rombar = hostpci.value.rombar
+  #     pcie   = hostpci.value.pcie 
+  #   }
+  # }
+
   dynamic "network" {
     for_each = var.vm_network
     content {
