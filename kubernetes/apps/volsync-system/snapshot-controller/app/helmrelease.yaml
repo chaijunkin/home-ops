@@ -26,3 +26,14 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  values:
+    snapshot-controller:
+      volumeSnapshotClasses:
+        - name: local-path
+          driver: rancher.io/local-path
+          annotations:
+            snapshot.storage.kubernetes.io/is-default-class: "true"
+          deletionPolicy: Delete
+
+      serviceMonitor:
+        create: true
