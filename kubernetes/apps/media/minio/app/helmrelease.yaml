@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app minio
+  name: minio
 spec:
   interval: 30m
   chart:
@@ -20,6 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -30,7 +31,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2024-03-15T01-07-19Z
+              tag: RELEASE.2024-03-15T01-07-19Z@sha256:ea2c70cda70860c7d10f04ce1df640d3abb995784cb7aeedef8d4baa53a5a113
             env:
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${SECRET_DOMAIN},https://s3.${SECRET_DOMAIN}
               MINIO_BROWSER_REDIRECT_URL: https://minio.${SECRET_DOMAIN}
@@ -62,18 +63,15 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            securityContext:
-              privileged: true
-              runAsUser: 99
-            resources:
-              requests:
-                memory: 100Mi
-                cpu: 100m
-              limits:
-                memory: 3Gi
+            # securityContext:
+            #   runAsUser: 568
+            #   runAsGroup: 568
+            #   fsGroup: 568
+            #   fsGroupChangePolicy: OnRootMismatch
+            #   supplementalGroups: [100]
     service:
       app:
-        controller: *app
+        controller: minio
         ports:
           http:
             port: 9001
@@ -81,7 +79,7 @@ spec:
             port: 9000
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: minio
         endpoints:
           - port: s3
             scheme: http
@@ -91,10 +89,6 @@ spec:
     ingress:
       app:
         className: internal
-        annotations:
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            more_set_headers "Host $host";
-            more_set_headers "X-Forwarded-For $remote_addr"
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
@@ -102,18 +96,6 @@ spec:
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
-      api:
-        enabled: true
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            more_set_headers "Host $host";
-            more_set_headers "X-Forwarded-For $remote_addr"
-        hosts:
           - host: &s3Host s3.${SECRET_DOMAIN}
             paths:
               - path: /
@@ -122,7 +104,8 @@ spec:
                   port: s3
         tls:
           - hosts:
-            - *s3Host
+              - *host
+              - *s3Host
     persistence:
       config:
         enabled: true
