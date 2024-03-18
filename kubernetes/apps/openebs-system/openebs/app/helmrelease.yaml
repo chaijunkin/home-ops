@@ -34,19 +34,19 @@ spec:
         name: openebs-hostpath
         isDefaultClass: true
         basePath: /var/openebs/local
-    snapshotOperator:
-      enabled: true
-      controller:
-        image: "quay.io/openebs/snapshot-controller"
-        imageTag: "1.6.0"
-      provisioner:
-        image: "quay.io/openebs/snapshot-provisioner"
-        imageTag: "1.6.0"
-      replicas: 1
-      upgradeStrategy: "Recreate"
-      nodeSelector: {}
-      tolerations: []
-      affinity: {}
-      healthCheck:
-        initialDelaySeconds: 30
-        periodSeconds: 60
+    # snapshotOperator:
+    #   enabled: true
+    #   controller:
+    #     image: "quay.io/openebs/snapshot-controller"
+    #     imageTag: "1.6.0"
+    #   provisioner:
+    #     image: "quay.io/openebs/snapshot-provisioner"
+    #     imageTag: "1.6.0"
+    #   replicas: 1
+    #   upgradeStrategy: "Recreate"
+    #   nodeSelector: {}
+    #   tolerations: []
+    #   affinity: {}
+    #   healthCheck:
+    #     initialDelaySeconds: 30
+    #     periodSeconds: 60
