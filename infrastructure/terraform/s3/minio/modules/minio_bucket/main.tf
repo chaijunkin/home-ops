@@ -8,17 +8,16 @@ terraform {
 
 resource "minio_s3_bucket" "bucket" {
   bucket = var.bucket_name
-  acl    = var.is_public == true ? "public" : "private"
+  acl    = "private"
 }
 
 resource "minio_iam_user" "user" {
-  name          = var.owner_access_key != null ? var.owner_access_key : var.bucket_name
-  force_destroy = true
-  secret        = var.owner_secret_key != null ? var.owner_secret_key : null
+  name   = var.user_name
+  secret = var.user_secret
 }
 
-resource "minio_iam_policy" "rw_policy" {
-  name   = "${var.bucket_name}-rw"
+resource "minio_iam_policy" "policy" {
+  name   = "${var.bucket_name}-policy"
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -39,7 +38,7 @@ resource "minio_iam_policy" "rw_policy" {
 EOF
 }
 
-resource "minio_iam_user_policy_attachment" "user_rw" {
+resource "minio_iam_user_policy_attachment" "attachment" {
   user_name   = minio_iam_user.user.id
-  policy_name = minio_iam_policy.rw_policy.id
+  policy_name = minio_iam_policy.policy.id
 }

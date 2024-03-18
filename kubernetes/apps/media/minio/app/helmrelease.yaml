@@ -1,21 +1,19 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: minio
-  namespace: media
+  name: &app minio
 spec:
+  interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.5.0
-      interval: 30m
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -23,57 +21,32 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false  
-  interval: 30m
   values:
     controllers:
-      main:
-        type: statefulset
-
+      minio:
         annotations:
           reloader.stakater.com/auto: "true"
-
         containers:
-          main:
+          app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2023-10-25T06-33-25Z
-            args:
-              - server
-              - /data
-              - --console-address
-              - :9001
+              tag: RELEASE.2024-03-15T01-07-19Z
             env:
-              MINIO_ROOT_USER:
-                valueFrom:
-                  secretKeyRef:
-                    name: minio-secret
-                    key: MINIO_ROOT_USER
-              MINIO_ROOT_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: minio-secret
-                    key: MINIO_ROOT_PASSWORD
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${SECRET_DOMAIN},https://s3.${SECRET_DOMAIN}
               MINIO_BROWSER_REDIRECT_URL: https://minio.${SECRET_DOMAIN}
               MINIO_PROMETHEUS_JOB_ID: minio
               MINIO_PROMETHEUS_URL: https://prometheus.${SECRET_DOMAIN}
               MINIO_PROMETHEUS_AUTH_TYPE: public
               MINIO_SERVER_URL: https://s3.${SECRET_DOMAIN}
-              # MINIO_SERVER_HOST: minio.${SECRET_DOMAIN}
               MINIO_UPDATE: "off"
-            resources:
-              requests:
-                memory: 100Mi
-                cpu: 100m
-              limits:
-                memory: 1Gi
-            securityContext:
-              privileged: true
-              runAsUser: 0
-              # fsGroup: 568  # 568
-              # fsGroupChangePolicy: OnRootMismatch
+            envFrom:
+              - secretRef:
+                  name: minio-secret
+            args:
+              - server
+              - /data
+              - --console-address
+              - :9001
             probes:
               liveness: &probes
                 enabled: true
@@ -89,68 +62,67 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            
-
+            securityContext:
+              privileged: true
+              runAsUser: 99
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 100m
+              limits:
+                memory: 3Gi
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: 9001
           s3:
             port: 9000
-
     serviceMonitor:
-      main:
-        enabled: true
+      app:
+        serviceName: *app
         endpoints:
           - port: s3
             scheme: http
             path: /minio/v2/metrics/cluster
             interval: 1m
             scrapeTimeout: 10s
-
     ingress:
-      main:
+      app:
+        className: internal
         annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Compute/Storage Infrastructure
-          gethomepage.dev/name: Minio
-          gethomepage.dev/description: Object Storage
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/minio.png
-          # nginx.ingress.kubernetes.io/configuration-snippet: |
-          #   more_set_headers "Host $host";
-          #   more_set_headers "X-Forwarded-For $remote_addr"
-        enabled: true
-        className: "internal"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            more_set_headers "Host $host";
+            more_set_headers "X-Forwarded-For $remote_addr"
         hosts:
-          - host: &host "minio.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
               - *host
       api:
         enabled: true
-        className: internal
+        className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
-          # nginx.ingress.kubernetes.io/configuration-snippet: |
-          #   more_set_headers "Host $host";
-          #   more_set_headers "X-Forwarded-For $remote_addr"
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            more_set_headers "Host $host";
+            more_set_headers "X-Forwarded-For $remote_addr"
         hosts:
           - host: &s3Host s3.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: s3
         tls:
           - hosts:
             - *s3Host
-
     persistence:
       config:
         enabled: true
