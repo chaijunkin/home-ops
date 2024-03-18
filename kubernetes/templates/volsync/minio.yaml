@@ -57,11 +57,11 @@ spec:
   restic:
     repository: "${APP}-volsync"
     copyMethod: Snapshot
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath-snapshot}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-democratic-csi-local-hostpath}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-democratic-csi-local-hostpath}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
-    storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-democratic-csi-local-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
       runAsUser: "${VOLSYNC_UID:-568}"
@@ -81,11 +81,11 @@ spec:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
     pruneIntervalDays: 10
     repository: "${APP}-volsync"
-    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath-snapshot}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-democratic-csi-local-hostpath}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-democratic-csi-local-hostpath}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-    storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-democratic-csi-local-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
       runAsUser: "${VOLSYNC_UID:-568}"

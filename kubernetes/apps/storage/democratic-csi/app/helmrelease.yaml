@@ -28,13 +28,13 @@ spec:
       attachRequired: false
       fsGroupPolicy: File
     storageClasses:
-      - name: local-hostpath
+      - name: democratic-csi-local-hostpath
         defaultClass: false
         reclaimPolicy: Delete
         volumeBindingMode: WaitForFirstConsumer
         allowVolumeExpansion: false
     volumeSnapshotClasses:
-      - name: local-hostpath-snapshot
+      - name: democratic-csi-local-hostpath
         deletionPolicy: Delete
         parameters:
           cluster: k8s
@@ -63,7 +63,7 @@ spec:
       driver:
         extraVolumeMounts:
           - name: local-hostpath
-            mountPath: &path /var/mnt/sata/democratic-csi-local-hostpath
+            mountPath: &path /var/lib/democratic-csi-local-hostpath
             mountPropagation: Bidirectional
       extraVolumes:
         - name: local-hostpath
