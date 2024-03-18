@@ -4,3 +4,5 @@ metadata:
   name: local-hostpath
 deletionPolicy: Delete
 driver: org.democratic-csi.local-hostpath
+parameters:
+  cluster: k8s
