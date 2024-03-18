@@ -87,15 +87,37 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     ingress:
-      app:
-        className: internal
+      main:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Compute/Storage Infrastructure
+          gethomepage.dev/name: Minio
+          gethomepage.dev/description: Object Storage
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/minio.png
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            more_set_headers "Host $host";
+            more_set_headers "X-Forwarded-For $remote_addr"
+        enabled: true
+        className: "internal"
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "minio.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
+        tls:
+          - hosts:
+              - *host
+      api:
+        enabled: true
+        className: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            more_set_headers "Host $host";
+            more_set_headers "X-Forwarded-For $remote_addr"
+        hosts:
           - host: &s3Host s3.${SECRET_DOMAIN}
             paths:
               - path: /
@@ -104,8 +126,7 @@ spec:
                   port: s3
         tls:
           - hosts:
-              - *host
-              - *s3Host
+            - *s3Host
     persistence:
       config:
         enabled: true
