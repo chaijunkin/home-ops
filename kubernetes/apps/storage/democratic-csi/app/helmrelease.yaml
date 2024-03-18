@@ -77,6 +77,6 @@ spec:
         local-hostpath:
           shareBasePath: *path
           controllerBasePath: *path
-          dirPermissionsMode: "0770"
+          dirPermissionsMode: "0777"
           dirPermissionsUser: 0
           dirPermissionsGroup: 0
