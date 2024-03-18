@@ -18,6 +18,7 @@ module "minio_bucket" {
     minio = minio.nas
   }
 }
+
 output "minio_bucket_outputs" {
   value     = module.minio_bucket
   sensitive = true
