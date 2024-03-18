@@ -66,8 +66,8 @@ spec:
                 gpu.intel.com/i915: 1
                 memory: 16G
         pod:
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
+          # nodeSelector:
+          #   intel.feature.node.kubernetes.io/gpu: "true"
           securityContext:
             runAsUser: 568
             runAsGroup: 568
