@@ -1,124 +1,116 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app sonarr
-  namespace: downloads
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.0.3
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
-  uninstall:
-    keepHistory: false
+  dependsOn:
+  - name: volsync
+    namespace: storage
   values:
     controllers:
-      main:
+      sonarr:
+        labels:
+          nfsMount: "true"
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 14.9
-              pullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: sonarr-secret
-
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/onedr0p/sonarr
-              tag: 3.0.10.1567
+              repository: ghcr.io/joryirving/sonarr
+              tag: 4.0.2.1183@sha256:fee81605e8afb40266acaf2a2026b0627e955a225dac431decc6c871d4aaf341
             env:
-              TZ: "${TIMEZONE}"
+              TZ: ${TIMEZONE}
+              SONARR__AUTHENTICATION_METHOD: External
+              SONARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               SONARR__INSTANCE_NAME: Sonarr
               SONARR__PORT: &port 80
               SONARR__LOG_LEVEL: info
-              SONARR__THEME: dark
-            envFrom: *envFrom
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/v2/app/version
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
+            envFrom:
+            - secretRef:
+                name: sonarr-secret
             resources:
               requests:
                 cpu: 10m
+                memory: 250Mi
               limits:
-                memory: 1Gi
+                memory: 1000Mi
         pod:
           securityContext:
             runAsUser: 568
             runAsGroup: 568
-            runAsNonRoot: true
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [10000]
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: *port
-    ingress:
-      main:
+    probes:
+      liveness: &probes
         enabled: true
-        className: "internal"
+        custom: true
+        spec:
+          httpGet:
+            path: /ping
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
+    ingress:
+      app:
+        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/group: Downloads
           gethomepage.dev/name: Sonarr
-          gethomepage.dev/description: Sonarr service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/sonarr.png
+          gethomepage.dev/icon: sonarr.png
+          gethomepage.dev/description: TV Downloads
+          # gethomepage.dev/widget.type: sonarr
+          # gethomepage.dev/widget.url: http://sonarr.downloads
+          # gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SONARR_TOKEN}}"
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            proxy_set_header Accept-Encoding "";
+            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/sonarr/nord.css"></head>';
+            sub_filter_once on;
         hosts:
-          - host: &host "sonarr.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
+        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     persistence:
-      media:
+      config:
+        existingClaim: *app
+      tmp:
+        type: emptyDir
+      data:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-          - path: /data
-      config:
-        enabled: true
-        storageClass: openebs-hostpath
-      #   existingClaim: pvc-smb-sonarr
-      #   globalMounts:
-      #     - path: /config
+        - path: /data
