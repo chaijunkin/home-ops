@@ -56,11 +56,11 @@ spec:
         enabled: false
       externalAttacher:
         enabled: false
-      # externalSnapshotter:
-      #   enabled: true
-      #   extraArgs:
-      #     - --leader-election=false
-      #     - --node-deployment=true
+      externalSnapshotter:
+        enabled: true
+        extraArgs:
+          - --leader-election=false
+          - --node-deployment=true
     node:
       driver:
         extraVolumeMounts:
