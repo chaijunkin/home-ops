@@ -15,7 +15,7 @@ resources:
   # - ./navidrome/ks.yaml
   # - ./nextcloud/ks.yaml
   # - ./overseerr/ks.yaml
-  # # - ./paperless/ks.yaml
-  - ./plex/ks.yaml
+  - ./paperless/ks.yaml
+  # - ./plex/ks.yaml
   # - ./tautulli/ks.yaml
   # - ./wikijs/ks.yaml
