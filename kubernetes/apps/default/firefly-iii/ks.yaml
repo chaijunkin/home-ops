@@ -18,5 +18,5 @@ spec:
     name: home-kubernetes
   wait: false
   dependsOn:
-    - name: cluster-apps-external-secrets-stores
-    - name: cluster-apps-cloudnative-pg
+    - name: external-secrets-stores
+    - name: cloudnative-pg
