@@ -68,13 +68,13 @@ spec:
         pod:
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: "true"
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            runAsNonRoot: true
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups: [44, 10000, 109]
+          # securityContext:
+          #   runAsUser: 568
+          #   runAsGroup: 568
+          #   runAsNonRoot: true
+          #   fsGroup: 568
+          #   fsGroupChangePolicy: OnRootMismatch
+          #   supplementalGroups: [44, 10000, 109]
     service:
       app:
         controller: *app
