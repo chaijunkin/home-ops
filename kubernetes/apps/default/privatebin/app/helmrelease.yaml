@@ -57,9 +57,9 @@ spec:
       configmap.reloader.stakater.com/reload: privatebin-settings
     persistence:
       data:
-        enabled: true
-        storageClass: local-hostpath
-        type: emptyDir
+        # enabled: true
+        # type: emptyDir
+        existingClaim: privatebin-test
     resources:
       requests:
         cpu: 100m
