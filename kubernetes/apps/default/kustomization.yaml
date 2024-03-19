@@ -5,13 +5,13 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  # - ./changedetection/ks.yaml
-  # - ./cyberchef/ks.yaml
-  # - ./excalidraw/ks.yaml
-  # - ./firefly-iii/ks.yaml
+  - ./changedetection/ks.yaml
+  - ./cyberchef/ks.yaml
+  - ./excalidraw/ks.yaml
+  - ./firefly-iii/ks.yaml
   # - ./hajimari/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
-  # - ./miniflux/ks.yaml
+  - ./miniflux/ks.yaml
   # - ./odoo/ks.yaml
-  # - ./privatebin/ks.yaml
+  - ./privatebin/ks.yaml

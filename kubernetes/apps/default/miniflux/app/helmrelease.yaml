@@ -1,0 +1,103 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: miniflux
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.2.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        strategy: RollingUpdate
+
+        pod:
+          enableServiceLinks: false
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 14.9
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: miniflux-secret
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/miniflux/miniflux
+              tag: 2.0.50
+            env:
+              BASE_URL: https://miniflux.${SECRET_DOMAIN}
+              CREATE_ADMIN: "1"
+              DEBUG: "1"
+              LOG_DATE_TIME: "1"
+              # METRICS_ALLOWED_NETWORKS: "10.32.0.0/16"
+              # METRICS_COLLECTOR: "1"
+              # OAUTH2_CLIENT_ID: miniflux
+              # OAUTH2_USER_CREATION: "1"
+              # OAUTH2_OIDC_DISCOVERY_ENDPOINT: https://auth.${SECRET_DOMAIN}
+              # OAUTH2_PROVIDER: oidc
+              # OAUTH2_REDIRECT_URL: https://miniflux.${SECRET_DOMAIN}/oauth2/oidc/callback
+              POLLING_SCHEDULER: entry_frequency
+              POLLING_FREQUENCY: "15"
+              PORT: &port 80
+              RUN_MIGRATIONS: "1"
+            envFrom: &envFrom
+              - secretRef:
+                  name: miniflux-secret
+            resources:
+              requests:
+                cpu: 12m
+                memory: 64M
+              limits:
+                memory: 256M
+
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+
+    ingress:
+      main:
+        enabled: true
+        className: "external"
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Miniflux
+          gethomepage.dev/description: Feed aggregator services
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/miniflux.png
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        hosts:
+          - host: &host "miniflux.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+## EXECUTE ME
+### miniflux /var/www/miniflux/bin/console doctrine:migrations:migrate --env=prod --no-interaction
+
+### php bin/console miniflux:install --env=prod
