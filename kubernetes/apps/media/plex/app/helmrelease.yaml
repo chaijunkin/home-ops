@@ -128,4 +128,4 @@ spec:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-          - path: /data
+          - path: /media
