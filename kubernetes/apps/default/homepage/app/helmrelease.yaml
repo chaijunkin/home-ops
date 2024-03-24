@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.8.8
+              tag: v0.8.10
             env:
               TZ: ${TIMEZONE}
             # envFrom:
