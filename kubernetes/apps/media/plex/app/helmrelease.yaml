@@ -123,8 +123,8 @@ spec:
         type: emptyDir
       transcode:
         type: emptyDir
-      media:
-        enabled: true
-        existingClaim: pvc-smb-media
-        globalMounts:
-          - path: /data
+      # media:
+      #   enabled: true
+      #   existingClaim: pvc-smb-media
+      #   globalMounts:
+      #     - path: /data
