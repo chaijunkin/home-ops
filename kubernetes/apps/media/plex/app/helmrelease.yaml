@@ -39,7 +39,8 @@ spec:
             env:
               TZ: ${TIMEZONE}
               PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443,http://10.10.30.14:32400
-              # PLEX_NO_AUTH_NETWORKS: ${NODE_CIDR}
+              ALLOWED_NETWORKS: "10.0.0.0/8"
+              PLEX_NO_AUTH_NETWORKS: "10.0.0.0/8"
             probes:
               liveness: &probes
                 enabled: true
@@ -77,9 +78,9 @@ spec:
     service:
       app:
         controller: *app
-        # type: LoadBalancer
-        # annotations:
-        #   io.cilium/lb-ipam-ips: 10.10.30.14
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.14
         ports:
           http:
             port: *port
