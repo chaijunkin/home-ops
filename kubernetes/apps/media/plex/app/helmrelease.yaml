@@ -38,7 +38,7 @@ spec:
               tag: 1.40.1.8227-c0dd5a73e@sha256:3187f7b1b7cbaf93d938b1710fe43cf3c9b86835b00176984309188f0a3930d0
             env:
               TZ: ${TIMEZONE}
-              PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443,http://10.10.30.14:32400
+              PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443,https://10.10.30.14:32400
               ALLOWED_NETWORKS: "10.0.0.0/8"
               PLEX_NO_AUTH_NETWORKS: "10.0.0.0/8"
             probes:
@@ -56,10 +56,10 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 100m
