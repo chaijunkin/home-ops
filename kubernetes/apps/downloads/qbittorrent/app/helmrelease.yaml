@@ -49,16 +49,16 @@ spec:
               repository: ghcr.io/buroa/qbittools
               tag: v0.11.0
             args: ["reannounce", "-s", "localhost", "-p", "8080"]
-        pod:
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app.kubernetes.io/name
-                        operator: In
-                        values: ["sabnzbd"]
-                  topologyKey: kubernetes.io/hostname
+        # pod:
+        #   affinity:
+        #     podAntiAffinity:
+        #       requiredDuringSchedulingIgnoredDuringExecution:
+        #         - labelSelector:
+        #             matchExpressions:
+        #               - key: app.kubernetes.io/name
+        #                 operator: In
+        #                 values: ["sabnzbd"]
+        #           topologyKey: kubernetes.io/hostname
           # securityContext:
           #   runAsUser: 568
           #   runAsGroup: 568
