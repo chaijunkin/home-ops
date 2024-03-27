@@ -7,7 +7,7 @@ provisioner: smb.csi.k8s.io
 parameters:
   # On Windows, "*.default.svc.cluster.local" could not be recognized by csi-proxy
   source: //smb.${SECRET_DOMAIN}/services
-  # subDir: media  ## bjw-s chart support subDir by default
+  subDir: media  ## bjw-s chart support subDir by default
   # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
   # with PV name under source
   csi.storage.k8s.io/provisioner-secret-name: "smb-secret"
