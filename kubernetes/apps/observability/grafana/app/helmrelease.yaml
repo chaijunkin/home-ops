@@ -25,8 +25,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    command: 
-      - ["sh", "-c", "grafana cli admin reset-admin-password ${GF_SECURITY_ADMIN_PASSWORD}"]
+    command: ["sh", "-c", "grafana cli admin reset-admin-password ${GF_SECURITY_ADMIN_PASSWORD}"]
     replicas: 1
     podAnnotations:
       reloader.stakater.com/auto: "true"
