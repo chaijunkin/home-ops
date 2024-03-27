@@ -68,16 +68,16 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 12Gi
-        pod:
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchExpressions:
-                      - key: app.kubernetes.io/name
-                        operator: In
-                        values: ["qbittorrent"]
-                  topologyKey: kubernetes.io/hostname
+        # pod:
+        #   affinity:
+        #     podAntiAffinity:
+        #       requiredDuringSchedulingIgnoredDuringExecution:
+        #         - labelSelector:
+        #             matchExpressions:
+        #               - key: app.kubernetes.io/name
+        #                 operator: In
+        #                 values: ["qbittorrent"]
+        #           topologyKey: kubernetes.io/hostname
           # securityContext:
           #   runAsUser: 0
           #   runAsGroup: 0
