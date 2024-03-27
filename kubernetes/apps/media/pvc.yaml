@@ -24,16 +24,16 @@ mountOptions:
   - mfsymlinks
   - cache=strict
   - noserverino  # required to prevent data corruption
-# ---
-# kind: PersistentVolumeClaim
-# apiVersion: v1
-# metadata:
-#   name: pvc-smb-media
-#   namespace: media
-# spec:
-#   accessModes:
-#     - ReadWriteMany
-#   resources:
-#     requests:
-#       storage: 1Mi
-#   storageClassName: "smb-media"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-smb-media
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: "smb-media"

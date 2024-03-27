@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  # - ./pvc.yaml
+  - ./pvc.yaml
   # # Flux-Kustomizations
   # # - ./bonob/ks.yaml
   # # - ./calibre-web/ks.yaml
@@ -16,6 +16,6 @@ resources:
   # # - ./nextcloud/ks.yaml
   # # - ./overseerr/ks.yaml
   # - ./paperless/ks.yaml
-  # - ./plex/ks.yaml
+  - ./plex/ks.yaml
   # # - ./tautulli/ks.yaml
   # # - ./wikijs/ks.yaml
