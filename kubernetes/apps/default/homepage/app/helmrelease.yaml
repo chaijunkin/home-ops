@@ -10,18 +10,18 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.2.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
   uninstall:
     keepHistory: false
@@ -36,7 +36,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v0.8.8
+              tag: v0.8.10
             env:
               TZ: ${TIMEZONE}
             envFrom:
@@ -52,12 +52,13 @@ spec:
               limits:
                 memory: 2G
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
             port: 3000
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
@@ -66,7 +67,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  name: app
                   port: http
         tls:
           - hosts:
@@ -91,3 +92,4 @@ spec:
             path: /app/config/widgets.yaml
     serviceAccount:
       create: true
+      name: *app
