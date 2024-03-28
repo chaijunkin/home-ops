@@ -106,6 +106,7 @@ spec:
           - *host
     persistence:
       config:
+        enabled: false
         existingClaim: *app
       tmp:
         type: emptyDir
