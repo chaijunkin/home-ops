@@ -93,6 +93,9 @@ spec:
           gethomepage.dev/name: Radarr
           gethomepage.dev/description: Radarr service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/radarr.png
+          gethomepage.dev/widget.type: radarr
+          gethomepage.dev/widget.url: http://radarr.downloads
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_RADARR_TOKEN}}"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
             sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/radarr/nord.css"></head>';

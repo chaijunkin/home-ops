@@ -96,9 +96,9 @@ spec:
           gethomepage.dev/name: Plex
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/plex.png
           gethomepage.dev/description: Media Player
-          # gethomepage.dev/widget.type: plex
-          # gethomepage.dev/widget.url: http://plex.media:32400
-          # gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+          gethomepage.dev/widget.type: plex
+          gethomepage.dev/widget.url: http://plex.media:32400
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
           # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:

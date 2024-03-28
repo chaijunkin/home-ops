@@ -62,6 +62,9 @@ spec:
           gethomepage.dev/name: Autobrr
           gethomepage.dev/description: Autobrr service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobrr.png
+          gethomepage.dev/widget.type: autobrr
+          gethomepage.dev/widget.url: http://autobrr.downloads
+          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTOBRR_TOKEN}}"
         hosts:
           - host: &host "autobrr.${SECRET_DOMAIN}"
             paths:
