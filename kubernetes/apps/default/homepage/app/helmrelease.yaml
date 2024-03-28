@@ -42,9 +42,10 @@ spec:
             envFrom:
               - secretRef:
                   name: homepage-secret
-            dnsConfig:
-              searches:
-                - svc.cluster.local
+            defaultPodOptions:
+              dnsConfig: 
+                searches:
+                  - svc.cluster.local
             resources:
               requests:
                 cpu: 15m
