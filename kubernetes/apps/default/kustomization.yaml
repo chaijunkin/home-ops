@@ -10,7 +10,7 @@ resources:
   - ./excalidraw/ks.yaml
   - ./firefly-iii/ks.yaml
   # - ./hajimari/ks.yaml
-  # - ./homepage/ks.yaml
+  - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./miniflux/ks.yaml
   # - ./odoo/ks.yaml
