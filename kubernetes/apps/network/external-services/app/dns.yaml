@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app pihole
+  name: &app adguard
   namespace: network
   labels:
     app.kubernetes.io/name: *app
@@ -12,14 +12,14 @@ spec:
   clusterIP: None
   ports:
     - name: http
-      port: &port 80
+      port: &port 3000
       protocol: TCP
       targetPort: *port
 ---
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: &app pihole
+  name: &app adguard
   namespace: network
   labels:
     kubernetes.io/service-name: *app
@@ -28,18 +28,18 @@ ports:
   - name: http
     appProtocol: http
     protocol: TCP
-    port: 80
+    port: 3000
 endpoints:
   - addresses:
-      - "10.10.31.9"
+      - "10.10.31.1"
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: &app pihole
+  name: &app adguard
   namespace: network
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: pihole.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/hostname: adguard.${SECRET_DOMAIN}
     # nginx.ingress.kubernetes.io/rewrite-target: /admin
   labels:
     app.kubernetes.io/name: *app
@@ -47,7 +47,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host pihole.${SECRET_DOMAIN}
+    - host: &host adguard.${SECRET_DOMAIN}
       http:
         paths:
           - path: /

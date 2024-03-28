@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: default
 resources:
   - ./configmap.yaml
-  # - ./external-secret.yaml
+  - ./external-secret.yaml
   - ./helmrelease.yaml
   - ./rbac.yaml
   - ../../../../templates/gatus/guarded

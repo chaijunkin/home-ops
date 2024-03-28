@@ -34,13 +34,13 @@ data:
               maxEvents: 10 # optional - defaults to 10
               integrations: # optional
                 - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-                  service_group: Downloads # group name where widget exists
+                  service_group: Downloads Service # group name where widget exists
                   service_name: Sonarr # service name for that widget
                 - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-                  service_group: Downloads # group name where widget exists
+                  service_group: Downloads Service # group name where widget exists
                   service_name: Radarr # service name for that widget
                 - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-                  service_group: Downloads # group name where widget exists
+                  service_group: Downloads Service # group name where widget exists
                   service_name: Readarr # service name for that widget
     - Application Service:
         - VaultWarden:
@@ -74,28 +74,26 @@ data:
         #     href: https://immich.${SECRET_DOMAIN}
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/immich.png
 
-    - Compute/Storage Infrastructure:
-        - Proxmox (Dashy):
-            description: Compute hypervisor
-            href: https://dashy.${SECRET_DOMAIN}
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
-        - NAS:
-            description: SMB service provider
-            href: https://nas.${SECRET_DOMAIN}/login
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cockpit.png
+    # - Compute/Storage Infrastructure:
+    #     - Proxmox (Dashy):
+    #         description: Compute hypervisor
+    #         href: https://dashy.${SECRET_DOMAIN}
+    #         icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
+    #     - NAS:
+    #         description: SMB service provider
+    #         href: https://nas.${SECRET_DOMAIN}/login
+    #         icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cockpit.png
     
     - Network Infrastructure:
         - Opnsense:
             description: Router & Firewall Appliance
             href: https://gateway.${SECRET_DOMAIN}
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/opnsense.png
-        - Pihole:
-            description: Local DNS Server and Adblocker
-            href: https://pihole.${SECRET_DOMAIN}/admin
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/pi-hole.png
             widget:
-              type: pihole
-              url: https://pihole.${SECRET_DOMAIN}
+              type: opnsense
+              url: https://gateway.${SECRET_DOMAIN}
+              username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
+              password: {{HOMEPAGE_VAR_OPNSENSE_API_KEY}}
         - Switch:
             description: Managed switch
             href: https://switch.${SECRET_DOMAIN}
@@ -109,16 +107,6 @@ data:
         #     href: https://kutt.${SECRET_DOMAIN}
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kutt.png
 
-    - Observability Service:
-        - AlertManager:
-            description: Alert manager server
-            href: https://alertmanager.${SECRET_DOMAIN}
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/alertmanager.png
-        # - Jaeger:
-        #     description: Distributed tracing server
-        #     href: https://jaeger.${SECRET_DOMAIN}
-        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/jaeger.png
-
     - External Service:
         - Cloudflare:
             description: Cloudflare dashboard
@@ -130,10 +118,6 @@ data:
               tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
               key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
               fields: ["status"]
-        - Zohomail:
-            description: Mail provider
-            href: https://mailadmin.zoho.com/hosting?domain=${SECRET_DOMAIN}
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/zohomail.png
         - Fly.io:
             description: Edge computing platform
             href: https://fly.io/dashboard
@@ -165,26 +149,14 @@ data:
             description: Coding services
             href: https://coder.${SECRET_DOMAIN}/
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/vscode.png
-        - JumpServer:
-            description: Bastion Host
-            href: https://jumpserver.${SECRET_DOMAIN}
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/guacamole.png
+        # - JumpServer:
+        #     description: Bastion Host
+        #     href: https://jumpserver.${SECRET_DOMAIN}
+        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/guacamole.png
         - PiKVM:
             description: PiKVM services
             href: https://pikvm.${SECRET_DOMAIN}
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/pikvm.png
-        - RustDesk:
-            description: Remote Desktop services
-            href: https://rustdesk.${SECRET_DOMAIN}
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/rustdesk.svg
-        - Tabby:
-            description: AI Recommendation Developer tools (Copilot)
-            href: https://tabby.${SECRET_DOMAIN}
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/hajimari.png
-        - Hajimari:
-            description: Second homepage (Temp)
-            href: https://hajimari.${SECRET_DOMAIN}
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/hajimari.png
 
   widgets.yaml: |
     # - resources:

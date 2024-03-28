@@ -39,6 +39,11 @@ metadata:
   name: &app dashy
   namespace: network
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
+    gethomepage.dev/name: Proxmox (Dashy)
+    gethomepage.dev/group: Compute/Storage Infrastructure
+    gethomepage.dev/description: Compute hypervisor
     external-dns.alpha.kubernetes.io/hostname: dashy.${SECRET_DOMAIN}
     ingress.kubernetes.io/configuration-snippet: "proxy_set_header Host $http_host;\nproxy_set_header
       X-Real-IP $remote_addr;\nproxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

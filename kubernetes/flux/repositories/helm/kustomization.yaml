@@ -26,6 +26,7 @@ resources:
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./stakater.yaml
+  - ./stevehipwell.yaml
   - ./tf-controller.yaml
   - ./weave-gitops.yaml
   - ./xenitab.yaml
