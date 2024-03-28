@@ -89,7 +89,7 @@ spec:
         className: internal
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads Services
+          gethomepage.dev/group: Downloads Service
           gethomepage.dev/name: Lidarr
           gethomepage.dev/icon: lidarr.png
           gethomepage.dev/description: Song search
