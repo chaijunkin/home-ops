@@ -32,16 +32,16 @@ data:
               firstDayInWeek: sunday # optional - defaults to monday
               #view: monthly # optional - possible values monthly, agenda
               maxEvents: 10 # optional - defaults to 10
-            #   integrations: # optional
-            #     - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-            #       service_group: Downloads # group name where widget exists
-            #       service_name: Sonarr # service name for that widget
-            #     - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-            #       service_group: Downloads # group name where widget exists
-            #       service_name: Radarr # service name for that widget
-            #     - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-            #       service_group: Downloads # group name where widget exists
-            #       service_name: Readarr # service name for that widget
+              integrations: # optional
+                - type: sonarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+                  service_group: Downloads # group name where widget exists
+                  service_name: Sonarr # service name for that widget
+                - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+                  service_group: Downloads # group name where widget exists
+                  service_name: Radarr # service name for that widget
+                - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+                  service_group: Downloads # group name where widget exists
+                  service_name: Readarr # service name for that widget
     - Application Service:
         - VaultWarden:
             description: Primary Password manager
@@ -124,6 +124,12 @@ data:
             description: Cloudflare dashboard
             href: https://dash.cloudflare.com/
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cloudflare.png
+            widget:
+              type: cloudflared
+              accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
+              tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
+              key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+              fields: ["status"]
         - Zohomail:
             description: Mail provider
             href: https://mailadmin.zoho.com/hosting?domain=${SECRET_DOMAIN}
@@ -231,6 +237,12 @@ data:
       Media Service:
         style: column
         icon: mdi-play-circle
+      Developer:
+        style: column
+        icon: mdi-toolbox
+      External Service:
+        style: column
+        icon: mdi-cloud
       Downloads Service:
         style: column
         icon: mdi-download-circle
@@ -243,9 +255,6 @@ data:
       Observability Service:
         style: column
         icon: mdi-chart-line
-      External Service:
-        style: column
-        icon: mdi-cloud
       Utility Service:
         style: column
         icon: mdi-tools
@@ -253,8 +262,5 @@ data:
         style: column
         icon: mdi-cellphone-link
       Management Tools:
-        style: column
-        icon: mdi-toolbox
-      Developer:
         style: column
         icon: mdi-toolbox
