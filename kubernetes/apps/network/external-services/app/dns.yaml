@@ -39,6 +39,11 @@ metadata:
   name: &app adguard
   namespace: network
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/adguard-home.png
+    gethomepage.dev/name: Adguard
+    gethomepage.dev/group: Network Infrastructure
+    gethomepage.dev/description: DNS Adblocker
     external-dns.alpha.kubernetes.io/hostname: adguard.${SECRET_DOMAIN}
     # nginx.ingress.kubernetes.io/rewrite-target: /admin
   labels:
@@ -56,7 +61,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 80
+                  number: 3000
   tls:
     - hosts:
         - *host
