@@ -74,6 +74,18 @@ data:
         #     href: https://immich.${SECRET_DOMAIN}
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/immich.png
 
+    - Compute/Storage Infrastructure:
+        - Proxmox (Dashy):
+            href: https://dashy.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
+            name: Proxmox (Dashy)
+            group: Compute/Storage Infrastructure
+            description: Compute hypervisor
+            widget:
+              type: proxmox
+              username: "{{HOMEPAGE_VAR_PROXMOX_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_PROXMOX_PASSWORD}}"
+
     - Network Infrastructure:
         - Opnsense:
             description: Router & Firewall Appliance
@@ -84,6 +96,15 @@ data:
               url: https://gateway.${SECRET_DOMAIN}
               username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
               password: {{HOMEPAGE_VAR_OPNSENSE_API_KEY}}
+        - Adguard:
+            description: DNS Adblocker
+            href: https://adguard.${SECRET_DOMAIN}
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/adguard-home.png
+            widget:
+              type: adguard
+              url: https://adguard.${SECRET_DOMAIN}
+              username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"              
         - Switch:
             description: Managed switch
             href: https://switch.${SECRET_DOMAIN}

@@ -39,14 +39,14 @@ metadata:
   name: &app adguard
   namespace: network
   annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/adguard-home.png
-    gethomepage.dev/name: Adguard
-    gethomepage.dev/group: Network Infrastructure
-    gethomepage.dev/description: DNS Adblocker
-    gethomepage.dev/widget.type: adguard
-    gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
-    gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
+    # gethomepage.dev/enabled: "true"
+    # gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/adguard-home.png
+    # gethomepage.dev/name: Adguard
+    # gethomepage.dev/group: Network Infrastructure
+    # gethomepage.dev/description: DNS Adblocker
+    # gethomepage.dev/widget.type: adguard
+    # gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
+    # gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
     external-dns.alpha.kubernetes.io/hostname: adguard.${SECRET_DOMAIN}
     # nginx.ingress.kubernetes.io/rewrite-target: /admin
   labels:
