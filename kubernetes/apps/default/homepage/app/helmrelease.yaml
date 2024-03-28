@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      dnsConfig: 
+        searches:
+          - svc.cluster.local
     controllers:
       main:
         replicas: 1
@@ -42,10 +46,6 @@ spec:
             envFrom:
               - secretRef:
                   name: homepage-secret
-            defaultPodOptions:
-              dnsConfig: 
-                searches:
-                  - svc.cluster.local
             resources:
               requests:
                 cpu: 15m
@@ -53,13 +53,13 @@ spec:
               limits:
                 memory: 2G
     service:
-      app:
+      main:
         controller: *app
         ports:
           http:
             port: 3000
     ingress:
-      app:
+      main:
         enabled: true
         className: internal
         hosts:
@@ -68,7 +68,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: app
+                  name: main
                   port: http
         tls:
           - hosts:
