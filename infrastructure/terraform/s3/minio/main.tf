@@ -4,7 +4,8 @@ locals {
     "thanos",
     "volsync",
     "postgresql",
-    "tagspaces"
+    "tagspaces",
+    "outline"
   ]
 }
 
