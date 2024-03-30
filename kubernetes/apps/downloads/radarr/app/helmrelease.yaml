@@ -45,8 +45,8 @@ spec:
               tag: 5.2.2.8288@sha256:a96055f121ec26d3165a954948bcd888dedd7da55fa7a67838c64dd4bda9e15d
             env:
               TZ: ${TIMEZONE}
-              # RADARR__AUTHENTICATION_METHOD: External
-              # RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
+              RADARR__AUTHENTICATION_METHOD: External
+              RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               RADARR__INSTANCE_NAME: Radarr
               RADARR__PORT: &port 80
               RADARR__LOG_LEVEL: info
