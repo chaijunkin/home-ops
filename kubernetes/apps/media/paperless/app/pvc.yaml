@@ -47,4 +47,4 @@ spec:
   resources:
     requests:
       storage: 1Mi
-  storageClassName: "local-hostpath"
+  storageClassName: "openebs-hostpath"
