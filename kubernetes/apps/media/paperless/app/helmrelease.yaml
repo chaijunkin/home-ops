@@ -56,9 +56,9 @@ spec:
 
               # Configure folders
               PAPERLESS_CONSUMPTION_DIR: /data/apps/consume
-              PAPERLESS_DATA_DIR: /data/local/data
+              PAPERLESS_DATA_DIR: /data/local/Documents
               PAPERLESS_EXPORT_DIR: /data/apps/export
-              PAPERLESS_MEDIA_ROOT: /data/local/media
+              PAPERLESS_MEDIA_ROOT: /data/local/
 
               # Configure folder importer
               PAPERLESS_CONSUMER_POLLING: "60"

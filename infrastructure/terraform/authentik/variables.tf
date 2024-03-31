@@ -16,17 +16,17 @@ variable "cluster_domain" {
 #   sensitive   = true
 # }
 
-variable "grafana_id" {
-  type        = string
-  description = "Grafana Client ID"
-  sensitive   = true
-}
+# variable "grafana_id" {
+#   type        = string
+#   description = "Grafana Client ID"
+#   sensitive   = true
+# }
 
-variable "grafana_secret" {
-  type        = string
-  description = "Grafana Client Secret"
-  sensitive   = true
-}
+# variable "grafana_secret" {
+#   type        = string
+#   description = "Grafana Client Secret"
+#   sensitive   = true
+# }
 
 # variable "paperless_id" {
 #   type        = string
