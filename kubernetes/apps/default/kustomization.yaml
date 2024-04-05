@@ -15,3 +15,4 @@ resources:
   - ./miniflux/ks.yaml
   # - ./odoo/ks.yaml
   - ./privatebin/ks.yaml
+  - ./wikijs/ks.yaml
