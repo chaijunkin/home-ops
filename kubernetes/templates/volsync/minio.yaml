@@ -56,7 +56,7 @@
 #     manual: restore-once
 #   restic:
 #     repository: "${APP}-volsync"
-#     copyMethod: "${VOLSYNC_COPYMETHOD:-Clone}"
+#     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
 #     # volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath}"
 #     # cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
 #     # cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
@@ -78,7 +78,7 @@
 #   trigger:
 #     schedule: "0 * * * *"
 #   restic:
-#     copyMethod: "${VOLSYNC_COPYMETHOD:-Clone}"
+#     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
 #     pruneIntervalDays: 10
 #     repository: "${APP}-volsync"
 #     # volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath}"
