@@ -3,20 +3,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: self-hosted-wikijs
+  name: wikijs
   namespace: flux-system
 spec:
-  targetNamespace: self-hosted
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: &app wikijs
-  path: ./kubernetes/main/apps/self-hosted/wikijs/app
+  path: ./kubernetes/apps/default/wikijs/app
   sourceRef:
     kind: GitRepository
     name: homelab-kubernetes
   dependsOn:
-    - name: dbms-cloudnative-pg
-    - name: security-external-secrets-stores
+    - name: cloudnative-pg
+    - name: external-secrets-stores
   prune: true
   wait: false
   interval: 30m
