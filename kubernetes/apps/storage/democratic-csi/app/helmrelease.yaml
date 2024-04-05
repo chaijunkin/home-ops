@@ -50,8 +50,7 @@ spec:
           - --feature-gates=Topology=true
           - --strict-topology=true
           - --enable-capacity=true
-          - --capacity-ownerref-level=1
-          
+          - --capacity-ownerref-level=1          
       externalResizer:
         enabled: false
       externalAttacher:
