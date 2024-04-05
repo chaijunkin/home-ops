@@ -77,7 +77,11 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns/is-public: "true"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Wikijs
+          gethomepage.dev/description: wiki services
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/wikijs.png
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
           - host: "wiki.${SECRET_DOMAIN}"
