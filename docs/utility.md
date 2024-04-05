@@ -1,0 +1,1 @@
+kubectl get volumesnapshotcontents.snapshot.storage.k8s.io --all-namespaces -o json | jq 'del(.items[] | .metadata.finalizers)' | kubectl replace -f -
