@@ -88,9 +88,9 @@ spec:
     storageClassName: "local-hostpath"
     accessModes: ["ReadWriteOnce"]
     moverSecurityContext:
-      runAsUser: "0"
-      runAsGroup: "0"
-      fsGroup: "0"
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
     retain:
       hourly: 24
       daily: 10
