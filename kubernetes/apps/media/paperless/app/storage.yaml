@@ -69,3 +69,29 @@ spec:
       fsGroup: 0
     capacity: "2G"
 ---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: "paperless"
+spec:
+  sourcePVC: "paperless"
+  trigger:
+    schedule: "0 * * * *"
+  restic:
+    copyMethod: "Clone"
+    pruneIntervalDays: 10
+    repository: "paperless-volsync"
+    volumeSnapshotClassName: "local-hostpath"
+    cacheCapacity: "8Gi"
+    cacheStorageClassName: "local-hostpath"
+    cacheAccessModes: ["ReadWriteOnce"]
+    storageClassName: "local-hostpath"
+    accessModes: ["ReadWriteOnce"]
+    moverSecurityContext:
+      runAsUser: "0"
+      runAsGroup: "0"
+      fsGroup: "0"
+    retain:
+      hourly: 24
+      daily: 10
+      weekly: 5
