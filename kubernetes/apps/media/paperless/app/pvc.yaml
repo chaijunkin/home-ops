@@ -43,11 +43,11 @@ metadata:
   namespace: media
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   dataSourceRef:
     kind: ReplicationDestination
     apiGroup: volsync.backube
-    name: "${APP}-bootstrap"
+    name: "paperless-bootstrap"
   resources:
     requests:
       storage: 1Mi
