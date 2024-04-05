@@ -1,0 +1,71 @@
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: "paperless-volsync"
+spec:
+  target:
+    deletionPolicy: Delete
+    template:
+      type: Opaque
+      data:
+        RESTIC_REPOSITORY: "{{ .REPOSITORY_TEMPLATE }}/paperless"
+        RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
+        AWS_ACCESS_KEY_ID: "{{ .AWS_ACCESS_KEY_ID }}"
+        AWS_SECRET_ACCESS_KEY: "{{ .AWS_SECRET_ACCESS_KEY }}"
+  data:
+    - secretKey: REPOSITORY_TEMPLATE
+      sourceRef:
+        storeRef:
+          name: bitwarden-fields
+          kind: ClusterSecretStore
+      remoteRef:
+        key: 75d679a4-15fc-474b-a8db-aab74209f0ff
+        property: restic_endpoint
+    - secretKey: RESTIC_PASSWORD
+      sourceRef:
+        storeRef:
+          name: bitwarden-fields
+          kind: ClusterSecretStore
+      remoteRef:
+        key: 75d679a4-15fc-474b-a8db-aab74209f0ff
+        property: restic_password
+    - secretKey: AWS_ACCESS_KEY_ID
+      sourceRef:
+        storeRef:
+          name: bitwarden-fields
+          kind: ClusterSecretStore
+      remoteRef:
+        key: d10ce5c3-ce4b-4f22-9430-b962390e0cba
+        property: owner_access_key
+    - secretKey: AWS_SECRET_ACCESS_KEY
+      sourceRef:
+        storeRef:
+          name: bitwarden-fields
+          kind: ClusterSecretStore
+      remoteRef:
+        key: d10ce5c3-ce4b-4f22-9430-b962390e0cba
+        property: owner_secret_key
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "paperless-bootstrap"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: "paperless-volsync"
+    copyMethod: "Clone"
+    volumeSnapshotClassName: "local-hostpath"
+    cacheStorageClassName: "local-hostpath"
+    cacheAccessModes: ["ReadWriteOnce"]
+    cacheCapacity: "8Gi"
+    storageClassName: "local-hostpath"
+    accessModes: ["ReadWriteOnce"]
+    moverSecurityContext:
+      runAsUser: 0  # RISK!
+      runAsGroup: 0
+      fsGroup: 0
+    capacity: "2G"
+---
