@@ -12,7 +12,7 @@ spec:
       version: 3.1.0
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: bjw-s
         namespace: flux-system
       interval: 15m
   maxHistory: 3
@@ -64,16 +64,6 @@ spec:
             port: 3000
     ingress:
       main:
-        enabled: true
-        className: internal
-        hosts:
-          - host: "wiki.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
-      external:
         enabled: true
         className: external
         annotations:
