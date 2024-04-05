@@ -6,8 +6,8 @@ resources:
   # - ./configmap.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  # - ./pvc.yaml
-  - ../../../../templates/volsync
+  - ./pvc.yaml
+  # - ../../../../templates/volsync
 labels:
   - pairs:
       app.kubernetes.io/name: paperless

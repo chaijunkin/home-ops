@@ -35,16 +35,16 @@
 #     requests:
 #       storage: 1Mi
 #   storageClassName: "smb-paperless"
-# ---
-# kind: PersistentVolumeClaim
-# apiVersion: v1
-# metadata:
-#   name: paperless
-#   namespace: media
-# spec:
-#   accessModes:
-#     - ReadWriteMany
-#   resources:
-#     requests:
-#       storage: 1Mi
-#   storageClassName: "openebs-hostpath"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: paperless
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: "local-hostpath"
