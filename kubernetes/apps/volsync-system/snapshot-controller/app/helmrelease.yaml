@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: snapshot-controller
-      version: 2.2.0
+      version: 2.2.1
       sourceRef:
         kind: HelmRepository
         name: piraeus
@@ -27,13 +27,18 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    snapshot-controller:
-      volumeSnapshotClasses:
-        - name: local-hostpath
-          driver: org.democratic-csi.local-hostpath
-          annotations:
-            snapshot.storage.kubernetes.io/is-default-class: "true"
-          deletionPolicy: Delete
-
+    controller:
+      args:
+        enableDistributedSnapshotting: true
       serviceMonitor:
         create: true
+    # snapshot-controller:
+    #   volumeSnapshotClasses:
+    #     - name: local-hostpath
+    #       driver: org.democratic-csi.local-hostpath
+    #       annotations:
+    #         snapshot.storage.kubernetes.io/is-default-class: "true"
+    #       deletionPolicy: Delete
+
+      # serviceMonitor:
+      #   create: true
