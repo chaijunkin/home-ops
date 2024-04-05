@@ -13,7 +13,7 @@ spec:
   path: ./kubernetes/apps/default/wikijs/app
   sourceRef:
     kind: GitRepository
-    name: homelab-kubernetes
+    name: home-kubernetes
   dependsOn:
     - name: cloudnative-pg
     - name: external-secrets-stores
