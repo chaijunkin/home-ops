@@ -84,7 +84,7 @@ spec:
     persistence:
       config:
         existingClaim: *app
-      tmp:
-        type: emptyDir
-      add-ons:
-        type: emptyDir
+      # tmp:
+      #   type: emptyDir
+      # add-ons:
+      #   type: emptyDir
