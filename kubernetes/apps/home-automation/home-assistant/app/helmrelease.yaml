@@ -32,7 +32,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/chaijunkin/home-assistant
               tag: 2024.4.1@sha256:d4301c0376f68b6330e13b2b264619c3e81a1c771f3ab9425395d14283c202aa
@@ -58,7 +58,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.21.1
+              tag: 4.22.1
             env:
               TZ: ${TIMEZONE}
             probes: *probes
@@ -69,8 +69,6 @@ spec:
               - "/config/.vscode"
               - --extensions-dir
               - "/config/.vscode"
-              - --port
-              - "80"
               - "/config"
             volumeMounts:
             - name: config
@@ -86,7 +84,8 @@ spec:
               limits:
                 memory: 512Mi
     service:
-      main:
+      app:
+        controller: home-assistant
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "10.10.30.12"
@@ -99,9 +98,9 @@ spec:
         ports:
           http:
             enabled: true
-            port: 80
+            port: 8080
     ingress:
-      main:
+      app:
         enabled: true
         className: external
         annotations:
@@ -119,7 +118,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  name: app
                   port: http
         tls:
           - hosts:
