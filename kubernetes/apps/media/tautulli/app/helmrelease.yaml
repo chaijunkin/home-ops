@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             image:
-              repository:  ghcr.io/joryirving/tautulli
-              tag: 2.13.4@sha256:62569d9d27c007c0788ff3edf8331604dfcf5246094827d885b72c32f36ed85d
+              repository:  ghcr.io/chaijunkin/tautulli
+              tag: 2.13.4@sha256:0a723e71f6267cf333232e1ee8402510d60dcf2c25957daea797205bdf450063
             env:
               TZ: ${TIMEZONE}
             resources:
@@ -42,11 +42,15 @@ spec:
                 memory: 100M
               limits:
                 memory: 250M
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
+            runAsUser: 1002
+            runAsGroup: 1002
+            fsGroup: 1002
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -80,3 +84,7 @@ spec:
     persistence:
       config:
         existingClaim: *app
+      tmp:
+        type: emptyDir
+      add-ons:
+        type: emptyDir
