@@ -128,7 +128,7 @@ spec:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
         property: r2_url
     - secretKey: RESTIC_PASSWORD
       sourceRef:
@@ -136,7 +136,7 @@ spec:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
         property: r2_token
     - secretKey: R2_ACCESS_KEY_ID
       sourceRef:
@@ -144,7 +144,7 @@ spec:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
         property: r2_access_key
     - secretKey: R2_SECRET_ACCESS_KEY
       sourceRef:
@@ -152,7 +152,7 @@ spec:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
         property: r2_access_secret
 ---
 apiVersion: volsync.backube/v1alpha1
