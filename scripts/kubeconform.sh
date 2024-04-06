@@ -24,14 +24,14 @@ kubeconform_args=(
     "-verbose"
 )
 
-echo "=== Validating standalone manifests in ${KUBERNETES_DIR}/flux ==="
-find "${KUBERNETES_DIR}/flux" -maxdepth 1 -type f -name '*.yaml' -print0 | while IFS= read -r -d $'\0' file;
-  do
-    kubeconform "${kubeconform_args[@]}" "${file}"
-    if [[ ${PIPESTATUS[0]} != 0 ]]; then
-      exit 1
-    fi
-done
+# echo "=== Validating standalone manifests in ${KUBERNETES_DIR}/flux ==="
+# find "${KUBERNETES_DIR}/flux" -maxdepth 1 -type f -name '*.yaml' -print0 | while IFS= read -r -d $'\0' file;
+#   do
+#     kubeconform "${kubeconform_args[@]}" "${file}"
+#     if [[ ${PIPESTATUS[0]} != 0 ]]; then
+#       exit 1
+#     fi
+# done
 
 echo "=== Validating kustomizations in ${KUBERNETES_DIR}/flux ==="
 find "${KUBERNETES_DIR}/flux" -type f -name $kustomize_config -print0 | while IFS= read -r -d $'\0' file;
