@@ -33,8 +33,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/sonarr
-              tag: 4.0.2.1183@sha256:fee81605e8afb40266acaf2a2026b0627e955a225dac431decc6c871d4aaf341
+              repository: ghcr.io/chaijunkin/sonarr
+              tag: 4.0.3.1413@sha256:a132b1f8565c9a0d7dd1b801a0f0aac2f2b2c9cc1ede2c91d0875b692db8d269
             env:
               TZ: ${TIMEZONE}
               SONARR__AUTHENTICATION_METHOD: External

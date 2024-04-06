@@ -41,7 +41,7 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/lidarr
+              repository: ghcr.io/chaijunkin/lidarr
               tag: 2.1.7.4030
             env:
               TZ: ${TIMEZONE}

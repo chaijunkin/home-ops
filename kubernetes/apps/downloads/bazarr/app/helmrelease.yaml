@@ -39,8 +39,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/bazarr
-              tag: 1.4.2@sha256:0088ce11a9e9f675ee1d1d0fc368647bae6f0fdfe12b6f4938c9fe75ed0a794b
+              repository: ghcr.io/chaijunkin/bazarr
+              tag: 1.4.2@sha256:b66a8276a88182ed0eab533ba99569893607ec2eb11c2d70ad0e60cea9dfd0d4
             env:
               TZ: ${TIMEZONE}
             envFrom:

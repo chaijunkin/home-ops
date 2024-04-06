@@ -41,8 +41,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.15.0.4361@sha256:0b6b55c6b230da58c73dce53976c3ff866cab099eefc9d5a1e85bf6b1c610ae1
+              repository: ghcr.io/chaijunkin/prowlarr
+              tag: 1.15.0.4361@sha256:3ba1631c3a0fe038e21966ee922d3268c3afe4a53c14a90ecb0e8761c26e1e87
             env:
               TZ: ${TIMEZONE}
               PROWLARR__INSTANCE_NAME: Prowlarr
