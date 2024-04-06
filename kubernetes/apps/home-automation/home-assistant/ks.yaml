@@ -7,9 +7,6 @@ metadata:
   namespace: flux-system
 spec:
   targetNamespace: home-automation
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   interval: 30m
   retryInterval: 1m
   timeout: 5m
