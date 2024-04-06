@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
-              tag: 4.6.3@sha256:71c61643256f5c2c2a488d96728f6410de4b0184328b5112c0b3cb900eee558c
+              tag: 4.6.4@sha256:71a016611dfdf20f5bb44dabf3c91e6eddafa3f57f8e62a15111d383a2d8f556
             env:
               TZ: ${TIMEZONE}
               QBITTORRENT__PORT: &port 8080
