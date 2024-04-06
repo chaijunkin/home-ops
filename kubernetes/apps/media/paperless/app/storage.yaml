@@ -75,6 +75,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: "paperless"
+  namespace: media
 spec:
   sourcePVC: "paperless"
   trigger:
@@ -108,6 +109,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: "paperless-volsync-r2"
+  namespace: media
 spec:
   secretStoreRef:
     name: bitwarden-secrets-manager
@@ -159,6 +161,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: "paperless-r2"
+  namespace: media
 spec:
   sourcePVC: "paperless"
   trigger:
