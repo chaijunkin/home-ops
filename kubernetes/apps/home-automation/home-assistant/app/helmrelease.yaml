@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.1.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -21,11 +21,14 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
+  dependsOn:
+    - name: volsync
+      namespace: volsync-system
   uninstall:
     keepHistory: false
   values:
     controllers:
-      main:
+      home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -131,9 +134,14 @@ spec:
               - *host
     persistence:
       config:
-        enabled: true
         existingClaim: *app
-        globalMounts:
-          - path: /config
       tmp:
         type: emptyDir
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      tts:
+        type: emptyDir
+        globalMounts:
+          - path: /config/tts
