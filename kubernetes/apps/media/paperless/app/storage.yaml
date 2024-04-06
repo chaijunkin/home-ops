@@ -138,7 +138,7 @@ spec:
       remoteRef:
         key: b911db44-1713-44eb-9453-493e2b81b501
         property: r2_token
-    - secretKey: AWS_ACCESS_KEY_ID
+    - secretKey: R2_ACCESS_KEY_ID
       sourceRef:
         storeRef:
           name: bitwarden-fields
@@ -146,7 +146,7 @@ spec:
       remoteRef:
         key: b911db44-1713-44eb-9453-493e2b81b501
         property: r2_access_key
-    - secretKey: AWS_SECRET_ACCESS_KEY
+    - secretKey: R2_SECRET_ACCESS_KEY
       sourceRef:
         storeRef:
           name: bitwarden-fields
