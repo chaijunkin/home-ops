@@ -6,10 +6,10 @@ resources:
   - ./namespace.yaml
   - ./pvc.yaml
   # Flux-Kustomizations
-  # - ./bazarr/ks.yaml
-  # - ./lidarr/ks.yaml
-  # - ./prowlarr/ks.yaml
+  - ./bazarr/ks.yaml
+  - ./lidarr/ks.yaml
+  - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
-  # - ./radarr/ks.yaml
-  # - ./readarr/ks.yaml
-  # - ./sonarr/ks.yaml
+  - ./radarr/ks.yaml
+  - ./readarr/ks.yaml
+  - ./sonarr/ks.yaml
