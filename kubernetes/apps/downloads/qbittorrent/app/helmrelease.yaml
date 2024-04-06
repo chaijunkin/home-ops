@@ -30,27 +30,27 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          gluetun:
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: v3.38.0
-            env:
-              VPN_SERVICE_PROVIDER: custom
-              VPN_TYPE: wireguard
-              VPN_INTERFACE: wg0
-              VPN_ENDPOINT_PORT: 51820
-              VPN_PORT_FORWARDING: on
-              VPN_PORT_FORWARDING_PROVIDER: protonvpn
-              FIREWALL_INPUT_PORTS: 8080
-              FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12,10.69.0.0/16 # Allow access to k8s subnets
-            envFrom:
-              - secretRef:
-                  name: qbittorrent-secret
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-              allowPrivilegeEscalation: true
+          # gluetun:
+          #   image:
+          #     repository: ghcr.io/qdm12/gluetun
+          #     tag: v3.38.0
+          #   env:
+          #     VPN_SERVICE_PROVIDER: custom
+          #     VPN_TYPE: wireguard
+          #     VPN_INTERFACE: wg0
+          #     VPN_ENDPOINT_PORT: 51820
+          #     VPN_PORT_FORWARDING: on
+          #     VPN_PORT_FORWARDING_PROVIDER: protonvpn
+          #     FIREWALL_INPUT_PORTS: 8080
+          #     FIREWALL_OUTBOUND_SUBNETS: 10.96.0.0/12,10.69.0.0/16 # Allow access to k8s subnets
+          #   envFrom:
+          #     - secretRef:
+          #         name: qbittorrent-secret
+          #   securityContext:
+          #     capabilities:
+          #       add:
+          #         - NET_ADMIN
+          #     allowPrivilegeEscalation: true
           app:
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
