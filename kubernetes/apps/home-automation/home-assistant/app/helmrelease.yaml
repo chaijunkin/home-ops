@@ -31,6 +31,12 @@ spec:
       home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
+            # fsGroupChangePolicy: OnRootMismatch
         containers:
           app:
             image:
@@ -55,11 +61,6 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
-              fsGroup: 0
-              fsGroupChangePolicy: OnRootMismatch
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
@@ -75,11 +76,6 @@ spec:
               - --extensions-dir
               - "/config/.vscode"
               - "/config"
-            securityContext:
-              runAsUser: 0
-              runAsGroup: 0
-              fsGroup: 0
-              fsGroupChangePolicy: OnRootMismatch
             resources:
               requests:
                 cpu: 10m
