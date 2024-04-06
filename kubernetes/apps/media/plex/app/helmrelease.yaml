@@ -34,8 +34,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/plex
-              tag: 1.40.1.8227-c0dd5a73e@sha256:3187f7b1b7cbaf93d938b1710fe43cf3c9b86835b00176984309188f0a3930d0
+              repository: ghcr.io/chaijunkin/plex
+              tag: 1.40.1.8227-c0dd5a73e@sha256:de03f023ca6c12a6aaf7b1fd3785b800662602416e328291756ee8a110c792b7
             env:
               TZ: ${TIMEZONE}
               PLEX_ADVERTISE_URL: https://plex.${SECRET_DOMAIN}:443,https://10.10.30.14:32400
@@ -59,10 +59,10 @@ spec:
               readiness: *probes
               startup:
                 enabled: false
-            # securityContext:
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities: { drop: ["ALL"] }
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 100m
@@ -73,11 +73,11 @@ spec:
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: "true"
           securityContext:
-            runAsUser: 0
-            runAsGroup: 0
-            fsGroup: 0
-            # fsGroupChangePolicy: OnRootMismatch
-            # supplementalGroups: [44, 10000, 109]
+            runAsUser: 1004
+            runAsGroup: 1004
+            fsGroup: 1004
+            fsGroupChangePolicy: OnRootMismatch
+            supplementalGroups: [44, 10000]
     service:
       app:
         controller: *app
