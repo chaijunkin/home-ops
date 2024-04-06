@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/joryirving/qbittorrent
-              tag: 4.6.3@sha256:e4d0cbdc8a130cc7f2644c33a0fb2052b048b82a8e9cf8fbe6f27ef08822fc70
+              repository: ghcr.io/chaijunkin/qbittorrent
+              tag: 4.6.3@sha256:71c61643256f5c2c2a488d96728f6410de4b0184328b5112c0b3cb900eee558c
             env:
               TZ: ${TIMEZONE}
               QBITTORRENT__PORT: &port 8080
@@ -49,7 +49,7 @@ spec:
           #     repository: ghcr.io/buroa/qbittools
           #     tag: v0.11.0
           #   args: ["reannounce", "-s", "localhost", "-p", "8080"]
-        # pod:
+        pod:
         #   affinity:
         #     podAntiAffinity:
         #       requiredDuringSchedulingIgnoredDuringExecution:
@@ -59,11 +59,11 @@ spec:
         #                 operator: In
         #                 values: ["sabnzbd"]
         #           topologyKey: kubernetes.io/hostname
-          # securityContext:
-          #   runAsUser: 568
-          #   runAsGroup: 568
-          #   fsGroup: 568
-          #   fsGroupChangePolicy: OnRootMismatch
+          securityContext:
+            runAsUser: 1002
+            runAsGroup: 1002
+            fsGroup: 1002
+            fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
