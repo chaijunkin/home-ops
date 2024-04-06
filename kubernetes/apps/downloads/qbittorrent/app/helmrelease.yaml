@@ -50,7 +50,7 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
           app:
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
