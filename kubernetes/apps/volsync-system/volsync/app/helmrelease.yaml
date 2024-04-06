@@ -30,8 +30,8 @@ spec:
   values:
     manageCRDs: true
     image: &image
-      repository: ghcr.io/joryirving/volsync
-      tag: 0.8.0
+      repository: ghcr.io/chaijunkin/volsync
+      tag: 0.8
     restic:
       <<: *image
     metrics:

@@ -64,9 +64,9 @@ spec:
     storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:-0}"  # RISK!
-      runAsGroup: "${VOLSYNC_GID:-0}"
-      fsGroup: "${VOLSYNC_GID:-0}"
+      runAsUser: "${VOLSYNC_UID:-1002}"  # RISK!
+      runAsGroup: "${VOLSYNC_GID:-1002}"
+      fsGroup: "${VOLSYNC_GID:-1002}"
     capacity: "${VOLSYNC_CAPACITY}"
 ---
 apiVersion: volsync.backube/v1alpha1
@@ -88,9 +88,9 @@ spec:
     storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:-568}"
-      runAsGroup: "${VOLSYNC_GID:-568}"
-      fsGroup: "${VOLSYNC_GID:-568}"
+      runAsUser: "${VOLSYNC_UID:-1002}"
+      runAsGroup: "${VOLSYNC_GID:-1002}"
+      fsGroup: "${VOLSYNC_GID:-1002}"
     retain:
       hourly: 24
       daily: 10
