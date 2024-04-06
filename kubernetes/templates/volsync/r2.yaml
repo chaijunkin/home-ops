@@ -1,18 +1,21 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: "${APP}-volsync-r2"
+  namespace: media
 spec:
   target:
     deletionPolicy: Delete
+    name: "${APP}-volsync-r2"
     template:
-      type: Opaque
+      engineVersion: v2
       data:
         RESTIC_REPOSITORY: "{{ .REPOSITORY_TEMPLATE }}/${APP}"
         RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
-        AWS_ACCESS_KEY_ID: "{{ .AWS_ACCESS_KEY_ID }}"
-        AWS_SECRET_ACCESS_KEY: "{{ .AWS_SECRET_ACCESS_KEY }}"
+        AWS_ACCESS_KEY_ID: "{{ .R2_ACCESS_KEY_ID }}"
+        AWS_SECRET_ACCESS_KEY: "{{ .R2_SECRET_ACCESS_KEY }}"
   data:
     - secretKey: REPOSITORY_TEMPLATE
       sourceRef:
@@ -20,32 +23,32 @@ spec:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: 75d679a4-15fc-474b-a8db-aab74209f0ff
-        property: restic_endpoint
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
+        property: r2_url
     - secretKey: RESTIC_PASSWORD
       sourceRef:
         storeRef:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: 75d679a4-15fc-474b-a8db-aab74209f0ff
-        property: restic_password
-    - secretKey: AWS_ACCESS_KEY_ID
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
+        property: r2_token
+    - secretKey: R2_ACCESS_KEY_ID
       sourceRef:
         storeRef:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: d10ce5c3-ce4b-4f22-9430-b962390e0cba
-        property: owner_access_key
-    - secretKey: AWS_SECRET_ACCESS_KEY
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
+        property: r2_access_key
+    - secretKey: R2_SECRET_ACCESS_KEY
       sourceRef:
         storeRef:
           name: bitwarden-fields
           kind: ClusterSecretStore
       remoteRef:
-        key: d10ce5c3-ce4b-4f22-9430-b962390e0cba
-        property: owner_secret_key
+        key: cb424eb9-ca32-4608-93ef-63e28c3f531e
+        property: r2_access_secret
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
