@@ -132,7 +132,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: homeassistant
+        existingClaim: *app
         globalMounts:
           - path: /config
       tmp:
