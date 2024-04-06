@@ -20,7 +20,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: hass
-      # VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_CAPACITY: 5Gi
   # dependsOn:
   #   - name: cluster-apps-multus-config
   #   - name: cluster-apps-external-secrets-stores
