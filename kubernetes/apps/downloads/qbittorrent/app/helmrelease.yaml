@@ -46,11 +46,11 @@ spec:
             envFrom:
               - secretRef:
                   name: qbittorrent-secret
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-              allowPrivilegeEscalation: false
+            # securityContext:
+            #   capabilities:
+            #     add:
+            #       - NET_ADMIN
+            #   allowPrivilegeEscalation: false
           app:
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
