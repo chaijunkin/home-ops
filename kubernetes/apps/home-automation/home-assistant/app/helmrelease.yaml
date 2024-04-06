@@ -75,6 +75,11 @@ spec:
             volumeMounts:
             - name: config
               mountPath: /config
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
+              fsGroupChangePolicy: OnRootMismatch
             resources:
               requests:
                 cpu: 10m
