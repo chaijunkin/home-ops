@@ -95,7 +95,7 @@ spec:
               - *host
     persistence:
       config:
-        enabled: false
+        enabled: true
         existingClaim: *app
       media:
         existingClaim: pvc-smb-media
