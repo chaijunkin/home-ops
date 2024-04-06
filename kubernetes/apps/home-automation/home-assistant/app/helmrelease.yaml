@@ -85,7 +85,8 @@ spec:
                 memory: 512Mi
     service:
       app:
-        controller: home-assistant
+        controller: *app
+        nameOverride: *app
         type: LoadBalancer
         annotations:
           io.cilium/lb-ipam-ips: "10.10.30.12"
@@ -93,8 +94,8 @@ spec:
           http:
             port: 8123
       codeserver:
+        controller: *app
         type: ClusterIP
-        controller: main
         ports:
           http:
             enabled: true
