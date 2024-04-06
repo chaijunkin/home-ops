@@ -5,6 +5,3 @@ namespace: media
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-commonLabels:
-  app.kubernetes.io/name: nextcloud-redis
-  app.kubernetes.io/instance: nextcloud

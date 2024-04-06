@@ -5,6 +5,3 @@ namespace: media
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-commonLabels:
-  app.kubernetes.io/name: paperless-redis
-  app.kubernetes.io/instance: paperless

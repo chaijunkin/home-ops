@@ -7,6 +7,3 @@ resources:
   - ./helmrelease.yaml
   - ./helmrepository.yaml
   - ./pvc.yaml
-commonLabels:
-  app.kubernetes.io/name: nextcloud
-  app.kubernetes.io/instance: nextcloud

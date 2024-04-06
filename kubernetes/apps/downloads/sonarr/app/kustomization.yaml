@@ -6,6 +6,3 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ../../../../templates/volsync
-commonLabels:
-  app.kubernetes.io/name: sonarr
-  app.kubernetes.io/instance: sonarr

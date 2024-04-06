@@ -6,6 +6,3 @@ resources:
   - ./helmrelease.yaml
   # - ./pvc.yaml  ## SQLITEDB NOT SUPPORT BY SMB
   # - ./volsync.yaml
-commonLabels:
-  app.kubernetes.io/name: jellyfin
-  app.kubernetes.io/instance: jellyfin
