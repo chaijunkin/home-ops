@@ -94,88 +94,60 @@ spec:
       runAsGroup: 0
       fsGroup: 0
     retain:
-      hourly: 1
-      daily: 1
-      weekly: 1
-      monthly: 1
-      yearly: 1
-      # hourly: 24
-      # daily: 10
-      # weekly: 5
+      hourly: 24
+      daily: 10
+      weekly: 5
+# ---
+# apiVersion: storage.k8s.io/v1
+# kind: StorageClass
+# metadata:
+#   name: smb-paperless
+# provisioner: smb.csi.k8s.io
+# parameters:
+#   # On Windows, "*.default.svc.cluster.local" could not be recognized by csi-proxy
+#   source: //smb.${SECRET_DOMAIN}/services
+#   subDir: Apps/Paperless
+#   # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
+#   # with PV name under source
+#   csi.storage.k8s.io/provisioner-secret-name: "smb-secret"
+#   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
+#   csi.storage.k8s.io/node-stage-secret-name: "smb-secret"
+#   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+# volumeBindingMode: Immediate
+# mountOptions:
+#   - dir_mode=0777
+#   - file_mode=0777
+#   - noperm
+#   - mfsymlinks
+#   - cache=strict
+#   - noserverino  # required to prevent data corruption
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#   name: pvc-smb-paperless
+#   namespace: media
+# spec:
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: 1Mi
+#   storageClassName: "smb-paperless"
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
+kind: PersistentVolumeClaim
+apiVersion: v1
 metadata:
-  name: "paperless-volsync-r2"
+  name: paperless
+  namespace: media
 spec:
-  secretStoreRef:
-    name: bitwarden-secrets-manager
-    kind: ClusterSecretStore
-  target:
-    name: "paperless-volsync-r2"
-    template:
-      engineVersion: v2
-      data:
-        RESTIC_REPOSITORY: "{{ .REPOSITORY_TEMPLATE }}/paperless"
-        RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
-        AWS_ACCESS_KEY_ID: "{{ .R2_ACCESS_KEY_ID }}"
-        AWS_SECRET_ACCESS_KEY: "{{ .R2_SECRET_ACCESS_KEY }}"
-  data:
-    - secretKey: REPOSITORY_TEMPLATE
-      sourceRef:
-        storeRef:
-          name: bitwarden-fields
-          kind: ClusterSecretStore
-      remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
-        property: r2_url
-    - secretKey: RESTIC_PASSWORD
-      sourceRef:
-        storeRef:
-          name: bitwarden-fields
-          kind: ClusterSecretStore
-      remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
-        property: r2_token
-    - secretKey: AWS_ACCESS_KEY_ID
-      sourceRef:
-        storeRef:
-          name: bitwarden-fields
-          kind: ClusterSecretStore
-      remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
-        property: r2_access_key
-    - secretKey: AWS_SECRET_ACCESS_KEY
-      sourceRef:
-        storeRef:
-          name: bitwarden-fields
-          kind: ClusterSecretStore
-      remoteRef:
-        key: b911db44-1713-44eb-9453-493e2b81b501
-        property: r2_access_secret
----
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
-metadata:
-  name: "paperless-r2"
-spec:
-  sourcePVC: "paperless"
-  trigger:
-    schedule: "0 0 * * *"
-  restic:
-    copyMethod: "Snapshot"
-    pruneIntervalDays: 7
-    repository: "paperless-volsync-r2"
-    volumeSnapshotClassName: "local-hostpath"
-    cacheCapacity: "8Gi"
-    cacheStorageClassName: "local-hostpath"
-    cacheAccessModes: ["ReadWriteOnce"]
-    storageClassName: "local-hostpath"
-    accessModes: ["ReadWriteOnce"]
-    moverSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
-    retain:
-      hourly: 1
+  accessModes:
+    - ReadWriteOnce
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: "paperless-bootstrap"
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: "local-hostpath"

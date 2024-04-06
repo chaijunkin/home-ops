@@ -18,4 +18,3 @@ resources:
   - ./paperless/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
-  # # - ./wikijs/ks.yaml
