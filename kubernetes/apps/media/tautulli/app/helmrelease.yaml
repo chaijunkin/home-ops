@@ -42,16 +42,16 @@ spec:
                 memory: 100M
               limits:
                 memory: 250M
-            securityContext: &securityContext
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-        pod:
-          securityContext:
-            runAsUser: 1002
-            runAsGroup: 1002
-            fsGroup: 1002
-            fsGroupChangePolicy: OnRootMismatch
+            # securityContext: &securityContext
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: true
+            #   capabilities: { drop: ["ALL"] }
+        # pod:
+        #   securityContext:
+        #     runAsUser: 1002
+        #     runAsGroup: 1002
+        #     fsGroup: 1002
+        #     fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
