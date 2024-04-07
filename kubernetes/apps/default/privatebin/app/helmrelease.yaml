@@ -44,7 +44,7 @@ spec:
           gethomepage.dev/name: PrivateBin
           gethomepage.dev/description: Pastebin services
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/privatebin.png
-          helloworld: 123451234555
+          helloworld: "123451234555"
         ingressClassName: internal
         hosts:
           - host: &host "privatebin.${SECRET_DOMAIN}"
