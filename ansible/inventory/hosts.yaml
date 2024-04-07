@@ -6,8 +6,3 @@ kubernetes:
         "k3smaster01":
           ansible_user: "linux"
           ansible_host: "10.10.30.31"
-    workers:
-      hosts:
-        "k3sworker04":
-          ansible_user: "linux"
-          ansible_host: "10.10.30.34"

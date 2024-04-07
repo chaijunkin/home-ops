@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: "https://github.com/chaijunkin/k3s-home-ops"
+  url: "https://github.com/chaijunkin/home-ops"
   ref:
     branch: "main"
   ignore: |
