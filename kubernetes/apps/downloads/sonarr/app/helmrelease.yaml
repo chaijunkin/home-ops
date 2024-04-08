@@ -116,8 +116,8 @@ spec:
         existingClaim: *app
       tmp:
         type: emptyDir
-      data:
+      media:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-        - path: /data
+        - path: /media
