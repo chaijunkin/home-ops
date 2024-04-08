@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: ghcr.io/prymitive/karma
-              tag: v0.119
+              tag: v0.120
             env:
               CONFIG_FILE: &config /config/config.yaml
             resources:
