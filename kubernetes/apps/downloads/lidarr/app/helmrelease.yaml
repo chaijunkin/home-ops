@@ -114,6 +114,6 @@ spec:
       config:
         enabled: false
         existingClaim: *app
-      data:
+      media:
         enabled: true
         existingClaim: pvc-smb-media
