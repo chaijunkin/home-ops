@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
-              tag: 4.6.4@sha256:71a016611dfdf20f5bb44dabf3c91e6eddafa3f57f8e62a15111d383a2d8f556
+              tag: 4.6.4@sha256:e4364557daecfc87060a758436f97b0f72a8606f7a3ca8104850fe17f27174d7
             env:
               TZ: ${TIMEZONE}
               UMASK: "022"
