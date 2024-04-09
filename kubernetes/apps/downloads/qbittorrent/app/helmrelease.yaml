@@ -25,6 +25,11 @@ spec:
     - name: volsync
       namespace: volsync-system
   values:
+    defaultPodOptions:
+      labels: 
+        setGateway: "true"
+      annotations:
+        setGateway: "true"
     controllers:
       qbittorrent:
         annotations:
