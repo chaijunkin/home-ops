@@ -58,6 +58,11 @@ spec:
           #     repository: ghcr.io/buroa/qbittools
           #     tag: v0.11.0
           #   args: ["reannounce", "-s", "localhost", "-p", "8080"]
+            securityContext:
+              runAsUser: 1004
+              runAsGroup: 1004
+              fsGroup: 1004
+              fsGroupChangePolicy: OnRootMismatch
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
@@ -88,11 +93,6 @@ spec:
         #                 operator: In
         #                 values: ["sabnzbd"]
         #           topologyKey: kubernetes.io/hostname
-          securityContext:
-            runAsUser: 1004
-            runAsGroup: 1004
-            fsGroup: 1004
-            fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
