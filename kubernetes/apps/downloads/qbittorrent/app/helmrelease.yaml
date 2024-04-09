@@ -44,7 +44,7 @@ spec:
               TZ: ${TIMEZONE}
               UMASK: "022"
               QBITTORRENT__PORT: &port 8080
-              # QBITTORRENT__BT_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1:=51820}"
+              QBITTORRENT__BT_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1:=51820}"
               # QBT_BitTorrent__Session__Interface: vxlan0
               # QBT_BitTorrent__Session__InterfaceName: vxlan0
             resources:
@@ -79,9 +79,6 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
-        pod:
-          annotations:
-            setGateway: "true"
         #   affinity:
         #     podAntiAffinity:
         #       requiredDuringSchedulingIgnoredDuringExecution:
