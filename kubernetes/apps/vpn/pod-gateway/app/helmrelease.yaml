@@ -76,7 +76,7 @@ spec:
                 - namespaceSelector: {}
     publicPorts:
       - IP: 10
-        hostname: qbittorrent-vpn-0
+        hostname: qbittorrent
         ports:
           - port: 57683
             type: udp
@@ -85,8 +85,8 @@ spec:
     routed_namespaces: ["downloads"]
     settings:
       VPN_INTERFACE: *if
-      # VXLAN_ID: "43"
-      # VXLAN_IP_NETWORK: "172.16.1"
+      VXLAN_ID: "43"
+      VXLAN_IP_NETWORK: "172.16.1"
       VPN_BLOCK_OTHER_TRAFFIC: "true"
       VPN_TRAFFIC_PORT: *port
       DNS_LOCAL_CIDRS: "local"
