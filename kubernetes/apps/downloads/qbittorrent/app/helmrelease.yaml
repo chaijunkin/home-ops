@@ -44,9 +44,9 @@ spec:
               TZ: ${TIMEZONE}
               UMASK: "022"
               QBITTORRENT__PORT: &port 8080
-              QBITTORRENT__BT_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1:=57683}"
-              QBT_BitTorrent__Session__Interface: vxlan0
-              QBT_BitTorrent__Session__InterfaceName: vxlan0
+              # QBITTORRENT__BT_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1:=51820}"
+              # QBT_BitTorrent__Session__Interface: vxlan0
+              # QBT_BitTorrent__Session__InterfaceName: vxlan0
             resources:
               requests:
                 cpu: 25m
@@ -58,6 +58,27 @@ spec:
           #     repository: ghcr.io/buroa/qbittools
           #     tag: v0.11.0
           #   args: ["reannounce", "-s", "localhost", "-p", "8080"]
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.38.0
+            env:
+              VPN_SERVICE_PROVIDER: custom
+              VPN_TYPE: wireguard
+              VPN_INTERFACE: wg0
+              VPN_ENDPOINT_PORT: 51820
+              VPN_PORT_FORWARDING: on
+              VPN_PORT_FORWARDING_PROVIDER: protonvpn
+              FIREWALL_INPUT_PORTS: 8080
+              FIREWALL_OUTBOUND_SUBNETS: 10.69.0.0/16,10.96.0.0/16 # Allow access to k8s subnets
+            envFrom:
+              - secretRef:
+                  name: qbittorrent-secret
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+              allowPrivilegeEscalation: false
         pod:
           annotations:
             setGateway: "true"
