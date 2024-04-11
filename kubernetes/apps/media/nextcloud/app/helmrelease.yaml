@@ -28,9 +28,6 @@ spec:
     image:
       repository: public.ecr.aws/docker/library/nextcloud
       tag: 28.0.4-fpm-alpine
-      pullPolicy: IfNotPresent
-      # pullSecrets:
-      #   - myRegistrKeySecretName
     nginx:
       enabled: false
     lifecycle:
