@@ -87,8 +87,8 @@ spec:
           port: 465
           authtype: tls
       # securityContext:
-      #   runAsUser: 1000
-      #   runAsGroup: 1000
+      #   runAsUser: 1004
+      #   runAsGroup: 1004
       #   runAsNonRoot: true
       #   readOnlyRootFilesystem: false
     redis:
@@ -124,48 +124,6 @@ spec:
         nginx.ingress.kubernetes.io/proxy-buffering: "off"
         nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
         nginx.ingress.kubernetes.io/proxy-body-size: 4G
-        # nginx.ingress.kubernetes.io/server-snippet: |-
-        #   server_tokens off;
-        #   proxy_hide_header X-Powered-By;
-        
-        #   # Rule borrowed from .htaccess to handle Microsoft DAV clients
-        #   location = / {
-        #     if ( $http_user_agent ~ ^DavClnt ) {
-        #       return 302 /remote.php/webdav/$is_args$args;
-        #     }
-        #   }
-     
-
-
-        #   location ^~ /.well-known {
-          
-        #     # The rules in this block are an adaptation of the rules
-        #     # in .htaccess that concern /.well-known.
-
-        #     location = /.well-known/carddav { return 301 /remote.php/dav/; }
-        #     location = /.well-known/caldav  { return 301 /remote.php/dav/; }
-            
-        #     location /.well-known/acme-challenge    { try_files $uri $uri/ =404; }
-        #     location /.well-known/pki-validation    { try_files $uri $uri/ =404; }
-            
-        #     # Let Nextcloud's API for /.well-known URIs handle all other
-        #     # requests by passing them to the front-end controller.
-        #     return 301 /index.php$request_uri;
-        #   }
-          
-        #   # Rules borrowed from .htaccess to hide certain paths from clients
-        #   location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
-        #     deny all;
-        #   }
-        #   location ~ ^/(?:autotest|occ|issue|indie|db_|console) {
-        #     deny all;
-        #   }
-
-        #   location = /robots.txt {
-        #       allow all;
-        #       log_not_found off;
-        #       access_log off;
-        #   }
         nginx.ingress.kubernetes.io/server-snippet: |-
           server_tokens off;
           proxy_hide_header X-Powered-By;
@@ -205,3 +163,11 @@ spec:
       enabled: false
     readinessProbe:
       enabled: false
+    # this seems to be required for nextcloud initialization which takes a long time
+    startupProbe:
+      enabled: true
+      initialDelaySeconds: 10
+      periodSeconds: 20
+      timeoutSeconds: 5
+      failureThreshold: 30
+      successThreshold: 1
