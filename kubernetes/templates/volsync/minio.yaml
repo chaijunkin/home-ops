@@ -64,7 +64,7 @@ spec:
     storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:-1002}"  # RISK!
+      runAsUser: "${VOLSYNC_UID:-1002}"
       runAsGroup: "${VOLSYNC_GID:-1002}"
       fsGroup: "${VOLSYNC_GID:-1002}"
     capacity: "${VOLSYNC_CAPACITY}"
