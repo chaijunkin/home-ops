@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: 4.5.2
+      version: 4.6.5
       sourceRef:
         kind: HelmRepository
         name: nextcloud
@@ -34,7 +34,7 @@ spec:
     nginx:
       enabled: false
     lifecycle:
-      postStartCommand: ["/bin/sh", "-c", "echo \"ServerName drive.cloudjur.com\" | tee -a /etc/apache2/apache2.conf"]
+      postStartCommand: ["/bin/sh", "-c", "echo \"ServerName drive.${SECRET_DOMAIN}\" | tee -a /etc/apache2/apache2.conf"]
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
 
@@ -75,15 +75,9 @@ spec:
         smtpPasswordKey: SMTP_PASSWORD
       extraEnv:
         - name: REDIS_HOST
-          value: nextcloud-redis.media.svc.cluster.local
+          value: dragonfly.database.svc.cluster.local
         - name: REDIS_HOST_PORT
           value: "6379"
-        - name: REDIS_HOST_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: *secret
-              key: NEXTCLOUD_REDIS_PASSWORD
-      
       mail:
         enabled: true
         fromAddress: apphub
@@ -91,10 +85,10 @@ spec:
         smtp:
           port: 465
           authtype: tls
-      # securityContext:
-      #   runAsUser: 1000
-      #   runAsGroup: 1000
-      #   runAsNonRoot: true
+      securityContext:
+        runAsUser: 1004
+        runAsGroup: 1004
+        runAsNonRoot: true
       #   readOnlyRootFilesystem: false
     redis:
       enabled: false
@@ -121,7 +115,7 @@ spec:
       # servicePort: http
       annotations:
         gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Media Service
+        gethomepage.dev/group: Application Service
         gethomepage.dev/name: Nextcloud
         gethomepage.dev/description: File Hosting Service
         gethomepage.dev/icon: nextcloud.png
@@ -201,13 +195,20 @@ spec:
             - *host
     persistence:
       enabled: true
-      existingClaim: pvc-smb-nextcloud
-      # storageClass: local-path
-      # nextcloudData:
-      #   enabled: true
-        # existingClaim: pvc-smb-nextcloud
-        # accessMode: ReadWriteMany
+      existingClaim: *app
+      nextcloudData:
+        enabled: true
+        existingClaim: pvc-smb-nextcloud
+        accessMode: ReadWriteMany
     livenessProbe:
       enabled: false
     readinessProbe:
       enabled: false
+    # this seems to be required for nextcloud initialization which takes a long time
+    startupProbe:
+      enabled: true
+      initialDelaySeconds: 10
+      periodSeconds: 20
+      timeoutSeconds: 5
+      failureThreshold: 30
+      successThreshold: 1
