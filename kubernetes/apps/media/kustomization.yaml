@@ -8,7 +8,7 @@ resources:
   # # Flux-Kustomizations
   - ./filebrowser/ks.yaml
   - ./minio/ks.yaml
-  - ./nextcloud/ks.yaml
+  # - ./nextcloud/ks.yaml
   - ./overseerr/ks.yaml
   # - ./paperless/ks.yaml
   - ./plex/ks.yaml
