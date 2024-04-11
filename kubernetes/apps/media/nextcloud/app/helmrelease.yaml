@@ -83,11 +83,11 @@ spec:
         smtp:
           port: 465
           authtype: tls
-      securityContext:
-        runAsUser: 1004
-        runAsGroup: 1004
-        runAsNonRoot: false
-        readOnlyRootFilesystem: false
+      # securityContext:
+      #   runAsUser: 1004
+      #   runAsGroup: 1004
+      #   runAsNonRoot: false
+      #   readOnlyRootFilesystem: false
     redis:
       enabled: false
       # auth:
