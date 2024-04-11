@@ -87,7 +87,7 @@ spec:
         runAsUser: 0
         runAsGroup: 0
         runAsNonRoot: false
-        readOnlyRootFilesystem: false
+        # readOnlyRootFilesystem: false
     redis:
       enabled: false
       # auth:
