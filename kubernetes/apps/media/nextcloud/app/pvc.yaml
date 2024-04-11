@@ -16,8 +16,8 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
 volumeBindingMode: Immediate
 mountOptions:
-  - dir_mode=0777
-  - file_mode=0777
+  - dir_mode=0770
+  - file_mode=0770
   - uid=33
   - gid=33
   - noperm
