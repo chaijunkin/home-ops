@@ -84,8 +84,8 @@ spec:
           port: 465
           authtype: tls
       securityContext:
-        runAsUser: 1004
-        runAsGroup: 1004
+        runAsUser: 0
+        runAsGroup: 0
         runAsNonRoot: true
         readOnlyRootFilesystem: false
     redis:
