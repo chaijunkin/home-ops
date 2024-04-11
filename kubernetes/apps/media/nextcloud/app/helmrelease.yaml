@@ -83,16 +83,11 @@ spec:
         smtp:
           port: 465
           authtype: tls
-      # securityContext:
-      #   runAsUser: 1004
-      #   runAsGroup: 1004
-      #   runAsNonRoot: true
-      #   readOnlyRootFilesystem: false
-      podSecurityContext:
-        runAsUser: 33
-        runAsGroup: 33
+      securityContext:
+        runAsUser: 1004
+        runAsGroup: 1004
         runAsNonRoot: true
-        fsGroup: 33
+        readOnlyRootFilesystem: false
     redis:
       enabled: false
       # auth:
