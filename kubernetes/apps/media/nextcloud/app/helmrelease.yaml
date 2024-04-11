@@ -13,7 +13,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: nextcloud
-        namespace: media
+        namespace: kube-system
   maxHistory: 2
   install:
     remediation:

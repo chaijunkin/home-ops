@@ -5,6 +5,5 @@ namespace: media
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./helmrepository.yaml
   - ./pvc.yaml
   - ../../../../templates/volsync
