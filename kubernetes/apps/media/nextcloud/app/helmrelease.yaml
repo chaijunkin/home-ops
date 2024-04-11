@@ -196,11 +196,11 @@ spec:
             - *host
     persistence:
       enabled: true
-      existingClaim: pvc-smb-nextcloud
-      # nextcloudData:
-      #   enabled: true
-      #   existingClaim: pvc-smb-nextcloud
-      #   accessMode: ReadWriteMany
+      existingClaim: *app
+      nextcloudData:
+        enabled: true
+        existingClaim: pvc-smb-nextcloud
+        accessMode: ReadWriteMany
     livenessProbe:
       enabled: false
     readinessProbe:
