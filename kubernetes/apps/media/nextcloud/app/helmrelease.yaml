@@ -164,10 +164,10 @@ spec:
     readinessProbe:
       enabled: false
     # this seems to be required for nextcloud initialization which takes a long time
-    startupProbe:
-      enabled: true
-      initialDelaySeconds: 10
-      periodSeconds: 20
-      timeoutSeconds: 5
-      failureThreshold: 30
-      successThreshold: 1
+    # startupProbe:
+    #   enabled: true
+    #   initialDelaySeconds: 10
+    #   periodSeconds: 20
+    #   timeoutSeconds: 5
+    #   failureThreshold: 30
+    #   successThreshold: 1
