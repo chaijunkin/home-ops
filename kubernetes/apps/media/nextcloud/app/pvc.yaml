@@ -18,8 +18,8 @@ volumeBindingMode: Immediate
 mountOptions:
   - dir_mode=0777
   - file_mode=0777
-  - uid=1004
-  - gid=1004
+  # - uid=1004
+  # - gid=1004
   - noperm
   - mfsymlinks
   - cache=strict
