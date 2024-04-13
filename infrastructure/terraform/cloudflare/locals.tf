@@ -12,12 +12,6 @@ locals {
   dmarc_value    = var.dmarc_value
 
   cloudflare_record = {
-    # "documentation" = {
-    #     name = "@"
-    #     value = "chaijunkin.github.io"
-    #     type = "CNAME"
-    #     proxied = true
-    # }
     # "mail_txt" = {
     #   name  = "@"
     #   value = local.mail_txt_value
@@ -88,15 +82,22 @@ locals {
       value = local.dmarc_value
       type  = "TXT"
     }
-    "gitops-docs" = {
-      name    = "gitops-test"
-      value   = "chaijunkin.github.io"
-      type    = "CNAME"
-      proxied = true
+    # "gitops-docs" = {
+    #   name    = "gitops-test"
+    #   value   = "chaijunkin.github.io"
+    #   type    = "CNAME"
+    #   proxied = true
+    # }
+
+    "home" = {
+        name = "@"
+        value = "chaijunkin.github.io"
+        type = "CNAME"
+        proxied = true
     }
-    "documentation" = {
+    "home-www" = {
       name    = "www"
-      value   = "chaijunkin.github.io"
+      value   = "cloudjur.com"
       type    = "CNAME"
       proxied = true
     }

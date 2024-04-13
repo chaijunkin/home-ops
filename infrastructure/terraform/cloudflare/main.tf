@@ -18,23 +18,23 @@ resource "cloudflare_record" "records" {
   ttl      = try(each.value.ttl, null)
 }
 
-resource "cloudflare_record" "github_A_record" {
-  for_each = toset(local.github_A_record)
-  zone_id  = cloudflare_zone.cloudflare_zone.id
-  name     = "@"
-  value    = each.value
-  type     = "A"
-  # proxied = true
-}
+# resource "cloudflare_record" "github_A_record" {
+#   for_each = toset(local.github_A_record)
+#   zone_id  = cloudflare_zone.cloudflare_zone.id
+#   name     = "@"
+#   value    = each.value
+#   type     = "A"
+#   # proxied = true
+# }
 
-resource "cloudflare_record" "github_AAAA_record" {
-  for_each = toset(local.github_AAAA_record)
-  zone_id  = cloudflare_zone.cloudflare_zone.id
-  name     = "@"
-  value    = each.value
-  type     = "AAAA"
-  # proxied = true
-}
+# resource "cloudflare_record" "github_AAAA_record" {
+#   for_each = toset(local.github_AAAA_record)
+#   zone_id  = cloudflare_zone.cloudflare_zone.id
+#   name     = "@"
+#   value    = each.value
+#   type     = "AAAA"
+#   # proxied = true
+# }
 
 
 resource "random_id" "tunnel_secret" {
