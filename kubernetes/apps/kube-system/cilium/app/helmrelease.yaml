@@ -28,6 +28,10 @@ spec:
       enabled: true
     bpf:
       masquerade: false
+    cni:
+      exclusive: false
+
+
     cgroup:
       automount:
         enabled: false
