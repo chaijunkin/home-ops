@@ -89,15 +89,21 @@ locals {
     #   proxied = true
     # }
 
-    "home" = {
-        name = "@"
-        value = "chaijunkin.github.io"
-        type = "CNAME"
-        proxied = true
-    }
+    # "home" = {
+    #     name = "@"
+    #     value = "chaijunkin.github.io"
+    #     type = "CNAME"
+    #     proxied = true
+    # }
     "home-www" = {
       name    = "www"
-      value   = "cloudjur.com"
+      value   = "chaijunkin.github.io"
+      type    = "CNAME"
+      proxied = true
+    }
+    "home" = {
+      name    = "@"
+      value   = "chaijunkin.github.io"
       type    = "CNAME"
       proxied = true
     }

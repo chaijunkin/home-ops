@@ -99,5 +99,3 @@ spec:
         existingClaim: *app
       media:
         existingClaim: pvc-smb-media
-        globalMounts:
-          - path: /data/
