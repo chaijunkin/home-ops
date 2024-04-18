@@ -109,7 +109,7 @@ spec:
       config:
         enabled: true        
         existingClaim: *app
-      data:
+      media:
         enabled: true
         existingClaim: pvc-smb-media
       add-ons:
