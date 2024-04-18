@@ -3,9 +3,7 @@ locals {
     "loki",
     "thanos",
     "volsync",
-    "postgresql",
-    "tagspaces",
-    "outline"
+    "postgresql"
   ]
 }
 
