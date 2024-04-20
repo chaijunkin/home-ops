@@ -19,10 +19,10 @@ resource "authentik_group" "home" {
 #   order  = 0
 # }
 
-# resource "authentik_group" "infrastructure" {
-#   name         = "Infrastructure"
-#   is_superuser = false
-# }
+resource "authentik_group" "infrastructure" {
+  name         = "Infrastructure"
+  is_superuser = false
+}
 
 # resource "authentik_policy_binding" "gitops_infra" {
 #   target = authentik_application.gitops_application.uuid
@@ -36,11 +36,11 @@ resource "authentik_group" "home" {
 #   order  = 0
 # }
 
-# resource "authentik_group" "media" {
-#   name         = "Media"
-#   is_superuser = false
-#   parent       = resource.authentik_group.users.id
-# }
+resource "authentik_group" "media" {
+  name         = "Media"
+  is_superuser = false
+  parent       = resource.authentik_group.users.id
+}
 
 resource "authentik_group" "grafana_admin" {
   name         = "Grafana Admins"
