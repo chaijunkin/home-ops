@@ -42,28 +42,28 @@ resource "authentik_group" "home" {
 #   parent       = resource.authentik_group.users.id
 # }
 
-# resource "authentik_group" "grafana_admin" {
-#   name         = "Grafana Admins"
-#   is_superuser = false
-# }
+resource "authentik_group" "grafana_admin" {
+  name         = "Grafana Admins"
+  is_superuser = false
+}
 
-# resource "authentik_policy_binding" "grafana_admins" {
-#   target = authentik_application.grafana_application.uuid
-#   group  = authentik_group.grafana_admin.id
-#   order  = 0
-# }
+resource "authentik_policy_binding" "grafana_admins" {
+  target = authentik_application.grafana_application.uuid
+  group  = authentik_group.grafana_admin.id
+  order  = 0
+}
 
-# resource "authentik_group" "monitoring" {
-#   name         = "Monitoring"
-#   is_superuser = false
-#   parent       = resource.authentik_group.grafana_admin.id
-# }
+resource "authentik_group" "monitoring" {
+  name         = "Monitoring"
+  is_superuser = false
+  parent       = resource.authentik_group.grafana_admin.id
+}
 
-# resource "authentik_policy_binding" "grafana_infra" {
-#   target = authentik_application.grafana_application.uuid
-#   group  = authentik_group.monitoring.id
-#   order  = 0
-# }
+resource "authentik_policy_binding" "grafana_infra" {
+  target = authentik_application.grafana_application.uuid
+  group  = authentik_group.monitoring.id
+  order  = 0
+}
 
 data "authentik_group" "admins" {
   name = "authentik Admins"
