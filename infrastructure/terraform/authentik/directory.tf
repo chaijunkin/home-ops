@@ -65,19 +65,19 @@ resource "authentik_group" "home" {
 #   order  = 0
 # }
 
-# data "authentik_group" "admins" {
-#   name = "authentik Admins"
+data "authentik_group" "admins" {
+  name = "authentik Admins"
+}
+
+# #Oauth
+# resource "authentik_source_oauth" "discord" {
+#   name                = "Discord"
+#   slug                = "discord"
+#   authentication_flow = data.authentik_flow.default-source-authentication.id
+#   enrollment_flow     = authentik_flow.enrollment-invitation.uuid
+#   user_matching_mode  = "email_deny"
+
+#   provider_type   = "discord"
+#   consumer_key    = var.discord_client_id
+#   consumer_secret = var.discord_client_secret
 # }
-
-# ##Oauth
-# # resource "authentik_source_oauth" "discord" {
-# #   name                = "Discord"
-# #   slug                = "discord"
-# #   authentication_flow = data.authentik_flow.default-source-authentication.id
-# #   enrollment_flow     = authentik_flow.enrollment-invitation.uuid
-# #   user_matching_mode  = "email_deny"
-
-# #   provider_type   = "discord"
-# #   consumer_key    = var.discord_client_id
-# #   consumer_secret = var.discord_client_secret
-# # }

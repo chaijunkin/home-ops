@@ -17,11 +17,11 @@ resource "authentik_stage_password" "authentication-password" {
   failed_attempts_before_cancel = 3
 }
 
-resource "authentik_stage_authenticator_validate" "authentication-mfa-validation" {
-  name                  = "authentication-mfa-validation"
-  device_classes        = ["static", "totp", "webauthn"]
-  not_configured_action = "skip"
-}
+# resource "authentik_stage_authenticator_validate" "authentication-mfa-validation" {
+#   name                  = "authentication-mfa-validation"
+#   device_classes        = ["static", "totp", "webauthn"]
+#   not_configured_action = "skip"
+# }
 
 resource "authentik_stage_user_login" "authentication-login" {
   name = "authentication-login"
