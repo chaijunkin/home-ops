@@ -42,7 +42,7 @@ spec:
               NAMESPACE: ALL
               RESOURCE: both
               UNIQUE_FILENAMES: true
-              METHOD: WATCH
+              METHOD: LIST
             resources: &configSyncResources
               requests:
                 cpu: 10m
