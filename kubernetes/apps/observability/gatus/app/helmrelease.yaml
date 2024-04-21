@@ -42,7 +42,7 @@ spec:
               NAMESPACE: ALL
               RESOURCE: both
               UNIQUE_FILENAMES: true
-              METHOD: LIST
+              METHOD: WATCH
             resources: &configSyncResources
               requests:
                 cpu: 10m
@@ -58,6 +58,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               GATUS_CONFIG_PATH: /config
+              GATUS_DELAY_START_SECONDS: 15
               CUSTOM_WEB_PORT: &port 80
             resources:
               requests:

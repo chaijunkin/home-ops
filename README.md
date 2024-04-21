@@ -1,24 +1,25 @@
 <div align="center">
 
+<img src="https://raw.githubusercontent.com/chaijunkin/home-ops/main/docs/src/assets/logo.png" align="center" width="144px" height="144px"/>
+
 ### My Homelab Repository :snowflake:
 
 _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/renovatebot/renovate) and [GitHub Actions](https://github.com/features/actions)_ 🤖
 
 </div>
-<!-- 
 <div align="center">
 
 [![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/home-operations)&nbsp;&nbsp;
-[![Kubernetes](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fchaijunkin%2Fhome-ops%2Fmain%2Fkubernetes%2Fmain%2Fapps%2Fkube-tools%2Fsystem-upgrade-controller%2Fplans%2Fserver.yaml&query=%24.spec.version&style=for-the-badge&logo=kubernetes&logoColor=white&label=%20)](https://k3s.io/)&nbsp;&nbsp;
-[![Renovate](https://img.shields.io/github/actions/workflow/status/chaijunkin/home-ops/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/chaijunkin/home-ops/actions/workflows/renovate.yaml)
+[![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.cloudjur.com%2Fquery%3Fformat%3Dendpoint%26metric%3Dkubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=blue&label=%20)]()&nbsp;&nbsp;
+<!-- [![Renovate](https://img.shields.io/github/actions/workflow/status/chaijunkin/home-ops/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/chaijunkin/home-ops/actions/workflows/renovate.yaml) -->
 
 </div>
 
 <div align="center">
 
-[![Home-Internet](https://img.shields.io/endpoint?url=https%3A%2F%2Fhealthchecks.io%2Fbadge%2Ff0288b6a-305e-4084-b492-bb0a54%2FKkxSOeO1-2.shields&style=for-the-badge&logo=ubiquiti&logoColor=white&label=Home%20Internet)](https://status.cloudjur.com)&nbsp;&nbsp;
+<!-- [![Home-Internet](https://img.shields.io/endpoint?url=https%3A%2F%2Fhealthchecks.io%2Fbadge%2Ff0288b6a-305e-4084-b492-bb0a54%2FKkxSOeO1-2.shields&style=for-the-badge&logo=ubiquiti&logoColor=white&label=Home%20Internet)](https://status.cloudjur.com)&nbsp;&nbsp; -->
 [![Status-Page](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.cloudjur.com%2Fapi%2Fv1%2Fendpoints%2Fexternal_gatus%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=statuspage&logoColor=white&label=Status%20Page)](https://status.cloudjur.com/endpoints/external_gatus)&nbsp;&nbsp;
-[![Plex](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.cloudjur.com%2Fapi%2Fv1%2Fendpoints%2Fexternal_plex%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=plex&logoColor=white&label=Plex)](https://status.cloudjur.com/endpoints/external_plex)
+<!-- [![Plex](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.cloudjur.com%2Fapi%2Fv1%2Fendpoints%2Fexternal_plex%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=plex&logoColor=white&label=Plex)](https://status.cloudjur.com/endpoints/external_plex) -->
 
 </div>
 
@@ -31,7 +32,7 @@ _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/reno
 [![CPU-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.cloudjur.com%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_cpu_usage&style=flat-square&label=CPU)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
 [![Memory-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.cloudjur.com%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_memory_usage&style=flat-square&label=Memory)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
 
-</div> -->
+</div> 
 
 ---
 
