@@ -55,13 +55,14 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal
+        className: external
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Firefly-iii
           gethomepage.dev/description: Personal finance service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
+          external-dns.alpha.kubernetes.io/target: externals.${SECRET_DOMAIN}
         hosts:
           - host: &host "money.${SECRET_DOMAIN}"
             paths:

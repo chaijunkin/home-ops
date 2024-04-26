@@ -117,6 +117,18 @@ locals {
       value = "uptime-kuma-rdm12exn709.fly.dev"
       type  = "CNAME"
     }
+
+    "external-uptimekuma-ext" = {
+      name  = "ext-status"
+      value = "uptime-kuma-rdm12exn709.fly.dev"
+      type  = "CNAME"
+    }
+
+    "internal-uptimekuma-ext" = {
+      name  = "int-status"
+      value = "uptime-kuma-rdm12exn709.fly.dev"
+      type  = "CNAME"
+    }
   }
 
   github_A_record = [
