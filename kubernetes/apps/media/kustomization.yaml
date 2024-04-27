@@ -10,6 +10,6 @@ resources:
   - ./minio/ks.yaml
   - ./nextcloud/ks.yaml
   - ./overseerr/ks.yaml
-  # - ./paperless/ks.yaml
+  - ./paperless/ks.yaml
   - ./plex/ks.yaml
   - ./tautulli/ks.yaml
