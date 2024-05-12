@@ -68,7 +68,8 @@ spec:
               # Configure OCR
               PAPERLESS_OCR_LANGUAGES: nld
               PAPERLESS_OCR_LANGUAGE: nld
-
+              PAPERLESS_REDIS: redis://dragonfly.database.svc.cluster.local:6379
+             
               # Configure user permissions
               USERMAP_GID: "65543"
 
