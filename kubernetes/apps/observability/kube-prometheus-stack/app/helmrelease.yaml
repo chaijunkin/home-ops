@@ -145,10 +145,10 @@ spec:
                 - __meta_kubernetes_pod_node_name
               targetLabel: kubernetes_node
     prometheus:
-      # thanosService:
-      #   enabled: true
-      # thanosServiceMonitor:
-      #   enabled: true
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
       ingress:
         enabled: true
         ingressClassName: internal
@@ -191,12 +191,12 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
-        # thanos:
-        #   image: quay.io/thanos/thanos:v0.34.1
-        #   objectStorageConfig:
-        #     existingSecret:
-        #       name: thanos-objstore-secret
-        #       key: objstore.yml
+        thanos:
+          image: quay.io/thanos/thanos:v0.34.1
+          objectStorageConfig:
+            existingSecret:
+              name: thanos-secret
+              key: objstore.yml
     cleanPrometheusOperatorObjectNames: true
   postRenderers:
     - kustomize:
