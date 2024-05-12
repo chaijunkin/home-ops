@@ -170,10 +170,10 @@ spec:
             uid: prometheus
             isDefault: true
             access: proxy
-            # url: http://thanos-query-frontend.observability.svc.cluster.local:9090
-            url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
+            url: http://thanos-query-frontend.observability.svc.cluster.local:9090
+            # url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
             jsonData:
-              prometheusType: Prometheus
+              prometheusType: Thanos
               timeInterval: 1m
           - name: Loki
             type: loki
