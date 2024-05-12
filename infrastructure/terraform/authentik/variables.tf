@@ -40,17 +40,17 @@ variable "grafana_secret" {
 #   sensitive   = true
 # }
 
-# variable "discord_client_id" {
-#   type        = string
-#   description = "Discord Client ID"
-#   sensitive   = true
-# }
+variable "oauth_client_id" {
+  type        = string
+  description = "OAuth Client ID (google)"
+  sensitive   = true
+}
 
-# variable "discord_client_secret" {
-#   type        = string
-#   description = "Discord Client Secret"
-#   sensitive   = true
-# }
+variable "oauth_client_secret" {
+  type        = string
+  description = "OAuth Client Secret (google)"
+  sensitive   = true
+}
 
 variable "authentik_token" {
   type        = string

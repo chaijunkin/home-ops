@@ -1,18 +1,18 @@
-# ## Authentication flow
-# resource "authentik_flow" "authentication" {
-#   name               = "authentication-flow"
-#   title              = "Welcome!"
-#   slug               = "authentication-flow"
-#   designation        = "authentication"
-#   policy_engine_mode = "all"
-#   # background         = "https://placeholder.jpeg"
-# }
+## Authentication flow
+resource "authentik_flow" "authentication" {
+  name               = "authentication-flow"
+  title              = "Welcome!"
+  slug               = "authentication-flow"
+  designation        = "authentication"
+  policy_engine_mode = "all"
+  # background         = "https://placeholder.jpeg"
+}
 
-# resource "authentik_flow_stage_binding" "authentication-flow-binding-00" {
-#   target = authentik_flow.authentication.uuid
-#   stage  = authentik_stage_identification.authentication-identification.id
-#   order  = 0
-# }
+resource "authentik_flow_stage_binding" "authentication-flow-binding-00" {
+  target = authentik_flow.authentication.uuid
+  stage  = authentik_stage_identification.authentication-identification.id
+  order  = 0
+}
 
 # resource "authentik_flow_stage_binding" "authentication-flow-binding-10" {
 #   target = authentik_flow.authentication.uuid
@@ -20,11 +20,11 @@
 #   order  = 10
 # }
 
-# resource "authentik_flow_stage_binding" "authentication-flow-binding-100" {
-#   target = authentik_flow.authentication.uuid
-#   stage  = authentik_stage_user_login.authentication-login.id
-#   order  = 100
-# }
+resource "authentik_flow_stage_binding" "authentication-flow-binding-100" {
+  target = authentik_flow.authentication.uuid
+  stage  = authentik_stage_user_login.authentication-login.id
+  order  = 100
+}
 
 ## Invalidation flow
 resource "authentik_flow" "invalidation" {
