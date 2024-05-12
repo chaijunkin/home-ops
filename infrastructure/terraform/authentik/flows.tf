@@ -81,7 +81,7 @@ resource "authentik_flow_stage_binding" "recovery-flow-binding-30" {
 resource "authentik_flow" "enrollment-invitation" {
   name               = "enrollment-invitation-flow"
   title              = "Enrollment invitation"
-  slug               = "enrollmment-invitation"
+  slug               = "enrollment-invitation"
   designation        = "enrollment"
   compatibility_mode = true
   # background         = "https://placeholder.jpeg"
