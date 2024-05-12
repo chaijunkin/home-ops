@@ -95,6 +95,14 @@ spec:
           memory: 512Mi
         requests:
           cpu: 10m
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hostname: &compact-host thanos-compactor.${SECRET_DOMAIN}
+        tls: true
+        extraTls:
+          - hosts:
+            - *compact-host
     storegateway:
       enabled: true
       replicaCount: 1
