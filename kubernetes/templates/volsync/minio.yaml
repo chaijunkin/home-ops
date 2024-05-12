@@ -96,4 +96,4 @@ spec:
     #   daily: 10
     #   weekly: 5
     retain:
-      daily: 7
+      weekly: 2
