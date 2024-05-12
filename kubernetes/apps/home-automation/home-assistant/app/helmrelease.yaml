@@ -45,10 +45,12 @@ spec:
             #   "ips": ["10.10.32.254/24"]
             # },
           securityContext:
+            runAsNonRoot: true
             runAsUser: 568
             runAsGroup: 568
             fsGroup: 568
-            # fsGroupChangePolicy: OnRootMismatch
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile: { type: RuntimeDefault }
         containers:
           app:
             image:
