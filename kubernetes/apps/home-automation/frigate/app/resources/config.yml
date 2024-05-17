@@ -67,7 +67,7 @@ objects:
 #     frigate_basement_hq: rtspx://192.168.1.1:7441/ClBFQnBDDpfV3LeX
 #     frigate_basement_lq: rtspx://192.168.1.1:7441/RCB8niMyOC24qh2G
 
-# cameras:
+cameras:
 #   frigate_porch:
 #     ffmpeg:
 #       inputs:
@@ -140,17 +140,17 @@ objects:
 #       height: 720
 #       fps: 10
 
-  # frigate_living_room:
-  #   ffmpeg:
-  #     inputs:
-  #       - path: rtsp://localhost:8554/frigate_living_room_lq
-  #         roles: ["detect"]
-  #       - path: rtsp://localhost:8554/frigate_living_room_hq
-  #         roles: ["record"]
-  #   detect:
-  #     width: 1024
-  #     height: 576
-  #     fps: 10
+  frigate_living_room:
+    ffmpeg:
+      inputs:
+        - path: rtsp://localhost:8554/frigate_living_room_lq
+          roles: ["detect"]
+        - path: rtsp://localhost:8554/frigate_living_room_hq
+          roles: ["record"]
+    detect:
+      width: 1024
+      height: 576
+      fps: 10
 
 #   frigate_basement_1:
 #     ffmpeg:
