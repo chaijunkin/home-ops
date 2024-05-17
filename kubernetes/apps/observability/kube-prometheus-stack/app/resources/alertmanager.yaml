@@ -21,7 +21,7 @@ route:
     - receiver: discord
       continue: true
       matchers:
-        - severity = "critical}warning"
+        - severity = "critical"
     - receiver: pushover
       continue: true
       matchers:
