@@ -5,7 +5,7 @@ route:
   group_by: ["alertname", "job"]
   group_interval: 10m
   group_wait: 1m
-  receiver: discord
+  receiver: pushover
   repeat_interval: 12h
   routes:
     # - receiver: heartbeat
@@ -21,6 +21,10 @@ route:
     - receiver: discord
       continue: true
       matchers:
+        - severity = "critical}warning"
+    - receiver: pushover
+      continue: true
+      matchers:
         - severity = "critical"
 inhibit_rules:
   - equal: ["alertname", "namespace"]
@@ -34,6 +38,40 @@ receivers:
   #     - send_resolved: true
   #       url: "{{ .ALERTMANAGER_HEARTBEAT_URL }}"
   - name: "null"
+  - name: pushover
+    pushover_configs:
+      - html: true
+        token_file: /etc/secrets/pushover_api_token
+        user_key_file: /etc/secrets/pushover_api_userkey
+        send_resolved: true
+        priority: |-
+          {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
+        url_title: View in Alert Manager
+        title: |-
+          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+        message: |-
+          {{- range .Alerts }}
+            {{- if ne .Labels.severity "" }}
+              <b>Severity:</b> <i>{{ .Labels.severity }}</i>
+            {{- else }}
+              <b>Severity:</b> <i>N/A</i>
+            {{- end }}
+            {{- if ne .Annotations.description "" }}
+              <b>Description:</b> <i>{{ .Annotations.description }}</i>
+            {{- else if ne .Annotations.summary "" }}
+              <b>Summary:</b> <i>{{ .Annotations.summary }}</i>
+            {{- else if ne .Annotations.message "" }}
+              <b>Message:</b> <i>{{ .Annotations.message }}</i>
+            {{- else }}
+              <b>Description:</b> <i>N/A</i>
+            {{- end }}
+            {{- if gt (len .Labels.SortedPairs) 0 }}
+              <b>Details:</b>
+              {{- range .Labels.SortedPairs }}
+                • <b>{{ .Name }}:</b> <i>{{ .Value }}</i>
+              {{- end }}
+            {{- end }}
+          {{- end }}
   - name: discord
     discord_configs:
       - send_resolved: true
