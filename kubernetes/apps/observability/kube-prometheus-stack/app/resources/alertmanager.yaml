@@ -41,8 +41,8 @@ receivers:
   - name: pushover
     pushover_configs:
       - html: true
-        token_file: /etc/secrets/pushover_api_token
-        user_key_file: /etc/secrets/pushover_api_userkey
+        user_key: "{{ .pushover_api_userkey }}"
+        token: "{{ .pushover_api_token }}"
         send_resolved: true
         priority: |-
           {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
