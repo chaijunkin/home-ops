@@ -29,7 +29,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: pvc-smb-frigate
-  namespace: media
 spec:
   accessModes:
     - ReadWriteMany
