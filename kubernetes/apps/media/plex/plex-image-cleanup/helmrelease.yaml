@@ -85,4 +85,4 @@ spec:
       plex-config:
         existingClaim: plex
         globalMounts:
-          - path: /data/plex_config
+          - path: /media/plex_config
