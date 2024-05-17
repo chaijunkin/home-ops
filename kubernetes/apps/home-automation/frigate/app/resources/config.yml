@@ -141,6 +141,7 @@ cameras:
 #       fps: 10
 
   frigate_living_room:
+    enabled: False
     ffmpeg:
       inputs:
         - path: rtsp://localhost:8554/frigate_living_room_lq
