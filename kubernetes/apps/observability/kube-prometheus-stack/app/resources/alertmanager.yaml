@@ -43,35 +43,35 @@ receivers:
       - html: true
         user_key: "{{ .pushover_api_userkey }}"
         token: "{{ .pushover_api_token }}"
-        send_resolved: true
-        priority: |-
-          {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
-        url_title: View in Alert Manager
-        title: |-
-          [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }}
+        url_title: View in AlertManager        # Compooters are hard
         message: |-
-          {{- range .Alerts }}
-            {{- if ne .Labels.severity "" }}
-              <b>Severity:</b> <i>{{ .Labels.severity }}</i>
-            {{- else }}
-              <b>Severity:</b> <i>N/A</i>
-            {{- end }}
-            {{- if ne .Annotations.description "" }}
-              <b>Description:</b> <i>{{ .Annotations.description }}</i>
-            {{- else if ne .Annotations.summary "" }}
-              <b>Summary:</b> <i>{{ .Annotations.summary }}</i>
-            {{- else if ne .Annotations.message "" }}
-              <b>Message:</b> <i>{{ .Annotations.message }}</i>
-            {{- else }}
-              <b>Description:</b> <i>N/A</i>
-            {{- end }}
-            {{- if gt (len .Labels.SortedPairs) 0 }}
-              <b>Details:</b>
-              {{- range .Labels.SortedPairs }}
-                • <b>{{ .Name }}:</b> <i>{{ .Value }}</i>
-              {{- end }}
-            {{- end }}
-          {{- end }}
+          {{ "{{-" }} range .Alerts {{ "}}" }}
+            {{ "{{-" }} if ne .Annotations.description "" {{ "}}" }}
+              {{ "{{" }} .Annotations.description {{ "}}" }}
+            {{ "{{-" }} else if ne .Annotations.summary "" {{ "}}" }}
+              {{ "{{" }} .Annotations.summary {{ "}}" }}
+            {{ "{{-" }} else if ne .Annotations.message "" {{ "}}" }}
+              {{ "{{" }} .Annotations.message {{ "}}" }}
+            {{ "{{-" }} else {{ "}}" }}
+              Alert description not available
+            {{ "{{-" }} end {{ "}}" }}
+            {{ "{{-" }} if gt (len .Labels.SortedPairs) 0 {{ "}}" }}
+              <small>
+              {{ "{{-" }} range .Labels.SortedPairs {{ "}}" }}
+                <b>{{ "{{" }} .Name {{ "}}" }}:</b> {{ "{{" }} .Value {{ "}}" }}
+              {{ "{{-" }} end {{ "}}" }}
+              </small>
+            {{ "{{-" }} end {{ "}}" }}
+          {{ "{{-" }} end {{ "}}" }}
+        priority: |-
+          {{ "{{" }} if eq .Status "firing" {{ "}}" }}1{{ "{{" }} else {{ "}}" }}0{{ "{{" }} end {{ "}}" }}
+        send_resolved: true
+        sound: gamelan
+        # ttl: 1d
+        title: >-
+          {{ "{{" }} .CommonLabels.alertname {{ "}}" }}
+          [{{ "{{" }} .Status | toUpper {{ "}}" }}{{ "{{" }} if eq .Status "firing" {{ "}}" }}:{{ "{{" }} .Alerts.Firing | len {{ "}}" }}{{ "{{" }} end {{ "}}" }}]
+        
   - name: discord
     discord_configs:
       - send_resolved: true
