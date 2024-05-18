@@ -22,3 +22,4 @@ data:
           - "len([BODY]) == 0"
         alerts:
           - type: discord
+          - type: pushover
