@@ -4,6 +4,13 @@
 set -l json_data '
 {
   "apps_and_namespaces": [
+    {"app": "qbittorrent", "namespace": "downloads"},
+    {"app": "bazarr", "namespace": "downloads"},
+    {"app": "readarr", "namespace": "downloads"},
+    {"app": "sonarr", "namespace": "downloads"},
+    {"app": "radarr", "namespace": "downloads"},
+    {"app": "prowlarr", "namespace": "downloads"},
+    {"app": "home-assistant", "namespace": "home-automation"},
     {"app": "overseerr", "namespace": "media"},
     {"app": "plex", "namespace": "media"},
     {"app": "paperless", "namespace": "media"},
