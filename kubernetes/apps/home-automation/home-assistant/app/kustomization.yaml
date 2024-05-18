@@ -6,3 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./gatus-custom.yaml
   - ../../../../templates/volsync
+  - ../../../../templates/gatus/external
