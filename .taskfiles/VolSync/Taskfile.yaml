@@ -71,6 +71,29 @@ tasks:
       - { msg: "Unlock template not found",      sh: "test -f {{.templatesDir}}/unlock.tmpl.yaml" }
     silent: true
 
+  repair:
+    desc: Repair a Restic repository for an application
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        ns: Namespace the PVC is in (default: default)
+        app: Application to repair (required)
+    cmds:
+      - envsubst < <(cat {{.templatesDir}}/repair.tmpl.yaml) | kubectl --context {{.cluster}} apply -f -
+      - bash {{.scriptsDir}}/wait.sh repair-{{.app}}-{{.ts}} {{.ns}} {{.cluster}}
+      - kubectl --context {{.cluster}} -n {{.ns}} wait job/repair-{{.app}}-{{.ts}} --for condition=complete --timeout=1m
+      - kubectl --context {{.cluster}} -n {{.ns}} logs job/repair-{{.app}}-{{.ts}} --container repair-minio
+      - kubectl --context {{.cluster}} -n {{.ns}} delete job repair-{{.app}}-{{.ts}}
+    env: *env
+    vars:
+      ns: '{{.ns | default "default"}}'
+      app: '{{ or .app (fail "Argument (app) is required") }}'
+    preconditions:
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+      - { msg: "Wait script not found",          sh: "test -f {{.scriptsDir}}/wait.sh" }
+      - { msg: "repair template not found",      sh: "test -f {{.templatesDir}}/repair.tmpl.yaml" }
+    silent: true
+
   # To run backup jobs in parallel for all replicationsources:
   #   - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=4 -l bash -c 'task volsync:snapshot app=$0 ns=$1'
   snapshot:

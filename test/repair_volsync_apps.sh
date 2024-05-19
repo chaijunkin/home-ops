@@ -25,9 +25,9 @@ for pair in (echo $json_data | jq -c '.apps_and_namespaces[]')
     set app (echo $pair | jq -r '.app')
     set ns (echo $pair | jq -r '.namespace')
 
-    # Execute the task volsync:unlock command for each app and namespace in the background
-    echo "Executing: task volsync:unlock app=$app cluster=default ns=$ns"
-    task volsync:unlock app=$app cluster=default ns=$ns &
+    # Execute the task volsync:repair command for each app and namespace
+    echo "Executing: task volsync:repair app=$app cluster=default ns=$ns"
+    task volsync:repair app=$app cluster=default ns=$ns &
 end
 
 # Wait for all background jobs to finish
