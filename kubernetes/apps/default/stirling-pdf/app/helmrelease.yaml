@@ -35,11 +35,11 @@ spec:
               tag: 0.23.1
             resources:
               requests:
-                memory: 512Mi
+                memory: 1G
                 cpu: 100m
               limits:
                 cpu: 100m
-                memory: 512Mi
+                memory: 1G
         strategy: Recreate
     service:
       main:
