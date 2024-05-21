@@ -1,0 +1,71 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app stirling-pdf
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              pullPolicy: IfNotPresent
+              repository: frooodle/s-pdf
+              tag: 0.23.1
+            resources:
+              requests:
+                memory: 10Mi
+                cpu: 10m
+              limits:
+                memory: 50Mi
+        strategy: Recreate
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    env:
+      TZ: ${TIMEZONE}
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: PDF
+          gethomepage.dev/description: Developer utility tools
+          gethomepage.dev/icon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/93ab09fc0a7a0134a9274af73a572843c480163a/svg/stirling-pdf.svg
+          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        ingressClassName: external
+        hosts:
+          - host: &host "pdf.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
