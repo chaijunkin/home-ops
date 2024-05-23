@@ -20,47 +20,21 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     controllers:
-      main:
+      dragonfly-operator:
+        strategy: RollingUpdate
         containers:
-          rbac-proxy:
+          app:
             image:
-              repository: gcr.io/kubebuilder/kube-rbac-proxy
-              tag: v0.16.0
+              repository: ghcr.io/dragonflydb/operator
+              tag: v1.1.2@sha256:f0d76725950095ac65b36252e0042d339d1db9b181b1d068f4b6686ea93055e4
+            command: ["/manager"]
             args:
-              - "--secure-listen-address=0.0.0.0:8443"
-              - "--upstream=http://127.0.0.1:8080/"
-              - "--logtostderr=true"
-              - "--v=0"
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 5m
-                memory: 64Mi
-              limits:
-                cpu: 500m
-                memory: 128Mi
-          main:
-            image:
-              repository: docker.dragonflydb.io/dragonflydb/operator
-              tag: v1.1.1
-            args:
-              - "--health-probe-bind-address=:8081"
-              - "--metrics-bind-address=:8080"
-              - "--leader-elect"
-            command:
-              - "/manager"
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              - --health-probe-bind-address=:8081
+              - --metrics-bind-address=:8080
             probes:
               liveness:
                 enabled: true
@@ -84,44 +58,36 @@ spec:
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-              startup:
-                enabled: false
             resources:
               requests:
                 cpu: 10m
-                memory: 64Mi
               limits:
-                cpu: 500m
                 memory: 128Mi
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: kubernetes.io/arch
-                        operator: In
-                        values:
-                          - amd64
-                          - arm64
-                      - key: kubernetes.io/os
-                        operator: In
-                        values:
-                          - linux
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile: { type: RuntimeDefault }
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
-      main:
+      app:
+        controller: *app
         ports:
           http:
-            port: *port         
+            port: *port
+          metrics:
+            port: 8080
     serviceMonitor:
       app:
         serviceName: *app
