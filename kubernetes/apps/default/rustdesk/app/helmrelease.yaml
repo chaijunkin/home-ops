@@ -42,8 +42,8 @@ spec:
             env:
               TZ: ${TIMEZONE}
               DB_URL: /db/db_v2.sqlite3
-              RELAY: "${TOOLS_RUSTDESK_RELAY}:21117"
-            command: ["hbbs", "-r ${TOOLS_RUSTDESK_RELAY}:21117"]
+              RELAY: "10.10.30.20:21117"
+            command: ["hbbs", "-r 10.10.30.20:21117"]
             dependsOn: ["hbbr"]
             probes:
               liveness:
@@ -55,6 +55,9 @@ spec:
     service:
       hbbr:
         controller: hbbr
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: "10.10.30.20"
         ports:
           first:
             enabled: true
@@ -84,8 +87,32 @@ spec:
             port: 21118
             protocol: "TCP"
     ingress:
-      main:
-        enabled: false
+      hbbr:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host hbbr.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: hbbr
+                  port: 21117
+        tls:
+          - hosts:
+              - *host
+      hbbs:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host hbbs.${SECRET_DOMAIN}
+            paths:
+            - path: /
+              service:
+                identifier: hbbs
+                port: 21115
+        tls:
+          - hosts:
+              - *host
     persistence:
       data:
         enabled: true
