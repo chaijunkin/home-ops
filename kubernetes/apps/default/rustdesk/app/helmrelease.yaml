@@ -99,7 +99,7 @@ spec:
               - *host
     persistence:
       data:
-        enabled: true
+        enabled: false
         globalMounts:
           - path: /db
         storageClass: openebs-hostpath
