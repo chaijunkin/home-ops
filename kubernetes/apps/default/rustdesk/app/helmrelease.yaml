@@ -100,7 +100,6 @@ spec:
     persistence:
       data:
         enabled: true
+        existingClaim: rustdesk-data
         globalMounts:
           - path: /db
-        accessMode: ReadWriteMany
-        retain: true
