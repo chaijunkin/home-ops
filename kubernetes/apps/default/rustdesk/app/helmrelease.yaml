@@ -46,69 +46,71 @@ spec:
     # 21117 TCP relay
     # 21118/21119 TCP for web socket if you want to run web client
     service:
-      hbbr:
+      relay:
         controller: hbbr
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: "10.10.30.20"
+          external-dns.alpha.kubernetes.io/hostname: rustdesk-relay.${SECRET_DOMAIN}
+          io.cilium/lb-ipam-ips: "10.10.30.21"
         ports:
-          first:
+          rustdesk-5:
             enabled: true
             port: 21117  # Relay server
             protocol: "TCP"
-          second:
+          rustdesk-6:
             enabled: true
             port: 21119
             protocol: "TCP"
-      hbbs:
+      server:
         controller: hbbs
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: "10.10.30.21"
+          io.cilium/lb-ipam-ips: "10.10.30.20"
+          external-dns.alpha.kubernetes.io/hostname: rustdesk.${SECRET_DOMAIN}
         ports:
-          first:
+          rustdesk-1:
             enabled: true
             port: 21115
             protocol: "TCP"
-          second:
+          rustdesk-2:
             enabled: true
             port: 21116  # ID server
             protocol: "TCP"
-          third:
+          rustdesk-3:
             enabled: true
             port: 21116
             protocol: "UDP"
-          fourth:
+          rustdesk-4:
             enabled: true
             port: 21118
             protocol: "TCP"
-    ingress:
-      hbbr:
-        enabled: true
-        className: internal
-        hosts:
-          - host: &host hbbr.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: hbbr
-                  port: 21117
-        tls:
-          - hosts:
-              - *host
-      hbbs:
-        enabled: true
-        className: internal
-        hosts:
-          - host: &host hbbs.${SECRET_DOMAIN}
-            paths:
-            - path: /
-              service:
-                identifier: hbbs
-                port: 21116
-        tls:
-          - hosts:
-              - *host
+    # ingress:
+    #   hbbr:
+    #     enabled: true
+    #     className: internal
+    #     hosts:
+    #       - host: &host hbbr.${SECRET_DOMAIN}
+    #         paths:
+    #           - path: /
+    #             service:
+    #               identifier: hbbr
+    #               port: 21117
+    #     tls:
+    #       - hosts:
+    #           - *host
+    #   hbbs:
+    #     enabled: true
+    #     className: internal
+    #     hosts:
+    #       - host: &host hbbs.${SECRET_DOMAIN}
+    #         paths:
+    #         - path: /
+    #           service:
+    #             identifier: hbbs
+    #             port: 21116
+    #     tls:
+    #       - hosts:
+    #           - *host
     persistence:
       data:
         enabled: true
