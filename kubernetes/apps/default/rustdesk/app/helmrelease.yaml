@@ -35,7 +35,15 @@ spec:
               TZ: ${TIMEZONE}
               DB_URL: /db/db_v2.sqlite3
               RELAY: "10.10.30.20:21117"
-            command: ["hbbs", "-r 10.10.30.20:21117"]
+            command: ["hbbs", "-r rustdesk-hbbr:21117"]
+    # Because using docker host mode
+    # Just in case you forgot the ports:
+    # 21114 TCP for web console, only available in Pro version
+    # 21115 TCP for NAT type test
+    # 21116 TCP TCP hole punching
+    # 21116 UDP heartbeat/ID server
+    # 21117 TCP relay
+    # 21118/21119 TCP for web socket if you want to run web client
     service:
       hbbr:
         controller: hbbr
@@ -53,6 +61,9 @@ spec:
             protocol: "TCP"
       hbbs:
         controller: hbbs
+        type: LoadBalancer
+        annotations:
+          io.cilium/lb-ipam-ips: "10.10.30.21"
         ports:
           first:
             enabled: true
@@ -93,7 +104,7 @@ spec:
             - path: /
               service:
                 identifier: hbbs
-                port: 21115
+                port: 21116
         tls:
           - hosts:
               - *host
