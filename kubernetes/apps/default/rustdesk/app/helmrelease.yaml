@@ -36,7 +36,6 @@ spec:
               DB_URL: /db/db_v2.sqlite3
               RELAY: "10.10.30.20:21117"
             command: ["hbbs", "-r 10.10.30.20:21117"]
-            dependsOn: ["hbbr"]
     service:
       hbbr:
         controller: hbbr
