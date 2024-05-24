@@ -25,13 +25,6 @@ spec:
             env:
               TZ: ${TIMEZONE}
             command: ["hbbr"]
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              statup:
-                enabled: false
       hbbs:
         containers:
           hbbs:
@@ -44,13 +37,6 @@ spec:
               RELAY: "10.10.30.20:21117"
             command: ["hbbs", "-r 10.10.30.20:21117"]
             dependsOn: ["hbbr"]
-            probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
-              statup:
-                enabled: false
     service:
       hbbr:
         controller: hbbr
