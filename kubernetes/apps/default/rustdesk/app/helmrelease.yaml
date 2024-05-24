@@ -1,3 +1,4 @@
+### NOT READY
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
@@ -53,7 +54,7 @@ spec:
         ports:
           first:
             enabled: true
-            port: 21117
+            port: 21117  # Relay server
             protocol: "TCP"
           second:
             enabled: true
@@ -71,7 +72,7 @@ spec:
             protocol: "TCP"
           second:
             enabled: true
-            port: 21116
+            port: 21116  # ID server
             protocol: "TCP"
           third:
             enabled: true
