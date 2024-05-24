@@ -8,4 +8,4 @@ spec:
       storage: 20Gi
   storageClassName: openebs-hostpath
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
