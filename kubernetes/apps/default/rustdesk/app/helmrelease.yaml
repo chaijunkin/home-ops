@@ -97,12 +97,12 @@ spec:
         tls:
           - hosts:
               - *host
-    persistence:
-      data:
-        enabled: false
-        globalMounts:
-          - path: /db
-        storageClass: openebs-hostpath
-        accessMode: ReadWriteMany
-        size: 20Gi
-        retain: true
+    # persistence:
+    #   data:
+    #     enabled: false
+    #     globalMounts:
+    #       - path: /db
+    #     storageClass: openebs-hostpath
+    #     accessMode: ReadWriteMany
+    #     size: 20Gi
+    #     retain: true
