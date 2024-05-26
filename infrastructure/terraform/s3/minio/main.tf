@@ -3,7 +3,8 @@ locals {
     "loki",
     "thanos",
     "volsync",
-    "postgresql"
+    "postgresql",
+    "tempo"
   ]
 }
 
