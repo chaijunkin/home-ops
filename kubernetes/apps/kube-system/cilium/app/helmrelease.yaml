@@ -24,10 +24,14 @@ spec:
     keepHistory: false
   values:
     autoDirectNodeRoutes: true
+    bandwidthManager:
+      enabled: true
+      bbr: true
     bgpControlPlane:
       enabled: true
     bpf:
-      masquerade: false
+      masquerade: true
+      tproxy: true
     cni:
       exclusive: false
 
