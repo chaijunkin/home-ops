@@ -26,12 +26,12 @@ spec:
     autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: true
-      bbr: true
+      # bbr: true
     bgpControlPlane:
       enabled: true
     bpf:
-      masquerade: false
-      # tproxy: true
+      masquerade: true
+      tproxy: true
     cni:
       exclusive: false
 
