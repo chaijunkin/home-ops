@@ -32,7 +32,7 @@ spec:
             image:
               pullPolicy: IfNotPresent
               repository: frooodle/s-pdf
-              tag: 0.23.1
+              tag: 0.25.1
             resources:
               requests:
                 memory: 1G
