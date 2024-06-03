@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/chaijunkin/prowlarr
-              tag: 1.15.0.4361@sha256:6784c6d453865170f6f73b70ee913d84d61a0fd98639d4d537225fe3ed5e076c
+              tag: 1.18.0.4543@sha256:c8ac0d0e4b69b79c7248fbf61771a11c2af7e8df75f20db1d2d8ef55680987fd
             env:
               TZ: ${TIMEZONE}
               PROWLARR__INSTANCE_NAME: Prowlarr
