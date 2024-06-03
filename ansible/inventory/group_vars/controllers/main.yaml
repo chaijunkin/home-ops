@@ -20,6 +20,8 @@ k3s_server:
   kubelet-arg:
     - "image-gc-high-threshold=55"
     - "image-gc-low-threshold=50"
+    - "max-pods=250"
+
   node-ip: "{{ ansible_host }}"
   pause-image: registry.k8s.io/pause:3.9
   secrets-encryption: true
