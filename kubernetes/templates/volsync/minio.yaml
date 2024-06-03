@@ -79,7 +79,7 @@ spec:
     schedule: "0 * * * *"
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
-    pruneIntervalDays: 10
+    pruneIntervalDays: 7
     repository: "${APP}-volsync"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
@@ -91,9 +91,7 @@ spec:
       runAsUser: "${VOLSYNC_UID:-1002}"
       runAsGroup: "${VOLSYNC_GID:-1002}"
       fsGroup: "${VOLSYNC_GID:-1002}"
-    # retain:
-    #   hourly: 24
-    #   daily: 10
-    #   weekly: 5
     retain:
-      weekly: 1
+      hourly: 24
+      daily: 7
+      weekly: 5
