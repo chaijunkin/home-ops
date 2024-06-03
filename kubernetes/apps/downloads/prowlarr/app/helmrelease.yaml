@@ -97,7 +97,7 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/prowlarr.png
           gethomepage.dev/widget.type: prowlarr
           gethomepage.dev/widget.url: http://prowlarr.downloads
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_PROWLARR_TOKEN}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         className: internal
         hosts:
