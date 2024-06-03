@@ -42,7 +42,7 @@ resource "proxmox_vm_qemu" "qemu_vm" {
       tag    = network.value.tag
     }
   }
-  dynamic "disk" {
+  dynamic "disks" {
     for_each = var.vm_disk
     content {
       type    = disk.value.type
