@@ -21,13 +21,20 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
+  dependsOn:
+    - name: authentik
+      namespace: security
+    - name: kube-prometheus-stack
+      namespace: observability
+    - name: loki
+      namespace: observability
   values:
     extraInitContainers:
       - name: 01-init-db
         image: ghcr.io/onedr0p/postgres-init:16
+        imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
               name: &secret grafana-secret
