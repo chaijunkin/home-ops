@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository:  ghcr.io/chaijunkin/tautulli
-              tag: 2.13.4@sha256:dffcb7783953670ba478b2d5ce4ebd9cf1ba14a8b2f6ba643d3b095a2abc1137
+              tag: 2.14.2@sha256:6a08c633ef61dfff196964c806fd0d77b5c90c5013603667c71da03bf17215a0
             env:
               TZ: ${TIMEZONE}
             resources:
