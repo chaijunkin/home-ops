@@ -19,14 +19,6 @@ alerting:
       send-on-resolved: true
       failure-threshold: 5
       success-threshold: 2
-  pushover:
-    application-token: ${CUSTOM_PUSHOVER_TOKEN}
-    user-key: ${CUSTOM_PUSHOVER_USER_KEY}
-    default-alert:
-      description: health-check failed
-      send-on-resolved: true
-      failure-threshold: 5
-      success-threshold: 2
 connectivity:
   checker:
     target: 1.1.1.1:53
