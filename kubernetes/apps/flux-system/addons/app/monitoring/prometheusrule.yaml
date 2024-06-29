@@ -9,14 +9,14 @@ spec:
   groups:
     - name: flux.rules
       rules:
-        - alert: FluxComponentAbsent
-          annotations:
-            summary: Flux component has disappeared from Prometheus target discovery.
-          expr: |
-            absent(up{job=~".*flux-system.*"} == 1)
-          for: 15m
-          labels:
-            severity: critical
+        # - alert: FluxComponentAbsent
+        #   annotations:
+        #     summary: Flux component has disappeared from Prometheus target discovery.
+        #   expr: |
+        #     absent(up{job=~".*flux-system.*"} == 1)
+        #   for: 15m
+        #   labels:
+        #     severity: critical
         - alert: FluxReconciliationFailure
           annotations:
             summary: >-
