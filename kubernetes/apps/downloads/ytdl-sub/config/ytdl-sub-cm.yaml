@@ -38,6 +38,7 @@ data:
       ytdl_options:
         break_on_existing: True
         break_on_reject: True
+        final_ext: m4a
         cachedir: "/tmp/ytdl-sub/"
     YouTube Releases:
       = Chill:  # Sets genre tag to "Chill"
