@@ -1,0 +1,37 @@
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ytdl-sub-config
+data:
+  config.yml: |
+    configuration:
+      working_directory: "/tmp/ytdl-sub/"
+
+    presets:
+      Single:
+        download:
+          download_strategy: "url"
+
+        ytdl_options:
+          format: "bv[ext=mp4]+ba[ext=m4a]"
+          ignoreerrors: True
+          break_on_existing: True
+          break_on_reject: True
+          final_ext: m4a
+          cachedir: "/tmp/ytdl-sub/"
+
+        date_range:
+          before: "{download_before}"
+          after: "{download_after}"
+
+        overrides:
+          music_directory: "/media/Music/youtube"
+          download_before: "now"
+          download_after: "19000101"
+
+  subscriptions.yml: |-
+    YouTube Releases:
+      = Chill:  # Sets genre tag to "Chill"
+        "JAPAN": "https://youtube.com/playlist?list=PLkxXh7ZaWJdfvWz7-9fopddgvPd7boqLT&si=JCPK_rG0itTJ3rIQ"

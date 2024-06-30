@@ -1,0 +1,88 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ytdl-sub
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      ytdl-sub:
+        type: cronjob
+        annotations:
+          reloader.stakater.com/auto: "true"
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "0 0 * * *"
+          ttlSecondsAfterFinished: 86400
+          startingDeadlineSeconds: 30
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+          backoffLimit: 6
+        pod:
+          securityContext:
+            runAsUser: &user 1004
+            runAsGroup: &group 1004
+            fsGroup: *group
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/jmbannon/ytdl-sub
+              tag: 2023.10.25.post3
+            command:
+              - bash
+              - -c
+              - |
+                set -e
+                ytdl-sub --log-level=debug \
+                        --config=/config/config.yml \
+                        sub /config/subscriptions.yml
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            env:
+              TZ: ${TIMEZONE}
+              PUID: *user
+              PGID: *group
+              MEDIA_FOLDER: /media/Musics
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                memory: 2000Mi
+    persistence:
+      config:
+        name: "{{ .Release.Name }}-config"
+        type: configMap
+        defaultMode: 0755
+        globalMounts:
+          - path: /config
+            readOnly: true
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp/ytdl-sub
+      media:
+        enabled: true
+        existingClaim: pvc-smb-media
+        globalMounts:
+        - path: /media
