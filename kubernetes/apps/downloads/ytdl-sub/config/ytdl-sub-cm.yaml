@@ -8,10 +8,7 @@ data:
   config.yml: |
     configuration:
       working_directory: "/tmp/ytdl-sub/"
-      music_directory: "/media/Music/youtube"
 
-    overrides:
-      music_directory: "/media/Music/youtube"
     # presets:
     #   Single:
     #     download:
@@ -35,6 +32,9 @@ data:
     #       download_after: "19000101"
 
   subscriptions.yml: |-
+    __preset__:
+      overrides:
+        music_directory: "/media/Music/youtube"
     YouTube Releases:
       = Chill:  # Sets genre tag to "Chill"
         "JAPAN": "https://youtube.com/playlist?list=PLkxXh7ZaWJdfvWz7-9fopddgvPd7boqLT&si=JCPK_rG0itTJ3rIQ"
