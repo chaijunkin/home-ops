@@ -40,6 +40,6 @@ data:
         break_on_reject: True
         final_ext: m4a
         cachedir: "/tmp/ytdl-sub/"
-    YouTube Releases:
+    YouTube Full Albums:
       = Chill:  # Sets genre tag to "Chill"
         "JAPAN": "https://youtube.com/playlist?list=PLkxXh7ZaWJdfvWz7-9fopddgvPd7boqLT&si=JCPK_rG0itTJ3rIQ"
