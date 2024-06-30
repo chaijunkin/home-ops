@@ -73,7 +73,7 @@ spec:
       config:
         name: "{{ .Release.Name }}-config"
         type: configMap
-        defaultMode: 0755
+        # defaultMode: 0755
         globalMounts:
           - path: /config
             readOnly: true
