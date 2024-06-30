@@ -10,6 +10,9 @@ data:
       working_directory: "/tmp/ytdl-sub/"
       music_directory: "/media/Music/youtube"
 
+    __preset__:
+      overrides:
+        music_directory: "/media/Music/youtube"
     # presets:
     #   Single:
     #     download:
