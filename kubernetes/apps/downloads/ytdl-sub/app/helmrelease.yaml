@@ -27,13 +27,14 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         cronjob:
+          # schedule: "0 0 5 31 2" # Disable cronjob by giving it a schedule that will never run
           concurrencyPolicy: Forbid
           schedule: "0 0 * * *"
           ttlSecondsAfterFinished: 86400
           startingDeadlineSeconds: 30
           successfulJobsHistory: 1
           failedJobsHistory: 1
-          backoffLimit: 6
+          backoffLimit: 2
         # pod:
         #   securityContext:
         #     runAsUser: &user 1004
@@ -60,8 +61,8 @@ spec:
             #       - ALL
             env:
               TZ: ${TIMEZONE}
-              # PUID: *user
-              # PGID: *group
+              PUID: 0
+              PGID: 0
               MEDIA_FOLDER: /media/Music
             resources:
               requests:
