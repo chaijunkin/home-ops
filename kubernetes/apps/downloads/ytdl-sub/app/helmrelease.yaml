@@ -34,12 +34,12 @@ spec:
           successfulJobsHistory: 1
           failedJobsHistory: 1
           backoffLimit: 6
-        pod:
-          securityContext:
-            runAsUser: &user 1004
-            runAsGroup: &group 1004
-            fsGroup: *group
-            fsGroupChangePolicy: "OnRootMismatch"
+        # pod:
+        #   securityContext:
+        #     runAsUser: &user 1004
+        #     runAsGroup: &group 1004
+        #     fsGroup: *group
+        #     fsGroupChangePolicy: "OnRootMismatch"
         containers:
           app:
             image:
@@ -53,16 +53,16 @@ spec:
                 ytdl-sub --log-level=debug \
                         --config=/config/config.yml \
                         sub /config/subscriptions.yml
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   capabilities:
+            #     drop:
+            #       - ALL
             env:
               TZ: ${TIMEZONE}
-              PUID: *user
-              PGID: *group
-              MEDIA_FOLDER: /media/Musics
+              # PUID: *user
+              # PGID: *group
+              MEDIA_FOLDER: /media/Music
             resources:
               requests:
                 cpu: 100m
