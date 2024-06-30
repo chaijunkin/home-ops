@@ -35,6 +35,10 @@ data:
     __preset__:
       overrides:
         music_directory: "/media/Music/youtube"
+      ytdl_options:
+        break_on_existing: True
+        break_on_reject: True
+        cachedir: "/tmp/ytdl-sub/"
     YouTube Releases:
       = Chill:  # Sets genre tag to "Chill"
         "JAPAN": "https://youtube.com/playlist?list=PLkxXh7ZaWJdfvWz7-9fopddgvPd7boqLT&si=JCPK_rG0itTJ3rIQ"
