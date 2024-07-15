@@ -43,3 +43,19 @@ data:
     YouTube Full Albums:
       = Chill:  # Sets genre tag to "Chill"
         "JAPAN": "https://youtube.com/playlist?list=PLkxXh7ZaWJdfvWz7-9fopddgvPd7boqLT&si=JCPK_rG0itTJ3rIQ"
+        ## "ARTIST": "RELEASE URL/PLAYLIST URL/SONG URL"
+    
+    # Supports downloading YouTube /releases tab. Also works for any playlist (or playlist of playlists)
+    # # where each video is a single track.
+    # YouTube Releases:
+    #   = Jazz:  # Sets genre tag to "Jazz"
+    #     "Lester Young": "https://www.youtube.com/channel/UCsItMF6_fP754ihIsSRLk5A/playlists"
+    #     "Thelonious Monk": "https://www.youtube.com/@theloniousmonk3870/releases"
+    #     "Stan Getz": "https://www.youtube.com/@stangetzofficial/releases"
+    #     "Art Blakey": "https://www.youtube.com/channel/UCMki-b0zfAQiMQ0nbsrIuBQ/playlists"
+
+    # # Supports downloading playlists or individual videos where a single video is a full album.
+    # # ytdl-sub will split the album based on video chapters, and make each chapter a track.
+    # YouTube Full Albums:
+    #   = Lofi:
+    #     "Game Chops": "https://www.youtube.com/playlist?list=PLBsm_SagFMmdWnCnrNtLjA9kzfrRkto4i"
