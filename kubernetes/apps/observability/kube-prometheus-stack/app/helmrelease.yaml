@@ -42,7 +42,7 @@ spec:
           - hosts:
               - *host
       alertmanagerSpec:
-        replicas: 0
+        replicas: 1
         image:
           registry: quay.io
           repository: prometheus/alertmanager
