@@ -456,6 +456,11 @@ spec:
         retention: 2d
         retentionSize: 15GB
         replicas: 1
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            memory: 2000Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
