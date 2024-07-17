@@ -178,9 +178,9 @@ spec:
       rules:
         enabled: false
       serviceMonitor:
-        enabled: false
+        enabled: true
         metricsInstance:
-          enabled: false
+          enabled: true
       selfMonitoring:
         enabled: false
         grafanaAgent:
