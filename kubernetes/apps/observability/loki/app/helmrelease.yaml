@@ -67,7 +67,7 @@ spec:
             enabled: true
           ### loki feature
           volume_enabled: true
-          discover_service_name: app
+          discover_service_name: ["app"]
         query_scheduler:
           max_outstanding_requests_per_tenant: 4096
         frontend:
