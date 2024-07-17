@@ -39,9 +39,8 @@ spec:
             resources:
               requests:
                 cpu: 20m
-                memory: 100M
               limits:
-                memory: 250M
+                memory: 1Gi
             # securityContext: &securityContext
             #   allowPrivilegeEscalation: false
             #   readOnlyRootFilesystem: true
