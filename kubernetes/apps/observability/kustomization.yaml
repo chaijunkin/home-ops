@@ -11,7 +11,7 @@ resources:
   - ./karma/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  # - ./loki/ks.yaml
+  - ./loki/ks.yaml
   # - ./tempo/ks.yaml  ## maybe will use it
   - ./thanos/ks.yaml
   - ./vector/ks.yaml
