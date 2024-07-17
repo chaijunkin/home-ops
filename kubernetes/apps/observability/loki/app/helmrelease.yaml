@@ -25,7 +25,15 @@ spec:
   uninstall:
     keepHistory: false
   valuesFrom:
-  - targetPath: loki.storage.s3.bucketNames.chunks
+  - targetPath: loki.storage.bucketNames.chunks
+    kind: Secret
+    name: loki-secret
+    valuesKey: BUCKET_NAME
+  - targetPath: loki.storage.bucketNames.ruler
+    kind: Secret
+    name: loki-secret
+    valuesKey: BUCKET_NAME
+  - targetPath: loki.storage.bucketNames.admin
     kind: Secret
     name: loki-secret
     valuesKey: BUCKET_NAME
@@ -117,9 +125,6 @@ spec:
 
       storage:
         type: s3
-        bucketNames:
-          ruler: loki-ruler
-          admin: loki-admin
         s3:
           s3ForcePathStyle: true
           insecure: false
