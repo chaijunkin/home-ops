@@ -65,9 +65,9 @@ spec:
           per_stream_rate_limit_burst: 20MB
           shard_streams:
             enabled: true
-          ### loki feature
+          ### grafana explore loki feature
           volume_enabled: true
-          discover_service_name: ["app"]
+          # discover_service_name: ["app"]
         query_scheduler:
           max_outstanding_requests_per_tenant: 4096
         frontend:
