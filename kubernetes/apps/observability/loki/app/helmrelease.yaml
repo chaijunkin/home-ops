@@ -183,7 +183,7 @@ spec:
       rules:
         enabled: false
       serviceMonitor:
-        enabled: true
+        enabled: false
         metricsInstance:
           enabled: true
       selfMonitoring:
