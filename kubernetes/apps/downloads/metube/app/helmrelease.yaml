@@ -41,15 +41,15 @@ spec:
               DOWNLOAD_DIR: "/media/Downloads"
               STATE_DIR: "/config"
               YTDL_OPTIONS: '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}}'
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1004
-        runAsGroup: 1004
-        fsGroup: 1004
-        fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000]
-        seccompProfile: { type: RuntimeDefault }
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 1004
+    #     runAsGroup: 1004
+    #     fsGroup: 1004
+    #     fsGroupChangePolicy: OnRootMismatch
+    #     supplementalGroups: [10000]
+    #     seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: *app
