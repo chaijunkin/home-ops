@@ -61,8 +61,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.5.5@sha256:7c9514d573dddae6eaa0ec452e70f52a3e789cb6f348cb69d4fecc2bfa3dc10e
+              repository: ghcr.io/chaijunkin/home-assistant
+              tag: 2024.7.3@sha256:48c9db9faf12445174e69b3a4abedad7acf2e4cc03428a448d0b15781a97c1ce
             env:
               TZ: ${TIMEZONE}
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
