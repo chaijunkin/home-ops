@@ -50,13 +50,13 @@ spec:
                 "ips": ["10.10.10.254/24"]
               }]
             
-          # securityContext:
-          #   runAsNonRoot: true
-          #   runAsUser: 568
-          #   runAsGroup: 568
-          #   fsGroup: 568
-          #   fsGroupChangePolicy: OnRootMismatch
-          #   seccompProfile: { type: RuntimeDefault }
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile: { type: RuntimeDefault }
         containers:
           app:
             image:
@@ -66,12 +66,12 @@ spec:
               TZ: ${TIMEZONE}
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
               HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
-            # securityContext:
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities:
-            #     drop:
-            #       - ALL
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
             envFrom:
               - secretRef:
                   name: home-assistant-secret
