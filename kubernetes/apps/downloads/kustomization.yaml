@@ -6,6 +6,7 @@ resources:
   - ./namespace.yaml
   - ./pvc.yaml
   # Flux-Kustomizations
+  - ./autobangumi/ks.yaml
   - ./bazarr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./lidarr/ks.yaml
