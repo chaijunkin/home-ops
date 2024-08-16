@@ -80,7 +80,7 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /app/config
-      downloads:
+      media:
         enabled: true
         existingClaim: pvc-smb-media
       tmp:
