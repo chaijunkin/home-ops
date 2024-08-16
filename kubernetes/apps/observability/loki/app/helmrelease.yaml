@@ -91,8 +91,8 @@ spec:
         shard_streams:
           enabled: true
         split_queries_by_interval: 1h
-        ### grafana explore loki feature  ### FK THIS TAKE ME 3GB on loki-cache :)
-        # volume_enabled: true
+        ### grafana explore loki feature  
+        volume_enabled: true
         # discover_service_name: ["app"]
 
       query_scheduler:
@@ -199,6 +199,10 @@ spec:
         folder: /rules/fake
 
     lokiCanary:
+      enabled: false
+    chunksCache:  ### FK THIS TAKE ME 3GB on loki-cache :)
+      enabled: false
+    resultsCache:
       enabled: false
 
     test:
