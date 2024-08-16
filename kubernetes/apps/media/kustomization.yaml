@@ -12,4 +12,5 @@ resources:
   - ./overseerr/ks.yaml
   - ./paperless/ks.yaml
   - ./plex/ks.yaml
+  - ./tachidesk/ks.yaml
   - ./tautulli/ks.yaml
