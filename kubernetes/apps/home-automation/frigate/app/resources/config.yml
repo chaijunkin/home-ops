@@ -70,7 +70,36 @@ objects:
 #     frigate_basement_hq: rtspx://192.168.1.1:7441/ClBFQnBDDpfV3LeX
 #     frigate_basement_lq: rtspx://192.168.1.1:7441/RCB8niMyOC24qh2G
 
+go2rtc:
+  streams:
+    reolink_rlc1212a_frontdoor:
+      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={REOLINK_USERNAME}&password={REOLINK_USERNAME}#video=copy#audio=copy#audio=opus"
+      - rtsp://{REOLINK_USERNAME}:{REOLINK_PASSWORD}@10.10.32.4:554
+    reolink_rlc1212a_frontdoor_sub:
+      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={REOLINK_USERNAME}&password={REOLINK_USERNAME}"
+  ffmpeg:
+    bin: ffmpeg
+    volume: "-af \"volume=30dB\""
+
 cameras:
+  reolink_rlc1212a_frontdoor:
+    enabled: True
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+      output_args:
+        record: preset-record-generic-audio-aac
+    live:
+      stream_name: reolink_rlc1212a_frontdoor
+    detect:
+      enabled: False # <---- disable detection until you have a working camera feed
 #   frigate_porch:
 #     ffmpeg:
 #       inputs:
