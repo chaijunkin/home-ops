@@ -26,7 +26,7 @@ ffmpeg:
   global_args: ["-hide_banner", "-loglevel", "warning"]
   hwaccel_args: preset-intel-qsv-h264
   output_args:
-    record: preset-record-ubiquiti
+    record: preset-record-generic-audio-copy	
 
 snapshots:
   enabled: true
