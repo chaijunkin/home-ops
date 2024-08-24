@@ -150,7 +150,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_frontdoor
+        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor
           input_args: preset-rtsp-restream
           roles:
             - record
@@ -161,7 +161,7 @@ cameras:
       output_args:
         record: preset-record-generic-audio-aac
     live:
-      stream_name: reolink_rlc811a_frontdoor
+      stream_name: reolink_rlc811a_backdoor
     detect:
       enabled: False # <---- disable detection until you have a working camera feed
 #   frigate_porch:
