@@ -178,3 +178,14 @@ cameras:
   #     width: 1024
   #     height: 576
   #     fps: 10
+
+camera_groups:
+  # Required: Name of camera group
+  front:
+    # Required: list of cameras in the group
+    cameras:
+      - reolink_rlc1212a_frontdoor
+    # Required: icon used for group
+    icon: LuCar
+    # Required: index of this group
+    order: 0
