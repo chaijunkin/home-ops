@@ -73,10 +73,10 @@ objects:
 go2rtc:
   streams:
     reolink_rlc1212a_frontdoor:
-      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={REOLINK_USERNAME}&password={REOLINK_USERNAME}#video=copy#audio=copy#audio=opus"
+      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={REOLINK_USERNAME}&password={REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{REOLINK_USERNAME}:{REOLINK_PASSWORD}@10.10.32.4:554
     reolink_rlc1212a_frontdoor_sub:
-      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={REOLINK_USERNAME}&password={REOLINK_USERNAME}"
+      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={REOLINK_USERNAME}&password={REOLINK_PASSWORD}"
   ffmpeg:
     bin: ffmpeg
     volume: "-af \"volume=30dB\""
