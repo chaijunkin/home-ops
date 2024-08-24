@@ -12,7 +12,7 @@ kubeconform_args=(
     "-strict"
     "-ignore-missing-schemas"
     "-skip"
-    "Secret,ReplicationSource,ReplicationDestination"
+    "Secret,ReplicationSource,ReplicationDestination,CiliumLoadBalancerIPPool"
     "-schema-location"
     "default"
     "-schema-location"
