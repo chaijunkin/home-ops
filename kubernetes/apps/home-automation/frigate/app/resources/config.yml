@@ -73,11 +73,20 @@ objects:
 go2rtc:
   streams:
     reolink_rlc1212a_frontdoor:
+      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
+      - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
+    # reolink_rlc1212a_frontdoor_sub:
+    #   # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}"
+    #   - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
+    reolink_rlc520a_upstair:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
-      - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
-    reolink_rlc1212a_frontdoor_sub:
-      # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}"
-      - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
+      - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.2:554
+    reolink_rlc811a_backdoor:
+      # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
+      - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.3:554
+    reolink_rlc520a_dining:
+      # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
+      - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.5:554
   # ffmpeg:
   #   bin: ffmpeg
   #   volume: "-af \"volume=30dB\""
@@ -91,14 +100,68 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - record
-        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
-          input_args: preset-rtsp-restream
-          roles:
-            - detect
+        # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
+        #   input_args: preset-rtsp-restream
+        #   roles:
+        #     - detect
       output_args:
         record: preset-record-generic-audio-aac
     live:
       stream_name: reolink_rlc1212a_frontdoor
+    detect:
+      enabled: False # <---- disable detection until you have a working camera feed
+  reolink_rlc520a_dining:
+    enabled: True
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/reolink_rlc520a_dining
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
+        #   input_args: preset-rtsp-restream
+        #   roles:
+        #     - detect
+      output_args:
+        record: preset-record-generic-audio-aac
+    live:
+      stream_name: reolink_rlc520a_dining
+    detect:
+      enabled: False # <---- disable detection until you have a working camera feed
+  reolink_rlc520a_upstair:
+    enabled: True
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/reolink_rlc520a_upstair
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
+        #   input_args: preset-rtsp-restream
+        #   roles:
+        #     - detect
+      output_args:
+        record: preset-record-generic-audio-aac
+    live:
+      stream_name: reolink_rlc520a_upstair
+    detect:
+      enabled: False # <---- disable detection until you have a working camera feed
+  reolink_rlc811a_backdoor:
+    enabled: True
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_frontdoor
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+        # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
+        #   input_args: preset-rtsp-restream
+        #   roles:
+        #     - detect
+      output_args:
+        record: preset-record-generic-audio-aac
+    live:
+      stream_name: reolink_rlc811a_frontdoor
     detect:
       enabled: False # <---- disable detection until you have a working camera feed
 #   frigate_porch:
