@@ -22,5 +22,5 @@ kind: CiliumLoadBalancerIPPool
 metadata:
   name: pool
 spec:
-  cidrs:
+  blocks:
     - cidr: "${BGP_ADVERTISED_CIDR}"
