@@ -120,7 +120,6 @@ The alternative solution to these two problems would be to host a Kubernetes clu
 | [Bitwarden](https://bitwarden.com/)             | Secrets with [External Secrets](https://external-secrets.io/)     | ~$TBC/yr       |
 | [Cloudflare](https://www.cloudflare.com/)       | Domain and S3                                                     | ~$TBC/yr       |
 | [GitHub](https://github.com/)                   | Hosting this repository and continuous integration/deployments    | Free           |
-<!-- | [NextDNS](https://nextdns.io/)                  | My router DNS server which includes AdBlocking                    | ~$20/yr        | -->
 | [Uptimekuma](https://uptimerobot.com/)          | Monitoring internet connectivity and external facing applications | Free           |
 |                                                 |                                                                   | Total: ~$TBC/mo|
 
