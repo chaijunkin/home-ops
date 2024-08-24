@@ -164,99 +164,17 @@ cameras:
       stream_name: reolink_rlc811a_backdoor
     detect:
       enabled: False # <---- disable detection until you have a working camera feed
-#   frigate_porch:
-#     ffmpeg:
-#       inputs:
-#         - path: rtsp://localhost:8554/frigate_porch_lq
-#           roles: ["detect"]
-#         - path: rtsp://localhost:8554/frigate_porch_hq
-#           roles: ["record"]
-#     detect:
-#       width: 960
-#       height: 720
-#       fps: 10
-#     objects:
-#       filters:
-#         person:
-#           mask:
-#             - 39,445,199,427,198,263,36,228
-#             - 304,218,304,408,198,434,198,262
-#             - 305,411,485,382,615,393,612,335,578,321,574,233,549,118,308,209
 
-#   frigate_driveway:
-#     ffmpeg:
-#       inputs:
-#         - path: rtsp://localhost:8554/frigate_driveway_lq
-#           roles: ["detect"]
-#         - path: rtsp://localhost:8554/frigate_driveway_hq
-#           roles: ["record"]
-#     detect:
-#       width: 1280
-#       height: 720
-#       fps: 10
-#     objects:
-#       filters:
-#         person:
-#           mask:
-#             - 822,204,1280,360,1280,0,0,0,0,313
-
-#   frigate_garage:
-#     ffmpeg:
-#       inputs:
-#         - path: rtsp://localhost:8554/frigate_garage_lq
-#           roles: ["detect"]
-#         - path: rtsp://localhost:8554/frigate_garage_hq
-#           roles: ["record"]
-#     detect:
-#       width: 1024
-#       height: 576
-#       fps: 10
-
-#   frigate_river:
-#     ffmpeg:
-#       inputs:
-#         - path: rtsp://localhost:8554/frigate_river_lq
-#           roles: ["detect"]
-#         - path: rtsp://localhost:8554/frigate_river_hq
-#           roles: ["record"]
-#     detect:
-#       width: 1280
-#       height: 720
-#       fps: 10
-
-#   frigate_study:
-#     ffmpeg:
-#       inputs:
-#         - path: rtsp://localhost:8554/frigate_study_lq
-#           roles: ["detect"]
-#         - path: rtsp://localhost:8554/frigate_study_hq
-#           roles: ["record"]
-#     detect:
-#       width: 1280
-#       height: 720
-#       fps: 10
-
-  frigate_living_room:
-    enabled: False
-    ffmpeg:
-      inputs:
-        - path: rtsp://localhost:8554/frigate_living_room_lq
-          roles: ["detect"]
-        - path: rtsp://localhost:8554/frigate_living_room_hq
-          roles: ["record"]
-    detect:
-      width: 1024
-      height: 576
-      fps: 10
-
-#   frigate_basement_1:
-#     ffmpeg:
-#       inputs:
-#         - path: rtsp://localhost:8554/frigate_basement_lq
-#           roles: ["detect"]
-#         - path: rtsp://localhost:8554/frigate_basement_hq
-#           roles: ["record"]
-#     detect:
-#       width: 1280
-#       height: 720
-#       fps: 10
+  ## DUMMY CONFIG
+  # frigate_living_room:
+  #   enabled: False
+  #   ffmpeg:
+  #     inputs:
+  #       - path: rtsp://localhost:8554/frigate_living_room_lq
+  #         roles: ["detect"]
+  #       - path: rtsp://localhost:8554/frigate_living_room_hq
+  #         roles: ["record"]
+  #   detect:
+  #     width: 1024
+  #     height: 576
+  #     fps: 10
