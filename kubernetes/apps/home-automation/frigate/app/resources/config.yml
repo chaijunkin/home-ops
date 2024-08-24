@@ -78,9 +78,9 @@ go2rtc:
     reolink_rlc1212a_frontdoor_sub:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={REOLINK_USERNAME}&password={REOLINK_PASSWORD}"
       - rtsp://{REOLINK_USERNAME}:{REOLINK_PASSWORD}@10.10.32.4:554
-  ffmpeg:
-    bin: ffmpeg
-    volume: "-af \"volume=30dB\""
+  # ffmpeg:
+  #   bin: ffmpeg
+  #   volume: "-af \"volume=30dB\""
 
 cameras:
   reolink_rlc1212a_frontdoor:
