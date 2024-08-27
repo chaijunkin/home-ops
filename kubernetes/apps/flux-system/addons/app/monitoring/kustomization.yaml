@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./podmonitor.yaml
-  - ./prometheusrule.yaml
+  # - ./prometheusrule.yaml  # replica down random, noisy, sadge
