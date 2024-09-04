@@ -66,3 +66,15 @@ sinks:
       app: '{{ custom_app_name }}'
       namespace: '{{ kubernetes.pod_namespace }}'
       node: '{{ kubernetes.pod_node_name }}'
+
+  accesspoint:
+    type: loki
+    inputs:
+      - accesspoint_syslog
+    endpoint: http://loki-gateway.monitoring.svc.cluster.local
+    encoding:
+      codec: json
+    out_of_order_action: rewrite_timestamp
+    labels:
+      # hostname: "{{ host }}"
+      datasource: source_syslog
