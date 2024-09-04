@@ -72,9 +72,8 @@ sinks:
     inputs:
       - accesspoint_syslog
     endpoint: http://loki-gateway.observability.svc.cluster.local
-    encoding:
-      codec: json
-    out_of_order_action: rewrite_timestamp
+    encoding: { codec: json }
+    # out_of_order_action: rewrite_timestamp
     labels:
       # hostname: "{{ host }}"
       datasource: source_syslog
