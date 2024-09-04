@@ -14,6 +14,11 @@ sources:
     version: "2"
     address: 0.0.0.0:6000
 
+  accesspoint_syslog:
+    type: syslog
+    mode: tcp
+    address: 0.0.0.0:6001
+
   kubernetes_source:
     type: vector
     version: "2"
