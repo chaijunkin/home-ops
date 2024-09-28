@@ -37,6 +37,7 @@ spec:
         containers:
           # gluetu3scalation: true
           app:
+            nameOverride: qbittorrent
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
               tag: 4.6.7
@@ -150,15 +151,12 @@ spec:
           gethomepage.dev/description: Torrent Client
           gethomepage.dev/widget.type: qbittorrent
           gethomepage.dev/widget.url: http://qbittorrent.downloads:8080
-          gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
-          gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"
+          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}` }}"
+          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}` }}"
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_hide_header "x-webkit-csp";
             proxy_hide_header "content-security-policy";
             proxy_hide_header "X-Frame-Options";
-            proxy_set_header Accept-Encoding "";
-            sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.${SECRET_DOMAIN}/css/base/qbittorrent/onedark.css"></head>';
-            sub_filter_once on;
         hosts:
           - host: &host "qb.${SECRET_DOMAIN}"
             paths:
