@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.0.4
+      version: 3.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
-              tag: 4.6.5@sha256:f9b0a01a0928b9996e43c5d54dc29b1829b45eefcc5f363f247066031ba9699d
+              tag: 4.6.7
             env:
               TZ: ${TIMEZONE}
               UMASK: "022"
@@ -47,6 +47,18 @@ spec:
               QBITTORRENT__BT_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1:=51820}"
               # QBT_BitTorrent__Session__Interface: vxlan0
               # QBT_BitTorrent__Session__InterfaceName: vxlan0
+              # QBT_Application__MemoryWorkingSetLimit:
+              #   valueFrom:
+              #     resourceFieldRef:
+              #       resource: limits.memory
+              #       containerName: app
+              #       divisor: 1Mi
+              QBT_Preferences__WebUI__AlternativeUIEnabled: true
+              # QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
+              # QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
+              #   172.16.0.0/16, 10.1.2.0/24
+              # QBT_Preferences__WebUI__LocalHostAuth: false
+              QBT_Preferences__WebUI__RootFolder: /addons/VueTorrent
             resources:
               requests:
                 cpu: 25m
@@ -84,6 +96,22 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
+          vuetorrent:
+            dependsOn: app
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.3.0
+            args:
+              - --repo=https://github.com/WDaan/VueTorrent
+              - --ref=latest-release
+              - --period=86400s
+              - --root=/addons
+            resources:
+              requests:
+                cpu: 10m
+                memory: 25Mi
+              limits:
+                memory: 50Mi
         #   affinity:
         #     podAntiAffinity:
         #       requiredDuringSchedulingIgnoredDuringExecution:
@@ -93,6 +121,7 @@ spec:
         #                 operator: In
         #                 values: ["sabnzbd"]
         #           topologyKey: kubernetes.io/hostname
+
     service:
       app:
         controller: *app
