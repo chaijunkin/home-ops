@@ -173,4 +173,7 @@ spec:
       media:
         enabled: true
         existingClaim: pvc-smb-media
-        
+      addons:
+        type: emptyDir
+        globalMounts:
+          - path: /addons
