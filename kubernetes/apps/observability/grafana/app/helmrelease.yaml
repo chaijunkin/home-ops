@@ -315,11 +315,6 @@ spec:
           gnetId: 15759
           revision: 32
           datasource: Prometheus
-        kubernetes-pods:
-          # renovate: depName="Kubernetes / Views / Pods"
-          gNetId: 15760
-          revision: 32
-          datasource: Prometheus
         kubernetes-prometheus:
           # renovate: depName="Prometheus"
           gNetId: 19105
@@ -329,6 +324,11 @@ spec:
           # renovate: depName="K8s / Storage / Volumes / Cluster"
           gnetId: 11454
           revision: 14
+          datasource: Prometheus
+        kubernetes-pods:
+          # renovate: depName="Kubernetes / Views / Pods"
+          gNetId: 15760
+          revision: 32
           datasource: Prometheus
       emqx:
         emqx-authentication:
