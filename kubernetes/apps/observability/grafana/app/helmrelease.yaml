@@ -114,6 +114,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/emqx
+          - name: node-monitoring
+            orgId: 1
+            folder: Node
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/node-monitoring
           - name: cilium
             orgId: 1
             folder: Cilium
