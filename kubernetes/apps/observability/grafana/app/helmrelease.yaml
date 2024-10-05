@@ -230,6 +230,20 @@ spec:
       #   host-overview:
       #     url: https://raw.githubusercontent.com/ceph/ceph/main/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
       #     datasource: Prometheus
+      node-monitoring:
+        node-exporter-full:
+          # renovate: depName="Node Exporter Full"
+          gnetId: 1860
+          revision: 37
+          datasource: Prometheus
+        node-exporter-bsd:
+          # renovate: depName="Node Exporter BSD"
+          gnetId: 4260
+          revision: 12
+          datasource: Prometheus
+        node-feature-discovery:
+          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
+          datasource: Prometheus
       data:
         dragonfly:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly/e1b03d605c5376fe36d8a45633ee964f52a70af0/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json
@@ -288,7 +302,7 @@ spec:
         kubernetes-pods:
           # renovate: depName="Kubernetes / Views / Pods"
           gNetId: 15760
-          revision: 21
+          revision: 32
           datasource: Prometheus
         kubernetes-prometheus:
           # renovate: depName="Prometheus"
@@ -322,6 +336,31 @@ spec:
         emqx-rule-engine-rate:
           url: https://raw.githubusercontent.com/emqx/emqx-exporter/main/grafana-dashboard/template/emqx-5/rule-engine-rate.json
           datasource: Prometheus
+      media:
+        jellyseerr-exporter:
+          url: https://raw.githubusercontent.com/opspotes/jellyseerr-exporter/main/grafana/dashboard.json
+          datasource: Prometheus
+        qbittorrent-exporter:
+          url: https://raw.githubusercontent.com/esanchezm/prometheus-qbittorrent-exporter/master/grafana/dashboard.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+        transmission-exporter:
+          url: https://raw.githubusercontent.com/metalmatze/transmission-exporter/refs/heads/master/dashboards/dashboard.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+        exportarr:
+          url: https://raw.githubusercontent.com/onedr0p/exportarr/master/examples/grafana/dashboard2.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: Prometheus
+        plex-exporter:
+          url: https://raw.githubusercontent.com/jsclayton/prometheus-plex-exporter/main/examples/dashboards/Media%20Server.json
+          datasource: Prometheus
+        miniflux:
+          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
+          datasource: Prometheus
       network:
         blackbox-exporter:
           # renovate: depName="Prometheus Blackbox Exporter"
@@ -336,6 +375,12 @@ spec:
         #   gnetId: 11315
         #   revision: 9
         #   datasource: Prometheus
+        frigate:
+          # renovate: depName="Frigate"
+          gnetId: 18226
+          revision: 8
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
@@ -347,6 +392,12 @@ spec:
           gnetId: 15038
           revision: 3
           datasource: Prometheus
+        opnsense:
+          # renovate: depName="OPNsense"
+          gnetId: 21113
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS-K0, value: Prometheus }
         speedtest-exporter-hub:
           # renovate: depName="Speedtest Exporter"
           gnetId: 16541
@@ -383,6 +434,12 @@ spec:
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
             - { name: VAR_REPLICATIONDESTNAME, value: '.*-bootstrap'}
+        smart:
+          # renovate: depName="Dashboard for smartctl_exporter"
+          gnetId: 20204
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         # kasa:
         #   # renovate: depName="Kasa"
         #   gnetId: 10957
@@ -395,14 +452,6 @@ spec:
           revision: 26
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-        node-exporter-full:
-          # renovate: depName="Node Exporter Full"
-          gnetId: 1860
-          revision: 37
-          datasource: Prometheus
-        node-feature-discovery:
-          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource: Prometheus
         spegel:
           # renovate: depName="Spegel"
           gnetId: 18089
