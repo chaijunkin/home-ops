@@ -43,7 +43,7 @@ spec:
               OPNSENSE_EXPORTER_INSTANCE_LABEL: "home-firewall"
             envFrom:
               - secretRef:
-                  name: opnsense-exporter
+                  name: opnsense-exporter-secret
             probes:
               liveness:
                 enabled: true
