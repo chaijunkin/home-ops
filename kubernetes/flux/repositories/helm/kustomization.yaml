@@ -23,6 +23,7 @@ resources:
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./kubernetes-sigs-nfd.yaml
+  - ./meshery.yaml
   - ./metrics-server.yaml
   - ./nextcloud.yaml
   - ./openebs.yaml
