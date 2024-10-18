@@ -394,7 +394,7 @@ spec:
         frigate:
           # renovate: depName="Frigate"
           gnetId: 18226
-          revision: 8
+          revision: 9
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
         cloudflared:
