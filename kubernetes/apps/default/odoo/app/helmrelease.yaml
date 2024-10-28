@@ -66,7 +66,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "internal"
+        className: "external"
         hosts:
           - host: &host "odoo.${SECRET_DOMAIN}"
             paths:
