@@ -57,6 +57,12 @@ spec:
                 memory: 4Gi
             envFrom:
               - secret: odoo-secrets
+    service:
+      odoo:
+        controller: odoo
+        ports:
+          http:
+            port: 8069
     ingress:
       main:
         enabled: true
