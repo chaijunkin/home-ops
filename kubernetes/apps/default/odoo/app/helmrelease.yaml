@@ -48,7 +48,7 @@ spec:
         containers:
           odoo:
             image:
-              repository: docker.io/odoo
+              repository: registry-1.docker/odoo
               tag: "18.0"
             resources:
               requests:
