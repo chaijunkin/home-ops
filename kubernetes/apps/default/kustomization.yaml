@@ -11,6 +11,7 @@ resources:
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./miniflux/ks.yaml
+  - ./odoo/ks.yaml
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml
   # - ./stirling-pdf/ks.yaml

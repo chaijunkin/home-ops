@@ -1,0 +1,89 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: odoo
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: ${APP_UID}
+        runAsGroup: ${APP_GID}
+        fsGroup: ${APP_GID}
+        fsGroupChangePolicy: OnRootMismatch
+
+    controllers:
+      odoo:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: odoo-secrets
+
+        containers:
+          odoo:
+            image:
+              repository: registry.hub.docker.com/docker.io/odoo
+              tag: "18.0"
+            resources:
+              requests:
+                memory: 4Gi
+              limits:
+                memory: 4Gi
+            envFrom:
+              - secret: odoo-secrets
+        ingress:
+      main:
+        enabled: true
+        className: "internal"
+        hosts:
+          - host: &host "erp.${SECRET_DOMAIN}"
+            paths:
+              - path: "/"
+                pathType: Prefix
+                service:
+                  identifier: odoo
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      data:
+        existingClaim: "${VOLSYNC_CLAIM}"
+        globalMounts:
+          - path: /var/lib/odoo
+      etc-config-file:
+        type: configMap
+        name: odoo-configmap
+        globalMounts:
+          - path: /etc/odoo/odoo.conf
+            subPath: odoo.conf
+      extra-addons:
+        existingClaim: odoo-addons-v1
+        globalMounts:
+          - path: /mnt/extra-addons
