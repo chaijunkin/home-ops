@@ -46,7 +46,7 @@ spec:
           gethomepage.dev/description: Drawing services
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/excalidraw.png
         enabled: true
-        ingressClassName: external
+        ingressClassName: internal
         hosts:
           - host: &host "drawroom.${SECRET_DOMAIN}"
             paths:

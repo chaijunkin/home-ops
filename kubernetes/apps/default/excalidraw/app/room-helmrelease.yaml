@@ -55,7 +55,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: external
+        className: internal
         hosts:
           - host: &host excalidraw-room.${SECRET_DOMAIN}
             paths:
