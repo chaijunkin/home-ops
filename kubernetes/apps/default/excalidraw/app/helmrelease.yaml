@@ -65,8 +65,6 @@ spec:
         tls:
           - hosts:
               - *host
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: excalidraw-settings
     persistence:
       data:
         enabled: true
