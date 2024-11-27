@@ -26,7 +26,7 @@ spec:
     keepHistory: false
   values:
     image:
-      repository:  ghcr.io/wipash/excalidraw-collab
+      repository: ghcr.io/wipash/excalidraw-collab
       tag: 0.17.3@sha256:1fd7b2fb38f0b2195236168b89e86f18306f861fc86404795fe23b113d837785
     env:
       TZ: ${TIMEZONE}
