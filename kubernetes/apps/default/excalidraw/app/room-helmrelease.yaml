@@ -33,7 +33,7 @@ spec:
         containers:
           main:
             image:
-              repository: excalidraw/excalidraw-room
+              repository: docker.io/excalidraw/excalidraw-room
               tag: latest
               pullPolicy: IfNotPresent
             env:
