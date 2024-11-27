@@ -48,7 +48,7 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: &host "drawroom.${SECRET_DOMAIN}"
+          - host: &host "draw.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
