@@ -34,7 +34,7 @@ spec:
           main:
             image:
               repository: excalidraw/excalidraw-room
-              tag: latest@sha256:2fe999f9be43
+              tag: latest
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
