@@ -26,8 +26,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: ghcr.io/onedr0p/excalidraw
-      tag: latest@sha256:bafe3a1e529aac9e9d536199e77133b60bfce4413458ee0a46e48fb07095d23b
+      repository: lltr/excalidraw-collab
+      tag: v0.17.0
     env:
       TZ: ${TIMEZONE}
       PORT: &port 80
