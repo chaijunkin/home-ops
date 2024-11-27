@@ -25,13 +25,19 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/wipash/excalidraw-collab
-      tag: 0.17.3@sha256:1fd7b2fb38f0b2195236168b89e86f18306f861fc86404795fe23b113d837785
-    env:
-      TZ: ${TIMEZONE}
-      PORT: &port 80
-      COLLAB_ADDR: excalidraw-room.${SECRET_DOMAIN}
+    controllers:
+      main:
+        replicas: 1
+        strategy: RollingUpdate
+        containers:
+          main:            
+            image:
+              repository: ghcr.io/wipash/excalidraw-collab
+              tag: 0.17.3@sha256:1fd7b2fb38f0b2195236168b89e86f18306f861fc86404795fe23b113d837785
+            env:
+              TZ: ${TIMEZONE}
+              PORT: &port 80
+              COLLAB_ADDR: excalidraw-room.${SECRET_DOMAIN}
     service:
       main:
         ports:
