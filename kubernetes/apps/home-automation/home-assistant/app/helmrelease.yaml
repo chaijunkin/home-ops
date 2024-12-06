@@ -61,7 +61,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/home-assistant
-              tag: 2024.7.3@sha256:48c9db9faf12445174e69b3a4abedad7acf2e4cc03428a448d0b15781a97c1ce
+              tag: 2024.12.1@sha256:0527f1471ea600ec547359f09f25874c7f954490fa7c24bac3831e8508066942
             env:
               TZ: ${TIMEZONE}
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
