@@ -101,12 +101,12 @@ locals {
       type    = "CNAME"
       proxied = true
     }
-    "home" = {
-      name    = "@"
-      value   = "chaijunkin.github.io"
-      type    = "CNAME"
-      proxied = true
-    }
+    # "home" = {
+    #   name    = "@"
+    #   value   = "chaijunkin.github.io"
+    #   type    = "CNAME"
+    #   proxied = true
+    # }
     "vaultwarden" = {
       name    = "vw"
       value   = "blue-cherry-8641.fly.dev"
