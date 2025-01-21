@@ -108,20 +108,23 @@ locals {
       proxied = true
     }
     "vaultwarden" = {
-      name  = "vw"
-      value = "blue-cherry-8641.fly.dev"
-      type  = "CNAME"
+      name    = "vw"
+      value   = "blue-cherry-8641.fly.dev"
+      type    = "CNAME"
+      proxied = true
     }
     "external-uptimekuma" = {
-      name  = "ext-uptime"
-      value = "uptime-kuma-rdm12exn709.fly.dev"
-      type  = "CNAME"
+      name    = "ext-uptime"
+      value   = "uptime-kuma-rdm12exn709.fly.dev"
+      type    = "CNAME"
+      proxied = true
     }
 
     "external-uptimekuma-ext" = {
       name  = "ext-status"
       value = "uptime-kuma-rdm12exn709.fly.dev"
       type  = "CNAME"
+      proxied = true
     }
 
     "internal-uptimekuma-ext" = {
