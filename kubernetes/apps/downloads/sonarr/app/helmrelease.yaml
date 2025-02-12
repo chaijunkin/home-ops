@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/sonarr
-              tag: 4.0.5.1710@sha256:43b6517fa219b0b143cad054c642f9e3f0f505f2a63c93b13e020c5cbe041460
+              tag: 4.0.13.2932@sha256:1653025ff84cbf63ed7e265dbb466ded53210ba82954d08f305bfa112063541f
             env:
               TZ: ${TIMEZONE}
               SONARR__AUTHENTICATION_METHOD: External
