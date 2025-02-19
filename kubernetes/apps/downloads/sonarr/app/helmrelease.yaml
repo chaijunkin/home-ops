@@ -57,12 +57,15 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 1000Mi
-        # pod:
-        #   securityContext:
-        #     runAsUser: 568
-        #     runAsGroup: 568
-        #     fsGroup: 568
-        #     fsGroupChangePolicy: OnRootMismatch
+        pod:
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            fsGroup: 0
+            # runAsUser: 568
+            # runAsGroup: 568
+            # fsGroup: 568
+            # fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
