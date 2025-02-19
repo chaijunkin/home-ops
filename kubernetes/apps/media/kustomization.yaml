@@ -7,6 +7,7 @@ resources:
   - ./pvc.yaml
   # # Flux-Kustomizations
   - ./filebrowser/ks.yaml
+  - ./jellyfin/ks.yaml
   - ./minio/ks.yaml
   - ./nextcloud/ks.yaml
   - ./overseerr/ks.yaml
