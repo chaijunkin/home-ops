@@ -81,7 +81,7 @@ spec:
 
     ingress:
       main:
-        className: internal
+        className: external
         annotations:
           nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
