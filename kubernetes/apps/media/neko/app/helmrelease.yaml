@@ -85,7 +85,7 @@ spec:
         annotations:
           nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
-          # external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
           nginx.ingress.kubernetes.io/proxy-body-size: 1000M
           # nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-external.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           # nginx.ingress.kubernetes.io/auth-signin: /outpost.goauthentik.io/start?rd=$escaped_request_uri
