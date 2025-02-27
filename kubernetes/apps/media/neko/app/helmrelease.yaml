@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   releaseName: *app
-  targetNamespace: default
+  targetNamespace: media
   chart:
     spec:
       chart: app-template
@@ -51,7 +51,7 @@ spec:
                 readOnly: true
                 subPath: policies.json
       profile:
-        existingClaim: neko-firefox-profile-nas
+        existingClaim: pvc-smb-neko
         advancedMounts:
           *app :
             *app :

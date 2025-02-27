@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: neko-firefox-config
-  namespace: hotboxfort
+  namespace: media
 data:
   policies.json: |
     {
