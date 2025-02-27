@@ -73,14 +73,18 @@ spec:
             targetPort: 8080
           mux:
             port: &port 5101
+            targetPort: *port
           muxudp:
             port: *port
+            targetPort: *port
             protocol: UDP
 
     ingress:
       main:
         className: internal
-        # annotations:
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "14400"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "14400"
           
         hosts:
           - host: &host movienight.${SECRET_DOMAIN}
