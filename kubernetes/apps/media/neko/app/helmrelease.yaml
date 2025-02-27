@@ -36,6 +36,7 @@ spec:
               NEKO_TCPMUX: &mux "5101"
               NEKO_UDPMUX: *mux
               NEKO_ICELITE: "true"
+              NEKO_EPR: 5100-5101
               # NEKO_NAT1TO1: 127.0.0.1
             envFrom:
               - secretRef:
