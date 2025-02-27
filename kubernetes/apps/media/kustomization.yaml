@@ -13,6 +13,7 @@ resources:
   - ./neko/ks.yaml
   - ./overseerr/ks.yaml
   - ./paperless/ks.yaml
+  - ./pasta/ks.yaml
   - ./plex/ks.yaml
   # - ./tachidesk/ks.yaml
   - ./tautulli/ks.yaml
