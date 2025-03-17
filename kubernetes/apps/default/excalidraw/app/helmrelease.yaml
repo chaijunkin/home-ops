@@ -33,7 +33,7 @@ spec:
           main:            
             image:
               repository: ghcr.io/wipash/excalidraw-collab
-              tag: 0.17.3@sha256:1fd7b2fb38f0b2195236168b89e86f18306f861fc86404795fe23b113d837785
+              tag: 0.17.3@sha256:bf3f43758848a24a39aaebe89fd4037d1f9c3fe6e71c0c1ad041f7cdb10ca536
             env:
               TZ: ${TIMEZONE}
               PORT: &port 80
