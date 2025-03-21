@@ -92,3 +92,9 @@ spec:
         globalMounts:
           - path: /media
             readOnly: false
+      cwa-:
+        enabled: true
+        existingClaim: smb-downloads-book
+        globalMounts:
+          - path: /media
+            readOnly: false

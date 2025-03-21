@@ -93,9 +93,9 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /var/log/cwa-book-downloader/
-      media:
+      cwa-book-ingest:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-          - path: /media
+          - path: /cwa-book-ingest
             readOnly: false
