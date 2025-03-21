@@ -94,7 +94,7 @@ spec:
             readOnly: false
       cwa-book-ingest:
         enabled: true
-        existingClaim: smb-downloads-book
+        existingClaim: pvc-smb-downloads-book
         globalMounts:
           - path: /cwa-book-ingest
             readOnly: false
