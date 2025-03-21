@@ -48,13 +48,13 @@ spec:
                 memory: 470M
               limits:
                 memory: 470M
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            supplementalGroups: [568]
-            fsGroupChangePolicy: "OnRootMismatch"
+        # pod:
+        #   securityContext:
+        #     runAsUser: 568
+        #     runAsGroup: 568
+        #     fsGroup: 568
+        #     supplementalGroups: [568]
+        #     fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
         controller: calibre-web
