@@ -96,5 +96,5 @@ spec:
         enabled: true
         existingClaim: smb-downloads-book
         globalMounts:
-          - path: /media
+          - path: /cwa-book-ingest
             readOnly: false
