@@ -13,8 +13,7 @@ spec:
   path: ./kubernetes/main/apps/media/calibre-web/app
   sourceRef:
     kind: GitRepository
-    name: flux-system
-    namespace: flux-system
+    name: home-kubernetes
   dependsOn:
     - name: volsync
       namespace: system
