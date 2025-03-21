@@ -27,7 +27,7 @@ spec:
       namespace: volsync-system
   values:
     controllers:
-      calibre-web:
+      calibre-web-automated:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -57,7 +57,7 @@ spec:
         #     fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
-        controller: app
+        controller: calibre-web-automated
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
