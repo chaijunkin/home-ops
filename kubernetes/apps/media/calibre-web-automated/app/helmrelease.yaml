@@ -85,7 +85,7 @@ spec:
         globalMounts:
           - path: /cache
       config:
-        existingClaim: calibre-web
+        existingClaim: calibre-web-automated
       media:
         enabled: true
         existingClaim: pvc-smb-media
