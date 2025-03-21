@@ -6,6 +6,7 @@ resources:
   - ./namespace.yaml
   - ./pvc.yaml
   # # Flux-Kustomizations
+  - ./calibre-web/ks.yaml
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
   - ./minio/ks.yaml
