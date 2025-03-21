@@ -36,4 +36,4 @@ spec:
   resources:
     requests:
       storage: 1Mi
-  storageClassName: "smb-smb-downloads-book"
+  storageClassName: "smb-downloads-book"
