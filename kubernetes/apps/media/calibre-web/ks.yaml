@@ -16,7 +16,7 @@ spec:
     name: home-kubernetes
   dependsOn:
     - name: volsync
-      namespace: system
+      namespace: volsync-system
   postBuild:
     substitute:
       APP: *app
