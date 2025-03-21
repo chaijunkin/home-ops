@@ -92,7 +92,7 @@ spec:
         globalMounts:
           - path: /media
             readOnly: false
-      cwa-:
+      cwa-book-ingest:
         enabled: true
         existingClaim: smb-downloads-book
         globalMounts:
