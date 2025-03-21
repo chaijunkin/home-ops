@@ -18,13 +18,11 @@ spec:
   dependsOn:
     - name: volsync
       namespace: system
-  components:
-    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
-      APP_UID: "2000"
-      APP_GID: "2000"
+      APP_UID: "568"
+      APP_GID: "568"
       VOLSYNC_CLAIM: calibre-web-config
       VOLSYNC_CAPACITY: 2Gi
   prune: true
