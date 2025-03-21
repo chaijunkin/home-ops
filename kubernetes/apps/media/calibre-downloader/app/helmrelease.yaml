@@ -27,8 +27,6 @@ spec:
     controllers:
       main:
         pod:
-          nodeSelector:
-            kubernetes.io/hostname: "bonds"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
