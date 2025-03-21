@@ -19,7 +19,6 @@ spec:
       APP: *app
       APP_UID: "568"
       APP_GID: "568"
-      VOLSYNC_CLAIM: calibre-web-config
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false
