@@ -57,7 +57,7 @@ spec:
         #     fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
-        controller: calibre-web-automated
+        controller: app
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
