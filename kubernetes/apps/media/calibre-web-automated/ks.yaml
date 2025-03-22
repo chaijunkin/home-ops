@@ -16,7 +16,7 @@ spec:
     name: home-kubernetes
   postBuild:
     substitute:
-      APP: *app
+      APP: ebooks-auto
       # APP_UID: "568"
       # APP_GID: "568"
       VOLSYNC_CAPACITY: 2Gi
