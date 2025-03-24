@@ -10,10 +10,10 @@ resources:
   - ./calibre-web/ks.yaml
   - ./calibre-web-automated/ks.yaml
   - ./filebrowser/ks.yaml
-  - ./jellyfin/ks.yaml
+  # - ./jellyfin/ks.yaml
   - ./minio/ks.yaml
   - ./nextcloud/ks.yaml
-  - ./neko/ks.yaml
+  # - ./neko/ks.yaml
   - ./overseerr/ks.yaml
   - ./paperless/ks.yaml
   - ./pasta/ks.yaml
