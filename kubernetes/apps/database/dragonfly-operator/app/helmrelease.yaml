@@ -88,15 +88,15 @@ spec:
             port: *port
           metrics:
             port: 8080
-    serviceMonitor:
-      app:
-        serviceName: *app
-        endpoints:
-          - port: metrics
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
+    # serviceMonitor:
+    #   app:
+    #     serviceName: *app
+    #     endpoints:
+    #       - port: metrics
+    #         scheme: http
+    #         path: /metrics
+    #         interval: 1m
+    #         scrapeTimeout: 10s
     serviceAccount:
       create: true
       name: *app
