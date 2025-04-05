@@ -30,7 +30,7 @@ spec:
     bgpControlPlane:
       enabled: true
     bpf:
-      masquerade: true
+      # masquerade: true
       tproxy: true
     cni:
       exclusive: false
