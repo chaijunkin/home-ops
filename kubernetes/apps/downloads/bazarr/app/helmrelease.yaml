@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/bazarr
-              tag: 1.4.2@sha256:51e811b871ec1954886d4d3d43f3d2ff2c953d143b74cfb5009b2705083d686e
+              tag: 1.4.3@sha256:e87f1126bdc5da7f2aee1f6b798826979865bb1989bec618442f372bd2eaa6a1
             env:
               TZ: ${TIMEZONE}
             envFrom:
