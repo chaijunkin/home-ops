@@ -54,12 +54,12 @@ spec:
               #       resource: limits.memory
               #       containerName: app
               #       divisor: 1Mi
-              QBT_Preferences__WebUI__AlternativeUIEnabled: true
-              # QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
+              # QBT_Preferences__WebUI__AlternativeUIEnabled: true
+              # # QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
               # QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
               #   172.16.0.0/16, 10.1.2.0/24
               # QBT_Preferences__WebUI__LocalHostAuth: false
-              QBT_Preferences__WebUI__RootFolder: /addons/VueTorrent
+              # QBT_Preferences__WebUI__RootFolder: /addons/VueTorrent
             resources:
               requests:
                 cpu: 25m
@@ -97,22 +97,22 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
-          vuetorrent:
-            dependsOn: app
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.3.0
-            args:
-              - --repo=https://github.com/WDaan/VueTorrent
-              - --ref=latest-release
-              - --period=86400s
-              - --root=/addons
-            resources:
-              requests:
-                cpu: 10m
-                memory: 25Mi
-              limits:
-                memory: 50Mi
+        #  vuetorrent:
+        #    dependsOn: app
+        #    image:
+        #      repository: registry.k8s.io/git-sync/git-sync
+        #      tag: v4.3.0
+        #    args:
+        #      - --repo=https://github.com/WDaan/VueTorrent
+        #      - --ref=latest-release
+        #      - --period=86400s
+        #      - --root=/addons
+        #    resources:
+        #      requests:
+        #        cpu: 10m
+        #        memory: 25Mi
+        #      limits:
+        #       memory: 50Mi
         #   affinity:
         #     podAntiAffinity:
         #       requiredDuringSchedulingIgnoredDuringExecution:
