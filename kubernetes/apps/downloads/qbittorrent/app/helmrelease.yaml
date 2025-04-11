@@ -54,7 +54,7 @@ spec:
               #       resource: limits.memory
               #       containerName: app
               #       divisor: 1Mi
-              # QBT_Preferences__WebUI__AlternativeUIEnabled: true
+              QBT_Preferences__WebUI__AlternativeUIEnabled: false
               # # QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
               # QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
               #   172.16.0.0/16, 10.1.2.0/24
