@@ -82,7 +82,7 @@ spec:
         smtpPasswordKey: SMTP_PASSWORD
       extraEnv:
         - name: REDIS_HOST
-          value: dragonfly.database.svc.cluster.local
+          value: dragon`fl`y.database.svc.cluster.local
         - name: REDIS_HOST_PORT
           value: "6379"
       mail:

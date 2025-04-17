@@ -12,7 +12,7 @@ resources:
   - ./filebrowser/ks.yaml
   # - ./jellyfin/ks.yaml
   - ./minio/ks.yaml
-  - ./nextcloud/ks.yaml
+  # - ./nextcloud/ks.yaml
   # - ./neko/ks.yaml
   - ./overseerr/ks.yaml
   - ./paperless/ks.yaml
