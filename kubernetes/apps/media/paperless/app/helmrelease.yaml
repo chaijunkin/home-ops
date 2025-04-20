@@ -39,7 +39,7 @@ spec:
           main:
             image:
               repository: ghcr.io/paperless-ngx/paperless-ngx
-              tag: 2.9.0
+              tag: 2.15.3
             envFrom:
               - secretRef:
                   name: paperless-secret
