@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/prowlarr
-              tag: 1.18.0.4543@sha256:c8ac0d0e4b69b79c7248fbf61771a11c2af7e8df75f20db1d2d8ef55680987fd
+              tag: 1.35.1.5034@sha256:c5cc16975aea443b645187300579191f4d5a6d542ef3aa9d1bc036c34fc257a1
             env:
               PROWLARR__APP__INSTANCENAME: Prowlarr
               PROWLARR__APP__THEME: dark
