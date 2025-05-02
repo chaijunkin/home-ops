@@ -255,7 +255,7 @@ spec:
         node-exporter-bsd:
           # renovate: depName="Node Exporter BSD"
           gnetId: 4260
-          revision: 14
+          revision: 15
           datasource: Prometheus
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
