@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/kashalls/kromgo
-              tag: 0.3.1@sha256:5ba40b2fda00ab7adb039c0be955161b84febfe9e9e7816d5f1f87d9ab41f173
+              tag: v0.6.0@sha256:4b908ea0be5acd61e67ce38d8f1342d0731296b00b8ca2c35533aa519d804cc6
             env:
               # PROMETHEUS_URL: http://thanos-query-frontend.observability.svc.cluster.local:9090
               PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
