@@ -91,7 +91,7 @@ spec:
             port: *port
     ingress:
       app:
-        className: external
+        className: internal
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media Service
