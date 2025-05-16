@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/suwayomi/tachidesk
-              tag: v1.1.1@sha256:2ab0107a86970367a80346d5ea645bce7997896272d75cff1d0bd866c78f34b5
+              tag: v2.0.1747@sha256:5bee7ca22b6a0a16d44354a2683a7e9ae248a2c9ee5ca8679b6f769b3010d3ae
             env:
               AUTO_DOWNLOAD_CHAPTERS: true
               BIND_PORT: &port 80
