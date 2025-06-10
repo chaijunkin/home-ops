@@ -55,10 +55,10 @@ metadata:
     # nginx.ingress.kubernetes.io/cors-allow-origin: "*"
     # nginx.ingress.kubernetes.io/enable-cors: "true"
     # nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    # nginx.ingress.kubernetes.io/server-snippet: |-
-    #   client_max_body_size 100G;
-    #   server_tokens off;
-    #   proxy_hide_header X-Powered-By;
+    nginx.ingress.kubernetes.io/server-snippet: |-
+      client_max_body_size 100G;
+      server_tokens off;
+      proxy_hide_header X-Powered-By;
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
