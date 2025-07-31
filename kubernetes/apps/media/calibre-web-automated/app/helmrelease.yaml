@@ -67,6 +67,11 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Calibre Web
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/plex.png
+          gethomepage.dev/description: eBook Library
           # gethomepage.dev/enabled: "true"
           # gethomepage.dev/group: Media Service
           # gethomepage.dev/name: Calibre Web
@@ -74,6 +79,12 @@ spec:
           # gethomepage.dev/description: eBook Library
         hosts:
           - host: ebooks-auto.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+          - host: ebooks.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
