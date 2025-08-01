@@ -12,7 +12,10 @@ resources:
   - ./it-tools/ks.yaml
   - ./miniflux/ks.yaml
   # - ./odoo/ks.yaml
+  # - ./ollama/ks.yaml
+  # - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml
   # - ./stirling-pdf/ks.yaml
+  - ./searxng/ks.yaml
   - ./wikijs/ks.yaml
