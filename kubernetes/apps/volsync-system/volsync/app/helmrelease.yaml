@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: volsync
-      version: 0.13.0
+      version: 0.8.0
       sourceRef:
         kind: HelmRepository
         name: backube
@@ -29,15 +29,10 @@ spec:
       namespace: volsync-system
   values:
     manageCRDs: true
-    replicaCount: ${REPLICAS:=1}
+    image: &image
+      repository: ghcr.io/joryirving/volsync
+      tag: 0.8.0
+    restic:
+      <<: *image
     metrics:
       disableAuth: true
-    # podSecurityContext:
-    #   runAsNonRoot: true
-    #   runAsUser: 1000
-    #   runAsGroup: 100
-    #   seccompProfile: { type: RuntimeDefault }
-    # restic:
-    #   <<: *image
-    # metrics:
-    #   disableAuth: true
