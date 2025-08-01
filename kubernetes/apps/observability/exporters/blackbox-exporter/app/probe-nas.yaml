@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/monitoring.coreos.com/probe_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: devices
+spec:
+  module: icmp
+  prober:
+    url: blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        # - downstairs-hallway-slzb06.${SECRET_DOMAIN}
+        # - garage-tablet.${SECRET_DOMAIN}
+        # - gladius.${SECRET_DOMAIN}
+        # - hallway-tablet.${SECRET_DOMAIN}
+        # - livingroom-vacuum.${SECRET_DOMAIN}
+        - smb.${SECRET_DOMAIN}
+        - pikvm.${SECRET_DOMAIN}
+---
+# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/monitoring.coreos.com/probe_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: smb
+spec:
+  module: tcp_connect
+  prober:
+    url: blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - "smb.${SECRET_DOMAIN}:445"
