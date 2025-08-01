@@ -8,6 +8,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
+    apiVersion: source.toolkit.fluxcd.io/v1beta2
     name: app-template
   install:
     remediation:
