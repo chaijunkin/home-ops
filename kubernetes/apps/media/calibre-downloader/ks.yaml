@@ -24,3 +24,5 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+  components:
+    - ../../../../templates/keda/nas-scaler

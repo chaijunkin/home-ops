@@ -26,3 +26,5 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
+  components:
+    - ../../../../templates/keda/nas-scaler

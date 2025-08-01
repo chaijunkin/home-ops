@@ -26,3 +26,5 @@ spec:
       APP: *app
       GATUS_SUBDOMAIN: s3
       GATUS_STATUS: "403"
+  components:
+    - ../../../../templates/keda/nas-scaler
