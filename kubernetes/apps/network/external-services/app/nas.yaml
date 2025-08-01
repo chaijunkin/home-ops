@@ -45,16 +45,14 @@ metadata:
     gethomepage.dev/group: Compute/Storage Infrastructure
     gethomepage.dev/description: SMB service provider
     external-dns.alpha.kubernetes.io/hostname: nas.${SECRET_DOMAIN}
-    # ingress.kubernetes.io/configuration-snippet: "proxy_set_header Host $http_host;\nproxy_set_header
-    #   X-Real-IP $remote_addr;\nproxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    #   \     \nproxy_http_version 1.1;\nproxy_set_header Upgrade $http_upgrade;\nproxy_set_header
-    #   Connection $connection_upgrade;      "
-    # nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-    # nginx.ingress.kubernetes.io/cors-allow-headers: Authorization
-    # nginx.ingress.kubernetes.io/cors-allow-methods: PUT, GET, POST, OPTIONS, DELETE
-    # nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-    # nginx.ingress.kubernetes.io/enable-cors: "true"
-    # nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
     nginx.ingress.kubernetes.io/server-snippet: |-
       client_max_body_size 100G;
       server_tokens off;
