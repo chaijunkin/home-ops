@@ -26,7 +26,6 @@ spec:
       APP: *app
   components:
     - ../../../../components/keda/nas-scaler
-    - ../../../../components/gatus/internal
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
