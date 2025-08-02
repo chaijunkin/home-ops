@@ -25,5 +25,6 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: requests
   components:
+    - ../../../../components/volsync
     - ../../../../components/keda/nas-scaler
     - ../../../../components/gatus/external
