@@ -7,7 +7,7 @@ parameters:
   # On Windows, "*.default.svc.cluster.local" could not be recognized by csi-proxy
   source: //smb.${SECRET_DOMAIN}.com/services  
   # this is not usable due to kustomize patch from fluxcd cannot use default ${.metadata} in subdir
-  subDir: ${pvc.metadata.namespace}-${pvc.metadata.name}
+  subDir: Apps/Default
   # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
   # with PV name under source
   csi.storage.k8s.io/provisioner-secret-name: "smb-secret"
