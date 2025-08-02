@@ -23,3 +23,5 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: status
+  components:
+    - ../../../../components/gatus/external

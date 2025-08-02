@@ -24,4 +24,5 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
   components:
-    - ../../../../templates/keda/nas-scaler
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/gatus/internal

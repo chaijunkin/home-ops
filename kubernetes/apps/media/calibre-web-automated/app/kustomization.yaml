@@ -4,6 +4,4 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
-  - ../../../../templates/gatus/external
-  - ../../../../templates/volsync
   - ./pvc.yaml

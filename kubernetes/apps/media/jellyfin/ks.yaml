@@ -27,4 +27,5 @@ spec:
       # GATUS_URL_PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../templates/keda/nas-scaler
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/gatus/internal

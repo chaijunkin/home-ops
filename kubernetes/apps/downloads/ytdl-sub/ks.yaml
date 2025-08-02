@@ -22,7 +22,8 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../../../templates/keda/nas-scaler
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/gatus/internal
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

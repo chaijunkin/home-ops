@@ -27,4 +27,6 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../templates/keda/nas-scaler
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/volsync
+    - ../../../../components/gatus/internal

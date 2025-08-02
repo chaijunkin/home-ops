@@ -24,3 +24,6 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
       GATUS_SUBDOMAIN: requests
+  components:
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/gatus/external
