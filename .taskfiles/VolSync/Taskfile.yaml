@@ -10,7 +10,7 @@ tasks:
     desc: Unlock a restic source repo from local machine [NS=default] [APP=required]
     preconditions:
       - which kubectl minijinja-cli stern
-      - test -f {{.VOLSYNC_RESOURCES_DIR}}/unlock.yaml.j2
+      - test -f {{.VOLSYNC_TASK_RESOURCES_DIR}}/unlock.yaml.j2
     requires:
       vars:
         - APP
@@ -22,7 +22,7 @@ tasks:
       NS: "{{.NS}}"
       APP: "{{.APP}}"
     cmds:
-      - minijinja-cli {{.VOLSYNC_RESOURCES_DIR}}/unlock.yaml.j2 | kubectl apply --server-side --filename -
+      - minijinja-cli {{.VOLSYNC_TASK_RESOURCES_DIR}}/unlock.yaml.j2 | kubectl apply --server-side --filename -
       - until kubectl --namespace {{.NS}} get job/{{ .JOB }} &>/dev/null; do sleep 5; done
       - kubectl --namespace {{.NS}} wait job/{{ .JOB }} --for=condition=complete --timeout=5m
       - stern --namespace {{.NS}} job/{{ .JOB }} --no-follow
