@@ -21,6 +21,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app  components:
+      APP: *app
+  components:
     - ../../../../components/gatus/external
 
