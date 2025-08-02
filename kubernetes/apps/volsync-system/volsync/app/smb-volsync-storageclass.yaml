@@ -1,14 +1,14 @@
+---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: smb
+  name: smb-volsync
 provisioner: smb.csi.k8s.io
 parameters:
-  # On Windows, "*.default.svc.cluster.local" could not be recognized by csi-proxy
-  source: //smb.cloudjur.com/services
-  subDir: ${pvc.metadata.namespace}-${pvc.metadata.name}
-  # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
-  # with PV name under source
+  # SMB source for volsync backups
+  source: //smb.${SECRET_DOMAIN}/backup
+  subDir: Backup/Volsync
+  # Reference to SMB credentials
   csi.storage.k8s.io/provisioner-secret-name: "smb-secret"
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   csi.storage.k8s.io/node-stage-secret-name: "smb-secret"

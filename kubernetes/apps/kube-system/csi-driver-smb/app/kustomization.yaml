@@ -4,6 +4,4 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - ./externalsecret.yaml
-  - ./helmrelease.yaml
-  - ./storageclass.yaml
-  - ./smb-volsync-storageclass.yaml
+  - ./helmrelease.yam

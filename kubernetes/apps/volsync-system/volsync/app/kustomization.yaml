@@ -6,3 +6,5 @@ resources:
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
   # - ./mutatingadmissionpolicy.yaml
+  - ./storageclass.yaml
+  - ./smb-volsync-storageclass.yaml
