@@ -2,6 +2,9 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+set: [pipefail]
+shopt: [globstar]
+
 vars:
   # Directories
   ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
@@ -23,6 +26,7 @@ env:
   PYTHONDONTWRITEBYTECODE: "1"
   SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
+  MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
 
 includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
@@ -35,7 +39,7 @@ includes:
     taskfile: .taskfiles/Repository/Taskfile.yaml
   talos: .taskfiles/Talos/Taskfile.yaml
   sops: .taskfiles/Sops/Taskfile.yaml
-  workstation: .taskfiles/Workstation/Taskfile.yaml
+  workstation: .taskfiles/workstation
   user:
     taskfile: .taskfiles/User
     optional: true
@@ -45,7 +49,9 @@ includes:
 
 tasks:
 
-  default: task -l
+  default: 
+    cmd: task --list
+    silent: true
 
   init:
     desc: Initialize configuration files

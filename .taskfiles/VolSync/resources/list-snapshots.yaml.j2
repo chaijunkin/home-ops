@@ -20,12 +20,11 @@ spec:
             - snapshots
           envFrom:
             - secretRef:
-                name: {{ ENV.APP }}-volsync
+                name: {{ ENV.APP }}-volsync-smb
           volumeMounts:
             - mountPath: /repository
               name: repository
       volumes:
         - name: repository
-          nfs:
-            server: "gladius.bjw-s.internal"
-            path: "/mnt/tank/Backup/Volsync"
+          persistentVolumeClaim:
+            claimName: volsync-smb-repository

@@ -8,6 +8,9 @@ kubeconfig
 *.agekey
 *.pub
 *.key
+*.crt
+/.venv/
+.decrypted~*
 # Private
 .private
 .bin
@@ -17,6 +20,8 @@ kubeconfig
 .task
 # Brew
 Brewfile.lock.json
+onepassword.env
+talosconfig
 # intellij
 .idea
 # wiki
