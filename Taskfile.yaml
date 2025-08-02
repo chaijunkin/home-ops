@@ -39,7 +39,7 @@ includes:
   user:
     taskfile: .taskfiles/User
     optional: true
-  volsync: .taskfiles/VolSync/Taskfile.yaml
+  volsync: .taskfiles/volsync/Taskfile.yaml
   external-secrets: .taskfiles/ExternalSecrets/Taskfile.yaml
 
 
