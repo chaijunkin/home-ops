@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - ./externalsecret.yaml
-  - ./helmrelease.yam
+  - ./helmrelease.yaml
