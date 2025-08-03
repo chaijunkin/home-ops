@@ -19,6 +19,6 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: chat
-    components:
-    - ../../../../components/gatus/internal
-    - ../../../../components/volsync
+  components:
+  - ../../../../components/gatus/internal
+  - ../../../../components/volsync
