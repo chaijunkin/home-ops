@@ -50,7 +50,7 @@ metadata:
 spec:
   sourcePVC: "${CLAIM:-${APP}}"
   trigger:
-    schedule: 0 * * * *"
+    schedule: "0 * * * *"
   restic:
     repository: "${APP}-volsync-smb"
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
