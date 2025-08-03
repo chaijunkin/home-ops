@@ -67,7 +67,7 @@ spec:
       runAsUser: "${VOLSYNC_UID:-1002}"
       runAsGroup: "${VOLSYNC_GID:-1002}"
       fsGroup: "${VOLSYNC_GID:-1002}"
-    capacity: "${VOLSYNC_CAPACITY}"
+    capacity: "${VOLSYNC_CAPACITY:=2Gi}"
 ---
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
