@@ -31,7 +31,7 @@ spec:
             env:
               SEARXNG_BASE_URL: https://search.${SECRET_DOMAIN}
               SEARXNG_PORT: &port 8080
-              SEARXNG_REDIS_URL: "redis://{{ .Release.Name }}-dragonfly:6379"
+              SEARXNG_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"

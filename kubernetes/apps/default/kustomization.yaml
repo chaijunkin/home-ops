@@ -18,5 +18,5 @@ resources:
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml
   # - ./stirling-pdf/ks.yaml
-  # - ./searxng/ks.yaml
+  - ./searxng/ks.yaml
   - ./wikijs/ks.yaml
