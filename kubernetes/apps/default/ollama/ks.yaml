@@ -17,6 +17,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m 
-  substitute:
-    APP: *app
-
+  postBuild:
+    substitute:
+      APP: *app
+  components:
+    - ../../../../components/gatus/internal
