@@ -30,9 +30,9 @@ spec:
         containers:
           app:
             image:
-              repository: intelanalytics/ipex-llm-inference-cpp-xpu
+              repository: docker.io/intelanalytics/ipex-llm-inference-cpp-xpu
               # repository: ghcr.io/joryirving/ollama-intel-gpu
-              tag: latest
+              tag: sha256:be3c8142f88b09ed182ed20d05487bd3ca4baa2f6b60523cb76718e7f1f47706
               # tag: ipex-llm-v.0.0.1-2
             command:
               - /bin/sh
