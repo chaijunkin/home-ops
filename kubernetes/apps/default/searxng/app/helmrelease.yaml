@@ -10,6 +10,7 @@ spec:
     kind: OCIRepository
     apiVersion: source.toolkit.fluxcd.io/v1beta2
     name: app-template
+    namespace: flux-system
   install:
     remediation:
       retries: -1
