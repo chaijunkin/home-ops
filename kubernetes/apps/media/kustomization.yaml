@@ -20,4 +20,4 @@ resources:
   # - ./pasta/ks.yaml
   - ./plex/ks.yaml
   # - ./tachidesk/ks.yaml
-  - ./tautulli/ks.yaml
+  # - ./tautulli/ks.yaml
