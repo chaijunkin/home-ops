@@ -14,7 +14,7 @@ resources:
   - ./miniflux/ks.yaml
   # - ./odoo/ks.yaml
   - ./ollama/ks.yaml
-  - ./open-webui/ks.yaml
+  # - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml
   # - ./stirling-pdf/ks.yaml
