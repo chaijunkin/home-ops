@@ -87,8 +87,8 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
-                  port: 8080
+                  identifier: app
+                  port: http
         tls:
           - hosts:
               - *host
