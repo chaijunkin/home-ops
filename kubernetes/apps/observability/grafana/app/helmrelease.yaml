@@ -383,11 +383,11 @@ spec:
           gnetId: 7587
           revision: 3
           datasource: Prometheus
-        # cert-manager:
-        #   # renovate: depName="Cert-manager-Kubernetes"
-        #   gnetId: 20842
-        #   revision: 3
-        #   datasource: Prometheus
+        cert-manager:
+          # renovate: depName="Cert-manager-Kubernetes"
+          gnetId: 20842
+          revision: 3
+          datasource: Prometheus
         frigate:
           # renovate: depName="Frigate"
           gnetId: 18226
