@@ -8,4 +8,4 @@ spec:
   resources:
     requests:
       storage: 40Gi
-  storageClassName: localhost
+  storageClassName: local-hostpath

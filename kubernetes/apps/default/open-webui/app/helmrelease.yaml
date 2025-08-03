@@ -8,7 +8,9 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
+    apiVersion: source.toolkit.fluxcd.io/v1beta2
     name: app-template
+    namespace: flux-system
   install:
     remediation:
       retries: -1
@@ -21,6 +23,15 @@ spec:
       open-webui:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: open-webui-secret
         containers:
           app:
             image:
@@ -30,21 +41,21 @@ spec:
               # Image Generation
               ENABLE_OPENAI_API: False
               ENABLE_OLLAMA_API: True
-              ENABLE_IMAGE_GENERATION: True
-              IMAGE_GENERATION_ENGINE: automatic1111
-              IMAGE_GENERATION_MODEL: dreamshaper_8
-              IMAGE_SIZE: 400x400
-              IMAGE_STEPS: 8
-              AUTOMATIC1111_BASE_URL: http://sdnext:7860/
-              AUTOMATIC1111_CFG_SCALE: 2
-              AUTOMATIC1111_SAMPLER: DPM++ SDE
-              AUTOMATIC1111_SCHEDULER: Karras
+              # ENABLE_IMAGE_GENERATION: True
+              # IMAGE_GENERATION_ENGINE: automatic1111
+              # IMAGE_GENERATION_MODEL: dreamshaper_8
+              # IMAGE_SIZE: 400x400
+              # IMAGE_STEPS: 8
+              # AUTOMATIC1111_BASE_URL: http://sdnext:7860/
+              # AUTOMATIC1111_CFG_SCALE: 2
+              # AUTOMATIC1111_SAMPLER: DPM++ SDE
+              # AUTOMATIC1111_SCHEDULER: Karras
               # Open-webui settings
-              OLLAMA_BASE_URL: http://ollama:11434
+              OLLAMA_BASE_URL: http://ollama.default.svc.cluster.local:11434
               ENABLE_RAG_WEB_SEARCH: true
               ENABLE_SEARCH_QUERY: true
               RAG_WEB_SEARCH_ENGINE: searxng
-              SEARXNG_QUERY_URL: http://searxng:8080/search?q=<query>
+              SEARXNG_QUERY_URL: http://searxng.default.svc.cluster.local:8080/search?q=<query>
               ENABLE_WEBSOCKET_SUPPORT: "true"
               WEBSOCKET_MANAGER: "redis"
               WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
@@ -66,6 +77,27 @@ spec:
         ports:
           http:
             port: &port 8080
+    ingress:
+      app:
+        enabled: true
+        className: "internal"
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Open WebUI
+          gethomepage.dev/description: AI Chat services
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
+
+        hosts:
+          - host: &host "chat.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
     # route:
     #   app:
     #     hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.jory.dev"]
@@ -73,9 +105,9 @@ spec:
     #       - name: external
     #         namespace: kube-system
     #         sectionName: https
-    # persistence:
-    #   config:
-    #     enabled: true
-    #     existingClaim: "{{ .Release.Name }}"
-    #     globalMounts:
-    #       - path: /app/backend/data
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /app/backend/data

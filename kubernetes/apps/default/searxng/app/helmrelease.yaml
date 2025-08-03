@@ -71,6 +71,13 @@ spec:
         ports:
           http:
             port: *port
+    # route:
+    #   app:
+    #     hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${SECRET_DOMAIN}"]
+    #     parentRefs:
+    #       - name: internal
+    #         namespace: kube-system
+    #         sectionName: https
     ingress:
       app:
         enabled: true
