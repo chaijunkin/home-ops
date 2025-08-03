@@ -20,53 +20,53 @@ spec:
       remoteRef:
         key: 75d679a4-15fc-474b-a8db-aab74209f0ff
         property: restic_password
-# ---
-# apiVersion: volsync.backube/v1alpha1
-# kind: ReplicationDestination
-# metadata:
-#   name: "${APP}-bootstrap"
-# spec:
-#   trigger:
-#     manual: restore-once
-#   restic:
-#     repository: "${APP}-volsync-smb"
-#     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
-#     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath}"
-#     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
-#     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-#     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-4Gi}"
-#     storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
-#     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-#     moverSecurityContext:
-#       runAsUser: "${VOLSYNC_UID:-0}"
-#       runAsGroup: "${VOLSYNC_GID:-0}"
-#       fsGroup: "${VOLSYNC_GID:-0}"
-#     capacity: "${VOLSYNC_CAPACITY:=2Gi}"
-# ---
-# apiVersion: volsync.backube/v1alpha1
-# kind: ReplicationSource
-# metadata:
-#   name: "${APP}"
-# spec:
-#   sourcePVC: "${CLAIM:-${APP}}"
-#   trigger:
-#     schedule: 0 * * * *"
-#   restic:
-#     repository: "${APP}-volsync-smb"
-#     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
-#     pruneIntervalDays: 7
-#     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath}"
-#     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
-#     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
-#     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
-#     storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
-#     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
-#     moverSecurityContext:
-#       runAsUser: "${VOLSYNC_UID:-0}"
-#       runAsGroup: "${VOLSYNC_GID:-0}"
-#       fsGroup: "${VOLSYNC_GID:-0}"
-#     retain:
-#       hourly: 24
-#       daily: 10
-#       weekly: 5
-#       monthly: 3
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-bootstrap"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: "${APP}-volsync-smb"
+    copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-4Gi}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    moverSecurityContext:
+      runAsUser: "${VOLSYNC_UID:-0}"
+      runAsGroup: "${VOLSYNC_GID:-0}"
+      fsGroup: "${VOLSYNC_GID:-0}"
+    capacity: "${VOLSYNC_CAPACITY:=2Gi}"
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: "${APP}"
+spec:
+  sourcePVC: "${CLAIM:-${APP}}"
+  trigger:
+    schedule: 0 * * * *"
+  restic:
+    repository: "${APP}-volsync-smb"
+    copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
+    pruneIntervalDays: 7
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-local-hostpath}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-local-hostpath}"
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    moverSecurityContext:
+      runAsUser: "${VOLSYNC_UID:-0}"
+      runAsGroup: "${VOLSYNC_GID:-0}"
+      fsGroup: "${VOLSYNC_GID:-0}"
+    retain:
+      hourly: 24
+      daily: 10
+      weekly: 5
+      monthly: 3
