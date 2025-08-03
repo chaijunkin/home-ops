@@ -7,13 +7,13 @@ resources:
   - ./namespace.yaml
   - ./pvc.yaml
   # Flux-Kustomizations
-  - ./autobangumi/ks.yaml
+  # - ./autobangumi/ks.yaml
   - ./bazarr/ks.yaml
   - ./flaresolverr/ks.yaml
-  - ./lidarr/ks.yaml
-  - ./metube/ks.yaml
+  # - ./lidarr/ks.yaml
+  # - ./metube/ks.yaml
   - ./prowlarr/ks.yaml
-  - ./qbittorrent/ks.yaml
+  # - ./qbittorrent/ks.yaml
   - ./radarr/ks.yaml
   - ./readarr/ks.yaml
   - ./sonarr/ks.yaml
