@@ -51,7 +51,7 @@ spec:
     hubble:
       peerService:
         clusterDomain: cluster.local
-      enabled: true
+      enabled: false
       metrics:
         enabled:
           - dns:query
