@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/emqx/emqx-exporter
-              tag: 0.2.9@sha256:54c1e9563e4065482c9d1149cb5faac196dd6d1892de2b4888e0e3dc75a8da91
+              tag: 0.2.11@sha256:31173023132078a9243527ff1dbaae5facc77b8d3708a3b018634f8ba8862ec9
             args: ["--config.file", "/etc/emqx-exporter/config.yaml"]
             probes:
               liveness: &probes
