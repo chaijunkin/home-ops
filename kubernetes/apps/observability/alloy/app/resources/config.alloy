@@ -1,5 +1,5 @@
 logging {
-	level    = "warn"
+	level    = "info"  // Changed from "warn" to "info" for better debugging
 	format   = "json"
 	write_to = [loki.write.default.receiver]
 }
@@ -18,6 +18,20 @@ discovery.kubernetes "service" {
 // If no rules are defined, then the input targets are exported as-is.
 discovery.relabel "pod_logs" {
   targets = discovery.kubernetes.pod.targets
+
+  // Drop targets without a pod name
+  rule {
+    source_labels = ["__meta_kubernetes_pod_name"]
+    regex = ""
+    action = "drop"
+  }
+
+  // Drop targets that are not running
+  rule {
+    source_labels = ["__meta_kubernetes_pod_phase"]
+    regex = "Succeeded|Failed"
+    action = "drop"
+  }
 
   // Label creation - "namespace" field from "__meta_kubernetes_namespace"
   rule {
@@ -61,7 +75,7 @@ discovery.relabel "pod_logs" {
     action = "replace"
     target_label = "job"
     separator = "/"
-    replacement = "$1"
+    replacement = "$1/$2"
   }
 
   // Label creation - "container" field from "__meta_kubernetes_pod_uid" and "__meta_kubernetes_pod_container_name"
@@ -107,6 +121,7 @@ loki.process "pod_logs" {
 loki.source.kubernetes_events "cluster_events" {
   job_name   = "integrations/kubernetes/eventhandler"
   log_format = "logfmt"
+  namespaces = ["kube-system", "observability", "default"]  // Limit to specific namespaces
   forward_to = [
     loki.process.cluster_events.receiver,
   ]
@@ -133,5 +148,19 @@ loki.process "cluster_events" {
 loki.write "default" {
   endpoint {
     url = "http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push"
+    
+    // Add timeout and retry configuration
+    timeout = "10s"
+    
+    // Add headers if needed
+    headers = {
+      "X-Scope-OrgID" = "1"
+    }
+  }
+  
+  // Add external labels for better organization
+  external_labels = {
+    cluster = "main"
+    source = "alloy"
   }
 }
