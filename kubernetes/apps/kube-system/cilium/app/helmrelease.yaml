@@ -49,6 +49,8 @@ spec:
     endpointRoutes:
       enabled: true
     hubble:
+      peerService:
+        clusterDomain: cluster.local
       enabled: true
       metrics:
         enabled:
@@ -65,12 +67,12 @@ spec:
           enabled: true
           annotations:
             grafana_folder: Cilium
-      # relay:
-      #   enabled: true
-      #   rollOutPods: true
-      #   prometheus:
-      #     serviceMonitor:
-      #       enabled: true
+      relay:
+        enabled: true
+        rollOutPods: true
+        prometheus:
+          serviceMonitor:
+            enabled: true
       ui:
         enabled: true
         rollOutPods: true
