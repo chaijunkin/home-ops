@@ -29,7 +29,7 @@ spec:
     autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: true
-      bbr: true
+      # bbr: true  # not available in debian 12 yet
     bgpControlPlane:
       enabled: true
     bpf:
@@ -54,7 +54,7 @@ spec:
     hubble:
       peerService:
         clusterDomain: cluster.local
-      enabled: true
+      enabled: false
       metrics:
         enabled:
           - dns:query
@@ -71,13 +71,13 @@ spec:
           annotations:
             grafana_folder: Cilium
       relay:
-        enabled: true
+        enabled: false
         rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
       ui:
-        enabled: true
+        enabled: false
         rollOutPods: true
         ingress:
           enabled: true
