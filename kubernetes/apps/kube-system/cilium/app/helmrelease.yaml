@@ -26,11 +26,11 @@ spec:
     autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: true
-      # bbr: true ##  need update kernel
+      bbr: true
     bgpControlPlane:
       enabled: true
     bpf:
-      datapathMode: veth # netkit is not supported due to kernel issue F..k
+      datapathMode: netkit
       masquerade: true
       preallocateMaps: true
       # tproxy: true
