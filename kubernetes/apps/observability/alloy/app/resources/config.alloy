@@ -148,14 +148,6 @@ loki.process "cluster_events" {
 loki.write "default" {
   endpoint {
     url = "http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push"
-    
-    // Add timeout and retry configuration
-    timeout = "10s"
-    
-    // Add headers if needed
-    headers = {
-      "X-Scope-OrgID" = "1",
-    }
   }
   
   // Add external labels for better organization
