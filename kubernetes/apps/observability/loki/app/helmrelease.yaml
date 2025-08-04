@@ -47,6 +47,7 @@ spec:
       ingester:
         chunk_encoding: snappy
       limits_config:
+        reject_old_samples: false
         retention_period: 14d
       server:
         grpc_server_max_recv_msg_size: 10485760 # 10 MiB
