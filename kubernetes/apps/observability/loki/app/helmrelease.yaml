@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
@@ -13,7 +12,6 @@ spec:
     tag: 6.34.0
   url: oci://ghcr.io/grafana/helm-charts/loki
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -35,9 +33,9 @@ spec:
   values:
     deploymentMode: SingleBinary
     loki:
-      auth_enabled: false
       analytics:
         reporting_enabled: false
+      auth_enabled: false
       commonConfig:
         replication_factor: 1
       compactor:
@@ -48,12 +46,6 @@ spec:
         chunk_encoding: snappy
       limits_config:
         retention_period: 14d
-      server:
-        grpc_server_max_recv_msg_size: 10485760 # 10 MiB
-        grpc_server_max_send_msg_size: 10485760 # 10 MiB
-        log_level: info
-      storage:
-        type: filesystem
       schemaConfig:
         configs:
           - from: "2024-04-01" # quote
@@ -63,6 +55,12 @@ spec:
             index:
               prefix: loki_index_
               period: 24h
+      server:
+        grpc_server_max_recv_msg_size: 10485760 # 10 MiB
+        grpc_server_max_send_msg_size: 10485760 # 10 MiB
+        log_level: info
+      storage:
+        type: filesystem
       structuredConfig:
         ruler:
           enable_api: true
@@ -73,27 +71,17 @@ spec:
             local:
               directory: /rules
           rule_path: /rules/fake
-    singleBinary:
-      replicas: 1
-      persistence:
-        enabled: true
-        storageClass: local-hostpath
-        size: 20Gi
-    gateway:
-      replicas: 0
     backend:
-      replicas: 0
-    read:
-      replicas: 0
-    write:
       replicas: 0
     chunksCache:
       enabled: false
-    resultsCache:
-      enabled: false
+    gateway:
+      replicas: 0
     lokiCanary:
       enabled: false
-    test:
+    read:
+      replicas: 0
+    resultsCache:
       enabled: false
     sidecar:
       image:
@@ -103,3 +91,13 @@ spec:
       rules:
         searchNamespace: ALL
         folder: /rules/fake
+    singleBinary:
+      replicas: 1
+      persistence:
+        enabled: true
+        storageClass: ceph-block
+        size: 50Gi
+    test:
+      enabled: false
+    write:
+      replicas: 0
