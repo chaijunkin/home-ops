@@ -23,6 +23,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    cluster:
+      id: 1
+      name: main
     autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: true
