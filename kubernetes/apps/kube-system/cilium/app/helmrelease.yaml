@@ -68,13 +68,13 @@ spec:
           annotations:
             grafana_folder: Cilium
       relay:
-        enabled: false
+        enabled: true
         rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
       ui:
-        enabled: false
+        enabled: true
         rollOutPods: true
         ingress:
           enabled: true
