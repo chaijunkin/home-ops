@@ -154,13 +154,13 @@ loki.write "default" {
     
     // Add headers if needed
     headers = {
-      "X-Scope-OrgID" = "1"
+      "X-Scope-OrgID" = "1",
     }
   }
   
   // Add external labels for better organization
   external_labels = {
-    cluster = "main"
-    source = "alloy"
+    cluster = "main",
+    source = "alloy",
   }
 }
