@@ -26,23 +26,23 @@ spec:
     autoDirectNodeRoutes: true
     bandwidthManager:
       enabled: true
-      bbr: true
+      # bbr: true
     bgpControlPlane:
       enabled: true
     bpf:
-      datapathMode: netkit
-      masquerade: true
-      preallocateMaps: true
-      # tproxy: true
+      # masquerade: true
+      tproxy: true
     cni:
       exclusive: false
+
+
     cgroup:
       automount:
         enabled: false
       hostRoot: /sys/fs/cgroup
-    # cluster:
-    #   id: 1
-    #   name: home-kubernetes
+    cluster:
+      id: 1
+      name: home-kubernetes
 
     # NOTE: This might need to be set if you have more than one active NIC on your hosts
     devices: eth+
@@ -82,16 +82,6 @@ spec:
           tls:
             - hosts:
                 - "hubble.${SECRET_DOMAIN}"
-    enableIPv4BIGTCP: true
-    envoy:
-      rollOutPods: true
-      prometheus:
-        serviceMonitor:
-          enabled: true
-    gatewayAPI:
-      enabled: true
-      enableAlpn: true
-      xffNumTrustedHops: 1
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
@@ -137,8 +127,6 @@ spec:
           - IPC_LOCK
           - SYS_ADMIN
           - SYS_RESOURCE
-          - PERFMON
-          - BPF
           - DAC_OVERRIDE
           - FOWNER
           - SETGID
