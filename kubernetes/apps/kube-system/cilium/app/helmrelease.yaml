@@ -33,7 +33,7 @@ spec:
     bgpControlPlane:
       enabled: true
     bpf:
-      datapathMode: netkit
+      datapathMode: veth # "netkit" not available in debian 12 yet 
       masquerade: true
       preallocateMaps: true
       # tproxy: true
