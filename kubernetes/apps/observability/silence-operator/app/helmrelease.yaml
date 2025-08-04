@@ -24,12 +24,9 @@ spec:
     kind: OCIRepository
     name: silence-operator
   install:
-    remediation:
-      retries: -1
+    crds: CreateReplace
   upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+    crds: CreateReplace
   values:
     alertmanagerAddress: http://kube-prometheus-stack-alertmanager:9093
     image:
