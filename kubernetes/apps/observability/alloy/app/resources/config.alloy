@@ -96,7 +96,7 @@ loki.source.kubernetes "pod" {
 loki.process "pod" {
   stage.static_labels {
       values = {
-        cluster = "k3s-cluster",
+        cluster = "main",
       }
   }
 
@@ -117,7 +117,7 @@ loki.process "cluster_events" {
 
   stage.static_labels {
     values = {
-      cluster = "k3s-cluster",
+      cluster = "main",
     }
   }
 
