@@ -47,8 +47,24 @@ spec:
       ingester:
         chunk_encoding: snappy
       limits_config:
-        reject_old_samples: false
-        retention_period: 14d
+        # reject_old_samples: false
+        # retention_period: 14d
+        retention_period: 72h
+        enforce_metric_name: false
+        reject_old_samples: true
+        reject_old_samples_max_age: 168h
+        max_cache_freshness_per_query: 10m
+        split_queries_by_interval: 15m
+        # for big logs tune
+        per_stream_rate_limit: 512M
+        per_stream_rate_limit_burst: 1024M
+        cardinality_limit: 200000
+        ingestion_burst_size_mb: 1000
+        ingestion_rate_mb: 10000
+        max_entries_limit_per_query: 1000000
+        max_label_value_length: 20480
+        max_label_name_length: 10240
+        max_label_names_per_series: 300
       server:
         grpc_server_max_recv_msg_size: 10485760 # 10 MiB
         grpc_server_max_send_msg_size: 10485760 # 10 MiB
