@@ -34,6 +34,9 @@ spec:
       retries: 3
   values:
     deploymentMode: SingleBinary
+    memberlist:
+      service:
+        publishNotReadyAddresses: true
     loki:
       auth_enabled: false
       analytics:
