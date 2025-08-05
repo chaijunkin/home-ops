@@ -9,39 +9,80 @@ serviceAccount:
 service:
   name: kube-dns
   clusterIP: 10.96.0.10
+# Original configuration (commented out)
+# servers:
+#   - zones:
+#       - zone: .
+#         scheme: dns://
+#         use_tcp: true
+#     port: 53
+#     plugins:
+#       - name: errors
+#       - name: health
+#         configBlock: |-
+#           lameduck 5s
+#       - name: ready
+#       - name: kubernetes
+#         parameters: cluster.local in-addr.arpa ip6.arpa
+#         configBlock: |-
+#           pods verified
+#           fallthrough in-addr.arpa ip6.arpa
+#       - name: autopath
+#         parameters: "@kubernetes"
+#       - name: forward
+#         parameters: . /etc/resolv.conf
+#       - name: cache
+#         configBlock: |-
+#           prefetch 20
+#           serve_stale
+#       - name: loop
+#       - name: reload
+#       - name: loadbalance
+#       - name: prometheus
+#         parameters: 0.0.0.0:9153
+#       - name: log
+#         configBlock: |-
+#           class error
+
+# New configuration with NodeHosts and custom server support
+nodeHosts: |
+  10.10.30.31 k3smaster01
+
 servers:
   - zones:
       - zone: .
-        scheme: dns://
         use_tcp: true
     port: 53
     plugins:
       - name: errors
       - name: health
-        configBlock: |-
-          lameduck 5s
       - name: ready
       - name: kubernetes
         parameters: cluster.local in-addr.arpa ip6.arpa
         configBlock: |-
-          pods verified
+          pods insecure
           fallthrough in-addr.arpa ip6.arpa
-      - name: autopath
-        parameters: "@kubernetes"
+      - name: hosts
+        parameters: /etc/coredns/NodeHosts
+        configBlock: |-
+          ttl 60
+          reload 15s
+          fallthrough
+      - name: prometheus
+        parameters: :9153
       - name: forward
         parameters: . /etc/resolv.conf
       - name: cache
-        configBlock: |-
-          prefetch 20
-          serve_stale
+        parameters: 30
       - name: loop
       - name: reload
       - name: loadbalance
-      - name: prometheus
-        parameters: 0.0.0.0:9153
-      - name: log
-        configBlock: |-
-          class error
+      - name: import
+        parameters: /etc/coredns/custom/*.override
+extraConfig:
+  import:
+    parameters: /etc/coredns/custom/*.server
+
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
