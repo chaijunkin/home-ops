@@ -11,7 +11,7 @@ local.file_match "node_logs" {
       // Monitor syslog to scrape node-logs
       __path__  = "/var/log/syslog",
       job       = "node/syslog",
-      node_name = k3smaster01,
+      node_name = "k3smaster01",
       cluster   = "main",
   }]
 }
