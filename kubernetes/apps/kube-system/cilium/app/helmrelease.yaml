@@ -23,37 +23,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    cluster:
-      id: 1
-      name: main
-    autoDirectNodeRoutes: true
-    bandwidthManager:
-      enabled: true
-      # bbr: true  # not available in debian 12 yet
-    bgpControlPlane:
-      enabled: true
-    bpf:
-      datapathMode: veth # "netkit" not available in debian 12 yet 
-      masquerade: true
-      preallocateMaps: true
-      # tproxy: true
-    cni:
-      exclusive: false
-    cgroup:
-      automount:
-        enabled: false
-      hostRoot: /sys/fs/cgroup
-    # cluster:
-    #   id: 1
-    #   name: home-kubernetes
-
-    # NOTE: This might need to be set if you have more than one active NIC on your hosts
-    devices: eth+
-    endpointRoutes:
-      enabled: true
     hubble:
-      peerService:
-        clusterDomain: cluster.local
       enabled: false
       metrics:
         enabled:
@@ -68,8 +38,6 @@ spec:
           enabled: true
         dashboards:
           enabled: true
-          annotations:
-            grafana_folder: Cilium
       relay:
         enabled: false
         rollOutPods: true
@@ -79,76 +47,3 @@ spec:
       ui:
         enabled: false
         rollOutPods: true
-        ingress:
-          enabled: true
-          className: internal
-          hosts:
-            - "hubble.${SECRET_DOMAIN}"
-          tls:
-            - hosts:
-                - "hubble.${SECRET_DOMAIN}"
-    enableIPv4BIGTCP: true
-    envoy:
-      rollOutPods: true
-      prometheus:
-        serviceMonitor:
-          enabled: true
-    gatewayAPI:
-      enabled: true
-      enableAlpn: true
-      xffNumTrustedHops: 1
-    ipam:
-      mode: kubernetes
-    ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
-    k8sServiceHost: 127.0.0.1
-    k8sServicePort: 6444
-    kubeProxyReplacement: true
-    kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-    l2announcements:
-      enabled: true
-    loadBalancer:
-      algorithm: maglev
-      mode: dsr
-    localRedirectPolicy: true
-    operator:
-      replicas: 1
-      rollOutPods: true
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      dashboards:
-        enabled: true
-        annotations:
-          grafana_folder: Cilium
-    prometheus:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        trustCRDsExist: true
-    dashboards:
-      enabled: true
-      annotations:
-        grafana_folder: Cilium
-    rollOutCiliumPods: true
-    routingMode: native
-    securityContext:
-      capabilities:
-        ciliumAgent:
-          - CHOWN
-          - KILL
-          - NET_ADMIN
-          - NET_RAW
-          - IPC_LOCK
-          - SYS_ADMIN
-          - SYS_RESOURCE
-          - PERFMON
-          - BPF
-          - DAC_OVERRIDE
-          - FOWNER
-          - SETGID
-          - SETUID
-        cleanCiliumState:
-          - NET_ADMIN
-          - SYS_ADMIN
-          - SYS_RESOURCE

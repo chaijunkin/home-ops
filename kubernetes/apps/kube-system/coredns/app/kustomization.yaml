@@ -1,13 +1,11 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./externalsecret.yaml
-  - ./clusterissuer.yaml
   - ./helmrelease.yaml
-  - ./prometheusrule.yaml
 configMapGenerator:
-  - name: cert-manager-values
+  - name: coredns-values
     files:
       - values.yaml=./helm/values.yaml
 configurations:

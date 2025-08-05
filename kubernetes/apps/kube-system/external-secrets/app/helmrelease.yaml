@@ -25,31 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    installCRDs: true
-    leaderElect: true
-    grafana:
-      enabled: true
-    serviceMonitor:
-      enabled: true
-      interval: 1m
-    webhook:
-      serviceMonitor:
-        enabled: true
-        interval: 1m
-    certController:
-      serviceMonitor:
-        enabled: true
-        interval: 1m
-    backgroundController:
-      serviceMonitor:
-        enabled: true
-        interval: 1m
-    cleanupController:
-      serviceMonitor:
-        enabled: true
-        interval: 1m
-    reportsController:
-      serviceMonitor:
-        enabled: true
-        interval: 1m
+  valuesFrom:
+  - kind: ConfigMap
+    name: external-secrets-values

@@ -5,3 +5,10 @@ resources:
   - ./cilium-l2.yaml
   - ./helmrelease.yaml
   # - ./netpol.yaml
+
+configMapGenerator:
+  - name: cilium-values
+    files:
+      - values.yaml=./helm/values.yaml
+configurations:
+  - ./helm/kustomizeconfig.yaml

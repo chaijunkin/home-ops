@@ -1,0 +1,42 @@
+# https://www.talos.dev/v1.10/reference/configuration/v1alpha1/config/
+machine:
+  network:
+    interfaces:
+      - deviceSelector:
+          hardwareAddr: ${mac_address}
+        addresses:
+          - ${ip}/${subnet_mask}
+        routes:
+          - network: 0.0.0.0/0
+            gateway: ${gateway}
+        dhcp: false
+%{ if vip != null }
+        vip:
+          ip: ${vip}
+%{ endif }
+
+cluster:
+  allowSchedulingOnControlPlanes: true
+  apiServer:
+    ${indent(4, api_server)}
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+  etcd:
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
+  network:
+    cni:
+      name: none
+  proxy:
+    disabled: true
+  discovery:
+    enabled: true
+    registries:
+      service:
+        disabled: false
+  extraManifests: ${extra_manifests}
+  inlineManifests: ${inline_manifests}
