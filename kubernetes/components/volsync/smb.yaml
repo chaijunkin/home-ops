@@ -67,6 +67,4 @@ spec:
       fsGroup: "${VOLSYNC_GID:-0}"
     retain:
       hourly: 24
-      daily: 10
-      weekly: 5
-      monthly: 3
+      daily: 7
