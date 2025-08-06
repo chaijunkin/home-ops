@@ -29,6 +29,6 @@ spec:
       namespace: volsync-system
   values:
     manageCRDs: true
-    replicaCount: 1
+    replicaCount: 2  # 1 replica caused many leader election issues
     metrics:
       disableAuth: true
