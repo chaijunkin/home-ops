@@ -26,20 +26,25 @@ resource "proxmox_virtual_environment_vm" "this" {
     dedicated = each.value.ram_dedicated
   }
 
-  network_device {
-    bridge      = "vmbr0"
-    mac_address = each.value.mac_address
+  dynamic "network_device" {
+    for_each = each.value.network_devices
+    content {
+      bridge      = "vmbr0"
+      mac_address = network_device.value.mac_address
+      vlan_id     = network_device.value.tag
+    }
   }
+  # Example: Add a second
 
   disk {
     datastore_id = each.value.datastore_id
     interface    = "scsi0"
-    iothread     = true
-    cache        = "writethrough"
-    discard      = "on"
-    ssd          = true
-    file_format  = "raw"
-    size         = 20
+    iothread     = each.value.disk_iothread
+    cache        = each.value.disk_cache
+    discard      = each.value.disk_discard
+    ssd          = each.value.disk_ssd
+    file_format  = each.value.disk_file_format
+    size         = each.value.disk_size
     file_id      = proxmox_virtual_environment_download_file.this["${each.value.host_node}_${each.value.update == true ? local.update_image_id : local.image_id}"].id
   }
 
@@ -52,18 +57,21 @@ resource "proxmox_virtual_environment_vm" "this" {
   initialization {
     datastore_id = each.value.datastore_id
 
-    # Optional DNS Block.  Update Nodes with a list value to use.
-    dynamic "dns" {
-      for_each = try(each.value.dns, null) != null ? { "enabled" = each.value.dns } : {}
-      content {
-        servers = each.value.dns
-      }
+    # Optional DNS Block
+    dns {
+      domain  = each.value.dns_domain
+      servers = each.value.dns
     }
 
-    ip_config {
-      ipv4 {
-        address = "${each.value.ip}/${var.cluster.subnet_mask}"
-        gateway = var.cluster.gateway
+    dynamic "ip_config" {
+      for_each = each.value.network_devices
+      content {
+        ipv4 {
+          # Use device-specific IP if provided, otherwise fall back to primary IP for first device or DHCP
+          address = ip_config.value.ip_address != null ? "${ip_config.value.ip_address}/${var.cluster.subnet_mask}" : (ip_config.key == 0 ? "${each.value.ip}/${var.cluster.subnet_mask}" : "dhcp")
+          # Use device-specific gateway if provided, otherwise fall back to cluster gateway for first device only
+          gateway = ip_config.value.gateway != null ? ip_config.value.gateway : (ip_config.key == 0 ? var.cluster.gateway : null)
+        }
       }
     }
   }

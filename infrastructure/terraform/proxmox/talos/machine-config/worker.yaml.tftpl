@@ -1,11 +1,27 @@
 machine:
   network:
     interfaces:
+%{ if length(network_devices) > 0 ~}
+%{ for idx, device in network_devices ~}
       - deviceSelector:
-          hardwareAddr: ${mac_address}
+          hardwareAddr: ${lower(device.mac_address)}
+%{ if device.ip_address != null || idx == 0 ~}
         addresses:
-          - ${ip}/${subnet_mask}
+          - ${device.ip_address != null ? device.ip_address : ip}/${subnet_mask}
+%{ if device.gateway != null || idx == 0 ~}
         routes:
           - network: 0.0.0.0/0
-            gateway: ${gateway}
+            gateway: ${device.gateway != null ? device.gateway : gateway}
+%{ endif ~}
+%{ endif ~}
         dhcp: false
+%{ if device.tag != null ~}
+        vlans:
+          - vlanId: ${device.tag}
+%{ if device.ip_address != null ~}
+            addresses:
+              - ${device.ip_address}/${subnet_mask}
+%{ endif ~}
+%{ endif ~}
+%{ endfor ~}
+%{ endif ~}
