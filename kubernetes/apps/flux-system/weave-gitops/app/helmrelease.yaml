@@ -39,6 +39,7 @@ spec:
         gethomepage.dev/description: Kubernetes GitOps
         gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/flux-cd.svg
         hajimari.io/icon: sawtooth-wave
+        io.cilium/lb-ipam-ips: 10.10.30.33
       hosts:
         - host: &host "gitops.${SECRET_DOMAIN}"
           paths:
