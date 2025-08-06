@@ -79,13 +79,15 @@ spec:
       - host: &host "k8s.${SECRET_DOMAIN}"
         paths:
         - path: /
-          type: ImplementationSpecific
+          pathType: Prefix
         # - host: chart-example.local
         #   paths:
         #   - path: /
         #     type: ImplementationSpecific
       # -- Ingress TLS configuration
-      tls: *host
+      tls:
+        - hosts:
+            - *host
       #  - secretName: chart-example-tls
       #    hosts:
       #      - chart-example.local
