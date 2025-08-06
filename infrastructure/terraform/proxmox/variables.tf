@@ -11,11 +11,11 @@ variable "proxmox" {
   sensitive = true
 }
 
-# variable "proxmox_api_token" {
-#   description = "API token for Proxmox"
-#   type        = string
-#   sensitive   = true
-# }
+variable "proxmox_api_token" {
+  description = "API token for Proxmox"
+  type        = string
+  sensitive   = true
+}
 
 variable "talos_image" {
   description = "Talos image configuration"
