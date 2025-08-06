@@ -87,6 +87,10 @@ servers:
 extraConfig:
   import:
     parameters: /etc/coredns/custom/*.server
+  log.override: |
+    #
+  stub.server: |
+    #
 
 affinity:
   nodeAffinity:
