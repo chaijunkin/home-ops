@@ -65,6 +65,17 @@ spec:
       runAsUser: "${VOLSYNC_UID:-0}"
       runAsGroup: "${VOLSYNC_GID:-0}"
       fsGroup: "${VOLSYNC_GID:-0}"
+    moverAffinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/created-by: volsync
+            namespaceSelector:
+              matchExpressions:
+                - key: kubernetes.io/metadata.name
+                  operator: Exists
     retain:
       hourly: 24
       daily: 7
