@@ -1,55 +1,28 @@
----
-fullnameOverride: coredns
-image:
-  repository: mirror.gcr.io/coredns/coredns
-  tag: 1.12.3
-replicaCount: 1
-serviceAccount:
-  create: true
+
 k8sAppLabelOverride: "kube-dns"
+image:
+  repository: coredns/coredns
+  tag: 1.12.3
+
+fullnameOverride: coredns
+
+replicaCount: 3
+
 service:
   name: kube-dns
   clusterIP: 10.96.0.10
-# Original configuration (commented out)
-# servers:
-#   - zones:
-#       - zone: .
-#         scheme: dns://
-#         use_tcp: true
-#     port: 53
-#     plugins:
-#       - name: errors
-#       - name: health
-#         configBlock: |-
-#           lameduck 5s
-#       - name: ready
-#       - name: kubernetes
-#         parameters: cluster.local in-addr.arpa ip6.arpa
-#         configBlock: |-
-#           pods verified
-#           fallthrough in-addr.arpa ip6.arpa
-#       - name: autopath
-#         parameters: "@kubernetes"
-#       - name: forward
-#         parameters: . /etc/resolv.conf
-#       - name: cache
-#         configBlock: |-
-#           prefetch 20
-#           serve_stale
-#       - name: loop
-#       - name: reload
-#       - name: loadbalance
-#       - name: prometheus
-#         parameters: 0.0.0.0:9153
-#       - name: log
-#         configBlock: |-
-#           class error
+  annotations:
+    fix.coredns.template: "fnord"
+
+serviceAccount:
+  create: true
+
+prometheus:
+  service:
+    enabled: true
+
 podAnnotations:
   configmap.reloader.stakater.com/reload: "coredns"
-  
-# New configuration with NodeHosts and custom server support
-nodeHosts: |
-  10.10.30.31 k3smaster01
 
 servers:
   - zones:
@@ -58,44 +31,46 @@ servers:
         use_tcp: true
     port: 53
     plugins:
+      - name: log
       - name: errors
       - name: health
+        configBlock: |-
+          lameduck 5s
       - name: ready
       - name: kubernetes
         parameters: cluster.local in-addr.arpa ip6.arpa
         configBlock: |-
           pods insecure
           fallthrough in-addr.arpa ip6.arpa
-      - name: hosts
-        parameters: /etc/coredns/NodeHosts
-        configBlock: |-
-          ttl 60
-          reload 15s
-          fallthrough
+          ttl 30
+      # - name: hosts
+      #   parameters: /etc/coredns/NodeHosts
+      #   configBlock: |-
+      #     ttl 60
+      #     reload 15s
+      #     fallthrough
       - name: prometheus
-        parameters: :9153
+        parameters: 0.0.0.0:9153
       - name: forward
-        parameters: . /etc/resolv.conf
+        parameters: . 2606:4700:4700::1111 1.0.0.1 9.9.9.9
       - name: cache
         parameters: 30
       - name: loop
       - name: reload
       - name: loadbalance
-extraConfig:
-  import:
-    parameters: /etc/coredns/custom/*.server
 
-
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: node-role.kubernetes.io/control-plane
-              operator: Exists
 tolerations:
-  - key: CriticalAddonsOnly
-    operator: Exists
   - key: node-role.kubernetes.io/control-plane
     operator: Exists
-    effect: NoSchedule
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+  - key: node-role.kubernetes.io/etcd
+    operator: Exists
+
+topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: coredns
