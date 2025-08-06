@@ -6,12 +6,15 @@ variable "proxmox" {
     endpoint     = string
     insecure     = bool
     username     = string
+    password     = optional(string, null)
   })
+  sensitive = true
 }
 
 variable "proxmox_api_token" {
   description = "API token for Proxmox"
   type        = string
+  default     = null
   sensitive   = true
 }
 

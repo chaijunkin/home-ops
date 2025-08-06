@@ -35,7 +35,7 @@
     - name: Kubeconfig
       ansible.builtin.include_tasks: tasks/kubeconfig.yaml
 
-    ### ONLY RUN ON FIRST TIME INSTALLATION ###
+    # ### ONLY RUN ON FIRST TIME INSTALLATION ###
     # - name: Wait for custom manifests to rollout
     #   when:
     #     - k3s_primary_control_node
