@@ -80,6 +80,11 @@ spec:
         paths:
         - path: /
           pathType: Prefix
+          backend:
+            service:
+              name: headlamp
+              port:
+                number: 80
         # - host: chart-example.local
         #   paths:
         #   - path: /
