@@ -5,5 +5,5 @@ kind: Component
 resources:
   - ./pvc.yaml
   # - ./minio.yaml
-  # - ./r2.yaml
-  # - ./smb.yaml
+  - ./r2.yaml
+  - ./smb.yaml
