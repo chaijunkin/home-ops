@@ -8,7 +8,7 @@ variable "image" {
     update_version        = optional(string)
     arch                  = optional(string, "amd64")
     platform              = optional(string, "nocloud")
-    proxmox_datastore     = optional(string, "local")
+    proxmox_datastore     = optional(string, "vm-store")
   })
 }
 
