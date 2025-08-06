@@ -43,6 +43,8 @@ wiki
 *.tfstate
 *.tfstate.*
 
+output
+
 # Crash log files
 crash.log
 crash.*.log
