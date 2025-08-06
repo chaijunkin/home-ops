@@ -63,7 +63,7 @@ data "talos_machine_configuration" "this" {
     }), each.value.machine_type == "controlplane" ?
     templatefile("${path.module}/machine-config/control-plane.yaml.tftpl", {
       ip               = each.value.ip
-      network_devices  = each.value.network_devices
+      mac_address      = lower(each.value.mac_address)
       gateway          = var.cluster.gateway
       subnet_mask      = var.cluster.subnet_mask
       vip              = var.cluster.vip
@@ -72,10 +72,10 @@ data "talos_machine_configuration" "this" {
       inline_manifests = jsonencode(terraform_data.cilium_bootstrap_inline_manifests.output)
     }) :
     templatefile("${path.module}/machine-config/worker.yaml.tftpl", {
-      ip              = each.value.ip
-      network_devices = each.value.network_devices
-      gateway         = var.cluster.gateway
-      subnet_mask     = var.cluster.subnet_mask
+      ip          = each.value.ip
+      mac_address = lower(each.value.mac_address)
+      gateway     = var.cluster.gateway
+      subnet_mask = var.cluster.subnet_mask
     })
   ]
 }
