@@ -8,7 +8,7 @@ talos_cluster_config = {
   # See https://github.com/siderolabs/terraform-provider-talos/blob/main/docs/data-sources/machine_configuration.md
   # Uncomment to use this instead of version from talos_image.
   # talos_machine_config_version = "v1.9.2"
-  proxmox_cluster    = "k3s_master"
+  proxmox_cluster    = "dashy"
   kubernetes_version = "v1.33.3" # renovate: github-releases=kubernetes/kubernetes
   cilium = {
     bootstrap_manifest_path = "talos/inline-manifests/cilium-install.yaml"
