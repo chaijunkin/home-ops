@@ -20,6 +20,18 @@ locals {
   # update_image_id = "${talos_image_factory_schematic.updated.id}_${local.update_version}"
 }
 
+data "http" "schematic_id" {
+  url          = "${var.image.factory_url}/schematics"
+  method       = "POST"
+  request_body = local.schematic
+}
+
+data "http" "updated_schematic_id" {
+  url          = "${var.image.factory_url}/schematics"
+  method       = "POST"
+  request_body = local.update_schematic
+}
+
 resource "talos_image_factory_schematic" "this" {
   schematic = local.schematic
 }
