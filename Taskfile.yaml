@@ -21,6 +21,10 @@ vars:
   # Binaries
   PYTHON_BIN: python3
 
+dotenv:
+  - '{{.ROOT_DIR}}/onepassword.env'
+  - '{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env'
+
 env:
   KUBECONFIG: "{{.KUBECONFIG_FILE}}"
   PYTHONDONTWRITEBYTECODE: "1"
@@ -29,6 +33,7 @@ env:
   MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
 
 includes:
+  bootstrap: .taskfiles/bootstrap
   ansible: .taskfiles/Ansible/Taskfile.yaml
   kubernetes:
     aliases: ["k8s"]
