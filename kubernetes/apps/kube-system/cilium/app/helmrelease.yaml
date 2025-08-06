@@ -24,7 +24,7 @@ spec:
     keepHistory: false
   values:
     hubble:
-      enabled: true
+      enabled: false
       metrics:
         enabled:
           - dns:query
@@ -39,11 +39,11 @@ spec:
         dashboards:
           enabled: true
       relay:
-        enabled: true
+        enabled: false
         rollOutPods: true
         prometheus:
           serviceMonitor:
             enabled: true
       ui:
-        enabled: true
+        enabled: false
         rollOutPods: true
