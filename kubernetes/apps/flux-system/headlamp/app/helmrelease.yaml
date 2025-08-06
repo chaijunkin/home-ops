@@ -57,3 +57,35 @@ spec:
     volumes:
       - name: headlamp-plugins
         emptyDir: {}
+    ingress:
+      # -- Enable ingress controller resource
+      enabled: true
+      # -- Annotations for Ingress resource
+      annotations: {}
+        # external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        # kubernetes.io/tls-acme: "true"
+
+      # -- Additional labels to add to the Ingress resource
+      labels: {}
+        # app.kubernetes.io/part-of: traefik
+        # environment: prod
+
+      # -- Ingress class name. replacement for the deprecated "kubernetes.io/ingress.class" annotation
+      ingressClassName: "internal"
+
+      # -- Hostname(s) for the Ingress resource
+      # Please refer to https://kubernetes.io/docs/reference/kubernetes-api/service-resources/ingress-v1/#IngressSpec for more information.
+      hosts:
+      - host: &host "k8s.${SECRET_DOMAIN}"
+        paths:
+        - path: /
+          type: ImplementationSpecific
+        # - host: chart-example.local
+        #   paths:
+        #   - path: /
+        #     type: ImplementationSpecific
+      # -- Ingress TLS configuration
+      tls: *host
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
