@@ -5,3 +5,4 @@ namespace: flux-system
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  # - ./httproute.yaml
