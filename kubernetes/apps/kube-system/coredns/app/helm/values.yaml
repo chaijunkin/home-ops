@@ -4,7 +4,6 @@ image:
   repository: mirror.gcr.io/coredns/coredns
   tag: 1.12.3
 replicaCount: 1
-fullnameOverride: coredns
 serviceAccount:
   create: true
 service:
