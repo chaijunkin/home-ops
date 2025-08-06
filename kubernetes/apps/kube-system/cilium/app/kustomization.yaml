@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./cilium-l2.yaml
   - ./helmrelease.yaml
-  - ./netpol.yaml
+  # - ./netpol.yaml
 
 configMapGenerator:
   - name: cilium-values

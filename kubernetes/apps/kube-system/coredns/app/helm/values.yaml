@@ -9,8 +9,8 @@ serviceAccount:
 service:
   name: kube-dns
   clusterIP: 10.96.0.10
-  annotations:
-    fix.coredns.template: "fnord"
+  # labels:
+  #   k8s-app: kube-dns
 # Original configuration (commented out)
 # servers:
 #   - zones:
@@ -45,8 +45,6 @@ service:
 #       - name: log
 #         configBlock: |-
 #           class error
-podAnnotations:
-  configmap.reloader.stakater.com/reload: "coredns"
 
 # New configuration with NodeHosts and custom server support
 nodeHosts: |
@@ -87,10 +85,7 @@ servers:
 extraConfig:
   import:
     parameters: /etc/coredns/custom/*.server
-  log.override: |
-    #
-  stub.server: |
-    #
+
 
 affinity:
   nodeAffinity:
