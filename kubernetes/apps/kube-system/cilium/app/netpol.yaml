@@ -1,38 +1,76 @@
----
-apiVersion: "cilium.io/v2"
-kind: CiliumClusterwideNetworkPolicy
-metadata:
-  name: "cluster-default-kube-dns-ingress"
-spec:
-  description: "Policy for ingress allow to kube-dns from all Cilium managed endpoints in the cluster"
-  endpointSelector:
-    matchLabels:
-      k8s:io.kubernetes.pod.namespace: kube-system
-      k8s-app: kube-dns
-  ingress:
-    - fromEndpoints:
-        - {}
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: "ANY"
----
-apiVersion: "cilium.io/v2"
-kind: CiliumClusterwideNetworkPolicy
-metadata:
-  name: "cluster-default-kube-dns-egress"
-spec:
-  description: "Policy for egress allow to kube-dns from all Cilium managed endpoints in the cluster"
-  endpointSelector: {}
-  egress:
-    - toEndpoints:
-        - matchLabels:
-            "k8s:io.kubernetes.pod.namespace": kube-system
-            "k8s:k8s-app": kube-dns
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: "ANY"
-          rules:
-            dns:
-              - matchPattern: "*"
+# ---
+# apiVersion: "cilium.io/v2"
+# kind: CiliumClusterwideNetworkPolicy
+# metadata:
+#   name: "cluster-default-kube-dns-ingress"
+# spec:
+#   description: "Policy for ingress allow to kube-dns from all Cilium managed endpoints in the cluster"
+#   endpointSelector:
+#     matchLabels:
+#       k8s:io.kubernetes.pod.namespace: kube-system
+#       k8s-app: kube-dns
+#   ingress:
+#     - fromEndpoints:
+#         - {}
+#       toPorts:
+#         - ports:
+#             - port: "53"
+#               protocol: "ANY"
+# ---
+# apiVersion: "cilium.io/v2"
+# kind: CiliumClusterwideNetworkPolicy
+# metadata:
+#   name: "cluster-default-kube-dns-egress"
+# spec:
+#   description: "Policy for egress allow to kube-dns from all Cilium managed endpoints in the cluster"
+#   endpointSelector: {}
+#   egress:
+#     - toEndpoints:
+#         - matchLabels:
+#             "k8s:io.kubernetes.pod.namespace": kube-system
+#             "k8s:k8s-app": kube-dns
+#       toPorts:
+#         - ports:
+#             - port: "53"
+#               protocol: "ANY"
+#           rules:
+#             dns:
+#               - matchPattern: "*"
+# ---
+# apiVersion: "cilium.io/v2"
+# kind: CiliumClusterwideNetworkPolicy
+# metadata:
+#   name: "allow-all-pods-to-kube-dns"
+# spec:
+#   description: "Allows all pods to perform DNS lookups to CoreDNS."
+#   # This endpointSelector means this policy applies to *all* Cilium-managed pods in the cluster.
+#   endpointSelector: {} 
+#   egress:
+#     - toEndpoints:
+#         - matchLabels:
+#             k8s:io.kubernetes.pod.namespace: kube-system
+#             k8s-app: kube-dns
+#       toPorts:
+#         - ports:
+#             - port: "53"
+#               protocol: UDP # DNS primary protocol
+#             - port: "53"
+#               protocol: TCP # For larger DNS responses
+# ---
+# apiVersion: "cilium.io/v2"
+# kind: CiliumClusterwideNetworkPolicy
+# metadata:
+#   name: "allow-kube-dns-ingress"
+# spec:
+#   description: "Allow ingress to kube-dns from all pods"
+#   endpointSelector:
+#     matchLabels:
+#       k8s:io.kubernetes.pod.namespace: kube-system
+#       k8s-app: kube-dns
+#   ingress:
+#     - fromEndpoints:
+#         - {}
+#       toPorts:
+#         - ports:
+#             - port: "53"
+#               protocol: "ANY"
