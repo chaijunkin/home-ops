@@ -18,10 +18,6 @@ cgroup:
   automount:
     enabled: false
   hostRoot: /sys/fs/cgroup
-# cluster:
-#   id: 1
-#   name: home-kubernetes
-
 # NOTE: This might need to be set if you have more than one active NIC on your hosts
 devices: eth+
 endpointRoutes:
@@ -36,6 +32,8 @@ gatewayAPI:
   enabled: true
   enableAlpn: true
   xffNumTrustedHops: 1
+hubble:
+  enabled: false  
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "${CLUSTER_CIDR}"
@@ -50,7 +48,7 @@ loadBalancer:
   mode: dsr
 localRedirectPolicy: true
 operator:
-  replicas: 1
+  replicas: 2
   rollOutPods: true
   prometheus:
     enabled: true
