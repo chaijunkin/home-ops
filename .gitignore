@@ -51,7 +51,11 @@ crash.*.log
 # password, private keys, and other secrets. These should not be part of version 
 # control as they are data points which are potentially sensitive and subject 
 # to change depending on the environment.
+!talos_cluster.auto.tfvars
+!talos_image.auto.tfvars
+!talos_node.auto.tfvars
 terraform.auto.tfvars
+
 *.tfvars
 !terraform.tfvars
 *.tfvars.json
