@@ -40,7 +40,7 @@ spec:
             nameOverride: qbittorrent
             image:
               repository: ghcr.io/chaijunkin/qbittorrent
-              tag: 5.0.0
+              tag: 5.1.2
             env:
               TZ: ${TIMEZONE}
               UMASK: "022"
