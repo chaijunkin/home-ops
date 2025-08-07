@@ -19,12 +19,13 @@ provider "proxmox" {
   endpoint = var.proxmox.endpoint
   insecure = var.proxmox.insecure
 
-  api_token = var.proxmox_api_token
+  # api_token = var.proxmox_api_token
   username = var.proxmox.username
-  # password = var.proxmox.password
+  password = var.proxmox.password  # you need this for proxmoxo_vm non_mapped hostpci
   ssh {
-    agent    = true
-    username = var.proxmox.username
+    agent    = false
+    # username = var.proxmox.username
+    private_key = file("~/.ssh/jk_inventory") # Ensure this file exists and has the correct permissions
   }
 }
 
