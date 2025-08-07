@@ -1,124 +1,209 @@
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: loki
-spec:
-  interval: 5m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: 6.34.0
-  url: oci://ghcr.io/grafana/helm-charts/loki
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: loki
+  name: &app loki
 spec:
-  interval: 1h
-  chartRef:
-    kind: OCIRepository
-    name: loki
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: loki
+      version: 6.6.5
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+  maxHistory: 2
   install:
-    crds: Skip
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    crds: Skip
     remediation:
       retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  valuesFrom:
+  - targetPath: loki.storage.bucketNames.chunks
+    kind: Secret
+    name: loki-secret
+    valuesKey: BUCKET_NAME
+  - targetPath: loki.storage.bucketNames.ruler
+    kind: Secret
+    name: loki-secret
+    valuesKey: BUCKET_NAME
+  - targetPath: loki.storage.bucketNames.admin
+    kind: Secret
+    name: loki-secret
+    valuesKey: BUCKET_NAME
+  - targetPath: loki.storage.s3.endpoint
+    kind: Secret
+    name: loki-secret
+    valuesKey: BUCKET_HOST
+  - targetPath: loki.storage.s3.accessKeyId
+    kind: Secret
+    name: loki-secret
+    valuesKey: AWS_ACCESS_KEY_ID
+  - targetPath: loki.storage.s3.secretAccessKey
+    kind: Secret
+    name: loki-secret
+    valuesKey: AWS_SECRET_ACCESS_KEY
+  - kind: Secret
+    name: loki-secret
+    valuesKey: BUCKET_REGION
+    targetPath: loki.storage.s3.region
   values:
-    deploymentMode: SingleBinary
-    memberlist:
-      service:
-        publishNotReadyAddresses: true
+    deploymentMode: SimpleScalable
+
     loki:
+      podAnnotations:
+        secret.reloader.stakater.com/reload: loki-secret
+
       auth_enabled: false
+
       analytics:
         reporting_enabled: false
-      commonConfig:
-        replication_factor: 1
+
       compactor:
         working_directory: /var/loki/compactor/retention
-        delete_request_store: filesystem
+        delete_request_store: s3
         retention_enabled: true
+
+      frontend:
+        max_outstanding_per_tenant: 4096
+
       ingester:
         chunk_encoding: snappy
+
+      commonConfig:
+        replication_factor: 1
+
       limits_config:
-        # reject_old_samples: false
-        # retention_period: 14d
-        retention_period: 72h
+        ingestion_burst_size_mb: 128
+        ingestion_rate_mb: 64
+        max_query_parallelism: 100
+        per_stream_rate_limit: 64M
+        per_stream_rate_limit_burst: 128M
         reject_old_samples: true
         reject_old_samples_max_age: 168h
-        max_cache_freshness_per_query: 10m
-        split_queries_by_interval: 15m
-        # for big logs tune
-        per_stream_rate_limit: 512M
-        per_stream_rate_limit_burst: 1024M
-        cardinality_limit: 200000
-        ingestion_burst_size_mb: 1000
-        ingestion_rate_mb: 10000
-        max_entries_limit_per_query: 1000000
-        max_label_value_length: 20480
-        max_label_name_length: 10240
-        max_label_names_per_series: 300
-      server:
-        grpc_server_max_recv_msg_size: 10485760 # 10 MiB
-        grpc_server_max_send_msg_size: 10485760 # 10 MiB
-        log_level: info
-      storage:
-        type: filesystem
+        retention_period: 30d
+        shard_streams:
+          enabled: true
+        split_queries_by_interval: 1h
+        ### grafana explore loki feature  
+        volume_enabled: true
+        # discover_service_name: ["app"]
+
+      query_scheduler:
+        max_outstanding_requests_per_tenant: 4096
+
+      rulerConfig:
+        enable_api: true
+        enable_alertmanager_v2: true
+        alertmanager_url: http://alertmanager.observability.svc.cluster.local:9093
+        storage:
+          type: local
+          local:
+            directory: /rules
+        rule_path: /rules/fake
+
       schemaConfig:
         configs:
-          - from: "2024-04-01" # quote
+          - from: "2024-04-01"
             store: tsdb
-            object_store: filesystem
+            object_store: s3
             schema: v13
             index:
               prefix: loki_index_
               period: 24h
-      structuredConfig:
-        ruler:
-          enable_api: true
-          enable_alertmanager_v2: true
-          alertmanager_url: http://alertmanager-operated.observability.svc.cluster.local:9093
-          storage:
-            type: local
-            local:
-              directory: /rules
-          rule_path: /rules/fake
-    singleBinary:
+
+      server:
+        log_level: info
+        grpc_server_max_recv_msg_size: 8388608
+        grpc_server_max_send_msg_size: 8388608
+
+      storage:
+        type: s3
+        s3:
+          s3ForcePathStyle: true
+          insecure: false
+
+    gateway:
+      replicas: 1
+      enabled: true
+      image:
+        registry: ghcr.io
+        repository: nginxinc/nginx-unprivileged
+        tag: 1.27.0-alpine
+      deploymentStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 50%
+          maxSurge: 50%
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: loki
+              app.kubernetes.io/component: gateway
+      ingress:
+        enabled: true
+        ingressClassName: "internal"
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: |
+            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+        hosts:
+          - host: loki.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls: []
+    write:
       replicas: 1
       persistence:
-        enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 20Gi
-    gateway:
-      replicas: 0
-    backend:
-      replicas: 0
+
     read:
-      replicas: 0
-    write:
-      replicas: 0
-    chunksCache:
-      enabled: false
-    resultsCache:
-      enabled: false
-    lokiCanary:
-      enabled: false
-    test:
-      enabled: false
+      replicas: 1
+
+    backend:
+      replicas: 1
+      persistence:
+        storageClass: openebs-hostpath
+        size: 20Gi
+
+    monitoring:
+      dashboards:
+        annotations:
+          grafana_folder: Loki
+      rules:
+        enabled: false
+      serviceMonitor:
+        enabled: false
+        metricsInstance:
+          enabled: true
+      selfMonitoring:
+        enabled: false
+        grafanaAgent:
+          installOperator: false
+
     sidecar:
       image:
-        repository: ghcr.io/home-operations/k8s-sidecar
-        tag: 1.30.7@sha256:3b6444d91c6e69a9e07c5e55419452d967d18c833d88b36277dc2021b708f621
-      enableUniqueFilenames: true
+        repository: ghcr.io/kiwigrid/k8s-sidecar
       rules:
         searchNamespace: ALL
         folder: /rules/fake
+
+    lokiCanary:
+      enabled: false
+    chunksCache:  ### FK THIS TAKE ME 3GB on loki-cache :)
+      enabled: false
+    resultsCache:
+      enabled: false
+
+    test:
+      enabled: false
