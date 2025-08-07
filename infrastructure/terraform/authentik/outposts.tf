@@ -1,3 +1,5 @@
+### THIS IS KUBERNETES STUFF
+
 locals {
   internal_proxy_provider_ids = [
     module.echo_server_internal.proxy_provider_id,
@@ -19,7 +21,7 @@ resource "authentik_outpost" "internal" {
   config = jsonencode({
     "log_level"                      = "info"
     "docker_labels"                  = null
-    "authentik_host"                 = "https://auth.${var.cluster_domain}/"
+    "authentik_host"                 = "https://auth.${var.CLUSTER_DOMAIN}/"
     "docker_network"                 = null
     "container_image"                = null
     "docker_map_ports"               = true
@@ -45,7 +47,7 @@ resource "authentik_outpost" "external" {
   config = jsonencode({
     "log_level"                      = "info"
     "docker_labels"                  = null
-    "authentik_host"                 = "https://auth.${var.cluster_domain}/"
+    "authentik_host"                 = "https://auth.${var.CLUSTER_DOMAIN}/"
     "docker_network"                 = null
     "container_image"                = null
     "docker_map_ports"               = true
@@ -61,7 +63,7 @@ resource "authentik_outpost" "external" {
     "kubernetes_disabled_components" = []
     "kubernetes_ingress_annotations" = {
       "external-dns/is-public" : "true"
-      "external-dns.alpha.kubernetes.io/target" : "external.${var.cluster_domain}"
+      "external-dns.alpha.kubernetes.io/target" : "external.${var.CLUSTER_DOMAIN}"
     }
     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
   })

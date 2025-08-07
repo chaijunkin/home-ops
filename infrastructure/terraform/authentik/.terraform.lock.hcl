@@ -5,20 +5,7 @@ provider "registry.terraform.io/goauthentik/authentik" {
   version     = "2025.6.0"
   constraints = "2025.6.0"
   hashes = [
-    "h1:+u1o/H+WAIO5nP+RlQE3ay/+dHCykVoHBq6crfTl4pM=",
-    "h1:10kMBf77ecT3Xpw+7SG8Arnx0yv+By9o0o0CfGGONn0=",
-    "h1:3oSIhXwf9EMZZH0TPvD5T2kY6yYfEPROyfQWPNA00xw=",
-    "h1:FElCnBGnJQ6QZDzetJHlv6epvfmUcj/hDmNSVhnU3pE=",
-    "h1:K1/iRTwYc9JQbzvnhZ9jB9IFcDPk2rk6PSOZ+Y5aIOQ=",
-    "h1:eQ6jCmR3rssG5gaKNsc37MXydWNHymVRqpYmrntn2t8=",
-    "h1:gQyxqd10hfhryLD7QIA03ACS7PQppph62qBXGmZSe+E=",
-    "h1:gSI5UtIVuBepC1lgci7lv/l4PjiOaRySx3aRYMg6+84=",
-    "h1:hvkwiVQRya1zE4aXKG29GlwHTNABw/j/ebJIR6EAI24=",
-    "h1:i/aQKCN/ypAdHr4IcKlEhjC1hp19zh5nlVwOxEfYZvg=",
-    "h1:jGcZg4z76eUtuZLu8Qd9Ti7/TKg9YuTbTSAaT0nCW5M=",
-    "h1:uwV8O+jKz1zuosrGh1Lht063OS1heW5Fq1zWTOtr5Yw=",
     "h1:zMv5nyNyA+NgQplmrYhpeqOkoAGzzTJP4/W1oJzZtFM=",
-    "h1:ziINchbQjLKlYXh/0T922Y876F3wgZrvDQmIcaIezTs=",
     "zh:091960d2aed06773aa81858ae20c7ffc9943111b3c61ee2341263c3872dd7b89",
     "zh:122fac709223acf460912d71877db6ac638f501bac30b3f5516c283a4605d034",
     "zh:1d3cddb5e6336c70f701533c83c64c38a9b964e94987ad803b96961bd23a685e",

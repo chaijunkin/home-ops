@@ -1,4 +1,8 @@
 ## Authentication flow
+data "authentik_flow" "default-source-authentication" {
+  slug = "default-source-authentication"
+}
+
 resource "authentik_flow" "authentication" {
   name               = "authentication-flow"
   title              = "Welcome!"
@@ -14,11 +18,11 @@ resource "authentik_flow_stage_binding" "authentication-flow-binding-00" {
   order  = 0
 }
 
-# resource "authentik_flow_stage_binding" "authentication-flow-binding-10" {
-#   target = authentik_flow.authentication.uuid
-#   stage  = authentik_stage_authenticator_validate.authentication-mfa-validation.id
-#   order  = 10
-# }
+resource "authentik_flow_stage_binding" "authentication-flow-binding-10" {
+  target = authentik_flow.authentication.uuid
+  stage  = authentik_stage_authenticator_validate.authentication-mfa-validation.id
+  order  = 10
+}
 
 resource "authentik_flow_stage_binding" "authentication-flow-binding-100" {
   target = authentik_flow.authentication.uuid
@@ -27,6 +31,10 @@ resource "authentik_flow_stage_binding" "authentication-flow-binding-100" {
 }
 
 ## Invalidation flow
+data "authentik_flow" "default-provider-invalidation-flow" {
+  slug = "default-provider-invalidation-flow"
+}
+
 resource "authentik_flow" "invalidation" {
   name               = "invalidation-flow"
   title              = "Invalidation Flow"
@@ -78,10 +86,15 @@ resource "authentik_flow_stage_binding" "recovery-flow-binding-30" {
 }
 
 ## Invitation flow
+
+data "authentik_flow" "default-source-enrollment" {
+  slug = "default-source-enrollment"
+}
+
 resource "authentik_flow" "enrollment-invitation" {
   name               = "enrollment-invitation-flow"
   title              = "Enrollment invitation"
-  slug               = "enrollment-invitation"
+  slug               = "enrollmment-invitation"
   designation        = "enrollment"
   compatibility_mode = true
   # background         = "https://placeholder.jpeg"
@@ -144,16 +157,3 @@ resource "authentik_flow" "provider-authorization-implicit-consent" {
   designation        = "authorization"
   # background         = "https://placeholder.jpeg"
 }
-
-data "authentik_flow" "default-source-authentication" {
-  slug = "default-source-authentication"
-}
-
-data "authentik_flow" "default-source-enrollment" {
-  slug = "default-source-enrollment"
-}
-
-data "authentik_flow" "default-provider-authorization-implicit-consent" {
-  slug = "default-provider-authorization-implicit-consent"
-}
-

@@ -1,4 +1,5 @@
-variable "cluster_domain" {
+
+variable "CLUSTER_DOMAIN" {
   type        = string
   description = "Domain for Authentik"
   sensitive   = true
@@ -26,6 +27,20 @@ variable "grafana_secret" {
   type        = string
   description = "Grafana Client Secret"
   sensitive   = true
+}
+
+variable "headlamp_id" {
+  type        = string
+  description = "Headlamp Client ID"
+  sensitive   = true
+  default = null
+}
+
+variable "headlamp_secret" {
+  type        = string
+  description = "Headlamp Client Secret"
+  sensitive   = true
+  default = null
 }
 
 # variable "paperless_id" {

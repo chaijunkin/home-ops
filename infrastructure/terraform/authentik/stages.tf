@@ -11,17 +11,16 @@ resource "authentik_stage_identification" "authentication-identification" {
 }
 
 resource "authentik_stage_password" "authentication-password" {
-  name     = "authentication-password"
-  backends = ["authentik.core.auth.InbuiltBackend"]
-  # configure_flow                = data.authentik_flow.default-password-change.id
+  name                          = "authentication-password"
+  backends                      = ["authentik.core.auth.InbuiltBackend"]
   failed_attempts_before_cancel = 3
 }
 
-# resource "authentik_stage_authenticator_validate" "authentication-mfa-validation" {
-#   name                  = "authentication-mfa-validation"
-#   device_classes        = ["static", "totp", "webauthn"]
-#   not_configured_action = "skip"
-# }
+resource "authentik_stage_authenticator_validate" "authentication-mfa-validation" {
+  name                  = "authentication-mfa-validation"
+  device_classes        = ["static", "totp", "webauthn"]
+  not_configured_action = "skip"
+}
 
 resource "authentik_stage_user_login" "authentication-login" {
   name = "authentication-login"
@@ -88,7 +87,7 @@ resource "authentik_stage_prompt" "source-enrollment-prompt" {
 resource "authentik_stage_user_write" "enrollment-user-write" {
   name                     = "enrollment-user-write"
   create_users_as_inactive = false
-  create_users_group       = authentik_group.users.id
+  create_users_group       = authentik_group.default["users"].id
 }
 
 resource "authentik_stage_user_login" "source-enrollment-login" {
