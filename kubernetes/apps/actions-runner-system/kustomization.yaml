@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: actions-runner-system
 resources:
   - ./actions-runner-controller/ks.yaml
-  # - ./namespace.yaml
+  - ./namespace.yaml
