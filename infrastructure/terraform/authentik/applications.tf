@@ -2,7 +2,7 @@ locals {
   oauth_apps = [
     # "dashbrr",
     "grafana",
-    # "headlamp",
+    "headlamp",
     # "kyoo",
     # "lubelogger",
     # "open-webui",
@@ -29,14 +29,14 @@ locals {
       redirect_uri  = "https://grafana.${var.CLUSTER_DOMAIN}/login/generic_oauth"
       launch_url    = "https://grafana.${var.CLUSTER_DOMAIN}/login/generic_oauth"
     },
-    # headlamp = {
-    #   client_id     = var.headlamp_client_id
-    #   client_secret = var.headlamp_client_secret
-    #   group         = "infrastructure"
-    #   icon_url      = "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/src/resources/icon-dark.svg"
-    #   redirect_uri  = "https://headlamp.${var.CLUSTER_DOMAIN}/oidc-callback"
-    #   launch_url    = "https://headlamp.${var.CLUSTER_DOMAIN}/"
-    # },
+    headlamp = {
+      client_id     = var.headlamp_id
+      client_secret = var.headlamp_secret
+      group         = "infrastructure"
+      icon_url      = "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/src/resources/icon-dark.svg"
+      redirect_uri  = "https://headlamp.${var.CLUSTER_DOMAIN}/oidc-callback"
+      launch_url    = "https://headlamp.${var.CLUSTER_DOMAIN}/"
+    },
     # kyoo = {
     #   client_id     = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_ID"]
     #   client_secret = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_SECRET"]
