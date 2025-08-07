@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/chaijunkin/radarr
-              tag: 5.6.0.8846@sha256:767609d586ed5ced886c99171b21ff14b75174da7498872d7943f6a82fc69c2e
+              tag: 5.26.2.10099@sha256:797aa86a14f42e4555d9277cdf8533cda0588bf274002abf2a6e88ccf61f1791
             env:
               TZ: ${TIMEZONE}
               RADARR__AUTHENTICATION_METHOD: External
