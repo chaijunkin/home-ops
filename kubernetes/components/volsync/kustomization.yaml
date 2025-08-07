@@ -6,4 +6,4 @@ resources:
   - ./pvc.yaml
   # - ./minio.yaml
   # - ./r2.yaml
-  # - ./smb.yaml
+  - ./smb.yaml
