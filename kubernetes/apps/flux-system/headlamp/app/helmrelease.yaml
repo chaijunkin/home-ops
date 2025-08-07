@@ -61,7 +61,12 @@ spec:
       # -- Enable ingress controller resource
       enabled: true
       # -- Annotations for Ingress resource
-      annotations: {}
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Compute/Storage Infrastructure
+        gethomepage.dev/name: Headlamp
+        gethomepage.dev/description: Kubernetes Dashboared
+        gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/headlamp.png
         # external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
         # kubernetes.io/tls-acme: "true"
 
@@ -76,23 +81,11 @@ spec:
       # -- Hostname(s) for the Ingress resource
       # Please refer to https://kubernetes.io/docs/reference/kubernetes-api/service-resources/ingress-v1/#IngressSpec for more information.
       hosts:
-      - host: &host "k8s.${SECRET_DOMAIN}"
-        paths:
-        - path: /
-          pathType: Prefix
-          backend:
-            service:
-              name: headlamp
-              port:
-                number: 80
-        # - host: chart-example.local
-        #   paths:
-        #   - path: /
-        #     type: ImplementationSpecific
-      # -- Ingress TLS configuration
-      tls:
-        - hosts:
-            - *host
+        - host: headlamp.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              type: Prefix
+
       #  - secretName: chart-example-tls
       #    hosts:
       #      - chart-example.local
