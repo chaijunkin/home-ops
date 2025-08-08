@@ -5,8 +5,7 @@ kind: Kustomization
 components:
   - ../../components/common
 resources:
-  # Pre Flux-Kustomizations
-  -
+  # Pre Flux-Kustomizations  #
   # - ./notifications.yaml
   # Flux-Kustomizations
   - ./snapshot-controller/ks.yaml

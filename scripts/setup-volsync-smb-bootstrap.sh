@@ -12,7 +12,7 @@ BASE_DIR="kubernetes/apps"
 # Define application namespaces (excluding system namespaces)
 APP_NAMESPACES=(
     "default"
-    "downloads" 
+    "downloads"
     "media"
     "home-automation"
     "security"
@@ -45,12 +45,12 @@ log_debug() {
 create_bootstrap_structure() {
     local namespace=$1
     local bootstrap_dir="${BASE_DIR}/${namespace}/_bootstrap"
-    
+
     log_info "Creating bootstrap structure for namespace: ${namespace}"
-    
+
     # Create bootstrap directory
     mkdir -p "${bootstrap_dir}/app"
-    
+
     # Create kustomization.yaml for the bootstrap component
     cat > "${bootstrap_dir}/app/kustomization.yaml" << 'EOF'
 ---
@@ -93,9 +93,9 @@ EOF
 update_namespace_kustomization() {
     local namespace=$1
     local kustomization_file="${BASE_DIR}/${namespace}/kustomization.yaml"
-    
+
     log_info "Updating kustomization.yaml for namespace: ${namespace}"
-    
+
     # Check if kustomization.yaml exists
     if [[ ! -f "${kustomization_file}" ]]; then
         log_warn "Creating new kustomization.yaml for ${namespace}"
@@ -104,7 +104,8 @@ update_namespace_kustomization() {
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
+
+
   - ./bootstrap/ks.yaml
 EOF
     else
@@ -113,50 +114,50 @@ EOF
             log_info "Adding bootstrap/ks.yaml to existing kustomization.yaml"
             # Create a backup
             cp "${kustomization_file}" "${kustomization_file}.backup"
-            
+
             # Use awk to add the bootstrap line after the resources: line
             awk '
-            /^resources:/ { 
+            /^resources:/ {
                 print $0
                 print "  - ./bootstrap/ks.yaml"
-                next 
+                next
             }
             { print }
             ' "${kustomization_file}.backup" > "${kustomization_file}"
-            
+
             # Remove backup
             rm "${kustomization_file}.backup"
         else
             log_info "bootstrap/ks.yaml already exists in kustomization.yaml"
         fi
     fi
-    
+
     log_info "✓ Updated kustomization.yaml for ${namespace}"
 }
 
 check_prerequisites() {
     log_info "Checking prerequisites..."
-    
+
     # Check if we're in the correct directory
     if [[ ! -d "kubernetes/apps" ]]; then
         log_error "Please run this script from the root of your home-ops repository"
         return 1
     fi
-    
+
     # Check if the volsync-smb-repository component exists
     if [[ ! -d "kubernetes/components/volsync-smb-repository" ]]; then
         log_error "volsync-smb-repository component not found at kubernetes/components/volsync-smb-repository"
         log_error "Please ensure the component exists before running this script"
         return 1
     fi
-    
+
     # Check if SMB storage class exists
     if [[ ! -f "kubernetes/apps/kube-system/csi-driver-smb/app/smb-volsync-storageclass.yaml" ]]; then
         log_error "SMB volsync storage class not found"
         log_error "Please ensure smb-volsync-storageclass.yaml exists in kubernetes/apps/kube-system/csi-driver-smb/app/"
         return 1
     fi
-    
+
     log_info "✓ All prerequisites met"
     return 0
 }
@@ -192,12 +193,12 @@ show_summary() {
 main() {
     log_info "🚀 Starting volsync SMB repository bootstrap setup..."
     log_info ""
-    
+
     # Check prerequisites
     if ! check_prerequisites; then
         exit 1
     fi
-    
+
     # Process each application namespace
     for namespace in "${APP_NAMESPACES[@]}"; do
         if [[ -d "${BASE_DIR}/${namespace}" ]]; then
@@ -211,16 +212,16 @@ main() {
                     continue
                 fi
             fi
-            
+
             create_bootstrap_structure "${namespace}"
             update_namespace_kustomization "${namespace}"
         else
             log_warn "Namespace directory ${namespace} does not exist, skipping..."
         fi
     done
-    
+
     show_summary
-    
+
     log_info "✨ Bootstrap setup completed successfully!"
     log_info ""
     log_info "📋 Next steps:"

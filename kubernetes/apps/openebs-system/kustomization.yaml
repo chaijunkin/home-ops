@@ -4,5 +4,4 @@ kind: Kustomization
 components:
   - ../../components/common
 resources:
-  -
   - ./openebs/ks.yaml

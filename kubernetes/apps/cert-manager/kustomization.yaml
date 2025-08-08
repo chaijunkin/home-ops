@@ -4,5 +4,4 @@ kind: Kustomization
 components:
   - ../../components/common
 resources:
-  -
   - ./cert-manager/ks.yaml
