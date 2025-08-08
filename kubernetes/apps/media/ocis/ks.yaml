@@ -25,5 +25,4 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 15Gi
   components:
-    - ../../../../components/common
     - ../../../../components/volsync

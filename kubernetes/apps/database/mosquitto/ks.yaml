@@ -21,5 +21,3 @@ spec:
   postBuild:
     substitute:
       APP: *app
-  components:
-    - ../../../../components/common

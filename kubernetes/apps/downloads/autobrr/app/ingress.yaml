@@ -21,8 +21,11 @@ spec:
           - path: /
             pathType: Prefix
             backend:
+              service:
                 name: autobrr
                 port:
+                  annotations:
+                    io.cilium/lb-ipam-ips: 10.10.30.47
                   number: 80
   tls:
     - hosts:

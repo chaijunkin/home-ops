@@ -1,10 +1,11 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+components:
+  - ../../components/common
 resources:
   - ./_bootstrap/ks.yaml
   # Pre Flux-Kustomizations
-  - ./namespace.yaml
   # Flux-Kustomizations
   - ./cyberchef/ks.yaml
   # - ./excalidraw/ks.yaml
@@ -21,4 +22,5 @@ resources:
   - ./searxng/ks.yaml
   # - ./slskd/ks.yaml
   # - ./stirling-pdf/ks.yaml
+  - ./webhook/ks.yaml
   - ./wikijs/ks.yaml

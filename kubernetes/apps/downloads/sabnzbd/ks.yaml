@@ -26,6 +26,5 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: sab
   components:
-    - ../../../../components/common
     - ../../../../components/volsync
     - ../../../../components/gatus/internal
