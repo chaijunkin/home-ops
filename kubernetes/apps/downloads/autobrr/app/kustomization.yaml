@@ -6,9 +6,7 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-  # - ./ingress.yaml
-  # - ./pvc.yaml
-  # - ./storageclass.yaml
+  - ./ingress.yaml
 configMapGenerator:
   - name: autobrr-loki-rules
     files:

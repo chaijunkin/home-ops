@@ -5,9 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  # - ./ingress.yaml
-  # - ./pvc.yaml
-  # - ./storageclass.yaml
+  - ./ingress.yaml
 configMapGenerator:
   - name: cross-seed-loki-rules
     files:
