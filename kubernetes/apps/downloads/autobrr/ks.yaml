@@ -27,4 +27,4 @@ spec:
   components:
     - ../../../../components/common
     - ../../../../components/volsync
-    - ../../../../components/gatus/guarded
+    - ../../../../components/gatus/internal
