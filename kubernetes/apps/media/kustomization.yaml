@@ -15,7 +15,7 @@ resources:
   - ./minio/ks.yaml
   # - ./nextcloud/ks.yaml
   # - ./neko/ks.yaml
-  - ./overseerr/ks.yaml
+  - ./jellyseerr/ks.yaml
   # - ./paperless/ks.yaml
   # - ./pasta/ks.yaml
   - ./plex/ks.yaml
