@@ -15,6 +15,8 @@ spec:
             pathType: Prefix
             backend:
               service:
+                annotations:
+                  io.cilium/lb-ipam-ips: 10.10.30.66
                 name: webhook-receiver
                 port:
                   number: 80

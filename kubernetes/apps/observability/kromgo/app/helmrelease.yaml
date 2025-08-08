@@ -62,21 +62,27 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.72
       main:
         ports:
           http:
             port: *port
     ingress:
-      main:
-        enabled: true
-        className: external
         annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Applications
+          gethomepage.dev/name: Kromgo
+          gethomepage.dev/description: Kromgo Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kromgo.png
           external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
+                  annotations:
+                    io.cilium/lb-ipam-ips: 10.10.30.72
                   name: main
                   port: http
         tls:

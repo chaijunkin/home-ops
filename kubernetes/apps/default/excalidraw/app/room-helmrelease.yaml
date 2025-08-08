@@ -48,19 +48,20 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.47
       main:
         ports:
           http:
             port: *port
     ingress:
-      main:
-        enabled: true
-        className: internal
-        hosts:
-          - host: &host excalidraw-room.${SECRET_DOMAIN}
-            paths:
-              - path: /
-                service:
+                  annotations:
+                    gethomepage.dev/enabled: "true"
+                    gethomepage.dev/group: Applications
+                    gethomepage.dev/name: Excalidraw-Room
+                    gethomepage.dev/description: Excalidraw-Room Service
+                    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/excalidraw-room.png
+                    io.cilium/lb-ipam-ips: 10.10.30.47
                   name: main
                   port: http
         tls:

@@ -47,6 +47,8 @@ spec:
                 memory: 256Mi
 
     service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.43
       main:
         ports:
           http:
@@ -68,6 +70,8 @@ spec:
             paths:
               - path: /
                 service:
+                  annotations:
+                    io.cilium/lb-ipam-ips: 10.10.30.43
                   name: main
                   port: http
         tls:

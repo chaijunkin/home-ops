@@ -70,6 +70,8 @@ spec:
             pathType: Prefix
             backend:
               service:
+                annotations:
+                  io.cilium/lb-ipam-ips: 10.10.30.41
                 name: *app
                 port:
                   number: 9090

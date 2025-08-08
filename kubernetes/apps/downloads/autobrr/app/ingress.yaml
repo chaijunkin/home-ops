@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: autobrr
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Downloads Service
+    gethomepage.dev/name: autobrr
+    gethomepage.dev/icon: autobrr.png
+    gethomepage.dev/description: RSS/IRC automation
+spec:
+  ingressClassName: internal
+  rules:
+    - host: &host "autobrr.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                annotations:
+                  io.cilium/lb-ipam-ips: 10.10.30.39
+                name: autobrr
+                port:
+                  number: 7474
+  tls:
+    - hosts:
+        - *host

@@ -41,6 +41,8 @@ spec:
                 memory: 50Mi
         strategy: Recreate
     service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.51
       main:
         ports:
           http:
@@ -63,6 +65,8 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
+                  annotations:
+                    io.cilium/lb-ipam-ips: 10.10.30.51
                   name: main
                   port: http
         tls:

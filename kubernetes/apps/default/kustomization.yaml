@@ -9,6 +9,7 @@ resources:
   - ./cyberchef/ks.yaml
   # - ./excalidraw/ks.yaml
   - ./firefly-iii/ks.yaml
+  # - ./go2rtc/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./miniflux/ks.yaml
@@ -17,6 +18,7 @@ resources:
   - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml
-  # - ./stirling-pdf/ks.yaml
   - ./searxng/ks.yaml
+  # - ./slskd/ks.yaml
+  # - ./stirling-pdf/ks.yaml
   - ./wikijs/ks.yaml

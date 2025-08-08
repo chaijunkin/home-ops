@@ -56,6 +56,8 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.69
       main:
         ports:
           http:
@@ -79,6 +81,8 @@ spec:
             paths:
               - path: /
                 service:
+                  annotations:
+                    io.cilium/lb-ipam-ips: 10.10.30.69
                   name: main
                   port: http
         tls:

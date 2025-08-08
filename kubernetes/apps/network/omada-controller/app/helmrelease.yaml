@@ -47,6 +47,8 @@ spec:
               limits:
                 memory: 2000Mi
     service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.42
       main:
         enabled: true
         ports:
@@ -161,6 +163,8 @@ spec:
             paths:
               - path: /
                 service:
+                  annotations:
+                    io.cilium/lb-ipam-ips: 10.10.30.42
                   name: main
         tls:
           - hosts:

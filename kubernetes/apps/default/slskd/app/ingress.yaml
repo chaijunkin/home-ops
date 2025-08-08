@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: slskd
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Media Service
+    gethomepage.dev/name: slskd
+    gethomepage.dev/icon: slskd.png
+    gethomepage.dev/description: Soulseek client daemon
+spec:
+  ingressClassName: internal
+  rules:
+    - host: &host "slskd.${SECRET_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                annotations:
+                  io.cilium/lb-ipam-ips: 10.10.30.35
+                name: slskd
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - *host

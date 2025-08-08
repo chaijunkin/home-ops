@@ -53,6 +53,8 @@ spec:
               - secretRef:
                   name: wikijs-secret
     service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.68
       main:
         controller: main
         ports:
@@ -74,6 +76,8 @@ spec:
             paths:
               - path: /
                 service:
+                  annotations:
+                    io.cilium/lb-ipam-ips: 10.10.30.68
                   identifier: main
                   port: http
     # persistence:
