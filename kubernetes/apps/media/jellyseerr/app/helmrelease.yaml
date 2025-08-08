@@ -65,6 +65,8 @@ spec:
     service:
       app:
         controller: *app
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.18
         ports:
           http:
             port: *port

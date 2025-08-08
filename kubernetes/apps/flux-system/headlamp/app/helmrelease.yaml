@@ -57,7 +57,7 @@ spec:
       name: headlamp-admin
     clusterRoleBinding:
       create: false
-    
+
     volumeMounts:
       - mountPath: /build/plugins
         name: headlamp-plugins
@@ -84,7 +84,9 @@ spec:
 
       # -- Ingress class name. replacement for the deprecated "kubernetes.io/ingress.class" annotation
       ingressClassName: "internal"
-
+      service:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.18
       # -- Hostname(s) for the Ingress resource
       # Please refer to https://kubernetes.io/docs/reference/kubernetes-api/service-resources/ingress-v1/#IngressSpec for more information.
       hosts:
