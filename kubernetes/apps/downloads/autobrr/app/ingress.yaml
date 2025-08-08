@@ -23,7 +23,7 @@ spec:
             backend:
                 name: autobrr
                 port:
-                  number: 7474
+                  number: 80
   tls:
     - hosts:
         - *host
