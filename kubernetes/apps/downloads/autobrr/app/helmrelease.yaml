@@ -86,6 +86,26 @@ spec:
       app:
         endpoints:
           - port: metrics
+    ingress:
+      app:
+        enabled: true
+        className: internal
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Autobrr
+          gethomepage.dev/description: Autobrr Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobrr.png
+        hosts:
+          - host: &host autobrr.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
     # route:
     #   app:
     #     hostnames: ["{{ .Release.Name }}.turbo.ac"]
