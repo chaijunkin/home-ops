@@ -35,7 +35,6 @@
 - `10.10.30.54` - readarr
 - `10.10.30.55` - lidarr
 - `10.10.30.56` - minio
-- `10.10.30.57` - tachidesk
 - `10.10.30.65` - ingress-nginx-external
 - `10.10.30.67` - miniflux
 - `10.10.30.68` - wikijs
