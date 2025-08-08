@@ -1,3 +1,66 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: home-kubernetes
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: "https://github.com/chaijunkin/home-ops"
+  ref:
+    branch: "main"
+  ignore: |
+    # exclude all
+    /*
+    # include kubernetes directory
+    !/kubernetes
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster
+  namespace: flux-system
+spec:
+  interval: 30m
+  path: ./kubernetes/flux
+  prune: false
+  wait: false
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: cluster-settings
+      - kind: Secret
+        name: cluster-secrets
+      - kind: ConfigMap
+        name: cluster-settings-user
+        optional: true
+      - kind: Secret
+        name: cluster-secrets-user
+        optional: true
+  patches:
+    - # Add Sops decryption to child Kustomizations
+      patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          decryption:
+            provider: sops
+            secretRef:
+              name: sops-age
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+---
 apiVersion: v1
 kind: Secret
 metadata:
@@ -28,3 +91,13 @@ sops:
     pgp: []
     encrypted_regex: ^(data|stringData)$
     version: 3.8.1
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  TIMEZONE: "Asia/Kuala_Lumpur"
+  CLUSTER_CIDR: "10.69.0.0/16"
+  NODE_CIDR: "10.10.30.0/24"
