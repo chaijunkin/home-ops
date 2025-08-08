@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: system-upgrade-controller
   path: ./kubernetes/apps/system-upgrade/k3s/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

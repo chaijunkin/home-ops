@@ -14,7 +14,7 @@ spec:
     - name: external-secrets-bitwarden
     - name: csi-driver-smb
   path: ./kubernetes/apps/volsync-system/volsync/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

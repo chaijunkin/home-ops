@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: security
   path: ./kubernetes/apps/kyverno/kyverno/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -26,7 +26,7 @@ spec:
   dependsOn:
     - name: kyverno
   path: ./kubernetes/apps/kyverno/kyverno/policies
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: default
   path: ./kubernetes/apps/default/ollama/app
-  prune: true
+  prune: false
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -17,7 +17,7 @@ spec:
   wait: false
   interval: 30m
   retryInterval: 1m
-  timeout: 5m 
+  timeout: 5m
   postBuild:
     substitute:
       APP: *app

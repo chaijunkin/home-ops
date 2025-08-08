@@ -14,7 +14,7 @@ spec:
     - name: external-secrets-stores
     - name: cloudnative-pg
   path: ./kubernetes/apps/downloads/bazarr/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -77,7 +77,7 @@ spec:
     - name: csi-driver-smb
       namespace: flux-system
   path: ./kubernetes/apps/${namespace}/_bootstrap/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-bitwarden
   path: ./kubernetes/apps/media/plex/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -44,7 +44,7 @@ spec:
   dependsOn:
     - name: plex
   path: ./kubernetes/apps/media/plex/plex-auto-languages
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -68,7 +68,7 @@ spec:
     - name: plex
     - name: external-secrets-bitwarden
   path: ./kubernetes/apps/media/plex/plex-image-cleanup
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -100,7 +100,7 @@ spec:
 #     - name: sonarr
 #     - name: external-secrets-bitwarden
 #   path: ./kubernetes/apps/media/plex/kometa
-#   prune: true
+#   prune: false
 #   sourceRef:
 #     kind: GitRepository
 #     name: home-kubernetes

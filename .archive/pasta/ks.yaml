@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -30,7 +30,7 @@ spec:
 # spec:
 #   interval: 10m
 #   path: "./kubernetes/apps/media/paperless/redis"
-#   prune: true
+#   prune: false
 #   sourceRef:
 #     kind: GitRepository
 #     name: home-kubernetes

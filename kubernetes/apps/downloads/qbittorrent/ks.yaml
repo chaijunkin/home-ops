@@ -12,7 +12,7 @@ spec:
   # dependsOn:
   #   - name: qbittorrent-pod-gateway-downloads
   path: ./kubernetes/apps/downloads/qbittorrent/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

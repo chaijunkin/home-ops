@@ -16,7 +16,7 @@ spec:
       namespace: actions-runner-system
   interval: 1h
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/app
-  prune: true
+  prune: false
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
@@ -39,7 +39,7 @@ spec:
       namespace: flux-system
   interval: 1h
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/runners
-  prune: true
+  prune: false
   retryInterval: 2m
   sourceRef:
     kind: GitRepository

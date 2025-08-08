@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: external-dns
   path: ./kubernetes/apps/network/cloudflared/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
