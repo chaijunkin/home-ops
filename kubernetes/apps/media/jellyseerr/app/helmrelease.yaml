@@ -22,7 +22,7 @@ spec:
       namespace: volsync-system
   values:
     controllers:
-      overseerr:
+      jellyseerr:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
