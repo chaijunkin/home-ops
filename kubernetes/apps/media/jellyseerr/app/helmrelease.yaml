@@ -7,7 +7,9 @@ spec:
   interval: 30m
   chartRef:
     kind: OCIRepository
+    apiVersion: source.toolkit.fluxcd.io/v1
     name: app-template
+    namespace: flux-system
   install:
     remediation:
       retries: 3
