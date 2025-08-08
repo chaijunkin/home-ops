@@ -30,7 +30,7 @@ spec:
         replicas: 1
         strategy: RollingUpdate
         containers:
-          main:            
+          main:
             image:
               repository: ghcr.io/wipash/excalidraw-collab
               tag: 0.17.3@sha256:1fd7b2fb38f0b2195236168b89e86f18306f861fc86404795fe23b113d837785
@@ -39,10 +39,10 @@ spec:
               PORT: &port 80
               COLLAB_ADDR: excalidraw-room.${SECRET_DOMAIN}
     service:
-      annotations:
-        io.cilium/lb-ipam-ips: 10.10.30.48
       app:
         controller: *app
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.48
         ports:
           http:
             port: *port

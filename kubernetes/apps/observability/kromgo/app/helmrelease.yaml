@@ -62,13 +62,16 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      annotations:
-        io.cilium/lb-ipam-ips: 10.10.30.72
       main:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.68
         ports:
           http:
             port: *port
     ingress:
+      main:
+        enabled: true
+        className: external
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Applications

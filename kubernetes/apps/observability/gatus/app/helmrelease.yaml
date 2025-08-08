@@ -92,9 +92,9 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
-      annotations:
-        io.cilium/lb-ipam-ips: 10.10.30.71
       main:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.67
         ports:
           http:
             port: *port

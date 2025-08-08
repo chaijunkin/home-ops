@@ -503,12 +503,12 @@ class K8sResourceManager:
         return modified_files
 
     def _add_lb_ip_to_helm(self, content: str, ip: str) -> str:
-        """Add load balancer IP annotation to HelmRelease"""
+        """Add load balancer IP annotation to HelmRelease service section"""
         lines = content.split('\n')
         modified_lines = []
         in_service_section = False
-        in_annotations_section = False
-        indent_level = 0
+        service_indent = 0
+        added_annotation = False
 
         i = 0
         while i < len(lines):
@@ -517,37 +517,59 @@ class K8sResourceManager:
             # Detect service section
             if 'service:' in line and not line.strip().startswith('#'):
                 in_service_section = True
-                indent_level = len(line) - len(line.lstrip())
+                service_indent = len(line) - len(line.lstrip())
                 modified_lines.append(line)
 
-                # Look ahead for annotations
-                j = i + 1
-                found_annotations = False
-                while j < len(lines) and (not lines[j].strip() or lines[j].startswith(' ' * (indent_level + 1))):
-                    if 'annotations:' in lines[j]:
-                        found_annotations = True
-                        break
-                    j += 1
+            elif in_service_section:
+                current_indent = len(line) - len(line.lstrip()) if line.strip() else 0
 
-                if not found_annotations:
-                    # Add annotations section
-                    modified_lines.append(' ' * (indent_level + 2) + 'annotations:')
-                    modified_lines.append(' ' * (indent_level + 4) + f'io.cilium/lb-ipam-ips: {ip}')
+                # Check if we're out of service section
+                if line.strip() and current_indent <= service_indent:
+                    in_service_section = False
+                    modified_lines.append(line)
 
-            elif in_service_section and 'annotations:' in line:
-                modified_lines.append(line)
-                annotation_indent = len(line) - len(line.lstrip()) + 2
+                # Look for service names (app:, main:, etc.) - not annotations, ports, controller
+                elif (line.strip().endswith(':') and
+                      current_indent == service_indent + 2 and
+                      not line.strip().startswith(('annotations:', 'ports:', 'type:', 'controller:')) and
+                      not added_annotation):
 
-                # Add our annotation right after
-                modified_lines.append(' ' * annotation_indent + f'io.cilium/lb-ipam-ips: {ip}')
-                in_service_section = False
+                    modified_lines.append(line)
 
+                    # Look ahead to see if this service already has annotations
+                    j = i + 1
+                    has_annotations = False
+                    while j < len(lines):
+                        next_line = lines[j]
+                        next_indent = len(next_line) - len(next_line.lstrip()) if next_line.strip() else 0
+
+                        # If we've moved out of this service block, break
+                        if next_line.strip() and next_indent <= current_indent:
+                            break
+
+                        if 'annotations:' in next_line and next_indent == current_indent + 2:
+                            has_annotations = True
+                            break
+                        j += 1
+
+                    if not has_annotations:
+                        # Add annotations section
+                        modified_lines.append(' ' * (current_indent + 2) + 'annotations:')
+                        modified_lines.append(' ' * (current_indent + 4) + f'io.cilium/lb-ipam-ips: {ip}')
+                        added_annotation = True
+
+                # If we find existing annotations in a service, add our annotation
+                elif ('annotations:' in line and
+                      current_indent == service_indent + 4 and
+                      not added_annotation):
+                    modified_lines.append(line)
+                    modified_lines.append(' ' * (current_indent + 2) + f'io.cilium/lb-ipam-ips: {ip}')
+                    added_annotation = True
+
+                else:
+                    modified_lines.append(line)
             else:
                 modified_lines.append(line)
-
-                # Reset service section tracking
-                if in_service_section and line.strip() and len(line) - len(line.lstrip()) <= indent_level:
-                    in_service_section = False
 
             i += 1
 

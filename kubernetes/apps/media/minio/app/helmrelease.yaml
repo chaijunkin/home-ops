@@ -70,10 +70,10 @@ spec:
             #   fsGroupChangePolicy: OnRootMismatch
             #   supplementalGroups: [100]
     service:
-      annotations:
-        io.cilium/lb-ipam-ips: 10.10.30.56
       app:
         controller: minio
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.56
         ports:
           http:
             port: 9001

@@ -29,9 +29,9 @@ spec:
       repository: docker.io/privatebin/nginx-fpm-alpine
       tag: latest  ## TBC
     service:
-      annotations:
-        io.cilium/lb-ipam-ips: 10.10.30.49
       main:
+        annotations:
+          io.cilium/lb-ipam-ips: 10.10.30.37
         ports:
           http:
             port: 8080
