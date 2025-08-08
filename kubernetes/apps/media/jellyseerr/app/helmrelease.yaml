@@ -106,10 +106,8 @@ spec:
           - path: /app/config/cache
       tmpfs:
         type: emptyDir
-        advancedMounts:
-          jellyseerr:
-            app:
-              - path: /app/config/logs
-                subPath: logs
-              - path: /tmp
-                subPath: tmp
+        globalMounts:
+          - path: /app/config/logs
+            subPath: logs
+          - path: /tmp
+            subPath: tmp
