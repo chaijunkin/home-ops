@@ -22,5 +22,5 @@ spec:
       GATUS_SUBDOMAIN: chat
       VOLSYNC_CAPACITY: 2Gi
   components:
-  - ../../../../components/gatus/internal
+  - ../../../../components/gatus/external
   - ../../../../components/volsync
