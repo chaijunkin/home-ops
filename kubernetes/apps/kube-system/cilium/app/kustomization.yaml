@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - ./cilium-l2.yaml
   - ./cilium-l3.yaml
-  - ./helmrelease.yaml
+  # - ./helmrelease.yaml
   # - ./gateway.yaml
   # - ./netpol.yaml
 
