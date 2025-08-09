@@ -10,7 +10,7 @@
 #       namespace: kube-system
 #       sectionName: https
 #   hostnames:
-#     - "gitops.${SECRET_DOMAIN}"
+#     - "gitops.cloudjur.com"
 #   rules:
 #     - matches:
 #         - path:

@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
-      dnsConfig: 
+      dnsConfig:
         searches:
           - svc.cluster.local
     controllers:
@@ -43,7 +43,7 @@ spec:
               tag: v1.4.3
             env:
               TZ: ${TIMEZONE}
-              HOMEPAGE_ALLOWED_HOSTS: "{{ .Release.Name }}.${SECRET_DOMAIN}"
+              HOMEPAGE_ALLOWED_HOSTS: "{{ .Release.Name }}.cloudjur.com"
             envFrom:
               - secretRef:
                   name: homepage-secret
@@ -63,7 +63,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.cloudjur.com"
             paths:
               - path: /
                 pathType: Prefix

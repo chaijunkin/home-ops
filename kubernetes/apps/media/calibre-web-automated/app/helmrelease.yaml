@@ -66,7 +66,7 @@ spec:
       app:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media Service
           gethomepage.dev/name: Calibre Web
@@ -78,13 +78,13 @@ spec:
           # gethomepage.dev/icon: calibre.png
           # gethomepage.dev/description: eBook Library
         hosts:
-          - host: ebooks-auto.${SECRET_DOMAIN}
+          - host: ebooks-auto.cloudjur.com
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-          - host: ebooks.${SECRET_DOMAIN}
+          - host: ebooks.cloudjur.com
             paths:
               - path: /
                 service:

@@ -39,14 +39,14 @@ metadata:
   name: &app switch
   namespace: network
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: switch.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/hostname: switch.cloudjur.com
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
   ingressClassName: internal
   rules:
-    - host: &host switch.${SECRET_DOMAIN}
+    - host: &host switch.cloudjur.com
       http:
         paths:
           - path: /

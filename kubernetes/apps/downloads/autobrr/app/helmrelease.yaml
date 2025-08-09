@@ -97,7 +97,7 @@ spec:
           gethomepage.dev/description: Autobrr Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobrr.png
         hosts:
-          - host: &host autobrr.${SECRET_DOMAIN}
+          - host: &host autobrr.cloudjur.com
             paths:
               - path: /
                 service:

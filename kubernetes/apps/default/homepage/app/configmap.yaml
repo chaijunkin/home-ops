@@ -23,7 +23,7 @@ data:
     # - My Service:
     #     - Myself:
     #         - abbr: ME
-    #           href: https://me.${SECRET_DOMAIN}
+    #           href: https://me.cloudjur.com
   services.yaml: |
     - Calendar:
         - Calendar:
@@ -45,7 +45,7 @@ data:
     - Application Service:
         - VaultWarden:
             description: Primary Password manager
-            href: https://vw.${SECRET_DOMAIN}
+            href: https://vw.cloudjur.com
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/vaultwarden.png
         - BitWarden:
             description: Backup Password manager
@@ -55,46 +55,46 @@ data:
     # - Home Service:
     #     - Home Assistant:
     #         description: Home automation service
-    #         href: https://hass.${SECRET_DOMAIN}
+    #         href: https://hass.cloudjur.com
     #         icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/home-assistant.png
         # - Odoo:
         #     description: ERP service
-        #     href: https://odoo.${SECRET_DOMAIN}
+        #     href: https://odoo.cloudjur.com
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/odoo.png
         # - Wikijs:
         #     description: Wiki service
-        #     href: https://wikijs.${SECRET_DOMAIN}
+        #     href: https://wikijs.cloudjur.com
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/wikijs.png
         # - Calibre-web:
         #     description: Book service
-        #     href: https://book.${SECRET_DOMAIN}
+        #     href: https://book.cloudjur.com
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/calibre-web.png
         # - Immich:
         #     description: Mobile media backup service
-        #     href: https://immich.${SECRET_DOMAIN}
+        #     href: https://immich.cloudjur.com
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/immich.png
 
     - Network Infrastructure:
         - Opnsense:
             description: Router & Firewall Appliance
-            href: https://gateway.${SECRET_DOMAIN}
+            href: https://gateway.cloudjur.com
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/opnsense.png
             widget:
               type: opnsense
-              url: https://gateway.${SECRET_DOMAIN}
+              url: https://gateway.cloudjur.com
               username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
               password: {{HOMEPAGE_VAR_OPNSENSE_API_KEY}}
         - Switch:
             description: Managed switch
-            href: https://switch.${SECRET_DOMAIN}
+            href: https://switch.cloudjur.com
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/tp-link.png
         - Access point:
             description: Wifi provider
-            href: https://ap.${SECRET_DOMAIN}
+            href: https://ap.cloudjur.com
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/omada.png
         # - Kutt:
         #     description: URL shortner
-        #     href: https://kutt.${SECRET_DOMAIN}
+        #     href: https://kutt.cloudjur.com
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kutt.png
 
     - External Service:
@@ -130,22 +130,22 @@ data:
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proton-vpn.png
         - Uptime Kuma:
             description: External Uptime monitoring
-            href: https://ext-uptime.${SECRET_DOMAIN}
+            href: https://ext-uptime.cloudjur.com
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/uptime-kuma.png
-        
+
 
     - Management Tools:
         - VsCode:
             description: Coding services
-            href: https://coder.${SECRET_DOMAIN}/
+            href: https://coder.cloudjur.com/
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/vscode.png
         # - JumpServer:
         #     description: Bastion Host
-        #     href: https://jumpserver.${SECRET_DOMAIN}
+        #     href: https://jumpserver.cloudjur.com
         #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/guacamole.png
         - PiKVM:
             description: PiKVM services
-            href: https://pikvm.${SECRET_DOMAIN}
+            href: https://pikvm.cloudjur.com
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/pikvm.png
 
   widgets.yaml: |
@@ -171,7 +171,7 @@ data:
     - search:
         provider: [duckduckgo, google] # google, duckduckgo, bing, baidu, brave or custom
         focus: true # Optional, will set focus to the search bar on page load
-        target: _blank # One of _self, _blank, _parent or _top  
+        target: _blank # One of _self, _blank, _parent or _top
     - datetime:
         locale: nl
         text_size: l

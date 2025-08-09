@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host "go2rtc.${SECRET_DOMAIN}"
+    - host: &host "go2rtc.cloudjur.com"
       http:
         paths:
           - path: /

@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host "slskd.${SECRET_DOMAIN}"
+    - host: &host "slskd.cloudjur.com"
       http:
         paths:
           - path: /

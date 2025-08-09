@@ -33,12 +33,12 @@ spec:
               repository: quay.io/minio/minio
               tag: RELEASE.2024-05-28T17-19-04Z@sha256:7cb3f11447d1ac7c4b73420dd8f3601afa16ea0cd7e929ecb00be1a8af1eac05
             env:
-              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${SECRET_DOMAIN},https://s3.${SECRET_DOMAIN}
-              MINIO_BROWSER_REDIRECT_URL: https://minio.${SECRET_DOMAIN}
+              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.cloudjur.com,https://s3.cloudjur.com
+              MINIO_BROWSER_REDIRECT_URL: https://minio.cloudjur.com
               MINIO_PROMETHEUS_JOB_ID: minio
-              MINIO_PROMETHEUS_URL: https://prometheus.${SECRET_DOMAIN}
+              MINIO_PROMETHEUS_URL: https://prometheus.cloudjur.com
               MINIO_PROMETHEUS_AUTH_TYPE: public
-              MINIO_SERVER_URL: https://s3.${SECRET_DOMAIN}
+              MINIO_SERVER_URL: https://s3.cloudjur.com
               MINIO_UPDATE: "off"
             envFrom:
               - secretRef:
@@ -99,7 +99,7 @@ spec:
         enabled: true
         className: "internal"
         hosts:
-          - host: &host "minio.${SECRET_DOMAIN}"
+          - host: &host "minio.cloudjur.com"
             paths:
               - path: /
                 service:
@@ -112,10 +112,10 @@ spec:
         enabled: true
         className: internal
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
           nginx.ingress.kubernetes.io/ssl-redirect: "false"
         hosts:
-          - host: &s3Host s3.${SECRET_DOMAIN}
+          - host: &s3Host s3.cloudjur.com
             paths:
               - path: /
                 service:

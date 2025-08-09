@@ -82,7 +82,7 @@ spec:
           gethomepage.dev/widget.url: http://readarr.downloads
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_READARR_TOKEN}}"
         hosts:
-          - host: &host "readarr.${SECRET_DOMAIN}"
+          - host: &host "readarr.cloudjur.com"
             paths:
               - path: /
                 service:

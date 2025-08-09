@@ -46,11 +46,11 @@ spec:
           gethomepage.dev/name: Authentik
           gethomepage.dev/description: Authentication provider
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/authentik.png
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
           nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
         hosts:
-          - &host auth.${SECRET_DOMAIN}
+          - &host auth.cloudjur.com
         https: false
         tls:
           - secretName: *host
@@ -76,7 +76,7 @@ spec:
     prometheus:
       rules:
         enabled: true
-    
+
       # AUTHENTIK_REDIS__PASSWORD:
       #   secretKeyRef:
       #     name: authentik-secret
@@ -87,7 +87,7 @@ spec:
     postgresql:
       enabled: false
 
-    
+
 
     redis:
       enabled: false

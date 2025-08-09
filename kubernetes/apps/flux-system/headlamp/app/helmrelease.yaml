@@ -74,7 +74,7 @@ spec:
         gethomepage.dev/name: Headlamp
         gethomepage.dev/description: Kubernetes Dashboared
         gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/headlamp.png
-        # external-dns.alpha.kubernetes.io/target: internal.${SECRET_DOMAIN}
+        # external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
         # kubernetes.io/tls-acme: "true"
 
       # -- Additional labels to add to the Ingress resource
@@ -87,7 +87,7 @@ spec:
       # -- Hostname(s) for the Ingress resource
       # Please refer to https://kubernetes.io/docs/reference/kubernetes-api/service-resources/ingress-v1/#IngressSpec for more information.
       hosts:
-        - host: headlamp.${SECRET_DOMAIN}
+        - host: headlamp.cloudjur.com
           paths:
             - path: /
               type: Prefix

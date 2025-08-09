@@ -18,7 +18,7 @@ spec:
               key: CLOUDFLARE_DNS_TOKEN
         selector:
           dnsZones:
-            - "${SECRET_DOMAIN}"
+            - "cloudjur.com"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -38,4 +38,4 @@ spec:
               key: CLOUDFLARE_DNS_TOKEN
         selector:
           dnsZones:
-            - "${SECRET_DOMAIN}"
+            - "cloudjur.com"

@@ -90,7 +90,7 @@ spec:
           gethomepage.dev/description: Autobangumi Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobangumi.png
         hosts:
-          - host: &host bangumi.${SECRET_DOMAIN}
+          - host: &host bangumi.cloudjur.com
             paths:
               - path: /
                 service:

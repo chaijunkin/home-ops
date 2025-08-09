@@ -35,8 +35,8 @@ spec:
                 sabnzbd.downloads.svc,
                 sabnzbd.kube-system.svc.cluster,
                 sabnzbd.kube-system.svc.cluster.local,
-                sab.${SECRET_DOMAIN},
-                sabnzbd.${SECRET_DOMAIN}
+                sab.cloudjur.com,
+                sabnzbd.cloudjur.com
               TZ: America/New_York
             envFrom:
               - secretRef:

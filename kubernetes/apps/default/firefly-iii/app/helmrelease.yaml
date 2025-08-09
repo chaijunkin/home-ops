@@ -64,9 +64,9 @@ spec:
           gethomepage.dev/name: Firefly-iii
           gethomepage.dev/description: Personal finance service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
-          # external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          # external-dns.alpha.kubernetes.io/target: external.cloudjur.com
         hosts:
-          - host: &host "money.${SECRET_DOMAIN}"
+          - host: &host "money.cloudjur.com"
             paths:
               - path: /
                 service:

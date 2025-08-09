@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host "cross-seed.${SECRET_DOMAIN}"
+    - host: &host "cross-seed.cloudjur.com"
       http:
         paths:
           - path: /

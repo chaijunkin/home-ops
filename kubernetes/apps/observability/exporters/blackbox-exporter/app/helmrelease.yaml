@@ -62,7 +62,7 @@ spec:
       annotations:
         hajimari.io/enable: "false"
       hosts:
-        - host: &host blackbox.${SECRET_DOMAIN}
+        - host: &host blackbox.cloudjur.com
           paths:
             - path: /
               pathType: Prefix

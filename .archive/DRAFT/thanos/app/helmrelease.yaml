@@ -48,7 +48,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hostname: &host thanos.${SECRET_DOMAIN}
+        hostname: &host thanos.cloudjur.com
         tls: true
         extraTls:
           - hosts:
@@ -81,7 +81,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hostname: &bucketweb-host thanos-bucket.${SECRET_DOMAIN}
+        hostname: &bucketweb-host thanos-bucket.cloudjur.com
         tls: true
         extraTls:
           - hosts:
@@ -106,7 +106,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hostname: &compact-host thanos-compactor.${SECRET_DOMAIN}
+        hostname: &compact-host thanos-compactor.cloudjur.com
         tls: true
         extraTls:
           - hosts:

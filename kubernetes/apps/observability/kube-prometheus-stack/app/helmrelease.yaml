@@ -37,7 +37,7 @@ spec:
         pathType: Prefix
         ingressClassName: internal
         hosts:
-          - &host alertmanager.${SECRET_DOMAIN}
+          - &host alertmanager.cloudjur.com
         tls:
           - hosts:
               - *host
@@ -430,7 +430,7 @@ spec:
           gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090
         pathType: Prefix
         hosts:
-          - &host prometheus.${SECRET_DOMAIN}
+          - &host prometheus.cloudjur.com
         tls:
           - hosts:
               - *host

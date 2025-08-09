@@ -46,7 +46,7 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
         ingressClassName: internal
         hosts:
-          - host: &host "cyberchef.${SECRET_DOMAIN}"
+          - host: &host "cyberchef.cloudjur.com"
             paths:
               - path: /
                 pathType: Prefix

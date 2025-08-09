@@ -26,7 +26,7 @@ spec:
       namespace: volsync-system
   values:
     defaultPodOptions:
-      labels: 
+      labels:
         setGateway: "true"
       annotations:
         setGateway: "true"
@@ -117,7 +117,7 @@ spec:
           #     readOnlyRootFilesystem: false
           #     capabilities:
           #       drop:
-          #         - ALL              
+          #         - ALL
         #  vuetorrent:
         #    dependsOn: app
         #    image:
@@ -175,7 +175,7 @@ spec:
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}` }}"
           gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}` }}"
         hosts:
-          - host: &host "qb.${SECRET_DOMAIN}"
+          - host: &host "qb.cloudjur.com"
             paths:
               - path: /
                 service:

@@ -80,14 +80,14 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.cloudjur.com"
           # nginx.ingress.kubernetes.io/proxy-body-size: 1000M
           # nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-external.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           # nginx.ingress.kubernetes.io/auth-signin: /outpost.goauthentik.io/start?rd=$escaped_request_uri
           # nginx.ingress.kubernetes.io/auth-response-headers: Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
           # nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Host $http_host;
         hosts:
-          - host: &host "{{ .Release.Name }}-external.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}-external.cloudjur.com"
             paths:
               - path: /
                 service:
@@ -106,7 +106,7 @@ spec:
         #   nginx.ingress.kubernetes.io/auth-response-headers: Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
         #   nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Host $http_host;
         hosts:
-          - host: &host "{{ .Release.Name }}-internal.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}-internal.cloudjur.com"
             paths:
               - path: /
                 service:
@@ -119,14 +119,14 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.cloudjur.com"
           nginx.ingress.kubernetes.io/proxy-body-size: 1000M
           nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-external.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           nginx.ingress.kubernetes.io/auth-signin: /outpost.goauthentik.io/start?rd=$escaped_request_uri
           nginx.ingress.kubernetes.io/auth-response-headers: Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Host $http_host;
         hosts:
-          - host: &host "{{ .Release.Name }}-external-auth.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}-external-auth.cloudjur.com"
             paths:
               - path: /
                 service:
@@ -145,7 +145,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-response-headers: Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
           nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Host $http_host;
         hosts:
-          - host: &host "{{ .Release.Name }}-internal-auth.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}-internal-auth.cloudjur.com"
             paths:
               - path: /
                 service:

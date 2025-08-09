@@ -104,7 +104,7 @@ spec:
                     io.cilium/lb-ipam-ips: 10.10.30.57
                   identifier: app
                   port: http
-          - host: &codeserverHost "{{ .Release.Name }}-code.${SECRET_DOMAIN}"
+          - host: &codeserverHost "{{ .Release.Name }}-code.cloudjur.com"
             paths:
               - path: /
                 service:

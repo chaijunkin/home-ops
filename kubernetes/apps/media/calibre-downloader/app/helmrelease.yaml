@@ -80,7 +80,7 @@ spec:
       *app :
         className: internal
         hosts:
-          - host: &fqdn "download-books.${SECRET_DOMAIN}"
+          - host: &fqdn "download-books.cloudjur.com"
             paths:
               - path: /
                 service:

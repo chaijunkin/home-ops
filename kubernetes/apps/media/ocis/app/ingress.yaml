@@ -9,11 +9,11 @@ metadata:
     gethomepage.dev/name: OCIS
     gethomepage.dev/icon: ocis.png
     gethomepage.dev/description: ownCloud Infinite Scale
-    external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/target: "external.cloudjur.com"
 spec:
   ingressClassName: external
   rules:
-    - host: &host "files.${SECRET_DOMAIN}"
+    - host: &host "files.cloudjur.com"
       http:
         paths:
           - path: /

@@ -39,7 +39,7 @@ metadata:
   name: &app smb
   namespace: network
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: smb.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/hostname: smb.cloudjur.com
     # nginx.ingress.kubernetes.io/rewrite-target: /admin
   labels:
     app.kubernetes.io/name: *app
@@ -47,7 +47,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host smb.${SECRET_DOMAIN}
+    - host: &host smb.cloudjur.com
       http:
         paths:
           - path: /

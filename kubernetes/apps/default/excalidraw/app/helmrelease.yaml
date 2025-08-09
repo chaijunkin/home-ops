@@ -37,7 +37,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               PORT: &port 80
-              COLLAB_ADDR: excalidraw-room.${SECRET_DOMAIN}
+              COLLAB_ADDR: excalidraw-room.cloudjur.com
     service:
       app:
         controller: *app
@@ -57,7 +57,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "draw.${SECRET_DOMAIN}"
+          - host: &host "draw.cloudjur.com"
             paths:
               - path: /
                 pathType: Prefix

@@ -40,12 +40,12 @@ spec:
     nginx:
       enabled: false
     lifecycle:
-      postStartCommand: ["/bin/sh", "-c", "echo \"ServerName drive.${SECRET_DOMAIN}\" | tee -a /etc/apache2/apache2.conf"]
+      postStartCommand: ["/bin/sh", "-c", "echo \"ServerName drive.cloudjur.com\" | tee -a /etc/apache2/apache2.conf"]
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
 
     nextcloud:
-      host: &host drive.${SECRET_DOMAIN}
+      host: &host drive.cloudjur.com
       extraInitContainers:
         - name: init-db
           image: ghcr.io/onedr0p/postgres-init:16
@@ -65,7 +65,7 @@ spec:
             array (
               0 => 'HTTP_X_FORWARDED_FOR',
             ),
-            'overwrite.cli.url' => 'https://drive.${SECRET_DOMAIN}',
+            'overwrite.cli.url' => 'https://drive.cloudjur.com',
             'overwriteprotocol' => 'https',
             'skeletondirectory' => '',
             'default_phone_region' => 'MY',
@@ -88,7 +88,7 @@ spec:
       mail:
         enabled: true
         fromAddress: apphub
-        domain: ${SECRET_DOMAIN}
+        domain: cloudjur.com
         smtp:
           port: 465
           authtype: tls
@@ -126,7 +126,7 @@ spec:
         gethomepage.dev/name: Nextcloud
         gethomepage.dev/description: File Hosting Service
         gethomepage.dev/icon: nextcloud.png
-        external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+        external-dns.alpha.kubernetes.io/target: "external.cloudjur.com"
         nginx.ingress.kubernetes.io/proxy-body-size: 512M
         nginx.ingress.kubernetes.io/proxy-buffering: "off"
         nginx.ingress.kubernetes.io/proxy-request-buffering: "off"

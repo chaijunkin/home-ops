@@ -39,14 +39,14 @@ metadata:
   name: &app ap
   namespace: network
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: ap.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/hostname: ap.cloudjur.com
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
   ingressClassName: internal
   rules:
-    - host: &host ap.${SECRET_DOMAIN}
+    - host: &host ap.cloudjur.com
       http:
         paths:
           - path: /

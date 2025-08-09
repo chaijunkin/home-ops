@@ -99,7 +99,7 @@ spec:
           gethomepage.dev/widget.url: http://lidarr.downloads
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_LIDARR_TOKEN}}"
         hosts:
-          - host: &host "lidarr.${SECRET_DOMAIN}"
+          - host: &host "lidarr.cloudjur.com"
             paths:
               - path: /
                 service:

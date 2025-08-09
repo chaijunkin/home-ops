@@ -15,7 +15,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host "sab.${SECRET_DOMAIN}"
+    - host: &host "sab.cloudjur.com"
       http:
         paths:
           - path: /
@@ -27,7 +27,7 @@ spec:
                 name: sabnzbd
                 port:
                   number: 80
-    - host: &host2 "sabnzbd.${SECRET_DOMAIN}"
+    - host: &host2 "sabnzbd.cloudjur.com"
       http:
         paths:
           - path: /

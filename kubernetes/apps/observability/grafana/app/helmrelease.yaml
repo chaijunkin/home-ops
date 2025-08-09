@@ -48,7 +48,7 @@ spec:
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
       GF_SECURITY_COOKIE_SAMESITE: *app
-      GF_SERVER_ROOT_URL: https://grafana.${SECRET_DOMAIN}
+      GF_SERVER_ROOT_URL: https://grafana.cloudjur.com
     envFromSecrets:
       - name: grafana-secret
     grafana.ini:
@@ -57,7 +57,7 @@ spec:
         check_for_plugin_updates: false
         reporting_enabled: false
       auth:
-        signout_redirect_url: https://auth.${SECRET_DOMAIN}/application/o/grafana/end-session/
+        signout_redirect_url: https://auth.cloudjur.com/application/o/grafana/end-session/
         oauth_auto_login: false
         oauth_allow_insecure_email_lookup: true
       # # auth.anonymous:
@@ -69,9 +69,9 @@ spec:
       #   name: authentik
       #   enabled: true
       #   scopes: openid email profile
-      #   auth_url: https://auth.${SECRET_DOMAIN}/application/o/authorize/
-      #   token_url: https://auth.${SECRET_DOMAIN}/application/o/token/
-      #   api_url: https://auth.${SECRET_DOMAIN}/application/o/userinfo/
+      #   auth_url: https://auth.cloudjur.com/application/o/authorize/
+      #   token_url: https://auth.cloudjur.com/application/o/token/
+      #   api_url: https://auth.cloudjur.com/application/o/userinfo/
       #   # Optionally map user groups to Grafana roles
       #   role_attribute_path: contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'
     deploymentStrategy:
@@ -544,9 +544,9 @@ spec:
         gethomepage.dev/widget.url: http://grafana.observability
         gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_GRAFANA_USERNAME}}`}}'
         gethomepage.dev/widget.password: '{{`{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}`}}'
-        external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+        external-dns.alpha.kubernetes.io/target: external.cloudjur.com
       hosts:
-        - &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - &host "{{ .Release.Name }}.cloudjur.com"
       tls:
         - hosts:
             - *host

@@ -6,7 +6,7 @@ metadata:
 provisioner: smb.csi.k8s.io
 parameters:
   # On Windows, "*.default.svc.cluster.local" could not be recognized by csi-proxy
-  source: //smb.${SECRET_DOMAIN}/services
+  source: //smb.cloudjur.com/services
   subDir: Apps/Neko
   # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
   # with PV name under source

@@ -11,13 +11,13 @@ spec:
   targets:
     staticConfig:
       static:
-        # - downstairs-hallway-slzb06.${SECRET_DOMAIN}
-        # - garage-tablet.${SECRET_DOMAIN}
-        # - gladius.${SECRET_DOMAIN}
-        # - hallway-tablet.${SECRET_DOMAIN}
-        # - livingroom-vacuum.${SECRET_DOMAIN}
-        - smb.${SECRET_DOMAIN}
-        # - pikvm.${SECRET_DOMAIN}
+        # - downstairs-hallway-slzb06.cloudjur.com
+        # - garage-tablet.cloudjur.com
+        # - gladius.cloudjur.com
+        # - hallway-tablet.cloudjur.com
+        # - livingroom-vacuum.cloudjur.com
+        - smb.cloudjur.com
+        # - pikvm.cloudjur.com
 ---
 # yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
@@ -31,4 +31,4 @@ spec:
   targets:
     staticConfig:
       static:
-        - "smb.${SECRET_DOMAIN}:445"
+        - "smb.cloudjur.com:445"

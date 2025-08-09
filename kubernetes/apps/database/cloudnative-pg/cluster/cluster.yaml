@@ -37,7 +37,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: "https://s3.${SECRET_DOMAIN}"
+      endpointURL: "https://s3.cloudjur.com"
       serverName: &currentCluster postgres-v4
       s3Credentials:
         accessKeyId:

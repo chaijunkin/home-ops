@@ -7,7 +7,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - gateway.${SECRET_DOMAIN}:9100
+        - gateway.cloudjur.com:9100
   metricsPath: /metrics
   relabelings:
     - action: replace

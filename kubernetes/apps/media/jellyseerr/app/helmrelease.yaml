@@ -84,9 +84,9 @@ spec:
           gethomepage.dev/widget.type: jellyseerr
           gethomepage.dev/widget.url: http://jellyseerr.media:5055
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
         hosts:
-          - host: &host requests.${SECRET_DOMAIN}
+          - host: &host requests.cloudjur.com
             paths:
               - path: /
                 service:

@@ -93,7 +93,7 @@ spec:
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_BAZARR_TOKEN}}"
 
         hosts:
-        - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        - host: &host "{{ .Release.Name }}.cloudjur.com"
           paths:
           - path: /
             service:

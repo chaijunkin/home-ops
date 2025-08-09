@@ -87,7 +87,7 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
 
         hosts:
-          - host: &host "chat.${SECRET_DOMAIN}"
+          - host: &host "chat.cloudjur.com"
             paths:
               - path: /
                 service:

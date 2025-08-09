@@ -99,7 +99,7 @@ spec:
           gethomepage.dev/widget.url: http://radarr.downloads
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_RADARR_TOKEN}}"
         hosts:
-          - host: &host "radarr.${SECRET_DOMAIN}"
+          - host: &host "radarr.cloudjur.com"
             paths:
               - path: /
                 service:

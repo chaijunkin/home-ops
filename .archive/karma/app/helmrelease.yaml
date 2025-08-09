@@ -75,9 +75,9 @@ spec:
           gethomepage.dev/name: Karma
           gethomepage.dev/group: Observability Service
           gethomepage.dev/description: Alertmanger Quick View
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.cloudjur.com"
             paths:
               - path: /
                 service:

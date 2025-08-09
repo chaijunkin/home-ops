@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/miniflux/miniflux
               tag: 2.2.11
             env:
-              BASE_URL: https://miniflux.${SECRET_DOMAIN}
+              BASE_URL: https://miniflux.cloudjur.com
               CREATE_ADMIN: "1"
               DEBUG: "1"
               LOG_DATE_TIME: "1"
@@ -52,9 +52,9 @@ spec:
               # METRICS_COLLECTOR: "1"
               # OAUTH2_CLIENT_ID: miniflux
               # OAUTH2_USER_CREATION: "1"
-              # OAUTH2_OIDC_DISCOVERY_ENDPOINT: https://auth.${SECRET_DOMAIN}
+              # OAUTH2_OIDC_DISCOVERY_ENDPOINT: https://auth.cloudjur.com
               # OAUTH2_PROVIDER: oidc
-              # OAUTH2_REDIRECT_URL: https://miniflux.${SECRET_DOMAIN}/oauth2/oidc/callback
+              # OAUTH2_REDIRECT_URL: https://miniflux.cloudjur.com/oauth2/oidc/callback
               POLLING_SCHEDULER: entry_frequency
               POLLING_FREQUENCY: "15"
               PORT: &port 80
@@ -87,9 +87,9 @@ spec:
           gethomepage.dev/name: Miniflux
           gethomepage.dev/description: Feed aggregator services
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/miniflux.png
-          external-dns.alpha.kubernetes.io/target: "external.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "external.cloudjur.com"
         hosts:
-          - host: &host "miniflux.${SECRET_DOMAIN}"
+          - host: &host "miniflux.cloudjur.com"
             paths:
               - path: /
                 service:

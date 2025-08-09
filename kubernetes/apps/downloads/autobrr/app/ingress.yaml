@@ -15,7 +15,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: &host "autobrr.${SECRET_DOMAIN}"
+    - host: &host "autobrr.cloudjur.com"
       http:
         paths:
           - path: /

@@ -48,7 +48,7 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/privatebin.png
         ingressClassName: internal
         hosts:
-          - host: &host "privatebin.${SECRET_DOMAIN}"
+          - host: &host "privatebin.cloudjur.com"
             paths:
               - path: /
                 pathType: Prefix

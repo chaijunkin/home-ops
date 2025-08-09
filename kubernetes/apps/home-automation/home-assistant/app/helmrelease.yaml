@@ -49,7 +49,7 @@ spec:
                 "namespace": "network",
                 "ips": ["10.10.10.250/24"]
               }]
-            
+
           securityContext:
             runAsNonRoot: true
             runAsUser: 568
@@ -137,7 +137,7 @@ spec:
           # gethomepage.dev/widget.type: homeassistant
           # gethomepage.dev/widget.url: http://home-assistant.default:8123
           # gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_HASS_TOKEN}}"
-          external-dns.alpha.kubernetes.io/target: external.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
           # nginx.ingress.kubernetes.io/proxy-body-size: 1000M
           # nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-external.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
           # nginx.ingress.kubernetes.io/auth-signin: /outpost.goauthentik.io/start?rd=$escaped_request_uri
@@ -145,7 +145,7 @@ spec:
           # nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Host $http_host;
 
         hosts:
-          - host: &host hass.${SECRET_DOMAIN}
+          - host: &host hass.cloudjur.com
             paths:
               - path: /
                 service:
@@ -158,7 +158,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host hass-code.${SECRET_DOMAIN}
+          - host: &host hass-code.cloudjur.com
             paths:
             - path: /
               service:

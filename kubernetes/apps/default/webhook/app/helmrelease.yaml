@@ -66,7 +66,7 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
 
         hosts:
-          - host: &host "webhook.${SECRET_DOMAIN}"
+          - host: &host "webhook.cloudjur.com"
             paths:
               - path: /
                 service:

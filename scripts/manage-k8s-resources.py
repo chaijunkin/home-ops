@@ -238,7 +238,7 @@ class K8sResourceManager:
                 for host_config in hosts:
                     if isinstance(host_config, dict):
                         host = host_config.get('host', '')
-                        if host and '${SECRET_DOMAIN}' in host:
+                        if host and 'cloudjur.com' in host:
                             self.ingress_mappings[app_name] = {
                                 'namespace': namespace,
                                 'class': class_name,
@@ -260,7 +260,7 @@ class K8sResourceManager:
         rules = spec.get('rules', [])
         if rules and isinstance(rules[0], dict):
             host = rules[0].get('host', '')
-            if host and '${SECRET_DOMAIN}' in host:
+            if host and 'cloudjur.com' in host:
                 self.ingress_mappings[app_name] = {
                     'namespace': namespace,
                     'class': class_name,

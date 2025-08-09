@@ -6,7 +6,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: emqx.${SECRET_DOMAIN}
+    - host: emqx.cloudjur.com
       http:
         paths:
           - path: /

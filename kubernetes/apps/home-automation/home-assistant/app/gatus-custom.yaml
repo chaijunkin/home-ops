@@ -16,7 +16,7 @@ data:
           hide-hostname: true
           hide-url: true
         dns:
-          query-name: hass-code.${SECRET_DOMAIN}
+          query-name: hass-code.cloudjur.com
           query-type: A
         conditions:
           - "len([BODY]) == 0"
