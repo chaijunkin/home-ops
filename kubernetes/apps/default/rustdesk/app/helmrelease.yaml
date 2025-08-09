@@ -51,7 +51,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: rustdesk-relay.cloudjur.com
-          io.cilium/lb-ipam-ips: "10.10.30.21"
+          lbipam.cilium.io/ips: "10.10.30.21"
         ports:
           rustdesk-5:
             enabled: true
@@ -65,7 +65,7 @@ spec:
         controller: hbbs
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: "10.10.30.20"
+          lbipam.cilium.io/ips: "10.10.30.20"
           external-dns.alpha.kubernetes.io/hostname: rustdesk.cloudjur.com
         ports:
           rustdesk-1:

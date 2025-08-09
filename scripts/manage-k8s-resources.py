@@ -63,7 +63,7 @@ class K8sResourceManager:
 
     def _load_existing_ips(self):
         """Load already allocated IPs from existing resources"""
-        # Scan HelmRelease files for existing io.cilium/lb-ipam-ips annotations
+        # Scan HelmRelease files for existing lbipam.cilium.io/ips annotations
         for helm_file in self.kubernetes_dir.rglob("helmrelease.yaml"):
             try:
                 with open(helm_file, 'r') as f:
@@ -106,7 +106,7 @@ class K8sResourceManager:
         def search_for_ips(obj):
             if isinstance(obj, dict):
                 for key, value in obj.items():
-                    if key == 'io.cilium/lb-ipam-ips' and isinstance(value, str):
+                    if key == 'lbipam.cilium.io/ips' and isinstance(value, str):
                         # Handle both single IPs and comma-separated lists
                         ips = [ip.strip() for ip in value.split(',')]
                         for ip in ips:
@@ -149,7 +149,7 @@ class K8sResourceManager:
         ip_pattern = r'10\.10\.30\.\d+'
         ip_matches = re.findall(ip_pattern, content)
         for ip in ip_matches:
-            if 'io.cilium/lb-ipam-ips' in content:
+            if 'lbipam.cilium.io/ips' in content:
                 try:
                     ipaddress.ip_address(ip)
                     self.allocated_ips.add(ip)
@@ -338,7 +338,7 @@ class K8sResourceManager:
                 with open(file_path, 'r') as f:
                     content = f.read()
 
-                if 'io.cilium/lb-ipam-ips' in content:
+                if 'lbipam.cilium.io/ips' in content:
                     # Extract existing IP
                     import re
                     ip_match = re.search(r'io\.cilium/lb-ipam-ips:\s*["\']?([0-9.]+)["\']?', content)
@@ -418,7 +418,7 @@ class K8sResourceManager:
             try:
                 with open(helm_file, 'r') as f:
                     content = f.read()
-                    if ip in content and 'io.cilium/lb-ipam-ips' in content:
+                    if ip in content and 'lbipam.cilium.io/ips' in content:
                         # Try to extract the HelmRelease name from YAML
                         try:
                             # Handle multiple documents
@@ -481,7 +481,7 @@ class K8sResourceManager:
                 with open(file_path, 'r') as f:
                     content = f.read()
 
-                if 'io.cilium/lb-ipam-ips' in content:
+                if 'lbipam.cilium.io/ips' in content:
                     print(f"Skipping {app_name}: already has load balancer IP")
                     continue
 
@@ -555,7 +555,7 @@ class K8sResourceManager:
                     if not has_annotations:
                         # Add annotations section
                         modified_lines.append(' ' * (current_indent + 2) + 'annotations:')
-                        modified_lines.append(' ' * (current_indent + 4) + f'io.cilium/lb-ipam-ips: {ip}')
+                        modified_lines.append(' ' * (current_indent + 4) + f'lbipam.cilium.io/ips: {ip}')
                         added_annotation = True
 
                 # If we find existing annotations in a service, add our annotation
@@ -563,7 +563,7 @@ class K8sResourceManager:
                       current_indent == service_indent + 4 and
                       not added_annotation):
                     modified_lines.append(line)
-                    modified_lines.append(' ' * (current_indent + 2) + f'io.cilium/lb-ipam-ips: {ip}')
+                    modified_lines.append(' ' * (current_indent + 2) + f'lbipam.cilium.io/ips: {ip}')
                     added_annotation = True
 
                 else:

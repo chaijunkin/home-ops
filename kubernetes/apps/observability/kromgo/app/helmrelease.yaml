@@ -64,7 +64,7 @@ spec:
     service:
       main:
         annotations:
-          io.cilium/lb-ipam-ips: 10.10.30.68
+          lbipam.cilium.io/ips: 10.10.30.68
         ports:
           http:
             port: *port
