@@ -5,7 +5,6 @@ resources:
   - ./dnsendpoint.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./secret.sops.yaml
 configMapGenerator:
   - name: cloudflare-tunnel-configmap
     files:

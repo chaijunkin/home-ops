@@ -7,11 +7,11 @@ helmDefaults:
   waitForJobs: true
 
 releases:
-  - name: cilium
-    namespace: kube-system
-    chart: oci://ghcr.io/home-operations/charts-mirror/cilium
-    version: 1.18.0
-    values: ['../kubernetes/apps/kube-system/cilium/app/helm/values.yaml']
+  # - name: cilium
+  #   namespace: kube-system
+  #   chart: oci://ghcr.io/home-operations/charts-mirror/cilium
+  #   version: 1.18.0
+  #   values: ['../kubernetes/apps/kube-system/cilium/app/helm/values.yaml']
 
   # ## helm upgrade -i coredns oci://ghcr.io/coredns/charts/coredns --version 1.43.0 -
   # # -namespace kube-system --values kubernetes/apps/kube-system/coredns/app/helm/valu
@@ -83,20 +83,20 @@ releases:
   #   values: ['../kubernetes/apps/flux-system/flux-operator/app/helm/values.yaml']
   #   needs: ['kube-system/external-secrets']
 
-  # - name: flux-instance
-  #   namespace: flux-system
-  #   chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-  #   version: 0.26.0
-  #   values: ['../kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml']
-  #   needs: ['flux-system/flux-operator']
-  #   hooks:
-  #     - # Deploy bitwarden secret using sops decrypt first
-  #       events: ['postsync']
-  #       command: sh
-  #       args:
-  #         - -c
-  #         - |
-  #           echo "Decrypting and applying flux bootstrap..."
-  #           # Use sops to decrypt and apply the secret directly
-  #           sops -d ../kubernetes/flux/cluster/secret.sops.yaml | kubectl apply -f -
-  #           echo "Flux bootstrap applied successfully"
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.26.0
+    values: ['../kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml']
+    needs: ['flux-system/flux-operator']
+    hooks:
+      - # Deploy bitwarden secret using sops decrypt first
+        events: ['postsync']
+        command: sh
+        args:
+          - -c
+          - |
+            echo "Decrypting and applying flux bootstrap..."
+            # Use sops to decrypt and apply the secret directly
+            sops -d ../kubernetes/flux/cluster/secret.sops.yaml | kubectl apply -f -
+            echo "Flux bootstrap applied successfully"
