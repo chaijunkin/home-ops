@@ -77,7 +77,7 @@ spec:
             backend:
               service:
                 annotations:
-#                  lbipam.cilium.io/ips: 10.10.30.38
+                  lbipam.cilium.io/ips: 10.10.30.38
                 name: *app
                 port:
                   type: LoadBalancer

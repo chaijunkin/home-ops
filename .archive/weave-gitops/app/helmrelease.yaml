@@ -38,7 +38,7 @@ spec:
         gethomepage.dev/description: Weave-Gitops Service
         gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/weave-gitops.png
         hajimari.io/icon: sawtooth-wave
-#        lbipam.cilium.io/ips: 10.10.30.33
+        lbipam.cilium.io/ips: 10.10.30.33
       className: internal
       hosts:
         - host: &host "gitops.cloudjur.com"

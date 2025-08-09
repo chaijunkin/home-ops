@@ -21,7 +21,7 @@ spec:
             backend:
               service:
                 annotations:
-#                  lbipam.cilium.io/ips: 10.10.30.66
+                  lbipam.cilium.io/ips: 10.10.30.66
                 name: ocis
                 port:
                   type: LoadBalancer

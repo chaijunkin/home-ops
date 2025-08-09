@@ -113,7 +113,7 @@ spec:
         nameOverride: *app
         type: LoadBalancer
         annotations:
-#          lbipam.cilium.io/ips: "10.10.30.12"
+          lbipam.cilium.io/ips: "10.10.30.12"
         ports:
           http:
             port: 8123
