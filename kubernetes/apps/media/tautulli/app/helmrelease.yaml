@@ -35,7 +35,7 @@ spec:
               repository:  ghcr.io/chaijunkin/tautulli
               tag: 2.14.2@sha256:6a08c633ef61dfff196964c806fd0d77b5c90c5013603667c71da03bf17215a0
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
             resources:
               requests:
                 cpu: 20m

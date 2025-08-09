@@ -48,7 +48,7 @@ spec:
           http:
             port: 80
     env:
-      TZ: ${TIMEZONE}
+      TZ: Asia/Kuala_Lumpur
     ingress:
       main:
         enabled: true

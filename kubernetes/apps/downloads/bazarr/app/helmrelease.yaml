@@ -42,7 +42,7 @@ spec:
               repository: ghcr.io/chaijunkin/bazarr
               tag: 1.4.2@sha256:51e811b871ec1954886d4d3d43f3d2ff2c953d143b74cfb5009b2705083d686e
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
             envFrom:
             - secretRef:
                 name: bazarr-secret

@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/chaijunkin/lidarr
               tag: 2.3.3.4204
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               # LIDARR__AUTHENTICATION_METHOD: External
               # LIDARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               LIDARR__INSTANCE_NAME: Lidarr

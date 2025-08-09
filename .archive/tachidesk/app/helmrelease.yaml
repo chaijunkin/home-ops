@@ -44,7 +44,7 @@ spec:
               DOWNLOAD_AS_CBZ: true
               EXTENSION_REPOS: "[\"https://github.com/keiyoushi/extensions/tree/repo\"]"
               JAVA_TOOL_OPTIONS: -XX:+UseG1GC -XX:MaxRAMPercentage=75 -XX:+PrintFlagsFinal
-              TZ: &TZ ${TIMEZONE}
+              TZ: &TZ Asia/Kuala_Lumpur
               WEB_UI_CHANNEL: "preview"
             probes:
               liveness: &probes

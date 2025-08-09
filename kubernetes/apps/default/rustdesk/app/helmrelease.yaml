@@ -24,7 +24,7 @@ spec:
               repository: rustdesk/rustdesk-server
               tag: 1.1.10-3
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
             command: ["hbbr"]
       hbbs:
         containers:
@@ -33,7 +33,7 @@ spec:
               repository: rustdesk/rustdesk-server
               tag: 1.1.10-3
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               DB_URL: /db/db_v2.sqlite3
               RELAY: "10.10.30.20:21117"
             command: ["hbbs", "-r rustdesk-hbbr:21117"]

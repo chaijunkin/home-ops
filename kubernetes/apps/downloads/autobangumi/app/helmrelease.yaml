@@ -36,7 +36,7 @@ spec:
               - secretRef:
                   name: autobangumi-secret
             env:
-              TZ: &TZ ${TIMEZONE}
+              TZ: &TZ Asia/Kuala_Lumpur
               # AB_DOWNLOADER_HOST: ip:8989
               AB_INTERVAL_TIME: 7200
               AB_RENAME_FREQ: 20

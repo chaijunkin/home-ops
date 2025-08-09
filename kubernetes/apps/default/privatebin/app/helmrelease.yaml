@@ -36,7 +36,7 @@ spec:
           http:
             port: 8080
     env:
-      TZ: ${TIMEZONE}
+      TZ: Asia/Kuala_Lumpur
     ingress:
       main:
         enabled: true

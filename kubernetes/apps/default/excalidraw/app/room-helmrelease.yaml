@@ -37,7 +37,7 @@ spec:
               tag: latest
               pullPolicy: IfNotPresent
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               PORT: &port 80
         pod:
           topologySpreadConstraints:

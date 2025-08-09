@@ -42,7 +42,7 @@ spec:
               repository: ghcr.io/chaijunkin/sonarr
               tag: 4.0.5.1710@sha256:43b6517fa219b0b143cad054c642f9e3f0f505f2a63c93b13e020c5cbe041460
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               SONARR__AUTHENTICATION_METHOD: External
               SONARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               SONARR__INSTANCE_NAME: Sonarr

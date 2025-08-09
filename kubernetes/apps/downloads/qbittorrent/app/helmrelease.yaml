@@ -42,7 +42,7 @@ spec:
               repository: ghcr.io/chaijunkin/qbittorrent
               tag: 5.0.0
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               UMASK: "022"
               QBITTORRENT__PORT: &port 8080
               QBITTORRENT__BT_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1:=51820}"

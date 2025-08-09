@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/onedr0p/readarr-develop
               tag: 0.3.27.2538@sha256:6850caa980bfea336b6113c37f59c40a42f61ca2714d5b8f9c13b5933e33c0f2
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               READARR__INSTANCE_NAME: Readarr
               READARR__PORT: &port 80
               READARR__LOG_LEVEL: info

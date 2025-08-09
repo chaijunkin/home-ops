@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/chaijunkin/radarr
               tag: 5.6.0.8846@sha256:767609d586ed5ced886c99171b21ff14b75174da7498872d7943f6a82fc69c2e
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               RADARR__AUTHENTICATION_METHOD: External
               RADARR__AUTHENTICATION_REQUIRED: DisabledForLocalAddresses
               RADARR__INSTANCE_NAME: Radarr

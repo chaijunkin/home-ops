@@ -38,7 +38,7 @@ spec:
               tag: 10.10.6
               pullPolicy: IfNotPresent
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               JELLYFIN_FFmpeg__probesize: 50000000
               JELLYFIN_FFmpeg__analyzeduration: 50000000

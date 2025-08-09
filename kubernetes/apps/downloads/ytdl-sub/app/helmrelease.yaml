@@ -60,7 +60,7 @@ spec:
             #     drop:
             #       - ALL
             env:
-              TZ: ${TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               PUID: 0
               PGID: 0
               MEDIA_FOLDER: /media/Music
