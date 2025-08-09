@@ -11,7 +11,7 @@ resources:
   # Flux-Kustomizations
   - ./autobrr/ks.yaml
   - ./autobangumi/ks.yaml
-  - ./bazarr/ks.yaml
+  - ./bazarr/ks.yaml #
   - ./cross-seed/ks.yaml
   - ./flaresolverr/ks.yaml
   # - ./lidarr/ks.yaml
