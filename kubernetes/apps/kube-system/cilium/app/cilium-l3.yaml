@@ -39,10 +39,10 @@ spec:
       kubernetes.io/os: linux
   bgpInstances:
     - name: cilium
-      localASN: 65002
+      localASN: 64666
       peers:
         - name: opnsense
-          peerASN: 65001
-          peerAddress: 10.0.0.1
+          peerASN: 64667
+          peerAddress: 192.168.1.1
           peerConfigRef:
             name: l3-bgp-peer-config
