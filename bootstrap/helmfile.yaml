@@ -37,13 +37,35 @@ releases:
     values: ['../kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml']
   #   needs: ['kube-system/spegel']
 
+  # # Deploy bitwarden secrets before external-secrets needs them
+  # - name: bitwarden-prerequisites
+  #   namespace: kube-system
+  #   chart: oci://ghcr.io/home-operations/charts-mirror/app-template
+  #   version: 3.6.0
+  #   values:
+  #     - controllers:
+  #         main:
+  #           enabled: false
+  #   hooks:
+  #     - # Deploy bitwarden secret using sops decrypt first
+  #       events: ['presync']
+  #       command: sh
+  #       args:
+  #         - -c
+  #         - |
+  #           echo "Decrypting and applying bitwarden secret..."
+  #           # Use sops to decrypt and apply the secret directly
+  #           sops -d ../kubernetes/apps/kube-system/external-secrets/bitwarden/secret.sops.yaml | kubectl apply -f -
+  #           echo "Bitwarden secret applied successfully"
+  #       showlogs: true
+
   - name: external-secrets
     namespace: kube-system
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
     version: 0.19.0
     values: ['../kubernetes/apps/kube-system/external-secrets/app/helm/values.yaml']
     hooks:
-      - # Apply cluster secret store
+      - # Apply cluster secret store after external-secrets is ready
         events: ['postsync']
         command: kubectl
         args:
@@ -55,19 +77,7 @@ releases:
           - ../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
           - --wait=true
         showlogs: true
-      # - # Deploy bitwarden
-      #   events: ['postsync']
-      #   command: kubectl
-      #   args:
-      #     - apply
-      #     - --namespace=kube-system
-      #     - --server-side
-      #     - --field-manager=kustomize-controller
-      #     - --kustomize
-      #     - ../kubernetes/apps/kube-system/external-secrets/bitwarden/
-      #     - --wait=true
-      #   showlogs: true
-    needs: ['cert-manager/cert-manager']
+    needs: ['kube-system/bitwarden-prerequisites']
 
   - name: flux-operator
     namespace: flux-system

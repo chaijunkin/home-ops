@@ -5,9 +5,6 @@ metadata:
   name: bitwarden
   namespace: kube-system
 spec:
-  dependsOn:
-    - name: external-secrets
-      namespace: kube-system
   interval: 5m
   chart:
     spec:
