@@ -59,7 +59,7 @@ releases:
   - name: external-secrets
     namespace: kube-system
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: 0.19.0
+    version: 0.19.1
     values: ['../kubernetes/apps/kube-system/external-secrets/app/helm/values.yaml']
     hooks:
       - # Apply cluster secret store after external-secrets is ready
