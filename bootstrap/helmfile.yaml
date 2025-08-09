@@ -89,14 +89,15 @@ releases:
     version: 0.26.0
     values: ['../kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml']
     needs: ['flux-system/flux-operator']
-    hooks:
-      - # Deploy bitwarden secret using sops decrypt first
-        events: ['postsync']
-        command: sh
-        args:
-          - -c
-          - |
-            echo "Decrypting and applying flux bootstrap..."
-            # Use sops to decrypt and apply the secret directly
-            sops -d ../kubernetes/flux/cluster/secret.sops.yaml | kubectl apply -f -
-            echo "Flux bootstrap applied successfully"
+    # hooks:
+    #   - # Deploy bitwarden secret using sops decrypt first
+    #     events: ['postsync']
+    #     command: sh
+    #     args:
+    #       - -c
+    #       - |
+    #         echo "Decrypting and applying flux bootstrap..."
+    #         # Use sops to decrypt and apply the secret directly
+    #         sops -d ../kubernetes/flux/cluster/secret.sops.yaml | kubectl apply -f -
+    #         echo "Flux bootstrap applied successfully"
+    ##### THIS NEED TO CHANGE TO GET decrypt secret.sops.yaml in bootstrap directly
