@@ -1,49 +1,58 @@
 ---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: cilium
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.18.0
+  url: oci://ghcr.io/home-operations/charts-mirror/cilium
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cilium
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: cilium
-      version: 1.18.0
-      sourceRef:
-        kind: HelmRepository
-        name: cilium
-        namespace: flux-system
+  interval: 1hg
+  chartRef:
+    kind: OCIRepository
+    name: cilium
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
-  values:
-    hubble:
-      enabled: false
-      metrics:
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-        dashboards:
-          enabled: true
-      relay:
-        enabled: false
-        rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-      ui:
-        enabled: false
-        rollOutPods: true
+  # values:
+  #   hubble:
+  #     enabled: false
+  #     metrics:
+  #       enabled:
+  #         - dns:query
+  #         - drop
+  #         - tcp
+  #         - flow
+  #         - port-distribution
+  #         - icmp
+  #         - http
+  #       serviceMonitor:
+  #         enabled: true
+  #       dashboards:
+  #         enabled: true
+  #     relay:
+  #       enabled: false
+  #       rollOutPods: true
+  #       prometheus:
+  #         serviceMonitor:
+  #           enabled: true
+  #     ui:
+  #       enabled: false
+  #       rollOutPods: true
