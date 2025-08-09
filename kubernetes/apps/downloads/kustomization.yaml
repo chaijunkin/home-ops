@@ -11,16 +11,16 @@ resources:
   # Flux-Kustomizations
   - ./autobrr/ks.yaml
   - ./autobangumi/ks.yaml
-  - ./bazarr/ks.yaml
+  # - ./bazarr/ks.yaml
   - ./cross-seed/ks.yaml
   - ./flaresolverr/ks.yaml
   # - ./lidarr/ks.yaml
   - ./metube/ks.yaml
-  - ./prowlarr/ks.yaml
+  # - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
-  - ./radarr/ks.yaml
-  - ./readarr/ks.yaml
+  # - ./radarr/ks.yaml
+  # - ./readarr/ks.yaml
   - ./sabnzbd/ks.yaml
-  - ./sonarr/ks.yaml
+  # - ./sonarr/ks.yaml
   # - ./tqm/ks.yaml
   - ./ytdl-sub/ks.yaml
