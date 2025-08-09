@@ -1,19 +1,19 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: GitRepository
-metadata:
-  name: home-kubernetes
-  namespace: flux-system
-spec:
-  interval: 30m
-  url: "https://github.com/chaijunkin/home-ops"
-  ref:
-    branch: "main"
-  ignore: |
-    # exclude all
-    /*
-    # include kubernetes directory
-    !/kubernetes
+# ---
+# apiVersion: source.toolkit.fluxcd.io/v1
+# kind: GitRepository
+# metadata:
+#   name: home-kubernetes
+#   namespace: flux-system
+# spec:
+#   interval: 30m
+#   url: "https://github.com/chaijunkin/home-ops"
+#   ref:
+#     branch: "main"
+#   ignore: |
+#     # exclude all
+#     /*
+#     # include kubernetes directory
+#    /!/kubernetes
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
