@@ -5,6 +5,6 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-  # - ./mutatingadmissionpolicy.yaml
+  - ./mutatingadmissionpolicy.yaml
   - ./storageclass.yaml
   - ./smb-volsync-storageclass.yaml
