@@ -18,7 +18,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg
     - name: external-secrets-stores
-  prune: false
+  prune: true
   wait: false
   interval: 30m
   retryInterval: 1m

@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -26,7 +26,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/bitwarden
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -48,7 +48,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/stores
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -71,7 +71,7 @@ metadata:
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/cluster-secrets
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

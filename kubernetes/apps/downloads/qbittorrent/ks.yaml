@@ -12,7 +12,7 @@ spec:
   # dependsOn:
   #   - name: qbittorrent-pod-gateway-downloads
   path: ./kubernetes/apps/downloads/qbittorrent/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

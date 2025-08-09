@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: media
   path: ./kubernetes/apps/media/nextcloud/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

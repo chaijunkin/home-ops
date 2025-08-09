@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: vpn
   path: ./kubernetes/apps/vpn/pod-gateway/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

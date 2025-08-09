@@ -125,14 +125,17 @@ function apply_crds() {
     )
 
     for crd in "${crds[@]}"; do
-        if kubectl diff --filename "${crd}" &>/dev/null; then
+        if kubectl apply --server-side --filename "${crd}" --dry-run=server --force-conflicts &>/dev/null; then
             log info "CRDs are up-to-date" "crd=${crd}"
-            continue
-        fi
-        if kubectl apply --server-side --filename "${crd}" &>/dev/null; then
-            log info "CRDs applied" "crd=${crd}"
+            # Apply anyway to ensure proper annotations
+            kubectl apply --server-side --filename "${crd}" --force-conflicts &>/dev/null || true
         else
-            log error "Failed to apply CRDs" "crd=${crd}"
+            log info "Applying CRDs" "crd=${crd}"
+            if kubectl apply --server-side --filename "${crd}" --force-conflicts &>/dev/null; then
+                log info "CRDs applied successfully" "crd=${crd}"
+            else
+                log error "Failed to apply CRDs" "crd=${crd}"
+            fi
         fi
     done
 }
@@ -192,7 +195,7 @@ function main() {
 
     # Apply resources and Helm releases
     wait_for_nodes
-    # apply_crds
+    apply_crds
     # apply_resources
     sync_helm_releases
 

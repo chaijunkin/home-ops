@@ -11,7 +11,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   path: "./kubernetes/apps/home-automation/home-assistant/app"
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

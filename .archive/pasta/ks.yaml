@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -31,7 +31,7 @@ spec:
 # spec:
 #   interval: 10m
 #   path: "./kubernetes/apps/media/paperless/redis"
-#   prune: false
+#   prune: true
 #   sourceRef:
 #     kind: GitRepository
 #     name: home-kubernetes

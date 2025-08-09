@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-bitwarden
   path: ./kubernetes/apps/database/dragonfly-operator/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -37,7 +37,7 @@ spec:
   dependsOn:
     - name: dragonfly-operator
   path: ./kubernetes/apps/database/dragonfly-operator/cluster
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
