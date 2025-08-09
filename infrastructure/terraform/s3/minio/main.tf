@@ -1,10 +1,10 @@
 locals {
   buckets = [
     "loki",
-    "thanos",
+    # "thanos",
     "volsync",
     "postgresql",
-    "tempo"
+    # "tempo"
   ]
 }
 
