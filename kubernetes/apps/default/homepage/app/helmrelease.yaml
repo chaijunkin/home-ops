@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v1.4.3
+              tag: v1.4.4
             env:
               TZ: Asia/Kuala_Lumpur
               HOMEPAGE_ALLOWED_HOSTS: "{{ .Release.Name }}.cloudjur.com"
