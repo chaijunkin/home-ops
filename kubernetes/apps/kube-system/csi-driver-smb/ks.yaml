@@ -11,6 +11,7 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  targetNamespace: kube-system
   wait: false
   interval: 30m
   retryInterval: 1m
