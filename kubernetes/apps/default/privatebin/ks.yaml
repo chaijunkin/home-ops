@@ -5,6 +5,7 @@ metadata:
   name: privatebin
   namespace: flux-system
 spec:
+  targetNamespace: default
   path: ./kubernetes/apps/default/privatebin/app
   prune: true
   sourceRef:

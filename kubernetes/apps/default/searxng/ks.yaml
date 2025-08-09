@@ -5,6 +5,7 @@ metadata:
   name: searxng
   namespace: flux-system
 spec:
+  targetNamespace: default
   path: ./kubernetes/apps/default/searxng/app
   prune: true
   commonMetadata:
