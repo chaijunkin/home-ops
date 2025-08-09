@@ -10,5 +10,4 @@ configMapGenerator:
 resources:
   - ./helmrelease.yaml
   - ./networkpolicy.yaml
-  - ./secret.sops.yaml
 
