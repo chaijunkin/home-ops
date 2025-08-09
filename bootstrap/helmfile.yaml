@@ -42,10 +42,7 @@ releases:
     namespace: kube-system
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
     version: 4.2.0
-    values:
-      - controllers:
-          main:
-            enabled: false
+    values: ['../kubernetes/apps/kube-system/external-secrets/bitwarden/helm/values.yaml']
     hooks:
       - # Deploy bitwarden secret using sops decrypt first
         events: ['presync']
