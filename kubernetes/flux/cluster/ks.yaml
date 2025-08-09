@@ -59,7 +59,7 @@ spec:
               name: sops-age
       target:
         group: kustomize.toolkit.fluxcd.io
-        kind: Kustomizationg
+        kind: Kustomization
 ---
 apiVersion: v1
 kind: ConfigMap
