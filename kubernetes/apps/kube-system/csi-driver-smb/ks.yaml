@@ -4,8 +4,6 @@ kind: Kustomization
 metadata:
   name: csi-driver-smb
   namespace: kube-system
-  labels:
-    substitution.flux.home.arpa/disabled: "true"
 spec:
   path: ./kubernetes/apps/kube-system/csi-driver-smb/app
   prune: true
