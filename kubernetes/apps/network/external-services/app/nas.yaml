@@ -74,6 +74,7 @@ spec:
                   lbipam.cilium.io/ips: 10.10.30.41
                 name: *app
                 port:
+                  type: LoadBalancer
                   number: 9090
   tls:
     - hosts:

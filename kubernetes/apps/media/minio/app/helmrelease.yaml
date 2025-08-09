@@ -71,6 +71,7 @@ spec:
             #   supplementalGroups: [100]
     service:
       app:
+        type: LoadBalancer
         controller: minio
         annotations:
           lbipam.cilium.io/ips: 10.10.30.56

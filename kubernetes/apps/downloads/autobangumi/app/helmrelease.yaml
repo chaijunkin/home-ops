@@ -112,6 +112,7 @@ spec:
         type: emptyDir
     service:
       app:
+        type: LoadBalancer
         controller: autobangumi
         annotations:
           lbipam.cilium.io/ips: 10.10.30.52

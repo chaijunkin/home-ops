@@ -4,9 +4,11 @@ Kubernetes Resources Management Script
 
 This script automates:
 1. IPAM generation for Cilium load balancers
-2. Adding Cilium load balancer IPs to services with ingress domains
+2. Adding Cilium load balancer IPs and LoadBalancer type to services with ingress domains (HelmRelease only)
 3. Adding homepage annotations based on ingress configuration
 4. Enabling Gatus components based on ingress class (external/internal)
+
+Note: Only processes ingress configurations within HelmRelease resources, ignores standalone Ingress resources.
 """
 
 import os
@@ -28,9 +30,9 @@ LOAD_BALANCER_RANGES = {
 
 RESERVED_IPS = {
     '10.10.30.33',  # headlamp
-    '10.10.30.34',  # ingress-nginx-internal
-    '10.10.30.65',  # ingress-nginx-external
-    '10.10.30.70',  # k8s-gateway
+    '10.10.30.28',  # ingress-nginx-internal
+    '10.10.30.29',  # ingress-nginx-external
+    '10.10.30.27',  # k8s-gateway
 }
 
 HOMEPAGE_GROUPS = {
@@ -206,13 +208,14 @@ class K8sResourceManager:
                 continue
 
     def _process_yaml_doc(self, doc, file_path):
-        """Process individual YAML documents"""
+        """Process individual YAML documents - only process HelmRelease resources"""
         kind = doc.get('kind', '')
 
         if kind == 'HelmRelease':
             self._process_helm_release(doc, file_path)
-        elif kind == 'Ingress':
-            self._process_ingress(doc, file_path)
+        # Ignore standalone Ingress resources - we only process ingress configs within HelmReleases
+        # elif kind == 'Ingress':
+        #     self._process_ingress(doc, file_path)
 
     def _process_helm_release(self, doc, file_path):
         """Process HelmRelease for ingress configurations"""
@@ -248,26 +251,28 @@ class K8sResourceManager:
                             }
                             break
 
-    def _process_ingress(self, doc, file_path):
-        """Process standalone Ingress resources"""
-        metadata = doc.get('metadata', {})
-        app_name = metadata.get('name', '')
-        namespace = metadata.get('namespace', 'default')
+    # def _process_ingress(self, doc, file_path):
+    #     """Process standalone Ingress resources - DISABLED"""
+    #     # This method is disabled as we only process ingress configs within HelmReleases
+    #     # to avoid modifying standalone Ingress resources
+    #     metadata = doc.get('metadata', {})
+    #     app_name = metadata.get('name', '')
+    #     namespace = metadata.get('namespace', 'default')
 
-        spec = doc.get('spec', {})
-        class_name = spec.get('ingressClassName', 'internal')
+    #     spec = doc.get('spec', {})
+    #     class_name = spec.get('ingressClassName', 'internal')
 
-        rules = spec.get('rules', [])
-        if rules and isinstance(rules[0], dict):
-            host = rules[0].get('host', '')
-            if host and 'cloudjur.com' in host:
-                self.ingress_mappings[app_name] = {
-                    'namespace': namespace,
-                    'class': class_name,
-                    'host': host,
-                    'file_path': str(file_path),
-                    'ingress_name': 'main'
-                }
+    #     rules = spec.get('rules', [])
+    #     if rules and isinstance(rules[0], dict):
+    #         host = rules[0].get('host', '')
+    #         if host and 'cloudjur.com' in host:
+    #             self.ingress_mappings[app_name] = {
+    #                 'namespace': namespace,
+    #                 'class': class_name,
+    #                 'host': host,
+    #                 'file_path': str(file_path),
+    #                 'ingress_name': 'main'
+    #             }
 
     def get_next_available_ip(self, range_type: str) -> str:
         """Get the next available IP from the specified range"""
@@ -327,27 +332,42 @@ class K8sResourceManager:
         print("\n🔍 Services with ingress configurations:")
         services_needing_lb = []
         services_with_lb = []
+        import re  # Import re module at function level
 
         for app_name, config in self.ingress_mappings.items():
             class_name = config['class']
             file_path = config['file_path']
             host = config.get('host', 'N/A')
 
-            # Check if already has LB IP
+            # Check if already has LB IP and type
             try:
                 with open(file_path, 'r') as f:
                     content = f.read()
 
-                if 'lbipam.cilium.io/ips' in content:
+                has_lb_ip = 'lbipam.cilium.io/ips' in content
+                has_lb_type = 'type: LoadBalancer' in content
+
+                if has_lb_ip and has_lb_type:
                     # Extract existing IP
-                    import re
                     ip_match = re.search(r'io\.cilium/lb-ipam-ips:\s*["\']?([0-9.]+)["\']?', content)
                     existing_ip = ip_match.group(1) if ip_match else 'unknown'
                     services_with_lb.append({
                         'name': app_name,
                         'class': class_name,
                         'host': host,
-                        'ip': existing_ip
+                        'ip': existing_ip,
+                        'status': 'complete'
+                    })
+                elif has_lb_ip or has_lb_type:
+                    # Partial configuration
+                    ip_match = re.search(r'io\.cilium/lb-ipam-ips:\s*["\']?([0-9.]+)["\']?', content)
+                    existing_ip = ip_match.group(1) if ip_match else 'none'
+                    services_with_lb.append({
+                        'name': app_name,
+                        'class': class_name,
+                        'host': host,
+                        'ip': existing_ip,
+                        'status': f"partial ({'IP' if has_lb_ip else 'no IP'}, {'type' if has_lb_type else 'no type'})"
                     })
                 else:
                     range_type = 'external' if class_name == 'external' else 'internal'
@@ -361,23 +381,24 @@ class K8sResourceManager:
                 print(f"   ⚠️  Error analyzing {app_name}: {e}")
 
         if services_with_lb:
-            print(f"\n✅ Services already with load balancer IPs ({len(services_with_lb)}):")
+            print(f"\n✅ Services with load balancer configuration ({len(services_with_lb)}):")
             for svc in services_with_lb:
-                print(f"   - {svc['name']} ({svc['class']}) -> {svc['ip']} | {svc['host']}")
+                status_icon = "✅" if svc['status'] == 'complete' else "⚠️ "
+                print(f"   {status_icon} {svc['name']} ({svc['class']}) -> {svc['ip']} | {svc['host']} | {svc['status']}")
 
         if services_needing_lb:
-            print(f"\n🚀 Services that would get load balancer IPs ({len(services_needing_lb)}):")
+            print(f"\n🚀 Services that would get load balancer configuration ({len(services_needing_lb)}):")
             temp_allocated = self.allocated_ips.copy()
             for svc in services_needing_lb:
                 try:
                     # Get what IP would be assigned
                     next_ip = self._get_next_ip_for_range(svc['range'], temp_allocated)
                     temp_allocated.add(next_ip)  # Add to temp set to avoid duplicates
-                    print(f"   - {svc['name']} ({svc['class']}) -> {next_ip} | {svc['host']}")
+                    print(f"   + {svc['name']} ({svc['class']}) -> {next_ip} + type: LoadBalancer | {svc['host']}")
                 except Exception as e:
                     print(f"   - {svc['name']} ({svc['class']}) -> ERROR: {e}")
         else:
-            print("\n✅ No services need load balancer IPs")
+            print("\n✅ No services need load balancer configuration")
 
         print("\n📋 Summary:")
         print(f"   - Services with LB IPs: {len(services_with_lb)}")
@@ -461,7 +482,7 @@ class K8sResourceManager:
             return False
 
     def add_load_balancer_ips(self):
-        """Add Cilium load balancer IPs to services with ingress domains"""
+        """Add Cilium load balancer IPs and LoadBalancer type to services with ingress domains"""
         modified_files = []
 
         for app_name, config in self.ingress_mappings.items():
@@ -476,39 +497,139 @@ class K8sResourceManager:
             else:
                 continue
 
-            # Check if IP is already assigned
+            # Check if IP and type are already assigned
             try:
                 with open(file_path, 'r') as f:
                     content = f.read()
 
-                if 'lbipam.cilium.io/ips' in content:
-                    print(f"Skipping {app_name}: already has load balancer IP")
+                has_lb_ip = 'lbipam.cilium.io/ips' in content
+                has_lb_type = 'type: LoadBalancer' in content
+
+                if has_lb_ip and has_lb_type:
+                    print(f"Skipping {app_name}: already has complete load balancer configuration")
                     continue
 
-                # Get next available IP
-                ip = self.get_next_available_ip(range_type)
+                # Get next available IP if needed
+                ip = None
+                if not has_lb_ip:
+                    ip = self.get_next_available_ip(range_type)
 
-                # Add IP to service annotations
-                updated_content = self._add_lb_ip_to_helm(content, ip)
+                # Add IP and/or type to service
+                updated_content = self._add_lb_configuration_to_helm(content, ip, has_lb_ip, has_lb_type)
 
                 if updated_content != content:
                     with open(file_path, 'w') as f:
                         f.write(updated_content)
                     modified_files.append(file_path)
-                    print(f"Added IP {ip} to {app_name} ({class_name})")
+
+                    status_msg = []
+                    if not has_lb_ip and ip:
+                        status_msg.append(f"IP {ip}")
+                    if not has_lb_type:
+                        status_msg.append("type: LoadBalancer")
+
+                    print(f"Added {', '.join(status_msg)} to {app_name} ({class_name})")
 
             except Exception as e:
                 print(f"Error processing {app_name}: {e}")
 
         return modified_files
 
+    def _add_lb_configuration_to_helm(self, content: str, ip: Optional[str], has_lb_ip: bool, has_lb_type: bool) -> str:
+        """Add load balancer IP and/or type to HelmRelease service section"""
+        if has_lb_ip and has_lb_type:
+            return content
+
+        # If we only need to add IP, use the existing method
+        if ip and not has_lb_ip:
+            return self._add_lb_ip_to_helm(content, ip)
+
+        # If we only need to add type, add just the type
+        if not has_lb_type and has_lb_ip:
+            return self._add_lb_type_to_helm(content)
+
+        return content
+
+    def _add_lb_type_to_helm(self, content: str) -> str:
+        """Add LoadBalancer type to HelmRelease service section"""
+        lines = content.split('\n')
+        modified_lines = []
+        in_service_section = False
+        service_indent = 0
+        added_type = False
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+
+            # Detect service section
+            if 'service:' in line and not line.strip().startswith('#'):
+                in_service_section = True
+                service_indent = len(line) - len(line.lstrip())
+                modified_lines.append(line)
+
+            elif in_service_section:
+                current_indent = len(line) - len(line.lstrip()) if line.strip() else 0
+
+                # Check if we're out of service section
+                if line.strip() and current_indent <= service_indent:
+                    in_service_section = False
+                    modified_lines.append(line)
+
+                # Look for service names and add type if not present
+                elif (line.strip().endswith(':') and
+                      current_indent == service_indent + 2 and
+                      not line.strip().startswith(('annotations:', 'ports:', 'type:', 'controller:')) and
+                      not added_type):
+
+                    modified_lines.append(line)
+
+                    # Look ahead to see if this service already has type
+                    j = i + 1
+                    has_type = False
+                    while j < len(lines):
+                        next_line = lines[j]
+                        next_indent = len(next_line) - len(next_line.lstrip()) if next_line.strip() else 0
+
+                        # If we've moved out of this service block, break
+                        if next_line.strip() and next_indent <= current_indent:
+                            break
+
+                        if 'type:' in next_line and next_indent == current_indent + 2:
+                            has_type = True
+                            break
+                        j += 1
+
+                    # Add type: LoadBalancer if not present
+                    if not has_type:
+                        modified_lines.append(' ' * (current_indent + 2) + 'type: LoadBalancer')
+                        added_type = True
+
+                # If we find existing type that's not LoadBalancer, replace it
+                elif ('type:' in line and
+                      current_indent == service_indent + 4 and
+                      'LoadBalancer' not in line and
+                      not added_type):
+                    modified_lines.append(' ' * current_indent + 'type: LoadBalancer')
+                    added_type = True
+
+                else:
+                    modified_lines.append(line)
+            else:
+                modified_lines.append(line)
+
+            i += 1
+
+        return '\n'.join(modified_lines)
+
     def _add_lb_ip_to_helm(self, content: str, ip: str) -> str:
-        """Add load balancer IP annotation to HelmRelease service section"""
+        """Add load balancer IP annotation and type to HelmRelease service section"""
         lines = content.split('\n')
         modified_lines = []
         in_service_section = False
         service_indent = 0
         added_annotation = False
+        added_type = False
 
         i = 0
         while i < len(lines):
@@ -532,13 +653,14 @@ class K8sResourceManager:
                 elif (line.strip().endswith(':') and
                       current_indent == service_indent + 2 and
                       not line.strip().startswith(('annotations:', 'ports:', 'type:', 'controller:')) and
-                      not added_annotation):
+                      not (added_annotation and added_type)):
 
                     modified_lines.append(line)
 
-                    # Look ahead to see if this service already has annotations
+                    # Look ahead to see if this service already has annotations or type
                     j = i + 1
                     has_annotations = False
+                    has_type = False
                     while j < len(lines):
                         next_line = lines[j]
                         next_indent = len(next_line) - len(next_line.lstrip()) if next_line.strip() else 0
@@ -549,11 +671,17 @@ class K8sResourceManager:
 
                         if 'annotations:' in next_line and next_indent == current_indent + 2:
                             has_annotations = True
-                            break
+                        elif 'type:' in next_line and next_indent == current_indent + 2:
+                            has_type = True
                         j += 1
 
-                    if not has_annotations:
-                        # Add annotations section
+                    # Add type: LoadBalancer first if not present
+                    if not has_type and not added_type:
+                        modified_lines.append(' ' * (current_indent + 2) + 'type: LoadBalancer')
+                        added_type = True
+
+                    # Add annotations section if not present
+                    if not has_annotations and not added_annotation:
                         modified_lines.append(' ' * (current_indent + 2) + 'annotations:')
                         modified_lines.append(' ' * (current_indent + 4) + f'lbipam.cilium.io/ips: {ip}')
                         added_annotation = True
@@ -565,6 +693,14 @@ class K8sResourceManager:
                     modified_lines.append(line)
                     modified_lines.append(' ' * (current_indent + 2) + f'lbipam.cilium.io/ips: {ip}')
                     added_annotation = True
+
+                # If we find existing type, check if it's LoadBalancer
+                elif ('type:' in line and
+                      current_indent == service_indent + 4 and
+                      'LoadBalancer' not in line):
+                    # Replace existing type with LoadBalancer
+                    modified_lines.append(' ' * (current_indent) + 'type: LoadBalancer')
+                    added_type = True
 
                 else:
                     modified_lines.append(line)
@@ -749,7 +885,7 @@ def main():
     parser = argparse.ArgumentParser(description='Manage Kubernetes resources for home-ops')
     parser.add_argument('--root-dir', default='.', help='Root directory of the project')
     parser.add_argument('--generate-ipam-docs', action='store_true', help='Generate IPAM documentation')
-    parser.add_argument('--add-load-balancer-ips', action='store_true', help='Add Cilium load balancer IPs')
+    parser.add_argument('--add-load-balancer-ips', action='store_true', help='Add Cilium load balancer IPs and LoadBalancer type')
     parser.add_argument('--add-homepage-annotations', action='store_true', help='Add homepage annotations')
     # parser.add_argument('--enable-gatus', action='store_true', help='Enable Gatus components')  # DISABLED
     parser.add_argument('--all', action='store_true', help='Run all operations (except Gatus)')
@@ -774,7 +910,7 @@ def main():
         manager.generate_ipam_documentation()
 
     if args.all or args.add_load_balancer_ips:
-        print("Adding load balancer IPs...")
+        print("Adding load balancer IPs and LoadBalancer type...")
         modified_files = manager.add_load_balancer_ips()
         print(f"Modified {len(modified_files)} files")
 

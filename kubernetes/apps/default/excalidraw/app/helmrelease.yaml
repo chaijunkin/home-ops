@@ -38,6 +38,7 @@ spec:
               COLLAB_ADDR: excalidraw-room.cloudjur.com
     service:
       app:
+        type: LoadBalancer
         controller: *app
         annotations:
           lbipam.cilium.io/ips: 10.10.30.48

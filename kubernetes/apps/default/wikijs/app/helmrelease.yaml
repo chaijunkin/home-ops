@@ -54,6 +54,7 @@ spec:
                   name: wikijs-secret
     service:
       main:
+        type: LoadBalancer
         controller: main
         annotations:
           lbipam.cilium.io/ips: 10.10.30.68
