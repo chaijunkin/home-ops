@@ -406,6 +406,52 @@ class K8sResourceManager:
         print(f"   - Services needing LB IPs: {len(services_needing_lb)}")
         print(f"   - Total services with ingress: {len(self.ingress_mappings)}")
 
+        # Analyze external-dns annotations
+        print("\n🌐 External-DNS Status:")
+        services_with_external_dns = []
+        services_needing_external_dns = []
+
+        for app_name, config in self.ingress_mappings.items():
+            file_path = config['file_path']
+            ingress_class = config['class']
+            target_domain = 'external.cloudjur.com' if ingress_class == 'external' else 'internal.cloudjur.com'
+
+            try:
+                with open(file_path, 'r') as f:
+                    content = f.read()
+
+                has_external_dns = 'external-dns.alpha.kubernetes.io/target' in content
+                
+                if has_external_dns:
+                    services_with_external_dns.append({
+                        'name': app_name,
+                        'class': ingress_class,
+                        'target': target_domain
+                    })
+                else:
+                    services_needing_external_dns.append({
+                        'name': app_name,
+                        'class': ingress_class,
+                        'target': target_domain
+                    })
+            except Exception as e:
+                print(f"   ⚠️  Error analyzing external-dns for {app_name}: {e}")
+
+        if services_with_external_dns:
+            print(f"\n✅ Services with external-dns annotations ({len(services_with_external_dns)}):")
+            for svc in services_with_external_dns:
+                print(f"   ✅ {svc['name']} ({svc['class']}) -> {svc['target']}")
+
+        if services_needing_external_dns:
+            print(f"\n🚀 Services that would get external-dns annotations ({len(services_needing_external_dns)}):")
+            for svc in services_needing_external_dns:
+                print(f"   + {svc['name']} ({svc['class']}) -> {svc['target']}")
+        else:
+            if not services_with_external_dns:
+                print("   ℹ️  No services found with ingress configurations")
+            else:
+                print("   ✅ All services already have external-dns annotations")
+
     def _get_next_ip_for_range(self, range_type: str, allocated_set: Set[str]) -> str:
         """Get next available IP without modifying the main allocated_ips set"""
         if range_type not in LOAD_BALANCER_RANGES:
@@ -919,29 +965,31 @@ class K8sResourceManager:
                 # Look for annotations in this ingress section
                 j = i + 1
                 ingress_indent = len(line) - len(line.lstrip())
+                found_annotations = False
 
                 while j < len(lines):
                     current_line = lines[j]
 
+                    # If we've moved back to the same indent level or less, we're out of this ingress block
                     if current_line.strip() and len(current_line) - len(current_line.lstrip()) <= ingress_indent:
                         break
 
-                    if 'annotations:' in current_line:
+                    if 'annotations:' in current_line and not found_annotations:
                         modified_lines.append(current_line)
                         annotation_indent = len(current_line) - len(current_line.lstrip()) + 2
-
-                        # Add external-dns annotations
+                        found_annotations = True
+                        
+                        # Add external-dns annotations immediately after the annotations: line
                         for key, value in annotations.items():
                             modified_lines.append(' ' * annotation_indent + f'{key}: {value}')
-
-                        # Skip to next line and continue
-                        i = j
-                        break
+                    else:
+                        # Add all other lines as-is (including existing annotations)
+                        modified_lines.append(current_line)
 
                     j += 1
-                else:
-                    # No annotations found, continue normally
-                    pass
+
+                # Set i to j-1 because the main loop will increment i
+                i = j - 1
             else:
                 modified_lines.append(line)
 
@@ -1001,6 +1049,11 @@ def main():
     if args.all or args.add_homepage_annotations:
         print("Adding homepage annotations...")
         modified_files = manager.add_homepage_annotations()
+        print(f"Modified {len(modified_files)} files")
+
+    if args.all or args.add_external_dns_annotations:
+        print("Adding external-dns annotations...")
+        modified_files = manager.add_external_dns_annotations()
         print(f"Modified {len(modified_files)} files")
 
     # Gatus functionality disabled
