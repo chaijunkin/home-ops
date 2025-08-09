@@ -6,7 +6,8 @@ This script automates:
 1. IPAM generation for Cilium load balancers
 2. Adding Cilium load balancer IPs and LoadBalancer type to services with ingress domains (HelmRelease only)
 3. Adding homepage annotations based on ingress configuration
-4. Enabling Gatus components based on ingress class (external/internal)
+4. Adding external-dns annotations based on ingress class (external/internal)
+5. Enabling Gatus components based on ingress class (external/internal)
 
 Note: Only processes ingress configurations within HelmRelease resources, ignores standalone Ingress resources.
 """
@@ -866,6 +867,88 @@ class K8sResourceManager:
 
         return '\n'.join(modified_lines)
 
+    def add_external_dns_annotations(self):
+        """Add external-dns annotations to ingress resources based on ingress class"""
+        modified_files = []
+
+        for app_name, config in self.ingress_mappings.items():
+            file_path = config['file_path']
+            ingress_class = config['class']
+
+            try:
+                with open(file_path, 'r') as f:
+                    content = f.read()
+
+                if 'external-dns.alpha.kubernetes.io/target' in content:
+                    print(f"Skipping {app_name}: already has external-dns annotations")
+                    continue
+
+                # Generate external-dns target annotation based on ingress class
+                target_domain = 'external.cloudjur.com' if ingress_class == 'external' else 'internal.cloudjur.com'
+                annotations = {
+                    'external-dns.alpha.kubernetes.io/target': target_domain
+                }
+
+                # Add annotations to ingress
+                updated_content = self._add_external_dns_annotations_to_helm(content, annotations)
+
+                if updated_content != content:
+                    with open(file_path, 'w') as f:
+                        f.write(updated_content)
+                    modified_files.append(file_path)
+                    print(f"Added external-dns annotation to {app_name}: {target_domain}")
+
+            except Exception as e:
+                print(f"Error processing {app_name}: {e}")
+
+        return modified_files
+
+    def _add_external_dns_annotations_to_helm(self, content: str, annotations: Dict[str, str]) -> str:
+        """Add external-dns annotations to HelmRelease ingress section"""
+        lines = content.split('\n')
+        modified_lines = []
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+
+            # Look for ingress annotations section
+            if 'ingress:' in line and not line.strip().startswith('#'):
+                modified_lines.append(line)
+
+                # Look for annotations in this ingress section
+                j = i + 1
+                ingress_indent = len(line) - len(line.lstrip())
+
+                while j < len(lines):
+                    current_line = lines[j]
+
+                    if current_line.strip() and len(current_line) - len(current_line.lstrip()) <= ingress_indent:
+                        break
+
+                    if 'annotations:' in current_line:
+                        modified_lines.append(current_line)
+                        annotation_indent = len(current_line) - len(current_line.lstrip()) + 2
+
+                        # Add external-dns annotations
+                        for key, value in annotations.items():
+                            modified_lines.append(' ' * annotation_indent + f'{key}: {value}')
+
+                        # Skip to next line and continue
+                        i = j
+                        break
+
+                    j += 1
+                else:
+                    # No annotations found, continue normally
+                    pass
+            else:
+                modified_lines.append(line)
+
+            i += 1
+
+        return '\n'.join(modified_lines)
+
     def enable_gatus_components(self):
         """Enable Gatus components based on ingress class - DISABLED"""
         print("Gatus components functionality is disabled - not touching components/gatus directory")
@@ -887,13 +970,14 @@ def main():
     parser.add_argument('--generate-ipam-docs', action='store_true', help='Generate IPAM documentation')
     parser.add_argument('--add-load-balancer-ips', action='store_true', help='Add Cilium load balancer IPs and LoadBalancer type')
     parser.add_argument('--add-homepage-annotations', action='store_true', help='Add homepage annotations')
+    parser.add_argument('--add-external-dns-annotations', action='store_true', help='Add external-dns annotations based on ingress class')
     # parser.add_argument('--enable-gatus', action='store_true', help='Enable Gatus components')  # DISABLED
     parser.add_argument('--all', action='store_true', help='Run all operations (except Gatus)')
     parser.add_argument('--dry-run', action='store_true', help='Show what would be changed without making changes')
 
     args = parser.parse_args()
 
-    if not any([args.generate_ipam_docs, args.add_load_balancer_ips, args.add_homepage_annotations, args.all, args.dry_run]):
+    if not any([args.generate_ipam_docs, args.add_load_balancer_ips, args.add_homepage_annotations, args.add_external_dns_annotations, args.all, args.dry_run]):
         parser.print_help()
         return
 
