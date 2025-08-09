@@ -2,29 +2,27 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app qbittorrent
-  namespace: flux-system
+  name: qbittorrent
+  namespace: downloads
 spec:
   targetNamespace: downloads
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
-  # dependsOn:
-  #   - name: qbittorrent-pod-gateway-downloads
+      app.kubernetes.io/name: qbittorrent
   path: ./kubernetes/apps/downloads/qbittorrent/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: qbittorrent
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/gatus/internal
+  - ../../../../components/volsync
+  - ../../../../components/gatus/internal

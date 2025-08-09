@@ -2,8 +2,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app open-webui
-  namespace: flux-system
+  name: open-webui
+  namespace: default
 spec:
   targetNamespace: default
   path: ./kubernetes/apps/default/open-webui/app
@@ -18,7 +18,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: open-webui
       GATUS_SUBDOMAIN: chat
       VOLSYNC_CAPACITY: 2Gi
   components:

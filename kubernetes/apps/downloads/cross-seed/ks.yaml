@@ -2,28 +2,28 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cross-seed
-  namespace: flux-system
+  name: cross-seed
+  namespace: downloads
 spec:
   targetNamespace: downloads
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: cross-seed
   dependsOn:
-    - name: external-secrets-stores
+  - name: external-secrets-stores
   path: ./kubernetes/apps/downloads/cross-seed/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: cross-seed
       VOLSYNC_CAPACITY: 5Gi
   components:
-    - ../../../../components/volsync
+  - ../../../../components/volsync

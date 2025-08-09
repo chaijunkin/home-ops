@@ -1,33 +1,26 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app home-assistant
-  namespace: flux-system
+  name: home-assistant
+  namespace: home-automation
 spec:
   targetNamespace: home-automation
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-  path: "./kubernetes/apps/home-automation/home-assistant/app"
+  path: ./kubernetes/apps/home-automation/home-assistant/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   postBuild:
     substitute:
-      APP: *app
+      APP: home-assistant
       GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/gatus/external
-  # dependsOn:
-  #   - name: cluster-apps-multus-config
-  #   - name: cluster-apps-external-secrets-stores
-  #   - name: cluster-apps-rook-ceph-cluster
-  #   - name: cluster-apps-crunchy-postgres-operator
-  #   - name: cluster-apps-external-secrets-cluster-secrets
+  - ../../../../components/volsync
+  - ../../../../components/gatus/external

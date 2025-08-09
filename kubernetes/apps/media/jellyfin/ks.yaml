@@ -1,33 +1,29 @@
 ---
-# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app jellyfin
-  namespace: flux-system
+  name: jellyfin
+  namespace: media
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
-  # dependsOn:
-  #   - name: external-secrets-bitwarden
+      app.kubernetes.io/name: jellyfin
   path: ./kubernetes/apps/media/jellyfin/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
-      # GATUS_URL_PATH: /web/index.html
+      APP: jellyfin
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/keda/nas-scaler
-    - ../../../../components/gatus/internal
+  - ../../../../components/volsync
+  - ../../../../components/keda/nas-scaler
+  - ../../../../components/gatus/internal

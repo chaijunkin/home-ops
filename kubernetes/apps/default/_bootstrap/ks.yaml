@@ -2,16 +2,16 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app volsync-smb-repository-default
-  namespace: flux-system
+  name: volsync-smb-repository-default
+  namespace: default
 spec:
   targetNamespace: default
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: volsync-smb-repository-default
   dependsOn:
-    - name: csi-driver-smb
-      namespace: flux-system
+  - name: csi-driver-smb
+    namespace: kube-system
   path: ./kubernetes/apps/default/_bootstrap/app
   prune: true
   sourceRef:

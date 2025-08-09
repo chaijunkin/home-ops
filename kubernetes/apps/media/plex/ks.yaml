@@ -1,120 +1,86 @@
 ---
-# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app plex
-  namespace: flux-system
+  name: plex
+  namespace: media
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: plex
   dependsOn:
-    - name: external-secrets-bitwarden
+  - name: external-secrets-bitwarden
+    namespace: kube-system
   path: ./kubernetes/apps/media/plex/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: plex
       GATUS_URL_PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/volsync
-    - ../../../../components/gatus/external
+  - ../../../../components/volsync
+  - ../../../../components/gatus/external
 ---
-# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app plex-auto-languages
-  namespace: flux-system
+  name: plex-auto-languages
+  namespace: media
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: plex-auto-languages
   dependsOn:
-    - name: plex
+  - name: plex
+    namespace: media
   path: ./kubernetes/apps/media/plex/plex-auto-languages
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
 ---
-# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app plex-image-cleanup
-  namespace: flux-system
+  name: plex-image-cleanup
+  namespace: media
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: plex-image-cleanup
   dependsOn:
-    - name: plex
-    - name: external-secrets-bitwarden
+  - name: plex
+    namespace: media
+  - name: external-secrets-bitwarden
+    namespace: kube-system
   path: ./kubernetes/apps/media/plex/plex-image-cleanup
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: plex-image-cleanup
       VOLSYNC_CAPACITY: 2Gi
-
-# ---
-# # yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: &app kometa
-#   namespace: flux-system
-# spec:
-#   targetNamespace: media
-#   commonMetadata:
-#     labels:
-#       app.kubernetes.io/name: *app
-#   dependsOn:
-#     - name: plex
-#     - name: tautulli
-#     - name: radarr
-#     - name: sonarr
-#     - name: external-secrets-bitwarden
-#   path: ./kubernetes/apps/media/plex/kometa
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: home-kubernetes
-#   wait: false # no flux ks dependents
-#   interval: 30m
-#   retryInterval: 1m
-#   timeout: 5m
-#   postBuild:
-#     substitute:
-#       APP: *app
-#       VOLSYNC_CAPACITY: 2Gi
-#   components:
-#     - ../../../../components/keda/nas-scaler
-#     - ../../../../components/gatus/external

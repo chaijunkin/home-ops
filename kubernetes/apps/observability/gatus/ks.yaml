@@ -1,28 +1,27 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app gatus
-  namespace: flux-system
+  name: gatus
+  namespace: observability
 spec:
   targetNamespace: observability
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: gatus
   path: ./kubernetes/apps/observability/gatus/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: gatus
       GATUS_SUBDOMAIN: status
   components:
-    - ../../../../components/gatus/external
+  - ../../../../components/gatus/external

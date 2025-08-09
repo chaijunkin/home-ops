@@ -1,38 +1,36 @@
 ---
-# yaml-language-server: $schema=https://lds-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app ytdl-sub
-  namespace: flux-system
+  name: ytdl-sub
+  namespace: downloads
 spec:
   targetNamespace: downloads
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: ytdl-sub
   dependsOn:
-    - name: downloads-ytdl-sub-config
+  - name: downloads-ytdl-sub-config
+    namespace: downloads
   path: ./kubernetes/apps/downloads/ytdl-sub/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false # no flux ks dependents
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
-  # components:
-  #   - ../../../../components/keda/nas-scaler
+      APP: ytdl-sub
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: downloads-ytdl-sub-config
-  namespace: flux-system
+  namespace: downloads
 spec:
   targetNamespace: downloads
   path: ./kubernetes/apps/downloads/ytdl-sub/config

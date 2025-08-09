@@ -1,15 +1,14 @@
 ---
-# yaml-language-server: $schema=https://homelab-schemas-epg.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app calibre-web-automated
-  namespace: flux-system
+  name: calibre-web-automated
+  namespace: media
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: calibre-web-automated
   path: ./kubernetes/apps/media/calibre-web-automated/app
   sourceRef:
     kind: GitRepository
@@ -17,15 +16,13 @@ spec:
     namespace: flux-system
   postBuild:
     substitute:
-      APP: *app
+      APP: calibre-web-automated
       GATUS_SUBDOMAIN: ebooks-auto
-      # APP_UID: "568"
-      # APP_GID: "568"
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false
   interval: 30m
   timeout: 5m
   components:
-    - ../../../../components/keda/nas-scaler
-    - ../../../../components/gatus/external
+  - ../../../../components/keda/nas-scaler
+  - ../../../../components/gatus/external

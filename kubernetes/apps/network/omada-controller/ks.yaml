@@ -1,15 +1,14 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app omada-controller
-  namespace: flux-system
+  name: omada-controller
+  namespace: network
 spec:
   targetNamespace: network
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: omada-controller
   path: ./kubernetes/apps/network/omada-controller/app
   prune: true
   sourceRef:
@@ -20,11 +19,5 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 10m
-  # postBuild:
   components:
-    - ../../../../components/gatus/internal  #   substitute:
-  #     APP: *app
-  #     VOLSYNC_CLAIM: omada-data-v2
-  #     VOLSYNC_CAPACITY: 10Gi
-  #     VOLSYNC_UID: "508"
-  #     VOLSYNC_GID: "508"
+  - ../../../../components/gatus/internal

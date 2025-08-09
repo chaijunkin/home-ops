@@ -1,15 +1,14 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app vector
-  namespace: flux-system
+  name: vector
+  namespace: observability
 spec:
   targetNamespace: observability
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: vector
   path: ./kubernetes/apps/observability/vector/app
   prune: true
   sourceRef:
