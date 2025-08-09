@@ -38,7 +38,7 @@ releases:
   #   needs: ['kube-system/spegel']
 
   # Deploy bitwarden secrets before external-secrets needs them
-  - name: bitwarden-prerequisites
+  - name: bitwarden
     namespace: kube-system
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
     version: 4.2.0
