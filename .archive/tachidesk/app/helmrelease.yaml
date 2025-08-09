@@ -101,7 +101,7 @@ spec:
                     gethomepage.dev/name: Tachidesk
                     gethomepage.dev/description: Tachidesk Service
                     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/tachidesk.png
-                    lbipam.cilium.io/ips: 10.10.30.57
+#                    lbipam.cilium.io/ips: 10.10.30.57
                   identifier: app
                   port: http
           - host: &codeserverHost "{{ .Release.Name }}-code.cloudjur.com"
@@ -109,7 +109,7 @@ spec:
               - path: /
                 service:
                   annotations:
-                    lbipam.cilium.io/ips: 10.10.30.57
+#                    lbipam.cilium.io/ips: 10.10.30.57
                   identifier: app
                   port: codeserver
     persistence:
@@ -128,7 +128,7 @@ spec:
         type: emptyDir
     service:
       annotations:
-        lbipam.cilium.io/ips: 10.10.30.57
+#        lbipam.cilium.io/ips: 10.10.30.57
       app:
         controller: tachidesk
         ports:

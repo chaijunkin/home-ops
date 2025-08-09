@@ -25,7 +25,7 @@ spec:
                 name: autobrr
                 port:
                   annotations:
-                    lbipam.cilium.io/ips: 10.10.30.47
+#                    lbipam.cilium.io/ips: 10.10.30.47
                   number: 80
   tls:
     - hosts:

@@ -730,7 +730,7 @@ class K8sResourceManager:
                     # Add annotations section if not present
                     if not has_annotations and not added_annotation:
                         modified_lines.append(' ' * (current_indent + 2) + 'annotations:')
-                        modified_lines.append(' ' * (current_indent + 4) + f'lbipam.cilium.io/ips: {ip}')
+#                        modified_lines.append(' ' * (current_indent + 4) + f'lbipam.cilium.io/ips: {ip}')
                         added_annotation = True
 
                 # If we find existing annotations in a service, add our annotation
@@ -738,7 +738,7 @@ class K8sResourceManager:
                       current_indent == service_indent + 4 and
                       not added_annotation):
                     modified_lines.append(line)
-                    modified_lines.append(' ' * (current_indent + 2) + f'lbipam.cilium.io/ips: {ip}')
+#                    modified_lines.append(' ' * (current_indent + 2) + f'lbipam.cilium.io/ips: {ip}')
                     added_annotation = True
 
                 # If we find existing type, check if it's LoadBalancer

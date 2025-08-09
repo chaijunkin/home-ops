@@ -74,7 +74,7 @@ spec:
         type: LoadBalancer
         controller: minio
         annotations:
-          lbipam.cilium.io/ips: 10.10.30.56
+#          lbipam.cilium.io/ips: 10.10.30.56
         ports:
           http:
             port: 9001
