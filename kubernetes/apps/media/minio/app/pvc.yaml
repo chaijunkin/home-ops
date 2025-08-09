@@ -16,7 +16,9 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-namespace: kube-system
   csi.storage.k8s.io/node-stage-secret-name: "smb-secret"
   csi.storage.k8s.io/node-stage-secret-namespace: kube-system
+reclaimPolicy: Retain
 volumeBindingMode: Immediate
+allowVolumeExpansion: true
 mountOptions:
   - dir_mode=0777
   - file_mode=0777

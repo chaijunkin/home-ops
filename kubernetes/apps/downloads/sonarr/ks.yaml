@@ -10,8 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: sonarr
   dependsOn:
-  - name: cloudnative-pg-cluster
-    namespace: database
   - name: external-secrets-bitwarden
     namespace: kube-system
   path: ./kubernetes/apps/downloads/sonarr/app
