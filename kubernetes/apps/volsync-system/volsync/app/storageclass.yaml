@@ -2,10 +2,12 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: smb
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: "enabled"
 provisioner: smb.csi.k8s.io
 parameters:
   # On Windows, "*.default.svc.cluster.local" could not be recognized by csi-proxy
-  source: //smb.${SECRET_DOMAIN}.com/services  
+  source: //smb.${SECRET_DOMAIN}.com/services
   # this is not usable due to kustomize patch from fluxcd cannot use default ${.metadata} in subdir
   subDir: Apps/Default
   # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory

@@ -3,6 +3,8 @@ apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
   name: smb-volsync
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: "enabled"
 provisioner: smb.csi.k8s.io
 parameters:
   # SMB source for volsync backups
