@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: ingress-nginx-certificates
   dependsOn:
   - name: cert-manager
+    namespace: cert-manager
   path: ./kubernetes/apps/network/ingress-nginx/certificates
   prune: true
   sourceRef:

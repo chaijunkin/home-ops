@@ -11,7 +11,9 @@ spec:
       app.kubernetes.io/name: bazarr
   dependsOn:
   - name: external-secrets-stores
+    namespace: kube-system
   - name: cloudnative-pg
+    namespace: database
   path: ./kubernetes/apps/downloads/bazarr/app
   prune: true
   sourceRef:

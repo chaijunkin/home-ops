@@ -2,17 +2,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app searxng
+  name: searxng
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/default/searxng/app
   prune: true
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: searxng
   dependsOn:
-    - name: external-secrets-bitwarden
-    - name: external-secrets-stores
+  - name: external-secrets-bitwarden
+    namespace: kube-system
+  - name: external-secrets-stores
+    namespace: kube-system
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -23,6 +25,6 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: searxng
   components:
-    - ../../../../components/gatus/internal
+  - ../../../../components/gatus/internal

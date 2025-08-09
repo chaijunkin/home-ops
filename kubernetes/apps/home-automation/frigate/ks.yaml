@@ -12,6 +12,7 @@ spec:
   dependsOn:
   - name: emqx-cluster
   - name: external-secrets-stores
+    namespace: kube-system
   - name: node-feature-discovery-rules
   path: ./kubernetes/apps/home-automation/frigate/app
   prune: true

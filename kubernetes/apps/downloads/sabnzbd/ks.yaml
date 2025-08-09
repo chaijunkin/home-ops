@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: sabnzbd
   dependsOn:
   - name: external-secrets-stores
+    namespace: kube-system
   path: ./kubernetes/apps/downloads/sabnzbd/app
   prune: true
   sourceRef:

@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app external-secrets
+  name: external-secrets
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/app
@@ -13,7 +13,7 @@ spec:
     namespace: flux-system
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: external-secrets
   wait: true
   interval: 30m
   retryInterval: 1m
@@ -22,7 +22,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app external-secrets-bitwarden
+  name: external-secrets-bitwarden
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/bitwarden
@@ -33,18 +33,19 @@ spec:
     namespace: flux-system
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: external-secrets-bitwarden
   wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   dependsOn:
-    - name: external-secrets
+  - name: external-secrets
+    namespace: kube-system
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app external-secrets-stores
+  name: external-secrets-stores
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/stores
@@ -55,19 +56,21 @@ spec:
     namespace: flux-system
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: external-secrets-stores
   wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   dependsOn:
-    - name: external-secrets
-    - name: external-secrets-bitwarden
+  - name: external-secrets
+    namespace: kube-system
+  - name: external-secrets-bitwarden
+    namespace: kube-system
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app external-secrets-cluster-secrets
+  name: external-secrets-cluster-secrets
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/kube-system/external-secrets/cluster-secrets
@@ -78,12 +81,15 @@ spec:
     namespace: flux-system
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: external-secrets-cluster-secrets
   wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
   dependsOn:
-    - name: external-secrets
-    - name: external-secrets-bitwarden
-    - name: external-secrets-stores
+  - name: external-secrets
+    namespace: kube-system
+  - name: external-secrets-bitwarden
+    namespace: kube-system
+  - name: external-secrets-stores
+    namespace: kube-system
