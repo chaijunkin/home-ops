@@ -1,10 +1,8 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: miniflux
-  namespace: default
 spec:
   interval: 30m
   chart:
@@ -59,7 +57,7 @@ spec:
               POLLING_FREQUENCY: "15"
               PORT: &port 80
               RUN_MIGRATIONS: "1"
-            envFrom: &envFrom
+            envFrom:
               - secretRef:
                   name: miniflux-secret
             resources:
