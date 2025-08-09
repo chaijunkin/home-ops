@@ -39,7 +39,7 @@ controllers:
             memory: 512Mi
 service:
   app:
-    controller: *app
+    controller: bitwarden
     ports:
       http:
         port: 8087
