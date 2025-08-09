@@ -48,6 +48,7 @@ spec:
     ingress:
       app:
         annotations:
+          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Excalidraw

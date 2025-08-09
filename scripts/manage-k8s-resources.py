@@ -421,7 +421,7 @@ class K8sResourceManager:
                     content = f.read()
 
                 has_external_dns = 'external-dns.alpha.kubernetes.io/target' in content
-                
+
                 if has_external_dns:
                     services_with_external_dns.append({
                         'name': app_name,
@@ -978,7 +978,7 @@ class K8sResourceManager:
                         modified_lines.append(current_line)
                         annotation_indent = len(current_line) - len(current_line.lstrip()) + 2
                         found_annotations = True
-                        
+
                         # Add external-dns annotations immediately after the annotations: line
                         for key, value in annotations.items():
                             modified_lines.append(' ' * annotation_indent + f'{key}: {value}')
