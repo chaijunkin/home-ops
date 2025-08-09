@@ -1,50 +1,50 @@
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 769
-        runAsGroup: 769
-        runAsNonRoot: true
-    controllers:
-      bitwarden:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/roxedus/bw
-              tag: 2025.7.0@sha256:5c4fff9587f420cf648181b0aee253f0260b127b36c801cbab46bb67f48053e3
-            envFrom:
-              - secretRef:
-                  name: bitwarden-cli
-            securityContext:
-              readOnlyRootFilesystem: true
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  periodSeconds: 120
-                  exec:
-                    command:
-                      - sh
-                      - -c
-                      - /healthcheck.sh
-                  timeoutSeconds: 5
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
-            resources:
-              requests:
-                memory: 256Mi
-                cpu: 100m
-              limits:
-                memory: 512Mi
-    service:
+defaultPodOptions:
+  securityContext:
+    runAsUser: 769
+    runAsGroup: 769
+    runAsNonRoot: true
+controllers:
+  bitwarden:
+    containers:
       app:
-        controller: *app
-        ports:
-          http:
-            port: 8087
-    persistence:
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp
+        image:
+          repository: ghcr.io/roxedus/bw
+          tag: 2025.7.0@sha256:5c4fff9587f420cf648181b0aee253f0260b127b36c801cbab46bb67f48053e3
+        envFrom:
+          - secretRef:
+              name: bitwarden-cli
+        securityContext:
+          readOnlyRootFilesystem: true
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              periodSeconds: 120
+              exec:
+                command:
+                  - sh
+                  - -c
+                  - /healthcheck.sh
+              timeoutSeconds: 5
+          readiness:
+            enabled: false
+          startup:
+            enabled: false
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 100m
+          limits:
+            memory: 512Mi
+service:
+  app:
+    controller: *app
+    ports:
+      http:
+        port: 8087
+persistence:
+  tmp:
+    type: emptyDir
+    globalMounts:
+      - path: /tmp
