@@ -55,6 +55,18 @@ releases:
           - ../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
           - --wait=true
         showlogs: true
+      # - # Deploy bitwarden
+      #   events: ['postsync']
+      #   command: kubectl
+      #   args:
+      #     - apply
+      #     - --namespace=kube-system
+      #     - --server-side
+      #     - --field-manager=kustomize-controller
+      #     - --kustomize
+      #     - ../kubernetes/apps/kube-system/external-secrets/bitwarden/
+      #     - --wait=true
+      #   showlogs: true
     needs: ['cert-manager/cert-manager']
 
   - name: flux-operator

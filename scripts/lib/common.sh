@@ -115,8 +115,16 @@ function render_template() {
         log error "File does not exist" "file=${file}"
     fi
 
-    if ! output=$(minijinja-cli "${file}" | op inject 2>/dev/null) || [[ -z "${output}" ]]; then
+    # First try to render with minijinja-cli
+    if ! output=$(minijinja-cli "${file}") || [[ -z "${output}" ]]; then
         log error "Failed to render config" "file=${file}"
+    fi
+
+    # If op command is available and output contains op:// references, inject secrets
+    if command -v op >/dev/null 2>&1 && echo "${output}" | grep -q "op://"; then
+        if ! output=$(echo "${output}" | op inject 2>/dev/null) || [[ -z "${output}" ]]; then
+            log error "Failed to inject secrets" "file=${file}"
+        fi
     fi
 
     echo "${output}"

@@ -18,31 +18,17 @@ spec:
         name: bjw-s
         namespace: flux-system
       interval: 5m
-  values:
-    image:
-      repository: ghcr.io/larivierec/bitwarden-cli
-      tag: 2024.4.1
-    envFrom:
-      - secretRef:
-          name: bitwarden-cli
-    service:
-      main:
-        ports:
-          http:
-            port: 8087
-    probes:
-      liveness:
-        enabled: true
-        custom: true
-        spec:
-          exec:
-            command:  ["sh", "-c", "curl -X POST -s http://127.0.0.1:8087/sync | jq -e '.success == true'"]
-          timeoutSeconds: 5
-      readiness:
-        enabled: false
-    resources:
-      requests:
-        memory: 1024Mi
-        cpu: 200m
-      limits:
-        memory: 1024Mi
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  valuesFrom:
+  - kind: ConfigMap
+    name: bitwarden-values

@@ -196,7 +196,7 @@ function main() {
     # Apply resources and Helm releases
     wait_for_nodes
     apply_crds
-    # apply_resources
+    apply_resources
     sync_helm_releases
 
     log info "Congrats! The cluster is bootstrapped and Flux is syncing the Git repository"
