@@ -1,12 +1,11 @@
+---
 apiVersion: v1
 kind: Secret
 metadata:
-    name: cluster-secrets
-    namespace: flux-system
+    name: cloudflare-tunnel-id-secret
+    namespace: network
 stringData:
-    SECRET_DOMAIN: ENC[AES256_GCM,data:Y0Y+R+7M4crRzwIC,iv:74kqituQPOFlE326J+lUCUZiJ9FyMHVspOEiAoFFzAU=,tag:DesCnizxpOEc0Vc1EDwWXg==,type:str]
-    SECRET_ACME_EMAIL: ENC[AES256_GCM,data:Dci/rdkUVtqFZSt48Yhje8YkNkvDdg==,iv:m4NpkfxWyCn8whIWJuqfu6n46zJ6TJY/P7JefkQrJts=,tag:ElqaP4DpBTeCopnFmke0bw==,type:str]
-    SECRET_CLOUDFLARE_TUNNEL_ID: ENC[AES256_GCM,data:iE5/8iD/HL5EPU6MdHtLa45AkFCSZtel3mAsDUVetFo1aUpp,iv:t19Z4xAf7+6F7Yt+vFWmQvAue6OoLXo07vmlwbFv8Cc=,tag:Q4NV3UHYz0PhrJ2P2grelA==,type:str]
+    CLOUDFLARE_TUNNEL_ID: ENC[AES256_GCM,data:UBZMvdEeilZek3YO+zbRlB9NlA+Rl/jRggMfnAci+6trtcae,iv:fBcpxkohgnBkwIEFUE3wxlRK41Ok43c2/l2FkYBe7AI=,tag:hDFzbiZFd0VwlFWNWg2Y3Q==,type:str]
 sops:
     age:
         - recipient: age1apaw0x3ja8ne4w08re4elvgt8wjhadpefelxjzhshf83834nhfzs65j7zp
