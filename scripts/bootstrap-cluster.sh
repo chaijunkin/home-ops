@@ -195,7 +195,7 @@ function main() {
 
     # Apply resources and Helm releases
     wait_for_nodes
-    apply_crds
+    # apply_crds
     apply_resources
     sync_helm_releases
 
