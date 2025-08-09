@@ -74,7 +74,7 @@ releases:
           - ../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
           - --wait=true
         showlogs: true
-    needs: ['kube-system/bitwarden-prerequisites']
+    needs: ['kube-system/bitwarden']
 
   - name: flux-operator
     namespace: flux-system
