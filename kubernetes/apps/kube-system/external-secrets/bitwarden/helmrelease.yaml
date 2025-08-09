@@ -24,4 +24,3 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: bitwarden-values
-      namespace: kube-system
