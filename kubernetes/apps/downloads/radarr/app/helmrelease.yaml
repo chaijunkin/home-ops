@@ -50,7 +50,9 @@ spec:
               RADARR__INSTANCE_NAME: Radarr
               RADARR__PORT: &port 80
               RADARR__LOG_LEVEL: info
-            envFrom: *envFrom
+            envFrom:
+            - secretRef:
+                name: radarr-secret
             probes:
               liveness: &probes
                 enabled: true

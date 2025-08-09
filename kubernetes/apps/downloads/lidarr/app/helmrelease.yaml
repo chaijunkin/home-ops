@@ -50,7 +50,9 @@ spec:
               LIDARR__INSTANCE_NAME: Lidarr
               LIDARR__PORT: &port 80
               LIDARR__LOG_LEVEL: info
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: lidarr-secret
             probes:
               liveness: &probes
                 enabled: true
