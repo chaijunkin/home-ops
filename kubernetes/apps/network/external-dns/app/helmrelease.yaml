@@ -43,7 +43,6 @@ spec:
       - --crd-source-kind=DNSEndpoint
       - --ingress-class=external
       - --zone-id-filter=$(CF_ZONE_ID)
-      - --policy=upsert-only
     policy: sync
     sources: ["crd", "ingress"]
     txtPrefix: k8s.
