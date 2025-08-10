@@ -59,10 +59,10 @@ spec:
               # runAsUser: 1004
               # runAsGroup: 1004
               # fsGroup: 1004
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-              runAsNonRoot: true
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities: { drop: ["ALL"] }
+              # runAsNonRoot: true
               runAsUser: 1004
               runAsGroup: 1004
               fsGroup: 1004
