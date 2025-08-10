@@ -28,7 +28,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/chaijunkin/qbittorrent
+              repository: ghcr.io/home-operations/qbittorrent
               tag: 5.0.0
             env:
               TZ: Asia/Kuala_Lumpur
@@ -71,9 +71,9 @@ spec:
               limits:
                 memory: 18Gi
             securityContext:
-              runAsUser: 1004
-              runAsGroup: 1004
-              fsGroup: 1004
+              runAsUser: 1002
+              runAsGroup: 1002
+              fsGroup: 1002
               fsGroupChangePolicy: OnRootMismatch
           gluetun:
             image:
