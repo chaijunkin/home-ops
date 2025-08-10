@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.1.2@sha256:9dd0164cc23e9c937e0af27fd7c3f627d1df30c182cf62ed34d3f129c55dc0e8
+              repository: ghcr.io/chaijunkin/qbittorrent
+              tag: 5.1.2
             env:
               TZ: Asia/Kuala_Lumpur
               QBT_WEBUI_PORT: &port 80
@@ -56,7 +56,10 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 10
-            # securityContext:
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
             #   allowPrivilegeEscalation: false
             #   readOnlyRootFilesystem: true
             #   capabilities: { drop: ["ALL"] }
