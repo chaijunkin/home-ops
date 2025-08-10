@@ -101,10 +101,7 @@ tasks:
     deps: ["deps"]
     cmd: "{{.VIRTUAL_ENV}}/bin/ansible-lint --config-file {{.ANSIBLE_LINT_FILE}} {{.ANSIBLE_DIR}}/**/*.yaml"
     preconditions:
-      - {
-          msg: "Missing Ansible lint file",
-          sh: "test -f {{.ANSIBLE_LINT_FILE}}",
-        }
+      - {msg: "Missing Ansible lint file", sh: "test -f {{.ANSIBLE_LINT_FILE}}"}
 
   .reset:
     internal: true

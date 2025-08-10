@@ -47,7 +47,7 @@ sinks:
     inputs: ["journald_source"]
     type: loki
     endpoint: http://loki-gateway.observability.svc.cluster.local
-    encoding: { codec: json }
+    encoding: {codec: json}
     out_of_order_action: accept
     remove_label_fields: true
     remove_timestamp: true
@@ -58,7 +58,7 @@ sinks:
     inputs: ["kubernetes_remap"]
     type: loki
     endpoint: http://loki-gateway.observability.svc.cluster.local
-    encoding: { codec: json }
+    encoding: {codec: json}
     out_of_order_action: accept
     remove_label_fields: true
     remove_timestamp: true
@@ -72,7 +72,7 @@ sinks:
     inputs:
       - accesspoint_syslog
     endpoint: http://loki-gateway.observability.svc.cluster.local
-    encoding: { codec: json }
+    encoding: {codec: json}
     # out_of_order_action: rewrite_timestamp
     labels:
       # hostname: "{{ host }}"

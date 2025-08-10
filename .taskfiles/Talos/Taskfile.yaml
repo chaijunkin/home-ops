@@ -80,7 +80,7 @@ tasks:
       - helmfile --file ./apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
       - until kubectl --kubeconfig {{.KUBECONFIG_FILE}} wait --for=condition=Ready nodes --all --timeout=600s; do sleep 10; done
     preconditions:
-      - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
+      - {msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}"}
 
   upgrade-talos:
     desc: Upgrade talos on a node

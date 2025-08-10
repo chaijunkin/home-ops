@@ -9,7 +9,7 @@ tasks:
   resources:
     desc: Gather common resources in your cluster, useful when asking for support
     cmds:
-      - for: { var: resource }
+      - for: {var: resource}
         cmd: kubectl get {{.ITEM}} {{.CLI_ARGS | default "-A"}}
     vars:
       resource: >-

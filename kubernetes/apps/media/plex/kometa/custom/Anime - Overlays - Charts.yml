@@ -8,7 +8,7 @@ templates:
     smart_label: random
 collections:
   Plex Popular:
-    template: { name: Chart, num: 1 }
+    template: {name: Chart, num: 1}
     tautulli_popular:
       list_days: 30
       list_size: 20
@@ -19,12 +19,12 @@ collections:
       list_buffer: 20
     summary: Shows Popular on Plex
   Popular:
-    template: { name: Chart, num: 3 }
+    template: {name: Chart, num: 3}
     anidb_popular: 30
     anilist_popular: 30
     summary: Popular Anime across the internet
   Top Rated:
-    template: { name: Chart, num: 4 }
+    template: {name: Chart, num: 4}
     anilist_top_rated: 50
     summary: Top Rated Anime across the internet
   Current Anime Season:

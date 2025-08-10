@@ -13,8 +13,8 @@ spec:
         addresses: ["LoadBalancerIP"]
       selector:
         matchExpressions:
-          - { key: io.cilium/bgp, operator: In, values: ["true"] }
-          - { key: io.cilium/internal, operator: NotIn, values: ["true"] }
+          - {key: io.cilium/bgp, operator: In, values: ["true"]}
+          - {key: io.cilium/internal, operator: NotIn, values: ["true"]}
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgppeerconfig_v2.json
 apiVersion: cilium.io/v2

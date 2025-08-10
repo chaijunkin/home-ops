@@ -10,6 +10,7 @@ resources:
   # - ./dsmr-reader/ks.yaml
   # - ./esphome/ks.yaml
   # - ./frigate/ks.yaml
+  - ./go2rtc/ks.yaml
   - ./home-assistant/ks.yaml
   # - ./mosquitto/ks.yaml
   # - ./scrypted/ks.yaml

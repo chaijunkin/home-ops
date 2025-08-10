@@ -26,7 +26,7 @@ tasks:
       Args:
         None required - syncs all ExternalSecrets in all namespaces
     cmds:
-      - for: { var: secrets, split: "" }
+      - for: {var: secrets, split: ""}
         task: sync
         vars:
           ns: '{{$a := split "|" .ITEM}}{{$a._0}}'

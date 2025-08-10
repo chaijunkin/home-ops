@@ -15,7 +15,7 @@ tasks:
   encrypt:
     desc: Encrypt all Kubernetes SOPS secrets that are not already encrypted
     cmds:
-      - for: { var: file }
+      - for: {var: file}
         task: .encrypt-file
         vars:
           file: "{{.ITEM}}"
@@ -32,8 +32,8 @@ tasks:
     requires:
       vars: ["file"]
     preconditions:
-      - { msg: "Missing Sops config file", sh: "test -f {{.SOPS_CONFIG_FILE}}" }
-      - { msg: "Missing Sops Age key file", sh: "test -f {{.AGE_FILE}}" }
+      - {msg: "Missing Sops config file", sh: "test -f {{.SOPS_CONFIG_FILE}}"}
+      - {msg: "Missing Sops Age key file", sh: "test -f {{.AGE_FILE}}"}
 
   .reset:
     internal: true

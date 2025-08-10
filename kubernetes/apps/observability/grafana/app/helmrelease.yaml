@@ -199,8 +199,8 @@ spec:
       datasources.yaml:
         apiVersion: 1
         deleteDatasources:
-          - { name: Alertmanager, orgId: 1 }
-          - { name: Prometheus, orgId: 1 }
+          - {name: Alertmanager, orgId: 1}
+          - {name: Prometheus, orgId: 1}
         datasources:
           - name: Prometheus
             type: prometheus
@@ -332,7 +332,7 @@ spec:
           gnetId: 22604
           revision: 2
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         kubernetes-volumes:
           # renovate: depName="K8s / Storage / Volumes / Cluster"
           gnetId: 11454
@@ -406,13 +406,13 @@ spec:
           gnetId: 18226
           revision: 9
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
           revision: 6
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
@@ -423,13 +423,13 @@ spec:
           gnetId: 21113
           revision: 1
           datasource:
-            - { name: DS_PROMETHEUS-K0, value: Prometheus }
+            - {name: DS_PROMETHEUS-K0, value: Prometheus}
         speedtest-exporter-hub:
           # renovate: depName="Speedtest Exporter"
           gnetId: 16541
           revision: 1
           datasource:
-            - { name: datasource, value: Prometheus }
+            - {name: datasource, value: Prometheus}
         # unifi-network-sites:
         #   # renovate: depName="UniFi-Poller: Network Sites - Prometheus"
         #   gnetId: 11311
@@ -458,8 +458,8 @@ spec:
           gnetId: 21356
           revision: 3
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
-            - { name: VAR_REPLICATIONDESTNAME, value: ".*-bootstrap" }
+            - {name: DS_PROMETHEUS, value: Prometheus}
+            - {name: VAR_REPLICATIONDESTNAME, value: ".*-bootstrap"}
         # kasa:
         #   # renovate: depName="Kasa"
         #   gnetId: 10957
@@ -471,7 +471,7 @@ spec:
           gnetId: 13502
           revision: 26
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         spegel:
           # renovate: depName="Spegel"
           gnetId: 18089

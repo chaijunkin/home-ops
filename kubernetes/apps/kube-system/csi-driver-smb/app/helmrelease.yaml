@@ -188,4 +188,4 @@ spec:
     ## Security context give the opportunity to run container as nonroot by setting a securityContext
     ## by example :
     ## securityContext: { runAsUser: 1001 }
-    securityContext: { seccompProfile: { type: RuntimeDefault } }
+    securityContext: {seccompProfile: {type: RuntimeDefault}}

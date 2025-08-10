@@ -36,7 +36,7 @@ tasks:
       helper:
         sh: "command -v yay || command -v paru"
     preconditions:
-      - { msg: "Missing Archfile", sh: "test -f {{.ARCHFILE}}" }
+      - {msg: "Missing Archfile", sh: "test -f {{.ARCHFILE}}"}
 
   generic-linux:
     desc: Install CLI tools into the projects .bin directory using curl

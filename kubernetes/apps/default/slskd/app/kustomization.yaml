@@ -6,7 +6,6 @@ resources:
   - ./externalsecret.yaml
   - ./pvc.yaml
   - ./helmrelease.yaml
-  # - ./ingress.yaml
 configMapGenerator:
   - name: slskd-configmap
     files:

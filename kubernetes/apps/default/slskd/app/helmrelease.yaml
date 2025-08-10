@@ -52,7 +52,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -76,7 +76,7 @@ spec:
       soulseek:
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 192.168.42.127
+          lbipam.cilium.io/ips: 10.10.30.35
         ports:
           soulseek-tcp:
             port: *soulseekPort
@@ -92,6 +92,28 @@ spec:
     #       - backendRefs:
     #           - identifier: app
     #             port: *port
+    ingress:
+      app:
+        enabled: true
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: CyberChef
+          gethomepage.dev/description: Cyber operation tools
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
+        className: internal
+        hosts:
+          - host: &host "cyberchef.cloudjur.com"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
@@ -104,9 +126,7 @@ spec:
             subPath: slskd.yml
             readOnly: true
       media:
-        type: nfs
-        server: expanse.internal
-        path: /mnt/eros/Media
+        existingClaim: pvc-smb-media
         globalMounts:
           - path: /media/Downloads/soulseek
             subPath: Downloads/soulseek
