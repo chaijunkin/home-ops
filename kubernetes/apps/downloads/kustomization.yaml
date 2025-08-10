@@ -20,10 +20,9 @@ resources:
   - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./radarr/ks.yaml
-  # TODO migrate to newest app-template
   - ./readarr/ks.yaml
+  - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
-
   - ./sonarr/ks.yaml
   # - ./tqm/ks.yaml
   - ./ytdl-sub/ks.yaml
