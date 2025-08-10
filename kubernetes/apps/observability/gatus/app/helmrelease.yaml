@@ -60,7 +60,7 @@ spec:
             image:
               # TODO: move to semver once available
               repository: ghcr.io/twin/gatus
-              tag: v5.12.1
+              tag: v5.21.0
             env:
               TZ: Asia/Kuala_Lumpur
               GATUS_CONFIG_PATH: /config
