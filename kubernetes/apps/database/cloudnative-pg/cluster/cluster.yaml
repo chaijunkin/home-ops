@@ -5,6 +5,7 @@ metadata:
   name: postgres
   namespace: database
   annotations:
+    fluxcd.io/ignore: "true"
     kyverno.io/ignore: "true"
 spec:
   instances: 1
