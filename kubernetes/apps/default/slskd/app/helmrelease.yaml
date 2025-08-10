@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -35,8 +34,8 @@ spec:
               SLSKD_NO_HTTPS: true
               SLSKD_SLSK_LISTEN_PORT: &soulseekPort 50300
             envFrom:
-              - secretRef:
-                  name: "{{ .Release.Name }}-secret"
+            - secretRef:
+                name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -53,11 +52,10 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
-                memory: 128Mi
               limits:
                 memory: 1Gi
     defaultPodOptions:
@@ -101,15 +99,15 @@ spec:
         name: "{{ .Release.Name }}-configmap"
         defaultMode: 0775
         globalMounts:
-          - path: /config/slskd.yml
-            subPath: slskd.yml
-            readOnly: true
+        - path: /config/slskd.yml
+          subPath: slskd.yml
+          readOnly: true
       media:
         type: nfs
         server: expanse.internal
         path: /mnt/eros/Media
         globalMounts:
-          - path: /media/Downloads/soulseek
-            subPath: Downloads/soulseek
+        - path: /media/Downloads/soulseek
+          subPath: Downloads/soulseek
       tmp:
         type: emptyDir

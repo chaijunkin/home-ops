@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -29,9 +28,9 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
               pullPolicy: IfNotPresent
-            envFrom: &envFrom
-              - secretRef:
-                  name: open-webui-secret
+            envFrom:
+            - secretRef:
+                name: open-webui-secret
         containers:
           app:
             image:
@@ -39,8 +38,8 @@ spec:
               tag: v0.6.18@sha256:ff87dd7605720f33411d87ed5550357b665cec4880378176f2f95bfe751f5e32
             env:
               # Image Generation
-              ENABLE_OPENAI_API: False
-              ENABLE_OLLAMA_API: True
+              ENABLE_OPENAI_API: false
+              ENABLE_OLLAMA_API: true
               # ENABLE_IMAGE_GENERATION: True
               # IMAGE_GENERATION_ENGINE: automatic1111
               # IMAGE_GENERATION_MODEL: dreamshaper_8
@@ -61,11 +60,11 @@ spec:
               WEBSOCKET_MANAGER: "redis"
               WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
             envFrom:
-              - secretRef:
-                  name: "{{ .Release.Name }}-secret"
+            - secretRef:
+                name: "{{ .Release.Name }}-secret"
             resources:
               requests:
-                cpu: 500m
+                cpu: 10m
               limits:
                 memory: 2Gi
     service:
@@ -89,15 +88,15 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
 
         hosts:
-          - host: &host "chat.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        - host: &host "chat.cloudjur.com"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     # route:
     #   app:
     #     hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.jory.dev"]
@@ -110,4 +109,4 @@ spec:
         enabled: true
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
-          - path: /app/backend/data
+        - path: /app/backend/data

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -37,8 +36,8 @@ spec:
               RADARR__UPDATE__BRANCH: develop
               TZ: Asia/Kuala_Lumpur
             envFrom:
-              - secretRef:
-                  name: "{{ .Release.Name }}-secret"
+            - secretRef:
+                name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -55,10 +54,10 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
-                cpu: 100m
+                cpu: 10m
               limits:
                 memory: 4Gi
     defaultPodOptions:
@@ -91,15 +90,15 @@ spec:
           gethomepage.dev/widget.url: http://radarr.downloads
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}"
         hosts:
-          - host: &host "radarr.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        - host: &host "radarr.cloudjur.com"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     persistence:
       config:
         enabled: true

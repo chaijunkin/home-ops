@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -23,10 +22,10 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: intel-device-plugin-gpu
-      namespace: kube-system
-    - name: volsync
-      namespace: volsync-system
+  - name: intel-device-plugin-gpu
+    namespace: kube-system
+  - name: volsync
+    namespace: volsync-system
   values:
     controllers:
       frigate:
@@ -42,8 +41,8 @@ spec:
               TZ: Asia/Kuala_Lumpur
               LIBVA_DRIVER_NAME: i965
             envFrom:
-              - secretRef:
-                  name: frigate-secret
+            - secretRef:
+                name: frigate-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -61,7 +60,7 @@ spec:
               privileged: true
             resources:
               requests:
-                cpu: 100m
+                cpu: 10m
               limits:
                 gpu.intel.com/i915: "1"
                 memory: 8Gi
@@ -90,35 +89,35 @@ spec:
       app:
         className: internal
         hosts:
-          - host: "{{ .Release.Name }}.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        - host: "{{ .Release.Name }}.cloudjur.com"
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
     persistence:
       config:
         existingClaim: frigate
         globalMounts:
-          - path: /data
+        - path: /data
       config-file:
         type: configMap
         name: frigate-configmap
         globalMounts:
-          - path: /config/config.yml
-            subPath: config.yml
+        - path: /config/config.yml
+          subPath: config.yml
             # readOnly: true  ## frigate app is not happy due to using Home Assistant similar config method
       cache:
         type: emptyDir
         medium: Memory
         sizeLimit: 4Gi
         globalMounts:
-          - path: /dev/shm
+        - path: /dev/shm
       usb:
         type: hostPath
         hostPath: /dev/bus/usb
         hostPathType: Directory
         globalMounts:
-          - path: /dev/bus/usb
+        - path: /dev/bus/usb
       media:
         existingClaim: pvc-smb-frigate

@@ -48,13 +48,13 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/privatebin.png
         ingressClassName: internal
         hosts:
-          - host: &host "privatebin.cloudjur.com"
-            paths:
-              - path: /
-                pathType: Prefix
+        - host: &host "privatebin.cloudjur.com"
+          paths:
+          - path: /
+            pathType: Prefix
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     podAnnotations:
       configmap.reloader.stakater.com/reload: privatebin-settings
     persistence:
@@ -64,7 +64,6 @@ spec:
         existingClaim: privatebin-test
     resources:
       requests:
-        cpu: 100m
-        memory: 100Mi
+        cpu: 10m
       limits:
         memory: 500Mi

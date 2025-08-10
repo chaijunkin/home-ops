@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -32,27 +31,27 @@ spec:
             image:
               repository: ghcr.io/estrellaxd/auto_bangumi
               tag: 3.1.18
-            envFrom: &envFrom
-              - secretRef:
-                  name: autobangumi-secret
+            envFrom:
+            - secretRef:
+                name: autobangumi-secret
             env:
               TZ: &TZ Asia/Kuala_Lumpur
               AB_INTERVAL_TIME: 7200
               AB_RENAME_FREQ: 20
-              AB_GROUP_TAG: True
+              AB_GROUP_TAG: true
               # AB_NOT_CONTAIN: 1080|Traditional|CHT|JPTC|Traditional Japanese|\d+-\d+|BIG5
               AB_DOWNLOAD_PATH: /media/Anime
-              AB_DEBUG_MODE: False
-              AB_EP_COMPLETE: False
+              AB_DEBUG_MODE: false
+              AB_EP_COMPLETE: false
               AB_WEBUI_PORT: 80
-              AB_RENAME: True
-              AB_ENABLE_TMDB: True
+              AB_RENAME: true
+              AB_ENABLE_TMDB: true
               # AB_LANGUAGE: zh
               AB_DOWNLOADER_HOST: qbittorrent.downloads:8080
               AB_METHOD: pn
               AB_NOT_CONTAIN: 720
               AB_RSS: ${RSS}
-              AB_SEASON_ONE: True
+              AB_SEASON_ONE: true
             # probes:
             #   liveness: &probes
             #     enabled: true
@@ -69,7 +68,7 @@ spec:
               limits:
                 memory: 1Gi
               requests:
-                cpu: 25m
+                cpu: 10m
         #     securityContext:
         #       allowPrivilegeEscalation: false
         #       capabilities: { drop: ["ALL"] }
@@ -94,21 +93,21 @@ spec:
           gethomepage.dev/description: Autobangumi Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobangumi.png
         hosts:
-          - host: &host bangumi.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        - host: &host bangumi.cloudjur.com
+          paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host
     persistence:
       config:
         enabled: true
         existingClaim: *app
         globalMounts:
-          - path: /app/config
+        - path: /app/config
       media:
         enabled: true
         existingClaim: pvc-smb-media

@@ -47,13 +47,13 @@ spec:
               repository: ghcr.io/jmbannon/ytdl-sub
               tag: 2024.06.03.post1
             command:
-              - bash
-              - -c
-              - |
-                set -e
-                ytdl-sub --log-level=debug \
-                        --config=/config/config.yml \
-                        sub /config/subscriptions.yml
+            - bash
+            - -c
+            - |
+              set -e
+              ytdl-sub --log-level=debug \
+                      --config=/config/config.yml \
+                      sub /config/subscriptions.yml
             # securityContext:
             #   allowPrivilegeEscalation: false
             #   capabilities:
@@ -66,8 +66,7 @@ spec:
               MEDIA_FOLDER: /media/Music
             resources:
               requests:
-                cpu: 100m
-                memory: 128Mi
+                cpu: 10m
               limits:
                 memory: 2000Mi
     persistence:
@@ -76,12 +75,12 @@ spec:
         type: configMap
         # defaultMode: 0755
         globalMounts:
-          - path: /config
-            readOnly: true
+        - path: /config
+          readOnly: true
       tmp:
         type: emptyDir
         globalMounts:
-          - path: /tmp/ytdl-sub
+        - path: /tmp/ytdl-sub
       media:
         enabled: true
         existingClaim: pvc-smb-media

@@ -33,7 +33,6 @@ spec:
               pullPolicy: IfNotPresent
             resources:
               requests:
-                memory: 10Mi
                 cpu: 10m
               limits:
                 memory: 50Mi
@@ -60,13 +59,13 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/png/it-tools.png
         ingressClassName: internal
         hosts:
-          - host: &host "it-tools.cloudjur.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: http
+        - host: &host "it-tools.cloudjur.com"
+          paths:
+          - path: /
+            pathType: Prefix
+            service:
+              name: main
+              port: http
         tls:
-          - hosts:
-              - *host
+        - hosts:
+          - *host

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -39,8 +38,8 @@ spec:
                 sabnzbd.cloudjur.com
               TZ: Asia/Kuala_Lumpur
             envFrom:
-              - secretRef:
-                  name: "{{ .Release.Name }}-secret"
+            - secretRef:
+                name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -57,10 +56,10 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
-                cpu: 100m
+                cpu: 10m
               limits:
                 memory: 12Gi
     defaultPodOptions:
@@ -101,13 +100,13 @@ spec:
         name: "{{ .Release.Name }}-scripts"
         defaultMode: 0775
         globalMounts:
-          - readOnly: true
+        - readOnly: true
       tmpfs:
         type: emptyDir
         advancedMounts:
           sabnzbd:
             app:
-              - path: /config/logs
-                subPath: logs
-              - path: /tmp
-                subPath: tmp
+            - path: /config/logs
+              subPath: logs
+            - path: /tmp
+              subPath: tmp

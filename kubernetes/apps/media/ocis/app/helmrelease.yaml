@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -11,8 +10,8 @@ spec:
     name: app-template
     namespace: flux-system
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+  - name: rook-ceph-cluster
+    namespace: rook-ceph
   values:
     controllers:
       ocis:
@@ -26,18 +25,18 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups:
-              - 65542 # gladius:external-services
+            - 65542   # gladius:external-services
         initContainers:
           init-config:
             image:
               repository: docker.io/owncloud/ocis
               tag: 7.2.0
             command:
-              - /bin/sh
-              - -c
+            - /bin/sh
+            - -c
             args:
-              - |
-                if [ ! -f /etc/ocis/ocis.yaml ]; then ocis init; else exit 0; fi
+            - |
+              if [ ! -f /etc/ocis/ocis.yaml ]; then ocis init; else exit 0; fi
             env:
               OCIS_INSECURE: true
         containers:
@@ -53,8 +52,8 @@ spec:
               OCIS_URL: https://files.bjw-s.dev
               PROXY_TLS: false
             envFrom:
-              - secretRef:
-                  name: ocis-secret
+            - secretRef:
+                name: ocis-secret
             probes:
               liveness:
                 enabled: true
@@ -62,8 +61,7 @@ spec:
                 enabled: true
             resources:
               requests:
-                cpu: 50m
-                memory: 128Mi
+                cpu: 10m
               limits:
                 memory: 1024Mi
             securityContext:
@@ -71,7 +69,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities:
                 drop:
-                  - ALL
+                - ALL
     service:
       app:
         ports:
@@ -82,21 +80,21 @@ spec:
         type: configMap
         name: ocis
         globalMounts:
-          - path: /etc/ocis/web.yaml
-            subPath: web.yaml
-            readOnly: true
+        - path: /etc/ocis/web.yaml
+          subPath: web.yaml
+          readOnly: true
       data:
         existingClaim: ocis-data
         globalMounts:
-          - path: /var/lib/ocis
-            subPath: data
-          - path: /etc/ocis
-            subPath: config
+        - path: /var/lib/ocis
+          subPath: data
+        - path: /etc/ocis
+          subPath: config
       tmpfs:
         type: emptyDir
         globalMounts:
-          - path: /tmp
-            subPath: tmp
+        - path: /tmp
+          subPath: tmp
     # route:
     #   app:
     #     hostnames:

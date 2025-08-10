@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -35,11 +34,10 @@ spec:
               TZ: Asia/Kuala_Lumpur
               PLEX_URL: "http://plex.media.svc.cluster.local:32400"
             envFrom:
-              - secretRef:
-                  name: plex-secret
+            - secretRef:
+                name: plex-secret
             resources:
               requests:
-                cpu: 150m
-                memory: 200M
+                cpu: 10m
               limits:
                 memory: 2Gi
