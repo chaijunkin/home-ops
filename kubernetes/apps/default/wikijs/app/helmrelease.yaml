@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: wikijs
+  name: &app wikijs
 spec:
   interval: 15m
   chartRef:
@@ -49,7 +49,7 @@ spec:
     service:
       app:
         type: LoadBalancer
-        controller: app
+        controller: *app
         annotations:
           lbipam.cilium.io/ips: 10.10.30.68
         ports:
