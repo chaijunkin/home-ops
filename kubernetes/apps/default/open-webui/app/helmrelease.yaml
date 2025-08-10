@@ -81,7 +81,7 @@ spec:
         enabled: true
         className: "external"
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
+          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Open WebUI
