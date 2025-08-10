@@ -31,7 +31,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/qbittorrent
+              repository: ghcr.io/chaijunkin/qbittorrent
               tag: 5.1.2
             env:
               TZ: Asia/Kuala_Lumpur
@@ -63,10 +63,10 @@ spec:
               # readOnlyRootFilesystem: true
               # capabilities: { drop: ["ALL"] }
               # runAsNonRoot: true
-              runAsUser: 0
-              runAsGroup: 0
-              fsGroup: 0
-              # fsGroupChangePolicy: OnRootMismatch
+              runAsUser: 1004
+              runAsGroup: 1004
+              fsGroup: 1004
+              fsGroupChangePolicy: OnRootMismatch
             resources:
               requests:
                 cpu: 10m

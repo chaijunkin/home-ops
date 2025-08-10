@@ -5,21 +5,15 @@ metadata:
   name: &app autobangumi
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.3.2
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -43,7 +37,7 @@ spec:
               AB_DOWNLOAD_PATH: /media/Anime
               AB_DEBUG_MODE: false
               AB_EP_COMPLETE: false
-              AB_WEBUI_PORT: 80
+              AB_WEBUI_PORT: 7892
               AB_RENAME: true
               AB_ENABLE_TMDB: true
               # AB_LANGUAGE: zh
@@ -82,6 +76,16 @@ spec:
                 #     runAsUser: 568
                 #     seccompProfile: { type: RuntimeDefault }
                 memory: 50Mi
+    service:
+      app:
+        type: LoadBalancer
+        controller: autobangumi
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.52
+        ports:
+          http:
+            primary: true
+            port: 7892
     ingress:
       app:
         enabled: true
@@ -94,7 +98,7 @@ spec:
           gethomepage.dev/description: Autobangumi Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobangumi.png
         hosts:
-          - host: &host bangumi.cloudjur.com
+          - host: &host autobangumi.cloudjur.com
             paths:
               - path: /
                 service:
@@ -114,13 +118,3 @@ spec:
         existingClaim: pvc-smb-media
       tmp:
         type: emptyDir
-    service:
-      app:
-        type: LoadBalancer
-        controller: autobangumi
-        annotations:
-          lbipam.cilium.io/ips: 10.10.30.52
-        ports:
-          http:
-            primary: true
-            port: 80
