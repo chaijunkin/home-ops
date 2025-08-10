@@ -10,8 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: lidarr
   dependsOn:
-  - name: cloudnative-pg
-    namespace: database
+
   - name: external-secrets-stores
     namespace: kube-system
   path: ./kubernetes/apps/downloads/lidarr/app
