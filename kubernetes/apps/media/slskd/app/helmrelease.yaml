@@ -98,13 +98,13 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Utility Service
-          gethomepage.dev/name: CyberChef
-          gethomepage.dev/description: Cyber operation tools
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Slskd
+          gethomepage.dev/description: File Sharing Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
         className: internal
         hosts:
-          - host: &host "cyberchef.cloudjur.com"
+          - host: &host "slskd.cloudjur.com"
             paths:
               - path: /
                 pathType: Prefix
