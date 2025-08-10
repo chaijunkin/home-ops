@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -74,7 +75,7 @@ spec:
         #     fsGroup: 0
         #     fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      app:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.40
@@ -82,7 +83,7 @@ spec:
           http:
             port: *port
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations:
@@ -94,13 +95,13 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/radarr.png
           gethomepage.dev/widget.type: radarr
           gethomepage.dev/widget.url: http://radarr.downloads
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_RADARR_TOKEN}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}"
         hosts:
           - host: &host "radarr.cloudjur.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:

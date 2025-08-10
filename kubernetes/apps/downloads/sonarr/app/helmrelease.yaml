@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: &app sonarr
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -93,7 +93,7 @@ spec:
           gethomepage.dev/description: TV Downloads
           gethomepage.dev/widget.type: sonarr
           gethomepage.dev/widget.url: http://sonarr.downloads
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_SONARR_TOKEN}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"
         hosts:
         - host: &host "{{ .Release.Name }}.cloudjur.com"
           paths:
