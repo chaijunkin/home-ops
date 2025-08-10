@@ -34,7 +34,7 @@ spec:
           retag: &container
             image:
               repository: ghcr.io/home-operations/tqm
-              tag: 1.16.0@sha256:c9cda45efe561187bc0b25fe5a7048ee8d8293e0431605074b8ffa7a56a8fed9
+              tag: 1.16.0
             args:
               - retag
               - qb

@@ -1,19 +1,12 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app radarr
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 2.6.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   maxHistory: 2
   install:
     remediation:
@@ -41,8 +34,8 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/chaijunkin/radarr
-              tag: 5.6.0.8846@sha256:767609d586ed5ced886c99171b21ff14b75174da7498872d7943f6a82fc69c2e
+              repository: ghcr.io/home-operations/radarr
+              tag: 5.27.3.10153
             env:
               TZ: Asia/Kuala_Lumpur
               RADARR__AUTHENTICATION_METHOD: External

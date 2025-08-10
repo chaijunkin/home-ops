@@ -1,18 +1,13 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app bazarr
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.0.4
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
     remediation:
       retries: 3
@@ -39,8 +34,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/chaijunkin/bazarr
-              tag: 1.4.2@sha256:51e811b871ec1954886d4d3d43f3d2ff2c953d143b74cfb5009b2705083d686e
+              repository: ghcr.io/home-operations/bazarr
+              tag: 1.5.2
             env:
               TZ: Asia/Kuala_Lumpur
             envFrom:
