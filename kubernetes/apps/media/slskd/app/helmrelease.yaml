@@ -29,9 +29,14 @@ spec:
               DOTNET_BUNDLE_EXTRACT_BASE_DIR: /tmp/.net
               TZ: Asia/Kuala_Lumpur
               SLSKD_APP_DIR: /config
+              SLSKD_NO_VERSION_CHECK: true
               SLSKD_HTTP_PORT: &port 80
               SLSKD_NO_AUTH: true
               SLSKD_NO_HTTPS: true
+              SLSKD_SHARED_DIR: /media/Downloads/slskd/shared
+              SLSKD_DOWNLOADS_DIR: /media/Downloads/slskd/complete
+              SLSKD_INCOMPLETE_DIR: /media/Downloads/slskd/incomplete
+              SLSKD_SHARE_FILTER: Thumbs.db$;\.DS_Store$
               SLSKD_SLSK_LISTEN_PORT: &soulseekPort 50300
             envFrom:
               - secretRef:
@@ -128,7 +133,6 @@ spec:
       media:
         existingClaim: pvc-smb-media
         globalMounts:
-          - path: /media/Downloads/soulseek
-            subPath: Downloads/soulseek
+          - path: /media
       tmp:
         type: emptyDir

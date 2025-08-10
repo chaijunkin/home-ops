@@ -47,10 +47,10 @@ spec:
                   name: wikijs-secret
     service:
       app:
-        type: LoadBalancer
+        # type: LoadBalancer
         controller: *app
-        annotations:
-          lbipam.cilium.io/ips: 10.10.30.68
+        # annotations:
+        #   lbipam.cilium.io/ips: 10.10.30.68
         ports:
           http:
             port: 3000
