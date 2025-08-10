@@ -194,3 +194,5 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /addons
+      tmp:
+        type: emptyDir
