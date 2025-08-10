@@ -78,6 +78,7 @@ spec:
     resources:
       requests:
         cpu: 10m
+        memory: 50Mi
       limits:
         memory: 219M
     admin:
@@ -96,14 +97,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
-            # - name: ceph
-            #   orgId: 1
-            #   folder: Ceph
-            #   type: file
-            #   disableDeletion: false
-            #   editable: true
-            #   options:
-            #     path: /var/lib/grafana/dashboards/ceph
+              # - name: ceph
+              #   orgId: 1
+              #   folder: Ceph
+              #   type: file
+              #   disableDeletion: false
+              #   editable: true
+              #   options:
+              #     path: /var/lib/grafana/dashboards/ceph
           - name: emqx
             orgId: 1
             folder: EMQX
@@ -185,15 +186,15 @@ spec:
             allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/system
-            # - name: thanos
-            #   orgId: 1
-            #   folder: Thanos
-            #   type: file
-            #   disableDeletion: false
-            #   editable: true
-            #   allowUiUpdates: true
-            #   options:
-            #     path: /var/lib/grafana/dashboards/thanos
+              # - name: thanos
+              #   orgId: 1
+              #   folder: Thanos
+              #   type: file
+              #   disableDeletion: false
+              #   editable: true
+              #   allowUiUpdates: true
+              #   options:
+              #     path: /var/lib/grafana/dashboards/thanos
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -219,13 +220,13 @@ spec:
             url: http://loki-gateway.observability.svc.cluster.local
             jsonData:
               maxLines: 250
-            # - name: Loki
-            #   type: loki
-            #   uid: loki
-            #   access: proxy
-            #   url: http://loki-headless.observability.svc.cluster.local
-            #   jsonData:
-            #     maxLines: 250
+              # - name: Loki
+              #   type: loki
+              #   uid: loki
+              #   access: proxy
+              #   url: http://loki-headless.observability.svc.cluster.local
+              #   jsonData:
+              #     maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy

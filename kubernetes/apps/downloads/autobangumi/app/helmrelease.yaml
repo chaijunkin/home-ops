@@ -69,18 +69,19 @@ spec:
                 memory: 1Gi
               requests:
                 cpu: 10m
-        #     securityContext:
-        #       allowPrivilegeEscalation: false
-        #       capabilities: { drop: ["ALL"] }
-        # pod:
-        #   automountServiceAccountToken: false
-        #   securityContext:
-        #     fsGroup: 568
-        #     fsGroupChangePolicy: OnRootMismatch
-        #     runAsGroup: 568
-        #     runAsNonRoot: true
-        #     runAsUser: 568
-        #     seccompProfile: { type: RuntimeDefault }
+                #     securityContext:
+                #       allowPrivilegeEscalation: false
+                #       capabilities: { drop: ["ALL"] }
+                # pod:
+                #   automountServiceAccountToken: false
+                #   securityContext:
+                #     fsGroup: 568
+                #     fsGroupChangePolicy: OnRootMismatch
+                #     runAsGroup: 568
+                #     runAsNonRoot: true
+                #     runAsUser: 568
+                #     seccompProfile: { type: RuntimeDefault }
+                memory: 50Mi
     ingress:
       app:
         enabled: true

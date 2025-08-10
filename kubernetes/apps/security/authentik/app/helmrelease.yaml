@@ -57,8 +57,8 @@ spec:
     worker:
       resources:
         requests:
-          cpu: 50m
-          memory: 512Mi
+          cpu: 10m
+          memory: 50Mi
         limits:
           memory: 1Gi
     authentik:

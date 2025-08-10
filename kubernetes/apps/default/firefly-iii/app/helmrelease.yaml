@@ -28,7 +28,7 @@ spec:
             envFrom: &envFrom
               - secretRef:
                   name: firefly-secret
-                # TODO: set smtp secret
+                  # TODO: set smtp secret
         containers:
           main:
             image:
@@ -41,6 +41,7 @@ spec:
             resources:
               requests:
                 cpu: 10m
+                memory: 50Mi
               limits:
                 memory: 256Mi
 

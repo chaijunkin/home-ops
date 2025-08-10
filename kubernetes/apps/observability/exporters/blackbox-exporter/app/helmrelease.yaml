@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://lds-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -73,10 +72,9 @@ spec:
       reloader.stakater.com/auto: "true"
     resources:
       requests:
-        cpu: 15m
-        memory: 64M
+        cpu: 10m
+        memory: 50Mi
       limits:
-        cpu: 100m
         memory: 64M
     serviceMonitor:
       enabled: true
@@ -95,9 +93,9 @@ spec:
         - module: icmp
           name: nas
           url: 10.10.30.10
-        # - module: icmp
-        #   name: ap
-        #   url: 192.168.1.4
+          # - module: icmp
+          #   name: ap
+          #   url: 192.168.1.4
     prometheusRule:
       enabled: true
       additionalLabels:

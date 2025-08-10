@@ -8,15 +8,10 @@ def refactor_resources(resources):
     Refactor resources according to rules:
     - Keep memory limits (or set default if missing)
     - Remove CPU limits
-    - Remove memory requests
+    - Set memory requests to 50Mi (default)
     - Set CPU requests to 10m (minimal)
     """
     changed = False
-
-    # Remove memory requests
-    if "requests" in resources and "memory" in resources["requests"]:
-        del resources["requests"]["memory"]
-        changed = True
 
     # Remove cpu limits
     if "limits" in resources and "cpu" in resources["limits"]:
@@ -38,6 +33,14 @@ def refactor_resources(resources):
         changed = True
     elif resources["requests"]["cpu"] != "10m":
         resources["requests"]["cpu"] = "10m"
+        changed = True
+
+    # Set memory requests to 50Mi (default)
+    if "memory" not in resources["requests"]:
+        resources["requests"]["memory"] = "50Mi"
+        changed = True
+    elif resources["requests"]["memory"] != "50Mi":
+        resources["requests"]["memory"] = "50Mi"
         changed = True
 
     # Clean up empty sections
@@ -81,14 +84,37 @@ def process_yaml_file(filepath):
                     or "args" in parent_obj
                 )
 
+            def is_valid_resources_block(resources_obj):
+                # Check if this looks like a valid Kubernetes resources block
+                if not hasattr(resources_obj, "items"):
+                    return False
+
+                valid_keys = {"requests", "limits"}
+                resource_keys = set(resources_obj.keys())
+
+                # Must contain only valid resource keys
+                if not resource_keys.issubset(valid_keys):
+                    return False
+
+                # Check if requests/limits contain valid resource types
+                for section in resources_obj.values():
+                    if hasattr(section, "items"):
+                        valid_resource_types = {"cpu", "memory", "storage", "ephemeral-storage"}
+                        if not set(section.keys()).issubset(valid_resource_types):
+                            return False
+
+                return True
+
             if hasattr(obj, "items"):  # dict-like object
                 keys_to_remove = []
                 for k, v in obj.items():
-                    # Only process resources in containers context
+                    # Process resources blocks that are either:
+                    # 1. In container contexts, OR
+                    # 2. Valid Kubernetes resource specifications (Helm chart values)
                     if (
                         k == "resources"
-                        and hasattr(v, "items")
-                        and is_container_resources(obj)
+                        and is_valid_resources_block(v)
+                        and (is_container_resources(obj) or not is_container_resources(obj))
                     ):
                         resource_changed = refactor_resources(v)
                         if resource_changed:
@@ -137,12 +163,13 @@ if __name__ == "__main__":
 
     if len(sys.argv) != 2:
         print("Usage: python refactor_resources.py <directory>")
-        print("Rules applied:")
+        print("Rules applied to all Kubernetes resources blocks:")
         print("- Keep memory limits (set 512Mi if missing)")
         print("- Remove CPU limits")
-        print("- Remove memory requests")
+        print("- Set memory requests to 50Mi")
         print("- Set CPU requests to 10m")
         print("- Remove empty resources blocks")
+        print("- Processes both container resources AND Helm chart values")
         sys.exit(1)
 
     process_dir(sys.argv[1])

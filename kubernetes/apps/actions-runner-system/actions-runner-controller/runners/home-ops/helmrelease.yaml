@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
@@ -43,6 +42,10 @@ spec:
         resources:
           requests:
             storage: 25Gi
+            cpu: 10m
+            memory: 50Mi
+          limits:
+            memory: 512Mi
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
@@ -59,10 +62,10 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
-            # volumeMounts:
-            #   - mountPath: /var/run/secrets/talos.dev
-            #     name: talos
-            #     readOnly: true
+                # volumeMounts:
+                #   - mountPath: /var/run/secrets/talos.dev
+                #     name: talos
+                #     readOnly: true
         serviceAccountName: *name
         # volumes:
         #   - name: talos
