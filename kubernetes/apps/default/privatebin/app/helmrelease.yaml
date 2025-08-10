@@ -62,8 +62,8 @@ spec:
         tls:
           - hosts:
               - *host
-    persistence:
-      data:
-        # enabled: true
-        # type: emptyDir
-        existingClaim: privatebin-test
+    # persistence:
+    #   data:
+    #     # enabled: true
+    #     # type: emptyDir
+    #     existingClaim: privatebin-test
