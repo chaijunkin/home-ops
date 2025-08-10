@@ -8,7 +8,7 @@ def refactor_resources(resources):
     Refactor resources according to rules:
     - Keep memory limits (or set default if missing)
     - Remove CPU limits
-    - Set memory requests to 150Mi (default)
+    - Set memory requests to 50Mi (default)
     - Set CPU requests to 10m (minimal)
     """
     changed = False
