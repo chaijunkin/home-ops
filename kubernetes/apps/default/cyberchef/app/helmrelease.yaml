@@ -4,14 +4,9 @@ metadata:
   name: cyberchef
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 1.5.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   maxHistory: 2
   install:
     remediation:
@@ -23,19 +18,31 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: docker.io/mpepping/cyberchef
-      tag: v10.18.6@sha256:c70ed5a307f4fb02afcfdc4a6fa76e487c1ae893abb714ca155b208b2abe5e90
+    controllers:
+      cyberchef:
+        containers:
+          app:
+            image:
+              repository: docker.io/mpepping/cyberchef
+              tag: v10.18.6@sha256:c70ed5a307f4fb02afcfdc4a6fa76e487c1ae893abb714ca155b208b2abe5e90
+              pullPolicy: IfNotPresent
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 50Mi
+        strategy: Recreate
     service:
-      main:
+      app:
         type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: 10.10.30.36
         ports:
           http:
-            port: 8000
+            port: 80
+    env:
+      TZ: Asia/Kuala_Lumpur
     ingress:
-      main:
+      app:
         enabled: true
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
@@ -50,18 +57,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: app
+                  port: http
         tls:
           - hosts:
               - *host
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: cyberchef-settings
-    persistence:
-      data:
-        enabled: true
-        type: emptyDir
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 512Mi

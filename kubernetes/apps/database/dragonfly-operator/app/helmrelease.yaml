@@ -5,14 +5,9 @@ metadata:
   name: &app dragonfly-operator
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.1.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
     remediation:
       retries: 3
@@ -27,6 +22,8 @@ spec:
         strategy: RollingUpdate
         containers:
           app:
+            serviceAccountName:
+              identifier: &app
             image:
               repository: ghcr.io/dragonflydb/operator
               tag: v1.1.2@sha256:f0d76725950095ac65b36252e0042d339d1db9b181b1d068f4b6686ea93055e4
@@ -66,13 +63,13 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
         runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
       # topologySpreadConstraints:
       #   - maxSkew: 1
       #     topologyKey: kubernetes.io/hostname
@@ -97,6 +94,6 @@ spec:
     #         path: /metrics
     #         interval: 1m
     #         scrapeTimeout: 10s
-    serviceAccount:
+    controllerServiceAccount:
       create: true
       name: *app

@@ -15,9 +15,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: volsync
-      namespace: volsync-system
   values:
     defaultPodOptions:
       labels:
@@ -31,30 +28,30 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.1.2
+              repository: ghcr.io/chaijunkin/qbittorrent
+              tag: 5.0.0
             env:
               TZ: Asia/Kuala_Lumpur
               QBT_WEBUI_PORT: &port 80
               QBT_TORRENTING_PORT: &torrentPort 50413
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api/v2/app/version
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: true
-                spec:
-                  failureThreshold: 30
-                  periodSeconds: 10
+            # probes:
+            #   liveness: &probes
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       httpGet:
+            #         path: /api/v2/app/version
+            #         port: *port
+            #       initialDelaySeconds: 0
+            #       periodSeconds: 10
+            #       timeoutSeconds: 1
+            #       failureThreshold: 3
+            #   readiness: *probes
+            #   startup:
+            #     enabled: true
+            #     spec:
+            #       failureThreshold: 30
+            #       periodSeconds: 10
             # securityContext:
             #   # runAsUser: 1004
             #   # runAsGroup: 1004
@@ -73,6 +70,11 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 18Gi
+            securityContext:
+              runAsUser: 1004
+              runAsGroup: 1004
+              fsGroup: 1004
+              fsGroupChangePolicy: OnRootMismatch
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
