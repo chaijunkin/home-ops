@@ -133,6 +133,7 @@ spec:
       media:
         existingClaim: pvc-smb-media
         globalMounts:
-          - path: /media
+          - path: /media/Downloads/slskd
+            subPath: Downloads/slskd
       tmp:
         type: emptyDir
