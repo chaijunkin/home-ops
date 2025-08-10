@@ -29,6 +29,8 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+        serviceAccount:
+          identifier: homepage
         containers:
           main:
             image:
@@ -84,5 +86,4 @@ spec:
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
     serviceAccount:
-      create: true
-      name: *app
+      homepage: {}

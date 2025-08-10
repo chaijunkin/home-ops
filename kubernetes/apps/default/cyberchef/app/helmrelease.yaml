@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cyberchef
+  name: &app cyberchef
 spec:
   interval: 30m
   chartRef:
@@ -35,6 +35,7 @@ spec:
         strategy: Recreate
     service:
       app:
+        controller: *app
         type: LoadBalancer
         ports:
           http:
