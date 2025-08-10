@@ -21,10 +21,10 @@ spec:
     remediation:
       retries: 3
   dependsOn:
-  - name: intel-device-plugin-gpu
-    namespace: kube-system
-  - name: volsync
-    namespace: volsync-system
+    - name: intel-device-plugin-gpu
+      namespace: kube-system
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
       jellyfin:
@@ -61,7 +61,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 gpu.intel.com/i915: 1
@@ -103,15 +103,15 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.cloudjur.com
           # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
-        - host: &host "{{ .Release.Name }}.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "{{ .Release.Name }}.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         existingClaim: *app
@@ -132,4 +132,4 @@ spec:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-        - path: /media
+          - path: /media

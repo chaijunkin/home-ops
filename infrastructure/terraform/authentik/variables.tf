@@ -46,14 +46,14 @@ variable "headlamp_id" {
   type        = string
   description = "Headlamp Client ID"
   sensitive   = true
-  default = null
+  default     = null
 }
 
 variable "headlamp_secret" {
   type        = string
   description = "Headlamp Client Secret"
   sensitive   = true
-  default = null
+  default     = null
 }
 
 # variable "paperless_id" {

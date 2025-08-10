@@ -1,0 +1,100 @@
+repos:
+  #   # General formatting and linting
+  #   - repo: https://github.com/pre-commit/pre-commit-hooks
+  #     rev: v4.6.0
+  #     hooks:
+  #       - id: trailing-whitespace
+  #       - id: end-of-file-fixer
+  #       - id: check-yaml
+  #         args: [--allow-multiple-documents]
+  #       - id: check-added-large-files
+  #       - id: check-case-conflict
+  #       - id: check-merge-conflict
+  #       - id: check-symlinks
+  #       - id: check-executables-have-shebangs
+  #       - id: check-shebang-scripts-are-executable
+
+  # YAML formatting
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+        files: \.(yaml|yml)$
+        args: [--write]
+#   # Python formatting and linting
+#   - repo: https://github.com/psf/black
+#     rev: 24.4.2
+#     hooks:
+#       - id: black
+#         language_version: python3
+
+#   - repo: https://github.com/pycqa/isort
+#     rev: 5.13.2
+#     hooks:
+#       - id: isort
+#         args: [--profile, black]
+
+#   - repo: https://github.com/pycqa/flake8
+#     rev: 7.1.0
+#     hooks:
+#       - id: flake8
+#         args: [--max-line-length=88, --extend-ignore=E203,W503]
+
+#   # Shell script formatting
+#   - repo: https://github.com/shellcheck-py/shellcheck-py
+#     rev: v0.10.0.1
+#     hooks:
+#       - id: shellcheck
+
+#   # Kubernetes validation
+#   - repo: local
+#     hooks:
+#       - id: kubeconform
+#         name: Validate Kubernetes manifests
+#         entry: bash -c 'if command -v kubeconform &> /dev/null; then find kubernetes/ -name "*.yaml" -o -name "*.yml" | xargs kubeconform -strict -ignore-missing-schemas -schema-location default -schema-location "https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"; else echo "kubeconform not found, skipping validation"; fi'
+#         language: system
+#         files: ^kubernetes/.*\.(yaml|yml)$
+#         pass_filenames: false
+
+#       - id: helmfile-lint
+#         name: Lint Helmfile configurations
+#         entry: bash -c 'if command -v helmfile &> /dev/null; then find . -name "helmfile.yaml" -exec helmfile -f {} lint \;; else echo "helmfile not found, skipping lint"; fi'
+#         language: system
+#         files: helmfile\.yaml$
+#         pass_filenames: false
+
+#       - id: ansible-lint
+#         name: Lint Ansible playbooks
+#         entry: bash -c 'if command -v ansible-lint &> /dev/null; then find ansible/ -name "*.yml" -o -name "*.yaml" | xargs ansible-lint; else echo "ansible-lint not found, skipping lint"; fi'
+#         language: system
+#         files: ^ansible/.*\.(yaml|yml)$
+#         pass_filenames: false
+
+#       - id: terraform-fmt
+#         name: Format Terraform files
+#         entry: bash -c 'if command -v terraform &> /dev/null; then find infrastructure/terraform/ -name "*.tf" -exec dirname {} \; | sort -u | xargs -I {} terraform fmt {}; else echo "terraform not found, skipping format"; fi'
+#         language: system
+#         files: \.tf$
+#         pass_filenames: false
+
+#   #     - id: terraform-validate
+#   #       name: Validate Terraform configurations
+#   #       entry: bash -c 'if command -v terraform &> /dev/null; then find infrastructure/terraform/ -name "*.tf" -exec dirname {} \; | sort -u | while read dir; do (cd "$dir" && terraform init -backend=false && terraform validate); done; else echo "terraform not found, skipping validation"; fi'
+#   #       language: system
+#   #       files: \.tf$
+#   #       pass_filenames: false
+
+#   # # Security checks
+#   # - repo: https://github.com/Yelp/detect-secrets
+#   #   rev: v1.5.0
+#   #   hooks:
+#   #     - id: detect-secrets
+#   #       args: [--baseline, .secrets.baseline]
+#   #       exclude: package.lock.json
+
+#   # Git hooks
+#   - repo: https://github.com/commitizen-tools/commitizen
+#     rev: v3.27.0
+#     hooks:
+#       - id: commitizen
+#         stages: [commit-msg]

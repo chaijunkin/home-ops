@@ -160,10 +160,10 @@ spec:
         hosts:
           - host: &host hass-code.cloudjur.com
             paths:
-            - path: /
-              service:
-                identifier: codeserver
-                port: http
+              - path: /
+                service:
+                  identifier: codeserver
+                  port: http
         tls:
           - hosts:
               - *host

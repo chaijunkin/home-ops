@@ -43,7 +43,7 @@ receivers:
       - html: true
         user_key: "{{ .pushover_api_userkey }}"
         token: "{{ .pushover_api_token }}"
-        url_title: View in AlertManager        # Compooters are hard
+        url_title: View in AlertManager # Compooters are hard
         message: |-
           {{ "{{-" }} range .Alerts {{ "}}" }}
             {{ "{{-" }} if ne .Annotations.description "" {{ "}}" }}
@@ -71,7 +71,7 @@ receivers:
         title: >-
           {{ "{{" }} .CommonLabels.alertname {{ "}}" }}
           [{{ "{{" }} .Status | toUpper {{ "}}" }}{{ "{{" }} if eq .Status "firing" {{ "}}" }}:{{ "{{" }} .Alerts.Firing | len {{ "}}" }}{{ "{{" }} end {{ "}}" }}]
-        
+
   - name: discord
     discord_configs:
       - send_resolved: true

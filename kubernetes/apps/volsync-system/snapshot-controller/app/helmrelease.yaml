@@ -40,5 +40,5 @@ spec:
     #         snapshot.storage.kubernetes.io/is-default-class: "true"
     #       deletionPolicy: Delete
 
-      # serviceMonitor:
-      #   create: true
+    # serviceMonitor:
+    #   create: true

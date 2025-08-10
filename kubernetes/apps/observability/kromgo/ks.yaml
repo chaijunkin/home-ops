@@ -22,6 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: kromgo
-      GATUS_STATUS: '404'
+      GATUS_STATUS: "404"
   components:
-  - ../../../../components/gatus/external
+    - ../../../../components/gatus/external

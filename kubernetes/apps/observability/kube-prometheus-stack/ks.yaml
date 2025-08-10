@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: kube-prometheus-stack
   dependsOn:
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/observability/kube-prometheus-stack/app
   prune: true
   sourceRef:

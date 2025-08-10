@@ -8,7 +8,7 @@ bandwidthManager:
 bgpControlPlane:
   enabled: true
 bpf:
-  datapathMode: veth # "netkit" not available in debian 12 yet 
+  datapathMode: veth # "netkit" not available in debian 12 yet
   masquerade: true
   preallocateMaps: true
   # tproxy: true
@@ -33,10 +33,10 @@ gatewayAPI:
   enableAlpn: true
   xffNumTrustedHops: 1
 hubble:
-  enabled: false  
+  enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: "10.69.0.0/16"  # ${CLUSTER_CIDR}
+ipv4NativeRoutingCIDR: "10.69.0.0/16" # ${CLUSTER_CIDR}
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 6444
 kubeProxyReplacement: true

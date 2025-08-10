@@ -48,8 +48,8 @@ spec:
               READARR__PORT: &port 80
               READARR__LOG_LEVEL: info
             envFrom:
-            - secretRef:
-                name: readarr-secret
+              - secretRef:
+                  name: readarr-secret
             resources:
               requests:
                 cpu: 10m
@@ -84,15 +84,15 @@ spec:
           gethomepage.dev/widget.url: http://readarr.downloads
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_READARR_TOKEN}}"
         hosts:
-        - host: &host "readarr.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              name: main
-              port: http
+          - host: &host "readarr.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         enabled: true

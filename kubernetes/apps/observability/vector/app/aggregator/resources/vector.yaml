@@ -52,7 +52,7 @@ sinks:
     remove_label_fields: true
     remove_timestamp: true
     labels:
-      hostname: '{{ host }}'
+      hostname: "{{ host }}"
 
   kubernetes:
     inputs: ["kubernetes_remap"]
@@ -63,9 +63,9 @@ sinks:
     remove_label_fields: true
     remove_timestamp: true
     labels:
-      app: '{{ custom_app_name }}'
-      namespace: '{{ kubernetes.pod_namespace }}'
-      node: '{{ kubernetes.pod_node_name }}'
+      app: "{{ custom_app_name }}"
+      namespace: "{{ kubernetes.pod_namespace }}"
+      node: "{{ kubernetes.pod_node_name }}"
 
   accesspoint:
     type: loki

@@ -111,12 +111,12 @@ locals {
       name    = "vw"
       value   = "blue-cherry-8641.fly.dev"
       type    = "CNAME"
-      proxied = true  
+      proxied = true
       ### STEP 1 turn this off and terraform apply
       ### STEP 2 remove certificate and create again
       ### fly certs remove vw.{SECRET_DOMAIN} --app {SECRET_APP}
       ### fly certs add vw.{SECRET_DOMAIN} --app {SECRET_APP}
-      ### STEP 3 turn this on 
+      ### STEP 3 turn this on
     }
     "external-uptimekuma" = {
       name    = "ext-uptime"
@@ -126,9 +126,9 @@ locals {
     }
 
     "external-uptimekuma-ext" = {
-      name  = "ext-status"
-      value = "uptime-kuma-rdm12exn709.fly.dev"
-      type  = "CNAME"
+      name    = "ext-status"
+      value   = "uptime-kuma-rdm12exn709.fly.dev"
+      type    = "CNAME"
       proxied = true
     }
 

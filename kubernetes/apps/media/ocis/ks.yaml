@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: ocis
   dependsOn:
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: external-secrets-stores
+      namespace: kube-system
   path: ./kubernetes/apps/media/ocis/app
   prune: true
   sourceRef:
@@ -27,4 +27,4 @@ spec:
       APP: ocis
       VOLSYNC_CAPACITY: 15Gi
   components:
-  - ../../../../components/volsync
+    - ../../../../components/volsync

@@ -31,7 +31,7 @@ variable "full_clone" {
 variable "hotplug" {
   description = "Comma delimited list of hotplug features to enable"
   type        = string
-  default     = "network,disk,usb"	
+  default     = "network,disk,usb"
 }
 
 

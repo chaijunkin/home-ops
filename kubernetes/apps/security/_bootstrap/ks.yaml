@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: volsync-smb-repository-security
   dependsOn:
-  - name: csi-driver-smb
-    namespace: kube-system
+    - name: csi-driver-smb
+      namespace: kube-system
   path: ./kubernetes/apps/security/_bootstrap/app
   prune: true
   sourceRef:

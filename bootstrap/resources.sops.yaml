@@ -2,22 +2,22 @@
 apiVersion: v1
 kind: Secret
 metadata:
-    name: cloudflare-tunnel-id-secret
-    namespace: network
+  name: cloudflare-tunnel-id-secret
+  namespace: network
 stringData:
-    CLOUDFLARE_TUNNEL_ID: ENC[AES256_GCM,data:UBZMvdEeilZek3YO+zbRlB9NlA+Rl/jRggMfnAci+6trtcae,iv:fBcpxkohgnBkwIEFUE3wxlRK41Ok43c2/l2FkYBe7AI=,tag:hDFzbiZFd0VwlFWNWg2Y3Q==,type:str]
+  CLOUDFLARE_TUNNEL_ID: ENC[AES256_GCM,data:UBZMvdEeilZek3YO+zbRlB9NlA+Rl/jRggMfnAci+6trtcae,iv:fBcpxkohgnBkwIEFUE3wxlRK41Ok43c2/l2FkYBe7AI=,tag:hDFzbiZFd0VwlFWNWg2Y3Q==,type:str]
 sops:
-    age:
-        - recipient: age1apaw0x3ja8ne4w08re4elvgt8wjhadpefelxjzhshf83834nhfzs65j7zp
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTQTFxUmY2MlZhbjF5ZkJR
-            WHBqOEViTVdkelA3Vk1FNFg5bE5hKzNORGo4CnA0ZEFIZmxnSzRRaDVSdHJzQkZ5
-            Um5lbzFySDQ2UncxZGtFcnhVNFIrQ2MKLS0tIDUraGRTMHd3ZTkxZXhjeklZWWJN
-            UEhyb0hIWVRON3RUS2pUTk5nYVJ3MVUK4ZK6nWW26Fzgbc3VGU5f2G0+egVQlKnC
-            W6RFgY6V/749PnKRPPKwRr+U/e3jy5oB4ISQmJz867VtFcmNoiWy2w==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-09T07:37:26Z"
-    mac: ENC[AES256_GCM,data:4oKms5f9+FjZr6gDyTEC7fTkJSvPTkkLDAv1kWE1NNjXN0ipFWluMLIfTgQdVsfiUYxrWafUzTZtlaXaXJIik0ahj0qaRbf0mIkZNKRhdsuDvXD2/HmaG+vc+nGLxJIW8CjSFbhOpObjOCWekZ5gGhsOH7Y/Hsug2s0I83t0i5s=,iv:NwLVGmVDORWUgKoVW139nIzA3lBc4je8cyxOGLtKijM=,tag:HCE3FBa00gbEdTiLR6csTg==,type:str]
-    encrypted_regex: ^(data|stringData)$
-    version: 3.10.2
+  age:
+    - recipient: age1apaw0x3ja8ne4w08re4elvgt8wjhadpefelxjzhshf83834nhfzs65j7zp
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTQTFxUmY2MlZhbjF5ZkJR
+        WHBqOEViTVdkelA3Vk1FNFg5bE5hKzNORGo4CnA0ZEFIZmxnSzRRaDVSdHJzQkZ5
+        Um5lbzFySDQ2UncxZGtFcnhVNFIrQ2MKLS0tIDUraGRTMHd3ZTkxZXhjeklZWWJN
+        UEhyb0hIWVRON3RUS2pUTk5nYVJ3MVUK4ZK6nWW26Fzgbc3VGU5f2G0+egVQlKnC
+        W6RFgY6V/749PnKRPPKwRr+U/e3jy5oB4ISQmJz867VtFcmNoiWy2w==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2025-08-09T07:37:26Z"
+  mac: ENC[AES256_GCM,data:4oKms5f9+FjZr6gDyTEC7fTkJSvPTkkLDAv1kWE1NNjXN0ipFWluMLIfTgQdVsfiUYxrWafUzTZtlaXaXJIik0ahj0qaRbf0mIkZNKRhdsuDvXD2/HmaG+vc+nGLxJIW8CjSFbhOpObjOCWekZ5gGhsOH7Y/Hsug2s0I83t0i5s=,iv:NwLVGmVDORWUgKoVW139nIzA3lBc4je8cyxOGLtKijM=,tag:HCE3FBa00gbEdTiLR6csTg==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  version: 3.10.2

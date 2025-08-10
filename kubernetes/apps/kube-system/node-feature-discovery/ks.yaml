@@ -31,7 +31,7 @@ spec:
     labels:
       app.kubernetes.io/name: node-feature-discovery-rules
   dependsOn:
-  - name: node-feature-discovery
+    - name: node-feature-discovery
   path: ./kubernetes/apps/kube-system/node-feature-discovery/rules
   prune: true
   sourceRef:

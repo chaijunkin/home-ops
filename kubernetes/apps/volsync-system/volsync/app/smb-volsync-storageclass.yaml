@@ -19,9 +19,9 @@ volumeBindingMode: Immediate
 mountOptions:
   - dir_mode=0777
   - file_mode=0777
-  - uid=0  # FIXME: insecure temp access
-  - gid=0  # FIXME: insecure temp access
+  - uid=0 # FIXME: insecure temp access
+  - gid=0 # FIXME: insecure temp access
   - noperm
   - mfsymlinks
   - cache=strict
-  - noserverino  # required to prevent data corruption
+  - noserverino # required to prevent data corruption

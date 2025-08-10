@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: autobrr
   dependsOn:
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: external-secrets-stores
+      namespace: kube-system
   path: ./kubernetes/apps/downloads/autobrr/app
   prune: true
   sourceRef:
@@ -27,5 +27,5 @@ spec:
       APP: autobrr
       VOLSYNC_CAPACITY: 5Gi
   components:
-  - ../../../../components/volsync
-  - ../../../../components/gatus/internal
+    - ../../../../components/volsync
+    - ../../../../components/gatus/internal

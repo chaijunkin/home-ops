@@ -17,8 +17,8 @@ spec:
     remediation:
       retries: 3
   dependsOn:
-  - name: volsync
-    namespace: volsync-system
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
       jellyseerr:
@@ -84,28 +84,28 @@ spec:
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
           external-dns.alpha.kubernetes.io/target: external.cloudjur.com
         hosts:
-        - host: &host requests.cloudjur.com
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host requests.cloudjur.com
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         existingClaim: *app
         globalMounts:
-        - path: /app/config
+          - path: /app/config
       config-cache:
         existingClaim: "{{ .Release.Name }}-cache"
         globalMounts:
-        - path: /app/config/cache
+          - path: /app/config/cache
       tmpfs:
         type: emptyDir
         globalMounts:
-        - path: /app/config/logs
-          subPath: logs
-        - path: /tmp
-          subPath: tmp
+          - path: /app/config/logs
+            subPath: logs
+          - path: /tmp
+            subPath: tmp

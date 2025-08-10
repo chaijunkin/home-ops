@@ -23,8 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-  - name: volsync
-    namespace: volsync-system
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
       metube:
@@ -63,12 +63,12 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
         hosts:
-        - host: "{{ .Release.Name }}.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: "{{ .Release.Name }}.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: *app

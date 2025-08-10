@@ -29,8 +29,8 @@ spec:
               tag: 16
               pullPolicy: IfNotPresent
             envFrom:
-            - secretRef:
-                name: open-webui-secret
+              - secretRef:
+                  name: open-webui-secret
         containers:
           app:
             image:
@@ -60,8 +60,8 @@ spec:
               WEBSOCKET_MANAGER: "redis"
               WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
             envFrom:
-            - secretRef:
-                name: "{{ .Release.Name }}-secret"
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
             resources:
               requests:
                 cpu: 10m
@@ -88,15 +88,15 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
 
         hosts:
-        - host: &host "chat.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "chat.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     # route:
     #   app:
     #     hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.jory.dev"]
@@ -109,4 +109,4 @@ spec:
         enabled: true
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
-        - path: /app/backend/data
+          - path: /app/backend/data

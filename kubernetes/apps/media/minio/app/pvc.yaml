@@ -27,7 +27,7 @@ mountOptions:
   - noperm
   - mfsymlinks
   - cache=strict
-  - noserverino  # required to prevent data corruption
+  - noserverino # required to prevent data corruption
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

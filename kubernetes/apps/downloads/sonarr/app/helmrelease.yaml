@@ -36,8 +36,8 @@ spec:
               SONARR__UPDATE__BRANCH: develop
               TZ: Asia/Kuala_Lumpur
             envFrom:
-            - secretRef:
-                name: "{{ .Release.Name }}-secret"
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -54,7 +54,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -88,15 +88,15 @@ spec:
           gethomepage.dev/widget.url: http://sonarr.downloads
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}"
         hosts:
-        - host: &host "{{ .Release.Name }}.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "{{ .Release.Name }}.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         enabled: true
@@ -107,4 +107,4 @@ spec:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-        - path: /media
+          - path: /media

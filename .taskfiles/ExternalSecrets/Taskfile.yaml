@@ -2,7 +2,6 @@
 version: "3"
 
 tasks:
-
   sync:
     desc: Sync an ExternalSecret
     summary: |
@@ -16,7 +15,10 @@ tasks:
       ns: '{{.ns | default "default"}}'
       secret: '{{ or .secret (fail "Argument (secret) is required") }}'
     preconditions:
-      - { msg: "ExternalSecret not found", sh: "kubectl -n {{.ns}} get externalsecret {{.secret}}" }
+      - {
+          msg: "ExternalSecret not found",
+          sh: "kubectl -n {{.ns}} get externalsecret {{.secret}}",
+        }
 
   sync-all:
     desc: Sync all ExternalSecrets
@@ -24,7 +26,7 @@ tasks:
       Args:
         None required - syncs all ExternalSecrets in all namespaces
     cmds:
-      - for: { var: secrets, split: '' }
+      - for: { var: secrets, split: "" }
         task: sync
         vars:
           ns: '{{$a := split "|" .ITEM}}{{$a._0}}'

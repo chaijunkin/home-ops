@@ -24,4 +24,4 @@ spec:
       APP: gatus
       GATUS_SUBDOMAIN: status
   components:
-  - ../../../../components/gatus/external
+    - ../../../../components/gatus/external

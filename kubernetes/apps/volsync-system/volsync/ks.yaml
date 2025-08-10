@@ -10,10 +10,10 @@ spec:
     labels:
       app.kubernetes.io/name: volsync
   dependsOn:
-  - name: external-secrets-bitwarden
-    namespace: kube-system
-  - name: csi-driver-smb
-    namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
+    - name: csi-driver-smb
+      namespace: kube-system
   path: ./kubernetes/apps/volsync-system/volsync/app
   prune: true
   sourceRef:

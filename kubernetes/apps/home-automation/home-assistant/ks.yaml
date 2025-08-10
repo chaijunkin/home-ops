@@ -22,5 +22,5 @@ spec:
       GATUS_SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
   components:
-  - ../../../../components/volsync
-  - ../../../../components/gatus/external
+    - ../../../../components/volsync
+    - ../../../../components/gatus/external

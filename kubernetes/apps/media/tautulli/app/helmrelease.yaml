@@ -21,8 +21,8 @@ spec:
     remediation:
       retries: 3
   dependsOn:
-  - name: volsync
-    namespace: volsync-system
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
       tautulli:
@@ -70,26 +70,26 @@ spec:
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}"
           external-dns.alpha.kubernetes.io/target: external.cloudjur.com
         hosts:
-        - host: &host "{{ .Release.Name }}.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "{{ .Release.Name }}.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         existingClaim: *app
       cache:
         existingClaim: tautulli-cache
         globalMounts:
-        - path: /config/cache
+          - path: /config/cache
       logs:
         type: emptyDir
         globalMounts:
-        - path: /config/logs
+          - path: /config/logs
       tmp:
         type: emptyDir
       # tmp:

@@ -17,14 +17,14 @@ spec:
     namespace: flux-system
   wait: false
   dependsOn:
-  - name: external-secrets-stores
-    namespace: kube-system
-  - name: external-secrets-cluster-secrets
-    namespace: kube-system
-  - name: dragonfly-cluster
-    namespace: database
-  - name: cloudnative-pg
-    namespace: database
+    - name: external-secrets-stores
+      namespace: kube-system
+    - name: external-secrets-cluster-secrets
+      namespace: kube-system
+    - name: dragonfly-cluster
+      namespace: database
+    - name: cloudnative-pg
+      namespace: database
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -33,4 +33,4 @@ spec:
       APP: authentik
       GATUS_SUBDOMAIN: auth
   components:
-  - ../../../../components/gatus/external
+    - ../../../../components/gatus/external

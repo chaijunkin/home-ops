@@ -59,8 +59,8 @@ spec:
         enabled: true
         type: LoadBalancer
         externalIPs:
-        - 10.10.30.9
-          # - ${SVC_OMADA_ADDR_V6}
+          - 10.10.30.9
+            # - ${SVC_OMADA_ADDR_V6}
         externalTrafficPolicy: Local
         # ipFamilies: [IPv4, IPv6]
         # ipFamilyPolicy: PreferDualStack
@@ -158,14 +158,14 @@ spec:
           nginx.ingress.kubernetes.io/proxy-redirect-from: "~https://(.+):8043/(.+)/login$"
           nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$1/$2/login"
         hosts:
-        - host: &host omada.cloudjur.com
-          paths:
-          - path: /
-            service:
-              name: main
+          - host: &host omada.cloudjur.com
+            paths:
+              - path: /
+                service:
+                  name: main
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     # persistence:
     #   data:
     #     existingClaim: ${VOLSYNC_CLAIM}

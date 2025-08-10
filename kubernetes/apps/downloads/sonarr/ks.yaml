@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: sonarr
   dependsOn:
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/downloads/sonarr/app
   prune: true
   sourceRef:
@@ -27,6 +27,6 @@ spec:
       APP: sonarr
       VOLSYNC_CAPACITY: 2Gi
   components:
-  - ../../../../components/keda/nas-scaler
-  - ../../../../components/volsync
-  - ../../../../components/gatus/internal
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/volsync
+    - ../../../../components/gatus/internal

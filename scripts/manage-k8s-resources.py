@@ -12,43 +12,47 @@ This script automates:
 Note: Only processes ingress configurations within HelmRelease resources, ignores standalone Ingress resources.
 """
 
-import os
-import sys
-import yaml
+import argparse
 import glob
 import ipaddress
-import argparse
-from pathlib import Path
-from typing import Dict, List, Set, Optional, Tuple
+import os
 import re
+import sys
+from pathlib import Path
+from typing import Dict, List, Optional, Set, Tuple
+
+import yaml
 
 # Configuration
 LOAD_BALANCER_RANGES = {
-    'internal': '10.10.30.32/27',  # 10.10.30.32 - 10.10.30.63
-    'external': '10.10.30.64/27',  # 10.10.30.64 - 10.10.30.95
-    'gateway': '10.10.30.96/27',   # 10.10.30.96 - 10.10.30.127
+    "internal": "10.10.30.32/27",  # 10.10.30.32 - 10.10.30.63
+    "external": "10.10.30.64/27",  # 10.10.30.64 - 10.10.30.95
+    "gateway": "10.10.30.96/27",  # 10.10.30.96 - 10.10.30.127
 }
 
 RESERVED_IPS = {
-    '10.10.30.33',  # headlamp
-    '10.10.30.28',  # ingress-nginx-internal
-    '10.10.30.29',  # ingress-nginx-external
-    '10.10.30.27',  # k8s-gateway
+    "10.10.30.33",  # headlamp
+    "10.10.30.28",  # ingress-nginx-internal
+    "10.10.30.29",  # ingress-nginx-external
+    "10.10.30.27",  # k8s-gateway
 }
 
 HOMEPAGE_GROUPS = {
-    'infrastructure': 'Compute/Storage Infrastructure',
-    'monitoring': 'Observability',
-    'media': 'Media',
-    'downloads': 'Downloads',
-    'security': 'Security',
-    'database': 'Database',
-    'home-automation': 'Home Automation',
-    'network': 'Network',
-    'default': 'Applications'
+    "infrastructure": "Compute/Storage Infrastructure",
+    "monitoring": "Observability",
+    "media": "Media",
+    "downloads": "Downloads",
+    "security": "Security",
+    "database": "Database",
+    "home-automation": "Home Automation",
+    "network": "Network",
+    "default": "Applications",
 }
 
-HOMEPAGE_ICONS_BASE = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png"
+HOMEPAGE_ICONS_BASE = (
+    "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png"
+)
+
 
 class K8sResourceManager:
     def __init__(self, root_dir: str):
@@ -69,11 +73,11 @@ class K8sResourceManager:
         # Scan HelmRelease files for existing lbipam.cilium.io/ips annotations
         for helm_file in self.kubernetes_dir.rglob("helmrelease.yaml"):
             try:
-                with open(helm_file, 'r') as f:
+                with open(helm_file, "r") as f:
                     content = f.read()
 
                 # Handle multiple documents in a single file
-                documents = content.split('---')
+                documents = content.split("---")
                 for doc_content in documents:
                     doc_content = doc_content.strip()
                     if not doc_content:
@@ -88,7 +92,7 @@ class K8sResourceManager:
             except Exception as e:
                 # Fallback to regex-based extraction for problematic files
                 try:
-                    with open(helm_file, 'r') as f:
+                    with open(helm_file, "r") as f:
                         content = f.read()
                         self._extract_ips_with_regex(content)
                 except:
@@ -104,20 +108,20 @@ class K8sResourceManager:
             return
 
         # Get the HelmRelease name for tracking
-        helm_name = content.get('metadata', {}).get('name', 'unknown')
+        helm_name = content.get("metadata", {}).get("name", "unknown")
 
         def search_for_ips(obj):
             if isinstance(obj, dict):
                 for key, value in obj.items():
-                    if key == 'lbipam.cilium.io/ips' and isinstance(value, str):
+                    if key == "lbipam.cilium.io/ips" and isinstance(value, str):
                         # Handle both single IPs and comma-separated lists
-                        ips = [ip.strip() for ip in value.split(',')]
+                        ips = [ip.strip() for ip in value.split(",")]
                         for ip in ips:
                             try:
                                 ipaddress.ip_address(ip)
                                 self.allocated_ips.add(ip)
                                 # Store the mapping of IP to service name
-                                if not hasattr(self, 'ip_to_service'):
+                                if not hasattr(self, "ip_to_service"):
                                     self.ip_to_service = {}
                                 self.ip_to_service[ip] = helm_name
                             except ValueError:
@@ -140,7 +144,7 @@ class K8sResourceManager:
 
         for match in matches:
             # Handle comma-separated IPs
-            ips = [ip.strip() for ip in match.split(',')]
+            ips = [ip.strip() for ip in match.split(",")]
             for ip in ips:
                 try:
                     ipaddress.ip_address(ip)
@@ -149,10 +153,10 @@ class K8sResourceManager:
                     pass
 
         # Also look for direct IP patterns in service annotations
-        ip_pattern = r'10\.10\.30\.\d+'
+        ip_pattern = r"10\.10\.30\.\d+"
         ip_matches = re.findall(ip_pattern, content)
         for ip in ip_matches:
-            if 'lbipam.cilium.io/ips' in content:
+            if "lbipam.cilium.io/ips" in content:
                 try:
                     ipaddress.ip_address(ip)
                     self.allocated_ips.add(ip)
@@ -161,17 +165,17 @@ class K8sResourceManager:
 
     def _get_service_name_from_path(self, file_path: str) -> str:
         """Extract service name from file path"""
-        path_parts = str(file_path).split('/')
+        path_parts = str(file_path).split("/")
 
         # Look for the pattern: .../apps/namespace/service-name/app/helmrelease.yaml
-        if 'apps' in path_parts:
-            apps_index = path_parts.index('apps')
+        if "apps" in path_parts:
+            apps_index = path_parts.index("apps")
             if len(path_parts) > apps_index + 2:
                 return path_parts[apps_index + 2]  # service-name
 
         # Fallback: try to get from the directory name before 'app'
-        if 'app' in path_parts:
-            app_index = path_parts.index('app')
+        if "app" in path_parts:
+            app_index = path_parts.index("app")
             if app_index > 0:
                 return path_parts[app_index - 1]
 
@@ -179,20 +183,20 @@ class K8sResourceManager:
         if len(path_parts) >= 2:
             return path_parts[-2]
 
-        return 'unknown'
+        return "unknown"
 
     def _scan_ingress_resources(self):
         """Scan for ingress resources to understand the current setup"""
         for yaml_file in self.kubernetes_dir.rglob("*.yaml"):
-            if 'test' in str(yaml_file) or 'archive' in str(yaml_file):
+            if "test" in str(yaml_file) or "archive" in str(yaml_file):
                 continue
 
             try:
-                with open(yaml_file, 'r') as f:
+                with open(yaml_file, "r") as f:
                     content = f.read()
 
                 # Handle multiple YAML documents
-                documents = content.split('---')
+                documents = content.split("---")
                 for doc_content in documents:
                     doc_content = doc_content.strip()
                     if not doc_content:
@@ -210,9 +214,9 @@ class K8sResourceManager:
 
     def _process_yaml_doc(self, doc, file_path):
         """Process individual YAML documents - only process HelmRelease resources"""
-        kind = doc.get('kind', '')
+        kind = doc.get("kind", "")
 
-        if kind == 'HelmRelease':
+        if kind == "HelmRelease":
             self._process_helm_release(doc, file_path)
         # Ignore standalone Ingress resources - we only process ingress configs within HelmReleases
         # elif kind == 'Ingress':
@@ -220,35 +224,37 @@ class K8sResourceManager:
 
     def _process_helm_release(self, doc, file_path):
         """Process HelmRelease for ingress configurations"""
-        metadata = doc.get('metadata', {})
-        app_name = metadata.get('name', '')
-        namespace = file_path.parts[-4] if len(file_path.parts) >= 4 else 'default'
+        metadata = doc.get("metadata", {})
+        app_name = metadata.get("name", "")
+        namespace = file_path.parts[-4] if len(file_path.parts) >= 4 else "default"
 
-        values = doc.get('spec', {}).get('values', {})
+        values = doc.get("spec", {}).get("values", {})
 
         # Check for ingress configurations
-        ingresses = values.get('ingress', {})
+        ingresses = values.get("ingress", {})
         if not isinstance(ingresses, dict):
             return
 
         for ingress_name, ingress_config in ingresses.items():
-            if not isinstance(ingress_config, dict) or not ingress_config.get('enabled', False):
+            if not isinstance(ingress_config, dict) or not ingress_config.get(
+                "enabled", False
+            ):
                 continue
 
-            class_name = ingress_config.get('className', 'internal')
-            hosts = ingress_config.get('hosts', [])
+            class_name = ingress_config.get("className", "internal")
+            hosts = ingress_config.get("hosts", [])
 
             if hosts:
                 for host_config in hosts:
                     if isinstance(host_config, dict):
-                        host = host_config.get('host', '')
-                        if host and 'cloudjur.com' in host:
+                        host = host_config.get("host", "")
+                        if host and "cloudjur.com" in host:
                             self.ingress_mappings[app_name] = {
-                                'namespace': namespace,
-                                'class': class_name,
-                                'host': host,
-                                'file_path': str(file_path),
-                                'ingress_name': ingress_name
+                                "namespace": namespace,
+                                "class": class_name,
+                                "host": host,
+                                "file_path": str(file_path),
+                                "ingress_name": ingress_name,
                             }
                             break
 
@@ -317,7 +323,7 @@ class K8sResourceManager:
 
         # Write documentation
         ipam_doc_file = self.docs_dir / "cilium-ipam.md"
-        with open(ipam_doc_file, 'w') as f:
+        with open(ipam_doc_file, "w") as f:
             f.write(doc_content)
 
         print(f"Generated IPAM documentation: {ipam_doc_file}")
@@ -336,66 +342,84 @@ class K8sResourceManager:
         import re  # Import re module at function level
 
         for app_name, config in self.ingress_mappings.items():
-            class_name = config['class']
-            file_path = config['file_path']
-            host = config.get('host', 'N/A')
+            class_name = config["class"]
+            file_path = config["file_path"]
+            host = config.get("host", "N/A")
 
             # Check if already has LB IP and type
             try:
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     content = f.read()
 
-                has_lb_ip = 'lbipam.cilium.io/ips' in content
-                has_lb_type = 'type: LoadBalancer' in content
+                has_lb_ip = "lbipam.cilium.io/ips" in content
+                has_lb_type = "type: LoadBalancer" in content
 
                 if has_lb_ip and has_lb_type:
                     # Extract existing IP
-                    ip_match = re.search(r'io\.cilium/lb-ipam-ips:\s*["\']?([0-9.]+)["\']?', content)
-                    existing_ip = ip_match.group(1) if ip_match else 'unknown'
-                    services_with_lb.append({
-                        'name': app_name,
-                        'class': class_name,
-                        'host': host,
-                        'ip': existing_ip,
-                        'status': 'complete'
-                    })
+                    ip_match = re.search(
+                        r'io\.cilium/lb-ipam-ips:\s*["\']?([0-9.]+)["\']?', content
+                    )
+                    existing_ip = ip_match.group(1) if ip_match else "unknown"
+                    services_with_lb.append(
+                        {
+                            "name": app_name,
+                            "class": class_name,
+                            "host": host,
+                            "ip": existing_ip,
+                            "status": "complete",
+                        }
+                    )
                 elif has_lb_ip or has_lb_type:
                     # Partial configuration
-                    ip_match = re.search(r'io\.cilium/lb-ipam-ips:\s*["\']?([0-9.]+)["\']?', content)
-                    existing_ip = ip_match.group(1) if ip_match else 'none'
-                    services_with_lb.append({
-                        'name': app_name,
-                        'class': class_name,
-                        'host': host,
-                        'ip': existing_ip,
-                        'status': f"partial ({'IP' if has_lb_ip else 'no IP'}, {'type' if has_lb_type else 'no type'})"
-                    })
+                    ip_match = re.search(
+                        r'io\.cilium/lb-ipam-ips:\s*["\']?([0-9.]+)["\']?', content
+                    )
+                    existing_ip = ip_match.group(1) if ip_match else "none"
+                    services_with_lb.append(
+                        {
+                            "name": app_name,
+                            "class": class_name,
+                            "host": host,
+                            "ip": existing_ip,
+                            "status": f"partial ({'IP' if has_lb_ip else 'no IP'}, {'type' if has_lb_type else 'no type'})",
+                        }
+                    )
                 else:
-                    range_type = 'external' if class_name == 'external' else 'internal'
-                    services_needing_lb.append({
-                        'name': app_name,
-                        'class': class_name,
-                        'host': host,
-                        'range': range_type
-                    })
+                    range_type = "external" if class_name == "external" else "internal"
+                    services_needing_lb.append(
+                        {
+                            "name": app_name,
+                            "class": class_name,
+                            "host": host,
+                            "range": range_type,
+                        }
+                    )
             except Exception as e:
                 print(f"   ⚠️  Error analyzing {app_name}: {e}")
 
         if services_with_lb:
-            print(f"\n✅ Services with load balancer configuration ({len(services_with_lb)}):")
+            print(
+                f"\n✅ Services with load balancer configuration ({len(services_with_lb)}):"
+            )
             for svc in services_with_lb:
-                status_icon = "✅" if svc['status'] == 'complete' else "⚠️ "
-                print(f"   {status_icon} {svc['name']} ({svc['class']}) -> {svc['ip']} | {svc['host']} | {svc['status']}")
+                status_icon = "✅" if svc["status"] == "complete" else "⚠️ "
+                print(
+                    f"   {status_icon} {svc['name']} ({svc['class']}) -> {svc['ip']} | {svc['host']} | {svc['status']}"
+                )
 
         if services_needing_lb:
-            print(f"\n🚀 Services that would get load balancer configuration ({len(services_needing_lb)}):")
+            print(
+                f"\n🚀 Services that would get load balancer configuration ({len(services_needing_lb)}):"
+            )
             temp_allocated = self.allocated_ips.copy()
             for svc in services_needing_lb:
                 try:
                     # Get what IP would be assigned
-                    next_ip = self._get_next_ip_for_range(svc['range'], temp_allocated)
+                    next_ip = self._get_next_ip_for_range(svc["range"], temp_allocated)
                     temp_allocated.add(next_ip)  # Add to temp set to avoid duplicates
-                    print(f"   + {svc['name']} ({svc['class']}) -> {next_ip} + type: LoadBalancer | {svc['host']}")
+                    print(
+                        f"   + {svc['name']} ({svc['class']}) -> {next_ip} + type: LoadBalancer | {svc['host']}"
+                    )
                 except Exception as e:
                     print(f"   - {svc['name']} ({svc['class']}) -> ERROR: {e}")
         else:
@@ -412,38 +436,50 @@ class K8sResourceManager:
         services_needing_external_dns = []
 
         for app_name, config in self.ingress_mappings.items():
-            file_path = config['file_path']
-            ingress_class = config['class']
-            target_domain = 'external.cloudjur.com' if ingress_class == 'external' else 'internal.cloudjur.com'
+            file_path = config["file_path"]
+            ingress_class = config["class"]
+            target_domain = (
+                "external.cloudjur.com"
+                if ingress_class == "external"
+                else "internal.cloudjur.com"
+            )
 
             try:
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     content = f.read()
 
-                has_external_dns = 'external-dns.alpha.kubernetes.io/target' in content
+                has_external_dns = "external-dns.alpha.kubernetes.io/target" in content
 
                 if has_external_dns:
-                    services_with_external_dns.append({
-                        'name': app_name,
-                        'class': ingress_class,
-                        'target': target_domain
-                    })
+                    services_with_external_dns.append(
+                        {
+                            "name": app_name,
+                            "class": ingress_class,
+                            "target": target_domain,
+                        }
+                    )
                 else:
-                    services_needing_external_dns.append({
-                        'name': app_name,
-                        'class': ingress_class,
-                        'target': target_domain
-                    })
+                    services_needing_external_dns.append(
+                        {
+                            "name": app_name,
+                            "class": ingress_class,
+                            "target": target_domain,
+                        }
+                    )
             except Exception as e:
                 print(f"   ⚠️  Error analyzing external-dns for {app_name}: {e}")
 
         if services_with_external_dns:
-            print(f"\n✅ Services with external-dns annotations ({len(services_with_external_dns)}):")
+            print(
+                f"\n✅ Services with external-dns annotations ({len(services_with_external_dns)}):"
+            )
             for svc in services_with_external_dns:
                 print(f"   ✅ {svc['name']} ({svc['class']}) -> {svc['target']}")
 
         if services_needing_external_dns:
-            print(f"\n🚀 Services that would get external-dns annotations ({len(services_needing_external_dns)}):")
+            print(
+                f"\n🚀 Services that would get external-dns annotations ({len(services_needing_external_dns)}):"
+            )
             for svc in services_needing_external_dns:
                 print(f"   + {svc['name']} ({svc['class']}) -> {svc['target']}")
         else:
@@ -470,27 +506,27 @@ class K8sResourceManager:
         """Find which service uses the given IP"""
         if ip in RESERVED_IPS:
             known_services = {
-                '10.10.30.33': 'headlamp',
-                '10.10.30.34': 'ingress-nginx-internal',
-                '10.10.30.65': 'ingress-nginx-external',
-                '10.10.30.70': 'k8s-gateway'
+                "10.10.30.33": "headlamp",
+                "10.10.30.34": "ingress-nginx-internal",
+                "10.10.30.65": "ingress-nginx-external",
+                "10.10.30.70": "k8s-gateway",
             }
-            return known_services.get(ip, 'Reserved')
+            return known_services.get(ip, "Reserved")
 
         # Use the stored IP to service mapping if available
-        if hasattr(self, 'ip_to_service') and ip in self.ip_to_service:
+        if hasattr(self, "ip_to_service") and ip in self.ip_to_service:
             return self.ip_to_service[ip]
 
         # Search through all HelmRelease files for this IP
         for helm_file in self.kubernetes_dir.rglob("helmrelease.yaml"):
             try:
-                with open(helm_file, 'r') as f:
+                with open(helm_file, "r") as f:
                     content = f.read()
-                    if ip in content and 'lbipam.cilium.io/ips' in content:
+                    if ip in content and "lbipam.cilium.io/ips" in content:
                         # Try to extract the HelmRelease name from YAML
                         try:
                             # Handle multiple documents
-                            documents = content.split('---')
+                            documents = content.split("---")
                             for doc_content in documents:
                                 doc_content = doc_content.strip()
                                 if not doc_content or ip not in doc_content:
@@ -498,9 +534,9 @@ class K8sResourceManager:
                                 try:
                                     yaml_content = yaml.safe_load(doc_content)
                                     if yaml_content and isinstance(yaml_content, dict):
-                                        metadata = yaml_content.get('metadata', {})
-                                        name = metadata.get('name', 'unknown')
-                                        if name != 'unknown':
+                                        metadata = yaml_content.get("metadata", {})
+                                        name = metadata.get("name", "unknown")
+                                        if name != "unknown":
                                             return name
                                 except yaml.YAMLError:
                                     continue
@@ -514,15 +550,15 @@ class K8sResourceManager:
 
         # Search through ingress mappings as fallback
         for app_name, config in self.ingress_mappings.items():
-            if self._app_uses_ip(config['file_path'], ip):
+            if self._app_uses_ip(config["file_path"], ip):
                 return app_name
 
-        return 'app'
+        return "app"
 
     def _app_uses_ip(self, file_path: str, ip: str) -> bool:
         """Check if an app uses the given IP"""
         try:
-            with open(file_path, 'r') as f:
+            with open(file_path, "r") as f:
                 content = f.read()
                 return ip in content
         except:
@@ -533,27 +569,29 @@ class K8sResourceManager:
         modified_files = []
 
         for app_name, config in self.ingress_mappings.items():
-            class_name = config['class']
-            file_path = config['file_path']
+            class_name = config["class"]
+            file_path = config["file_path"]
 
             # Determine IP range based on ingress class
-            if class_name == 'external':
-                range_type = 'external'
-            elif class_name == 'internal':
-                range_type = 'internal'
+            if class_name == "external":
+                range_type = "external"
+            elif class_name == "internal":
+                range_type = "internal"
             else:
                 continue
 
             # Check if IP and type are already assigned
             try:
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     content = f.read()
 
-                has_lb_ip = 'lbipam.cilium.io/ips' in content
-                has_lb_type = 'type: LoadBalancer' in content
+                has_lb_ip = "lbipam.cilium.io/ips" in content
+                has_lb_type = "type: LoadBalancer" in content
 
                 if has_lb_ip and has_lb_type:
-                    print(f"Skipping {app_name}: already has complete load balancer configuration")
+                    print(
+                        f"Skipping {app_name}: already has complete load balancer configuration"
+                    )
                     continue
 
                 # Get next available IP if needed
@@ -562,10 +600,12 @@ class K8sResourceManager:
                     ip = self.get_next_available_ip(range_type)
 
                 # Add IP and/or type to service
-                updated_content = self._add_lb_configuration_to_helm(content, ip, has_lb_ip, has_lb_type)
+                updated_content = self._add_lb_configuration_to_helm(
+                    content, ip, has_lb_ip, has_lb_type
+                )
 
                 if updated_content != content:
-                    with open(file_path, 'w') as f:
+                    with open(file_path, "w") as f:
                         f.write(updated_content)
                     modified_files.append(file_path)
 
@@ -582,7 +622,9 @@ class K8sResourceManager:
 
         return modified_files
 
-    def _add_lb_configuration_to_helm(self, content: str, ip: Optional[str], has_lb_ip: bool, has_lb_type: bool) -> str:
+    def _add_lb_configuration_to_helm(
+        self, content: str, ip: Optional[str], has_lb_ip: bool, has_lb_type: bool
+    ) -> str:
         """Add load balancer IP and/or type to HelmRelease service section"""
         if has_lb_ip and has_lb_type:
             return content
@@ -599,7 +641,7 @@ class K8sResourceManager:
 
     def _add_lb_type_to_helm(self, content: str) -> str:
         """Add LoadBalancer type to HelmRelease service section"""
-        lines = content.split('\n')
+        lines = content.split("\n")
         modified_lines = []
         in_service_section = False
         service_indent = 0
@@ -610,7 +652,7 @@ class K8sResourceManager:
             line = lines[i]
 
             # Detect service section
-            if 'service:' in line and not line.strip().startswith('#'):
+            if "service:" in line and not line.strip().startswith("#"):
                 in_service_section = True
                 service_indent = len(line) - len(line.lstrip())
                 modified_lines.append(line)
@@ -624,10 +666,14 @@ class K8sResourceManager:
                     modified_lines.append(line)
 
                 # Look for service names and add type if not present
-                elif (line.strip().endswith(':') and
-                      current_indent == service_indent + 2 and
-                      not line.strip().startswith(('annotations:', 'ports:', 'type:', 'controller:')) and
-                      not added_type):
+                elif (
+                    line.strip().endswith(":")
+                    and current_indent == service_indent + 2
+                    and not line.strip().startswith(
+                        ("annotations:", "ports:", "type:", "controller:")
+                    )
+                    and not added_type
+                ):
 
                     modified_lines.append(line)
 
@@ -636,28 +682,36 @@ class K8sResourceManager:
                     has_type = False
                     while j < len(lines):
                         next_line = lines[j]
-                        next_indent = len(next_line) - len(next_line.lstrip()) if next_line.strip() else 0
+                        next_indent = (
+                            len(next_line) - len(next_line.lstrip())
+                            if next_line.strip()
+                            else 0
+                        )
 
                         # If we've moved out of this service block, break
                         if next_line.strip() and next_indent <= current_indent:
                             break
 
-                        if 'type:' in next_line and next_indent == current_indent + 2:
+                        if "type:" in next_line and next_indent == current_indent + 2:
                             has_type = True
                             break
                         j += 1
 
                     # Add type: LoadBalancer if not present
                     if not has_type:
-                        modified_lines.append(' ' * (current_indent + 2) + 'type: LoadBalancer')
+                        modified_lines.append(
+                            " " * (current_indent + 2) + "type: LoadBalancer"
+                        )
                         added_type = True
 
                 # If we find existing type that's not LoadBalancer, replace it
-                elif ('type:' in line and
-                      current_indent == service_indent + 4 and
-                      'LoadBalancer' not in line and
-                      not added_type):
-                    modified_lines.append(' ' * current_indent + 'type: LoadBalancer')
+                elif (
+                    "type:" in line
+                    and current_indent == service_indent + 4
+                    and "LoadBalancer" not in line
+                    and not added_type
+                ):
+                    modified_lines.append(" " * current_indent + "type: LoadBalancer")
                     added_type = True
 
                 else:
@@ -667,11 +721,11 @@ class K8sResourceManager:
 
             i += 1
 
-        return '\n'.join(modified_lines)
+        return "\n".join(modified_lines)
 
     def _add_lb_ip_to_helm(self, content: str, ip: str) -> str:
         """Add load balancer IP annotation and type to HelmRelease service section"""
-        lines = content.split('\n')
+        lines = content.split("\n")
         modified_lines = []
         in_service_section = False
         service_indent = 0
@@ -683,7 +737,7 @@ class K8sResourceManager:
             line = lines[i]
 
             # Detect service section
-            if 'service:' in line and not line.strip().startswith('#'):
+            if "service:" in line and not line.strip().startswith("#"):
                 in_service_section = True
                 service_indent = len(line) - len(line.lstrip())
                 modified_lines.append(line)
@@ -697,10 +751,14 @@ class K8sResourceManager:
                     modified_lines.append(line)
 
                 # Look for service names (app:, main:, etc.) - not annotations, ports, controller
-                elif (line.strip().endswith(':') and
-                      current_indent == service_indent + 2 and
-                      not line.strip().startswith(('annotations:', 'ports:', 'type:', 'controller:')) and
-                      not (added_annotation and added_type)):
+                elif (
+                    line.strip().endswith(":")
+                    and current_indent == service_indent + 2
+                    and not line.strip().startswith(
+                        ("annotations:", "ports:", "type:", "controller:")
+                    )
+                    and not (added_annotation and added_type)
+                ):
 
                     modified_lines.append(line)
 
@@ -710,43 +768,58 @@ class K8sResourceManager:
                     has_type = False
                     while j < len(lines):
                         next_line = lines[j]
-                        next_indent = len(next_line) - len(next_line.lstrip()) if next_line.strip() else 0
+                        next_indent = (
+                            len(next_line) - len(next_line.lstrip())
+                            if next_line.strip()
+                            else 0
+                        )
 
                         # If we've moved out of this service block, break
                         if next_line.strip() and next_indent <= current_indent:
                             break
 
-                        if 'annotations:' in next_line and next_indent == current_indent + 2:
+                        if (
+                            "annotations:" in next_line
+                            and next_indent == current_indent + 2
+                        ):
                             has_annotations = True
-                        elif 'type:' in next_line and next_indent == current_indent + 2:
+                        elif "type:" in next_line and next_indent == current_indent + 2:
                             has_type = True
                         j += 1
 
                     # Add type: LoadBalancer first if not present
                     if not has_type and not added_type:
-                        modified_lines.append(' ' * (current_indent + 2) + 'type: LoadBalancer')
+                        modified_lines.append(
+                            " " * (current_indent + 2) + "type: LoadBalancer"
+                        )
                         added_type = True
 
                     # Add annotations section if not present
                     if not has_annotations and not added_annotation:
-                        modified_lines.append(' ' * (current_indent + 2) + 'annotations:')
-#                        modified_lines.append(' ' * (current_indent + 4) + f'lbipam.cilium.io/ips: {ip}')
+                        modified_lines.append(
+                            " " * (current_indent + 2) + "annotations:"
+                        )
+                        #                        modified_lines.append(' ' * (current_indent + 4) + f'lbipam.cilium.io/ips: {ip}')
                         added_annotation = True
 
                 # If we find existing annotations in a service, add our annotation
-                elif ('annotations:' in line and
-                      current_indent == service_indent + 4 and
-                      not added_annotation):
+                elif (
+                    "annotations:" in line
+                    and current_indent == service_indent + 4
+                    and not added_annotation
+                ):
                     modified_lines.append(line)
-#                    modified_lines.append(' ' * (current_indent + 2) + f'lbipam.cilium.io/ips: {ip}')
+                    #                    modified_lines.append(' ' * (current_indent + 2) + f'lbipam.cilium.io/ips: {ip}')
                     added_annotation = True
 
                 # If we find existing type, check if it's LoadBalancer
-                elif ('type:' in line and
-                      current_indent == service_indent + 4 and
-                      'LoadBalancer' not in line):
+                elif (
+                    "type:" in line
+                    and current_indent == service_indent + 4
+                    and "LoadBalancer" not in line
+                ):
                     # Replace existing type with LoadBalancer
-                    modified_lines.append(' ' * (current_indent) + 'type: LoadBalancer')
+                    modified_lines.append(" " * (current_indent) + "type: LoadBalancer")
                     added_type = True
 
                 else:
@@ -756,21 +829,21 @@ class K8sResourceManager:
 
             i += 1
 
-        return '\n'.join(modified_lines)
+        return "\n".join(modified_lines)
 
     def add_homepage_annotations(self):
         """Add homepage annotations to ingress resources"""
         modified_files = []
 
         for app_name, config in self.ingress_mappings.items():
-            file_path = config['file_path']
-            namespace = config['namespace']
+            file_path = config["file_path"]
+            namespace = config["namespace"]
 
             try:
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     content = f.read()
 
-                if 'gethomepage.dev/enabled' in content:
+                if "gethomepage.dev/enabled" in content:
                     print(f"Skipping {app_name}: already has homepage annotations")
                     continue
 
@@ -778,10 +851,12 @@ class K8sResourceManager:
                 annotations = self._generate_homepage_annotations(app_name, namespace)
 
                 # Add annotations to ingress
-                updated_content = self._add_homepage_annotations_to_helm(content, annotations)
+                updated_content = self._add_homepage_annotations_to_helm(
+                    content, annotations
+                )
 
                 if updated_content != content:
-                    with open(file_path, 'w') as f:
+                    with open(file_path, "w") as f:
                         f.write(updated_content)
                     modified_files.append(file_path)
                     print(f"Added homepage annotations to {app_name}")
@@ -791,10 +866,12 @@ class K8sResourceManager:
 
         return modified_files
 
-    def _generate_homepage_annotations(self, app_name: str, namespace: str) -> Dict[str, str]:
+    def _generate_homepage_annotations(
+        self, app_name: str, namespace: str
+    ) -> Dict[str, str]:
         """Generate homepage annotations for an app"""
         # Determine group based on namespace
-        group = HOMEPAGE_GROUPS.get(namespace, HOMEPAGE_GROUPS['default'])
+        group = HOMEPAGE_GROUPS.get(namespace, HOMEPAGE_GROUPS["default"])
 
         # Generate description
         description = self._generate_description(app_name)
@@ -803,11 +880,11 @@ class K8sResourceManager:
         icon_url = f"{HOMEPAGE_ICONS_BASE}/{app_name.lower()}.png"
 
         annotations = {
-            'gethomepage.dev/enabled': '"true"',
-            'gethomepage.dev/group': group,
-            'gethomepage.dev/name': app_name.title(),
-            'gethomepage.dev/description': description,
-            'gethomepage.dev/icon': icon_url
+            "gethomepage.dev/enabled": '"true"',
+            "gethomepage.dev/group": group,
+            "gethomepage.dev/name": app_name.title(),
+            "gethomepage.dev/description": description,
+            "gethomepage.dev/icon": icon_url,
         }
 
         # Add widget configuration for known apps
@@ -820,21 +897,21 @@ class K8sResourceManager:
     def _generate_description(self, app_name: str) -> str:
         """Generate description for an app"""
         descriptions = {
-            'jellyseerr': 'Media Request Management',
-            'grafana': 'Monitoring Dashboard',
-            'headlamp': 'Kubernetes Dashboard',
-            'plex': 'Media Server',
-            'sonarr': 'Series Management',
-            'radarr': 'Movie Management',
-            'bazarr': 'Subtitle Management',
-            'prowlarr': 'Indexer Management',
-            'transmission': 'BitTorrent Client',
-            'gatus': 'Status Page',
-            'authentik': 'Authentication Provider',
-            'vaultwarden': 'Password Manager',
-            'paperless': 'Document Management',
-            'home-assistant': 'Home Automation',
-            'zigbee2mqtt': 'Zigbee Bridge'
+            "jellyseerr": "Media Request Management",
+            "grafana": "Monitoring Dashboard",
+            "headlamp": "Kubernetes Dashboard",
+            "plex": "Media Server",
+            "sonarr": "Series Management",
+            "radarr": "Movie Management",
+            "bazarr": "Subtitle Management",
+            "prowlarr": "Indexer Management",
+            "transmission": "BitTorrent Client",
+            "gatus": "Status Page",
+            "authentik": "Authentication Provider",
+            "vaultwarden": "Password Manager",
+            "paperless": "Document Management",
+            "home-assistant": "Home Automation",
+            "zigbee2mqtt": "Zigbee Bridge",
         }
 
         return descriptions.get(app_name.lower(), f"{app_name.title()} Service")
@@ -842,34 +919,36 @@ class K8sResourceManager:
     def _get_widget_config(self, app_name: str) -> Dict[str, str]:
         """Get widget configuration for known apps"""
         widgets = {
-            'jellyseerr': {
-                'gethomepage.dev/widget.type': 'overseerr',
-                'gethomepage.dev/widget.url': f'http://{app_name}.media:5055',
-                'gethomepage.dev/widget.key': '{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}'
+            "jellyseerr": {
+                "gethomepage.dev/widget.type": "overseerr",
+                "gethomepage.dev/widget.url": f"http://{app_name}.media:5055",
+                "gethomepage.dev/widget.key": "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}",
             },
-            'grafana': {
-                'gethomepage.dev/widget.type': 'grafana',
-                'gethomepage.dev/widget.url': f'http://{app_name}.observability:3000',
-                'gethomepage.dev/widget.username': '{{ `{{HOMEPAGE_VAR_GRAFANA_USERNAME}}` }}',
-                'gethomepage.dev/widget.password': '{{ `{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}` }}'
+            "grafana": {
+                "gethomepage.dev/widget.type": "grafana",
+                "gethomepage.dev/widget.url": f"http://{app_name}.observability:3000",
+                "gethomepage.dev/widget.username": "{{ `{{HOMEPAGE_VAR_GRAFANA_USERNAME}}` }}",
+                "gethomepage.dev/widget.password": "{{ `{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}` }}",
             },
-            'sonarr': {
-                'gethomepage.dev/widget.type': 'sonarr',
-                'gethomepage.dev/widget.url': f'http://{app_name}.downloads:8989',
-                'gethomepage.dev/widget.key': '{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}'
+            "sonarr": {
+                "gethomepage.dev/widget.type": "sonarr",
+                "gethomepage.dev/widget.url": f"http://{app_name}.downloads:8989",
+                "gethomepage.dev/widget.key": "{{ `{{HOMEPAGE_VAR_SONARR_TOKEN}}` }}",
             },
-            'radarr': {
-                'gethomepage.dev/widget.type': 'radarr',
-                'gethomepage.dev/widget.url': f'http://{app_name}.downloads:7878',
-                'gethomepage.dev/widget.key': '{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}'
-            }
+            "radarr": {
+                "gethomepage.dev/widget.type": "radarr",
+                "gethomepage.dev/widget.url": f"http://{app_name}.downloads:7878",
+                "gethomepage.dev/widget.key": "{{ `{{HOMEPAGE_VAR_RADARR_TOKEN}}` }}",
+            },
         }
 
         return widgets.get(app_name.lower(), {})
 
-    def _add_homepage_annotations_to_helm(self, content: str, annotations: Dict[str, str]) -> str:
+    def _add_homepage_annotations_to_helm(
+        self, content: str, annotations: Dict[str, str]
+    ) -> str:
         """Add homepage annotations to HelmRelease ingress section"""
-        lines = content.split('\n')
+        lines = content.split("\n")
         modified_lines = []
 
         i = 0
@@ -877,7 +956,7 @@ class K8sResourceManager:
             line = lines[i]
 
             # Look for ingress annotations section
-            if 'ingress:' in line and not line.strip().startswith('#'):
+            if "ingress:" in line and not line.strip().startswith("#"):
                 modified_lines.append(line)
 
                 # Look for annotations in this ingress section
@@ -887,16 +966,24 @@ class K8sResourceManager:
                 while j < len(lines):
                     current_line = lines[j]
 
-                    if current_line.strip() and len(current_line) - len(current_line.lstrip()) <= ingress_indent:
+                    if (
+                        current_line.strip()
+                        and len(current_line) - len(current_line.lstrip())
+                        <= ingress_indent
+                    ):
                         break
 
-                    if 'annotations:' in current_line:
+                    if "annotations:" in current_line:
                         modified_lines.append(current_line)
-                        annotation_indent = len(current_line) - len(current_line.lstrip()) + 2
+                        annotation_indent = (
+                            len(current_line) - len(current_line.lstrip()) + 2
+                        )
 
                         # Add homepage annotations
                         for key, value in annotations.items():
-                            modified_lines.append(' ' * annotation_indent + f'{key}: {value}')
+                            modified_lines.append(
+                                " " * annotation_indent + f"{key}: {value}"
+                            )
 
                         # Skip to next line and continue
                         i = j
@@ -911,47 +998,55 @@ class K8sResourceManager:
 
             i += 1
 
-        return '\n'.join(modified_lines)
+        return "\n".join(modified_lines)
 
     def add_external_dns_annotations(self):
         """Add external-dns annotations to ingress resources based on ingress class"""
         modified_files = []
 
         for app_name, config in self.ingress_mappings.items():
-            file_path = config['file_path']
-            ingress_class = config['class']
+            file_path = config["file_path"]
+            ingress_class = config["class"]
 
             try:
-                with open(file_path, 'r') as f:
+                with open(file_path, "r") as f:
                     content = f.read()
 
-                if 'external-dns.alpha.kubernetes.io/target' in content:
+                if "external-dns.alpha.kubernetes.io/target" in content:
                     print(f"Skipping {app_name}: already has external-dns annotations")
                     continue
 
                 # Generate external-dns target annotation based on ingress class
-                target_domain = 'external.cloudjur.com' if ingress_class == 'external' else 'internal.cloudjur.com'
-                annotations = {
-                    'external-dns.alpha.kubernetes.io/target': target_domain
-                }
+                target_domain = (
+                    "external.cloudjur.com"
+                    if ingress_class == "external"
+                    else "internal.cloudjur.com"
+                )
+                annotations = {"external-dns.alpha.kubernetes.io/target": target_domain}
 
                 # Add annotations to ingress
-                updated_content = self._add_external_dns_annotations_to_helm(content, annotations)
+                updated_content = self._add_external_dns_annotations_to_helm(
+                    content, annotations
+                )
 
                 if updated_content != content:
-                    with open(file_path, 'w') as f:
+                    with open(file_path, "w") as f:
                         f.write(updated_content)
                     modified_files.append(file_path)
-                    print(f"Added external-dns annotation to {app_name}: {target_domain}")
+                    print(
+                        f"Added external-dns annotation to {app_name}: {target_domain}"
+                    )
 
             except Exception as e:
                 print(f"Error processing {app_name}: {e}")
 
         return modified_files
 
-    def _add_external_dns_annotations_to_helm(self, content: str, annotations: Dict[str, str]) -> str:
+    def _add_external_dns_annotations_to_helm(
+        self, content: str, annotations: Dict[str, str]
+    ) -> str:
         """Add external-dns annotations to HelmRelease ingress section"""
-        lines = content.split('\n')
+        lines = content.split("\n")
         modified_lines = []
 
         i = 0
@@ -959,7 +1054,7 @@ class K8sResourceManager:
             line = lines[i]
 
             # Look for ingress annotations section
-            if 'ingress:' in line and not line.strip().startswith('#'):
+            if "ingress:" in line and not line.strip().startswith("#"):
                 modified_lines.append(line)
 
                 # Look for annotations in this ingress section
@@ -971,17 +1066,25 @@ class K8sResourceManager:
                     current_line = lines[j]
 
                     # If we've moved back to the same indent level or less, we're out of this ingress block
-                    if current_line.strip() and len(current_line) - len(current_line.lstrip()) <= ingress_indent:
+                    if (
+                        current_line.strip()
+                        and len(current_line) - len(current_line.lstrip())
+                        <= ingress_indent
+                    ):
                         break
 
-                    if 'annotations:' in current_line and not found_annotations:
+                    if "annotations:" in current_line and not found_annotations:
                         modified_lines.append(current_line)
-                        annotation_indent = len(current_line) - len(current_line.lstrip()) + 2
+                        annotation_indent = (
+                            len(current_line) - len(current_line.lstrip()) + 2
+                        )
                         found_annotations = True
 
                         # Add external-dns annotations immediately after the annotations: line
                         for key, value in annotations.items():
-                            modified_lines.append(' ' * annotation_indent + f'{key}: {value}')
+                            modified_lines.append(
+                                " " * annotation_indent + f"{key}: {value}"
+                            )
                     else:
                         # Add all other lines as-is (including existing annotations)
                         modified_lines.append(current_line)
@@ -995,11 +1098,13 @@ class K8sResourceManager:
 
             i += 1
 
-        return '\n'.join(modified_lines)
+        return "\n".join(modified_lines)
 
     def enable_gatus_components(self):
         """Enable Gatus components based on ingress class - DISABLED"""
-        print("Gatus components functionality is disabled - not touching components/gatus directory")
+        print(
+            "Gatus components functionality is disabled - not touching components/gatus directory"
+        )
         return
 
     def _create_gatus_components(self, services: List[str], component_type: str):
@@ -1013,19 +1118,50 @@ class K8sResourceManager:
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Manage Kubernetes resources for home-ops')
-    parser.add_argument('--root-dir', default='.', help='Root directory of the project')
-    parser.add_argument('--generate-ipam-docs', action='store_true', help='Generate IPAM documentation')
-    parser.add_argument('--add-load-balancer-ips', action='store_true', help='Add Cilium load balancer IPs and LoadBalancer type')
-    parser.add_argument('--add-homepage-annotations', action='store_true', help='Add homepage annotations')
-    parser.add_argument('--add-external-dns-annotations', action='store_true', help='Add external-dns annotations based on ingress class')
+    parser = argparse.ArgumentParser(
+        description="Manage Kubernetes resources for home-ops"
+    )
+    parser.add_argument("--root-dir", default=".", help="Root directory of the project")
+    parser.add_argument(
+        "--generate-ipam-docs", action="store_true", help="Generate IPAM documentation"
+    )
+    parser.add_argument(
+        "--add-load-balancer-ips",
+        action="store_true",
+        help="Add Cilium load balancer IPs and LoadBalancer type",
+    )
+    parser.add_argument(
+        "--add-homepage-annotations",
+        action="store_true",
+        help="Add homepage annotations",
+    )
+    parser.add_argument(
+        "--add-external-dns-annotations",
+        action="store_true",
+        help="Add external-dns annotations based on ingress class",
+    )
     # parser.add_argument('--enable-gatus', action='store_true', help='Enable Gatus components')  # DISABLED
-    parser.add_argument('--all', action='store_true', help='Run all operations (except Gatus)')
-    parser.add_argument('--dry-run', action='store_true', help='Show what would be changed without making changes')
+    parser.add_argument(
+        "--all", action="store_true", help="Run all operations (except Gatus)"
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show what would be changed without making changes",
+    )
 
     args = parser.parse_args()
 
-    if not any([args.generate_ipam_docs, args.add_load_balancer_ips, args.add_homepage_annotations, args.add_external_dns_annotations, args.all, args.dry_run]):
+    if not any(
+        [
+            args.generate_ipam_docs,
+            args.add_load_balancer_ips,
+            args.add_homepage_annotations,
+            args.add_external_dns_annotations,
+            args.all,
+            args.dry_run,
+        ]
+    ):
         parser.print_help()
         return
 
@@ -1033,7 +1169,7 @@ def main():
 
     if args.dry_run:
         print("DRY RUN MODE - No changes will be made")
-        print("="*50)
+        print("=" * 50)
         manager.dry_run_analysis()
         return
 
@@ -1064,5 +1200,5 @@ def main():
     print("Done!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

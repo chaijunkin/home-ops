@@ -124,7 +124,7 @@ spec:
                   port: s3
         tls:
           - hosts:
-            - *s3Host
+              - *s3Host
     persistence:
       config:
         enabled: true

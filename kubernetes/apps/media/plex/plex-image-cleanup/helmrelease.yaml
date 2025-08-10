@@ -40,8 +40,8 @@ spec:
               MODE: remove
               PHOTO_TRANSCODER: true
             envFrom:
-            - secretRef:
-                name: plex-secret
+              - secretRef:
+                  name: plex-secret
             probes:
               liveness:
                 enabled: false
@@ -59,18 +59,18 @@ spec:
               readOnlyRootFilesystem: true
               capabilities:
                 drop:
-                - ALL
+                  - ALL
         pod:
           affinity:
             podAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                    - plex
-                topologyKey: kubernetes.io/hostname
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - plex
+                  topologyKey: kubernetes.io/hostname
           enableServiceLinks: false
           securityContext:
             runAsUser: 568
@@ -80,8 +80,8 @@ spec:
       config:
         type: emptyDir
         globalMounts:
-        - path: /config
+          - path: /config
       plex-config:
         existingClaim: plex
         globalMounts:
-        - path: /media/plex_config
+          - path: /media/plex_config

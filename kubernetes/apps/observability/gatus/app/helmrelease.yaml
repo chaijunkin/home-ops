@@ -34,8 +34,8 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
             envFrom:
-            - secretRef:
-                name: gatus-secret
+              - secretRef:
+                  name: gatus-secret
           init-config:
             order: 2
             image: &configSyncImage
@@ -65,8 +65,8 @@ spec:
               GATUS_CONFIG_PATH: /config
               CUSTOM_WEB_PORT: &port 80
             envFrom:
-            - secretRef:
-                name: gatus-secret
+              - secretRef:
+                  name: gatus-secret
             resources:
               requests:
                 cpu: 10m
@@ -112,15 +112,15 @@ spec:
           gethomepage.dev/widget.url: http://gatus.observability
           external-dns.alpha.kubernetes.io/target: external.cloudjur.com
         hosts:
-        - host: &host status.cloudjur.com
-          paths:
-          - path: /
-            service:
-              name: main
-              port: http
+          - host: &host status.cloudjur.com
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     serviceAccount:
       create: true
       name: gatus
@@ -132,6 +132,6 @@ spec:
         type: configMap
         name: gatus-configmap
         globalMounts:
-        - path: /config/config.yaml
-          subPath: config.yaml
-          readOnly: true
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true

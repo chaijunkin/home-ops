@@ -15,10 +15,10 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-  - name: cloudnative-pg
-    namespace: database
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: cloudnative-pg
+      namespace: database
+    - name: external-secrets-stores
+      namespace: kube-system
   prune: true
   wait: false
   interval: 30m

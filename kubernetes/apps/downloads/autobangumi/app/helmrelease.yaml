@@ -32,8 +32,8 @@ spec:
               repository: ghcr.io/estrellaxd/auto_bangumi
               tag: 3.1.18
             envFrom:
-            - secretRef:
-                name: autobangumi-secret
+              - secretRef:
+                  name: autobangumi-secret
             env:
               TZ: &TZ Asia/Kuala_Lumpur
               AB_INTERVAL_TIME: 7200
@@ -93,21 +93,21 @@ spec:
           gethomepage.dev/description: Autobangumi Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobangumi.png
         hosts:
-        - host: &host bangumi.cloudjur.com
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host bangumi.cloudjur.com
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         enabled: true
         existingClaim: *app
         globalMounts:
-        - path: /app/config
+          - path: /app/config
       media:
         enabled: true
         existingClaim: pvc-smb-media

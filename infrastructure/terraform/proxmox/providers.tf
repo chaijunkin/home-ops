@@ -21,9 +21,9 @@ provider "proxmox" {
 
   # api_token = var.proxmox_api_token
   username = var.proxmox.username
-  password = var.proxmox.password  # you need this for proxmoxo_vm non_mapped hostpci
+  password = var.proxmox.password # you need this for proxmoxo_vm non_mapped hostpci
   ssh {
-    agent    = false
+    agent = false
     # username = var.proxmox.username
     private_key = file("~/.ssh/jk_inventory") # Ensure this file exists and has the correct permissions
   }

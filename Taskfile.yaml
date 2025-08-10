@@ -22,15 +22,15 @@ vars:
   PYTHON_BIN: python3
 
 dotenv:
-  - '{{.ROOT_DIR}}/onepassword.env'
-  - '{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env'
+  - "{{.ROOT_DIR}}/onepassword.env"
+  - "{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env"
 
 env:
   KUBECONFIG: "{{.KUBECONFIG_FILE}}"
   PYTHONDONTWRITEBYTECODE: "1"
   SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
-  MINIJINJA_CONFIG_FILE: '{{.ROOT_DIR}}/.minijinja.toml'
+  MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
 
 includes:
   bootstrap: .taskfiles/bootstrap
@@ -51,10 +51,8 @@ includes:
   volsync: .taskfiles/volsync
   external-secrets: .taskfiles/ExternalSecrets/Taskfile.yaml
 
-
 tasks:
-
-  default: 
+  default:
     cmd: task --list
     silent: true
 
@@ -86,9 +84,18 @@ tasks:
     cmd: "{{.VIRTUAL_ENV}}/bin/makejinja"
     preconditions:
       - { msg: "Missing virtual environment", sh: "test -d {{.VIRTUAL_ENV}}" }
-      - { msg: "Missing Makejinja config file", sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}" }
-      - { msg: "Missing Makejinja plugin file", sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py" }
-      - { msg: "Missing bootstrap config file", sh: "test -f {{.BOOTSTRAP_CONFIG_FILE}}" }
+      - {
+          msg: "Missing Makejinja config file",
+          sh: "test -f {{.MAKEJINJA_CONFIG_FILE}}",
+        }
+      - {
+          msg: "Missing Makejinja plugin file",
+          sh: "test -f {{.BOOTSTRAP_DIR}}/scripts/plugin.py",
+        }
+      - {
+          msg: "Missing bootstrap config file",
+          sh: "test -f {{.BOOTSTRAP_CONFIG_FILE}}",
+        }
 
   .validate:
     internal: true

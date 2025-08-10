@@ -1,9 +1,8 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: '3'
+version: "3"
 
 tasks:
-
   default:
     desc: Bootstrap Talos nodes and Cluster apps
     cmd: bash {{.SCRIPTS_DIR}}/bootstrap-cluster.sh

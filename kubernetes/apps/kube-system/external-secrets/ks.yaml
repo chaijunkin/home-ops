@@ -62,10 +62,10 @@ spec:
   timeout: 5m
   targetNamespace: kube-system
   dependsOn:
-  - name: external-secrets
-    namespace: kube-system
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: external-secrets
+      namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -88,9 +88,9 @@ spec:
   timeout: 5m
   targetNamespace: kube-system
   dependsOn:
-  - name: external-secrets
-    namespace: kube-system
-  - name: external-secrets-bitwarden
-    namespace: kube-system
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: external-secrets
+      namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
+    - name: external-secrets-stores
+      namespace: kube-system

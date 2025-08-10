@@ -25,7 +25,7 @@ spec:
   values:
     image:
       repository: docker.io/privatebin/nginx-fpm-alpine
-      tag: latest  ## TBC
+      tag: latest ## TBC
     service:
       main:
         type: LoadBalancer
@@ -48,13 +48,13 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/privatebin.png
         ingressClassName: internal
         hosts:
-        - host: &host "privatebin.cloudjur.com"
-          paths:
-          - path: /
-            pathType: Prefix
+          - host: &host "privatebin.cloudjur.com"
+            paths:
+              - path: /
+                pathType: Prefix
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     podAnnotations:
       configmap.reloader.stakater.com/reload: privatebin-settings
     persistence:

@@ -10,7 +10,6 @@ vars:
   GITHUB_DEPLOY_KEY_FILE: "{{.KUBERNETES_DIR}}/bootstrap/flux/github-deploy-key.sops.yaml"
 
 tasks:
-
   bootstrap:
     desc: Bootstrap Flux into a Kubernetes cluster
     cmds:
@@ -50,7 +49,10 @@ tasks:
         sh: flux --kubeconfig {{.KUBECONFIG_FILE}} --namespace {{.ns}} get kustomizations $(basename {{.path}}) 2>&1
     preconditions:
       - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
-      - { msg: "Missing Flux Kustomization for app {{.path}}", sh: "test -f {{.KUBERNETES_DIR}}/apps/{{.path}}/ks.yaml" }
+      - {
+          msg: "Missing Flux Kustomization for app {{.path}}",
+          sh: "test -f {{.KUBERNETES_DIR}}/apps/{{.path}}/ks.yaml",
+        }
 
   reconcile:
     desc: Force update Flux to pull in changes from your Git repository
@@ -65,4 +67,7 @@ tasks:
     preconditions:
       - { msg: "Missing kubeconfig", sh: "test -f {{.KUBECONFIG_FILE}}" }
       - { msg: "Missing Sops Age key file", sh: "test -f {{.AGE_FILE}}" }
-      - { msg: "Missing Github deploy key file", sh: "test -f {{.GITHUB_DEPLOY_KEY_FILE}}" }
+      - {
+          msg: "Missing Github deploy key file",
+          sh: "test -f {{.GITHUB_DEPLOY_KEY_FILE}}",
+        }

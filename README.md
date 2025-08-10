@@ -32,7 +32,7 @@ _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/reno
 [![CPU-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.cloudjur.com%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_cpu_usage&style=flat-square&label=CPU)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
 [![Memory-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.cloudjur.com%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_memory_usage&style=flat-square&label=Memory)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
 
-</div> 
+</div>
 
 ---
 
@@ -141,7 +141,7 @@ Total RAM: 40GB
 
 | Name         | Device         | CPU        | OS Disk   | Data Disk           | RAM    | OS         | Purpose               |
 |--------------|----------------|------------|-----------|---------------------|--------|------------|-----------------------|
-| Dashy (host) | Custom built   | E-2246G    | 64GB      | 500GB SSD           | 64GB   | Proxmox    | Virtualize NAS and VM | 
+| Dashy (host) | Custom built   | E-2246G    | 64GB      | 500GB SSD           | 64GB   | Proxmox    | Virtualize NAS and VM |
 | NAS (VM)     | Dashy          | 2          | 8G        | ZFS 4TB x2 (mirror) | 512Mib | Debian LXC | NAS/NFS/Backup        |
 
 ### Networking/UPS Hardware
@@ -178,6 +178,8 @@ Be sure to check out [kubesearch.dev](https://kubesearch.dev/) for ideas on how 
 ## 📜 Changelog
 
 See my _awful_ [commit history](https://github.com/chaijunkin/home-ops/commits/main)
+
+ARCHIVES FOLDER IS REMOVED ON Aug 10 14:20:50
 
 ---
 

@@ -32,7 +32,7 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             runAsNonRoot: true
-            seccompProfile: {type: RuntimeDefault}
+            seccompProfile: { type: RuntimeDefault }
         containers:
           *app :
             image:
@@ -67,7 +67,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities:
                 drop:
-                - ALL
+                  - ALL
               allowPrivilegeEscalation: false
     service:
       *app :
@@ -79,22 +79,22 @@ spec:
       *app :
         className: internal
         hosts:
-        - host: &fqdn "download-books.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: *app
-              port: http
+          - host: &fqdn "download-books.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: *app
+                  port: http
     persistence:
       tmp:
         type: emptyDir
       log:
         type: emptyDir
         globalMounts:
-        - path: /var/log/cwa-book-downloader/
+          - path: /var/log/cwa-book-downloader/
       media:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-        - path: /media
-          readOnly: false
+          - path: /media
+            readOnly: false

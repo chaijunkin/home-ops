@@ -1,13 +1,11 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: '3'
+version: "3"
 
 vars:
-  WORKSTATION_RESOURCES_DIR: '{{.ROOT_DIR}}/.taskfiles/workstation/resources'
+  WORKSTATION_RESOURCES_DIR: "{{.ROOT_DIR}}/.taskfiles/workstation/resources"
 
 tasks:
-
-
   direnv:
     desc: Run direnv hooks
     cmd: direnv allow .
@@ -19,14 +17,17 @@ tasks:
     desc: Set up virtual environment
     cmds:
       - "{{.PYTHON_BIN}} -m venv {{.VIRTUAL_ENV}}"
-      - '{{.VIRTUAL_ENV}}/bin/python3 -m pip install --upgrade pip setuptools wheel'
+      - "{{.VIRTUAL_ENV}}/bin/python3 -m pip install --upgrade pip setuptools wheel"
       - '{{.VIRTUAL_ENV}}/bin/python3 -m pip install --upgrade --requirement "{{.PIP_REQUIREMENTS_FILE}}"'
     sources:
       - "{{.PIP_REQUIREMENTS_FILE}}"
     generates:
       - "{{.VIRTUAL_ENV}}/pyvenv.cfg"
     preconditions:
-      - { msg: "Missing Pip requirements file", sh: "test -f {{.PIP_REQUIREMENTS_FILE}}" }
+      - {
+          msg: "Missing Pip requirements file",
+          sh: "test -f {{.PIP_REQUIREMENTS_FILE}}",
+        }
 
   arch:
     desc: Install Arch workstation dependencies with Paru Or Yay
@@ -67,9 +68,9 @@ tasks:
     cmds:
       - brew bundle --file {{.WORKSTATION_RESOURCES_DIR}}/Brewfile
     sources:
-      - '{{.WORKSTATION_RESOURCES_DIR}}/Brewfile'
+      - "{{.WORKSTATION_RESOURCES_DIR}}/Brewfile"
     generates:
-      - '{{.WORKSTATION_RESOURCES_DIR}}/Brewfile.lock.json'
+      - "{{.WORKSTATION_RESOURCES_DIR}}/Brewfile.lock.json"
     preconditions:
       - which brew
       - test -f {{.WORKSTATION_RESOURCES_DIR}}/Brewfile

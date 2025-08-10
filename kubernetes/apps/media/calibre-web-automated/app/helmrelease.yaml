@@ -22,8 +22,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-  - name: volsync
-    namespace: volsync-system
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
       calibre-web-automated:
@@ -76,34 +76,34 @@ spec:
           # gethomepage.dev/icon: calibre.png
           # gethomepage.dev/description: eBook Library
         hosts:
-        - host: ebooks-auto.cloudjur.com
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
-        - host: ebooks.cloudjur.com
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: ebooks-auto.cloudjur.com
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+          - host: ebooks.cloudjur.com
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       cache:
         type: emptyDir
         globalMounts:
-        - path: /cache
+          - path: /cache
       config:
         existingClaim: calibre-web-automated
       media:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-        - path: /media
-          readOnly: false
+          - path: /media
+            readOnly: false
       cwa-book-ingest:
         enabled: true
         existingClaim: pvc-smb-downloads-book
         globalMounts:
-        - path: /cwa-book-ingest
-          readOnly: false
+          - path: /cwa-book-ingest
+            readOnly: false

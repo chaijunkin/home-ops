@@ -48,4 +48,3 @@ locals {
 
   ssh_public_keys = var.ssh_public_keys
 }
-

@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------------------#
-# Proxmox Variables 
+# Proxmox Variables
 # Reference: https://github.com/Telmate/terraform-provider-proxmox/blob/master/docs/index.md
 #-------------------------------------------------------------------------------------------#
 

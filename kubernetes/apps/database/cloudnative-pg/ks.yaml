@@ -31,10 +31,10 @@ spec:
     labels:
       app.kubernetes.io/name: cloudnative-pg-cluster
   dependsOn:
-  - name: cloudnative-pg
-    namespace: database
-  - name: external-secrets
-    namespace: kube-system
+    - name: cloudnative-pg
+      namespace: database
+    - name: external-secrets
+      namespace: kube-system
   path: ./kubernetes/apps/database/cloudnative-pg/cluster
   prune: true
   sourceRef:

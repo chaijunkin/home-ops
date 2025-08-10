@@ -6,7 +6,6 @@ vars:
   SOPS_CONFIG_FILE: "{{.ROOT_DIR}}/.sops.yaml"
 
 tasks:
-
   age-keygen:
     desc: Initialize Age Key for Sops
     cmd: age-keygen --output {{.AGE_FILE}}

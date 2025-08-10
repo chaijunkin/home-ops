@@ -44,7 +44,7 @@
 # spec:
 #   description: "Allows all pods to perform DNS lookups to CoreDNS."
 #   # This endpointSelector means this policy applies to *all* Cilium-managed pods in the cluster.
-#   endpointSelector: {} 
+#   endpointSelector: {}
 #   egress:
 #     - toEndpoints:
 #         - matchLabels:

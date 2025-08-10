@@ -32,7 +32,7 @@ spec:
         # -- deploy metrics service
         enabled: true
         serviceMonitor:
-        # -- enable a prometheus ServiceMonitor
+          # -- enable a prometheus ServiceMonitor
           enabled: true
 
       ingress:
@@ -80,12 +80,8 @@ spec:
       #     name: authentik-secret
       #     key: AUTHENTIK_REDIS__PASSWORD
 
-
-
     postgresql:
       enabled: false
-
-
 
     redis:
       enabled: false

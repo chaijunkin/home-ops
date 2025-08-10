@@ -29,7 +29,7 @@ spec:
         cronjob:
           # schedule: "0 0 5 31 2" # Disable cronjob by giving it a schedule that will never run
           concurrencyPolicy: Forbid
-          schedule: "0 0 * * 0"  #  Run every Sunday at midnight
+          schedule: "0 0 * * 0" #  Run every Sunday at midnight
           ttlSecondsAfterFinished: 86400
           startingDeadlineSeconds: 30
           successfulJobsHistory: 1
@@ -47,13 +47,13 @@ spec:
               repository: ghcr.io/jmbannon/ytdl-sub
               tag: 2024.06.03.post1
             command:
-            - bash
-            - -c
-            - |
-              set -e
-              ytdl-sub --log-level=debug \
-                      --config=/config/config.yml \
-                      sub /config/subscriptions.yml
+              - bash
+              - -c
+              - |
+                set -e
+                ytdl-sub --log-level=debug \
+                        --config=/config/config.yml \
+                        sub /config/subscriptions.yml
             # securityContext:
             #   allowPrivilegeEscalation: false
             #   capabilities:
@@ -75,14 +75,14 @@ spec:
         type: configMap
         # defaultMode: 0755
         globalMounts:
-        - path: /config
-          readOnly: true
+          - path: /config
+            readOnly: true
       tmp:
         type: emptyDir
         globalMounts:
-        - path: /tmp/ytdl-sub
+          - path: /tmp/ytdl-sub
       media:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-        - path: /media
+          - path: /media

@@ -24,5 +24,5 @@ spec:
       APP: qbittorrent
       VOLSYNC_CAPACITY: 2Gi
   components:
-  - ../../../../components/volsync
-  - ../../../../components/gatus/internal
+    - ../../../../components/volsync
+    - ../../../../components/gatus/internal

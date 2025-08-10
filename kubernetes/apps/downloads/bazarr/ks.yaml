@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: bazarr
   dependsOn:
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: external-secrets-stores
+      namespace: kube-system
 
   path: ./kubernetes/apps/downloads/bazarr/app
   prune: true
@@ -28,6 +28,6 @@ spec:
       APP: bazarr
       VOLSYNC_CAPACITY: 2Gi
   components:
-  - ../../../../components/keda/nas-scaler
-  - ../../../../components/volsync
-  - ../../../../components/gatus/internal
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/volsync
+    - ../../../../components/gatus/internal

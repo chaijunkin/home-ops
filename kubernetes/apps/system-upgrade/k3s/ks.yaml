@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: system-upgrade-k3s
   dependsOn:
-  - name: system-upgrade-controller
+    - name: system-upgrade-controller
   path: ./kubernetes/apps/system-upgrade/k3s/app
   prune: true
   sourceRef:

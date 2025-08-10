@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: dragonfly-operator
   dependsOn:
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/database/dragonfly-operator/app
   prune: true
   sourceRef:
@@ -34,8 +34,8 @@ spec:
     labels:
       app.kubernetes.io/name: dragonfly-cluster
   dependsOn:
-  - name: dragonfly-operator
-    namespace: database
+    - name: dragonfly-operator
+      namespace: database
   path: ./kubernetes/apps/database/dragonfly-operator/cluster
   prune: true
   sourceRef:

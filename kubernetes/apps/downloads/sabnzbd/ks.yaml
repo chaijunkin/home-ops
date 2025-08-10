@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: sabnzbd
   dependsOn:
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: external-secrets-stores
+      namespace: kube-system
   path: ./kubernetes/apps/downloads/sabnzbd/app
   prune: true
   sourceRef:
@@ -28,5 +28,5 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: sab
   components:
-  - ../../../../components/volsync
-  - ../../../../components/gatus/internal
+    - ../../../../components/volsync
+    - ../../../../components/gatus/internal

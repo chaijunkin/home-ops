@@ -5,7 +5,7 @@ defaultSecurityContext: &defaultSecurityContext
   securityContext:
     allowPrivilegeEscalation: false
     readOnlyRootFilesystem: true
-    capabilities: 
+    capabilities:
       drop: ["ALL"]
     seccompProfile:
       type: RuntimeDefault
@@ -25,7 +25,6 @@ mediaSecurityContext: &mediaSecurityContext
     runAsGroup: 568
     fsGroup: 568
     fsGroupChangePolicy: OnRootMismatch
-
 # Example usage in HelmRelease:
 # controllers:
 #   main:

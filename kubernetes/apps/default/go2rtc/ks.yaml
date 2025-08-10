@@ -23,4 +23,4 @@ spec:
     substitute:
       APP: go2rtc
   components:
-  - ../../../../components/gatus/guarded
+    - ../../../../components/gatus/guarded

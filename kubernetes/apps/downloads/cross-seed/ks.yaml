@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: cross-seed
   dependsOn:
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: external-secrets-stores
+      namespace: kube-system
   path: ./kubernetes/apps/downloads/cross-seed/app
   prune: true
   sourceRef:
@@ -27,4 +27,4 @@ spec:
       APP: cross-seed
       VOLSYNC_CAPACITY: 5Gi
   components:
-  - ../../../../components/volsync
+    - ../../../../components/volsync

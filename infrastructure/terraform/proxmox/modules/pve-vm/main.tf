@@ -30,7 +30,7 @@ resource "proxmox_vm_qemu" "qemu_vm" {
   #   content {
   #     host   = hostpci.value.host
   #     rombar = hostpci.value.rombar
-  #     pcie   = hostpci.value.pcie 
+  #     pcie   = hostpci.value.pcie
   #   }
   # }
 
@@ -67,7 +67,7 @@ resource "proxmox_vm_qemu" "qemu_vm" {
 }
 
 // Allow time for provisioning, initial boot, & cloud-init to complete before continuing.
-// This is a rudimentary approach, but combined with Ansible wait_for port check, works for now. 
+// This is a rudimentary approach, but combined with Ansible wait_for port check, works for now.
 # resource "time_sleep" "wait_90_sec" {
 #   depends_on      = [proxmox_vm_qemu.qemu_vm]
 #   create_duration = "90s"
@@ -78,8 +78,8 @@ resource "proxmox_vm_qemu" "qemu_vm" {
 //  create_duration = "90s"
 //}
 
-// Post-provisioning pre-Ansible connectivity check before handoff to Ansible in parent module. 
-// Default timeout of 5 minutes. 
+// Post-provisioning pre-Ansible connectivity check before handoff to Ansible in parent module.
+// Default timeout of 5 minutes.
 //resource "null_resource" "provisioning" {
 //  depends_on = [time_sleep.wait_90_sec]
 //  provisioner "remote-exec" {

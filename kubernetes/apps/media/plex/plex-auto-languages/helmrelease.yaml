@@ -34,8 +34,8 @@ spec:
               TZ: Asia/Kuala_Lumpur
               PLEX_URL: "http://plex.media.svc.cluster.local:32400"
             envFrom:
-            - secretRef:
-                name: plex-secret
+              - secretRef:
+                  name: plex-secret
             resources:
               requests:
                 cpu: 10m

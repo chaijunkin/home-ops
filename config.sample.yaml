@@ -1,5 +1,4 @@
 ---
-
 #
 # 1. (Required) Cluster details - Cluster represents the Kubernetes cluster layer and any additional customizations
 #
@@ -45,13 +44,14 @@ bootstrap_node_default_gateway: ""
 
 # (Required) Use only 1, 3 or more ODD number of controller nodes, recommended is 3
 #   Worker nodes are optional
-bootstrap_node_inventory: []
-    # - name: ""          # Name of the node (must match [a-z0-9-\.]+)
-    #   address: ""       # IP address of the node
-    #   controller: true  # (Required) Set to true if this is a controller node
-    #   ssh_user: ""      # (Required: k3s) SSH username of the node
-    #   talos_disk: ""    # (Required: Talos) Device path or serial number of the disk for this node
-    # ...
+bootstrap_node_inventory:
+  []
+  # - name: ""          # Name of the node (must match [a-z0-9-\.]+)
+  #   address: ""       # IP address of the node
+  #   controller: true  # (Required) Set to true if this is a controller node
+  #   ssh_user: ""      # (Required: k3s) SSH username of the node
+  #   talos_disk: ""    # (Required: Talos) Device path or serial number of the disk for this node
+  # ...
 
 # (Optional) The DNS server to use for the cluster, this can be an existing
 #   local DNS server or a public one.
@@ -104,7 +104,7 @@ bootstrap_bgp:
   peers: []
   # (Required) Set the BGP Autonomous System Number for the router(s) and nodes.
   #  If these match, iBGP will be used. If not, eBGP will be used.
-  peer_asn: ""  # Router(s) AS
+  peer_asn: "" # Router(s) AS
   local_asn: "" # Node(s) AS
   # (Required) The advertised CIDR for the cluster, this must NOT overlap with any
   #   existing networks and is usually a /16 (64K IPs).
@@ -195,7 +195,6 @@ bootstrap_cloudflare:
     # The Load balancer IP for external ingress, choose an available IP
     #   in your nodes host network that is NOT being used. This is announced over L2.
     ingress_vip: ""
-
 # (Optional) Feature gates are used to enable experimental features
 # bootstrap_feature_gates:
 #   # Enable Dual Stack IPv4 first

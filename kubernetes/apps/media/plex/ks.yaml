@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: plex
   dependsOn:
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/media/plex/app
   prune: true
   sourceRef:
@@ -28,8 +28,8 @@ spec:
       GATUS_URL_PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
   components:
-  - ../../../../components/volsync
-  - ../../../../components/gatus/external
+    - ../../../../components/volsync
+    - ../../../../components/gatus/external
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -42,8 +42,8 @@ spec:
     labels:
       app.kubernetes.io/name: plex-auto-languages
   dependsOn:
-  - name: plex
-    namespace: media
+    - name: plex
+      namespace: media
   path: ./kubernetes/apps/media/plex/plex-auto-languages
   prune: true
   sourceRef:
@@ -66,10 +66,10 @@ spec:
     labels:
       app.kubernetes.io/name: plex-image-cleanup
   dependsOn:
-  - name: plex
-    namespace: media
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: plex
+      namespace: media
+    - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/media/plex/plex-image-cleanup
   prune: true
   sourceRef:

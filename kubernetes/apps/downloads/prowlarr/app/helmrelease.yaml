@@ -36,8 +36,8 @@ spec:
               PROWLARR__UPDATE__BRANCH: develop
               TZ: Asia/Kuala_Lumpur
             envFrom:
-            - secretRef:
-                name: "{{ .Release.Name }}-secret"
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -89,12 +89,12 @@ spec:
           external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
         className: internal
         hosts:
-        - host: &host "prowlarr.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "prowlarr.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
     persistence:
       config:
         existingClaim: *app

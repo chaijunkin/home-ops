@@ -10,4 +10,3 @@ resources:
   - ./speedtest-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
   # - ./tautulli-exporter/ks.yaml
-

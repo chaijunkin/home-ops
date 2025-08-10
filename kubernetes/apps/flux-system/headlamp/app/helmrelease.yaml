@@ -78,7 +78,8 @@ spec:
         # kubernetes.io/tls-acme: "true"
 
       # -- Additional labels to add to the Ingress resource
-      labels: {}
+      labels:
+        {}
         # app.kubernetes.io/part-of: traefik
         # environment: prod
 

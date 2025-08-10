@@ -6,4 +6,3 @@ resources:
   - ./alerts
   - ./repos
   - ./sops
-

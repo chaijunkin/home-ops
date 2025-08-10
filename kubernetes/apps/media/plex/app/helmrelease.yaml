@@ -21,10 +21,10 @@ spec:
     remediation:
       retries: 3
   dependsOn:
-  - name: intel-device-plugin-gpu
-    namespace: kube-system
-  - name: volsync
-    namespace: volsync-system
+    - name: intel-device-plugin-gpu
+      namespace: kube-system
+    - name: volsync
+      namespace: volsync-system
   values:
     controllers:
       plex:
@@ -41,8 +41,8 @@ spec:
               ALLOWED_NETWORKS: "10.0.0.0/8"
               PLEX_NO_AUTH_NETWORKS: "10.0.0.0/8"
             envFrom:
-            - secretRef:
-                name: plex-secret
+              - secretRef:
+                  name: plex-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -66,8 +66,8 @@ spec:
               requests:
                 cpu: 10m
               # limits:
-                # gpu.intel.com/i915: 1
-                # memory: 16G
+              # gpu.intel.com/i915: 1
+              # memory: 16G
               limits:
                 memory: 512Mi
         pod:
@@ -104,15 +104,15 @@ spec:
           # external-dns.alpha.kubernetes.io/target: external.cloudjur.com
           # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         hosts:
-        - host: &host "{{ .Release.Name }}.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "{{ .Release.Name }}.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         existingClaim: *app
@@ -120,11 +120,11 @@ spec:
       plex-cache:
         existingClaim: plex-cache
         globalMounts:
-        - path: /config/Library/Application Support/Plex Media Server/Cache
+          - path: /config/Library/Application Support/Plex Media Server/Cache
       logs:
         type: emptyDir
         globalMounts:
-        - path: /config/Library/Application Support/Plex Media Server/Logs
+          - path: /config/Library/Application Support/Plex Media Server/Logs
       tmp:
         type: emptyDir
       transcode:
@@ -133,4 +133,4 @@ spec:
         enabled: true
         existingClaim: pvc-smb-media
         globalMounts:
-        - path: /media
+          - path: /media

@@ -33,8 +33,8 @@ spec:
               tag: 16.4
               pullPolicy: IfNotPresent
             envFrom:
-            - secretRef:
-                name: miniflux-secret
+              - secretRef:
+                  name: miniflux-secret
 
         containers:
           main:
@@ -58,8 +58,8 @@ spec:
               PORT: &port 80
               RUN_MIGRATIONS: "1"
             envFrom:
-            - secretRef:
-                name: miniflux-secret
+              - secretRef:
+                  name: miniflux-secret
             resources:
               requests:
                 cpu: 10m
@@ -88,16 +88,15 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/miniflux.png
           external-dns.alpha.kubernetes.io/target: "external.cloudjur.com"
         hosts:
-        - host: &host "miniflux.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              name: main
-              port: http
+          - host: &host "miniflux.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
-
+          - hosts:
+              - *host
 ## EXECUTE ME
 ### miniflux /var/www/miniflux/bin/console doctrine:migrations:migrate --env=prod --no-interaction
 

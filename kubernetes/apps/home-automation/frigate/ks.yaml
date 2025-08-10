@@ -10,10 +10,10 @@ spec:
     labels:
       app.kubernetes.io/name: frigate
   dependsOn:
-  - name: emqx-cluster
-  - name: external-secrets-stores
-    namespace: kube-system
-  - name: node-feature-discovery-rules
+    - name: emqx-cluster
+    - name: external-secrets-stores
+      namespace: kube-system
+    - name: node-feature-discovery-rules
   path: ./kubernetes/apps/home-automation/frigate/app
   prune: true
   sourceRef:
@@ -29,5 +29,5 @@ spec:
       APP: frigate
       VOLSYNC_CAPACITY: 5Gi
   components:
-  - ../../../../components/volsync
-  - ../../../../components/gatus/internal
+    - ../../../../components/volsync
+    - ../../../../components/gatus/internal

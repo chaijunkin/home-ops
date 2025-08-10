@@ -64,7 +64,7 @@ spec:
     controller:
       name: csi-smb-controller
       replicas: 1
-      dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+      dnsPolicy: ClusterFirstWithHostNet # available values: Default, ClusterFirstWithHostNet, ClusterFirst
       metricsPort: 29644
       livenessProbe:
         healthPort: 29642
@@ -115,7 +115,7 @@ spec:
     linux:
       enabled: true
       dsName: csi-smb-node # daemonset name
-      dnsPolicy: ClusterFirstWithHostNet  # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+      dnsPolicy: ClusterFirstWithHostNet # available values: Default, ClusterFirstWithHostNet, ClusterFirst
       kubelet: /var/lib/kubelet
       # krb5CacheDirectory: ""
       # krb5Prefix: "krb5cc_"
@@ -188,4 +188,4 @@ spec:
     ## Security context give the opportunity to run container as nonroot by setting a securityContext
     ## by example :
     ## securityContext: { runAsUser: 1001 }
-    securityContext: {seccompProfile: {type: RuntimeDefault}}
+    securityContext: { seccompProfile: { type: RuntimeDefault } }

@@ -15,7 +15,7 @@ spec:
   targetNamespace: observability
   wait: true
   dependsOn:
-  - name: kube-prometheus-stack
-    namespace: observability
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: kube-prometheus-stack
+      namespace: observability
+    - name: external-secrets-bitwarden
+      namespace: kube-system

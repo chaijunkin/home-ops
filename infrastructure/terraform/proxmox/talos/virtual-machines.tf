@@ -81,10 +81,10 @@ resource "proxmox_virtual_environment_vm" "this" {
     content {
       # Passthrough iGPU
       ### VIRTUAL
-      device   = "hostpci0"
-      id       = "0000:00:02.0"
-      rombar   = true
-      pcie = false
+      device = "hostpci0"
+      id     = "0000:00:02.0"
+      rombar = true
+      pcie   = false
       # ### PHYSICAL
       # device  = "hostpci0"
       # mapping = "iGPU"

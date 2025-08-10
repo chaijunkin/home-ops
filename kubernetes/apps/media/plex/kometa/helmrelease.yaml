@@ -39,19 +39,19 @@ spec:
               repository: kometateam/kometa
               tag: v2.0.2@sha256:2f4515f85b76c83e5bf2c6618af22f4c0c453e4bd5b8f9a00595a0f81f603bef
             command:
-            - /bin/sh
-            - -c
+              - /bin/sh
+              - -c
             args:
-            - |
-              python3 kometa.py --run --read-only-config --run-libraries "Anime";
-              python3 kometa.py --run --read-only-config --run-libraries "Movies";
+              - |
+                python3 kometa.py --run --read-only-config --run-libraries "Anime";
+                python3 kometa.py --run --read-only-config --run-libraries "Movies";
 
-              # python3 kometa.py --run --read-only-config --run-libraries "TV Shows";
+                # python3 kometa.py --run --read-only-config --run-libraries "TV Shows";
             env:
               TZ: *timeZone
             envFrom:
-            - secretRef:
-                name: kometa-secret
+              - secretRef:
+                  name: kometa-secret
             resources:
               requests:
                 cpu: 10m
@@ -62,7 +62,7 @@ spec:
               readOnlyRootFilesystem: true
               capabilities:
                 drop:
-                - ALL
+                  - ALL
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -77,10 +77,10 @@ spec:
         type: configMap
         name: kometa-configmap
         globalMounts:
-        - path: /config/config.yml
-          subPath: config.yml
-          readOnly: true
+          - path: /config/config.yml
+            subPath: config.yml
+            readOnly: true
       logs:
         type: emptyDir
         globalMounts:
-        - path: /config/logs
+          - path: /config/logs

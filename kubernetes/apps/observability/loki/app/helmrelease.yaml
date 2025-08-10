@@ -25,34 +25,34 @@ spec:
   uninstall:
     keepHistory: false
   valuesFrom:
-  - targetPath: loki.storage.bucketNames.chunks
-    kind: Secret
-    name: loki-secret
-    valuesKey: BUCKET_NAME
-  - targetPath: loki.storage.bucketNames.ruler
-    kind: Secret
-    name: loki-secret
-    valuesKey: BUCKET_NAME
-  - targetPath: loki.storage.bucketNames.admin
-    kind: Secret
-    name: loki-secret
-    valuesKey: BUCKET_NAME
-  - targetPath: loki.storage.s3.endpoint
-    kind: Secret
-    name: loki-secret
-    valuesKey: BUCKET_HOST
-  - targetPath: loki.storage.s3.accessKeyId
-    kind: Secret
-    name: loki-secret
-    valuesKey: AWS_ACCESS_KEY_ID
-  - targetPath: loki.storage.s3.secretAccessKey
-    kind: Secret
-    name: loki-secret
-    valuesKey: AWS_SECRET_ACCESS_KEY
-  - kind: Secret
-    name: loki-secret
-    valuesKey: BUCKET_REGION
-    targetPath: loki.storage.s3.region
+    - targetPath: loki.storage.bucketNames.chunks
+      kind: Secret
+      name: loki-secret
+      valuesKey: BUCKET_NAME
+    - targetPath: loki.storage.bucketNames.ruler
+      kind: Secret
+      name: loki-secret
+      valuesKey: BUCKET_NAME
+    - targetPath: loki.storage.bucketNames.admin
+      kind: Secret
+      name: loki-secret
+      valuesKey: BUCKET_NAME
+    - targetPath: loki.storage.s3.endpoint
+      kind: Secret
+      name: loki-secret
+      valuesKey: BUCKET_HOST
+    - targetPath: loki.storage.s3.accessKeyId
+      kind: Secret
+      name: loki-secret
+      valuesKey: AWS_ACCESS_KEY_ID
+    - targetPath: loki.storage.s3.secretAccessKey
+      kind: Secret
+      name: loki-secret
+      valuesKey: AWS_SECRET_ACCESS_KEY
+    - kind: Secret
+      name: loki-secret
+      valuesKey: BUCKET_REGION
+      targetPath: loki.storage.s3.region
   values:
     deploymentMode: SimpleScalable
 
@@ -200,7 +200,7 @@ spec:
 
     lokiCanary:
       enabled: false
-    chunksCache:  ### FK THIS TAKE ME 3GB on loki-cache :)
+    chunksCache: ### FK THIS TAKE ME 3GB on loki-cache :)
       enabled: false
     resultsCache:
       enabled: false

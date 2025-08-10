@@ -26,9 +26,9 @@ spec:
               tag: 16
               pullPolicy: IfNotPresent
             envFrom: &envFrom
-            - secretRef:
-                name: firefly-secret
-              # TODO: set smtp secret
+              - secretRef:
+                  name: firefly-secret
+                # TODO: set smtp secret
         containers:
           main:
             image:
@@ -37,7 +37,7 @@ spec:
             envFrom: *envFrom
             env:
               TZ: "Asia/Kuala_Lumpur"
-              TRUSTED_PROXIES: "**"  # TODO: This should be changed..
+              TRUSTED_PROXIES: "**" # TODO: This should be changed..
             resources:
               requests:
                 cpu: 10m
@@ -65,15 +65,15 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
           # external-dns.alpha.kubernetes.io/target: external.cloudjur.com
         hosts:
-        - host: &host "money.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              name: main
-              port: http
+          - host: &host "money.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
 
     persistence:
       data:

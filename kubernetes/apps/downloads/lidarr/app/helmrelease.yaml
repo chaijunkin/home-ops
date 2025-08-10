@@ -50,8 +50,8 @@ spec:
               LIDARR__PORT: &port 80
               LIDARR__LOG_LEVEL: info
             envFrom:
-            - secretRef:
-                name: lidarr-secret
+              - secretRef:
+                  name: lidarr-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -101,15 +101,15 @@ spec:
           gethomepage.dev/widget.url: http://lidarr.downloads
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_LIDARR_TOKEN}}"
         hosts:
-        - host: &host "lidarr.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              name: main
-              port: http
+          - host: &host "lidarr.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         enabled: false

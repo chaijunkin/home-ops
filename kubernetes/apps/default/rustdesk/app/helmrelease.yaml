@@ -55,7 +55,7 @@ spec:
         ports:
           rustdesk-5:
             enabled: true
-            port: 21117  # Relay server
+            port: 21117 # Relay server
             protocol: "TCP"
           rustdesk-6:
             enabled: true
@@ -74,7 +74,7 @@ spec:
             protocol: "TCP"
           rustdesk-2:
             enabled: true
-            port: 21116  # ID server
+            port: 21116 # ID server
             protocol: "TCP"
           rustdesk-3:
             enabled: true

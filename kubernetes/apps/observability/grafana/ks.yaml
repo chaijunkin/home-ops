@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: grafana
   dependsOn:
-  - name: external-secrets-bitwarden
-    namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/observability/grafana/app
   prune: true
   sourceRef:
@@ -26,4 +26,4 @@ spec:
     substitute:
       APP: grafana
   components:
-  - ../../../../components/gatus/external
+    - ../../../../components/gatus/external

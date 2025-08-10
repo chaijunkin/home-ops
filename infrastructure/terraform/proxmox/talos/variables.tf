@@ -36,28 +36,28 @@ variable "cluster" {
 variable "nodes" {
   description = "Configuration for cluster nodes"
   type = map(object({
-    host_node     = string
-    machine_type  = string
-    datastore_id  = optional(string, "vm-store")
-    ip            = string
-    dns           = optional(list(string))
-    dns_domain    = optional(string)
+    host_node    = string
+    machine_type = string
+    datastore_id = optional(string, "vm-store")
+    ip           = string
+    dns          = optional(list(string))
+    dns_domain   = optional(string)
     network_devices = optional(list(object({
       mac_address = string
       tag         = optional(number)
-      ip_address  = optional(string)  # IP address for this specific interface
-      gateway     = optional(string)  # Gateway for this specific interface
+      ip_address  = optional(string) # IP address for this specific interface
+      gateway     = optional(string) # Gateway for this specific interface
     })), [])
-    disk_iothread     = optional(bool, true)
-    disk_cache        = optional(string, "writethrough")
-    disk_discard      = optional(string, "on")
-    disk_ssd          = optional(bool, true)
-    disk_file_format  = optional(string, "raw")
-    disk_size         = optional(number, 200)
-    vm_id         = number
-    cpu           = number
-    ram_dedicated = number
-    update        = optional(bool, false)
-    igpu          = optional(bool, false)
+    disk_iothread    = optional(bool, true)
+    disk_cache       = optional(string, "writethrough")
+    disk_discard     = optional(string, "on")
+    disk_ssd         = optional(bool, true)
+    disk_file_format = optional(string, "raw")
+    disk_size        = optional(number, 200)
+    vm_id            = number
+    cpu              = number
+    ram_dedicated    = number
+    update           = optional(bool, false)
+    igpu             = optional(bool, false)
   }))
 }

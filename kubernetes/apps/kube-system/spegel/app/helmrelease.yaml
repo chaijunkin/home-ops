@@ -23,6 +23,6 @@ spec:
   uninstall:
     keepHistory: false
   valuesFrom:
-  - kind: ConfigMap
-    name: spegel-values
-    valuesKey: values.yaml
+    - kind: ConfigMap
+      name: spegel-values
+      valuesKey: values.yaml

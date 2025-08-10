@@ -37,4 +37,4 @@ spec:
     namespace: flux-system
   wait: true
   dependsOn:
-  - name: multus
+    - name: multus

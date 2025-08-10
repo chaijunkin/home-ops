@@ -1,4 +1,4 @@
-// "Live" Terrafolocal.rm infra config for a nest k3s (k3s.io) cluster 
+// "Live" Terrafolocal.rm infra config for a nest k3s (k3s.io) cluster
 // running on Proxmox VMs. Post-provisioning config handed off to Ansible.
 
 // Create k3s server node VM

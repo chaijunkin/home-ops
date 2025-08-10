@@ -79,15 +79,15 @@ spec:
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_BAZARR_TOKEN}}` }}"
 
         hosts:
-        - host: &host "{{ .Release.Name }}.cloudjur.com"
-          paths:
-          - path: /
-            service:
-              identifier: app
-              port: http
+          - host: &host "{{ .Release.Name }}.cloudjur.com"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
         tls:
-        - hosts:
-          - *host
+          - hosts:
+              - *host
     persistence:
       config:
         enabled: true

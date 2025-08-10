@@ -16,10 +16,10 @@ spec:
     name: flux-system
     namespace: flux-system
   dependsOn:
-  - name: external-secrets-bitwarden
-    namespace: kube-system
-  - name: external-secrets-stores
-    namespace: kube-system
+    - name: external-secrets-bitwarden
+      namespace: kube-system
+    - name: external-secrets-stores
+      namespace: kube-system
   wait: false
   interval: 30m
   retryInterval: 1m
@@ -28,7 +28,7 @@ spec:
     substitute:
       APP: minio
       GATUS_SUBDOMAIN: s3
-      GATUS_STATUS: '403'
+      GATUS_STATUS: "403"
   components:
-  - ../../../../components/keda/nas-scaler
-  - ../../../../components/gatus/internal
+    - ../../../../components/keda/nas-scaler
+    - ../../../../components/gatus/internal

@@ -7,9 +7,9 @@ module "echo_server_internal" {
   domain = "echo-server-internal.${var.CLUSTER_DOMAIN}"
   group  = authentik_group.default["infrastructure"].id
 
-  policy_engine_mode        = "any"
-  authorization_flow_uuid   = authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow_uuid    = data.authentik_flow.default-provider-invalidation-flow.id
+  policy_engine_mode      = "any"
+  authorization_flow_uuid = authentik_flow.provider-authorization-implicit-consent.uuid
+  invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
 
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
 }
@@ -28,9 +28,9 @@ module "echo_server_external" {
   domain = "echo-server-external.${var.CLUSTER_DOMAIN}"
   group  = authentik_group.default["infrastructure"].id
 
-  policy_engine_mode        = "any"
-  authorization_flow_uuid   = authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow_uuid    = data.authentik_flow.default-provider-invalidation-flow.id
+  policy_engine_mode      = "any"
+  authorization_flow_uuid = authentik_flow.provider-authorization-implicit-consent.uuid
+  invalidation_flow_uuid  = data.authentik_flow.default-provider-invalidation-flow.id
 
   meta_icon = "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/web-check.png"
 }

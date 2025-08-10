@@ -40,7 +40,7 @@
       when:
         - k3s_primary_control_node
         - (k3s_server_manifests_templates | length > 0
-            or k3s_server_manifests_urls | length > 0)
+          or k3s_server_manifests_urls | length > 0)
       kubernetes.core.k8s_info:
         kubeconfig: /etc/rancher/k3s/k3s.yaml
         kind: "{{ item.kind }}"
