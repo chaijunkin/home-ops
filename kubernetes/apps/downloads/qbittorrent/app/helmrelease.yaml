@@ -63,9 +63,9 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
               runAsNonRoot: true
-              runAsUser: 1002
-              runAsGroup: 1002
-              fsGroup: 1002
+              runAsUser: 1004
+              runAsGroup: 1004
+              fsGroup: 1004
               fsGroupChangePolicy: OnRootMismatch
             resources:
               requests:
