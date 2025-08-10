@@ -63,10 +63,10 @@ spec:
               # readOnlyRootFilesystem: true
               # capabilities: { drop: ["ALL"] }
               # runAsNonRoot: true
-              runAsUser: 1004
-              runAsGroup: 1004
-              fsGroup: 1004
-              fsGroupChangePolicy: OnRootMismatch
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
+              # fsGroupChangePolicy: OnRootMismatch
             resources:
               requests:
                 cpu: 10m
