@@ -13,7 +13,6 @@ resources:
   - ./autobangumi/ks.yaml
   - ./bazarr/ks.yaml #
   - ./cross-seed/ks.yaml
-  # TODO migrate to newest app-template
   - ./flaresolverr/ks.yaml
   # TODO maybe new service for music searching
   # - ./lidarr/ks.yaml

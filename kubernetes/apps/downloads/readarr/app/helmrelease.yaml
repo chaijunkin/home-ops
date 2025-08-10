@@ -1,18 +1,13 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/app/helmrelease-helm-v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app readarr
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 2.6.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   maxHistory: 2
   install:
     remediation:
@@ -25,7 +20,7 @@ spec:
     keepHistory: false
   values:
     controllers:
-      main:
+      readarr:
         annotations:
           reloader.stakater.com/auto: "true"
         # initContainers:
@@ -38,7 +33,7 @@ spec:
         #       - secretRef:
         #           name: readarr-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/readarr-develop
               tag: 0.3.27.2538@sha256:6850caa980bfea336b6113c37f59c40a42f61ca2714d5b8f9c13b5933e33c0f2
@@ -63,15 +58,16 @@ spec:
             fsGroup: 0
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      app:
         type: LoadBalancer
+        controller: *app
         annotations:
           lbipam.cilium.io/ips: 10.10.30.41
         ports:
           http:
             port: *port
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         annotations:
@@ -83,13 +79,13 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/readarr.png
           gethomepage.dev/widget.type: readarr
           gethomepage.dev/widget.url: http://readarr.downloads
-          gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_READARR_TOKEN}}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
         hosts:
           - host: &host "readarr.cloudjur.com"
             paths:
               - path: /
                 service:
-                  name: main
+                  name: app
                   port: http
         tls:
           - hosts:
