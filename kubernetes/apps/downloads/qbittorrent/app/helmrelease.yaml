@@ -124,8 +124,8 @@ spec:
 
     service:
       app:
-        # forceRename: "{{ .Release.Name }}"
-        # primary: true
+        forceRename: "{{ .Release.Name }}"
+        primary: true
         ports:
           http:
             port: *port
