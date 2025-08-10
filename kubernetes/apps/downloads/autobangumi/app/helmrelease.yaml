@@ -113,6 +113,9 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /app/config
+            subPath: config
+          - path: /app/data
+            subPath: data
       media:
         enabled: true
         existingClaim: pvc-smb-media
