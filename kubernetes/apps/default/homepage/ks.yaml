@@ -28,4 +28,4 @@ spec:
     substitute:
       APP: homepage
   components:
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/guarded

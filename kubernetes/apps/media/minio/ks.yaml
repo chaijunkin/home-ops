@@ -31,4 +31,4 @@ spec:
       GATUS_STATUS: "403"
   components:
     - ../../../../components/keda/nas-scaler
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/guarded

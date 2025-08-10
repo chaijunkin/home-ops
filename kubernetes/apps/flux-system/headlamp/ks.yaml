@@ -21,4 +21,4 @@ spec:
       APP: *app
       # GATUS_SUBDOMAIN: k8s
   components:
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/guarded

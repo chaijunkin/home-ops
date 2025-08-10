@@ -23,4 +23,4 @@ spec:
   interval: 30m
   timeout: 5m
   components:
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/guarded

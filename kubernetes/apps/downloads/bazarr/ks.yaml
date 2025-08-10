@@ -30,4 +30,4 @@ spec:
   components:
     - ../../../../components/keda/nas-scaler
     - ../../../../components/volsync
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/guarded

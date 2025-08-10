@@ -29,4 +29,4 @@ spec:
       GATUS_SUBDOMAIN: sab
   components:
     - ../../../../components/volsync
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/guarded

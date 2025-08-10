@@ -28,4 +28,4 @@ spec:
     substitute:
       APP: searxng
   components:
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/guarded
