@@ -29,6 +29,19 @@ variable "grafana_secret" {
   sensitive   = true
 }
 
+variable "open_webui_id" {
+  type        = string
+  description = "Open Web UI Client ID"
+  sensitive   = true
+}
+
+variable "open_webui_secret" {
+  type        = string
+  description = "Open Web UI Client Secret"
+  sensitive   = true
+}
+
+
 variable "headlamp_id" {
   type        = string
   description = "Headlamp Client ID"

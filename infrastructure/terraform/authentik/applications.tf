@@ -5,7 +5,7 @@ locals {
     "headlamp",
     # "kyoo",
     # "lubelogger",
-    # "open-webui",
+    "open-webui",
     # "paperless",
     # "portainer"
   ]
@@ -53,14 +53,14 @@ locals {
     #   redirect_uri  = "https://lubelogger.${var.CLUSTER_DOMAIN}/Login/RemoteAuth"
     #   launch_url    = "https://lubelogger.${var.CLUSTER_DOMAIN}/Login/RemoteAuth"
     # },
-    # open-webui = {
-    #   client_id     = module.onepassword_application["open-webui"].fields["OPEN_WEBUI_CLIENT_ID"]
-    #   client_secret = module.onepassword_application["open-webui"].fields["OPEN_WEBUI_CLIENT_SECRET"]
-    #   group         = "home"
-    #   icon_url      = "https://raw.githubusercontent.com/open-webui/open-webui/refs/heads/main/static/favicon.png"
-    #   redirect_uri  = "https://chat.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
-    #   launch_url    = "https://chat.${var.CLUSTER_DOMAIN}/auth"
-    # },
+    open-webui = {
+      client_id     = var.open_webui_id
+      client_secret = var.open_webui_secret
+      group         = "home"
+      icon_url      = "https://raw.githubusercontent.com/open-webui/open-webui/refs/heads/main/static/favicon.png"
+      redirect_uri  = "https://chat.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
+      launch_url    = "https://chat.${var.CLUSTER_DOMAIN}/auth"
+    },
     # paperless = {
     #   client_id     = module.onepassword_application["paperless"].fields["PAPERLESS_CLIENT_ID"]
     #   client_secret = module.onepassword_application["paperless"].fields["PAPERLESS_CLIENT_SECRET"]
