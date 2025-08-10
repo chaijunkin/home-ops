@@ -32,7 +32,7 @@ spec:
               tag: 5.1.2
             env:
               TZ: Asia/Kuala_Lumpur
-              QBT_WEBUI_PORT: &port 80
+              QBT_WEBUI_PORT: &port 8080
               QBT_TORRENTING_PORT: &torrentPort 50413
             # probes:
             #   liveness: &probes
@@ -53,16 +53,16 @@ spec:
             #       failureThreshold: 30
             #       periodSeconds: 10
             # securityContext:
-            #   # runAsUser: 1004
-            #   # runAsGroup: 1004
-            #   # fsGroup: 1004
+            #   # runAsUser: 1002
+            #   # runAsGroup: 1002
+            #   # fsGroup: 1002
             #   # allowPrivilegeEscalation: false
             #   # readOnlyRootFilesystem: true
             #   # capabilities: { drop: ["ALL"] }
             #   # runAsNonRoot: true
-            #   runAsUser: 1004
-            #   runAsGroup: 1004
-            #   fsGroup: 1004
+            #   runAsUser: 1002
+            #   runAsGroup: 1002
+            #   fsGroup: 1002
             #   fsGroupChangePolicy: OnRootMismatch
             resources:
               requests:
@@ -124,8 +124,9 @@ spec:
 
     service:
       app:
-        forceRename: "{{ .Release.Name }}"
-        primary: true
+        controller: *app
+        # forceRename: "{{ .Release.Name }}"
+        # primary: true
         ports:
           http:
             port: *port
