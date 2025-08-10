@@ -25,52 +25,52 @@ spec:
         setGateway: "true"
       annotations:
         setGateway: "true"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       qbittorrent:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          # gluetu3scalation: true
           app:
-            nameOverride: qbittorrent
             image:
               repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.1.2
+              tag: 5.1.2@sha256:9dd0164cc23e9c937e0af27fd7c3f627d1df30c182cf62ed34d3f129c55dc0e8
             env:
               TZ: Asia/Kuala_Lumpur
-              UMASK: "022"
-              QBITTORRENT__PORT: &port 8080
-              QBITTORRENT__BT_PORT: &port-bt "${SECRET_VPN_FORWARDED_PORT_1:=51820}"
-              # QBT_BitTorrent__Session__Interface: vxlan0
-              # QBT_BitTorrent__Session__InterfaceName: vxlan0
-              # QBT_Application__MemoryWorkingSetLimit:
-              #   valueFrom:
-              #     resourceFieldRef:
-              #       resource: limits.memory
-              #       containerName: app
-              #       divisor: 1Mi
-              QBT_Preferences__WebUI__AlternativeUIEnabled: false
-              QBT_Preferences__WebUI__AuthSubnetWhitelistEnabled: true
-              QBT_Preferences__WebUI__AuthSubnetWhitelist: |-
-                172.16.0.0/16, 10.1.2.0/24
-              # QBT_Preferences__WebUI__LocalHostAuth: false
-              # QBT_Preferences__WebUI__RootFolder: /addons/VueTorrent
+              QBT_WEBUI_PORT: &port 80
+              QBT_TORRENTING_PORT: &torrentPort 50413
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/v2/app/version
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 25m
-                memory: 1G
+                cpu: 100m
               limits:
-                memory: 10G
-          # reannounce:
-          #   image:
-          #     repository: ghcr.io/buroa/qbittools
-          #     tag: v0.11.0
-          #   args: ["reannounce", "-s", "localhost", "-p", "8080"]
-            securityContext:
-              runAsUser: 1004
-              runAsGroup: 1004
-              fsGroup: 1004
-              fsGroupChangePolicy: OnRootMismatch
+                memory: 18Gi
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
@@ -92,27 +92,6 @@ spec:
                 add:
                   - NET_ADMIN
               allowPrivilegeEscalation: false
-          # port-forward:
-          #   image:
-          #     repository: ghcr.io/bjw-s/gluetun-qb-port-sync
-          #     tag: 0.0.4@sha256:5fd1da9f2d6509c00b6d6f4b3b7ada6fa097b8134040fc8965b6c1dc8584dc6b
-          #   env:
-          #     GLUETUN_CONTROL_SERVER_HOST: localhost
-          #     GLUETUN_CONTROL_SERVER_PORT: 8000
-          #     QBITTORRENT_HOST: localhost
-          #     QBITTORRENT_WEBUI_PORT: *port
-          #     CRON_ENABLED: true
-          #     CRON_SCHEDULE: "*/5 * * * *"
-          #     LOG_TIMESTAMP: false
-          #   securityContext:
-          #     runAsUser: 568
-          #     runAsGroup: 568
-          #     runAsNonRoot: true
-          #     allowPrivilegeEscalation: false
-          #     readOnlyRootFilesystem: false
-          #     capabilities:
-          #       drop:
-          #         - ALL
         #  vuetorrent:
         #    dependsOn: app
         #    image:
@@ -141,22 +120,18 @@ spec:
 
     service:
       app:
-        controller: *app
-        # type: LoadBalancer
-        # annotations:
-        #   lbipam.cilium.io/ips: 10.10.30.16
+        forceRename: "{{ .Release.Name }}"
+        primary: true
         ports:
           http:
             port: *port
       bittorrent:
-        controller: *app
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.13
         ports:
-          bittorrent:
-            enabled: true
-            port: *port-bt
+          bittorrent-tcp:
+            port: *torrentPort
             protocol: TCP
     ingress:
       app:
@@ -181,7 +156,20 @@ spec:
         tls:
           - hosts:
               - *host
+    configMaps:
+      config:
+        data:
+          .qbt.toml: |
+            [qbittorrent]
+            addr = "http://localhost:80"
     persistence:
+      config-file:
+        type: configMap
+        name: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /config/.qbt.toml
+            subPath: .qbt.toml
+            readOnly: true
       config:
         existingClaim: *app
       media:
@@ -191,5 +179,8 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /addons
+      qbrr:
+        type: image
+        image: ghcr.io/buroa/qbrr:0.0.29@sha256:5090c88b212f62c40a7c1124dd469b6ce9ee8428e8d0784875ba49d6819d3992
       tmp:
         type: emptyDir

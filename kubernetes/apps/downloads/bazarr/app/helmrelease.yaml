@@ -10,70 +10,53 @@ spec:
     name: app-template
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-  - name: volsync
-    namespace: volsync-system
   values:
     controllers:
       bazarr:
         annotations:
           reloader.stakater.com/auto: "true"
-        # initContainers:
-        #   init-db:
-        #     image:
-        #       repository: ghcr.io/onedr0p/postgres-init
-        #       tag: 16
-        #     envFrom: &envFrom
-        #       - secretRef:
-        #           name: bazarr-secret
         containers:
           app:
             image:
               repository: ghcr.io/home-operations/bazarr
-              tag: 1.5.2
+              tag: 1.5.2@sha256:dbc87e5ce9e199709188e152e82b3ff5d33e6521a1b3d61e465aa75b4b739e7f
             env:
+              BAZARR__PORT: &port 80
               TZ: Asia/Kuala_Lumpur
-            envFrom:
-            - secretRef:
-                name: bazarr-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
-                memory: 256M
               limits:
-                memory: 1024M
-          subcleaner:
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.2.3
-            args:
-            - --repo=https://github.com/KBlixt/subcleaner
-            - --branch=master
-            - --wait=86400 # 1 day
-            - --root=/add-ons
-            resources:
-              requests:
-                cpu: 10m
-                memory: 10M
-              limits:
-                memory: 128M
-        pod:
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
-            fsGroup: 0
-            fsGroupChangePolicy: OnRootMismatch
-    service:
-      app:
-        controller: *app
-        ports:
-          http:
-            port: 6767
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     ingress:
       app:
         className: internal

@@ -37,7 +37,7 @@ spec:
                 sabnzbd.kube-system.svc.cluster.local,
                 sab.cloudjur.com,
                 sabnzbd.cloudjur.com
-              TZ: America/New_York
+              TZ: Asia/Kuala_Lumpur
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"
