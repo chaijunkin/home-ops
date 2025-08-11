@@ -93,9 +93,6 @@ spec:
         ports:
           http:
             port: *port
-    serviceMonitor:
-      app:
-        enabled: true
     ingress:
       app:
         enabled: true
@@ -119,8 +116,7 @@ spec:
           - hosts:
               - *host
     serviceAccount:
-      create: true
-      name: gatus
+      gatus: {}
     persistence:
       config:
         enabled: true
