@@ -23,4 +23,5 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
+      # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
       KUBE_VERSION: v1.33.3+k3s1
