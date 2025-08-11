@@ -1,3 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: volsync
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  url: oci://ghcr.io/backube/volsync/volsync
+  ref:
+    tag: 0.13.0
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -6,14 +18,6 @@ metadata:
   name: volsync
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: volsync
-      version: 0.13.0
-      sourceRef:
-        kind: HelmRepository
-        name: backube
-        namespace: flux-system
   maxHistory: 2
   install:
     remediation:
@@ -32,3 +36,6 @@ spec:
     replicaCount: 2 # 1 replica caused many leader election issues
     metrics:
       disableAuth: true
+  chartRef:
+    kind: OCIRepository
+    name: volsync

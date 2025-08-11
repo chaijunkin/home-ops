@@ -1,3 +1,15 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: external-dns
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  url: oci://ghcr.io/home-operations/charts-mirror/external-dns
+  ref:
+    tag: 1.14.4
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
@@ -19,14 +31,6 @@ metadata:
   name: &app external-dns
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: external-dns
-      version: 1.14.4
-      sourceRef:
-        kind: HelmRepository
-        name: external-dns
-        namespace: flux-system
   install:
     remediation:
       retries: 3
@@ -66,3 +70,6 @@ spec:
       enabled: true
     podAnnotations:
       secret.reloader.stakater.com/reload: external-dns-secret
+  chartRef:
+    kind: OCIRepository
+    name: external-dns

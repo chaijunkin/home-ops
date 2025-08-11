@@ -1,17 +1,22 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: csi-driver-smb
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  url: oci://ghcr.io/kubernetes-csi/csi-driver-smb/csi-driver-smb
+  ref:
+    tag: v1.12.0
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: csi-driver-smb
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: csi-driver-smb
-      version: v1.12.0
-      sourceRef:
-        kind: HelmRepository
-        name: csi-driver-smb
-        namespace: flux-system
   maxHistory: 2
   install:
     remediation:
@@ -45,33 +50,28 @@ spec:
         repository: ghcr.io/kubernetes-sigs/sig-windows/csi-provisioner
         tag: v1.1.2
         pullPolicy: IfNotPresent
-
     serviceAccount:
-      create: true # When true, service accounts will be created for you. Set to false if you want to use your own.
+      create: true
       controller: csi-smb-controller-sa
       node: csi-smb-node-sa
-
     rbac:
       create: true
       name: smb
-
     driver:
       name: smb.csi.k8s.io
-
     feature:
       enableGetVolumeStats: true
-
     controller:
       name: csi-smb-controller
       replicas: 1
-      dnsPolicy: ClusterFirstWithHostNet # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+      dnsPolicy: ClusterFirstWithHostNet
       metricsPort: 29644
       livenessProbe:
         healthPort: 29642
       runOnMaster: false
       runOnControlPlane: false
       logLevel: 5
-      workingMountDir: "/tmp"
+      workingMountDir: /tmp
       resources:
         csiProvisioner:
           limits:
@@ -94,16 +94,15 @@ spec:
       affinity: {}
       nodeSelector: {}
       tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Exists"
-          effect: "NoSchedule"
-        - key: "node-role.kubernetes.io/controlplane"
-          operator: "Exists"
-          effect: "NoSchedule"
-        - key: "node-role.kubernetes.io/control-plane"
-          operator: "Exists"
-          effect: "NoSchedule"
-
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/controlplane
+          operator: Exists
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+          effect: NoSchedule
     node:
       maxUnavailable: 1
       logLevel: 5
@@ -111,16 +110,13 @@ spec:
         healthPort: 29643
       affinity: {}
       nodeSelector: {}
-
     linux:
       enabled: true
-      dsName: csi-smb-node # daemonset name
-      dnsPolicy: ClusterFirstWithHostNet # available values: Default, ClusterFirstWithHostNet, ClusterFirst
+      dsName: csi-smb-node
+      dnsPolicy: ClusterFirstWithHostNet
       kubelet: /var/lib/kubelet
-      # krb5CacheDirectory: ""
-      # krb5Prefix: "krb5cc_"
       tolerations:
-        - operator: "Exists"
+        - operator: Exists
       resources:
         livenessProbe:
           limits:
@@ -140,16 +136,15 @@ spec:
           requests:
             cpu: 10m
             memory: 20Mi
-
     windows:
-      enabled: false # Unless you already had csi proxy installed, windows.csiproxy.enabled=true is required
-      dsName: csi-smb-node-win # daemonset name
-      kubelet: 'C:\var\lib\kubelet'
+      enabled: false
+      dsName: csi-smb-node-win
+      kubelet: C:\var\lib\kubelet
       removeSMBMappingDuringUnmount: true
       tolerations:
-        - key: "node.kubernetes.io/os"
-          operator: "Exists"
-          effect: "NoSchedule"
+        - key: node.kubernetes.io/os
+          operator: Exists
+          effect: NoSchedule
       resources:
         livenessProbe:
           limits:
@@ -170,22 +165,19 @@ spec:
             cpu: 10m
             memory: 40Mi
       csiproxy:
-        enabled: false # required if windows.enabled is true, but may be installed manually also
-        dsName: csi-proxy-win # daemonset name
+        enabled: false
+        dsName: csi-proxy-win
         tolerations: {}
         affinity: {}
         nodeSelector:
-          "kubernetes.io/os": windows
-
+          kubernetes.io/os: windows
     customLabels: {}
-    ## Collection of annotations to add to all the pods
     podAnnotations: {}
-    ## Collection of labels to add to all the pods
     podLabels: {}
-    ## Leverage a PriorityClass to ensure your pods survive resource shortages
-    ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
     priorityClassName: system-cluster-critical
-    ## Security context give the opportunity to run container as nonroot by setting a securityContext
-    ## by example :
-    ## securityContext: { runAsUser: 1001 }
-    securityContext: {seccompProfile: {type: RuntimeDefault}}
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+  chartRef:
+    kind: OCIRepository
+    name: csi-driver-smb

@@ -1,19 +1,22 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: node-feature-discovery
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  url: oci://ghcr.io/kubernetes-sigs/node-feature-discovery-charts/node-feature-discovery
+  ref:
+    tag: 0.16.0
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: node-feature-discovery
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: node-feature-discovery
-      version: 0.16.0
-      sourceRef:
-        kind: HelmRepository
-        name: node-feature-discovery
-        namespace: flux-system
   install:
     crds: CreateReplace
     remediation:
@@ -29,6 +32,12 @@ spec:
     worker:
       config:
         core:
-          sources: ["custom", "pci", "usb"]
+          sources:
+            - custom
+            - pci
+            - usb
     prometheus:
       enable: true
+  chartRef:
+    kind: OCIRepository
+    name: node-feature-discovery
