@@ -8,17 +8,17 @@ rtsp:
 webrtc:
   listen: :8555
   candidates:
-    - 192.168.42.124:8555
+    - 10.10.30.16:8555
     - stun:8555
   ice_servers:
     - urls:
         - stun:stun.cloudflare.com:3478
 streams:
   frontdoor:
-    - rtspx://10.10.32.4:7441/SB74mRIu1CkoPcEq
+    - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
   upstair:
-    - rtspx://10.10.32.2:7441/dFl352XtCUFREtRz
+    - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.2:554
   backdoor:
-    - rtspx://10.10.32.3:7441/ezkTDbaOR71GUE67
+    - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.3:554
   dining:
-    - rtspx://10.10.32.5:7441/6yxwoNNfNeg3iNAQ
+    - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.5:554
