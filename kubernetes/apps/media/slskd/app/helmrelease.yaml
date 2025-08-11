@@ -112,7 +112,6 @@ spec:
           - host: &host "slskd.cloudjur.com"
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   identifier: app
                   port: http
