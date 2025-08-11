@@ -5,14 +5,9 @@ metadata:
   name: frigate
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.1.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
     remediation:
       retries: 3
@@ -73,12 +68,16 @@ spec:
         # google.feature.node.kubernetes.io/coral: "true"
         intel.feature.node.kubernetes.io/gpu: "true"
     service:
-      app:
-        controller: frigate
+      main:
         ports:
           http:
-            port: *port
+            port: &port 5000
+            primary: true
+          go2rtc:
+            enabled: true
+            port: &apiPort 1984
           rtsp:
+            enabled: true
             port: 8554
     ingress:
       app:
