@@ -103,6 +103,7 @@ spec:
           - host: &host status.cloudjur.com
             paths:
               - path: /
+                pathType: Prefix
                 service:
                   identifer: app
                   port: http
