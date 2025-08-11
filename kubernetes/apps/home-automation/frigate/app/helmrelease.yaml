@@ -68,7 +68,7 @@ spec:
         # google.feature.node.kubernetes.io/coral: "true"
         intel.feature.node.kubernetes.io/gpu: "true"
     service:
-      main:
+      app:
         ports:
           http:
             port: &port 5000
