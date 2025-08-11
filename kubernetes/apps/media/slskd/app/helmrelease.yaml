@@ -115,7 +115,7 @@ spec:
                 pathType: Prefix
                 service:
                   identifier: app
-                  port: *app
+                  port: http
         tls:
           - hosts:
               - *host

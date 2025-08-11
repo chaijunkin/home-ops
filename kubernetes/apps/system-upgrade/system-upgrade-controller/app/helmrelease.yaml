@@ -28,28 +28,10 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsGroup: 65534
-        runAsUser: 65534
-        seccompProfile:
-          type: RuntimeDefault
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/control-plane
-                    operator: Exists
+        runAsGroup: 1000
+        runAsUser: 1000
       labels:
         upgrade.cattle.io/controller: system-upgrade-controller # necessary to avoid drain
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-        - key: node-role.kubernetes.io/etcd
-          operator: Exists
-        - key: node-role.kubernetes.io/master
-          operator: Exists
 
     controllers:
       system-upgrade-controller:
@@ -73,10 +55,6 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
-
-        serviceAccount:
-          name: system-upgrade
-
     persistence:
       tmp:
         type: emptyDir
@@ -103,3 +81,14 @@ spec:
         globalMounts:
           - path: /etc/ca-certificates
             readOnly: true
+    serviceAccount:
+      system-upgrade-controller: {}
+    rbac:
+      bindings:
+        system-upgrade-controller:
+          type: ClusterRoleBinding
+          roleRef:
+            kind: ClusterRole
+            name: cluster-admin
+          subjects:
+            - identifier: system-upgrade-controller
