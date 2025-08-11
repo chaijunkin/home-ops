@@ -73,17 +73,15 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        forceRename: "{{ .Release.Name }}"
-        primary: true
-        ports:
-          http:
-            port: *port
-      soulseek:
+        controller: slskd
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.35
         ports:
-          soulseek-tcp:
+          http:
+            port: *port
+          soulseek:
+            enabled: true
             port: *soulseekPort
             protocol: TCP
     # route:
@@ -109,15 +107,12 @@ spec:
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
         className: internal
         hosts:
-          - host: &host "slskd.cloudjur.com"
+          - host: "slskd.cloudjur.com"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
