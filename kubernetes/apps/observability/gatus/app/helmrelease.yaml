@@ -103,9 +103,8 @@ spec:
           - host: &host status.cloudjur.com
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  identifer: app
+                  identifier: app
                   port: http
         tls:
           - hosts:
