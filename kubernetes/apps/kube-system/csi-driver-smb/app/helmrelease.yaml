@@ -27,25 +27,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: Deployment
-              name: csi-smb-controller
-              namespace: kube-system
-            patch: |
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: csi-smb-controller
-                namespace: kube-system
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - name: csi-resizer
-                        $patch: delete
   values:
     image:
       baseRepo: registry.k8s.io/sig-storage
