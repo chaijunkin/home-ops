@@ -43,7 +43,6 @@ jobs:
             test
             --all-namespaces
             --enable-helm
-            --skip-invalid-helm-release-paths
             --path /github/workspace/kubernetes/flux/cluster
             --verbose
 
@@ -83,7 +82,6 @@ jobs:
             --path-orig /github/workspace/default/kubernetes/flux/cluster
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
-            --skip-invalid-helm-release-paths
             --all-namespaces
             --sources "flux-system"
             --output-file diff.patch
