@@ -109,7 +109,6 @@ spec:
         className: internal
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          nginx.ingress.kubernetes.io/ssl-redirect: "false"
         hosts:
           - host: &s3Host s3.cloudjur.com
             paths:
