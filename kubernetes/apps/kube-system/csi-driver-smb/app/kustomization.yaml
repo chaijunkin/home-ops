@@ -5,15 +5,3 @@ resources:
   - ./helmrelease.yaml
 patchesStrategicMerge:
   - delete-csi-resizer.yaml
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: csi-smb-controller
-  namespace: kube-system
-spec:
-  template:
-    spec:
-      containers:
-        - name: csi-resizer
-          $patch: delete
