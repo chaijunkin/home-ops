@@ -55,8 +55,7 @@ spec:
           - &host auth.cloudjur.com
         https: false
         tls:
-          - secretName: *host
-            hosts:
+          - hosts:
               - *host
     worker:
       resources:
