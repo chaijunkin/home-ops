@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: system-upgrade
 components:
   - ../../components/common
-resources:
+resources: []
 
   # - ./system-upgrade-controller/ks.yaml
   # - ./k3s/ks.yaml
