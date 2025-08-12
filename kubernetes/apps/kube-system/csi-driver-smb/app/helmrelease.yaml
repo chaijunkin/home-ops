@@ -27,20 +27,20 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  postRenderers:
-    - kustomize:
-        patchesStrategicMerge:
-          - |
-            apiVersion: apps/v1
-            kind: Deployment
-            metadata:
-              name: csi-smb-controller
-            spec:
-              template:
-                spec:
-                  containers:
-                    - name: csi-resizer
-                      $patch: delete
+  # postRenderers:
+  #   - kustomize:
+  #       patchesStrategicMerge:
+  #         - |
+  #           apiVersion: apps/v1
+  #           kind: Deployment
+  #           metadata:
+  #             name: csi-smb-controller
+  #           spec:
+  #             template:
+  #               spec:
+  #                 containers:
+  #                   - name: csi-resizer
+  #                     $patch: delete
   values:
     image:
       baseRepo: registry.k8s.io/sig-storage
