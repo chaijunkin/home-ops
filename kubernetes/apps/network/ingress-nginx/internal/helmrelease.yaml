@@ -38,6 +38,7 @@ spec:
       service:
         annotations:
           lbipam.cilium.io/ips: "10.10.30.28"
+          external-dns.alpha.kubernetes.io/hostname: &hostname "internal.cloudjur.com"
         externalTrafficPolicy: Cluster
       ingressClassResource:
         name: internal
@@ -49,6 +50,7 @@ spec:
             - key: ingress-class
               operator: In
               values: ["internal"]
+      allowSnippetAnnotations: true
       config:
         block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
@@ -85,6 +87,7 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/cloudjur-com-production-tls"
+        publish-status-address: *hostname
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
