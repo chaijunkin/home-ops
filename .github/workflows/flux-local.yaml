@@ -81,6 +81,7 @@ jobs:
             --path /github/workspace/pull/kubernetes/flux/cluster
             --path-orig /github/workspace/default/kubernetes/flux/cluster
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
+            --skip-invalid-helm-release-paths
             --limit-bytes 10000
             --all-namespaces
             --sources "flux-system"
