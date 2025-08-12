@@ -73,15 +73,17 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: slskd
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: 10.10.30.35
+        forceRename: "{{ .Release.Name }}"
+        primary: true
         ports:
           http:
             port: *port
-          soulseek:
-            enabled: true
+      soulseek:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.77
+        ports:
+          soulseek-tcp:
             port: *soulseekPort
             protocol: TCP
     # route:
