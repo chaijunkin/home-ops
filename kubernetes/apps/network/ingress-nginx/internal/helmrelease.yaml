@@ -87,7 +87,7 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: "network/cloudjur-com-production-tls"
-        publish-status-address: *hostname
+        # publish-status-address: *hostname
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname

@@ -3,5 +3,3 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-patchesStrategicMerge:
-  - delete-csi-resizer.yaml

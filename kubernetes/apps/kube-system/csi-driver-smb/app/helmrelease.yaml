@@ -27,6 +27,15 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: csi-smb-controller
+            patch: |
+              - op: remove
+                path: /spec/template/spec/containers/[?(@.name=="csi-resizer")]
   values:
     image:
       baseRepo: registry.k8s.io/sig-storage
