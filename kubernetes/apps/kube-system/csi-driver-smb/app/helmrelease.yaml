@@ -7,9 +7,9 @@ spec:
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
-  url: oci://ghcr.io/kubernetes-csi/csi-driver-smb/csi-driver-smb
+  url: oci://ghcr.io/home-operations/charts-mirror/csi-driver-smb
   ref:
-    tag: v1.12.0
+    tag: v1.17.0
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease

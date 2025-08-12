@@ -7,7 +7,7 @@ spec:
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
-  url: oci://ghcr.io/piraeusdatastore/charts/snapshot-controller
+  url: oci://ghcr.io/piraeusdatastore/helm-charts/snapshot-controller
   ref:
     tag: 4.1.0
 ---

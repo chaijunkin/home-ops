@@ -103,7 +103,7 @@ def migrate_helmrelease(file_path, oci_url, chart_name, release_name, namespace)
         "kind": "OCIRepository",
         "name": release_name
     }
-    
+
     # Remove old chart spec if it exists
     if "chart" in helmrelease_doc["spec"]:
         del helmrelease_doc["spec"]["chart"]
@@ -157,7 +157,7 @@ def main():
         app_path_part = parts[2].split(" - ")[0]  # Remove error message part
         if "/" not in app_path_part:
             continue
-        
+
         namespace, release_name = app_path_part.split("/", 1)
 
         # Extract repository and chart info from the error message
@@ -184,7 +184,7 @@ def main():
                     app_path = alt_path
                     found = True
                     break
-            
+
             if not found:
                 tried_paths = [os.path.join(base_dir, namespace, release_name)] + alternatives
                 print(f"Warning: Could not find directory for {release_name} in {namespace}. Tried paths: {tried_paths}")
