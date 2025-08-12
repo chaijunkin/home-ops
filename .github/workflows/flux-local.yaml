@@ -43,6 +43,7 @@ jobs:
             test
             --all-namespaces
             --enable-helm
+            --skip-invalid-helm-release-paths
             --path /github/workspace/kubernetes/flux/cluster
             --verbose
 
