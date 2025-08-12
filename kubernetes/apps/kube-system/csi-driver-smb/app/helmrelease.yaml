@@ -115,7 +115,7 @@ spec:
       dsName: csi-smb-node
       dnsPolicy: ClusterFirstWithHostNet
       kubelet: /var/lib/kubelet
-      krb5Prefix: ""
+      krb5Prefix: "krb5cc_"
       tolerations:
         - operator: Exists
       resources:
