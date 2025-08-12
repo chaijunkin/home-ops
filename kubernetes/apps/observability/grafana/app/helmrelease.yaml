@@ -404,8 +404,8 @@ spec:
             - {name: DS_PROMETHEUS-K0, value: Prometheus}
         speedtest-exporter-hub:
           # renovate: depName="Speedtest Exporter"
-          gnetId: 16541
-          revision: 1
+          gnetId: 13665
+          revision: 4
           datasource:
             - {name: datasource, value: Prometheus}
         # unifi-network-sites:

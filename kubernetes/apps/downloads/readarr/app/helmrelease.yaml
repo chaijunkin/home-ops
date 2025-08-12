@@ -35,13 +35,16 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/readarr-develop
-              tag: 0.3.27.2538@sha256:6850caa980bfea336b6113c37f59c40a42f61ca2714d5b8f9c13b5933e33c0f2
+              repository: ghcr.io/home-operations/readarr
+              tag: 0.4.18.2805@sha256:8f7551205fbdccd526db23a38a6fba18b0f40726e63bb89be0fb2333ff4ee4cd
             env:
-              TZ: Asia/Kuala_Lumpur
-              READARR__INSTANCE_NAME: Readarr
-              READARR__PORT: &port 80
+              READARR__APP__INSTANCENAME: Readarr
+              READARR__APP__THEME: dark
+              READARR__AUTH__METHOD: External
+              READARR__AUTH__REQUIRED: DisabledForLocalAddresses
+              READARR__SERVER__PORT: &port 80
               READARR__LOG_LEVEL: info
+              READARR__UPDATE__BRANCH: develop
             envFrom:
               - secretRef:
                   name: readarr-secret
