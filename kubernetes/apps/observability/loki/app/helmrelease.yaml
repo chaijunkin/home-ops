@@ -60,10 +60,9 @@ spec:
       targetPath: loki.storage.s3.region
   values:
     deploymentMode: SimpleScalable
-
     loki:
       podAnnotations:
-        secret.reloader.stakater.com/reload: loki-secret
+        reloader.stakater.com/auto: "true"
 
       auth_enabled: false
 
