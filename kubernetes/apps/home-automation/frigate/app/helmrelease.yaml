@@ -73,9 +73,18 @@ spec:
           http:
             port: &port 5000
             primary: true
-          go2rtc:
+          go2rtc-tcp:
             enabled: true
-            port: &apiPort 1984
+            primary: false
+            port: 1984
+            protocol: TCP
+            targetPort: 1984
+          go2rtc-udp:
+            enabled: true
+            primary: false
+            port: 1984
+            protocol: UDP
+            targetPort: 1984
           rtsp:
             enabled: true
             port: 8554

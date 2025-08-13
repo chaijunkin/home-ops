@@ -56,8 +56,9 @@ objects:
 go2rtc:
   streams:
     reolink_rlc1212a_frontdoor:
-      # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
+      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
+
     # reolink_rlc1212a_frontdoor_sub:
     #   # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}"
     #   - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
@@ -65,7 +66,7 @@ go2rtc:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.2:554
     reolink_rlc811a_backdoor:
-      # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
+      - "ffmpeg:http://10.10.32.3/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.3:554
     reolink_rlc520a_dining:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
