@@ -132,7 +132,7 @@ spec:
             cpu: 10m
             memory: 20Mi
       affinity: {}
-      nodeSelector: {}
+      # nodeSelector: {}
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Exists
