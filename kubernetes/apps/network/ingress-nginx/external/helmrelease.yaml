@@ -39,7 +39,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "external.cloudjur.com"
           lbipam.cilium.io/ips: "10.10.30.29"
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
       ingressClassResource:
         name: external
         default: false
