@@ -38,38 +38,38 @@ spec:
     keepHistory: false
   postRenderers:
     - kustomize:
-      patchesStrategicMerge:
-        - |
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: csi-smb-controller
-          spec:
-            template:
-              spec:
-                containers:
-                  - name: csi-resizer
-                    $patch: delete
+        patchesStrategicMerge:
+          - |
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: csi-smb-controller
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: csi-resizer
+                      $patch: delete
     - kustomize:
-      patchesStrategicMerge:
-        - |
-          apiVersion: apps/v1
-          kind: DaemonSet
-          metadata:
-            name: csi-smb-node
-          spec:
-            template:
-              spec:
-                containers:
-                  - name: smb
-                    $patch: merge
-                    args:
-                      $patch: replace
-                      - "--v=5"
-                      - "--drivername=smb.csi.k8s.io"
-                      - "--endpoint=$(CSI_ENDPOINT)"
-                      - "--nodeid=$(KUBE_NODE_NAME)"
-                      - "--enable-get-volume-stats=true"
+        patchesStrategicMerge:
+          - |
+            apiVersion: apps/v1
+            kind: DaemonSet
+            metadata:
+              name: csi-smb-node
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: smb
+                      $patch: merge
+                      args:
+                        $patch: replace
+                        - "--v=5"
+                        - "--drivername=smb.csi.k8s.io"
+                        - "--endpoint=$(CSI_ENDPOINT)"
+                        - "--nodeid=$(KUBE_NODE_NAME)"
+                        - "--enable-get-volume-stats=true"
   values:
     image:
       baseRepo: registry.k8s.io/sig-storage
