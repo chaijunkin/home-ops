@@ -23,14 +23,14 @@ detectors:
   #   device: usb
 
 ffmpeg:
-  global_args: ["-hide_banner", "-loglevel", "warning"]
+  # global_args: ["-hide_banner", "-loglevel", "warning"]
   hwaccel_args: preset-intel-qsv-h264
-  output_args:
-    record: preset-record-generic
+  # output_args:
+  #   record: preset-record-generic
 
 snapshots:
   enabled: true
-  timestamp: false
+  timestamp: true
   bounding_box: true
   retain:
     default: 1
@@ -38,7 +38,7 @@ snapshots:
 record:
   enabled: true
   retain:
-    days: 1
+    days: 7
     mode: all
   events:
     retain:
@@ -46,29 +46,12 @@ record:
       mode: active_objects
 
 objects:
-  track: ["person"]
+  track: ["person", "animal"]
   filters:
     person:
       min_area: 5000
       max_area: 100000
       threshold: 0.7
-
-# go2rtc:
-#   streams:
-#     frigate_porch_hq: rtspx://192.168.1.1:7441/VwpGq6jdn21y2Bjg
-#     frigate_porch_lq: rtspx://192.168.1.1:7441/pjt5fr9cOIAUTGpq
-#     frigate_driveway_hq: rtspx://192.168.1.1:7441/Sp0AVqPtCjjTqWa9
-#     frigate_driveway_lq: rtspx://192.168.1.1:7441/3Kw4P8B973r0pnU8
-#     frigate_garage_hq: rtspx://192.168.1.1:7441/Vfv64mbUdREe0z44
-#     frigate_garage_lq: rtspx://192.168.1.1:7441/NNtRaYhKJqlsc0tW
-#     frigate_river_hq: rtspx://192.168.1.1:7441/rHWe97CTPc3c4Wcw
-#     frigate_river_lq: rtspx://192.168.1.1:7441/imySjeEjzFLHhMKC
-#     frigate_study_hq: rtspx://192.168.1.1:7441/Kqzd2oancd3blWia
-#     frigate_study_lq: rtspx://192.168.1.1:7441/bJJseRnvXF6WjvCu
-#     frigate_living_room_hq: rtspx://192.168.1.1:7441/CfJka8v3QndvrCTv
-#     frigate_living_room_lq: rtspx://192.168.1.1:7441/WiWPTV90w9gM8Bba
-#     frigate_basement_hq: rtspx://192.168.1.1:7441/ClBFQnBDDpfV3LeX
-#     frigate_basement_lq: rtspx://192.168.1.1:7441/RCB8niMyOC24qh2G
 
 go2rtc:
   streams:
@@ -97,7 +80,7 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor
-          input_args: preset-rtsp-restream
+          # input_args: preset-rtsp-restream
           roles:
             - record
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
@@ -115,7 +98,7 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/reolink_rlc520a_dining
-          input_args: preset-rtsp-restream
+          # input_args: preset-rtsp-restream
           roles:
             - record
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
@@ -133,7 +116,7 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/reolink_rlc520a_upstair
-          input_args: preset-rtsp-restream
+          # input_args: preset-rtsp-restream
           roles:
             - record
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
@@ -151,7 +134,7 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor
-          input_args: preset-rtsp-restream
+          # input_args: preset-rtsp-restream
           roles:
             - record
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
