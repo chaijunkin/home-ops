@@ -35,7 +35,7 @@ spec:
                   name: frigate-secret
             probes:
               liveness: &probes
-                enabled: true
+                enabled: false
                 custom: true
                 spec:
                   httpGet:
@@ -99,7 +99,7 @@ spec:
               - path: /
                 service:
                   identifier: app
-                  port: *port
+                  port: 5000
         tls:
           - hosts:
               - *host
