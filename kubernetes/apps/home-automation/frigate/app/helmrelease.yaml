@@ -71,7 +71,7 @@ spec:
       app:
         ports:
           http:
-            port: &port 5000
+            port: &port 8971
             primary: true
           go2rtc-tcp:
             enabled: true
