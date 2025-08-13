@@ -33,19 +33,19 @@ spec:
             envFrom:
               - secretRef:
                   name: frigate-secret
-            # probes:
-            #   liveness: &probes
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       httpGet:
-            #         path: /api/version
-            #         port: &port 5000
-            #       initialDelaySeconds: 0
-            #       periodSeconds: 10
-            #       timeoutSeconds: 1
-            #       failureThreshold: 3
-            #   readiness: *probes
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/version
+                    port: &port 5000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               privileged: true
             resources:
@@ -88,6 +88,8 @@ spec:
           rtsp:
             enabled: true
             port: 8554
+          unsecure:
+            port: 5000
     ingress:
       app:
         className: internal
