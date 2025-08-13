@@ -104,8 +104,8 @@ cameras:
         #   input_args: preset-rtsp-restream
         #   roles:
         #     - detect
-      # output_args:
-      #   record: preset-record-generic-audio-aac
+      output_args:
+        record: preset-record-generic
     detect:
       enabled: False # <---- disable detection until you have a working camera feed
   reolink_rlc520a_upstair:
@@ -120,8 +120,8 @@ cameras:
         #   input_args: preset-rtsp-restream
         #   roles:
         #     - detect
-      # output_args:
-      #   record: preset-record-generic-audio-aac
+      output_args:
+        record: preset-record-generic
     detect:
       enabled: False # <---- disable detection until you have a working camera feed
   reolink_rlc811a_backdoor:
