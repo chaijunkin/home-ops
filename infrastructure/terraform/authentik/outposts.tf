@@ -22,6 +22,7 @@ resource "authentik_outpost" "internal" {
     "log_level"                      = "info"
     "docker_labels"                  = null
     "authentik_host"                 = "https://auth.${var.CLUSTER_DOMAIN}/"
+    "authentik_host_browser"         = ""
     "docker_network"                 = null
     "container_image"                = null
     "docker_map_ports"               = true
@@ -48,6 +49,7 @@ resource "authentik_outpost" "external" {
     "log_level"                      = "info"
     "docker_labels"                  = null
     "authentik_host"                 = "https://auth.${var.CLUSTER_DOMAIN}/"
+    "authentik_host_browser"         = ""
     "docker_network"                 = null
     "container_image"                = null
     "docker_map_ports"               = true
