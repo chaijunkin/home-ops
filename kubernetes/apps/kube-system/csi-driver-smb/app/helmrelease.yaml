@@ -10,15 +10,15 @@ spec:
   url: oci://ghcr.io/home-operations/charts-mirror/csi-driver-smb
   ref:
     tag: 1.18.0
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: csi-driver-smb
-  namespace: flux-system
-spec:
-  interval: 1h
-  url: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+# ---
+# apiVersion: source.toolkit.fluxcd.io/v1
+# kind: HelmRepository
+# metadata:
+#   name: csi-driver-smb
+#   namespace: flux-system
+# spec:
+#   interval: 1h
+#   url: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -36,20 +36,38 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  # postRenderers:
-  #   - kustomize:
-  #       patchesStrategicMerge:
-  #         - |
-  #           apiVersion: apps/v1
-  #           kind: Deployment
-  #           metadata:
-  #             name: csi-smb-controller
-  #           spec:
-  #             template:
-  #               spec:
-  #                 containers:
-  #                   - name: csi-resizer
-  #                     $patch: delete
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - |
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: csi-smb-controller
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: csi-resizer
+                      $patch: delete
+          - |
+            apiVersion: apps/v1
+            kind: DaemonSet
+            metadata:
+              name: csi-smb-node
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: smb
+                      $patch: merge
+                      args:
+                        $patch: replace
+                        - "--v=5"
+                        - "--drivername=smb.csi.k8s.io"
+                        - "--endpoint=$(CSI_ENDPOINT)"
+                        - "--nodeid=$(KUBE_NODE_NAME)"
+                        - "--enable-get-volume-stats=true"
   values:
     image:
       baseRepo: registry.k8s.io/sig-storage
@@ -202,14 +220,14 @@ spec:
     securityContext:
       seccompProfile:
         type: RuntimeDefault
-  # chartRef:
-  #   kind: OCIRepository
-  #   name: csi-driver-smb
-  chart:
-    spec:
-      chart: csi-driver-smb
-      version: v1.12.0
-      sourceRef:
-        kind: HelmRepository
-        name: csi-driver-smb
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: csi-driver-smb
+  # chart:
+  #   spec:
+  #     chart: csi-driver-smb
+  #     version: v1.12.0
+  #     sourceRef:
+  #       kind: HelmRepository
+  #       name: csi-driver-smb
+  #       namespace: flux-system
