@@ -38,36 +38,44 @@ spec:
     keepHistory: false
   postRenderers:
     - kustomize:
-        patchesStrategicMerge:
-          - |
-            apiVersion: apps/v1
-            kind: Deployment
-            metadata:
+        patches:
+          - target:
+              version: v1
+              kind: Deployment
               name: csi-smb-controller
-            spec:
-              template:
-                spec:
-                  containers:
-                    - name: csi-resizer
-                      $patch: delete
-          - |
-            apiVersion: apps/v1
-            kind: DaemonSet
-            metadata:
+            patch: |
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: csi-smb-controller
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: csi-resizer
+                        $patch: delete
+          - target:
+              version: v1
+              kind: DaemonSet
               name: csi-smb-node
-            spec:
-              template:
-                spec:
-                  containers:
-                    - name: smb
-                      $patch: merge
-                      args:
-                        $patch: replace
-                        - "--v=5"
-                        - "--drivername=smb.csi.k8s.io"
-                        - "--endpoint=$(CSI_ENDPOINT)"
-                        - "--nodeid=$(KUBE_NODE_NAME)"
-                        - "--enable-get-volume-stats=true"
+            patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: csi-smb-node
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: smb
+                        $patch: merge
+                        args:
+                          $patch: replace
+                          - "--v=5"
+                          - "--drivername=smb.csi.k8s.io"
+                          - "--endpoint=$(CSI_ENDPOINT)"
+                          - "--nodeid=$(KUBE_NODE_NAME)"
+                          - "--enable-get-volume-stats=true"
   values:
     image:
       baseRepo: registry.k8s.io/sig-storage
