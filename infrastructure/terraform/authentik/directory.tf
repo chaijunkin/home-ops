@@ -9,6 +9,10 @@ locals {
   }
 }
 
+data "authentik_user" "akadmin" {
+  username = "akadmin"
+}
+
 data "authentik_group" "admins" {
   name = "authentik Admins"
 }
@@ -16,12 +20,14 @@ data "authentik_group" "admins" {
 resource "authentik_group" "grafana_admin" {
   name         = "Grafana Admins"
   is_superuser = false
+  users        = [data.authentik_user.akadmin.id]
 }
 
 resource "authentik_group" "default" {
   for_each     = local.authentik_groups
   name         = each.value.name
   is_superuser = false
+  users        = [data.authentik_user.akadmin.id]
 }
 
 resource "authentik_policy_binding" "application_policy_binding" {
