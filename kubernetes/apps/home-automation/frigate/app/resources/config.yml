@@ -24,7 +24,7 @@ detectors:
 
 ffmpeg:
   # global_args: ["-hide_banner", "-loglevel", "warning"]
-  hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
+  # hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
   input_args: preset-rtsp-restream
 
 snapshots:
@@ -89,7 +89,7 @@ cameras:
         #   roles:
         #     - detect
       output_args:
-        record: preset-record-generic-audio-aac
+        record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy # -an
     detect:
       enabled: False # <---- disable detection until you have a working camera feed
   reolink_rlc520a_dining:
