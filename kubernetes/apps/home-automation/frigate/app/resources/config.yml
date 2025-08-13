@@ -40,10 +40,10 @@ record:
   retain:
     days: 7
     mode: all
-  events:
-    retain:
-      default: 1
-      mode: active_objects
+  # events:
+  #   retain:
+  #     default: 1
+  #     mode: active_objects
 
 objects:
   track: ["person", "animal"]
