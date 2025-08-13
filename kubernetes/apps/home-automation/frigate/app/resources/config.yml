@@ -84,7 +84,7 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor
-          # input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream
           roles:
             - record
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
@@ -138,7 +138,7 @@ cameras:
     ffmpeg:
       inputs:
         - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor
-          # input_args: preset-rtsp-restream
+          input_args: preset-rtsp-restream
           roles:
             - record
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
