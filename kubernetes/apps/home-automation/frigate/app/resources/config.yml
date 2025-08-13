@@ -26,8 +26,6 @@ ffmpeg:
   # global_args: ["-hide_banner", "-loglevel", "warning"]
   hwaccel_args: preset-intel-qsv-h265
   input_args: preset-rtsp-restream
-  output_args:
-    record: preset-record-generic-audio-copy
 
 snapshots:
   enabled: true
@@ -57,9 +55,8 @@ objects:
 go2rtc:
   streams:
     reolink_rlc1212a_frontdoor:
-      - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
-
+      - "ffmpeg:camerasideroad#audio=opus"
     # reolink_rlc1212a_frontdoor_sub:
     #   # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}"
     #   - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
@@ -67,8 +64,8 @@ go2rtc:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.2:554
     reolink_rlc811a_backdoor:
-      - "ffmpeg:http://10.10.32.3/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.3:554
+      - "ffmpeg:camerasideroad#audio=opus"
     reolink_rlc520a_dining:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.5:554
@@ -83,7 +80,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor
+        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor?video=copy&audio=aac
           input_args: preset-rtsp-restream
           roles:
             - record
@@ -137,7 +134,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor
+        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor?video=copy
           input_args: preset-rtsp-restream
           roles:
             - record
