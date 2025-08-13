@@ -49,6 +49,7 @@ metadata:
     gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_PROXMOX_USERNAME}}"
     gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_PROXMOX_PASSWORD}}"
     external-dns.alpha.kubernetes.io/hostname: dashy.cloudjur.com
+    external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
     # ingress.kubernetes.io/configuration-snippet: "proxy_set_header Host $http_host;\nproxy_set_header
     #   X-Real-IP $remote_addr;\nproxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     #   \     \nproxy_http_version 1.1;\nproxy_set_header Upgrade $http_upgrade;\nproxy_set_header

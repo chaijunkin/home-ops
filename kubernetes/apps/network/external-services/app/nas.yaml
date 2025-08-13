@@ -45,6 +45,7 @@ metadata:
     gethomepage.dev/group: Compute/Storage Infrastructure
     gethomepage.dev/description: SMB service provider
     external-dns.alpha.kubernetes.io/hostname: nas.cloudjur.com
+    external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
     nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header Host $http_host;
