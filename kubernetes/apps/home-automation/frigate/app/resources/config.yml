@@ -100,6 +100,20 @@ cameras:
         person:
           min_area: 1000
           min_score: 0.7
+    zones:
+      zone_2:
+        coordinates: 0.527,0.284,0.539,0,0.767,0,0.801,1,0.189,1,0.274,0.818
+        inertia: 3
+        loitering_time: 0
+    review:
+      detections:
+        required_zones: zone_2
+      alerts:
+        required_zones: zone_2
+    motion:
+      threshold: 30
+      contour_area: 10
+      improve_contrast: "true"
   reolink_rlc520a_dining:
     enabled: True
     ffmpeg:
