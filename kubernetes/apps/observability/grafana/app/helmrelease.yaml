@@ -212,21 +212,21 @@ spec:
             jsonData:
               # prometheusType: Thanos
               timeInterval: 1m
+          # - name: Loki
+          #   type: loki
+          #   uid: loki
+          #   access: proxy
+          #   url: http://loki-gateway.observability.svc.cluster.local
+          #   jsonData:
+          #     maxLines:
+          #       250
           - name: Loki
             type: loki
             uid: loki
             access: proxy
-            url: http://loki-gateway.observability.svc.cluster.local
+            url: http://loki-headless.observability.svc.cluster.local
             jsonData:
-              maxLines:
-                250
-                # - name: Loki
-                #   type: loki
-                #   uid: loki
-                #   access: proxy
-                #   url: http://loki-headless.observability.svc.cluster.local
-                #   jsonData:
-                #     maxLines: 250
+              maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy
