@@ -72,9 +72,11 @@ go2rtc:
     reolink_rlc520a_dining:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.5:554
-  # ffmpeg:
-  #   bin: ffmpeg
-  #   volume: "-af \"volume=30dB\""
+  ffmpeg:
+    http: "-avoid_negative_ts make_zero -flags low_delay -fflags nobuffer+genpts+discardcorrupt -strict experimental -analyzeduration 1000M -probesize 1000M -rw_timeout 5000000 -i {input}"
+    opus/ch1: "-map 0:a:0? -c:a:0 libopus -ar:a:0 48000 -ac:a:0 2 -application:a:0 voip -min_comp 0"
+    aac/ch2: "-map 0:a:0? -c:a:1 copy"
+    #aac/ch2ubiquiti: "-map 0:a:0? -c:a:1 aac -ar:a:1 44100 -ac:a:1 1"
 
 cameras:
   reolink_rlc1212a_frontdoor:

@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: frigate
+  name: &app frigate
 spec:
   interval: 30m
   chartRef:
@@ -69,27 +69,23 @@ spec:
         intel.feature.node.kubernetes.io/gpu: "true"
     service:
       app:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.16
+        controller: *app
         ports:
           http:
-            port: &port 8971
-            primary: true
-          go2rtc-tcp:
-            enabled: true
-            primary: false
+            port: *port
+          go2rtc:
             port: 1984
-            protocol: TCP
-            targetPort: 1984
-          go2rtc-udp:
-            enabled: true
-            primary: false
-            port: 1984
-            protocol: UDP
-            targetPort: 1984
           rtsp:
-            enabled: true
             port: 8554
-          unsecure:
-            port: 5000
+          webrtc:
+            port: 8555
+            protocol: TCP
+          webrtc-udp:
+            port: 8555
+            protocol: UDP
     ingress:
       app:
         className: internal
@@ -99,7 +95,7 @@ spec:
               - path: /
                 service:
                   identifier: app
-                  port: 5000
+                  port: *port
         tls:
           - hosts:
               - *host
