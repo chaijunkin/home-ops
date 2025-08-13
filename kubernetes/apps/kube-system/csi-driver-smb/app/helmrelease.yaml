@@ -50,8 +50,6 @@ spec:
                   containers:
                     - name: csi-resizer
                       $patch: delete
-    - kustomize:
-        patchesStrategicMerge:
           - |
             apiVersion: apps/v1
             kind: DaemonSet
