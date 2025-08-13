@@ -51,6 +51,9 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               GATUS_WEB_PORT: &port 80
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
             # probes:
             #   liveness: &probes
             #     enabled: true
@@ -73,6 +76,8 @@ spec:
                 cpu: 100m
               limits:
                 memory: 256Mi
+        serviceAccount:
+          identifier: gatus
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
