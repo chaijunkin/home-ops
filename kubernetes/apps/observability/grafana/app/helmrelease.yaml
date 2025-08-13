@@ -69,15 +69,15 @@ spec:
       # #   org_name: Main Org.
       # #   org_role: Viewer
       # #   hide_version: true
-      # auth.generic_oauth:
-      #   name: authentik
-      #   enabled: true
-      #   scopes: openid email profile
-      #   auth_url: https://auth.cloudjur.com/application/o/authorize/
-      #   token_url: https://auth.cloudjur.com/application/o/token/
-      #   api_url: https://auth.cloudjur.com/application/o/userinfo/
-      #   # Optionally map user groups to Grafana roles
-      #   role_attribute_path: contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'
+      auth.generic_oauth:
+        name: authentik
+        enabled: true
+        scopes: openid email profile
+        auth_url: https://auth.cloudjur.com/application/o/authorize/
+        token_url: https://auth.cloudjur.com/application/o/token/
+        api_url: https://auth.cloudjur.com/application/o/userinfo/
+        # Optionally map user groups to Grafana roles
+        role_attribute_path: contains(groups[*], 'Grafana Admins') && 'Admin' || contains(groups[*], 'Grafana Editors') && 'Editor' || 'Viewer'
     deploymentStrategy:
       type: RollingUpdate
     resources:
