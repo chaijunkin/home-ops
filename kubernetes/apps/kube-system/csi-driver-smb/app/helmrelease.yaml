@@ -60,7 +60,7 @@ spec:
               name: csi-smb-node
             patch: |
               - op: replace
-                path: /spec/template/spec/containers/INDEX/args
+                path: /spec/template/spec/containers/2/args
                 value:
                    - "--v=5"
                    - "--drivername=smb.csi.k8s.io"
