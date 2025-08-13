@@ -7,15 +7,14 @@ components:
 resources:
   - ./_bootstrap/ks.yaml
   # Pre Flux-Kustomizations  # Flux-Kustomizations
-  # - ./alloy/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   # - ./karma/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./loki/ks.yaml
+  # - ./loki/ks.yaml
   - ./silence-operator/ks.yaml
   # - ./tempo/ks.yaml  ## maybe will use it
   # - ./thanos/ks.yaml
-  - ./vector/ks.yaml
+  # - ./vector/ks.yaml
   - ./exporters
