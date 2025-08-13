@@ -24,7 +24,7 @@ detectors:
 
 ffmpeg:
   # global_args: ["-hide_banner", "-loglevel", "warning"]
-  # hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
+  hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
   input_args: preset-rtsp-restream
 
 snapshots:
@@ -56,7 +56,7 @@ go2rtc:
   streams:
     reolink_rlc1212a_frontdoor:
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
-      - "ffmpeg:reolink_rlc1212a_frontdoor#audio=opus"
+      # - "ffmpeg:reolink_rlc1212a_frontdoor#audio=opus"
     # reolink_rlc1212a_frontdoor_sub:
     #   # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}"
     #   - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.4:554
@@ -65,7 +65,6 @@ go2rtc:
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.2:554
     reolink_rlc811a_backdoor:
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.3:554
-      - "ffmpeg:reolink_rlc811a_backdoor#audio=opus"
     reolink_rlc520a_dining:
       # - "ffmpeg:http://10.10.32.4/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USERNAME}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus"
       - rtsp://{FRIGATE_REOLINK_USERNAME}:{FRIGATE_REOLINK_PASSWORD}@10.10.32.5:554
@@ -80,18 +79,27 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor?video=copy&audio=aac
+        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor
           input_args: preset-rtsp-restream
           roles:
             - record
+          hwaccel_args: preset-intel-qsv-h265
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
         #   input_args: preset-rtsp-restream
         #   roles:
         #     - detect
       output_args:
-        record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -c copy # -an
+        record: preset-record-generic-audio-aac
     detect:
-      enabled: False # <---- disable detection until you have a working camera feed
+      enabled: true
+      width: 896
+      height: 512
+      fps: 10 # <---- disable detection until you have a working camera feed
+    objects:
+      filters:
+        person:
+          min_area: 1000
+          min_score: 0.7
   reolink_rlc520a_dining:
     enabled: True
     ffmpeg:
@@ -134,7 +142,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor?video=copy
+        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor
           input_args: preset-rtsp-restream
           roles:
             - record
