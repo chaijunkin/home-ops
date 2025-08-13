@@ -125,7 +125,7 @@ def main():
     FAILED kubernetes/flux/cluster::intel-device-plugin-gpu::kube-system/intel-device-plugin-gpu - flux_local.exceptions.HelmException: Unable to find HelmRepository for flux-system-intel/intel-device-plugins-gpu for HelmRelease intel-device-plugin-gpu
     FAILED kubernetes/flux/cluster::metrics-server::kube-system/metrics-server - flux_local.exceptions.HelmException: Unable to find HelmRepository for flux-system-metrics-server/metrics-server for HelmRelease metrics-server
     FAILED kubernetes/flux/cluster::node-feature-discovery::kube-system/node-feature-discovery - flux_local.exceptions.HelmException: Unable to find HelmRepository for flux-system-node-feature-discovery/node-feature-discovery for HelmRelease node-feature-discovery
-    FAILED kubernetes/flux/cluster::reloader::kube-system/reloader - flux_local.exceptions.HelmException: Unable to find HelmRepository for flux-system-stakater/reloader for HelmRelease reloader
+          reloader.stakater.com/auto: "true"
     FAILED kubernetes/flux/cluster::external-dns::network/external-dns - flux_local.exceptions.HelmException: Unable to find HelmRepository for flux-system-external-dns/external-dns for HelmRelease external-dns
     FAILED kubernetes/flux/cluster::ingress-nginx-external::network/ingress-nginx-external - flux_local.exceptions.HelmException: Unable to find HelmRepository for flux-system-ingress-nginx/ingress-nginx for HelmRelease ingress-nginx-external
     FAILED kubernetes/flux/cluster::ingress-nginx-internal::network/ingress-nginx-internal - flux_local.exceptions.HelmException: Unable to find HelmRepository for flux-system-ingress-nginx/ingress-nginx for HelmRelease ingress-nginx-internal

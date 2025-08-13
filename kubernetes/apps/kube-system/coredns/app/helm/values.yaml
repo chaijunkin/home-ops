@@ -21,7 +21,7 @@ prometheus:
     enabled: true
 
 podAnnotations:
-  configmap.reloader.stakater.com/reload: "coredns"
+  reloader.stakater.com/auto: "true"
 
 servers:
   - zones:

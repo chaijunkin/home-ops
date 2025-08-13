@@ -55,7 +55,7 @@ spec:
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-secret
+      reloader.stakater.com/auto: "true"
   chartRef:
     kind: OCIRepository
     name: external-dns

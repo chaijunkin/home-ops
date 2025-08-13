@@ -62,7 +62,7 @@ spec:
     deploymentMode: SimpleScalable
     loki:
       podAnnotations:
-        reloader.stakater.com/auto: "true"
+          reloader.stakater.com/auto: "true"
 
       auth_enabled: false
 
