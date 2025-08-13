@@ -55,7 +55,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-oprations/home-assistant
-              tag: 2025.8.0
+              tag: 2025.8.1
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
