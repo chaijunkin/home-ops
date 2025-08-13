@@ -54,8 +54,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/chaijunkin/home-assistant
-              tag: 2024.7.3@sha256:48c9db9faf12445174e69b3a4abedad7acf2e4cc03428a448d0b15781a97c1ce
+              repository: ghcr.io/home-oprations/home-assistant
+              tag: 2025.8.0
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
