@@ -132,7 +132,7 @@ spec:
             cpu: 10m
             memory: 20Mi
       affinity: {}
-      # nodeSelector: {}
+      nodeSelector: {}
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Exists
@@ -155,7 +155,7 @@ spec:
       dsName: csi-smb-node
       dnsPolicy: ClusterFirstWithHostNet
       kubelet: /var/lib/kubelet
-      krb5Prefix: "krb5cc2_"
+      # krb5Prefix: "krb5cc2_"
       tolerations:
         - operator: Exists
       resources:
