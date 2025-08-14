@@ -22,7 +22,7 @@ spec:
       kind: ClusterIssuer
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
-  interval: 7d # interval: 1h
+  interval: 1440h # interval: 1h
   path: ./kubernetes/apps/cert-manager/cert-manager/app
   prune: true
   retryInterval: 2m
