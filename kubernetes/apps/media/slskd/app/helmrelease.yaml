@@ -88,7 +88,7 @@ spec:
             protocol: TCP
     # route:
     #   app:
-    #     hostnames: ["{{ .Release.Name }}.turbo.ac"]
+    #     hostnames: ["{{ .Release.Name }}.cloudjur.com"]
     #     parentRefs:
     #       - name: internal
     #         namespace: kube-system
