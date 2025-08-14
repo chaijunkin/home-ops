@@ -45,7 +45,6 @@ spec:
     startupProbe:
       enabled: true
     extraEnv:
-      ENABLE_WHITELIST: false
       TZ: "Asia/Kuala_Lumpur"
       ENABLE_ROLLING_LOGS: true
       UID: 1000
@@ -65,6 +64,8 @@ spec:
       version: 1.21.4
       type: PAPER
       difficulty: normal
+      whitelist: "jk"
+      ops: "jk"
       pvp: true
       motd: Meh
       worldSaveName: Kubeworld
@@ -101,7 +102,7 @@ spec:
               gethomepage.dev/widget.type: minecraft
               gethomepage.dev/widget.url: udp://minecraft.games:25565
             hosts:
-              - name: &host dynmap.cloudjur.com
+              - name: &host minecraft.cloudjur.com
                 path: /
             tls: [hosts: [*host]]
   valuesFrom:
