@@ -3,6 +3,10 @@ originRequest:
   originServerName: "external.cloudjur.com"
 
 ingress:
+  - hostname: cloudjur.com
+    service: &svc https://cilium-gateway-external.kube-system.svc.cluster.local
+  - hostname: "*.cloudjur.com"
+    service: *svc
   - hostname: "cloudjur.com"
     service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   - hostname: "*.cloudjur.com"
