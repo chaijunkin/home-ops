@@ -64,8 +64,8 @@ spec:
       version: 1.21.4
       type: PAPER
       difficulty: normal
-      whitelist: "jk"
-      ops: "jk"
+      whitelist: "fly4sun"
+      ops: "fly4sun"
       pvp: true
       motd: Meh
       worldSaveName: Kubeworld
