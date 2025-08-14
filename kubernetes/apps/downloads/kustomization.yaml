@@ -24,4 +24,5 @@ resources:
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
   # - ./tqm/ks.yaml
+  - ./webhook/ks.yaml
   - ./ytdl-sub/ks.yaml

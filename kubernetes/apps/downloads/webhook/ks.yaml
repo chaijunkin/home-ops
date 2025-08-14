@@ -3,7 +3,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: webhook
-  namespace: default
+  namespace: downloads
 spec:
   commonMetadata:
     labels:
@@ -11,7 +11,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1440h # interval: 1h
-  path: ./kubernetes/apps/default/webhook/app
+  path: ./kubernetes/apps/downloads/webhook/app
   postBuild:
     substitute:
       APP: webhook
@@ -21,6 +21,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: default
+  targetNamespace: downloads
   timeout: 5m
   wait: false

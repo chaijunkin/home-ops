@@ -21,5 +21,4 @@ resources:
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   # - ./stirling-pdf/ks.yaml
-  - ./webhook/ks.yaml
   - ./wikijs/ks.yaml
