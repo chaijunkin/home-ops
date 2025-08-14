@@ -26,11 +26,12 @@ spec:
     remediation:
       retries: -1
   upgrade:
-    # cleanupOnFail: true
+    cleanupOnFail: true
     remediation:
-      retries: -1
-  uninstall:
-    keepHistory: false
+      retries: 3
+  valuesFrom:
+    - kind: ConfigMap
+      name: cilium-values
   # values:
   #   hubble:
   #     enabled: false
