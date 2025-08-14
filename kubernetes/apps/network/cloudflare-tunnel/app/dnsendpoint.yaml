@@ -9,6 +9,6 @@ spec:
     - dnsName: external.cloudjur.com
       recordType: CNAME
       targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
-    - dnsName: external-local.cloudjur.com
-      recordType: CNAME
-      targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
+    # - dnsName: external-local.cloudjur.com
+    #   recordType: CNAME
+    #   targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
