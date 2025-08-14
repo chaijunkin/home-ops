@@ -67,4 +67,4 @@ spec:
 #       tls:
 #         certificateRefs:
 #           - kind: Secret
-#             name: cloudjur-com-production-tls
+#             name: cloudjur-com-tls
