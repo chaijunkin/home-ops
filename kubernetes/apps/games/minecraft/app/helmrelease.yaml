@@ -102,7 +102,7 @@ spec:
               gethomepage.dev/widget.type: minecraft
               gethomepage.dev/widget.url: udp://minecraft.games:25565
             hosts:
-              - name: &host minecraft.cloudjur.com
+              - name: &host dynmap.cloudjur.com
                 path: /
             tls: [hosts: [*host]]
   valuesFrom:
