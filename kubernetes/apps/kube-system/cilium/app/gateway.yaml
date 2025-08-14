@@ -5,7 +5,7 @@ kind: Gateway
 metadata:
   name: internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname internal-local.turbo.ac
+    external-dns.alpha.kubernetes.io/target: &hostname internal-local.cloudjur.com
 spec:
   gatewayClassName: cilium
   addresses:

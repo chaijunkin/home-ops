@@ -40,28 +40,35 @@ spec:
             port: 80
     env:
       TZ: Asia/Kuala_Lumpur
-    ingress:
+    route:
       app:
-        enabled: true
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Utility Service
-          gethomepage.dev/name: PrivateBin
-          gethomepage.dev/description: Pastebin services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/privatebin.png
-        className: internal
-        hosts:
-          - host: &host "privatebin.cloudjur.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
+        hostnames: ["{{ .Release.Name }}.cloudjur.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+    # ingress:
+    #   app:
+    #     enabled: true
+    #     annotations:
+    #       external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
+    #       gethomepage.dev/enabled: "true"
+    #       gethomepage.dev/group: Utility Service
+    #       gethomepage.dev/name: PrivateBin
+    #       gethomepage.dev/description: Pastebin services
+    #       gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/privatebin.png
+    #     className: internal
+    #     hosts:
+    #       - host: &host "privatebin.cloudjur.com"
+    #         paths:
+    #           - path: /
+    #             pathType: Prefix
+    #             service:
+    #               identifier: app
+    #               port: http
+    #     tls:
+    #       - hosts:
+    #           - *host
     # persistence:
     #   data:
     #     # enabled: true
