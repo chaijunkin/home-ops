@@ -74,6 +74,12 @@ spec:
           - name: internal
             namespace: kube-system
             sectionName: https
+      ext-route:
+        hostnames: ["{{ .Release.Name }}-ext-route.cloudjur.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
     ingress:
       app:
         enabled: true
