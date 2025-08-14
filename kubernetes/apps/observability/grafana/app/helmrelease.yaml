@@ -27,13 +27,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    # - name: authentik
-    #   namespace: security
-    - name: kube-prometheus-stack
-      namespace: observability
-    - name: loki
-      namespace: observability
   values:
     extraInitContainers:
       - name: 01-init-db
