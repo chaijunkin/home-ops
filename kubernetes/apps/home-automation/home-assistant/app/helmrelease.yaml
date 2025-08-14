@@ -21,6 +21,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     controllers:
       home-assistant:
         annotations:
@@ -43,14 +50,6 @@ spec:
                 "namespace": "network",
                 "ips": ["10.10.10.250/24"]
               }]
-
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
-            seccompProfile: {type: RuntimeDefault}
         containers:
           app:
             image:
@@ -63,9 +62,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+              capabilities: {drop: ["ALL"]}
             envFrom:
               - secretRef:
                   name: home-assistant-secret
