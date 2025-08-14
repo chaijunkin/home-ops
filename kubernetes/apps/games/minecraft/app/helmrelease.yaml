@@ -50,6 +50,7 @@ spec:
       UID: 1000
       GID: 1000
       MEMORY: ""
+      ENABLE_WHITELIST: false
     persistence:
       dataDir:
         enabled: true
@@ -64,8 +65,8 @@ spec:
       version: 1.21.4
       type: PAPER
       difficulty: normal
-      whitelist: "fly4sun"
-      ops: "fly4sun"
+      # whitelist: "fly4sun"
+      # ops: "fly4sun"
       pvp: true
       motd: Meh
       worldSaveName: Kubeworld
