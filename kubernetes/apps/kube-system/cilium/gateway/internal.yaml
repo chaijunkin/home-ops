@@ -32,4 +32,4 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: cloud-jur-tls
+            name: cloudjur-com-tls
