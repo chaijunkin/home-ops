@@ -5,8 +5,9 @@ resources:
   - ./cilium-l2.yaml
   - ./cilium-l3.yaml
   # - ./helmrelease.yaml
-  # - ./gateway.yaml
+  - ./gateway.yaml
   # - ./netpol.yaml
+  - ./redirect.yaml
 
 configMapGenerator:
   - name: cilium-values
