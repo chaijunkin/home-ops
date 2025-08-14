@@ -5,6 +5,5 @@ namespace: games
 components:
   - ../../components/common
 resources:
-  []
-  # - ./_bootstrap/ks.yaml
-  # - ./minecraft/ks.yaml
+  - ./_bootstrap/ks.yaml
+  - ./minecraft/ks.yaml
