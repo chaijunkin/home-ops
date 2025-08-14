@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: &app searxng
 spec:
-  interval: 1h
+  interval: 7d # interval: 1h
   chartRef:
     kind: OCIRepository
     apiVersion: source.toolkit.fluxcd.io/v1

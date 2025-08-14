@@ -13,7 +13,7 @@ spec:
       kind: HelmRelease
       name: actions-runner-controller
       namespace: actions-runner-system
-  interval: 1h
+  interval: 7d # interval: 1h
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/app
   prune: true
   retryInterval: 2m
@@ -36,7 +36,7 @@ spec:
   dependsOn:
     - name: actions-runner-controller
       namespace: actions-runner-system
-  interval: 1h
+  interval: 7d # interval: 1h
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/runners
   prune: true
   retryInterval: 2m

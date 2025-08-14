@@ -8,7 +8,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: coredns
-  interval: 1h
+  interval: 7d # interval: 1h
   path: ./kubernetes/apps/kube-system/coredns/app
   prune: true
   retryInterval: 2m
