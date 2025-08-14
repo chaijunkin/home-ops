@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: minecraft
+  namespace: &namespace games
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: &appname minecraft
+  components:
+    - ../../../../components/volsync
+  interval: 30m
+  path: ./kubernetes/apps/games/minecraft/app
+  postBuild:
+    substitute:
+      APP: *appname
+      HOSTNAME: minecraft.cloudjur.com
+      MAP_HOSTNAME: dynmap.cloudjur.com
+      # APP_UID: "1000"
+      # APP_GID: "1000"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  wait: false
