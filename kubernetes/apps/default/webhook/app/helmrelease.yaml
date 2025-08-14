@@ -63,12 +63,6 @@ spec:
         className: "internal"
         annotations:
           external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Open WebUI
-          gethomepage.dev/description: AI Chat services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
-
         hosts:
           - host: &host "webhook.cloudjur.com"
             paths:
