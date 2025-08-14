@@ -64,8 +64,8 @@ spec:
       version: 1.21.4
       type: PAPER
       difficulty: normal
-      whitelist: "GachouGoose,movi,MicroGachou"
-      ops: "movi,GachouGoose"
+      whitelist: "jk"
+      ops: "jk"
       pvp: true
       motd: Meh
       worldSaveName: Kubeworld
