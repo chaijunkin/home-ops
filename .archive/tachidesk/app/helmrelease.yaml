@@ -1,0 +1,138 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tachidesk
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: volsync
+      namespace: volsync-system
+  values:
+    controllers:
+      tachidesk:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/suwayomi/tachidesk
+              tag: v1.1.1@sha256:2ab0107a86970367a80346d5ea645bce7997896272d75cff1d0bd866c78f34b5
+            env:
+              AUTO_DOWNLOAD_CHAPTERS: true
+              BIND_PORT: &port 80
+              DEBUG: true
+              DOWNLOAD_AS_CBZ: true
+              EXTENSION_REPOS: '["https://github.com/keiyoushi/extensions/tree/repo"]'
+              JAVA_TOOL_OPTIONS: -XX:+UseG1GC -XX:MaxRAMPercentage=75 -XX:+PrintFlagsFinal
+              TZ: &TZ ${TIMEZONE}
+              WEB_UI_CHANNEL: "preview"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /manifest.json
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            resources:
+              limits:
+                memory: 4Gi
+              requests:
+                cpu: 25m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.91.1@sha256:8403442d3472e411f72b6a5267b5ee0e62db27e258d81efebef40c3b41219970
+            env:
+              TZ: *TZ
+            args:
+              - "/config"
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+            resources:
+              limits:
+                memory: 256Mi
+              requests:
+                cpu: 10m
+        pod:
+          automountServiceAccountToken: false
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 568
+            runAsNonRoot: true
+            runAsUser: 568
+            seccompProfile: {type: RuntimeDefault}
+    ingress:
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Media
+        gethomepage.dev/name: Tachidesk
+        gethomepage.dev/description: Tachidesk Service
+        gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/tachidesk.png
+        io.cilium/lb-ipam-ips: 10.10.30.57
+      hosts:
+        - host: &codeserverHost "{{ .Release.Name }}-code.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              service:
+                annotations:
+                  io.cilium/lb-ipam-ips: 10.10.30.57
+                identifier: app
+                port: codeserver
+    persistence:
+      config:
+        enabled: true
+        existingClaim: tachidesk
+        globalMounts:
+          - path: /home/suwayomi/.local/share/Tachidesk
+      downloads:
+        enabled: true
+        existingClaim: pvc-smb-media
+        globalMounts:
+          - path: /home/suwayomi/.local/share/Tachidesk/downloads
+            subPath: Downloads/tachidesk
+      tmp:
+        type: emptyDir
+    service:
+      annotations:
+        io.cilium/lb-ipam-ips: 10.10.30.57
+      app:
+        controller: tachidesk
+        ports:
+          http:
+            primary: true
+            port: *port
+          codeserver:
+            port: 8080

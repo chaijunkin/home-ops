@@ -1,0 +1,124 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app paperless
+  namespace: media
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  dependsOn:
+    - name: volsync
+      namespace: volsync-system
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16.4
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: paperless-secret
+
+        containers:
+          main:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: 2.9.0
+            envFrom:
+              - secretRef:
+                  name: paperless-secret
+            env:
+              PAPERLESS_URL: https://paperless.${SECRET_DOMAIN}
+              PAPERLESS_PORT: "8000"
+              PAPERLESS_TIME_ZONE: "Asia/Kuala_Lumpur"
+              PAPERLESS_WEBSERVER_WORKERS: "2"
+              PAPERLESS_TASK_WORKERS: "2"
+
+              # # Configure Remote User auth
+              # PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+              # PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_X_AUTHENTIK_USERNAME
+
+              # Configure folders
+              PAPERLESS_CONSUMPTION_DIR: /data/apps/consume
+              PAPERLESS_DATA_DIR: /data/local/Documents
+              PAPERLESS_EXPORT_DIR: /data/apps/export
+              PAPERLESS_MEDIA_ROOT: /data/local/
+
+              # Configure folder importer
+              PAPERLESS_CONSUMER_POLLING: "60"
+              PAPERLESS_CONSUMER_RECURSIVE: "true"
+              PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+
+              # Configure OCR
+              PAPERLESS_OCR_LANGUAGES: nld
+              PAPERLESS_OCR_LANGUAGE: nld
+              PAPERLESS_REDIS: redis://dragonfly.database.svc.cluster.local:6379
+
+              # Configure user permissions
+              USERMAP_GID: "65543"
+
+            resources:
+              requests:
+                cpu: 15m
+                memory: 1812M
+              limits:
+                memory: 1812M
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
+
+    ingress:
+      main:
+        enabled: true
+        className: "internal"
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Paperless
+          gethomepage.dev/description: Document Service
+          gethomepage.dev/icon: paperless.png
+        #   nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-internal-proxy-outpost.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
+        #   nginx.ingress.kubernetes.io/auth-signin: /outpost.goauthentik.io/start?rd=$escaped_request_uri
+        #   nginx.ingress.kubernetes.io/auth-response-headers: Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
+        #   nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Host $http_host;
+        hosts:
+          - host: &host "paperless.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: *app
+        globalMounts:
+          - path: /data/apps
+      data:
+        enabled: true
+        existingClaim: pvc-smb-media
+        globalMounts:
+          - path: /data/local
