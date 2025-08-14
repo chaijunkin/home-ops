@@ -76,9 +76,8 @@ spec:
     resources:
       requests:
         cpu: 10m
-        memory: 50Mi
       limits:
-        memory: 219M
+        memory: 1024M
     admin:
       existingSecret: grafana-secret
       passwordKey: adminPass
