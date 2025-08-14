@@ -69,7 +69,7 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["{{ .Release.Name }}-route.cloudjur.com"]
+        hostnames: ["{{ .Release.Name }}-int-route.cloudjur.com"]
         parentRefs:
           - name: internal
             namespace: kube-system
