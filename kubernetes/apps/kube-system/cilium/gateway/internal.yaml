@@ -5,12 +5,12 @@ kind: Gateway
 metadata:
   name: internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname internal.cloudjur.com
+    external-dns.alpha.kubernetes.io/target: &hostname internal-local.cloudjur.com
 spec:
   gatewayClassName: cilium
   addresses:
     - type: IPAddress
-      value: 10.10.30.28
+      value: 10.10.30.25
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
@@ -32,4 +32,4 @@ spec:
       tls:
         certificateRefs:
           - kind: Secret
-            name: cloudjur-com-tls
+            name: cloud-jur-tls

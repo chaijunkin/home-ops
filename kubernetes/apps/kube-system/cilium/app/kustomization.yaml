@@ -2,12 +2,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./cilium-l2.yaml
-  - ./cilium-l3.yaml
   # - ./helmrelease.yaml
   - ./gateway.yaml
-  # - ./netpol.yaml
-  - ./redirect.yaml
+  - ./networks.yaml
 
 configMapGenerator:
   - name: cilium-values
