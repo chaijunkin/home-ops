@@ -67,6 +67,13 @@ spec:
         ports:
           http:
             port: *port
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}-route.cloudjur.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     ingress:
       app:
         enabled: true
