@@ -1,21 +1,12 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: tqm-secret
+    name: tqm-secret
 stringData:
-  config.yaml: ENC[AES256_GCM,data:cDTpfPz6qbRkNZgajbIXiPLv41X8xJGapoXMlJVeX3j6kXQ15l6hysqm/A0U3Mo2VwXY8gBKG9/0Nm7dFL68HBKBay2ypZpGstTygW4zWcYZ08OTSigWSFi5jkoGxjfHU69G12fTdkmzwQ8K7V+/R82DSIAtiVwzSsOqlUuAOGqEaeglZl9e/Vwh3OrqFBcnptrsP/sH6IeaTLdUcA==,iv:7TJbmXZHgaGJoREXBILCeA6s7KbaGDJLqNlMNyuGn6Q=,tag:dVZYmvq6ronr8QZpUW1OYw==,type:str]
-sops:
-  age:
-    - recipient: age1apaw0x3ja8ne4w08re4elvgt8wjhadpefelxjzhshf83834nhfzs65j7zp
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6V0pYTVBoUDBNQWVHcTVP
-        ZzMvelR2UzhNQnJ4YVBnZXNqQ3FkY3Z6aVN3ClgwV3MvWWVISWUzcytmS0F2Z3RE
-        MmpXdmh0R2lGQWJaVkJvY1VKbHBkM0EKLS0tIERvaXVKbkpaTnF1eVd3bUVyY3NT
-        UDhSM0hIZ2V5amtQb05rYXNZVTJUOEkK1Nw5ZP+A/H0lWxlwo0ECvuB1YO2ES83I
-        Qroj0W6oopuhC8EA6T+sFV5egsrzM9LOQQbc95er6STcRjoympozVw==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2025-08-08T13:23:33Z"
-  mac: ENC[AES256_GCM,data:NkMNAQdCzQKcfNpVY3ZCUVsaynA/jmqrtmE3HRKuvDdNvJJmFrZyPM7Ajz9v+M+NoxCsBYMSNYoS/sCxfnDU0XIv0cu2LGJ37i/1ugvIId1ddm9y+LcbbBYKxbefXnSe7hhNp+1soPBkgRWsFK5DE/Cg9j4K8TwLJa7LLQuwruw=,iv:hW19ir+xl5OoWgdERvF8ArQkLcvBEzZft1KY508LrYU=,tag:KNZ/NFBNxXKSxTopyWbTsQ==,type:str]
-  encrypted_regex: ^(data|stringData)$
-  version: 3.10.2
+    config.yaml: |-
+        notifications:
+          detailed: true
+          skip_empty_run: true
+          service:
+            discord:
+              webhook_url: http://webhook.default.svc.cluster.local/hooks/tqm-pushover

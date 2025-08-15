@@ -35,6 +35,18 @@ tasks:
       - {msg: "Missing Sops config file", sh: "test -f {{.SOPS_CONFIG_FILE}}"}
       - {msg: "Missing Sops Age key file", sh: "test -f {{.AGE_FILE}}"}
 
-  .reset:
-    internal: true
-    cmd: rm -rf {{.SOPS_CONFIG_FILE}}
+  # .reset:
+  #   internal: true
+  #   cmd: rm -rf {{.SOPS_CONFIG_FILE}}
+
+  re-encrypt:
+    desc: Decrypt and re-encrypt all sops secrets
+    vars:
+      SECRET_FILES:
+        sh: find . -type d -name .archive -prune -o -type f -name '*.sops.yaml' ! -name ".sops.yaml" -print
+    cmds:
+      - for:
+          var: SECRET_FILES
+        cmd: |
+          # sops --decrypt --in-place "{{ .ITEM }}"
+          sops --encrypt --in-place "{{ .ITEM }}"
