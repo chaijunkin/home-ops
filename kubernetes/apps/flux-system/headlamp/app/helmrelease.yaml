@@ -93,6 +93,7 @@ spec:
             - path: /
               type: Prefix
     service:
+      type: LoadBalancer
       annotations:
         lbipam.cilium.io/ips: 10.10.30.69
       #  - secretName: chart-example-tls
