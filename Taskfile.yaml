@@ -20,6 +20,8 @@ vars:
   PIP_REQUIREMENTS_FILE: "{{.ROOT_DIR}}/requirements.txt"
   # Binaries
   PYTHON_BIN: python3
+  K8S_DIR: "{{.ROOT_DIR}}/kubernetes"
+  TALOS_DIR: "{{.K8S_DIR}}/talos"
 
 dotenv:
   - "{{.ROOT_DIR}}/onepassword.env"
