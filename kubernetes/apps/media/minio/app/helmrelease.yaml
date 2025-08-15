@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: minio/minio:RELEASE.2025-04-22T22-12-26Z
+              tag: RELEASE.2025-04-22T22-12-26Z
             env:
               MINIO_API_CORS_ALLOW_ORIGIN: https://minio.cloudjur.com,https://s3.cloudjur.com
               MINIO_BROWSER_REDIRECT_URL: https://minio.cloudjur.com
