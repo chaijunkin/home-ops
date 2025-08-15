@@ -4,11 +4,11 @@ cluster:
 autoDirectNodeRoutes: true
 bandwidthManager:
   enabled: true
-  # bbr: true  # not available in debian 12 yet
+  bbr: true # not available in debian 12 yet
 bgpControlPlane:
   enabled: true
 bpf:
-  datapathMode: veth # "netkit" not available in debian 12 yet
+  datapathMode: netkit # "netkit" not available in debian 12 yet
   masquerade: true
   preallocateMaps: true
   # tproxy: true
