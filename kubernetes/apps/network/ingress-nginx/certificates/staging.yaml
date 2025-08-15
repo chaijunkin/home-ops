@@ -1,14 +1,14 @@
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: "cloudjur-com-staging"
-spec:
-  secretName: "cloudjur-com-staging-tls"
-  issuerRef:
-    name: letsencrypt-staging
-    kind: ClusterIssuer
-  commonName: "cloudjur.com"
-  dnsNames:
-    - "cloudjur.com"
-    - "*.cloudjur.com"
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: "cloudjur-com-staging"
+# spec:
+#   secretName: "cloudjur-com-staging-tls"
+#   issuerRef:
+#     name: letsencrypt-staging
+#     kind: ClusterIssuer
+#   commonName: "cloudjur.com"
+#   dnsNames:
+#     - "cloudjur.com"
+#     - "*.cloudjur.com"
