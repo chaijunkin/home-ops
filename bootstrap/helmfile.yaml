@@ -108,6 +108,7 @@ releases:
             echo "Decrypting and applying flux bootstrap..."
             # Use sops to decrypt and apply the secret directly
             sops -d ../kubernetes/flux/cluster/secret.sops.yaml | kubectl apply -f -
+            sops -d ../kubernetes/flux/cluster/resources.sops.yaml | kubectl apply -f -
             sops -d ../kubernetes/components/common/sops/secret.sops.yaml | kubectl apply -f - -n flux-system
             echo "Flux bootstrap applied successfully"
     #### THIS NEED TO CHANGE TO GET decrypt secret.sops.yaml in bootstrap directly

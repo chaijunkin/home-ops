@@ -19,7 +19,7 @@ kind: HelmRelease
 metadata:
   name: &app headlamp
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: headlamp
@@ -92,7 +92,11 @@ spec:
           paths:
             - path: /
               type: Prefix
-
+    service:
+      app:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.69
       #  - secretName: chart-example-tls
       #    hosts:
       #      - chart-example.local
