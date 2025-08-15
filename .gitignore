@@ -2,7 +2,10 @@
 .DS_Store
 Thumbs.db
 # k8s
-kubeconfig
+*kubeconfig*
+talosconfig
+kubernetes/talos/**
+!/kubernetes/talos/.gitkeep
 .decrypted~*.yaml
 .config.env
 *.agekey

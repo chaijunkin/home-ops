@@ -1,7 +1,43 @@
 machine:
   kubelet:
+    defaultRuntimeSeccompProfileEnabled: true
+    disableManifestsDirectory: true
+    extraConfig:
+      featureGates:
+        ImageVolume: true
+      serializeImagePulls: false
+    nodeIP:
+      validSubnets:
+        - 10.10.30.0/24
     image: ghcr.io/siderolabs/kubelet:${kubernetes_version}
     ${indent(4, kubelet)}
+  features:
+    apidCheckExtKeyUsage: true
+    diskQuotaSupport: true
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+      resolveMemberNames: true
+    kubePrism:
+      enabled: true
+      port: 7445
+    kubernetesTalosAPIAccess:
+      allowedKubernetesNamespaces:
+        - actions-runner-system
+        - system-upgrade
+      allowedRoles:
+        - os:admin
+      enabled: true
+    rbac: true
+    stableHostname: true
+  files:
+    - op: create
+      path: /etc/cri/conf.d/20-customization.part
+      content: |
+        [plugins."io.containerd.cri.v1.images"]
+          discard_unpacked_layers = false
+        [plugins."io.containerd.cri.v1.runtime"]
+          device_ownership_from_security_context = true
   nodeLabels:
     topology.kubernetes.io/region: ${cluster_name}
     topology.kubernetes.io/zone: ${node_name}
@@ -13,20 +49,76 @@ machine:
     net.core.default_qdisc: fq             # 10Gb/s
     net.core.rmem_max: 67108864            # 10Gb/s | Cloudflared / QUIC
     net.core.wmem_max: 67108864            # 10Gb/s | Cloudflared / QUIC
+    net.ipv4.neigh.default.gc_thresh1: "4096"
+    net.ipv4.neigh.default.gc_thresh2: "8192"
+    net.ipv4.neigh.default.gc_thresh3: "16384"
     net.ipv4.tcp_congestion_control: bbr   # 10Gb/s
     net.ipv4.tcp_fastopen: 3               # Send and accept data in the opening SYN packet
     net.ipv4.tcp_mtu_probing: 1            # 10Gb/s | Jumbo frames
     net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
     net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
     net.ipv4.tcp_window_scaling: 1         # 10Gb/s
+    sunrpc.tcp_max_slot_table_entries: "128"
+    sunrpc.tcp_slot_table_entries: "128"
     vm.nr_hugepages: 1024                  # PostgreSQL
 
 cluster:
+  clusterName: main
+  controlPlane:
+    endpoint: https://10.10.30.30:6443
+  network:
+    cni:
+      name: none
+    dnsDomain: cluster.local
+    podSubnets:
+      - 10.69.0.0/16
+    serviceSubnets:
+      - 10.96.0.0/16
+  allowSchedulingOnControlPlanes: true
   apiServer:
     image: registry.k8s.io/kube-apiserver:${kubernetes_version}
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1
+      kind: Policy
+      rules:
+        - level: Metadata
+    disablePodSecurityPolicy: true
+    certSANs: ["127.0.0.1", "k8s.cloudjur.com", "10.10.30.31"]
+    extraArgs:
+      enable-aggregator-routing: "true"
+      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
+      runtime-config: admissionregistration.k8s.io/v1alpha1=true
   controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
     image: registry.k8s.io/kube-controller-manager:${kubernetes_version}
+  coreDNS:
+    disabled: true
+  etcd:
+    advertisedSubnets:
+      - 10.10.30.0/24
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
   proxy:
-    image: registry.k8s.io/kube-proxy:${kubernetes_version}
+    disabled: true
   scheduler:
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
+    extraArgs:
+      bind-address: 0.0.0.0
     image: registry.k8s.io/kube-scheduler:${kubernetes_version}

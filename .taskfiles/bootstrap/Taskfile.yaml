@@ -8,5 +8,5 @@ tasks:
     cmd: bash {{.SCRIPTS_DIR}}/bootstrap-cluster.sh
     preconditions:
       # - talosctl config info
-      # - test -f {{.ROOT_DIR}}/talosconfig
+      - test -f {{.ROOT_DIR}}/talosconfig
       - test -f {{.SCRIPTS_DIR}}/bootstrap-cluster.sh

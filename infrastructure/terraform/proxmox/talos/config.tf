@@ -19,28 +19,28 @@ data "talos_client_configuration" "this" {
   endpoints            = [for k, v in var.nodes : v.ip if v.machine_type == "controlplane"]
 }
 
-resource "terraform_data" "cilium_bootstrap_inline_manifests" {
-  input = [
-    {
-      name     = "cilium-bootstrap"
-      contents = file("${path.root}/${var.cluster.cilium.bootstrap_manifest_path}")
-    },
-    {
-      name = "cilium-values"
-      contents = yamlencode({
-        apiVersion = "v1"
-        kind       = "ConfigMap"
-        metadata = {
-          name      = "cilium-values"
-          namespace = "kube-system"
-        }
-        data = {
-          "values.yaml" = file("${path.root}/${var.cluster.cilium.values_file_path}")
-        }
-      })
-    }
-  ]
-}
+# resource "terraform_data" "cilium_bootstrap_inline_manifests" {
+#   input = [
+#     {
+#       name     = "cilium-bootstrap"
+#       contents = file("${path.root}/${var.cluster.cilium.bootstrap_manifest_path}")
+#     },
+#     {
+#       name = "cilium-values"
+#       contents = yamlencode({
+#         apiVersion = "v1"
+#         kind       = "ConfigMap"
+#         metadata = {
+#           name      = "cilium-values"
+#           namespace = "kube-system"
+#         }
+#         data = {
+#           "values.yaml" = file("${path.root}/${var.cluster.cilium.values_file_path}")
+#         }
+#       })
+#     }
+#   ]
+# }
 
 data "talos_machine_configuration" "this" {
   for_each     = var.nodes
@@ -67,9 +67,9 @@ data "talos_machine_configuration" "this" {
       gateway          = var.cluster.gateway
       subnet_mask      = var.cluster.subnet_mask
       vip              = var.cluster.vip
-      extra_manifests  = jsonencode(local.extra_manifests)
+      # extra_manifests  = jsonencode(local.extra_manifests)
       api_server       = var.cluster.api_server
-      inline_manifests = jsonencode(terraform_data.cilium_bootstrap_inline_manifests.output)
+      # inline_manifests = jsonencode(terraform_data.cilium_bootstrap_inline_manifests.output)
     }) :
     templatefile("${path.module}/machine-config/worker.yaml.tftpl", {
       ip              = each.value.ip
@@ -101,25 +101,25 @@ resource "talos_machine_bootstrap" "this" {
   client_configuration = talos_machine_secrets.this.client_configuration
 }
 
-data "talos_cluster_health" "this" {
-  depends_on = [
-    talos_machine_configuration_apply.this,
-    talos_machine_bootstrap.this
-  ]
-  skip_kubernetes_checks = false
-  client_configuration   = data.talos_client_configuration.this.client_configuration
-  control_plane_nodes    = [for k, v in var.nodes : v.ip if v.machine_type == "controlplane"]
-  worker_nodes           = [for k, v in var.nodes : v.ip if v.machine_type == "worker"]
-  endpoints              = data.talos_client_configuration.this.endpoints
-  timeouts = {
-    read = "10m"
-  }
-}
+# data "talos_cluster_health" "this" {
+#   depends_on = [
+#     talos_machine_configuration_apply.this,
+#     talos_machine_bootstrap.this
+#   ]
+#   skip_kubernetes_checks = false
+#   client_configuration   = data.talos_client_configuration.this.client_configuration
+#   control_plane_nodes    = [for k, v in var.nodes : v.ip if v.machine_type == "controlplane"]
+#   worker_nodes           = [for k, v in var.nodes : v.ip if v.machine_type == "worker"]
+#   endpoints              = data.talos_client_configuration.this.endpoints
+#   timeouts = {
+#     read = "10m"
+#   }
+# }
 
 resource "talos_cluster_kubeconfig" "this" {
   depends_on = [
     talos_machine_bootstrap.this,
-    data.talos_cluster_health.this
+    # data.talos_cluster_health.this
   ]
   # The kubeconfig endpoint will be populated from the talos_machine_configuration cluster_endpoint
   node                 = local.first_control_plane_node_ip

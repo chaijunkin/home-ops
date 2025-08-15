@@ -31,6 +31,7 @@ env:
   SOPS_AGE_KEY_FILE: "{{.AGE_FILE}}"
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
   MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
+  TALOSCONFIG: "{{.ROOT_DIR}}/talosconfig"
 
 includes:
   bootstrap: .taskfiles/bootstrap

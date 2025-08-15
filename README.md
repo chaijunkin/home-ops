@@ -157,6 +157,30 @@ Total RAM: 40GB
 
 ---
 
+## 🚀 Deployment Tasks
+
+This repository includes several Taskfile tasks to automate infrastructure provisioning and cluster configuration:
+
+### Proxmox Infrastructure
+
+- **init**
+  Initializes the Terraform working directory for Proxmox infrastructure.
+  ```sh
+  task talos:init
+  ```
+  - Runs `terraform init` in `infrastructure/terraform/proxmox`.
+
+- **apply**
+  Applies the Terraform configuration to provision/update Proxmox infrastructure.
+  ```sh
+  task talos:apply
+  ```
+  - Runs `terraform apply -auto-approve` in `infrastructure/terraform/proxmox`.
+
+> See `.taskfiles/talos/Taskfile.yaml` for more details and additional tasks.
+
+---
+
 ## ⭐ Stargazers
 
 <div align="center">

@@ -4,55 +4,20 @@ machine:
     interfaces:
 %{ if length(network_devices) > 0 ~}
 %{ for idx, device in network_devices ~}
+%{ if idx == 0 ~}
       - deviceSelector:
           hardwareAddr: ${lower(device.mac_address)}
-%{ if device.ip_address != null || idx == 0 ~}
         addresses:
           - ${device.ip_address != null ? device.ip_address : ip}/${subnet_mask}
-%{ if idx == 0 ~}
         routes:
           - network: 0.0.0.0/0
             gateway: ${device.gateway != null ? device.gateway : gateway}
-%{ endif ~}
 %{ if vip != null && idx == 0 ~}
         vip:
           ip: ${vip}
 %{ endif ~}
-%{ endif ~}
         dhcp: false
-%{ if device.tag != null ~}
-        vlans:
-          - vlanId: ${device.tag}
-%{ if device.ip_address != null ~}
-            addresses:
-              - ${device.ip_address}/${subnet_mask}
-%{ endif ~}
 %{ endif ~}
 %{ endfor ~}
 %{ endif ~}
 
-cluster:
-  allowSchedulingOnControlPlanes: true
-  apiServer:
-    ${indent(4, api_server)}
-  controllerManager:
-    extraArgs:
-      bind-address: 0.0.0.0
-  etcd:
-    extraArgs:
-      listen-metrics-urls: http://0.0.0.0:2381
-  scheduler:
-    extraArgs:
-      bind-address: 0.0.0.0
-  network:
-    cni:
-      name: none
-  proxy:
-    disabled: true
-  discovery:
-    enabled: true
-    registries:
-      service:
-        disabled: false
-  extraManifests: ${extra_manifests}
-  inlineManifests: ${inline_manifests}
