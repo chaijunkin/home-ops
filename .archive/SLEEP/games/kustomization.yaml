@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: games
 components:
   - ../../components/common
-resources: []
+resources:
+  []
   # - ./_bootstrap/ks.yaml
   # - ./minecraft/ks.yaml

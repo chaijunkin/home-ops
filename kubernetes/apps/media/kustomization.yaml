@@ -18,9 +18,9 @@ resources:
   # - ./nextcloud/ks.yaml
   # - ./neko/ks.yaml
   # - ./ocis/ks.yaml
-  - ./jellyseerr/ks.yaml
+  # - ./jellyseerr/ks.yaml
   # - ./paperless/ks.yaml
-  - ./plex/ks.yaml
+  # - ./plex/ks.yaml
   # - ./slskd/ks.yaml
   # - ./tachidesk/ks.yaml
-  - ./tautulli/ks.yaml
+  # - ./tautulli/ks.yaml
