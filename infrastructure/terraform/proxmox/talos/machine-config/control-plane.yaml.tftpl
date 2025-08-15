@@ -21,3 +21,6 @@ machine:
 %{ endfor ~}
 %{ endif ~}
 
+cluster:
+  extraManifests: ${extra_manifests}
+  inlineManifests: ${inline_manifests}

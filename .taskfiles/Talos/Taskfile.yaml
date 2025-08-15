@@ -95,15 +95,15 @@ tasks:
       - talosctl --nodes {{.NODES}} get machineconfig
       - which talosctl yq
 
-  # generate-kubeconfig:
-  #   desc: Generate kubeconfig
-  #   cmd: talosctl kubeconfig --nodes {{.CONTROLLER}} --force --force-context-name main {{.ROOT_DIR}}
-  #   vars:
-  #     CONTROLLER:
-  #       sh: talosctl config info --output yaml | yq --exit-status '.endpoints[0]'
-  #   preconditions:
-  #     - talosctl --nodes {{.CONTROLLER}} get machineconfig
-  #     - which talosctl yq
+  generate-kubeconfig:
+    desc: Generate kubeconfig
+    cmd: talosctl kubeconfig --nodes {{.CONTROLLER}} --force --force-context-name main {{.ROOT_DIR}}
+    vars:
+      CONTROLLER:
+        sh: talosctl config info --output yaml | yq --exit-status '.endpoints[0]'
+    preconditions:
+      - talosctl --nodes {{.CONTROLLER}} get machineconfig
+      - which talosctl yq
 
   # generate-schematic:
   #   desc: Generate Schematic ID [VERSION=required]
@@ -136,5 +136,23 @@ tasks:
     cmds:
       # - terraform init
       - terraform apply -auto-approve
+    preconditions:
+      - which terraform
+
+  destroy:
+    desc: Run 'terraform destroy' on Proxmox infrastructure
+    dir: infrastructure/terraform/proxmox
+    cmds:
+      # - terraform init
+      - terraform destroy -auto-approve
+    preconditions:
+      - which terraform
+
+  force-unlock:
+    desc: Run 'terraform destroy' on Proxmox infrastructure
+    dir: infrastructure/terraform/proxmox
+    cmds:
+      # - terraform init
+      - cmd: terraform force-unlock -force chaijunkin/proxmox-talos-workspace
     preconditions:
       - which terraform
