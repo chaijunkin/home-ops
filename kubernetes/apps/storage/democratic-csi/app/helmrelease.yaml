@@ -44,6 +44,8 @@ spec:
         allowVolumeExpansion: false
     volumeSnapshotClasses:
       - name: local-hostpath
+        annotations:
+          snapshot.storage.kubernetes.io/is-default-class: "true"
         deletionPolicy: Delete
         parameters:
           cluster: k8s
