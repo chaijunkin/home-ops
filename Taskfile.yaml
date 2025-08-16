@@ -7,7 +7,7 @@ shopt: [globstar]
 
 vars:
   # Directories
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/infrastructure/ansible"
   BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   PRIVATE_DIR: "{{.ROOT_DIR}}/.private"
@@ -37,22 +37,21 @@ env:
 
 includes:
   bootstrap: .taskfiles/bootstrap
-  ansible: .taskfiles/Ansible/Taskfile.yaml
+  ansible: .taskfiles/ansible/Taskfile.yaml
   kubernetes:
     aliases: ["k8s"]
     taskfile: .taskfiles/kubernetes/Taskfile.yaml
   flux: .taskfiles/Flux/Taskfile.yaml
   repository:
     aliases: ["repo"]
-    taskfile: .taskfiles/Repository/Taskfile.yaml
-  talos: .taskfiles/Talos/Taskfile.yaml
-  sops: .taskfiles/Sops/Taskfile.yaml
+    taskfile: .taskfiles/repository/Taskfile.yaml
+  talos: .taskfiles/talos/Taskfile.yaml
+  sops: .taskfiles/sops/Taskfile.yaml
   workstation: .taskfiles/workstation
   user:
-    taskfile: .taskfiles/User
+    taskfile: .taskfiles/user
     optional: true
   volsync: .taskfiles/volsync
-  external-secrets: .taskfiles/ExternalSecrets/Taskfile.yaml
 
 tasks:
   default:

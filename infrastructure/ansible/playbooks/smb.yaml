@@ -1,0 +1,105 @@
+---
+- name: Install and configure SMB server
+  hosts: proxmox
+  become: true
+  vars:
+    smb_user: nas
+    smb_group: nas
+    smb_password: "{{ lookup('community.sops', '{{ playbook_dir }}/../samba_user.sops.yaml')['smb_password'] }}"
+    smb_shares:
+      - name: Apps
+        path: /tank/Apps
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Storage
+        path: /tank/Storage
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Backup
+        path: /tank/Backup
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Shared
+        path: /tank/Shared
+        guest_ok: "yes"
+        read_only: "no"
+        browsable: "yes"
+  pre_tasks:
+    - name: Ensure nas group exists
+      ansible.builtin.group:
+        name: "{{ smb_group }}"
+        state: present
+
+    - name: Ensure nas user exists
+      ansible.builtin.user:
+        name: "{{ smb_user }}"
+        group: "{{ smb_group }}"
+        create_home: false
+        shell: /usr/sbin/nologin
+        state: present
+
+    - name: Debug print smb_password (remove after verification)
+      ansible.builtin.debug:
+        msg: "smb_password={{ smb_password }}"
+
+    - name: Set Samba password for nas user
+      ansible.builtin.expect:
+        command: "smbpasswd -a {{ smb_user }}"
+        responses:
+          (?i)password: "{{ smb_password }}"
+          (?i)Retype.*: "{{ smb_password }}"
+      register: smbpasswd_result
+      changed_when: "'Added user' in smbpasswd_result.stdout or 'exists' in smbpasswd_result.stdout"
+      no_log: true
+
+  tasks:
+    - name: Ensure share directories exist and are owned by nas
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ smb_user }}"
+        group: "{{ smb_group }}"
+        mode: "0770"
+      loop: "{{ smb_shares }}"
+
+    - name: Configure smb.conf
+      ansible.builtin.blockinfile:
+        path: /etc/samba/smb.conf
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+        block: |
+          {% for share in smb_shares %}
+          [{{ share.name }}]
+          path = {{ share.path }}
+          guest ok = {{ share.guest_ok }}
+          read only = {{ share.read_only }}
+          browsable = {{ share.browsable }}
+          force user = {{ smb_user }}
+          force group = {{ smb_group }}
+          create mask = 0660
+          directory mask = 0770
+          {% endfor %}
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart smbd
+
+  handlers:
+    - name: Restart smbd
+      ansible.builtin.service:
+        name: smbd
+        state: restarted
+
+    - name: Ensure Samba service is enabled and started
+      ansible.builtin.service:
+        name: smbd
+        enabled: true
+        state: restarted
+
+    - name: Ensure Samba service is enabled and started
+      ansible.builtin.service:
+        name: smbd
+        state: started
+        enabled: true

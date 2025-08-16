@@ -1,8 +1,0 @@
----
-kubernetes:
-  children:
-    controllers:
-      hosts:
-        "k3smaster01":
-          ansible_user: "linux"
-          ansible_host: "10.10.30.31"

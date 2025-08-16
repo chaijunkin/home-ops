@@ -1,0 +1,253 @@
+---
+- name: Install and configure NFS and SMB server
+  hosts: proxmox
+  become: true
+  vars:
+    nfs_user: nas
+    nfs_group: nas
+    nfs_exports:
+      - {
+          path: "/tank/Apps",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage",
+          clients: "10.10.30.0/24(ro,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Backup",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Shared",
+          clients: "*(rw,sync,no_subtree_check,no_root_squash)",
+        }
+    smb_user: nas
+    smb_group: nas
+    smb_password: "{{ (lookup('community.sops.sops', playbook_dir ~ '/../samba_user.sops.yaml') | from_yaml).smb_password }}"
+    nas_password: "{{ (lookup('community.sops.sops', playbook_dir ~ '/../samba_user.sops.yaml') | from_yaml).nas_password }}"
+    smb_shares:
+      - name: Apps
+        path: /tank/Apps
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Storage
+        path: /tank/Storage
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Backup
+        path: /tank/Backup
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Shared
+        path: /tank/Shared
+        guest_ok: "yes"
+        read_only: "no"
+        browsable: "yes"
+
+  pre_tasks:
+    - name: Ensure nas group exists
+      ansible.builtin.group:
+        name: "{{ nfs_group }}"
+        state: present
+
+    - name: Ensure nas user exists and set password for Cockpit login
+      ansible.builtin.user:
+        name: "{{ nfs_user }}"
+        group: "{{ nfs_group }}"
+        create_home: false
+        shell: /bin/bash
+        password: "{{ nas_password | password_hash('sha512') }}"
+        state: present
+
+    - name: Ensure python3-pexpect is installed on remote host
+      ansible.builtin.package:
+        name: python3-pexpect
+        state: present
+
+    - name: Set Samba password for nas user
+      ansible.builtin.expect:
+        command: "smbpasswd -a {{ smb_user }}"
+        responses:
+          (?i)password: "{{ smb_password }}"
+          (?i)Retype.*: "{{ smb_password }}"
+      register: smbpasswd_result
+      changed_when: "'Added user' in smbpasswd_result.stdout or 'exists' in smbpasswd_result.stdout"
+      # no_log: true
+
+  tasks:
+    # NFS setup
+    - name: Install NFS packages
+      ansible.builtin.package:
+        name:
+          - nfs-common
+          - nfs-kernel-server
+        state: present
+
+    - name: Ensure NFS export directories exist and are owned by nas
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ nfs_user }}"
+        group: "{{ nfs_group }}"
+        mode: "0770"
+      loop: "{{ nfs_exports }}"
+
+    - name: Configure /etc/exports
+      ansible.builtin.template:
+        src: ../templates/exports.j2
+        dest: /etc/exports
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Export NFS shares
+      ansible.builtin.command: exportfs -ra
+
+    - name: Ensure NFS service is enabled and started
+      ansible.builtin.service:
+        name: nfs-server
+        state: started
+        enabled: true
+
+    # SMB setup
+    - name: Install Samba packages
+      ansible.builtin.package:
+        name:
+          - samba
+          - samba-common
+        state: present
+
+    - name: Ensure SMB share directories exist and are owned by nas
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ smb_user }}"
+        group: "{{ smb_group }}"
+        mode: "0770"
+      loop: "{{ smb_shares }}"
+
+    - name: Configure smb.conf
+      ansible.builtin.blockinfile:
+        path: /etc/samba/smb.conf
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+        block: |
+          {% for share in smb_shares %}
+          [{{ share.name }}]
+          path = {{ share.path }}
+          guest ok = {{ share.guest_ok }}
+          read only = {{ share.read_only }}
+          browsable = {{ share.browsable }}
+          force user = {{ smb_user }}
+          force group = {{ smb_group }}
+          create mask = 0660
+          directory mask = 0770
+          {% endfor %}
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart smbd
+
+    - name: Ensure [global] section in smb.conf has 'include = registry'
+      ansible.builtin.lineinfile:
+        path: /etc/samba/smb.conf
+        insertafter: '^\[global\]'
+        line: "include = registry"
+        state: present
+        owner: root
+        group: root
+        mode: "0644"
+
+    # Cockpit setup
+    - name: Install Cockpit (core package)
+      ansible.builtin.package:
+        name: cockpit
+        state: present
+
+    - name: Add 45Drives repo for Debian/Ubuntu
+      block:
+        - name: Ensure ca-certificates is installed
+          ansible.builtin.apt:
+            name: ca-certificates
+            state: present
+            update_cache: yes
+
+        - name: Add 45Drives GPG key
+          ansible.builtin.apt_key:
+            url: https://repo.45drives.com/key/gpg.asc
+            keyring: /usr/share/keyrings/45drives-archive-keyring.gpg
+            state: present
+
+        - name: Add 45Drives apt repo file (default to focal)
+          ansible.builtin.get_url:
+            url: "https://repo.45drives.com/repofiles/ubuntu/45drives-enterprise-focal.list"
+            dest: "/etc/apt/sources.list.d/45drives-enterprise-focal.list"
+            mode: "0644"
+
+        - name: apt update after adding 45Drives repo
+          ansible.builtin.apt:
+            update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Install Cockpit Navigator
+      ansible.builtin.package:
+        name: cockpit-navigator
+        state: present
+
+    - name: Install Cockpit File Sharing
+      ansible.builtin.package:
+        name: cockpit-file-sharing
+        state: present
+
+    - name: Ensure Cockpit is enabled and started
+      ansible.builtin.service:
+        name: cockpit
+        state: started
+        enabled: true
+
+    - name: Ensure root is disallowed from Cockpit login (default)
+      ansible.builtin.lineinfile:
+        path: /etc/cockpit/disallowed-users
+        line: root
+        state: present
+        create: yes
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Ensure nas user is in sambashare group
+      ansible.builtin.user:
+        name: "{{ smb_user }}"
+        groups: sambashare
+        append: yes
+        state: present
+
+    - name: Ensure nas user can access Samba registry files
+      ansible.builtin.file:
+        path: /var/lib/samba/private
+        owner: root
+        group: root
+        mode: "0770"
+
+    - name: Ensure Samba registry database is root-owned and not group-writable
+      ansible.builtin.file:
+        path: /var/lib/samba/registry.tdb
+        owner: root
+        group: root
+        mode: "0600"
+      when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+
+  handlers:
+    - name: Restart smbd
+      ansible.builtin.service:
+        name: smbd
+        state: restarted
+
+    - name: Ensure Samba service is enabled and started
+      ansible.builtin.service:
+        name: smbd
+        state: started
+        enabled: true

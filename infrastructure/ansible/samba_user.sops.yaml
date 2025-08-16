@@ -1,0 +1,17 @@
+smb_password: ENC[AES256_GCM,data:aasmkJ864gY3zsp5tV0iIqG3vKQ2BkcrluPQs+1nCjg=,iv:lwixuCkZW82B2eMPQ/8O95UtGM1PatKW+DU+imRI0rY=,tag:OJegXIqfP5EilTh+v/Buew==,type:str]
+nas_password: ENC[AES256_GCM,data:5rDRudWK45R4kvyLOjzVDIPL4UaOA4OQ1KqVXd6Lg+E=,iv:XSkWObeGIJCcHdx9kT3am/Rex/NEtKjUfTJ2/Pfdtok=,tag:DA6z3X5sYjOkILwfPrLTcQ==,type:str]
+sops:
+    age:
+        - recipient: age1apaw0x3ja8ne4w08re4elvgt8wjhadpefelxjzhshf83834nhfzs65j7zp
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA0VjhGZXZxZXdjcU41TElJ
+            MW1MREVYZjBxRU80STY2UFRxYVhmcTF4ZHdjClFhcXZJcnBaaWpsQXkwYkEyRklX
+            ZlNnNXJQbml6UWV1UDRmdVprWWhDcnMKLS0tIE51blR1eTVOcVJUNzVCa1kvZ0xr
+            NmxWWXhlRWZjMnhmVUpxQTJrTzRlMzAK9A+qlXwbhNW/ggb4jEFiprixUSoviHoF
+            4HsAXmQ7Tyvp+BVwDlA6coJMhrdSZQbMOxDo/oPY/WEd5yIs4cayUA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-16T10:45:36Z"
+    mac: ENC[AES256_GCM,data:bP7zVN+UmavI7jIfiBJyQTLPOzZmOaZ0gLTiIYULDLouZU4eeJtKB0royDk9S/ieewlc7ZHd7zyQ7lk38h6ncOfXLsSEQOzN73CQlZX/MeokGrAkawtKurrov+LtI3a7Vm9XwL1+GCBBwpH+NqM66I6kUwdLerUSBAVdv/yQNuE=,iv:6f632YV19qqI2gMpQxyV9zk4cU7GD8E7qaoJBvecaGY=,tag:ydiIiE0iSQQebReMZmWinw==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.10.2

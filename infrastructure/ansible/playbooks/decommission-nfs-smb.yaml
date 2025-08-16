@@ -1,0 +1,31 @@
+---
+- name: Decommission NFS and SMB configuration (without removing content)
+  hosts: proxmox
+  become: true
+  tasks:
+    - name: Stop and disable NFS server
+      ansible.builtin.service:
+        name: nfs-server
+        state: stopped
+        enabled: false
+
+    - name: Remove /etc/exports file if exists
+      ansible.builtin.file:
+        path: /etc/exports
+        state: absent
+
+    - name: Stop and disable Samba server
+      ansible.builtin.service:
+        name: smbd
+        state: stopped
+        enabled: false
+
+    - name: Remove all managed SMB shares from smb.conf
+      ansible.builtin.blockinfile:
+        path: /etc/samba/smb.conf
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+        state: absent
+
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: yes

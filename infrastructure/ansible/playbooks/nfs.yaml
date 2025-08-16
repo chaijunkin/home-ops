@@ -1,0 +1,64 @@
+---
+- name: Install and configure NFS server
+  hosts: proxmox
+  become: true
+  vars:
+    nfs_user: nas
+    nfs_group: nas
+    nfs_exports:
+      - {
+          path: "/tank/Apps",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage",
+          clients: "10.10.30.0/24(ro,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Backup",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Shared",
+          clients: "*(rw,sync,no_subtree_check,no_root_squash)",
+        }
+  pre_tasks:
+    - name: Ensure nas group exists
+      ansible.builtin.group:
+        name: "{{ nfs_group }}"
+        state: present
+
+    - name: Ensure nas user exists
+      ansible.builtin.user:
+        name: "{{ nfs_user }}"
+        group: "{{ nfs_group }}"
+        create_home: false
+        shell: /usr/sbin/nologin
+        state: present
+
+  tasks:
+    - name: Ensure export directories exist and are owned by nas
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: directory
+        owner: "{{ nfs_user }}"
+        group: "{{ nfs_group }}"
+        mode: "0770"
+      loop: "{{ nfs_exports }}"
+
+    - name: Configure /etc/exports
+      ansible.builtin.template:
+        src: ../templates/exports.j2
+        dest: /etc/exports
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Export NFS shares
+      ansible.builtin.command: exportfs -ra
+
+    - name: Ensure NFS service is enabled and started
+      ansible.builtin.service:
+        name: nfs-server
+        state: started
+        enabled: true

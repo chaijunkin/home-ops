@@ -4,19 +4,19 @@ metadata:
     name: cloudflare-tunnel-id-secret
     namespace: network
 stringData:
-    CLOUDFLARE_TUNNEL_ID: ENC[AES256_GCM,data:wuDsd9auu1ijQKANZzv848kxSfbAbi99gL2HEvtIsyk3CJ1z,iv:who1k4B57jf4xrg+ev4PGZOMEnwgoHQwmEs41MMq4sE=,tag:q8bRn/HaD2ddleDelEUdHQ==,type:str]
+    CLOUDFLARE_TUNNEL_ID: ENC[AES256_GCM,data:KT1QNFlix6Od3CSPxSUqODWx24BxC7/NT7gfgv0UFYs51xNt,iv:XMvv8OEBV4EV1Wxztf5gleDd4iYlMAE8hhArOpBGuGQ=,tag:Ohmp0/k5WzZGP7WwgoWZwA==,type:str]
 sops:
     age:
         - recipient: age1apaw0x3ja8ne4w08re4elvgt8wjhadpefelxjzhshf83834nhfzs65j7zp
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnN2VyamE0QUc4U1hMVWlB
-            MGxuaHZFa0FraDFETzRKMEZjVG9JVEZZRGkwCnhrZUU4UzNPSVljclczeUNPeDJ4
-            cXRiREdsWVV3Q2NiNnhFeTlHS3VsWWMKLS0tIGNzN3VEYXkvWVQ3cFk0Z0I1MXpr
-            WmpNNzd4RjZ6aE9ScS84Qk1vR0xMZlEKAWj1zErvtyd9MDt7IkO/5BJNvkxtqExG
-            wM5xTFYQJo1zh53tG2oqbhNAZZfK/385+cEMY2etHyO9n5HrUKl+3A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLRTNxOG11aXd1NTEwRGcz
+            MDNKUHpiQVJiUE05QXVxUzkrZ21GaUg5L0RzClFMTkhaQjhqbDBLYkVhYlR3WS9j
+            eVhINUR6cjdCeVJOemh0N2pXcndTR1UKLS0tIG9wRHpmcld5TDRTbXZtSFFuNzgx
+            SkJ3U0FzTWlzcGxtWGpSOWZxc0JqZmcKaPvlfBDpVt08R7R8jLs0IJsYIexcf9Pj
+            31EGM4nrKFkTUTkYdipyFgtElrvMmjfdFuEmRZF2HCZMN7YmO9XWFw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-15T15:21:19Z"
-    mac: ENC[AES256_GCM,data:zAr7OB1JwfVZQIjRGw03iLi2n/1XepXJEuOcXlxl4lV9N6W9CXQ4T1w522uFbcURw82Mdn5q4IsGUyzz8H4oikrSiSjJhkkJafVgOq6OQvwLf0cBdd//O1s+SOKdM8QaRmN8IfG+B9PkriWw3GJZZDwxvBlsYzhTunNTqGPwmzs=,iv:i3itjZw/FNPasFuHsZc+XaJJ8N8SAeKC0HDiI56093M=,tag:6NUW/KefaxjCgmH8Td3Djw==,type:str]
+    lastmodified: "2025-08-16T09:52:53Z"
+    mac: ENC[AES256_GCM,data:CaT+Lr/u6o3ZqXfkLrDq10GPd0EIyLwa5KEfV6N1+xTZzChrJu3kXqe41ODMPPu+D7kHvXaWm9sy2oX5/jrlWdtKhsmDhXRQ/RN4AqqghYzZ2G+v2YzV6As3ESfLe055XG9QQwSVd0nH5clEKu+Q6Xz9HiFZI2cnNQIxAx2yHg0=,iv:ZneUbEESfqt3kDZ2LvIxpw7/BA5ugZT+fy5jhA6MU5c=,tag:q26eJxZ5/Qhum4T1vJc2MA==,type:str]
     encrypted_regex: ^(data|stringData)$
     version: 3.10.2

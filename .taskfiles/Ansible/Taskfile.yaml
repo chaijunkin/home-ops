@@ -7,6 +7,7 @@ vars:
   ANSIBLE_INVENTORY_FILE: "{{.ANSIBLE_DIR}}/inventory/hosts.yaml"
   ANSIBLE_REQUIREMENTS_FILE: "{{.ANSIBLE_DIR}}/requirements.yaml"
   ANSIBLE_PIP_REQUIREMENTS_FILE: "{{.ANSIBLE_DIR}}/requirements.txt"
+  ANSIBLE_STDOUT_CALLBACK: '{{.ANSIBLE_STDOUT_CALLBACK | default "default"}}'
 
 env:
   ANSIBLE_COLLECTIONS_PATH: "{{.VIRTUAL_ENV}}/galaxy"
@@ -14,6 +15,8 @@ env:
   ANSIBLE_VARS_ENABLED: "host_group_vars"
   ANSIBLE_LOCALHOST_WARNING: "False"
   ANSIBLE_INVENTORY_UNPARSED_WARNING: "False"
+  SOPS_AGE_KEY_FILE: "../../age.key"
+  ANSIBLE_STDOUT_CALLBACK: "{{.ANSIBLE_STDOUT_CALLBACK}}"
 
 tasks:
   deps:
@@ -41,7 +44,7 @@ tasks:
       force: '{{.force | default "true"}}'
 
   run:
-    desc: Run an Ansible playbook for configuring a cluster
+    desc: Run an Ansible playbook
     summary: |
       Args:
         playbook: Playbook to run (required)

@@ -26,8 +26,7 @@ tasks:
               find "{{.KUBERNETES_DIR}}" -type f -name "*.sops.*" -exec grep -L "ENC\[AES256_GCM" {} \;
           fi
 
-  .encrypt-file:
-    internal: true
+  encrypt-file:
     cmd: sops --encrypt --in-place {{.file}}
     requires:
       vars: ["file"]
@@ -48,5 +47,5 @@ tasks:
       - for:
           var: SECRET_FILES
         cmd: |
-          # sops --decrypt --in-place "{{ .ITEM }}"
+          sops --decrypt --in-place "{{ .ITEM }}"
           sops --encrypt --in-place "{{ .ITEM }}"
