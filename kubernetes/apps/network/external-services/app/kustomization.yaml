@@ -6,5 +6,4 @@ resources:
   - ./dns.yaml
   - ./hypervisor.yaml
   - ./nas.yaml
-  - ./smb.yaml
   - ./switch.yaml
