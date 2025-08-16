@@ -75,7 +75,7 @@ variable "talos_nodes" {
       disk_discard     = optional(string, "on")
       disk_ssd         = optional(bool, true)
       disk_file_format = optional(string, "raw")
-      disk_size        = optional(number, 200)
+      disk_size        = optional(number, 400)
 
       vm_id         = number
       cpu           = number

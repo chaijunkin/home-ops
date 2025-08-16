@@ -87,17 +87,18 @@ tasks:
   reset-cluster:
     desc: Reset whole cluster
     prompt: Reset the Talos cluster ... continue?
-    cmd: talosctl reset --nodes {{.NODES}} --graceful=false --user-disks-to-wipe u-local-hostpath
+    # cmd: talosctl reset --nodes {{.NODES}} --graceful=false --user-disks-to-wipe u-local-hostpath
+    cmd: talosctl reset --graceful=false
     vars:
       NODES:
         sh: talosctl config info --output yaml | yq --exit-status '.nodes | join (",")'
     preconditions:
-      - talosctl --nodes {{.NODES}} get machineconfig
+      - talosctl get machineconfig
       - which talosctl yq
 
   generate-kubeconfig:
     desc: Generate kubeconfig
-    cmd: talosctl kubeconfig --nodes {{.CONTROLLER}} --force --force-context-name main {{.ROOT_DIR}}
+    cmd: talosctl kubeconfig --nodes {{.CONTROLLER}} --force --force-context-name admin@main {{.ROOT_DIR}}
     vars:
       CONTROLLER:
         sh: talosctl config info --output yaml | yq --exit-status '.endpoints[0]'
