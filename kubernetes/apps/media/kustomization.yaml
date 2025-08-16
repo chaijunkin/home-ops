@@ -5,21 +5,22 @@ namespace: media
 components:
   - ../../components/common
 resources:
-  - ./_bootstrap/ks.yaml
-  # Pre Flux-Kustomizations
-  - ./pvc.yaml
-  # # Flux-Kustomizations
-  - ./calibre-downloader/ks.yaml
-  - ./calibre-web-automated/ks.yaml
-  - ./filebrowser/ks.yaml
-  # - ./jellyfin/ks.yaml
-  - ./minio/ks.yaml
-  - ./jellyseerr/ks.yaml
-  - ./plex/ks.yaml
-  - ./slskd/ks.yaml
-  - ./tautulli/ks.yaml
-  # - ./nextcloud/ks.yaml
-  # - ./paperless/ks.yaml
-  # - ./neko/ks.yaml
-  # - ./ocis/ks.yaml
-  # - ./tachidesk/ks.yaml
+  []
+  # - ./_bootstrap/ks.yaml
+  # # Pre Flux-Kustomizations
+  # - ./pvc.yaml
+  # # # Flux-Kustomizations
+  # - ./calibre-downloader/ks.yaml
+  # - ./calibre-web-automated/ks.yaml
+  # - ./filebrowser/ks.yaml
+  # # - ./jellyfin/ks.yaml
+  # - ./minio/ks.yaml
+  # - ./jellyseerr/ks.yaml
+  # - ./plex/ks.yaml
+  # - ./slskd/ks.yaml
+  # - ./tautulli/ks.yaml
+  # # - ./nextcloud/ks.yaml
+  # # - ./paperless/ks.yaml
+  # # - ./neko/ks.yaml
+  # # - ./ocis/ks.yaml
+  # # - ./tachidesk/ks.yaml

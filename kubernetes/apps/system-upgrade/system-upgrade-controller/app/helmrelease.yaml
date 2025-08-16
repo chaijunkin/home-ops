@@ -1,116 +1,64 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app system-upgrade-controller
+  name: system-upgrade-controller
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
     controllers:
-      sysupgrade:
+      system-upgrade-controller:
         strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
               repository: docker.io/rancher/system-upgrade-controller
-              tag: v0.16.0
+              tag: v0.16.2@sha256:ae933d9d81e9c42e316989a0ce7b1fb0dfe93afe5469631b8f384141b89b106a
             env:
-              SYSTEM_UPGRADE_CONTROLLER_DEBUG: false
-              SYSTEM_UPGRADE_CONTROLLER_THREADS: 2
-              SYSTEM_UPGRADE_JOB_ACTIVE_DEADLINE_SECONDS: 900
-              SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: 99
-              SYSTEM_UPGRADE_JOB_IMAGE_PULL_POLICY: IfNotPresent
-              SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: docker.io/rancher/kubectl:v1.33.3
-              SYSTEM_UPGRADE_JOB_PRIVILEGED: true
-              SYSTEM_UPGRADE_JOB_TTL_SECONDS_AFTER_FINISH: 900
-              SYSTEM_UPGRADE_PLAN_POLLING_INTERVAL: 15m
-              SYSTEM_UPGRADE_CONTROLLER_NAME: *app
-              SYSTEM_UPGRADE_CONTROLLER_NAMESPACE:
+              SYSTEM_UPGRADE_CONTROLLER_LEADER_ELECT: true
+              SYSTEM_UPGRADE_CONTROLLER_NAME: "{{ .Release.Name }}"
+              SYSTEM_UPGRADE_CONTROLLER_NAMESPACE: "{{ .Release.Namespace }}"
+              SYSTEM_UPGRADE_CONTROLLER_NODE_NAME:
                 valueFrom:
                   fieldRef:
-                    fieldPath: metadata.namespace
+                    fieldPath: spec.nodeName
+              SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: "99"
+              SYSTEM_UPGRADE_JOB_PRIVILEGED: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-
+              capabilities: {drop: ["ALL"]}
     defaultPodOptions:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: node-role.kubernetes.io/control-plane
-                    operator: Exists
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-      tolerations:
-        - key: "master"
-          operator: "Exists"
-          effect: "NoSchedule"
-        - key: "master"
-          operator: "Exists"
-          effect: "NoExecute"
-        - {key: CriticalAddonsOnly, operator: Exists}
-        - {
-            key: node-role.kubernetes.io/master,
-            operator: Exists,
-            effect: NoSchedule,
-          }
-        - {
-            key: node-role.kubernetes.io/controlplane,
-            operator: Exists,
-            effect: NoSchedule,
-          }
-
+        runAsUser: 1000
+        runAsGroup: 1000
+    rawResources:
+      talosServiceAccount:
+        apiVersion: talos.dev/v1alpha1
+        kind: ServiceAccount
+        spec:
+          spec:
+            roles: ["os:admin"]
+    rbac:
+      bindings:
+        system-upgrade-controller:
+          type: ClusterRoleBinding
+          roleRef:
+            kind: ClusterRole
+            name: cluster-admin
+          subjects:
+            - identifier: system-upgrade-controller
     serviceAccount:
-      system-upgrade: {}
-
-    persistence:
-      tmp:
-        type: emptyDir
-        globalMounts:
-          - path: /tmp
-      etc-ssl:
-        type: hostPath
-        hostPath: /etc/ssl
-        hostPathType: DirectoryOrCreate
-        globalMounts:
-          - path: /etc/ssl
-            readOnly: true
-      etc-pki:
-        type: hostPath
-        hostPath: /etc/pki
-        hostPathType: DirectoryOrCreate
-        globalMounts:
-          - path: /etc/pki
-            readOnly: true
-      etc-ca-certificates:
-        type: hostPath
-        hostPath: /etc/ca-certificates
-        hostPathType: DirectoryOrCreate
-        globalMounts:
-          - path: /etc/ca-certificates
-            readOnly: true
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: system-upgrade
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: system-upgrade
-    namespace: system-upgrade
+      system-upgrade-controller: {}

@@ -5,13 +5,14 @@ namespace: home-automation
 components:
   - ../../components/common
 resources:
-  - ./_bootstrap/ks.yaml
-  # Pre Flux-Kustomizations  # # Flux-Kustomizations
-  # - ./dsmr-reader/ks.yaml
-  # - ./esphome/ks.yaml
-  # - ./frigate/ks.yaml
-  # - ./go2rtc/ks.yaml
-  - ./home-assistant/ks.yaml
-  # - ./mosquitto/ks.yaml
-  # - ./scrypted/ks.yaml
-  # - ./zigbee2mqtt/ks.yaml
+  []
+  # - ./_bootstrap/ks.yaml
+  # # Pre Flux-Kustomizations  # # Flux-Kustomizations
+  # # - ./dsmr-reader/ks.yaml
+  # # - ./esphome/ks.yaml
+  # # - ./frigate/ks.yaml
+  # # - ./go2rtc/ks.yaml
+  # - ./home-assistant/ks.yaml
+  # # - ./mosquitto/ks.yaml
+  # # - ./scrypted/ks.yaml
+  # # - ./zigbee2mqtt/ks.yaml

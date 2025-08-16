@@ -8,7 +8,8 @@ resources:
   - ./certificates/ks.yaml
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
-  - ./csi-driver-smb/ks.yaml
+  - ./csi-driver-nfs/ks.yaml
+  # - ./csi-driver-smb/ks.yaml
   - ./external-secrets/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./keda/ks.yaml
