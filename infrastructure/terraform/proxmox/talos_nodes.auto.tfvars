@@ -37,7 +37,7 @@ talos_nodes = {
     ]
 
     vm_id         = 3031
-    cpu           = 10
+    cpu           = 9
     ram_dedicated = 59392
     igpu          = true
     dns           = ["10.10.30.1"]

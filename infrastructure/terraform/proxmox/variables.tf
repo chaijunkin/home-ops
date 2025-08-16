@@ -28,7 +28,7 @@ variable "talos_image" {
     update_schematic_path = optional(string)
     arch                  = optional(string, "amd64")
     platform              = optional(string, "nocloud")
-    proxmox_datastore     = optional(string, "vm-store")
+    proxmox_datastore     = optional(string, "iso-image")
   })
 }
 
@@ -75,7 +75,7 @@ variable "talos_nodes" {
       disk_discard     = optional(string, "on")
       disk_ssd         = optional(bool, true)
       disk_file_format = optional(string, "raw")
-      disk_size        = optional(number, 400)
+      disk_size        = optional(number, 200)
 
       vm_id         = number
       cpu           = number
