@@ -56,6 +56,17 @@
         guest_ok: "yes"
         read_only: "no"
         browsable: "yes"
+    storage_standard_dirs:
+      - Desktop
+      - Documents
+      - Downloads
+      - Music
+      - Pictures
+      - Public
+      - Templates
+      - Videos
+      - Books
+      - Anime
 
   pre_tasks:
     - name: Ensure nas group exists
@@ -248,6 +259,19 @@
         group: root
         mode: "0600"
       when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+
+    # Ensure standard directories exist under /tank/Storage/
+    - name: Ensure XDG standard directories exist in /tank/Storage/
+      ansible.builtin.file:
+        path: "/tank/Storage/{{ item }}"
+        state: directory
+        owner: "{{ nfs_user }}"
+        group: "{{ nfs_group }}"
+        mode: "0770"
+      loop: "{{ storage_standard_dirs }}"
+      loop_control:
+        loop_var: item
+      when: storage_standard_dirs is defined
 
   handlers:
     - name: Restart smbd

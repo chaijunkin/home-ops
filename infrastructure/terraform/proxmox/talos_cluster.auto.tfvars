@@ -19,6 +19,5 @@ talos_cluster_config = {
   kubelet             = <<-EOT
   EOT
   api_server          = <<-EOT
-    admissionControl: []
   EOT
 }

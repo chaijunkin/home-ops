@@ -1,7 +1,7 @@
 machine:
-  kernel:
-    modules:
-      - name: nbd
+  # kernel:
+  #   modules:
+  #     - name: nbd
   certSANs: ["127.0.0.1", "k8s.cloudjur.com", "10.10.30.31"]
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -89,6 +89,7 @@ cluster:
       - 10.96.0.0/16
   allowSchedulingOnControlPlanes: true
   apiServer:
+    admissionControl: []
     image: registry.k8s.io/kube-apiserver:${kubernetes_version}
     auditPolicy:
       apiVersion: audit.k8s.io/v1
