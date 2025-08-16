@@ -40,7 +40,7 @@ includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
   kubernetes:
     aliases: ["k8s"]
-    taskfile: .taskfiles/Kubernetes/Taskfile.yaml
+    taskfile: .taskfiles/kubernetes/Taskfile.yaml
   flux: .taskfiles/Flux/Taskfile.yaml
   repository:
     aliases: ["repo"]

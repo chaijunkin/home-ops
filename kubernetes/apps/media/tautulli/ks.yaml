@@ -25,5 +25,5 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/volsync
-    - ../../../../components/keda/nas-scaler
+    # - ../../../../components/keda/nas-scaler
     - ../../../../components/gatus/external

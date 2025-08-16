@@ -24,5 +24,5 @@ spec:
   interval: 30m
   timeout: 5m
   components:
-    - ../../../../components/keda/nas-scaler
+    # - ../../../../components/keda/nas-scaler
     - ../../../../components/gatus/external

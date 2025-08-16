@@ -27,6 +27,6 @@ spec:
       APP: sonarr
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/keda/nas-scaler
+    # - ../../../../components/keda/nas-scaler
     - ../../../../components/volsync
     - ../../../../components/gatus/guarded
