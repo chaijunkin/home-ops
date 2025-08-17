@@ -33,7 +33,7 @@ spec:
               MINIO_PROMETHEUS_JOB_ID: minio
               MINIO_PROMETHEUS_URL: https://prometheus.cloudjur.com
               MINIO_PROMETHEUS_AUTH_TYPE: public
-              MINIO_SERVER_URL: https://s3.cloudjur.com
+              # MINIO_SERVER_URL: https://s3.cloudjur.com
               MINIO_UPDATE: "off"
             envFrom:
               - secretRef:
