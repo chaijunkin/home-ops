@@ -31,6 +31,9 @@ spec:
     remediation:
       retries: 3
   values:
+    ipFamilyPolicy: SingleStack
+    ipFamilies:
+      - IPv4
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       route:

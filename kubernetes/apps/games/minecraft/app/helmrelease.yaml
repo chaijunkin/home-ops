@@ -65,6 +65,7 @@ spec:
     serviceAnnotations:
       lbipam.cilium.io/ips: "10.10.30.41"
       external-dns.alpha.kubernetes.io/hostname: minecraft-local.cloudjur.com
+      external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
       mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
     minecraftServer:
       eula: true
