@@ -61,11 +61,11 @@ spec:
               requests:
                 cpu: 10m
                 # limits:
-                gpu.intel.com/i915: 1
                 # memory: 16G
                 memory: 50Mi
               limits:
                 memory: 512Mi
+                gpu.intel.com/i915: 1
         pod:
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: "true"
