@@ -5,5 +5,4 @@ namespace: games
 components:
   - ../../components/common
 resources:
-  []
-  # - ./minecraft/ks.yaml
+  - ./minecraft/ks.yaml
