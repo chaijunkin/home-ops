@@ -112,9 +112,13 @@ spec:
         globalMounts:
           - path: /dev/bus/usb
       media:
-        existingClaim: pvc-smb-frigate
+        enabled: true
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps
         globalMounts:
           - path: /media/frigate
+            subPath: Frigate
     route:
       app:
         hostnames:
