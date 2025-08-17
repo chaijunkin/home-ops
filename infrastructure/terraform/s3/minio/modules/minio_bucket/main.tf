@@ -42,3 +42,9 @@ resource "minio_iam_user_policy_attachment" "attachment" {
   user_name   = minio_iam_user.user.id
   policy_name = minio_iam_policy.policy.id
 }
+
+# resource "minio_accesskey" "owner_access_key" {
+#   user      = minio_iam_user.user.id
+#   access_key = var.owner_access_key
+#   secret_key = var.owner_secret_key
+# }

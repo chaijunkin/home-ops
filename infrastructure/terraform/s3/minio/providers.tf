@@ -5,14 +5,9 @@ terraform {
     workspaces { name = "minio-workspace" }
   }
   required_providers {
-    b2 = {
-      source  = "Backblaze/b2"
-      version = "0.8.9"
-    }
-
     minio = {
       source  = "aminueza/minio"
-      version = "2.2.1"
+      version = "3.6.3"
     }
   }
 }

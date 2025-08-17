@@ -14,6 +14,8 @@ module "minio_bucket" {
   bucket_name = each.key
   user_name   = random_password.user_name[each.key].result
   user_secret = random_password.user_secret[each.key].result
+  # owner_access_key = var.owner_access_key
+  # owner_secret_key = var.owner_secret_key
   providers = {
     minio = minio.nas
   }
@@ -33,4 +35,12 @@ resource "random_password" "user_name" {
 resource "random_password" "user_secret" {
   for_each = toset(local.buckets)
   length   = 32
+}
+
+resource "minio_accesskey" "owner_access_key" {
+  user      = "root"
+  access_key = var.owner_access_key
+  secret_key = var.owner_secret_key
+
+  provider = minio.nas
 }
