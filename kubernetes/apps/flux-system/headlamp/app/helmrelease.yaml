@@ -64,34 +64,6 @@ spec:
     volumes:
       - name: headlamp-plugins
         emptyDir: {}
-    # ingress:
-    #   # -- Enable ingress controller resource
-    #   enabled: true
-    #   # -- Annotations for Ingress resource
-    #   annotations:
-    #     gethomepage.dev/enabled: "true"
-    #     gethomepage.dev/group: Compute/Storage Infrastructure
-    #     gethomepage.dev/name: Headlamp
-    #     gethomepage.dev/description: Kubernetes Dashboared
-    #     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/headlamp.png
-    #     # external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-    #     # kubernetes.io/tls-acme: "true"
-
-    #   # -- Additional labels to add to the Ingress resource
-    #   labels:
-    #     {}
-    #     # app.kubernetes.io/part-of: traefik
-    #     # environment: prod
-
-    #   # -- Ingress class name. replacement for the deprecated "kubernetes.io/ingress.class" annotation
-    #   ingressClassName: "internal"
-    #   # -- Hostname(s) for the Ingress resource
-    #   # Please refer to https://kubernetes.io/docs/reference/kubernetes-api/service-resources/ingress-v1/#IngressSpec for more information.
-    #   hosts:
-    #     - host: headlamp.cloudjur.com
-    #       paths:
-    #         - path: /
-    #           type: Prefix
     service:
       type: LoadBalancer
       loadBalancerIP: 10.10.30.69

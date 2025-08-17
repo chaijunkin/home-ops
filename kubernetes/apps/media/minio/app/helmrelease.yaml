@@ -105,41 +105,6 @@ spec:
           - backendRefs:
               - name: minio
                 port: 9000
-    # ingress:
-    #   main:
-    #     annotations:
-    #       gethomepage.dev/enabled: "true"
-    #       gethomepage.dev/group: Compute/Storage Infrastructure
-    #       gethomepage.dev/name: Minio
-    #       gethomepage.dev/description: Object Storage
-    #       gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/minio.png
-    #     enabled: true
-    #     className: "internal"
-    #     hosts:
-    #       - host: &host "minio.cloudjur.com"
-    #         paths:
-    #           - path: /
-    #             service:
-    #               identifier: app
-    #               port: http
-    #     tls:
-    #       - hosts:
-    #           - *host
-    #   api:
-    #     enabled: true
-    #     className: internal
-    #     annotations:
-    #       external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-    #     hosts:
-    #       - host: &s3Host s3.cloudjur.com
-    #         paths:
-    #           - path: /
-    #             service:
-    #               identifier: app
-    #               port: s3
-    #     tls:
-    #       - hosts:
-    #           - *s3Host
     persistence:
       config:
         enabled: true
