@@ -136,7 +136,7 @@ spec:
     route:
       app:
         hostnames:
-          - home-assistant.cloudjur.com
+          - hass.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system
