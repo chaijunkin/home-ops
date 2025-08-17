@@ -10,4 +10,4 @@ resources:
   # Flux-Kustomizations
   # - ./cloudnative-pg/ks.yaml
   - ./dragonfly-operator/ks.yaml
-  # - ./mosquitto/ks.yaml
+  - ./mosquitto/ks.yaml
