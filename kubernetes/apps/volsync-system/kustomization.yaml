@@ -6,8 +6,6 @@ namespace: volsync-system
 components:
   - ../../components/common
 resources:
-  # Pre Flux-Kustomizations  #
-  # - ./notifications.yaml
   # Flux-Kustomizations
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml

@@ -5,7 +5,7 @@ namespace: media
 components:
   - ../../components/common
 resources:
-  []
+  # []
   # - ./_bootstrap/ks.yaml
   # # Pre Flux-Kustomizations
   # - ./pvc.yaml
@@ -14,7 +14,7 @@ resources:
   # - ./calibre-web-automated/ks.yaml
   # - ./filebrowser/ks.yaml
   # # - ./jellyfin/ks.yaml
-  # - ./minio/ks.yaml
+  - ./minio/ks.yaml
   # - ./jellyseerr/ks.yaml
   # - ./plex/ks.yaml
   # - ./slskd/ks.yaml

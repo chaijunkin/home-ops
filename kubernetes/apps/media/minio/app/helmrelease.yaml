@@ -122,6 +122,11 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: pvc-smb-minio
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps/minio
         globalMounts:
           - path: /data
+        # existingClaim: pvc-smb-minio
+        # globalMounts:
+        #   - path: /data
