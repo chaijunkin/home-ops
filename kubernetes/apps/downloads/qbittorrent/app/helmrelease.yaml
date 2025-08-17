@@ -77,14 +77,14 @@ spec:
               limits:
                 memory: 18Gi
             securityContext:
-              runAsUser: 2000
-              runAsGroup: 2000
-              runAsNonRoot: true
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+              runAsUser: 0
+              runAsGroup: 0
+              # runAsNonRoot: true
+              # allowPrivilegeEscalation: false
+              # readOnlyRootFilesystem: true
+              # capabilities:
+              #   drop:
+              #     - ALL
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
@@ -105,11 +105,6 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
-              runAsUser: 2000
-              runAsGroup: 2000
-              runAsNonRoot: true
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
         #  vuetorrent:
         #    dependsOn: app
         #    image:
