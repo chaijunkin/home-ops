@@ -69,7 +69,7 @@ spec:
       eula: true
       version: 1.21.4
       type: PAPER
-      overrideServerProperties: true
+      # overrideServerProperties: true
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
       difficulty: normal
       # spawnProtection: 0
