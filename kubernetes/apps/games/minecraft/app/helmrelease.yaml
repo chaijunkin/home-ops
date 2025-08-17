@@ -64,7 +64,8 @@ spec:
       ENABLE_WHITELIST: false
     serviceAnnotations:
       lbipam.cilium.io/ips: "10.10.30.41"
-      mc-router.itzg.me/externalServerName: minecraft-local.cloudjur.com
+      external-dns.alpha.kubernetes.io/hostname: minecraft-local.cloudjur.com
+      mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
     minecraftServer:
       eula: true
       version: 1.21.4
