@@ -90,6 +90,7 @@ spec:
       # - 36618 #Prom Exporter
       rcon:
         enabled: true
+      serviceType: LoadBalancer
   valuesFrom:
     - kind: Secret
       name: minecraft-secret
