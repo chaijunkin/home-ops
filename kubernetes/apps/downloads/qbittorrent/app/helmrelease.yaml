@@ -23,12 +23,6 @@ spec:
         setGateway: "true"
     controllers:
       qbittorrent:
-        pod:
-          securityContext:
-            fsGroup: 2000
-            fsGroupChangePolicy: "OnRootMismatch"
-            supplementalGroups:
-              - 65542 # gladius:external-services
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -65,7 +59,7 @@ spec:
               allowPrivilegeEscalation: false
               # readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
-              runAsNonRoot: true
+              # runAsNonRoot: true
             resources:
               requests:
                 cpu: 10m
