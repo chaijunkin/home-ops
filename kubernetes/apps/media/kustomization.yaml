@@ -12,7 +12,7 @@ resources:
   # # # Flux-Kustomizations
   # - ./calibre-downloader/ks.yaml
   # - ./calibre-web-automated/ks.yaml
-  # - ./filebrowser/ks.yaml
+  - ./filebrowser/ks.yaml
   # # - ./jellyfin/ks.yaml
   - ./minio/ks.yaml
   # - ./jellyseerr/ks.yaml

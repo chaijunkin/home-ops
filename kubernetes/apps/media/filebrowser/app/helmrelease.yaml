@@ -87,6 +87,8 @@ spec:
       config:
         existingClaim: *app
       media:
-        existingClaim: pvc-smb-media
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Storage
         globalMounts:
           - path: /media
