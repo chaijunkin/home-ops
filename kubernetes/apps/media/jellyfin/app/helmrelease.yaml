@@ -15,11 +15,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: intel-device-plugin-gpu
-      namespace: kube-system
-    - name: volsync
-      namespace: volsync-system
   values:
     controllers:
       jellyfin:
@@ -60,10 +55,8 @@ spec:
               capabilities: {drop: ["ALL"]}
             resources:
               requests:
-                gpu.intel.com/i915: 1
                 cpu: 10m
               limits:
-                gpu.intel.com/i915: 1
                 memory: 4Gi
         pod:
           nodeSelector:
