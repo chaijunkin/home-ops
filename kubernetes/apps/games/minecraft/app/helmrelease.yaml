@@ -69,7 +69,7 @@ spec:
       mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
     minecraftServer:
       eula: true
-      version: 1.21.4
+      version: 1.21.8
       type: PAPER
       # overrideServerProperties: true
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
