@@ -6,9 +6,9 @@ metadata:
   name: cloudflare-tunnel
 spec:
   endpoints:
-    - dnsName: external.cloudjur.com
-      recordType: CNAME
-      targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
-    # - dnsName: external-local.cloudjur.com
+    # - dnsName: external.cloudjur.com
     #   recordType: CNAME
     #   targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
+    - dnsName: external-local.cloudjur.com
+      recordType: CNAME
+      targets: ["${CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
