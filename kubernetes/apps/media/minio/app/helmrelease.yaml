@@ -84,62 +84,62 @@ spec:
             path: /minio/v2/metrics/cluster
             interval: 1m
             scrapeTimeout: 10s
-    # route:
-    #   main:
-    #     hostnames: ["minio.cloudjur.com"]
-    #     parentRefs:
-    #       - name: internal
-    #         namespace: kube-system
-    #         port: 443
-    #     rules:
-    #       - backendRefs:
-    #           - name: minio
-    #             port: 9001
-    #   s3:
-    #     hostnames: ["s3.cloudjur.com"]
-    #     parentRefs:
-    #       - name: internal
-    #         namespace: kube-system
-    #         port: 443
-    #     rules:
-    #       - backendRefs:
-    #           - name: minio
-    #             port: 9000
-    ingress:
+    route:
       main:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Compute/Storage Infrastructure
-          gethomepage.dev/name: Minio
-          gethomepage.dev/description: Object Storage
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/minio.png
-        enabled: true
-        className: "internal"
-        hosts:
-          - host: &host "minio.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-      api:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-        hosts:
-          - host: &s3Host s3.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: s3
-        tls:
-          - hosts:
-              - *s3Host
+        hostnames: ["minio.cloudjur.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            port: 443
+        rules:
+          - backendRefs:
+              - name: minio
+                port: 9001
+      s3:
+        hostnames: ["s3.cloudjur.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            port: 443
+        rules:
+          - backendRefs:
+              - name: minio
+                port: 9000
+    # ingress:
+    #   main:
+    #     annotations:
+    #       gethomepage.dev/enabled: "true"
+    #       gethomepage.dev/group: Compute/Storage Infrastructure
+    #       gethomepage.dev/name: Minio
+    #       gethomepage.dev/description: Object Storage
+    #       gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/minio.png
+    #     enabled: true
+    #     className: "internal"
+    #     hosts:
+    #       - host: &host "minio.cloudjur.com"
+    #         paths:
+    #           - path: /
+    #             service:
+    #               identifier: app
+    #               port: http
+    #     tls:
+    #       - hosts:
+    #           - *host
+    #   api:
+    #     enabled: true
+    #     className: internal
+    #     annotations:
+    #       external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
+    #     hosts:
+    #       - host: &s3Host s3.cloudjur.com
+    #         paths:
+    #           - path: /
+    #             service:
+    #               identifier: app
+    #               port: s3
+    #     tls:
+    #       - hosts:
+    #           - *s3Host
     persistence:
       config:
         enabled: true
