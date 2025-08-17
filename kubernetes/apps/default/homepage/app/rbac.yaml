@@ -44,6 +44,7 @@ rules:
     resources:
       - customresourcedefinitions/status
     verbs:
+      - get
   - apiGroups:
       - gateway.networking.k8s.io
     resources:
