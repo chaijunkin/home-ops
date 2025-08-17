@@ -152,6 +152,9 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
+        globalMounts:
+          - path: /media/Downloads/qbittorrent
+            subPath: Downloads/qbittorrent
       addons:
         type: emptyDir
         globalMounts:
@@ -165,6 +168,7 @@ spec:
       app:
         hostnames:
           - qbittorrent.cloudjur.com
+          - qb.cloudjur.com
         parentRefs:
           - name: internal
             namespace: kube-system
