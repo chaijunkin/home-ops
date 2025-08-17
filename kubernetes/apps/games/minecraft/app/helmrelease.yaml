@@ -17,7 +17,7 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app minecraft-create
+  name: &app minecraft
 spec:
   interval: 1h
   chartRef:
@@ -64,7 +64,7 @@ spec:
       ENABLE_WHITELIST: false
     serviceAnnotations:
       lbipam.cilium.io/ips: "10.10.30.41"
-      mc-router.itzg.me/externalServerName: create.cloudjur.com
+      mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
     minecraftServer:
       eula: true
       version: 1.21.4
@@ -76,7 +76,7 @@ spec:
       # gameMode: survival
       pvp: true
       onlineMode: false
-      #whitelist: "LilDrunkenSmurf"
+      #whitelist: "fly4sun"
       # ops: "fly4sun"
       motd: "Nah"
       worldSaveName: Kubeworld
