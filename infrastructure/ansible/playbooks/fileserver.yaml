@@ -120,6 +120,7 @@
         group: "{{ nfs_group }}"
         mode: "0770"
       loop:
+        - /tank/Apps/Frigate
         - /tank/Apps/Minio
         - /tank/Backup/Volsync
         - /tank/Backup/Personal
