@@ -44,19 +44,24 @@ spec:
         memory: 4Gi
     securityContext:
       runAsUser: 1000
-      fsGroup: 100
+      fsGroup: 1000
     livenessProbe:
       initialDelaySeconds: 30
     readinessProbe:
       initialDelaySeconds: 30
     startupProbe:
       enabled: true
-    extraEnv:
-      TZ: Asia/Kuala_Lumpur
     persistence:
       dataDir:
         enabled: true
         existingClaim: *app
+    extraEnv:
+      TZ: "Asia/Kuala_Lumpur"
+      ENABLE_ROLLING_LOGS: true
+      UID: 1000
+      GID: 1000
+      MEMORY: ""
+      ENABLE_WHITELIST: false
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: create.cloudjur.com
     minecraftServer:
@@ -74,7 +79,8 @@ spec:
       ops: "fly4sun"
       motd: "Nah"
       worldSaveName: Kubeworld
-      # viewDistance: 12
+      forceReDownload: true
+      viewDistance: 12
       # modUrls:
       #   - "https://cdn.modrinth.com/data/LNytGWDc/versions/5LpL274U/create-1.21.1-6.0.4.jar"
       # spigetResources:
