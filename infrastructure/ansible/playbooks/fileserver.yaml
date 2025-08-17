@@ -5,6 +5,8 @@
   vars:
     nfs_user: nas
     nfs_group: nas
+    nfs_uid: 2000
+    nfs_gid: 2000
     nfs_exports:
       - {
           path: "/tank/Apps",
@@ -26,6 +28,50 @@
           path: "/tank/Default",
           clients: "*(rw,sync,no_subtree_check,no_root_squash)",
         }
+      - {
+          path: "/tank/Apps/Minio",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Desktop",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Documents",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Downloads",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Music",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Pictures",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Public",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Templates",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Videos",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Books",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
+      - {
+          path: "/tank/Storage/Anime",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
     smb_user: nas
     smb_group: nas
     smb_password: "{{ (lookup('community.sops.sops', playbook_dir ~ '/../samba_user.sops.yaml') | from_yaml).smb_password }}"
@@ -38,6 +84,11 @@
         browsable: "yes"
       - name: Apps
         path: /tank/Apps
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Apps
+        path: /tank/Apps/Minio
         guest_ok: "no"
         read_only: "no"
         browsable: "yes"
@@ -56,32 +107,75 @@
         guest_ok: "yes"
         read_only: "no"
         browsable: "yes"
-    storage_standard_dirs:
-      - Desktop
-      - Documents
-      - Downloads
-      - Music
-      - Pictures
-      - Public
-      - Templates
-      - Videos
-      - Books
-      - Anime
+      - name: Desktop
+        path: /tank/Storage/Desktop
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Documents
+        path: /tank/Storage/Documents
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Downloads
+        path: /tank/Storage/Downloads
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Music
+        path: /tank/Storage/Music
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Pictures
+        path: /tank/Storage/Pictures
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Public
+        path: /tank/Storage/Public
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Templates
+        path: /tank/Storage/Templates
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Videos
+        path: /tank/Storage/Videos
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Books
+        path: /tank/Storage/Books
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Anime
+        path: /tank/Storage/Anime
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
 
   pre_tasks:
     - name: Ensure nas group exists
       ansible.builtin.group:
         name: "{{ nfs_group }}"
+        gid: "{{ nfs_gid }}"
         state: present
+        # force: yes
 
     - name: Ensure nas user exists and set password for Cockpit login
       ansible.builtin.user:
         name: "{{ nfs_user }}"
         group: "{{ nfs_group }}"
+        uid: "{{ nfs_uid }}"
         create_home: false
         shell: /bin/bash
         password: "{{ nas_password | password_hash('sha512') }}"
         state: present
+        # force: yes
 
     - name: Ensure python3-pexpect is installed on remote host
       ansible.builtin.package:
