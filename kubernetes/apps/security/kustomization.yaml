@@ -5,8 +5,4 @@ namespace: security
 components:
   - ../../components/common
 resources:
-  []
-  # - ./_bootstrap/ks.yaml
-  # # Pre Flux-Kustomizations  # Flux-Kustomizations
-  # - ./authentik/ks.yaml
-  # # - ./kyverno/ks.yaml
+  - ./authentik/ks.yaml

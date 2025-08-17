@@ -78,6 +78,27 @@ spec:
             enabled: true
             port: 21118
             protocol: "TCP"
+    route:
+      hbbr:
+        hostnames: ["hbbr.cloudjur.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 21117
+                name: hbbr
+      hbbs:
+        hostnames: ["hbbs.cloudjur.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 21116
+                name: hbbs
     # ingress:
     #   hbbr:
     #     enabled: true

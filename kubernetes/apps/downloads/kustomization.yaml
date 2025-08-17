@@ -5,11 +5,6 @@ namespace: downloads
 components:
   - ../../components/common
 resources:
-  # []
-  # - ./_bootstrap/ks.yaml
-  # # Pre Flux-Kustomizations
-  # - ./pvc.yaml
-  # # Flux-Kustomizations
   - ./autobrr/ks.yaml
   - ./autobangumi/ks.yaml
   - ./bazarr/ks.yaml #

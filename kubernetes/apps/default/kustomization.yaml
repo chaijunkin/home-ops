@@ -5,21 +5,14 @@ namespace: default
 components:
   - ../../components/common
 resources:
-  # []
-  #   - ./_bootstrap/ks.yaml
-  #   # Pre Flux-Kustomizations
-  #   # Flux-Kustomizations
-  #   - ./cyberchef/ks.yaml
-  #   # - ./excalidraw/ks.yaml
-  #   - ./firefly-iii/ks.yaml
+  - ./cyberchef/ks.yaml
+  # - ./firefly-iii/ks.yaml
   - ./homepage/ks.yaml
-#   - ./it-tools/ks.yaml
-#   - ./miniflux/ks.yaml
-#   # - ./odoo/ks.yaml
-#   # - ./ollama/ks.yaml
-#   - ./open-webui/ks.yaml
-#   - ./privatebin/ks.yaml
-#   - ./rustdesk/ks.yaml
-#   - ./searxng/ks.yaml
-#   # - ./stirling-pdf/ks.yaml
-#   - ./wikijs/ks.yaml
+  - ./it-tools/ks.yaml
+  - ./miniflux/ks.yaml
+  # - ./ollama/ks.yaml
+  - ./open-webui/ks.yaml
+  - ./privatebin/ks.yaml
+  - ./rustdesk/ks.yaml
+  - ./searxng/ks.yaml
+  # - ./wikijs/ks.yaml

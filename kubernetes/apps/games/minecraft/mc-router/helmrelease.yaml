@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: mc-router
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.4.0
+  url: oci://ghcr.io/itzg/minecraft-server-charts/mc-router
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mc-router
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: mc-router
+  dependsOn: []
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: ghcr.io/itzg/mc-router
+      tag: 1.34.1@sha256:cee7a1048639ea3c96bb378e4516df5ce7f6dabd4e6be1a98996d1e597be8d75
+      pullPolicy: IfNotPresent
+    services:
+      minecraft:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.69.10.40
+          external-dns.alpha.kubernetes.io/hostname: mc.jory.dev, takocraft.jory.dev, create.jory.dev, vibecraft.jory.dev
