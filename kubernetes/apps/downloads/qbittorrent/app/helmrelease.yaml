@@ -154,7 +154,6 @@ spec:
         path: /tank/Storage
         globalMounts:
           - path: /media
-            subPath: Downloads/qbittorrent
       addons:
         type: emptyDir
         globalMounts:
