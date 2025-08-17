@@ -19,12 +19,12 @@ tasks:
         task: .encrypt-file
         vars:
           file: "{{.ITEM}}"
-    vars:
-      file:
-        sh: |
-          if [ -d "{{.KUBERNETES_DIR}}" ]; then
-              find "{{.KUBERNETES_DIR}}" -type f -name "*.sops.*" -exec grep -L "ENC\[AES256_GCM" {} \;
-          fi
+    # vars:
+    #   file:
+    #     sh: |
+    #       if [ -d "{{.KUBERNETES_DIR}}" ]; then
+    #           find "{{.KUBERNETES_DIR}}" -type f -name "*.sops.*" -exec grep -L "ENC\[AES256_GCM" {} \;
+    #       fi
 
   encrypt-file:
     cmd: sops --encrypt --in-place {{.file}}
