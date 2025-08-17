@@ -182,6 +182,7 @@ data:
   kubernetes.yaml: |
     # change mode to 'cluster' to use RBAC service account
     mode: cluster
+    gateway: true # enable gateway-api
   docker.yaml: ""
   settings.yaml: |
     title: Dashboard
