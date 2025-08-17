@@ -40,5 +40,5 @@ spec:
       minecraft:
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 10.69.10.40
-          external-dns.alpha.kubernetes.io/hostname: mc.jory.dev, takocraft.jory.dev, create.jory.dev, vibecraft.jory.dev
+          lbipam.cilium.io/ips: 10.10.30.40
+          external-dns.alpha.kubernetes.io/hostname: mc.cloudjur.com, create.cloudjur.com

@@ -58,7 +58,7 @@ spec:
         enabled: true
         existingClaim: *app
     serviceAnnotations:
-      mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
+      mc-router.itzg.me/externalServerName: create.cloudjur.com
     minecraftServer:
       eula: true
       version: 1.21.1
