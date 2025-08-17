@@ -131,11 +131,6 @@
         guest_ok: "no"
         read_only: "no"
         browsable: "yes"
-      - name: Downloads
-        path: /tank/Storage/Downloads/qbittorrent
-        guest_ok: "no"
-        read_only: "no"
-        browsable: "yes"
       - name: Music
         path: /tank/Storage/Music
         guest_ok: "no"
