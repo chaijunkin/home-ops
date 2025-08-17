@@ -69,7 +69,7 @@ spec:
       spawnProtection: 0
       gameMode: survival
       pvp: false
-      onlineMode: true
+      onlineMode: false
       #whitelist: "LilDrunkenSmurf"
       ops: "fly4sun"
       motd: "Create Server test"
