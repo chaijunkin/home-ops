@@ -178,7 +178,9 @@ spec:
         existingClaim: *app
       media:
         enabled: true
-        existingClaim: pvc-smb-media
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Storage
       addons:
         type: emptyDir
         globalMounts:

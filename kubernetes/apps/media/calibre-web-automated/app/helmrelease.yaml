@@ -93,7 +93,9 @@ spec:
         existingClaim: calibre-web-automated
       media:
         enabled: true
-        existingClaim: pvc-smb-media
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Storage
         globalMounts:
           - path: /media
             readOnly: false

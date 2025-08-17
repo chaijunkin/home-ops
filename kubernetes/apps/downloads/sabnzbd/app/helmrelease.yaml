@@ -89,7 +89,9 @@ spec:
         existingClaim: "{{ .Release.Name }}"
       media:
         enabled: true
-        existingClaim: pvc-smb-media
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Storage
         # type: nfs
         # server: expanse.internal
         # path: /mnt/eros/Media

@@ -127,7 +127,9 @@ spec:
             subPath: slskd.yml
             readOnly: true
       media:
-        existingClaim: pvc-smb-media
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Storage
         globalMounts:
           - path: /media/Downloads/slskd
             subPath: Downloads/slskd
