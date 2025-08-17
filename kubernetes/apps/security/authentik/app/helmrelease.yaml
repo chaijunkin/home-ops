@@ -50,7 +50,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: 9443
+                port: 80
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Platform Service
