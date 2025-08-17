@@ -336,31 +336,15 @@ spec:
           revision: 32
           datasource: Prometheus
       media:
-        # jellyseerr-exporter:
-        #   url: https://raw.githubusercontent.com/opspotes/jellyseerr-exporter/main/grafana/dashboard.json
-        #   datasource: Prometheus
-        qbittorrent-exporter:
-          url: https://raw.githubusercontent.com/esanchezm/prometheus-qbittorrent-exporter/master/grafana/dashboard.json
-          datasource:
-            - name: DS_PROMETHEUS
-              value: Prometheus
-        # transmission-exporter:
-        #   url: https://raw.githubusercontent.com/metalmatze/transmission-exporter/refs/heads/master/dashboards/dashboard.json
-        #   datasource:
-        #     - name: DS_PROMETHEUS
-        #       value: Prometheus
-        # exportarr:
-        #   url: https://raw.githubusercontent.com/onedr0p/exportarr/master/examples/grafana/dashboard2.json
-        #   datasource:
-        #     - name: DS_PROMETHEUS
-        #       value: Prometheus
-        plex-exporter:
-          url: https://raw.githubusercontent.com/jsclayton/prometheus-plex-exporter/main/examples/dashboards/Media%20Server.json
-          datasource: Prometheus
         miniflux:
           url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
       network:
+        apc-ups:
+          # renovate: depName="APC UPS (SNMP)"
+          gnetId: 12340
+          revision: 1
+          datasource: Prometheus
         blackbox-exporter:
           # renovate: depName="Prometheus Blackbox Exporter"
           gnetId: 7587
@@ -377,6 +361,12 @@ spec:
           revision: 9
           datasource:
             - {name: DS_PROMETHEUS, value: Prometheus}
+        envoy:
+          # renovate: depName="Envoy Proxy Monitoring gRPC"
+          gnetId: 23239
+          revision: 1
+          datasource:
+            - {name: DS_AFRANET_PROMETHEUS, value: Prometheus}
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
@@ -501,25 +491,6 @@ spec:
       - fifemon-graphql-datasource
     serviceMonitor:
       enabled: true
-    ingress:
-      enabled: true
-      ingressClassName: external
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/icon: grafana.png
-        gethomepage.dev/name: Grafana
-        gethomepage.dev/group: Observability Service
-        gethomepage.dev/description: Monitoring Dashboards
-        gethomepage.dev/widget.type: grafana
-        gethomepage.dev/widget.url: http://grafana.observability
-        gethomepage.dev/widget.username: "{{`{{HOMEPAGE_VAR_GRAFANA_USERNAME}}`}}"
-        gethomepage.dev/widget.password: "{{`{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}`}}"
-        external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-      hosts:
-        - &host "{{ .Release.Name }}.cloudjur.com"
-      tls:
-        - hosts:
-            - *host
     persistence:
       enabled: false
     # topologySpreadConstraints:
@@ -529,6 +500,14 @@ spec:
     #     labelSelector:
     #       matchLabels:
     #         app.kubernetes.io/name: *app
+    route:
+      main:
+        enabled: true
+        hostnames: ["{{ .Release.Name }}.cloudjur.com"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
   chartRef:
     kind: OCIRepository
     name: grafana

@@ -65,19 +65,6 @@ spec:
       options:
         - name: ndots
           value: "1"
-    ingress:
-      enabled: true
-      className: internal
-      annotations:
-        hajimari.io/enable: "false"
-      hosts:
-        - host: &host blackbox.cloudjur.com
-          paths:
-            - path: /
-              pathType: Prefix
-      tls:
-        - hosts:
-            - *host
     podAnnotations:
       reloader.stakater.com/auto: "true"
     resources:
