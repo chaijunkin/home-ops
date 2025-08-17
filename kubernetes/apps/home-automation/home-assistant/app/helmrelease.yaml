@@ -38,17 +38,21 @@ spec:
               [{
               "name": "multus-not",
               "namespace": "network",
-              "ips": ["10.10.32.250/24"]
+              "ips": ["10.10.32.250/24"],
+              "mac": "16:44:BB:A0:A4:40"
+
               },
               {
                 "name": "multus-iot",
                 "namespace": "network",
-                "ips": ["10.10.33.250/24"]
+                "ips": ["10.10.33.250/24"],
+                "mac": "16:44:BB:A0:A4:41"
               }
               ,{
                 "name": "multus-trust",
                 "namespace": "network",
                 "ips": ["10.10.10.250/24"]
+                "mac": "16:44:BB:A0:A4:42"
               }]
         containers:
           app:
