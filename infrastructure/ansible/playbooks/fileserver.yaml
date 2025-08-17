@@ -10,15 +10,15 @@
     nfs_exports:
       - {
           path: "/tank/Apps",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Storage",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(rw,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Backup",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Shared",
@@ -41,7 +41,7 @@
       - name: Apps
         path: /tank/Apps
         guest_ok: "no"
-        read_only: "no"
+        read_only: "yes"
         browsable: "yes"
       - name: Storage
         path: /tank/Storage
@@ -51,7 +51,7 @@
       - name: Backup
         path: /tank/Backup
         guest_ok: "no"
-        read_only: "no"
+        read_only: "yes"
         browsable: "yes"
       - name: Shared
         path: /tank/Shared
@@ -121,6 +121,8 @@
         mode: "0770"
       loop:
         - /tank/Apps/Minio
+        - /tank/Backup/Volsync
+        - /tank/Backup/Personal
         - /tank/Storage/Desktop
         - /tank/Storage/Documents
         - /tank/Storage/Downloads
