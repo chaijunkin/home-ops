@@ -38,25 +38,6 @@ spec:
         serviceMonitor:
           # -- enable a prometheus ServiceMonitor
           enabled: true
-
-    route:
-      app:
-        hostnames:
-          - auth.cloudjur.com
-        parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: 80
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Platform Service
-          gethomepage.dev/name: Authentik
-          gethomepage.dev/description: Authentication provider
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/authentik.png
     worker:
       resources:
         requests:
