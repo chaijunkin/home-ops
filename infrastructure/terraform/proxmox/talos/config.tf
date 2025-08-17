@@ -54,6 +54,16 @@ data "talos_machine_configuration" "this" {
   machine_type    = each.value.machine_type
   machine_secrets = talos_machine_secrets.this.machine_secrets
   config_patches = [
+    ## please make boolean to variables in case anything happen
+
+      yamlencode(false ? [] : [
+      {
+        op = "replace"
+        path = "/cluster/apiServer/admissionControl"
+        value: []
+      }
+    ])
+    ,
     templatefile("${path.module}/machine-config/common.yaml.tftpl", {
       node_name          = each.value.host_node
       cluster_name       = var.cluster.proxmox_cluster
