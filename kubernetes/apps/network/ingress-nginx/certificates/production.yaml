@@ -12,3 +12,4 @@ spec:
   dnsNames:
     - "cloudjur.com"
     - "*.cloudjur.com"
+    - "ext.cloudjur.com"
