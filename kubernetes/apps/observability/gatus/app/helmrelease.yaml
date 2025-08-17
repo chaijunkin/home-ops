@@ -93,28 +93,6 @@ spec:
       app:
         endpoints:
           - port: http
-    ingress:
-      app:
-        enabled: true
-        className: external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Observability Service
-          gethomepage.dev/name: Gatus
-          gethomepage.dev/icon: gatus.png
-          gethomepage.dev/widget.type: gatus
-          gethomepage.dev/widget.url: http://gatus.observability
-          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-        hosts:
-          - host: &host status.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     rbac:
       roles:
         gatus:
@@ -142,3 +120,22 @@ spec:
           - path: /config/config.yaml
             subPath: config.yaml
             readOnly: true
+    route:
+      app:
+        hostnames:
+          - gatus.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: gatus
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Observability Service
+          gethomepage.dev/name: Gatus
+          gethomepage.dev/icon: gatus.png
+          gethomepage.dev/widget.type: gatus
+          gethomepage.dev/widget.url: http://gatus.observability

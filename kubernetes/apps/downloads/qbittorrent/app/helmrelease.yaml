@@ -137,35 +137,6 @@ spec:
           bittorrent-tcp:
             port: *torrentPort
             protocol: TCP
-    ingress:
-      app:
-        className: internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads Service
-          gethomepage.dev/name: qBittorrent
-          gethomepage.dev/icon: qbittorrent.png
-          gethomepage.dev/description: Torrent Client
-          gethomepage.dev/widget.type: qbittorrent
-          gethomepage.dev/widget.url: http://qbittorrent.downloads:8080
-          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}` }}"
-          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}` }}"
-        hosts:
-          - host: &host "qb.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-    # configMaps:
-    #   config:
-    #     data:
-    #       .qbt.toml: |
-    #         [qbittorrent]
-    #         addr = "http://localhost:80"
     persistence:
       # config-file:
       #   type: configMap
@@ -190,3 +161,29 @@ spec:
         image: ghcr.io/buroa/qbrr:0.0.29@sha256:5090c88b212f62c40a7c1124dd469b6ce9ee8428e8d0784875ba49d6819d3992
       tmp:
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - qbittorrent.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: qBittorrent
+          gethomepage.dev/icon: qbittorrent.png
+          gethomepage.dev/description: Torrent Client
+          gethomepage.dev/widget.type: qbittorrent
+          gethomepage.dev/widget.url: http://qbittorrent.downloads:8080
+          gethomepage.dev/widget.username:
+            "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}`
+            }}"
+          gethomepage.dev/widget.password:
+            "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}`
+            }}"

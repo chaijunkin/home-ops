@@ -66,7 +66,7 @@ spec:
             envFrom:
               - secretRef:
                   name: home-assistant-secret
-            probes: &probes
+            probes:
               liveness:
                 enabled: false
               readiness:
@@ -116,49 +116,6 @@ spec:
       #     http:
       #       enabled: true
       #       port: 8080
-    ingress:
-      app:
-        enabled: true
-        className: external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Home-Assistant
-          gethomepage.dev/icon: home-assistant.png
-          gethomepage.dev/description: Home Automation Software
-          # gethomepage.dev/widget.type: homeassistant
-          # gethomepage.dev/widget.url: http://home-assistant.default:8123
-          # gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_HASS_TOKEN}}"
-          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-          # nginx.ingress.kubernetes.io/proxy-body-size: 1000M
-          # nginx.ingress.kubernetes.io/auth-url: http://ak-outpost-external.security.svc.cluster.local:9000/outpost.goauthentik.io/auth/nginx
-          # nginx.ingress.kubernetes.io/auth-signin: /outpost.goauthentik.io/start?rd=$escaped_request_uri
-          # nginx.ingress.kubernetes.io/auth-response-headers: Set-Cookie,X-authentik-username,X-authentik-groups,X-authentik-email,X-authentik-name,X-authentik-uid
-          # nginx.ingress.kubernetes.io/auth-snippet: proxy_set_header X-Forwarded-Host $http_host;
-
-        hosts:
-          - host: &host hass.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-      # codeserver:
-      #   enabled: true
-      #   className: internal
-      #   hosts:
-      #     - host: &host hass-code.cloudjur.com
-      #       paths:
-      #         - path: /
-      #           service:
-      #             identifier: codeserver
-      #             port: http
-      #   tls:
-      #     - hosts:
-      #         - *host
     persistence:
       config:
         existingClaim: *app
@@ -172,3 +129,21 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /config/tts
+    route:
+      app:
+        hostnames:
+          - home-assistant.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 8123
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Home-Assistant
+          gethomepage.dev/icon: home-assistant.png
+          gethomepage.dev/description: Home Automation Software

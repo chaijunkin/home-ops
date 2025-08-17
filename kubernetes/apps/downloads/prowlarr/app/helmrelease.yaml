@@ -76,8 +76,23 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
+    persistence:
+      config:
+        existingClaim: *app
+      tmp:
+        type: emptyDir
+    route:
       app:
+        hostnames:
+          - prowlarr.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads Service
@@ -87,17 +102,3 @@ spec:
           gethomepage.dev/widget.type: prowlarr
           gethomepage.dev/widget.url: http://prowlarr.downloads
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PROWLARR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-        className: internal
-        hosts:
-          - host: &host "prowlarr.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-    persistence:
-      config:
-        existingClaim: *app
-      tmp:
-        type: emptyDir

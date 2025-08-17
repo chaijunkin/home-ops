@@ -97,24 +97,6 @@ spec:
     #       - backendRefs:
     #           - identifier: app
     #             port: *port
-    ingress:
-      app:
-        enabled: true
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Slskd
-          gethomepage.dev/description: File Sharing Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
-        className: internal
-        hosts:
-          - host: "slskd.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
@@ -135,3 +117,21 @@ spec:
             subPath: Downloads/slskd
       tmp:
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - slskd.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Slskd
+          gethomepage.dev/description: File Sharing Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png

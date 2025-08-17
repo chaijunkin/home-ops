@@ -89,34 +89,6 @@ spec:
       app:
         endpoints:
           - port: metrics
-    ingress:
-      app:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Autobrr
-          gethomepage.dev/description: Autobrr Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobrr.png
-        hosts:
-          - host: &host autobrr.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-    # route:
-    #   app:
-    #     hostnames: ["{{ .Release.Name }}.cloudjur.com"]
-    #     parentRefs:
-    #       - name: internal
-    #         namespace: kube-system
-    #         sectionName: https
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
@@ -129,3 +101,21 @@ spec:
                 subPath: log
               - path: /tmp
                 subPath: tmp
+    route:
+      app:
+        hostnames:
+          - autobrr.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: autobrr
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Autobrr
+          gethomepage.dev/description: Autobrr Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobrr.png

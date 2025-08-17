@@ -34,7 +34,8 @@ spec:
             command:
               - /bin/sh
               - -c
-              - mkdir -p /llm/ollama && cd /llm/ollama && init-ollama && exec ./ollama serve
+              - mkdir -p /llm/ollama && cd /llm/ollama && init-ollama && exec
+                ./ollama serve
             securityContext:
               privileged: true
             env:
@@ -79,28 +80,6 @@ spec:
     #       - name: internal
     #         namespace: kube-system
     #         sectionName: https
-    ingress:
-      app:
-        enabled: true
-        className: "internal"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Ollama
-          gethomepage.dev/description: LLM services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/ollama.png
-
-        hosts:
-          - host: &host "ollama.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       ollama:
         existingClaim: "{{ .Release.Name }}"
@@ -112,3 +91,21 @@ spec:
       dri:
         type: hostPath
         hostPath: /dev/dri
+    route:
+      app:
+        hostnames:
+          - ollama.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: ollama
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Ollama
+          gethomepage.dev/description: LLM services
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/ollama.png

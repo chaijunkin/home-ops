@@ -82,30 +82,6 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads Service
-          gethomepage.dev/name: Lidarr
-          gethomepage.dev/icon: lidarr.png
-          gethomepage.dev/description: Song search
-          gethomepage.dev/widget.type: lidarr
-          gethomepage.dev/widget.url: http://lidarr.downloads
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_LIDARR_TOKEN}}` }}"
-        hosts:
-          - host: &host "lidarr.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         existingClaim: *app
@@ -114,3 +90,24 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
+    route:
+      app:
+        hostnames:
+          - lidarr.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: Lidarr
+          gethomepage.dev/icon: lidarr.png
+          gethomepage.dev/description: Song search
+          gethomepage.dev/widget.type: lidarr
+          gethomepage.dev/widget.url: http://lidarr.downloads
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_LIDARR_TOKEN}}` }}"

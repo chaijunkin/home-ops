@@ -71,18 +71,6 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: &host "{{ .Release.Name }}.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
     persistence:
       config:
         existingClaim: *app
@@ -92,3 +80,15 @@ spec:
         path: /tank/Storage
         globalMounts:
           - path: /media
+    route:
+      app:
+        hostnames:
+          - filebrowser.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: filebrowser

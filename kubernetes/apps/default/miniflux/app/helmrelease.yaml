@@ -71,28 +71,21 @@ spec:
           http:
             port: 80
 
-    ingress:
+    route:
       app:
-        enabled: true
-        className: "external"
+        hostnames:
+          - miniflux.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 80
+                name: *app
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Miniflux
           gethomepage.dev/description: Feed aggregator services
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/miniflux.png
-          external-dns.alpha.kubernetes.io/target: "external.cloudjur.com"
-        hosts:
-          - host: &host "miniflux.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-## EXECUTE ME
-### miniflux /var/www/miniflux/bin/console doctrine:migrations:migrate --env=prod --no-interaction
-
-### php bin/console miniflux:install --env=prod

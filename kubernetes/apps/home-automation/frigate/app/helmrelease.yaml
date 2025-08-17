@@ -86,19 +86,6 @@ spec:
           webrtc-udp:
             port: 8555
             protocol: UDP
-    ingress:
-      app:
-        className: internal
-        hosts:
-          - host: &host "{{ .Release.Name }}.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: *port
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         existingClaim: frigate
@@ -128,3 +115,15 @@ spec:
         existingClaim: pvc-smb-frigate
         globalMounts:
           - path: /media/frigate
+    route:
+      app:
+        hostnames:
+          - frigate.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app

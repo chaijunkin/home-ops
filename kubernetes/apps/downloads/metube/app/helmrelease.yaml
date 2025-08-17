@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -36,7 +35,9 @@ spec:
               DOWNLOAD_DIR: "/media/Downloads"
               AUDIO_DOWNLOAD_DIR: "/media/Music"
               STATE_DIR: "/config"
-              YTDL_OPTIONS: '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}}'
+              YTDL_OPTIONS:
+                '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows
+                NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}}'
     # defaultPodOptions:
     #   securityContext:
     #     runAsNonRoot: true
@@ -52,18 +53,6 @@ spec:
         ports:
           http:
             port: 8081
-    ingress:
-      app:
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-        hosts:
-          - host: "{{ .Release.Name }}.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       config:
         existingClaim: *app
@@ -72,3 +61,15 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
+    route:
+      app:
+        hostnames:
+          - metube.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 8081
+                name: *app

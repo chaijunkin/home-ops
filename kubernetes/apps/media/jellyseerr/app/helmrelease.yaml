@@ -71,29 +71,6 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        className: external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Media Service
-          gethomepage.dev/name: Jellyseerr
-          gethomepage.dev/icon: jellyseerr.png
-          gethomepage.dev/description: Media Request Management
-          gethomepage.dev/widget.type: jellyseerr
-          gethomepage.dev/widget.url: http://jellyseerr.media:5055
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-        hosts:
-          - host: &host requests.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         existingClaim: *app
@@ -110,3 +87,24 @@ spec:
             subPath: logs
           - path: /tmp
             subPath: tmp
+    route:
+      app:
+        hostnames:
+          - jellyseerr.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Jellyseerr
+          gethomepage.dev/icon: jellyseerr.png
+          gethomepage.dev/description: Media Request Management
+          gethomepage.dev/widget.type: jellyseerr
+          gethomepage.dev/widget.url: http://jellyseerr.media:5055
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"

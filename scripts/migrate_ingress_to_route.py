@@ -108,26 +108,27 @@ def migrate_helmrelease(path):
     if not docs:
         return
     doc = docs[0]
-    # Only migrate if conditions are met
     values = doc.get('spec', {}).get('values', {})
-    # Check for className before removing ingress
-    parent_ref_name = 'internal'
     ingress_obj = values.get('ingress')
     if ingress_obj and isinstance(ingress_obj, dict):
         ingress_app = ingress_obj.get('app', {})
         class_name = ingress_app.get('className')
-        if class_name == 'external':
-            parent_ref_name = 'external'
-    # Remove the ingress block directly from the YAML structure
-    if 'ingress' in values:
+        parent_ref_name = 'external' if class_name == 'external' else 'internal'
+        # Remove the ingress block directly from the YAML structure
         del values['ingress']
-    app_name, port = get_service_info(doc)
-    values['route'] = build_route_block(app_name, port, parent_ref_name)
-    # Write back all YAML documents (preserving formatting)
-    docs[0] = doc
-    with open(path, 'w') as f:
-        yaml.dump_all(docs, f)
-    print(f"Migrated {path}: removed ingress, added route block.")
+        app_name, port = get_service_info(doc)
+        route_block = build_route_block(app_name, port, parent_ref_name)
+        # Copy homepage annotations only (exclude external-dns)
+        annotations = ingress_app.get('annotations', {})
+        if annotations:
+            homepage_keys = [k for k in annotations if k.startswith('gethomepage.dev/')]
+            if homepage_keys:
+                route_block['app']['annotations'] = {k: annotations[k] for k in homepage_keys}
+        values['route'] = route_block
+        docs[0] = doc
+        with open(path, 'w') as f:
+            yaml.dump_all(docs, f)
+        print(f"Migrated {path}: removed ingress, added route block.")
 
 def find_helmreleases(root):
     helmreleases = []

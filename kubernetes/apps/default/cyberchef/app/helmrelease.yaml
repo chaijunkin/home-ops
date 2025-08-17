@@ -42,25 +42,21 @@ spec:
             port: 80
     env:
       TZ: Asia/Kuala_Lumpur
-    ingress:
+    route:
       app:
-        enabled: true
+        hostnames:
+          - cyberchef.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 80
+                name: *app
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Utility Service
           gethomepage.dev/name: CyberChef
           gethomepage.dev/description: Cyber operation tools
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
-        className: internal
-        hosts:
-          - host: &host "cyberchef.cloudjur.com"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host

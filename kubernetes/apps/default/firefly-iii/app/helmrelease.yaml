@@ -21,8 +21,9 @@ spec:
               pullPolicy: IfNotPresent
             envFrom: &envFrom
               - secretRef:
-                  name: firefly-secret
-                  # TODO: set smtp secret
+                  name:
+                    firefly-secret
+                    # TODO: set smtp secret
         containers:
           app:
             image:
@@ -49,29 +50,25 @@ spec:
           http:
             port: 8080
 
-    ingress:
-      app:
+    persistence:
+      data:
         enabled: true
-        className: internal
+        type: emptyDir
+    route:
+      app:
+        hostnames:
+          - firefly-iii.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 8080
+                name: *app
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Firefly-iii
           gethomepage.dev/description: Personal finance service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
-          # external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-        hosts:
-          - host: &host "money.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-
-    persistence:
-      data:
-        enabled: true
-        type: emptyDir

@@ -74,38 +74,27 @@ spec:
         ports:
           http:
             port: &port 8080
-    ingress:
-      app:
-        enabled: true
-        className: "external"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Open WebUI
-          gethomepage.dev/description: AI Chat services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
-
-        hosts:
-          - host: &host "chat.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
-    # route:
-    #   app:
-    #     hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.jory.dev"]
-    #     parentRefs:
-    #       - name: external
-    #         namespace: kube-system
-    #         sectionName: https
     persistence:
       config:
         enabled: true
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
           - path: /app/backend/data
+    route:
+      app:
+        hostnames:
+          - open-webui.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: open-webui
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Open WebUI
+          gethomepage.dev/description: AI Chat services
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png

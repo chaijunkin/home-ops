@@ -55,29 +55,6 @@ spec:
         ports:
           http:
             port: 8181
-    ingress:
-      app:
-        className: external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Media Service
-          gethomepage.dev/name: Tautulli
-          gethomepage.dev/icon: tautulli.png
-          gethomepage.dev/description: Plex Stream Monitoring
-          gethomepage.dev/widget.type: tautulli
-          gethomepage.dev/widget.url: http://tautulli.media:8181
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}` }}"
-          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-        hosts:
-          - host: &host "{{ .Release.Name }}.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         existingClaim: *app
@@ -95,3 +72,24 @@ spec:
       #   type: emptyDir
       # add-ons:
       #   type: emptyDir
+    route:
+      app:
+        hostnames:
+          - tautulli.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 8181
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Tautulli
+          gethomepage.dev/icon: tautulli.png
+          gethomepage.dev/description: Plex Stream Monitoring
+          gethomepage.dev/widget.type: tautulli
+          gethomepage.dev/widget.url: http://tautulli.media:8181
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}` }}"

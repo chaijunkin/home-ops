@@ -73,35 +73,6 @@ spec:
         ports:
           http:
             port: *port
-    # route:
-    #   app:
-    #     hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.cloudjur.com"]
-    #     parentRefs:
-    #       - name: internal
-    #         namespace: kube-system
-    #         sectionName: https
-    ingress:
-      app:
-        enabled: true
-        className: "internal"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Searxng
-          gethomepage.dev/description: Search services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/searxng.png
-
-        hosts:
-          - host: &host "search.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         type: configMap
@@ -118,3 +89,21 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /tmp
+    route:
+      app:
+        hostnames:
+          - searxng.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Searxng
+          gethomepage.dev/description: Search services
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/searxng.png

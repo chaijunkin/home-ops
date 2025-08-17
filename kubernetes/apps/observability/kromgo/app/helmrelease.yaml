@@ -61,27 +61,6 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        enabled: true
-        className: external
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Applications
-          gethomepage.dev/name: Kromgo
-          gethomepage.dev/description: Kromgo Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kromgo.png
-          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-        hosts:
-          - host: &host "{{ .Release.Name }}.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config-file:
         type: configMap
@@ -90,3 +69,21 @@ spec:
           - path: /kromgo/config.yaml
             subPath: config.yaml
             readOnly: true
+    route:
+      app:
+        hostnames:
+          - kromgo.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Applications
+          gethomepage.dev/name: Kromgo
+          gethomepage.dev/description: Kromgo Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kromgo.png

@@ -56,34 +56,6 @@ spec:
         ports:
           http:
             port: 8083
-    ingress:
-      app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Media Service
-          gethomepage.dev/name: Calibre Web
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/plex.png
-          gethomepage.dev/description: eBook Library
-          # gethomepage.dev/enabled: "true"
-          # gethomepage.dev/group: Media Service
-          # gethomepage.dev/name: Calibre Web
-          # gethomepage.dev/icon: calibre.png
-          # gethomepage.dev/description: eBook Library
-        hosts:
-          - host: ebooks-auto.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-          - host: ebooks.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       cache:
         type: emptyDir
@@ -105,3 +77,21 @@ spec:
         globalMounts:
           - path: /cwa-book-ingest
             readOnly: false
+    route:
+      app:
+        hostnames:
+          - calibre-web-automated.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 8083
+                name: calibre-web-automated
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Calibre Web
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/plex.png
+          gethomepage.dev/description: eBook Library

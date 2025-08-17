@@ -86,27 +86,6 @@ spec:
           http:
             primary: true
             port: 7892
-    ingress:
-      app:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads
-          gethomepage.dev/name: Autobangumi
-          gethomepage.dev/description: Autobangumi Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobangumi.png
-        hosts:
-          - host: &host autobangumi.cloudjur.com
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
@@ -123,3 +102,21 @@ spec:
         path: /tank/Storage
       tmp:
         type: emptyDir
+    route:
+      app:
+        hostnames:
+          - autobangumi.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 7892
+                name: autobangumi
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads
+          gethomepage.dev/name: Autobangumi
+          gethomepage.dev/description: Autobangumi Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobangumi.png

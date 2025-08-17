@@ -69,30 +69,6 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      app:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads Service
-          gethomepage.dev/name: Readarr
-          gethomepage.dev/description: Readarr service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/readarr.png
-          gethomepage.dev/widget.type: readarr
-          gethomepage.dev/widget.url: http://readarr.downloads
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
-        hosts:
-          - host: &host "readarr.cloudjur.com"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
@@ -101,3 +77,24 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
+    route:
+      app:
+        hostnames:
+          - readarr.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: Readarr
+          gethomepage.dev/description: Readarr service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/readarr.png
+          gethomepage.dev/widget.type: readarr
+          gethomepage.dev/widget.url: http://readarr.downloads
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_READARR_TOKEN}}` }}"
