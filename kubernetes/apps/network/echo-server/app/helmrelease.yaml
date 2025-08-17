@@ -68,9 +68,20 @@ spec:
           http:
             port: *port
     route:
-      app:
+      int-route:
         hostnames:
-          - echo-server.cloudjur.com
+          - echo-server-internal.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: echo-server
+      extroute:
+        hostnames:
+          - echo-server-external.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system

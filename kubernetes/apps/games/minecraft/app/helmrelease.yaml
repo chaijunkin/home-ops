@@ -64,7 +64,7 @@ spec:
       ENABLE_WHITELIST: false
     serviceAnnotations:
       lbipam.cilium.io/ips: "10.10.30.41"
-      mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
+      mc-router.itzg.me/externalServerName: minecraft-local.cloudjur.com
     minecraftServer:
       eula: true
       version: 1.21.4
@@ -82,8 +82,8 @@ spec:
       worldSaveName: Kubeworld
       forceReDownload: true
       viewDistance: 12
-      # modUrls:
-      #   - "https://cdn.modrinth.com/data/LNytGWDc/versions/5LpL274U/create-1.21.1-6.0.4.jar"
+      modUrls:
+        - "https://cdn.modrinth.com/data/LNytGWDc/versions/5LpL274U/create-1.21.1-6.0.4.jar"
       # spigetResources:
       # - 36618 #Prom Exporter
       rcon:
