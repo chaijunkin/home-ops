@@ -63,6 +63,7 @@ spec:
       MEMORY: ""
       ENABLE_WHITELIST: false
     serviceAnnotations:
+      lbipam.cilium.io/ips: "10.10.30.41"
       mc-router.itzg.me/externalServerName: create.cloudjur.com
     minecraftServer:
       eula: true
