@@ -72,6 +72,10 @@
           path: "/tank/Storage/Anime",
           clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
         }
+      - {
+          path: "/tank/Storage/Movies",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
+        }
     smb_user: nas
     smb_group: nas
     smb_password: "{{ (lookup('community.sops.sops', playbook_dir ~ '/../samba_user.sops.yaml') | from_yaml).smb_password }}"
@@ -154,6 +158,11 @@
         browsable: "yes"
       - name: Anime
         path: /tank/Storage/Anime
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+      - name: Anime
+        path: /tank/Storage/Movies
         guest_ok: "no"
         read_only: "no"
         browsable: "yes"
