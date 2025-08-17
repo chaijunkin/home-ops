@@ -14,7 +14,7 @@
         }
       - {
           path: "/tank/Storage",
-          clients: "10.10.30.0/24(ro,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Backup",
