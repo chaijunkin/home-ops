@@ -35,6 +35,8 @@ data:
       overrides:
         music_directory: "/media/Music/youtube"
       ytdl_options:
+        cookiefile: "/config/cookie.txt"
+        http_headers": '{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}'
         check_formats: True
         throttle_protection:
           sleep_per_download_s:
