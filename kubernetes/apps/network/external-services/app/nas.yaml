@@ -33,47 +33,32 @@ endpoints:
   - addresses:
       - "10.10.30.10"
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
 metadata:
-  name: &app nas
+  name: nas
   namespace: network
+  labels:
+    app.kubernetes.io/name: nas
+    app.kubernetes.io/instance: nas
   annotations:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cockpit.png
     gethomepage.dev/name: NAS
     gethomepage.dev/group: Compute/Storage Infrastructure
     gethomepage.dev/description: SMB service provider
-    external-dns.alpha.kubernetes.io/hostname: nas.cloudjur.com
-    external-dns.alpha.kubernetes.io/target: internal.cloudjur.com
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection $connection_upgrade;
-    nginx.ingress.kubernetes.io/server-snippet: |-
-      client_max_body_size 100G;
-      server_tokens off;
-      proxy_hide_header X-Powered-By;
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
 spec:
-  ingressClassName: internal
+  parentRefs:
+    - name: internal
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - nas.cloudjur.com
   rules:
-    - host: &host nas.cloudjur.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: *app
-                port:
-                  type: LoadBalancer
-                  number: 9090
-  tls:
-    - hosts:
-        - *host
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nas
+          port: 9090

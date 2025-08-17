@@ -33,32 +33,26 @@ endpoints:
   - addresses:
       - "192.168.1.4"
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
 metadata:
-  name: &app ap
+  name: ap
   namespace: network
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: ap.cloudjur.com
   labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
+    app.kubernetes.io/name: ap
+    app.kubernetes.io/instance: ap
 spec:
-  ingressClassName: internal
+  parentRefs:
+    - name: internal
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - ap.cloudjur.com
   rules:
-    - host: &host ap.cloudjur.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                annotations:
-                  lbipam.cilium.io/ips: 10.10.30.37
-                name: *app
-                port:
-                  type: LoadBalancer
-                  number: 80
-  tls:
-    - hosts:
-        - *host
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: ap
+          port: 80

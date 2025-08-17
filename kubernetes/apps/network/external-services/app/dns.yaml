@@ -33,11 +33,14 @@ endpoints:
   - addresses:
       - "10.10.31.1"
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
 metadata:
-  name: &app adguard
+  name: adguard
   namespace: network
+  labels:
+    app.kubernetes.io/name: adguard
+    app.kubernetes.io/instance: adguard
   annotations:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/adguard-home.png
@@ -48,27 +51,18 @@ metadata:
     gethomepage.dev/widget.url: https://adguard.cloudjur.com
     gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_ADGUARD_USERNAME}}"
     gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
-    external-dns.alpha.kubernetes.io/hostname: adguard.cloudjur.com
-    # nginx.ingress.kubernetes.io/rewrite-target: /admin
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
 spec:
-  ingressClassName: internal
+  parentRefs:
+    - name: internal
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - adguard.cloudjur.com
   rules:
-    - host: &host adguard.cloudjur.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                annotations:
-                  lbipam.cilium.io/ips: 10.10.30.40
-                name: *app
-                port:
-                  type: LoadBalancer
-                  number: 3000
-  tls:
-    - hosts:
-        - *host
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: adguard
+          port: 3000
