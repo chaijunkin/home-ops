@@ -32,9 +32,14 @@ spec:
               repository: ghcr.io/alexta69/metube
               tag: "2025-07-01"
             env:
-              DOWNLOAD_DIR: "/media/Downloads"
+              DOWNLOAD_DIR: "/media/Downloads/metube"
               AUDIO_DOWNLOAD_DIR: "/media/Music"
-              STATE_DIR: "/config"
+              DOWNLOAD_DIRS_INDEXABLE: "true"
+              CUSTOM_DIRS: "true"
+              CREATE_CUSTOM_DIRS: "true"
+              CUSTOM_DIRS_EXCLUDE_REGEX: "(^|/)[.@].*$"
+              STATE_DIR: "/media/Downloads/.metube"
+              TEMP_DIR: "/media/Downloads/tmp"
               # DOWNLOAD_MODE: concurrent # defaults to limited
               DOWNLOAD_MODE: limited
               MAX_CONCURRENT_DOWNLOADS: 5 #only used with limited, default to 3
@@ -62,6 +67,13 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
+      downloads:
+        type: nfs
+        server: voyager.internal
+        path: /tank/Storage/Downloads
+        globalMounts:
+          - path: /downloads
+            subPath: metube
     route:
       app:
         hostnames:
