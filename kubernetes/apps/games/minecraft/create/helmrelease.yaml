@@ -77,7 +77,7 @@ spec:
       pvp: true
       onlineMode: false
       #whitelist: "LilDrunkenSmurf"
-      ops: "fly4sun"
+      # ops: "fly4sun"
       motd: "Nah"
       worldSaveName: Kubeworld
       forceReDownload: true
