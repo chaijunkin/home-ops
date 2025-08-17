@@ -5,9 +5,6 @@ namespace: home-automation
 components:
   - ../../components/common
 resources:
-  # []
-  # - ./_bootstrap/ks.yaml
-  # # Pre Flux-Kustomizations  # # Flux-Kustomizations
   # # - ./dsmr-reader/ks.yaml
   # # - ./esphome/ks.yaml
   # - ./frigate/ks.yaml
