@@ -145,9 +145,10 @@ spec:
         enabled: true
         type: nfs
         server: smb.cloudjur.com
-        path: /tank/Apps/Minio
+        path: /tank/Apps
         globalMounts:
           - path: /data
+            subPath: Minio
         # existingClaim: pvc-smb-minio
         # globalMounts:
         #   - path: /data
