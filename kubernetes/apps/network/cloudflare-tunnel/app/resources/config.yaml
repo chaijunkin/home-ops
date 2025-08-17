@@ -1,6 +1,6 @@
 ---
 originRequest:
-  originServerName: "external-local.cloudjur.com"
+  originServerName: "external.cloudjur.com"
 
 ingress:
   - hostname: cloudjur.com
