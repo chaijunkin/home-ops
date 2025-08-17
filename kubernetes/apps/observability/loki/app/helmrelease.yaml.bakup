@@ -168,7 +168,7 @@ spec:
     write:
       replicas: 1
       persistence:
-        storageClass: openebs-hostpath
+        storageClass: local-hostpath
         size: 20Gi
 
     read:
@@ -177,7 +177,7 @@ spec:
     backend:
       replicas: 1
       persistence:
-        storageClass: openebs-hostpath
+        storageClass: local-hostpath
         size: 20Gi
 
     monitoring:
