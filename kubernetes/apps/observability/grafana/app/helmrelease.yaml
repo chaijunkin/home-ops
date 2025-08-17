@@ -28,13 +28,13 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    extraInitContainers:
-      - name: 01-init-db
-        image: ghcr.io/onedr0p/postgres-init:16
-        imagePullPolicy: IfNotPresent
-        envFrom:
-          - secretRef:
-              name: &secret grafana-secret
+    # extraInitContainers:
+    #   - name: 01-init-db
+    #     image: ghcr.io/onedr0p/postgres-init:16
+    #     imagePullPolicy: IfNotPresent
+    #     envFrom:
+    #       - secretRef:
+    #           name: &secret grafana-secret
     replicas: 1
     podAnnotations:
       reloader.stakater.com/auto: "true"
