@@ -61,22 +61,22 @@ spec:
       mc-router.itzg.me/externalServerName: create.cloudjur.com
     minecraftServer:
       eula: true
-      version: 1.21.1
-      type: FORGE
+      version: 1.21.4
+      type: PAPER
       overrideServerProperties: true
       jvmXXOpts: "-XX:MaxRAMPercentage=75"
       difficulty: normal
-      spawnProtection: 0
-      gameMode: survival
-      pvp: false
+      # spawnProtection: 0
+      # gameMode: survival
+      pvp: true
       onlineMode: false
       #whitelist: "LilDrunkenSmurf"
       ops: "fly4sun"
-      motd: "Create Server test"
-      worldSaveName: create
-      viewDistance: 12
-      modUrls:
-        - "https://cdn.modrinth.com/data/LNytGWDc/versions/5LpL274U/create-1.21.1-6.0.4.jar"
+      motd: "Nah"
+      worldSaveName: Kubeworld
+      # viewDistance: 12
+      # modUrls:
+      #   - "https://cdn.modrinth.com/data/LNytGWDc/versions/5LpL274U/create-1.21.1-6.0.4.jar"
       # spigetResources:
       # - 36618 #Prom Exporter
       rcon:
