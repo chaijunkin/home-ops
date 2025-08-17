@@ -161,9 +161,9 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
-        globalMounts:
-          - path: /media/Downloads/qbittorrent
-            subPath: Downloads/qbittorrent
+        # globalMounts:
+        #   - path: /media/Downloads/qbittorrent
+        #     subPath: Downloads/qbittorrent
       addons:
         type: emptyDir
         globalMounts:
