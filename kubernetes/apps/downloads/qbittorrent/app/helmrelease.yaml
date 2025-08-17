@@ -70,11 +70,11 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 18Gi
-            securityContext:
-              runAsUser: 1002
-              runAsGroup: 1002
-              fsGroup: 1002
-              fsGroupChangePolicy: OnRootMismatch
+            # securityContext:
+            #   runAsUser: 1002
+            #   runAsGroup: 1002
+            #   fsGroup: 1002
+            #   fsGroupChangePolicy: OnRootMismatch
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
