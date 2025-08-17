@@ -32,8 +32,8 @@ spec:
           backoffLimit: 2
         # pod:
         #   securityContext:
-        #     runAsUser: &user 1002
-        #     runAsGroup: &group 1002
+        #     runAsUser: &user 2000
+        #     runAsGroup: &group 2000
         #     fsGroup: *group
         #     fsGroupChangePolicy: "OnRootMismatch"
         containers:

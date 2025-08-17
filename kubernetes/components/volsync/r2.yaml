@@ -69,9 +69,9 @@ spec:
     storageClassName: "${VOLSYNC_STORAGECLASS:-local-hostpath}"
     accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:-1002}"
-      runAsGroup: "${VOLSYNC_GID:-1002}"
-      fsGroup: "${VOLSYNC_GID:-1002}"
+      runAsUser: "${VOLSYNC_UID:-2000}"
+      runAsGroup: "${VOLSYNC_GID:-2000}"
+      fsGroup: "${VOLSYNC_GID:-2000}"
     # moverAffinity:
     #   podAntiAffinity:
     #     requiredDuringSchedulingIgnoredDuringExecution:
