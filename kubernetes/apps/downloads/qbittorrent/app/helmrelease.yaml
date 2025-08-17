@@ -153,7 +153,7 @@ spec:
         server: smb.cloudjur.com
         path: /tank/Storage
         globalMounts:
-          - path: /media/Downloads/qbittorrent
+          - path: /tank/Storage/Downloads
             subPath: Downloads/qbittorrent
       addons:
         type: emptyDir
