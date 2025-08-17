@@ -91,6 +91,8 @@ spec:
       app:
         hostnames:
           - jellyseerr.cloudjur.com
+          - requests.cloudjur.com
+          - request.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system
