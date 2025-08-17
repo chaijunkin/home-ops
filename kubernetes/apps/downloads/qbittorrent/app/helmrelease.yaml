@@ -76,6 +76,9 @@ spec:
               runAsGroup: 2000
               fsGroup: 2000
               fsGroupChangePolicy: OnRootMismatch
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
