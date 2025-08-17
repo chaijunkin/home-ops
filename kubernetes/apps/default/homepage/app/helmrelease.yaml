@@ -67,6 +67,19 @@ spec:
                   port: http
         tls:
           - hosts: [*host]
+    route:
+      app:
+        hostnames:
+          - "homepage.cloudjur.com"
+          - "home.cloudjur.com"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 3000
+                name: *app
     persistence:
       config:
         enabled: true
