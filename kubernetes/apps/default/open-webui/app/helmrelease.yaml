@@ -83,7 +83,8 @@ spec:
     route:
       app:
         hostnames:
-          - open-webui.cloudjur.com
+          # - open-webui.cloudjur.com
+          - chat.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system
