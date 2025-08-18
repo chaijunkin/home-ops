@@ -123,7 +123,7 @@ spec:
     route:
       app:
         hostnames:
-          - gatus.cloudjur.com
+        - status.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system
