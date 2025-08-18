@@ -123,16 +123,21 @@ spec:
     persistence:
       config:
         existingClaim: *app
-      tmp:
-        type: emptyDir
-      logs:
-        type: emptyDir
+      config-cache:
+        existingClaim: "{{ .Release.Name }}-cache"
         globalMounts:
-          - path: /config/logs
-      tts:
+          - path: /config/.venv
+      tmpfs:
         type: emptyDir
-        globalMounts:
-          - path: /config/tts
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config/logs
+                subPath: logs
+              - path: /config/tts
+                subPath: tts
+              - path: /tmp
+                subPath: tmp
     route:
       app:
         hostnames:
