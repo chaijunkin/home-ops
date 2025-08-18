@@ -27,9 +27,11 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/tautulli
-              tag: 2.15.3
+              tag: 2.15.3@sha256:3e0eaca8c082ebe121a0ae9125bea1b4e2d177fca34ac8df4ec14a28e62f63a4
             env:
               TZ: Asia/Kuala_Lumpur
+              TAUTULLI_HTTP_BASE_URL: https://tautulli.cloudjur.com
+              TAUTULLI_HTTP_PORT: &port 80
             envFrom:
               - secretRef:
                   name: tautulli-secret
@@ -39,16 +41,30 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 1Gi
-            # securityContext: &securityContext
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities: { drop: ["ALL"] }
-        # pod:
-        #   securityContext:
-        #     runAsUser: 2000
-        #     runAsGroup: 2000
-        #     fsGroup: 2000
-        #     fsGroupChangePolicy: OnRootMismatch
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /status
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
@@ -77,7 +93,7 @@ spec:
         hostnames:
           - tautulli.cloudjur.com
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
