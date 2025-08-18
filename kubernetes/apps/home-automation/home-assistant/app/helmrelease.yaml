@@ -136,15 +136,12 @@ spec:
     route:
       app:
         hostnames:
+          - "{{ .Release.Name }}.cloudjur.com"
           - hass.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system
             sectionName: https
-        rules:
-          - backendRefs:
-              - port: 8123
-                name: *app
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
