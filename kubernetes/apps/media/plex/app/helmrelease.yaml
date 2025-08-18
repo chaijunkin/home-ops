@@ -52,29 +52,27 @@ spec:
                   failureThreshold: 3
               readiness: *probes
               startup:
-                enabled: false
-            # securityContext:
-            #   allowPrivilegeEscalation: false
-            #   readOnlyRootFilesystem: true
-            #   capabilities: { drop: ["ALL"] }
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
-                cpu: 10m
-                # limits:
-                # memory: 16G
-                memory: 50Mi
+                cpu: 100m
               limits:
-                memory: 512Mi
-                # gpu.intel.com/i915: 1
-        pod:
-          nodeSelector:
-            intel.feature.node.kubernetes.io/gpu: "true"
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            fsGroup: 2000
-            # fsGroupChangePolicy: OnRootMismatch
-            # supplementalGroups: [44, 10000]
+                gpu.intel.com/i915: 1
+                memory: 16Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
