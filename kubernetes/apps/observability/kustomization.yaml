@@ -7,9 +7,9 @@ components:
 resources:
   # - ./alloy/ks.yaml
   - ./gatus/ks.yaml
-  - ./grafana/ks.yaml
+  # - ./grafana/ks.yaml
   # - ./kromgo/ks.yaml
-  - ./kube-prometheus-stack/ks.yaml
+  # - ./kube-prometheus-stack/ks.yaml
   # - ./loki/ks.yaml
-  - ./silence-operator/ks.yaml
-  - ./exporters
+  # - ./silence-operator/ks.yaml
+  # - ./exporters
