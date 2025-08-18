@@ -47,7 +47,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mosquitto.cloudjur.com
-          lbipam.cilium.io/ips: 10.10.30.25
+          lbipam.cilium.io/ips: 10.10.30.12
         ports:
           http:
             port: 1883
