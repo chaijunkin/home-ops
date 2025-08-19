@@ -24,9 +24,9 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       home-assistant:
@@ -61,8 +61,8 @@ spec:
               tag: 2025.8.1
             env:
               TZ: Asia/Kuala_Lumpur
-              HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
-              HASS_HTTP_TRUSTED_PROXY_2: 10.42.0.0/16
+              HASS_HTTP_TRUSTED_PROXY_1: 10.10.10.0/24
+              HASS_HTTP_TRUSTED_PROXY_2: 10.10.30.0/16
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
