@@ -8,7 +8,7 @@ spec:
   loadBalancerIPs: true
   # NOTE: This might need to be set if you have more than one active NIC on your hosts
   interfaces:
-    - ^eth[0-9]+
+    - ^eth.*
   nodeSelector:
     matchLabels:
       kubernetes.io/os: linux
@@ -21,45 +21,6 @@ spec:
   allowFirstLastIPs: "No"
   blocks:
     - cidr: "10.10.30.0/24"
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: kube-api
-#   annotations:
-##     lbipam.cilium.io/ips: 10.10.30.30
-# spec:
-#   type: LoadBalancer
-#   externalTrafficPolicy: Cluster
-#   selector:
-#     # k8s-app: kube-apiserver
-#     # tier: control-plane
-#     component: apiserver
-#   ports:
-#     - name: https
-#       port: 6443
-#       protocol: TCP
-#       targetPort: 6443
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   annotations:
-##     lbipam.cilium.io/ips: 10.10.30.30
-#   name: kubernetes-external
-#   namespace: kube-system
-# spec:
-#   externalTrafficPolicy: Local
-#   type: LoadBalancer
-#   loadBalancerClass: io.cilium/bgp-control-plane
-#   selector:
-#     k8s-app: kube-apiserver
-#     tier: control-plane
-#   ports:
-#     - name: https
-#       port: 443
-#       protocol: TCP
-#       targetPort: 6443
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
 apiVersion: cilium.io/v2
