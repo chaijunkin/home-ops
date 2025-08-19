@@ -93,6 +93,8 @@ spec:
             args:
               - --auth
               - "none"
+              - "--port"
+              - "12321"
               - --user-data-dir
               - "/config/.vscode"
               - --extensions-dir
@@ -113,13 +115,8 @@ spec:
         ports:
           http:
             port: 8123
-      codeserver:
-        controller: *app
-        type: ClusterIP
-        ports:
-          http:
-            enabled: true
-            port: 8080
+          codeserver:
+            port: 12321
     persistence:
       config:
         existingClaim: *app
@@ -153,10 +150,14 @@ spec:
           gethomepage.dev/name: Home-Assistant
           gethomepage.dev/icon: home-assistant.png
           gethomepage.dev/description: Home Automation Software
-      codeserver:
+      code-server:
         hostnames:
-          - hass-code.cloudjur.com
+          - "hass-code.cloudjur.com"
         parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 12321
