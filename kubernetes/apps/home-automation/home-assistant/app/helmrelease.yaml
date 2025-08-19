@@ -83,27 +83,27 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 1Gi
-          # codeserver:
-          #   image:
-          #     repository: ghcr.io/coder/code-server
-          #     tag: 4.89.1
-          #   env:
-          #     TZ: Asia/Kuala_Lumpur
-          #   probes: *probes
-          #   args:
-          #     - --auth
-          #     - "none"
-          #     - --user-data-dir
-          #     - "/config/.vscode"
-          #     - --extensions-dir
-          #     - "/config/.vscode"
-          #     - "/config"
-          #   resources:
-          #     requests:
-          #       cpu: 10m
-          #       memory: 50Mi
-          #     limits:
-          #       memory: 512Mi
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.89.1
+            env:
+              TZ: Asia/Kuala_Lumpur
+            # probes: *probes
+            args:
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+              - "/config"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 512Mi
     service:
       app:
         controller: *app
@@ -113,13 +113,13 @@ spec:
         ports:
           http:
             port: 8123
-      # codeserver:
-      #   controller: *app
-      #   type: ClusterIP
-      #   ports:
-      #     http:
-      #       enabled: true
-      #       port: 8080
+      codeserver:
+        controller: *app
+        type: ClusterIP
+        ports:
+          http:
+            enabled: true
+            port: 8080
     persistence:
       config:
         existingClaim: *app
@@ -153,3 +153,10 @@ spec:
           gethomepage.dev/name: Home-Assistant
           gethomepage.dev/icon: home-assistant.png
           gethomepage.dev/description: Home Automation Software
+      codeserver:
+        hostnames:
+          - hass-code.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
