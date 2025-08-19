@@ -1,6 +1,6 @@
 {
   "search.exclude": {
-    "**/.archives": true
+    "**/.archive": true
   },
   "editor.bracketPairColorization.enabled": true,
   "editor.fontFamily": "FiraCode Nerd Font",
