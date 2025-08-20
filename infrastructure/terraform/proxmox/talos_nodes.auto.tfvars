@@ -39,9 +39,34 @@ talos_nodes = {
     vm_id         = 3031
     cpu           = 9
     ram_dedicated = 59392
-    disk_size     = 400
     igpu          = true
     dns           = ["10.10.30.1"]
     dns_domain    = "cloudjur.com"
+    datastore_id = "fast"
+    disks = [
+      {
+        datastore_id = "fast"
+        interface    = "scsi0"
+        iothread     = true
+        cache        = "writethrough"
+        discard      = "on"
+        ssd          = true
+        file_format  = "raw"
+        size         = 850
+        # file_id will be set in the Terraform code, not here
+      },
+      {
+        datastore_id = "vm-store"
+        interface    = "scsi1"
+        iothread     = true
+        cache        = "writethrough"
+        discard      = "on"
+        ssd          = true
+        file_format  = "raw"
+        size         = 400
+        # file_id will be set in the Terraform code, not here
+      }
+      # Add more disks here as needed
+    ]
   }
 }

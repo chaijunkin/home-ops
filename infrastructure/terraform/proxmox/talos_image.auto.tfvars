@@ -4,4 +4,5 @@ talos_image = {
   schematic_path = "talos/image/schematic.yaml"
   # Point this to a new schematic file to update the schematic
   # update_schematic_path = "talos/image/schematic.yaml"
+  proxmox_datastore = "vm-store"
 }

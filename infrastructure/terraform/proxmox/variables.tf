@@ -69,13 +69,25 @@ variable "talos_nodes" {
         gateway     = optional(string) # Gateway for this specific interface
       })), [])
 
-      # Disk configuration parameters
-      disk_iothread    = optional(bool, true)
-      disk_cache       = optional(string, "writethrough")
-      disk_discard     = optional(string, "on")
-      disk_ssd         = optional(bool, true)
-      disk_file_format = optional(string, "raw")
-      disk_size        = optional(number, 200)
+      # Multiple disk support
+      disks = optional(list(object({
+        datastore_id = string
+        interface    = string
+        iothread     = optional(bool, true)
+        cache        = optional(string, "writethrough")
+        discard      = optional(string, "on")
+        ssd          = optional(bool, true)
+        file_format  = optional(string, "raw")
+        size         = number
+      })))
+
+      # # Single disk (legacy/compatibility)
+      # disk_iothread    = optional(bool, true)
+      # disk_cache       = optional(string, "writethrough")
+      # disk_discard     = optional(string, "on")
+      # disk_ssd         = optional(bool, true)
+      # disk_file_format = optional(string, "raw")
+      # disk_size        = optional(number, 200)
 
       vm_id         = number
       cpu           = number

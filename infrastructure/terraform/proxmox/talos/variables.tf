@@ -8,7 +8,7 @@ variable "image" {
     update_version        = optional(string)
     arch                  = optional(string, "amd64")
     platform              = optional(string, "nocloud")
-    proxmox_datastore     = optional(string, "vm-store")
+    proxmox_datastore     = optional(string, "fast")
   })
 }
 
@@ -38,7 +38,7 @@ variable "nodes" {
   type = map(object({
     host_node    = string
     machine_type = string
-    datastore_id = optional(string, "vm-store")
+    datastore_id = optional(string)
     ip           = string
     dns          = optional(list(string))
     dns_domain   = optional(string)
@@ -48,12 +48,24 @@ variable "nodes" {
       ip_address  = optional(string) # IP address for this specific interface
       gateway     = optional(string) # Gateway for this specific interface
     })), [])
-    disk_iothread    = optional(bool, true)
-    disk_cache       = optional(string, "writethrough")
-    disk_discard     = optional(string, "on")
-    disk_ssd         = optional(bool, true)
-    disk_file_format = optional(string, "raw")
-    disk_size        = optional(number, 50)
+    # Multiple disk support
+    disks = optional(list(object({
+      datastore_id = string
+      interface    = string
+      iothread     = optional(bool, true)
+      cache        = optional(string, "writethrough")
+      discard      = optional(string, "on")
+      ssd          = optional(bool, true)
+      file_format  = optional(string, "raw")
+      size         = number
+    })))
+    # Single disk (legacy/compatibility)
+    # disk_iothread    = optional(bool, true)
+    # disk_cache       = optional(string, "writethrough")
+    # disk_discard     = optional(string, "on")
+    # disk_ssd         = optional(bool, true)
+    # disk_file_format = optional(string, "raw")
+    # disk_size        = optional(number, 50)
     vm_id            = number
     cpu              = number
     ram_dedicated    = number
