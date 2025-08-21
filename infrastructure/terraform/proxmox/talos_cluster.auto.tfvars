@@ -17,6 +17,14 @@ talos_cluster_config = {
   gateway_api_version = "v1.3.0" # renovate: github-releases=kubernetes-sigs/gateway-api
   extra_manifests     = []
   kubelet             = <<-EOT
+  extraMounts:
+  - destination: /var/openebs/local
+    type: bind
+    source: /var/openebs/local
+    options:
+      - rbind
+      - rshared
+      - rw
   EOT
   api_server          = <<-EOT
   EOT

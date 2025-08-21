@@ -1,6 +1,6 @@
 talos_nodes = {
   "k8s-0" = {
-    host_node    = "dashy"
+    host_node    = "pve"
     machine_type = "controlplane"
     ip           = "10.10.30.31"
     network_devices = [

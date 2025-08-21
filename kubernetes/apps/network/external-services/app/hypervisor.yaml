@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app dashy
+  name: &app pve
   namespace: network
   labels:
     app.kubernetes.io/name: *app
@@ -19,7 +19,7 @@ spec:
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
-  name: &app dashy
+  name: &app pve
   namespace: network
   labels:
     kubernetes.io/service-name: *app
@@ -36,19 +36,19 @@ endpoints:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: dashy
+  name: pve
   namespace: network
   labels:
-    app.kubernetes.io/name: dashy
-    app.kubernetes.io/instance: dashy
+    app.kubernetes.io/name: pve
+    app.kubernetes.io/instance: pve
   annotations:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
-    gethomepage.dev/name: Proxmox (Dashy)
+    gethomepage.dev/name: Proxmox (pve)
     gethomepage.dev/group: Compute/Storage Infrastructure
     gethomepage.dev/description: Compute hypervisor
     gethomepage.dev/widget.type: proxmox
-    gethomepage.dev/widget.url: https://dashy.cloudjur.com
+    gethomepage.dev/widget.url: https://pve.cloudjur.com
     gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_PROXMOX_USERNAME}}"
     gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_PROXMOX_PASSWORD}}"
 spec:
@@ -57,12 +57,12 @@ spec:
       namespace: kube-system
       sectionName: https
   hostnames:
-    - dashy.cloudjur.com
+    - pve.cloudjur.com
   rules:
     - matches:
         - path:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: dashy
+        - name: pve
           port: 8006

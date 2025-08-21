@@ -83,16 +83,6 @@
         name: python3-pexpect
         state: present
 
-    - name: Set Samba password for nas user
-      ansible.builtin.expect:
-        command: "smbpasswd -a {{ smb_user }}"
-        responses:
-          (?i)password: "{{ smb_password }}"
-          (?i)Retype.*: "{{ smb_password }}"
-      register: smbpasswd_result
-      changed_when: "'Added user' in smbpasswd_result.stdout or 'exists' in smbpasswd_result.stdout"
-      # no_log: true
-
   tasks:
     # NFS setup
     - name: Install NFS packages
@@ -162,6 +152,16 @@
           - samba-common
         state: present
 
+    - name: Set Samba password for nas user
+      ansible.builtin.expect:
+        command: "smbpasswd -a {{ smb_user }}"
+        responses:
+          (?i)password: "{{ smb_password }}"
+          (?i)Retype.*: "{{ smb_password }}"
+      register: smbpasswd_result
+      changed_when: "'Added user' in smbpasswd_result.stdout or 'exists' in smbpasswd_result.stdout"
+      # no_log: true
+
     - name: Ensure SMB share directories exist and are owned by nas
       ansible.builtin.file:
         path: "{{ item.path }}"
@@ -216,11 +216,11 @@
             state: present
             update_cache: yes
 
-        - name: Add 45Drives GPG key
-          ansible.builtin.apt_key:
+        - name: Download 45Drives GPG key to keyring
+          ansible.builtin.get_url:
             url: https://repo.45drives.com/key/gpg.asc
-            keyring: /usr/share/keyrings/45drives-archive-keyring.gpg
-            state: present
+            dest: /usr/share/keyrings/45drives-archive-keyring.gpg
+            mode: "0644"
 
         - name: Add 45Drives apt repo file (default to focal)
           ansible.builtin.get_url:

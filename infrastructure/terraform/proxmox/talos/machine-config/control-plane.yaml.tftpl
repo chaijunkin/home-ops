@@ -20,7 +20,10 @@ machine:
 %{ endif ~}
 %{ endfor ~}
 %{ endif ~}
-
+  disks:
+    - device: /dev/sdb
+      partitions:
+        - mountpoint: /var/openebs/local
 cluster:
   discovery:
     enabled: true
