@@ -75,6 +75,7 @@ spec:
       type: RollingUpdate
     resources:
       requests:
+        requests: 100Mi
         cpu: 10m
       limits:
         memory: 1024M

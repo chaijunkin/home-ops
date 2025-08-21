@@ -38,6 +38,7 @@ spec:
       tag: 2025.8.1@sha256:92681e6745391ed80c7e59ebe9ba9956e787178b9e52c34e734e998bc80a8649
     resources:
       requests:
+        memory: 512Mi
         cpu: 200m
       limits:
         cpu: 2000m
