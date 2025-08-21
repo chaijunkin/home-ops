@@ -12,8 +12,8 @@ spec:
   components:
     - ../../../../components/keda/nfs-scaler
   dependsOn:
-    - name: openebs
-      namespace: openebs-system
+    - name: local-hostpath
+      namespace: storage
     - name: snapshot-controller
       namespace: kube-system
   healthChecks:
