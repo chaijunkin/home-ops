@@ -30,5 +30,5 @@ spec:
       GATUS_SUBDOMAIN: s3
       GATUS_STATUS: "403"
   components:
-    # - ../../../../components/keda/nas-scaler
+    # - ../../../../components/keda/nfs-scaler
     - ../../../../components/gatus/guarded

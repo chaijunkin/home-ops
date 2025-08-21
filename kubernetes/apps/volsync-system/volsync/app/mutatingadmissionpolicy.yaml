@@ -44,7 +44,7 @@ spec:
                 name: "jitter",
                 image: "ghcr.io/home-operations/busybox:1.37.0@sha256:026ed7273270ec08f6902b4ae8334c23b473e5394bec3bbbdbfe580c710d50bc",
                 imagePullPolicy: "IfNotPresent",
-                command: ["sh", "-c", "sleep $(shuf -i 0-90 -n 1)"]
+                command: ["sh", "-c", "sleep $(shuf -i 0-30 -n 1)"]
               }
             }
           ]
@@ -53,15 +53,15 @@ spec:
 apiVersion: admissionregistration.k8s.io/v1alpha1
 kind: MutatingAdmissionPolicyBinding
 metadata:
-  name: volsync-mover-nas
+  name: volsync-mover-nfs
 spec:
-  policyName: volsync-mover-nas
+  policyName: volsync-mover-nfs
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/v1.32.0/mutatingadmissionpolicy-admissionregistration-v1alpha1.json
 apiVersion: admissionregistration.k8s.io/v1alpha1
 kind: MutatingAdmissionPolicy
 metadata:
-  name: volsync-mover-nas
+  name: volsync-mover-nfs
 spec:
   matchConstraints:
     resourceRules:

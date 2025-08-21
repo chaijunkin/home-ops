@@ -28,6 +28,6 @@ spec:
       APP: bazarr
       VOLSYNC_CAPACITY: 2Gi
   components:
-    # - ../../../../components/keda/nas-scaler
+    # - ../../../../components/keda/nfs-scaler
     - ../../../../components/volsync
     - ../../../../components/gatus/guarded

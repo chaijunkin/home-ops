@@ -23,7 +23,7 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
-  name: smb
+  name: nfs
 spec:
   module: tcp_connect
   prober:
@@ -31,4 +31,4 @@ spec:
   targets:
     staticConfig:
       static:
-        - "smb.cloudjur.com:445"
+        - "smb.cloudjur.com:2049"
