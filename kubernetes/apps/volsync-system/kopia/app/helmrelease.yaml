@@ -87,7 +87,7 @@ spec:
             readOnly: true
       repository:
         type: nfs
-        server: expanse.internal
+        server: smb.cloudjur.com
         path: /tank/Backup/Volsync
         globalMounts:
           - path: /repository
