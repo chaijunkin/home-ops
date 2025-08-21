@@ -61,7 +61,7 @@ spec:
               tag: 2025.8.1
             env:
               TZ: Asia/Kuala_Lumpur
-              HASS_HTTP_TRUSTED_PROXY_1: 10.10.10.0/24
+              HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
               HASS_HTTP_TRUSTED_PROXY_2: 10.10.30.0/16
             securityContext:
               allowPrivilegeEscalation: false
