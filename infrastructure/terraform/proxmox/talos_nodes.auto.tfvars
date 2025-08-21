@@ -38,7 +38,7 @@ talos_nodes = {
 
     vm_id         = 3031
     cpu           = 9
-    ram_dedicated = 59392
+    ram_dedicated = 51200
     igpu          = true
     dns           = ["10.10.30.1"]
     dns_domain    = "cloudjur.com"
