@@ -102,8 +102,11 @@ spec:
     - name: plex
     - name: tautulli
     - name: radarr
+      namespace: downloads
     - name: sonarr
+      namespace: downloads
     - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/media/plex/kometa
   prune: true
   sourceRef:
