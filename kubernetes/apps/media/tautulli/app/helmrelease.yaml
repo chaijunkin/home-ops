@@ -84,10 +84,6 @@ spec:
           - path: /config/logs
       tmp:
         type: emptyDir
-      # tmp:
-      #   type: emptyDir
-      # add-ons:
-      #   type: emptyDir
     route:
       app:
         hostnames:
@@ -96,10 +92,6 @@ spec:
           - name: internal
             namespace: kube-system
             sectionName: https
-        rules:
-          - backendRefs:
-              - port: 8181
-                name: *app
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media Service
