@@ -33,6 +33,9 @@ spec:
               TZ: Asia/Kuala_Lumpur
               LOG_LEVEL: "info"
               PORT: &port 80
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
             resources:
               requests:
                 cpu: 10m
