@@ -9,8 +9,6 @@ endpoints:
     dns:
       query-name: "${GATUS_SUBDOMAIN:=${APP}}.cloudjur.com"
       query-type: A
-    client:
-      dns-resolver: tcp://1.1.1.1:53
     conditions:
       - "len([BODY]) == 0"
     alerts:
