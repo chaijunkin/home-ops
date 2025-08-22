@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 5.27.3.10153@sha256:1bf822eaf3d944dc994656c3a712a89df0d88f5f46731af4fccc90c5e0333167
+              tag: 5.27.4.10176@sha256:4b9c3548ff82a9f3e4ccdabb2d7044da8167c42003ac96164c3e1a5287730538
             env:
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__APP__THEME: dark
@@ -63,9 +63,6 @@ spec:
                 memory: 4Gi
     defaultPodOptions:
       securityContext:
-        # runAsUser: 0
-        # runAsGroup: 0
-        # fsGroup: 0
         runAsNonRoot: true
         runAsUser: 2000
         runAsGroup: 2000
@@ -85,6 +82,10 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
+      config-cache:
+        existingClaim: radarr-cache
+        globalMounts:
+          - path: /config/MediaCover
     route:
       app:
         hostnames:

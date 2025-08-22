@@ -57,6 +57,7 @@ spec:
       app:
         hostnames:
           - wikijs.cloudjur.com
+          - wiki.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system

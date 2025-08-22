@@ -82,6 +82,10 @@ spec:
         existingClaim: *app
       tmp:
         type: emptyDir
+      config-cache:
+        existingClaim: sonarr-cache
+        globalMounts:
+          - path: /config/MediaCover
       media:
         enabled: true
         type: nfs

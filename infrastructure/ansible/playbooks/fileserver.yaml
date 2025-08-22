@@ -112,6 +112,7 @@
       loop:
         - /tank/Apps/Frigate
         - /tank/Apps/Minio
+        - /tank/Backup/Database
         - /tank/Backup/Volsync
         - /tank/Backup/Personal
         - /tank/Storage/Desktop

@@ -131,8 +131,8 @@ The alternative solution to these two problems would be to host a Kubernetes clu
 
 | Name        | Device | CPU | OS Disk   | Data Disk | RAM  | OS     | Purpose           |
 |-------------|--------|-----| ----------|-----------|------|--------|-------------------|
-| master (VM) | pve  | 4   | 50GB SSD  | None      | 16GB | Debian | k8s control-plane |
-| worker (VM) | pve  | 4   | 100GB SSD | None      | 24GB | Debian | k8s worker        |
+| master (VM) | Dashy  | 4   | 50GB SSD  | None      | 16GB | Debian | k8s control-plane |
+| worker (VM) | Dashy  | 4   | 100GB SSD | None      | 24GB | Debian | k8s worker        |
 
 Total CPU: 8 threads
 Total RAM: 40GB
@@ -141,8 +141,8 @@ Total RAM: 40GB
 
 | Name         | Device         | CPU        | OS Disk   | Data Disk           | RAM    | OS         | Purpose               |
 |--------------|----------------|------------|-----------|---------------------|--------|------------|-----------------------|
-| pve (host) | Custom built   | E-2246G    | 64GB      | 500GB SSD           | 64GB   | Proxmox    | Virtualize NAS and VM |
-| NAS (VM)     | pve          | 2          | 8G        | ZFS 4TB x2 (mirror) | 512Mib | Debian LXC | NAS/NFS/Backup        |
+| Dashy (host) | Custom built   | E-2246G    | 64GB      | 500GB SSD           | 64GB   | Proxmox    | Virtualize NAS and VM |
+| NAS (VM)     | Dashy          | 2          | 8G        | ZFS 4TB x2 (mirror) | 512Mib | Debian LXC | NAS/NFS/Backup        |
 
 ### Networking/UPS Hardware
 

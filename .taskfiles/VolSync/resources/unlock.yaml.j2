@@ -23,5 +23,6 @@ spec:
           resources: {}
       volumes:
         - name: repository
-          persistentVolumeClaim:
-            claimName: volsync-smb-repository
+          nfs:
+            server: smb.cloudjur.com
+            path: /tank/Apps/Minio/volsync

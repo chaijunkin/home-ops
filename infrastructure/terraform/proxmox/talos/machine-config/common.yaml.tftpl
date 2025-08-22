@@ -1,11 +1,14 @@
 machine:
   # kernel:
   #   modules:
+  #     - name: i915
   #     - name: nbd
   certSANs: ["127.0.0.1", "k8s.cloudjur.com", "10.10.30.31"]
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
+    extraArgs:
+      max-pods: "250"
     extraConfig:
       featureGates:
         ImageVolume: true
@@ -52,6 +55,7 @@ machine:
         nconnect=16
         noatime=True
   nodeLabels:
+    intel.feature.node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/region: ${cluster_name}
     topology.kubernetes.io/zone: ${node_name}
   network:
