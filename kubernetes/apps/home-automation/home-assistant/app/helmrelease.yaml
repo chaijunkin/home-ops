@@ -141,7 +141,7 @@ spec:
           - "{{ .Release.Name }}.cloudjur.com"
           - hass.cloudjur.com
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         annotations:
