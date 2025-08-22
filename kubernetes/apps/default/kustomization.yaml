@@ -6,13 +6,13 @@ components:
   - ../../components/common
 resources:
   - ./cyberchef/ks.yaml
-  # - ./firefly-iii/ks.yaml
+  - ./firefly-iii/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
-  # - ./miniflux/ks.yaml
-  # - ./ollama/ks.yaml
+  - ./miniflux/ks.yaml
+  - ./ollama/ks.yaml
   # - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
-  # - ./wikijs/ks.yaml
+  - ./wikijs/ks.yaml
