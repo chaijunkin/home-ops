@@ -30,7 +30,7 @@ spec:
     server:
       initContainers:
         - name: init-db
-          image: ghcr.io/onedr0p/postgres-init:16
+          image: ghcr.io/home-operations/postgres-init:16
           envFrom: *envFrom
       metrics:
         # -- deploy metrics service
