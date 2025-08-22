@@ -83,7 +83,7 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - record
-          hwaccel_args: preset-intel-qsv-h265
+          # hwaccel_args: preset-intel-qsv-h265
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
         #   input_args: preset-rtsp-restream
         #   roles:
