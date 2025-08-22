@@ -150,14 +150,14 @@ spec:
           gethomepage.dev/name: Home-Assistant
           gethomepage.dev/icon: home-assistant.png
           gethomepage.dev/description: Home Automation Software
-      code-server:
-        hostnames:
-          - "hass-code.cloudjur.com"
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: 12321
+      # code-server:
+      #   hostnames:
+      #     - "hass-code.cloudjur.com"
+      #   parentRefs:
+      #     - name: internal
+      #       namespace: kube-system
+      #       sectionName: https
+      #   rules:
+      #     - backendRefs:
+      #         - identifier: app
+      #           port: 12321
