@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/keda.sh/scaledobject_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/keda.sh/scaledobject_v1alpha1.json
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: ${APP}-nfs-scaler
+  name: ${APP}
 spec:
   advanced:
     restoreToOriginalReplicaCount: true
@@ -18,6 +18,6 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
-        query: probe_success{instance=~"smb.cloudjur.com:2049"}
+        query: probe_success{instance=~".+:2049"}
         threshold: "1"
         ignoreNullValues: "0"
