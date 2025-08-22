@@ -22,4 +22,3 @@ customization:
       - siderolabs/qemu-guest-agent
       - siderolabs/mei
       # - siderolabs/nfsrahead
-      - siderolabs/util-linux-tools
