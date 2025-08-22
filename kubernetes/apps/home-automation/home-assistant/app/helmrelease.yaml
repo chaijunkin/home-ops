@@ -33,6 +33,7 @@ spec:
       home-assistant:
         annotations:
           reloader.stakater.com/auto: "true"
+        ### I MIGHT NOT NEED MULTUS DUE TO OPENVSWITCH CONFIGURATION
         # pod:
         #   annotations:
         #     k8s.v1.cni.cncf.io/networks: |
@@ -159,7 +160,7 @@ spec:
           - "{{ .Release.Name }}.cloudjur.com"
           - hass.cloudjur.com
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         rules:
