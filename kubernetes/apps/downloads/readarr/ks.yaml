@@ -27,6 +27,6 @@ spec:
       APP: readarr
       VOLSYNC_CAPACITY: 2Gi
   components:
-    # - ../../../../components/keda/nfs-scaler
+    - ../../../../components/keda/nfs-scaler
     - ../../../../components/volsync
     - ../../../../components/gatus/guarded

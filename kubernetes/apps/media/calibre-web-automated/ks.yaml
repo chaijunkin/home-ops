@@ -24,5 +24,5 @@ spec:
   interval: 30m
   timeout: 5m
   components:
-    # - ../../../../components/keda/nfs-scaler
+    - ../../../../components/keda/nfs-scaler
     - ../../../../components/gatus/external

@@ -30,6 +30,7 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/gatus/external
+    - ../../../../components/keda/nfs-scaler
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
