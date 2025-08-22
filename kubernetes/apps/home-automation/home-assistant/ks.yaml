@@ -23,4 +23,4 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
   components:
     - ../../../../components/volsync
-    - ../../../../components/gatus/guarded
+    - ../../../../components/gatus/external
