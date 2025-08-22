@@ -4,7 +4,7 @@ version: "3"
 
 vars:
   RENDER_MACHINE_SCRIPT: "{{.SCRIPTS_DIR}}/render-machine-config.sh"
-  TALOS_MACHINE_FILE: "{{.TALOS_DIR}}/machineconfig.yaml.j2"
+  TALOS_MACHINE_FILE: "{{.TALOS_DIR}}/machineconfig.yaml"
   TALOS_NODES_DIR: "{{.TALOS_DIR}}/nodes"
   TALOS_SCHEMATIC_FILE: "{{.TALOS_DIR}}/schematic.yaml"
 
@@ -20,8 +20,8 @@ tasks:
       vars: [NODE]
     preconditions:
       - talosctl --nodes {{.NODE}} get machineconfig
-      # - test -f {{.RENDER_MACHINE_SCRIPT}}
-      # - test -f {{.TALOS_MACHINE_FILE}}
+      - test -f {{.RENDER_MACHINE_SCRIPT}}
+      - test -f {{.TALOS_MACHINE_FILE}}
       - test -f {{.TALOS_DIR}}/{{.NODE}}.yaml
       - which minijinja-cli talosctl yq
 

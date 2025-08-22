@@ -10,8 +10,8 @@ resources:
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./miniflux/ks.yaml
-  - ./ollama/ks.yaml
-  # - ./open-webui/ks.yaml
+  # - ./ollama/ks.yaml
+  - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
