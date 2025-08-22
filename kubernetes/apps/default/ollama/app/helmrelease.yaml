@@ -53,7 +53,7 @@ spec:
                 cpu: 10m
               limits:
                 memory: 16Gi
-                gpu.intel.com/i915: 1
+                # gpu.intel.com/i915: 1
         pod:
           affinity:
             podAntiAffinity:
