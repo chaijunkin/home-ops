@@ -83,29 +83,29 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 1Gi
-          codeserver:
-            image:
-              repository: ghcr.io/coder/code-server
-              tag: 4.89.1
-            env:
-              TZ: Asia/Kuala_Lumpur
-            # probes: *probes
-            args:
-              - --auth
-              - "none"
-              - "--port"
-              - "12321"
-              - --user-data-dir
-              - "/config/.vscode"
-              - --extensions-dir
-              - "/config/.vscode"
-              - "/config"
-            resources:
-              requests:
-                cpu: 10m
-                memory: 50Mi
-              limits:
-                memory: 512Mi
+          # codeserver:
+          #   image:
+          #     repository: ghcr.io/coder/code-server
+          #     tag: 4.89.1
+          #   env:
+          #     TZ: Asia/Kuala_Lumpur
+          #   # probes: *probes
+          #   args:
+          #     - --auth
+          #     - "none"
+          #     - "--port"
+          #     - "12321"
+          #     - --user-data-dir
+          #     - "/config/.vscode"
+          #     - --extensions-dir
+          #     - "/config/.vscode"
+          #     - "/config"
+          #   resources:
+          #     requests:
+          #       cpu: 10m
+          #       memory: 50Mi
+          #     limits:
+          #       memory: 512Mi
     service:
       app:
         type: LoadBalancer
