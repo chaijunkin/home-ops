@@ -22,7 +22,7 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
-      hostUsers: false
+      # hostUsers: false
       securityContext:
         runAsNonRoot: true
         runAsUser: 2000
