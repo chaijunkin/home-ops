@@ -2,7 +2,7 @@ machine:
   kernel:
     modules:
       - name: i915
-      - name: nbd
+  #     - name: nbd
   certSANs: ["127.0.0.1", "k8s.cloudjur.com", "10.10.30.31"]
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true

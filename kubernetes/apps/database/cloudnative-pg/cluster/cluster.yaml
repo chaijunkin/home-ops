@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres
+  name: postgres16
   namespace: database
   annotations:
     fluxcd.io/ignore: "true"
@@ -20,18 +20,18 @@ spec:
   enableSuperuserAccess: true
   superuserSecret:
     name: cloudnative-pg-secret
-  bootstrap:
-    recovery:
-      source: &previousCluster postgres-v4
   postgresql:
     parameters:
       max_connections: "600"
       shared_buffers: 512MB
   monitoring:
     enablePodMonitor: true
+  bootstrap:
+    recovery:
+      source: &previousCluster postgres-v4
   backup:
     retentionPolicy: 30d
-    barmanObjectStore:
+    barmanObjectStore: &barmanObjectStore
       data:
         compression: bzip2
       wal:
@@ -39,7 +39,9 @@ spec:
         maxParallel: 8
       destinationPath: s3://postgresql/
       endpointURL: "https://s3.cloudjur.com"
-      serverName: &currentCluster postgres-v3
+      # Note: serverName version needs to be incremented
+      # when recovering from an existing cnpg cluster
+      serverName: &currentCluster postgres-v5
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -51,15 +53,5 @@ spec:
   externalClusters:
     - name: *previousCluster
       barmanObjectStore:
-        wal:
-          compression: bzip2
-          maxParallel: 8
-        destinationPath: s3://postgresql/
-        endpointURL: https://s3.cloudjur.com
-        s3Credentials:
-          accessKeyId:
-            name: cloudnative-pg-secret
-            key: aws-access-key-id
-          secretAccessKey:
-            name: cloudnative-pg-secret
-            key: aws-secret-access-key
+        <<: *barmanObjectStore
+        serverName: *previousCluster

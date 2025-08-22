@@ -14,7 +14,7 @@ resource "proxmox_virtual_environment_vm" "this" {
   bios          = "seabios"
 
   agent {
-    enabled = false
+    enabled = true
   }
 
   cpu {
