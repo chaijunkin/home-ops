@@ -9,44 +9,45 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   type: ClusterIP
-  clusterIP: None
   ports:
-    - name: http
-      port: &port 9090
+    - port: 9000
       protocol: TCP
-      targetPort: *port
+      targetPort: 9000
+
 ---
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+apiVersion: v1
+kind: Endpoints
 metadata:
   name: &app nas
   namespace: network
   labels:
-    kubernetes.io/service-name: *app
-addressType: IPv4
-ports:
-  - name: http
-    appProtocol: https
-    protocol: TCP
-    port: 9090
-endpoints:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+subsets:
   - addresses:
-      - "10.10.30.10"
+      - ip: 10.10.30.10
+    ports:
+      - port: 9000
+
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: nas
+  name: &app nas
   namespace: network
   labels:
-    app.kubernetes.io/name: nas
-    app.kubernetes.io/instance: nas
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cockpit.png
-    gethomepage.dev/name: NAS
-    gethomepage.dev/group: Compute/Storage Infrastructure
-    gethomepage.dev/description: SMB service provider
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+  # annotations:
+  #   gethomepage.dev/enabled: "true"
+  #   gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
+  #   gethomepage.dev/name: Proxmox (Dashy)
+  #   gethomepage.dev/group: Compute/Storage Infrastructure
+  #   gethomepage.dev/description: Compute hypervisor
+  #   gethomepage.dev/widget.type: proxmox
+  #   gethomepage.dev/widget.url: https://dashy.cloudjur.com
+  #   gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_PROXMOX_USERNAME}}"
+  #   gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_PROXMOX_PASSWORD}}"
 spec:
   parentRefs:
     - name: internal
@@ -60,5 +61,5 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: nas
-          port: 9090
+        - name: *app
+          port: 9000
