@@ -1,12 +1,13 @@
 ---
 web:
   port: ${GATUS_WEB_PORT}
+
 metrics: true
-debug: false
+
 ui:
   title: Status | Gatus
   header: Status
-  logo: https://avatars.githubusercontent.com/u/88609082?v=4
+  logo: https://avatars.githubusercontent.com/u/213795
   link: https://github.com/chaijunkin
   buttons:
     - name: Github
@@ -22,20 +23,12 @@ alerting:
       send-on-resolved: true
       failure-threshold: 5
       success-threshold: 2
-  # pushover:
-  #   title: Gatus (Kubernetes)
-  #   application-token: $${PUSHOVER_TOKEN}
-  #   user-key: $${PUSHOVER_USER_KEY}
-  #   priority: 1
-  #   default-alert:
-  #     description: health-check failed
-  #     send-on-resolved: true
-  #     failure-threshold: 3
-  #     success-threshold: 3
+
 connectivity:
   checker:
     target: 1.1.1.1:53
     interval: 1m
+
 endpoints:
   - name: flux-webhook
     group: external
