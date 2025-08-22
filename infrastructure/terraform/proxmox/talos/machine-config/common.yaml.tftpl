@@ -7,6 +7,8 @@ machine:
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
+    extraArgs:
+      max-pods: "250"
     extraConfig:
       featureGates:
         ImageVolume: true
