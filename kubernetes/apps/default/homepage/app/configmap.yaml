@@ -192,38 +192,49 @@ data:
     headerStyle: clean
     layout:
       Calendar:
+        tab: First
         style: column
         icon: mdi-calendar
       Application Service:
+        tab: First
         style: column
         icon: mdi-application
       Media Service:
+        tab: First
         style: column
         icon: mdi-play-circle
-      Developer:
-        style: column
-        icon: mdi-toolbox
       External Service:
+        tab: First
         style: column
         icon: mdi-cloud
       Downloads Service:
+        tab: First
         style: column
         icon: mdi-download-circle
+      Developer:
+        tab: Second
+        style: column
+        icon: mdi-toolbox
       Compute/Storage Infrastructure:
+        tab: Second
         style: column
         icon: mdi-server
       Network Infrastructure:
+        tab: Second
         style: column
         icon: mdi-access-point-network
       Observability Service:
+        tab: Second
         style: column
         icon: mdi-chart-line
       Utility Service:
         style: column
         icon: mdi-tools
       Platform Service:
+        tab: Second
         style: column
         icon: mdi-cellphone-link
       Management Tools:
+        tab: Second
         style: column
         icon: mdi-toolbox

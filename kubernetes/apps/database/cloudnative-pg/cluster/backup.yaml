@@ -1,0 +1,12 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Backup
+metadata:
+  labels:
+    app.kubernetes.io/name: cloudnative-pg-cluster
+  name: postgres
+  namespace: database
+spec:
+  cluster:
+    name: postgres
+  method: barmanObjectStore
