@@ -122,8 +122,8 @@ tasks:
   #   preconditions:
   #     - test -f {{.TALOS_SCHEMATIC_FILE}}
   #     - which curl jq
-  init:
-    desc: Run 'terraform apply' on Proxmox infrastructure
+  tf-init:
+    desc: Run 'terraform init' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
       - terraform init
@@ -131,7 +131,7 @@ tasks:
     preconditions:
       - which terraform
 
-  apply:
+  tf-apply:
     desc: Run 'terraform apply' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
@@ -140,7 +140,7 @@ tasks:
     preconditions:
       - which terraform
 
-  destroy:
+  tf-destroy:
     desc: Run 'terraform destroy' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
@@ -149,8 +149,8 @@ tasks:
     preconditions:
       - which terraform
 
-  force-unlock:
-    desc: Run 'terraform destroy' on Proxmox infrastructure
+  tf-force-unlock:
+    desc: Run 'terraform unlock' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
       # - terraform init
