@@ -16,22 +16,18 @@ spec:
       protocol: TCP
       targetPort: *port
 ---
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
+apiVersion: v1
+kind: Endpoints
 metadata:
-  name: &app pve
+  name: pve
   namespace: network
-  labels:
-    kubernetes.io/service-name: *app
-addressType: IPv4
-ports:
-  - name: http
-    appProtocol: https
-    protocol: TCP
-    port: 8006
-endpoints:
+subsets:
   - addresses:
-      - "10.10.30.10"
+      - ip: 10.10.30.10
+    ports:
+      - port: 8006
+        name: websecure
+        protocol: TCP
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -65,4 +61,5 @@ spec:
             value: /
       backendRefs:
         - name: pve
+          kind: Service
           port: 8006
