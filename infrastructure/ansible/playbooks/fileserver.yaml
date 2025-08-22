@@ -10,23 +10,23 @@
     nfs_exports:
       - {
           path: "/tank/Apps",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,all_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Storage",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,all_squash) 10.10.10.0/24(rw,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(rw,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Backup",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,all_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Shared",
-          clients: "*(rw,sync,no_subtree_check,all_squash)",
+          clients: "*(rw,sync,no_subtree_check,no_root_squash)",
         }
       - {
           path: "/tank/Default",
-          clients: "*(rw,sync,no_subtree_check,all_squash)",
+          clients: "*(rw,sync,no_subtree_check,no_root_squash)",
         }
     smb_user: nas
     smb_group: nas
