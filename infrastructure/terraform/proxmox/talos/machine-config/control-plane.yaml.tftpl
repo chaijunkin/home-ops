@@ -24,10 +24,10 @@ machine:
     - device: /dev/sdb
       partitions:
         - mountpoint: /var/openebs/local
-  # udev:
-  #   rules:
-  #     # Intel GPU
-  #     - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
+  udev:
+    rules:
+      # Intel GPU
+      - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
 cluster:
   discovery:
     enabled: true
