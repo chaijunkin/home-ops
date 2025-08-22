@@ -125,13 +125,12 @@ spec:
                 memory: 512Mi
     service:
       app:
-        controller: *app
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: "10.10.30.50"
         ports:
           http:
-            port: 8123
+            port: &port 8123
           codeserver:
             port: &codeserverPort 12321
     persistence:
@@ -163,6 +162,10 @@ spec:
           - name: internal
             namespace: kube-system
             sectionName: https
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *port
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
