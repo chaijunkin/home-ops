@@ -38,22 +38,38 @@ spec:
               [{
               "name": "multus-not",
               "namespace": "network",
-              "ips": ["10.10.32.250/24"],
-              "mac": "16:44:BB:A0:A4:40"
-
+              "ips": ["10.10.32.250/24"]
               },
               {
                 "name": "multus-iot",
                 "namespace": "network",
-                "ips": ["10.10.33.250/24"],
-                "mac": "16:44:BB:A0:A4:41"
+                "ips": ["10.10.33.250/24"]
               }
               ,{
                 "name": "multus-trust",
                 "namespace": "network",
-                "ips": ["10.10.10.250/24"],
-                "mac": "16:44:BB:A0:A4:42"
+                "ips": ["10.10.10.250/24"]
               }]
+            # k8s.v1.cni.cncf.io/networks: |
+            #   [{
+            #   "name": "multus-not",
+            #   "namespace": "network",
+            #   "ips": ["10.10.32.250/24"],
+            #   "mac": "16:44:BB:A0:A4:40"
+
+            #   },
+            #   {
+            #     "name": "multus-iot",
+            #     "namespace": "network",
+            #     "ips": ["10.10.33.250/24"],
+            #     "mac": "16:44:BB:A0:A4:41"
+            #   }
+            #   ,{
+            #     "name": "multus-trust",
+            #     "namespace": "network",
+            #     "ips": ["10.10.10.250/24"],
+            #     "mac": "16:44:BB:A0:A4:42"
+            #   }]
         containers:
           app:
             image:
@@ -83,39 +99,40 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 1Gi
-          # codeserver:
-          #   image:
-          #     repository: ghcr.io/coder/code-server
-          #     tag: 4.89.1
-          #   env:
-          #     TZ: Asia/Kuala_Lumpur
-          #   # probes: *probes
-          #   args:
-          #     - --auth
-          #     - "none"
-          #     - "--port"
-          #     - "12321"
-          #     - --user-data-dir
-          #     - "/config/.vscode"
-          #     - --extensions-dir
-          #     - "/config/.vscode"
-          #     - "/config"
-          #   resources:
-          #     requests:
-          #       cpu: 10m
-          #       memory: 50Mi
-          #     limits:
-          #       memory: 512Mi
+          codeserver:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.89.1
+            env:
+              TZ: Asia/Kuala_Lumpur
+            # probes: *probes
+            args:
+              - --auth
+              - "none"
+              - "--port"
+              - "12321"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+              - "/config"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 512Mi
     service:
       app:
+        controller: *app
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: "10.10.30.50"
         ports:
-          # codeserver:
-          #   port: 12321
           http:
             port: 8123
+          codeserver:
+            port: &codeserverPort 12321
     persistence:
       config:
         existingClaim: *app
@@ -128,6 +145,8 @@ spec:
         advancedMounts:
           home-assistant:
             app:
+              - path: /config/.venv
+                subPath: .venv
               - path: /config/logs
                 subPath: logs
               - path: /config/tts
@@ -149,6 +168,16 @@ spec:
           gethomepage.dev/name: Home-Assistant
           gethomepage.dev/icon: home-assistant.png
           gethomepage.dev/description: Home Automation Software
+      codeserver:
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.cloudjur.com"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *codeserverPort
       # code-server:
       #   hostnames:
       #     - "hass-code.cloudjur.com"
