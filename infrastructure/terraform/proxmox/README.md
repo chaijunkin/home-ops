@@ -90,3 +90,13 @@ tofu state rm module.talos.talos_machine_secrets.this
 tofu import module.talos.talos_machine_secrets.this output/talos-machine-secrets.yaml
 tofu apply --refresh=false
 ```
+
+
+proxmox = {
+  name         = "pve"
+  cluster_name = "main"
+  endpoint     = "https://10.10.30.10:8006/"
+  insecure     = true
+  username     = "root@pam" # root or root@pam
+  password     = "TBC"
+}

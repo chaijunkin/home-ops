@@ -81,9 +81,3 @@ spec:
           - backendRefs:
               - port: *port
                 name: *app
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Applications
-          gethomepage.dev/name: Kromgo
-          gethomepage.dev/description: Kromgo Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kromgo.png

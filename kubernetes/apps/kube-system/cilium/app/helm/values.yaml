@@ -5,6 +5,7 @@ autoDirectNodeRoutes: true
 bandwidthManager:
   enabled: true
   bbr: true # not available in debian 12 yet
+bpfClockProbe: true
 bgpControlPlane:
   enabled: true
 bpf:

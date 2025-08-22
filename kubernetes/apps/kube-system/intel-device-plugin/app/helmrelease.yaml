@@ -42,3 +42,5 @@ spec:
     manager:
       devices:
         gpu: true
+    # controllerExtraArgs: |
+    #   - --devices=gpu

@@ -102,13 +102,17 @@ spec:
     - name: plex
     - name: tautulli
     - name: radarr
+      namespace: downloads
     - name: sonarr
+      namespace: downloads
     - name: external-secrets-bitwarden
+      namespace: kube-system
   path: ./kubernetes/apps/media/plex/kometa
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
@@ -117,3 +121,6 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
+  components:
+    - ../../../../components/volsync
+    - ../../../../components/keda/nfs-scaler

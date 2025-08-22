@@ -24,7 +24,7 @@ detectors:
 
 ffmpeg:
   # global_args: ["-hide_banner", "-loglevel", "warning"]
-  hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
+  # hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
   input_args: preset-rtsp-restream
 
 snapshots:
@@ -83,7 +83,7 @@ cameras:
           input_args: preset-rtsp-restream
           roles:
             - record
-          hwaccel_args: preset-intel-qsv-h265
+          # hwaccel_args: preset-intel-qsv-h265
         # - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor_sub
         #   input_args: preset-rtsp-restream
         #   roles:
@@ -91,7 +91,7 @@ cameras:
       output_args:
         record: preset-record-generic-audio-aac
     detect:
-      enabled: true
+      enabled: False
       width: 896
       height: 512
       fps: 10 # <---- disable detection until you have a working camera feed

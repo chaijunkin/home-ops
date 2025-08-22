@@ -79,9 +79,31 @@ spec:
           - backendRefs:
               - port: *port
                 name: echo-server
-      extroute:
+      int-auth-route:
+        hostnames:
+          - echo-server-internal-auth.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: echo-server
+      ext-route:
         hostnames:
           - echo-server-external.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: echo-server
+      ext-auth-route:
+        hostnames:
+          - echo-server-external-auth.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system

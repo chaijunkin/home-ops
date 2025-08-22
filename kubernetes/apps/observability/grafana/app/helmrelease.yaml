@@ -9,7 +9,7 @@ spec:
     operation: copy
   url: oci://ghcr.io/grafana/helm-charts/grafana
   ref:
-    tag: 9.3.3
+    tag: 9.3.4
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -198,7 +198,7 @@ spec:
             type: loki
             uid: loki
             access: proxy
-            url: http://loki-headless.observability.svc.cluster.local
+            url: http://loki-headless.observability.svc.cluster.local:3100
             jsonData:
               maxLines: 250
           - name: Alertmanager

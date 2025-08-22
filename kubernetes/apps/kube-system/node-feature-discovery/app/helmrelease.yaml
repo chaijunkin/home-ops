@@ -32,10 +32,7 @@ spec:
     worker:
       config:
         core:
-          sources:
-            - custom
-            - pci
-            - usb
+          labelSources: ["pci", "system", "usb"]
     prometheus:
       enable: true
   chartRef:

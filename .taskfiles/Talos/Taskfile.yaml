@@ -4,7 +4,7 @@ version: "3"
 
 vars:
   RENDER_MACHINE_SCRIPT: "{{.SCRIPTS_DIR}}/render-machine-config.sh"
-  TALOS_MACHINE_FILE: "{{.TALOS_DIR}}/machineconfig.yaml.j2"
+  TALOS_MACHINE_FILE: "{{.TALOS_DIR}}/machineconfig.yaml"
   TALOS_NODES_DIR: "{{.TALOS_DIR}}/nodes"
   TALOS_SCHEMATIC_FILE: "{{.TALOS_DIR}}/schematic.yaml"
 
@@ -20,8 +20,8 @@ tasks:
       vars: [NODE]
     preconditions:
       - talosctl --nodes {{.NODE}} get machineconfig
-      # - test -f {{.RENDER_MACHINE_SCRIPT}}
-      # - test -f {{.TALOS_MACHINE_FILE}}
+      - test -f {{.RENDER_MACHINE_SCRIPT}}
+      - test -f {{.TALOS_MACHINE_FILE}}
       - test -f {{.TALOS_DIR}}/{{.NODE}}.yaml
       - which minijinja-cli talosctl yq
 
@@ -122,8 +122,8 @@ tasks:
   #   preconditions:
   #     - test -f {{.TALOS_SCHEMATIC_FILE}}
   #     - which curl jq
-  init:
-    desc: Run 'terraform apply' on Proxmox infrastructure
+  tf-init:
+    desc: Run 'terraform init' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
       - terraform init
@@ -131,7 +131,7 @@ tasks:
     preconditions:
       - which terraform
 
-  apply:
+  tf-apply:
     desc: Run 'terraform apply' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
@@ -140,7 +140,7 @@ tasks:
     preconditions:
       - which terraform
 
-  destroy:
+  tf-destroy:
     desc: Run 'terraform destroy' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
@@ -149,8 +149,8 @@ tasks:
     preconditions:
       - which terraform
 
-  force-unlock:
-    desc: Run 'terraform destroy' on Proxmox infrastructure
+  tf-force-unlock:
+    desc: Run 'terraform unlock' on Proxmox infrastructure
     dir: infrastructure/terraform/proxmox
     cmds:
       # - terraform init

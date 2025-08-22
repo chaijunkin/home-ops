@@ -116,7 +116,7 @@ spec:
                 name: autobangumi
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Downloads
+          gethomepage.dev/group: Downloads Service
           gethomepage.dev/name: Autobangumi
           gethomepage.dev/description: Autobangumi Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobangumi.png
