@@ -24,7 +24,7 @@ detectors:
 
 ffmpeg:
   # global_args: ["-hide_banner", "-loglevel", "warning"]
-  hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
+  # hwaccel_args: preset-intel-qsv-h264 # Use Intel QSV for hardware acceleration
   input_args: preset-rtsp-restream
 
 snapshots:
@@ -79,7 +79,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc1212a_frontdoor
+        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor
           input_args: preset-rtsp-restream
           roles:
             - record
@@ -91,7 +91,7 @@ cameras:
       output_args:
         record: preset-record-generic-audio-aac
     detect:
-      enabled: false
+      enabled: False
       width: 896
       height: 512
       fps: 10 # <---- disable detection until you have a working camera feed
@@ -118,7 +118,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc520a_dining
+        - path: rtsp://127.0.0.1:8554/reolink_rlc520a_dining
           # input_args: preset-rtsp-restream
           roles:
             - record
@@ -137,7 +137,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc520a_upstair
+        - path: rtsp://127.0.0.1:8554/reolink_rlc520a_upstair
           # input_args: preset-rtsp-restream
           roles:
             - record
@@ -156,7 +156,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc811a_backdoor
+        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor
           input_args: preset-rtsp-restream
           roles:
             - record
