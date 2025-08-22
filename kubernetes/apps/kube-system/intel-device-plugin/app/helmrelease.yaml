@@ -39,5 +39,8 @@ spec:
     - name: node-feature-discovery
       namespace: kube-system
   values:
+    manager:
+      devices:
+        gpu: true
     controllerExtraArgs: |
       - --devices=gpu
