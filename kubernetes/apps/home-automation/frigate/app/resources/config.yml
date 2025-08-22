@@ -79,7 +79,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc1212a_frontdoor
+        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc1212a_frontdoor
           input_args: preset-rtsp-restream
           roles:
             - record
@@ -118,7 +118,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc520a_dining
+        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc520a_dining
           # input_args: preset-rtsp-restream
           roles:
             - record
@@ -137,7 +137,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc520a_upstair
+        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc520a_upstair
           # input_args: preset-rtsp-restream
           roles:
             - record
@@ -156,7 +156,7 @@ cameras:
     enabled: True
     ffmpeg:
       inputs:
-        - path: rtsp://127.0.0.1:8554/reolink_rlc811a_backdoor
+        - path: rtsp://#input=rtsp/udp # 127.0.0.1:8554/reolink_rlc811a_backdoor
           input_args: preset-rtsp-restream
           roles:
             - record
