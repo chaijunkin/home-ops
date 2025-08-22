@@ -21,4 +21,5 @@ customization:
       - siderolabs/intel-ucode
       - siderolabs/qemu-guest-agent
       - siderolabs/mei
-      # - siderolabs/nfsrahead
+      - siderolabs/nfsrahead
+      - siderolabs/util-linux-tools
