@@ -85,6 +85,10 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
+      config-cache:
+        existingClaim: radarr-cache
+        globalMounts:
+          - path: /config/MediaCover
     route:
       app:
         hostnames:
