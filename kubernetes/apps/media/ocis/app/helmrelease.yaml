@@ -88,8 +88,14 @@ spec:
         type: configMap
         name: ocis
         globalMounts:
+          - path: /etc/ocis/proxy.yaml
+            subPath: proxy.yaml
+            readOnly: true
           - path: /etc/ocis/web.yaml
             subPath: web.yaml
+            readOnly: true
+          - path: /etc/ocis/csp.yaml
+            subPath: csp.yaml
             readOnly: true
       data:
         existingClaim: ocis-data
@@ -98,7 +104,7 @@ spec:
             subPath: data
           - path: /etc/ocis
             subPath: config
-      tmpfs:
+      tmp:
         type: emptyDir
         globalMounts:
           - path: /tmp
