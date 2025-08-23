@@ -43,15 +43,15 @@ resource "authentik_stage_authenticator_validate" "authentication-mfa-validation
   ]
 }
 
-# resource "authentik_stage_authenticator_validate" "authentication-passkey-validation" {
-#   name                       = "authentication-passkey-validation"
-#   device_classes             = ["webauthn"]
-#   webauthn_user_verification = "required"
-#   not_configured_action      = "configure"
-#   configuration_stages = [
-#     authentik_stage_authenticator_webauthn.authenticator-webauthn-setup.id
-#   ]
-# }
+resource "authentik_stage_authenticator_validate" "authentication-passkey-validation" {
+  name                       = "authentication-passkey-validation"
+  device_classes             = ["webauthn"]
+  webauthn_user_verification = "required"
+  not_configured_action      = "configure"
+  configuration_stages = [
+    authentik_stage_authenticator_webauthn.authenticator-webauthn-setup.id
+  ]
+}
 
 resource "authentik_stage_user_login" "authentication-login" {
   name = "authentication-login"
