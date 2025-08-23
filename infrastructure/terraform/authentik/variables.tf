@@ -56,6 +56,20 @@ variable "headlamp_secret" {
   default     = null
 }
 
+variable "ocis_id" {
+  type        = string
+  description = "OCIS Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "ocis_secret" {
+  type        = string
+  description = "OCIS Client Secret"
+  sensitive   = true
+  default     = null
+}
+
 # variable "paperless_id" {
 #   type        = string
 #   description = "Paperless Client ID"

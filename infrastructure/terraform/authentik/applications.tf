@@ -3,6 +3,7 @@ locals {
     # "dashbrr",
     "grafana",
     "headlamp",
+    "ocis",
     # "kyoo",
     # "lubelogger",
     "open-webui",
@@ -36,6 +37,14 @@ locals {
       icon_url      = "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/src/resources/icon-dark.svg"
       redirect_uri  = "https://headlamp.${var.CLUSTER_DOMAIN}/oidc-callback"
       launch_url    = "https://headlamp.${var.CLUSTER_DOMAIN}/"
+    },
+    ocis = {
+      client_id     = var.ocis_id
+      client_secret = var.ocis_secret
+      group         = "infrastructure"
+      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
+      redirect_uri  = "https://ocis.${var.CLUSTER_DOMAIN}/oidc-callback"
+      launch_url    = "https://ocis.${var.CLUSTER_DOMAIN}/"
     },
     # kyoo = {
     #   client_id     = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_ID"]
