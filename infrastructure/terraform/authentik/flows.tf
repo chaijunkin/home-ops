@@ -1,3 +1,35 @@
+## Authenticator setup
+
+resource "authentik_flow" "authenticator-totp-setup" {
+  name           = "authenticator-totp-setup"
+  title          = "Setup Two-Factor authentication"
+  slug           = "authenticator-totp-setup"
+  designation    = "stage_configuration"
+  authentication = "require_authenticated"
+  # background     = "https://cdn.${var.public_domain}/branding/Background.jpeg"
+}
+
+resource "authentik_flow_stage_binding" "authenticator-totp-setup-binding-00" {
+  target = authentik_flow.authenticator-totp-setup.uuid
+  stage  = authentik_stage_authenticator_totp.authenticator-totp-setup.id
+  order  = 0
+}
+
+resource "authentik_flow" "authenticator-webauthn-setup" {
+  name           = "authenticator-webauthn-setup"
+  title          = "Setup WebAuthn"
+  slug           = "authenticator-webauthn-setup"
+  designation    = "stage_configuration"
+  authentication = "require_authenticated"
+  # background     = "https://cdn.${var.public_domain}/branding/Background.jpeg"
+}
+
+resource "authentik_flow_stage_binding" "authenticator-webauthn-setup-binding-00" {
+  target = authentik_flow.authenticator-webauthn-setup.uuid
+  stage  = authentik_stage_authenticator_webauthn.authenticator-webauthn-setup.id
+  order  = 0
+}
+
 ## Authentication flow
 data "authentik_flow" "default-source-authentication" {
   slug = "default-source-authentication"
