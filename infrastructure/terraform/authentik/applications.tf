@@ -38,10 +38,10 @@ locals {
       redirect_uri  = "https://headlamp.${var.CLUSTER_DOMAIN}/oidc-callback"
       launch_url    = "https://headlamp.${var.CLUSTER_DOMAIN}/"
     },
-    ocis = {
+    drive = {  # owncloud
       client_id     = var.ocis_id
       client_secret = var.ocis_secret
-      group         = "infrastructure"
+      group         = "media"
       icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
       redirect_uri  = "https://drive.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
       launch_url    = "https://drive.${var.CLUSTER_DOMAIN}/"
