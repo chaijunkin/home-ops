@@ -8,6 +8,10 @@ resources:
 configMapGenerator:
   - name: ocis
     files:
+      - csp.yaml=./config/csp.yaml
+      - proxy.yaml=./config/proxy.yaml
       - web.yaml=./config/web.yaml
+configurations:
+  - ./config/kustomizeconfig.yaml
 generatorOptions:
   disableNameSuffixHash: true

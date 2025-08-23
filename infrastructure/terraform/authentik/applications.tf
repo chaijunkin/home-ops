@@ -43,8 +43,8 @@ locals {
       client_secret = var.ocis_secret
       group         = "infrastructure"
       icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
-      redirect_uri  = "https://ocis.${var.CLUSTER_DOMAIN}/oidc-callback"
-      launch_url    = "https://ocis.${var.CLUSTER_DOMAIN}/"
+      redirect_uri  = "https://drive.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
+      launch_url    = "https://drive.${var.CLUSTER_DOMAIN}/"
     },
     # kyoo = {
     #   client_id     = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_ID"]

@@ -33,21 +33,25 @@ spec:
               - |
                 if [ ! -f /etc/ocis/ocis.yaml ]; then ocis init; else exit 0; fi
             env:
+              TZ: Asia/Kuala_Lumpur
               DEMO_USERS: false
               OCIS_LOG_COLOR: true
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: true
               OCIS_INSECURE: true
-              OCIS_OIDC_ISSUER: https://auth.cloudjur.com
+              OCIS_OIDC_ISSUER: https://auth.cloudjur.com/application/o/owncloud/
+              OCIS_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
+              OCIS_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
               PROXY_AUTOPROVISION_ACCOUNTS: true
+              PROXY_TLS: false
               PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD: none
+              PROXY_OIDC_SKIP_USER_INFO: false
               PROXY_OIDC_REWRITE_WELLKNOWN: true
               PROXY_ROLE_ASSIGNMENT_DRIVER: oidc
               PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM: groups
-              PROXY_USER_OIDC_CLAIM: "preferred_username"
-              WEB_OIDC_CLIENT_ID: ocis
-              WEB_OIDC_METADATA_URL: https://auth.cloudjur.com/.well-known/openid-configuration
-              WEB_OIDC_SCOPE: "openid profile email groups"
+              PROXY_USER_OIDC_CLAIM: preferred_username
+              WEB_OIDC_METADATA_URL: https://auth.cloudjur.com/application/o/ocis/.well-known/openid-configuration
+              WEB_OIDC_SCOPE: openid profile email groups
         containers:
           ocis:
             image:
