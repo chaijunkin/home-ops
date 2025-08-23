@@ -5,9 +5,6 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  # - ./ingress.yaml
-  # - ./pvc.yaml
-  # - ./storageclass.yaml
 configMapGenerator:
   - name: ocis
     files:
