@@ -12,7 +12,7 @@ resources:
   - ./jellyfin/ks.yaml
   - ./minio/ks.yaml
   - ./jellyseerr/ks.yaml
-  - ./ocis/ks.yaml
+  # - ./ocis/ks.yaml
   - ./plex/ks.yaml
   - ./slskd/ks.yaml
   - ./tautulli/ks.yaml
