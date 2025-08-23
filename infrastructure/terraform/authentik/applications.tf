@@ -38,14 +38,14 @@ locals {
       redirect_uri  = "https://headlamp.${var.CLUSTER_DOMAIN}/oidc-callback"
       launch_url    = "https://headlamp.${var.CLUSTER_DOMAIN}/"
     },
-    drive = {  # owncloud
-      client_id     = var.ocis_id
-      client_secret = var.ocis_secret
-      group         = "media"
-      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
-      redirect_uri  = "https://drive.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
-      launch_url    = "https://drive.${var.CLUSTER_DOMAIN}/"
-    },
+    # drive = {  # owncloud
+    #   client_id     = var.ocis_id
+    #   client_secret = var.ocis_secret
+    #   group         = "media"
+    #   icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
+    #   redirect_uri  = "https://drive.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
+    #   launch_url    = "https://drive.${var.CLUSTER_DOMAIN}/"
+    # },
     # kyoo = {
     #   client_id     = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_ID"]
     #   client_secret = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_SECRET"]
@@ -118,4 +118,53 @@ resource "authentik_application" "application" {
   meta_icon          = each.value.icon_url
   meta_launch_url    = each.value.launch_url
   policy_engine_mode = "all"
+}
+
+module "oauth2-ocis" {
+  source             = "./modules/oauth2_application"
+  name               = "Owncloud"
+  icon_url           = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
+  launch_url         = "https://drive.cloudjur.com"
+  description        = "ownCloud Infinite Scale"
+  newtab             = true
+  group              = "Media"
+  auth_groups        = [authentik_group.default["media"].id]
+  client_type        = "public"
+  authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+  invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
+  client_id          = var.ocis_id
+  client_secret      = var.ocis_secret
+  # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
+  redirect_uris = [
+    "https://drive.cloudjur.com",
+    "https://drive.cloudjur.com/oidc-callback.html",
+    "https://drive.cloudjur.com/oidc-silent-redirect.html"
+  ]
+}
+
+module "oauth2-ocis-android" {
+  source             = "./modules/oauth2_application"
+  name               = "Owncloud-android"
+  launch_url         = "blank://blank"
+  auth_groups        = [authentik_group.default["media"].id]
+  authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+  invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
+  client_id          = "e4rAsNUSIUs0lF4nbv9FmCeUkTlV9GdgTLDH1b5uie7syb90SzEVrbN7HIpmWJeD"
+  client_secret      = "dInFYGV33xKzhbRmpqQltYNdfLdJIfJ9L5ISoKhNoT9qZftpdWSP71VrpGR9pmoD"
+  redirect_uris      = ["oc://android.owncloud.com"]
+}
+
+module "oauth2-ocis-desktop" {
+  source             = "./modules/oauth2_application"
+  name               = "Owncloud-desktop"
+  launch_url         = "blank://blank"
+  auth_groups        = [authentik_group.default["media"].id]
+  authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+  invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
+  client_id          = "xdXOt13JKxym1B1QcEncf2XDkLAexMBFwiT9j6EfhhHFJhs2KM9jbjTmf8JBXE69"
+  client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
+  redirect_uris = [
+    { matching_mode = "regex", url = "http://127.0.0.1(:.*)?" },
+    { matching_mode = "regex", url = "http://localhost(:.*)?" }
+  ]
 }

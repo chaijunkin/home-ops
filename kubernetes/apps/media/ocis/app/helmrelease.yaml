@@ -39,7 +39,7 @@ spec:
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: true
               OCIS_INSECURE: true
-              OCIS_OIDC_ISSUER: https://auth.cloudjur.com/application/o/drive/
+              OCIS_OIDC_ISSUER: https://auth.cloudjur.com/application/o/owncloud/
               OCIS_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
               OCIS_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
               PROXY_AUTOPROVISION_ACCOUNTS: true
@@ -50,7 +50,7 @@ spec:
               PROXY_ROLE_ASSIGNMENT_DRIVER: oidc
               PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM: groups
               PROXY_USER_OIDC_CLAIM: preferred_username
-              WEB_OIDC_METADATA_URL: https://auth.cloudjur.com/application/o/drive/.well-known/openid-configuration
+              WEB_OIDC_METADATA_URL: https://auth.cloudjur.com/application/o/owncloud/.well-known/openid-configuration
               WEB_OIDC_SCOPE: openid profile email groups
         containers:
           ocis:
