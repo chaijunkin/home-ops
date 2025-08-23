@@ -33,12 +33,18 @@ spec:
               - |
                 if [ ! -f /etc/ocis/ocis.yaml ]; then ocis init; else exit 0; fi
             env:
+              OCIS_INSECURE: true
+        containers:
+          ocis:
+            image:
+              repository: docker.io/owncloud/ocis
+              tag: 7.2.0
+            env:
               TZ: Asia/Kuala_Lumpur
               DEMO_USERS: false
               OCIS_LOG_COLOR: true
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: true
-              OCIS_INSECURE: true
               OCIS_OIDC_ISSUER: https://auth.cloudjur.com/application/o/owncloud/
               OCIS_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
               OCIS_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
@@ -52,18 +58,6 @@ spec:
               PROXY_USER_OIDC_CLAIM: preferred_username
               WEB_OIDC_METADATA_URL: https://auth.cloudjur.com/application/o/owncloud/.well-known/openid-configuration
               WEB_OIDC_SCOPE: openid profile email groups
-        containers:
-          ocis:
-            image:
-              repository: docker.io/owncloud/ocis
-              tag: 7.2.0
-            env:
-              DEMO_USERS: false
-              OCIS_LOG_COLOR: true
-              OCIS_LOG_LEVEL: info
-              OCIS_LOG_PRETTY: true
-              OCIS_URL: https://drive.cloudjur.com
-              PROXY_TLS: false
             envFrom:
               - secretRef:
                   name: ocis-secret
@@ -111,6 +105,12 @@ spec:
             subPath: tmp
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: OwnCloud Infinite Scale
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/owncloud.png
+          gethomepage.dev/description: File Sync and Share
         hostnames:
           - drive.cloudjur.com
         parentRefs:
