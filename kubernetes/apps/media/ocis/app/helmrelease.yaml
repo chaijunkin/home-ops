@@ -48,6 +48,7 @@ spec:
               OCIS_OIDC_ISSUER: https://auth.cloudjur.com/application/o/owncloud/
               OCIS_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
               OCIS_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
+              OCIS_URL: https://drive.cloudjur.com
               PROXY_AUTOPROVISION_ACCOUNTS: true
               PROXY_TLS: false
               PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD: none
@@ -62,10 +63,20 @@ spec:
               - secretRef:
                   name: ocis-secret
             probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
+              liveness: &probes
+                enabled: false
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: &port 9200
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness: *probes
+              startup:
+                enabled: false
             resources:
               requests:
                 cpu: 10m
