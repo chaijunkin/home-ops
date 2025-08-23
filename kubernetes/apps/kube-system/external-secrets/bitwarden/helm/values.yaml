@@ -8,8 +8,8 @@ controllers:
         envFrom:
           - secretRef:
               name: bitwarden-cli
-        # securityContext:
-        #   readOnlyRootFilesystem: true
+        securityContext:
+          readOnlyRootFilesystem: true
         probes:
           liveness:
             enabled: true
