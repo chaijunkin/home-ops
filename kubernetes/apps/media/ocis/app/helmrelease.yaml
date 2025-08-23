@@ -34,6 +34,9 @@ spec:
                 if [ ! -f /etc/ocis/ocis.yaml ]; then ocis init; else exit 0; fi
             env:
               DEMO_USERS: false
+              OCIS_LOG_COLOR: true
+              OCIS_LOG_LEVEL: info
+              OCIS_LOG_PRETTY: true
               OCIS_INSECURE: true
               OCIS_OIDC_ISSUER: https://auth.cloudjur.com
               PROXY_AUTOPROVISION_ACCOUNTS: true
