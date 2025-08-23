@@ -25,6 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: ocis
+      CLAIM: ocis-data
       VOLSYNC_CAPACITY: 15Gi
   components:
     - ../../../../components/volsync
