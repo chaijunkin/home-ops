@@ -80,19 +80,26 @@ spec:
     persistence:
       config:
         existingClaim: *app
-      # # Separate PVC for cache to avoid backing up cache files
-      # jellyfin-cache:
-      #   existingClaim: jellyfin-cache
-      #   globalMounts:
-      #     - path: /config/Library/Application Support/jellyfin Media Server/Cache
-      # logs:
-      #   type: emptyDir
-      #   globalMounts:
-      #     - path: /config/Library/Application Support/jellyfin Media Server/Logs
-      tmp:
+      tmps:
         type: emptyDir
-      transcode:
-        type: emptyDir
+        advancedMounts:
+          jellyfin:
+            main:
+              - path: /cache
+                subPath: cache
+              - path: /config/log
+                subPath: log
+              - path: /tmp
+                subPath: tmp
+      config-cache:
+        existingClaim: jellyfin-cache
+        globalMounts:
+          - path: /config/metadata
+            subPath: metadata
+          - path: /config/transcode
+            subPath: transcode
+          - path: /config/cache
+            subPath: cache
       media:
         enabled: true
         type: nfs
