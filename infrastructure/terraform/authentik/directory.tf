@@ -5,7 +5,8 @@ locals {
     infrastructure = { name = "Infrastructure" }
     media          = { name = "Media" }
     monitoring     = { name = "Monitoring" }
-    users          = { name = "Users" }
+    users          = { name = "users" }
+    superusers     = { name = "superusers" }
   }
 }
 
