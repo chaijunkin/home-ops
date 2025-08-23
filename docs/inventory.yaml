@@ -1,0 +1,42 @@
+# Homelab device inventory with estimated typical and peak wattages
+# Edit values as you measure actual consumption.
+ups_efficiency: 0.9
+devices:
+  - id: first_server
+    name: "First server (NAS + compute)"
+    typical_watt: 120
+    peak_watt: 230
+    notes: "Intel E-2246G, 64GB ECC, 500GB SSD, 1TB NVMe, 2x HDD (NAS). Proposal: decouple NAS and compute."
+  - id: horaco_switch
+    name: "HORACO 2.5GbE Managed Switch (8-port + SFP+)"
+    typical_watt: 25
+    peak_watt: 30
+  - id: pikvm_a3
+    name: "PiKVM-A3 (Raspberry Pi)"
+    typical_watt: 5
+    peak_watt: 6
+  - id: intel_n100_mini
+    name: "Intel N100 / N5105 mini PC (edge router)"
+    typical_watt: 20
+    peak_watt: 35
+    notes: "Aliexpress soft-router / pfSense / ESXi-capable model"
+  - id: tp_link_eap670
+    name: "TP-LINK EAP670 (AX5400)"
+    typical_watt: 12
+    peak_watt: 20
+    notes: "Ceiling mount AP"
+  - id: dlink_poe_switch
+    name: "D-Link DES-F1010P-E (10-port PoE; 8 PoE)"
+    typical_watt: 15
+    peak_watt: 20
+    notes: "Switch chassis power (PoE devices accounted separately); 93W PoE budget"
+  - id: reolink_cameras
+    name: "Reolink cameras (4 total)"
+    typical_watt: 32
+    peak_watt: 40
+    notes: "Models: rlc1212a, rlc520a (x2), rlc811a — ~8W each typical"
+  - id: tp_link_tl_sg108e
+    name: "TP-Link TL-SG108E (8-Port Easy Smart Switch)"
+    typical_watt: 6
+    peak_watt: 8
+# Add other devices here as needed

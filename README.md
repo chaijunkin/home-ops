@@ -131,29 +131,83 @@ The alternative solution to these two problems would be to host a Kubernetes clu
 
 | Name        | Device | CPU | OS Disk   | Data Disk | RAM  | OS     | Purpose           |
 |-------------|--------|-----| ----------|-----------|------|--------|-------------------|
-| master (VM) | Dashy  | 4   | 50GB SSD  | None      | 16GB | Debian | k8s control-plane |
-| worker (VM) | Dashy  | 4   | 100GB SSD | None      | 24GB | Debian | k8s worker        |
 
-Total CPU: 8 threads
-Total RAM: 40GB
+First server (running NAS + compute home server)
+
+| Component | Specification |
+|-----------|---------------|
+| CPU | Intel E-2246G 3.6GHz (base) Xeon — 6 cores / 12 threads |
+| RAM | 64GB ECC Kingston |
+| Motherboard | Gigabyte C246-WU4 Workstation/Server |
+| OS Disk | 500GB Samsung Evo 850 SSD |
+| NVMe | 1TB Samsung 970 Evo Plus NVMe |
+| NAS/Data Disks | Seagate IronWolf / EXOS — various (1TB / 2TB / 4TB / 6TB / 8TB / 10TB) x2 (7200RPM, 256MB, CMR) |
+| Networking | Intel WiFi-6 AX201 PCIe |
+| Cooling | Be Quiet! Dark Rock Slim |
+| PSU | Corsair AX760 |
+| Case | Lian-Li PC-7H Full Aluminum ATX |
+
+Note: PROPOSING TO DECOUPLE NAS AND HOME SERVER — budget constrained (3rd world country costs). This is a proposed architecture change; details and migration plan are tracked elsewhere in the repo.
 
 ### Supporting Hardware
 
-| Name         | Device         | CPU        | OS Disk   | Data Disk           | RAM    | OS         | Purpose               |
-|--------------|----------------|------------|-----------|---------------------|--------|------------|-----------------------|
-| Dashy (host) | Custom built   | E-2246G    | 64GB      | 500GB SSD           | 64GB   | Proxmox    | Virtualize NAS and VM |
-| NAS (VM)     | Dashy          | 2          | 8G        | ZFS 4TB x2 (mirror) | 512Mib | Debian LXC | NAS/NFS/Backup        |
+
+The rest of the homelab and network devices include:
+
+| Device | Purpose / Notes |
+|--------|-----------------|
+| HORACO 2.5GbE Managed Switch (8-port 2.5GBASE-T, 10G SFP+ uplink) | Core LAN switching / aggregation |
+| PiKVM-A3 (for Raspberry Pi) | Remote KVM management for hardware access |
+| Intel N100 Celeron N5105 fanless mini PC (Aliexpress model) | Soft-router / pfSense / ESXi-capable device; 4x Intel i226/i225 2.5G LAN ports, HD/DP — used as edge firewall/router |
+| TP-LINK EAP670 AX5400 Ceiling Mount WiFi 6 Access Point | Wireless coverage (ceiling mount) |
+| PoE Cameras | reolink_rlc1212a_frontdoor, reolink_rlc520a_upstair, reolink_rlc811a_backdoor, reolink_rlc520a_dining |
+| D-Link DES-F1010P-E (10-port PoE switch, 8 PoE + 2 uplink; 93W budget) | Powers PoE cameras / APs |
+| TP-Link TL-SG108E (8-Port Easy Smart Switch) | Small L2 management switch for edge/office |
 
 ### Networking/UPS Hardware
 
-| Device                | Purpose                          |
-|-----------------------|----------------------------------|
-| Mini PC (Aliexpress)  | Router                           |
-| Omada Access point    | Access point                     |
-| Netgear GS324P        | 8 Port 2.5G 10G Switch - Main    |
-| TP-link switch        | 8 Port 1G Switch - Sub           |
-| Dlink PoE Switch      | 8 Port 0.1G Poe Switch           |
-| UPS                   | PROPOSING                        |
+
+| Device | Purpose |
+|--------|---------|
+| Mini PC (Aliexpress Intel N100 / N5105) | Edge router / firewall appliance |
+| TP-LINK EAP670 | Primary wireless AP (ceiling mount) |
+| HORACO 2.5GbE switch | Primary LAN switch (2.5G uplinks) |
+| TP-Link TL-SG108E | Small managed L2 switch for office/VLANs |
+| D-Link DES-F1010P-E | PoE switch for cameras / APs (93W power budget) |
+| UPS | (TBD — planned) |
+
+## Estimated power consumption ⚡
+
+Assumptions: these are rough, conservative estimates for typical (idle/average) and peak loads. Real consumption depends on workload, drive spin-up, PoE loads, and UPS efficiency. I assume a UPS/inverter efficiency of ~90% for mains draw calculations.
+
+| Item | Typical (W) | Peak (W) | Notes |
+|------|-------------:|---------:|-------|
+| First server (E-2246G, 64GB, NVMe + SATA SSD + 2x HDD) | 120 | 230 | Typical under light/medium home-lab load; peak under full CPU+disk IO |
+| HORACO 2.5GbE managed switch (8-port + SFP+) | 25 | 30 | Fanless small managed switch |
+| PiKVM-A3 (Raspberry Pi) | 5 | 6 | Low-power remote KVM board |
+| Intel N100 / N5105 mini PC (edge router) | 20 | 35 | Typical for fanless mini-PC, spikes under load/VPN/ESXi usage |
+| TP-LINK EAP670 AP | 12 | 20 | PoE/AC/AP radio active under clients |
+| D-Link DES-F1010P-E (PoE switch) - switch chassis | 15 | 20 | Switch chassis overhead (PoE separate) |
+| Cameras (4x Reolink, listed models) - total | 32 | 40 | ~8W each typical, up to ~10W peak each |
+| TP-Link TL-SG108E | 6 | 8 | Small L2 switch |
+
+Totals:
+
+- Total typical IT load: 235 W
+- Total peak IT load: 388 W
+
+Accounting for UPS/inverter inefficiency (~90%):
+
+- Mains draw (typical) ≈ 235 W / 0.9 ≈ 261 W (0.261 kW)
+- Mains draw (peak)  ≈ 388 W / 0.9 ≈ 431 W (0.431 kW)
+
+Estimated energy consumption:
+
+- Daily (typical): 0.261 kW × 24 h ≈ 6.26 kWh/day
+- Monthly (30d, typical): ≈ 187.9 kWh/month
+
+Notes & next steps:
+- These are estimates to help size UPS, breakers, and monthly energy costs. If you want, I can: compute estimated monthly cost for your local electricity rate, produce a per-device YAML inventory with the wattages, or create a small PowerPoint/CSV for UPS sizing and redundancy.
 
 ---
 
