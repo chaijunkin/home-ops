@@ -33,6 +33,7 @@ spec:
               - |
                 if [ ! -f /etc/ocis/ocis.yaml ]; then ocis init; else exit 0; fi
             env:
+              DEMO_USERS: false
               OCIS_INSECURE: true
               OCIS_OIDC_ISSUER: https://auth.cloudjur.com
               PROXY_AUTOPROVISION_ACCOUNTS: true
@@ -106,6 +107,6 @@ spec:
         hostnames:
           - drive.cloudjur.com
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
