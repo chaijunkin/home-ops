@@ -49,6 +49,7 @@ spec:
               OCIS_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
               OCIS_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
               OCIS_URL: https://drive.cloudjur.com
+              PROXY_CSP_CONFIG_FILE_LOCATION: /etc/ocis/csp.yaml
               PROXY_AUTOPROVISION_ACCOUNTS: true
               PROXY_TLS: false
               PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD: none
