@@ -39,7 +39,7 @@ spec:
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: true
               OCIS_INSECURE: true
-              OCIS_OIDC_ISSUER: https://auth.cloudjur.com/application/o/owncloud/
+              OCIS_OIDC_ISSUER: https://auth.cloudjur.com/application/o/ocis/
               OCIS_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
               OCIS_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
               PROXY_AUTOPROVISION_ACCOUNTS: true
