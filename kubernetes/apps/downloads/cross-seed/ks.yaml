@@ -28,3 +28,4 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
   components:
     - ../../../../components/volsync
+    - ../../../../components/keda/nfs-scaler

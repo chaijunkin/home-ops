@@ -30,3 +30,4 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/gatus/guarded
+    - ../../../../components/keda/nfs-scaler

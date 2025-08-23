@@ -26,5 +26,4 @@ spec:
       GATUS_SUBDOMAIN: requests
   components:
     - ../../../../components/volsync
-    - ../../../../components/keda/nfs-scaler
     - ../../../../components/gatus/external

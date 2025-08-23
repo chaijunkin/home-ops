@@ -24,3 +24,4 @@ spec:
       APP: slskd
   components:
     - ../../../../components/gatus/guarded
+    - ../../../../components/keda/nfs-scaler
