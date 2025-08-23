@@ -15,8 +15,11 @@ spec:
         containers:
           hbbr:
             image:
-              repository: rustdesk/rustdesk-server
-              tag: 1.1.10-3
+              repository: linuxserver/rustdesk
+              tag: version-1.4.1
+            # image:
+            #   repository: rustdesk/rustdesk-server
+            #   tag: 1.1.10-3
             env:
               TZ: Asia/Kuala_Lumpur
             command: ["hbbr"]
@@ -24,8 +27,11 @@ spec:
         containers:
           hbbs:
             image:
-              repository: rustdesk/rustdesk-server
-              tag: 1.1.10-3
+              repository: linuxserver/rustdesk
+              tag: version-1.4.1
+            # image:
+            #   repository: rustdesk/rustdesk-server
+            #   tag: 1.1.10-3
             env:
               TZ: Asia/Kuala_Lumpur
               DB_URL: /db/db_v2.sqlite3
