@@ -22,10 +22,8 @@ spec:
             runAsUser: 2000
             runAsGroup: 2000
             runAsNonRoot: true
-            fsGroup: 1000
+            fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
-            supplementalGroups:
-              - 65542 # gladius:external-services
         initContainers:
           init-config:
             image:
@@ -49,7 +47,7 @@ spec:
               OCIS_LOG_COLOR: true
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: true
-              OCIS_URL: https://files.bjw-s.dev
+              OCIS_URL: https://drive.cloudjur.com
               PROXY_TLS: false
             envFrom:
               - secretRef:
@@ -96,11 +94,11 @@ spec:
         globalMounts:
           - path: /tmp
             subPath: tmp
-    # route:
-    #   app:
-    #     hostnames:
-    #       - files.bjw-s.dev
-    #     parentRefs:
-    #       - name: external
-    #         namespace: kube-system
-    #         sectionName: https
+    route:
+      app:
+        hostnames:
+          - drive.cloudjur.com
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
