@@ -38,10 +38,7 @@ spec:
               PUID: 2000
               PGID: 2000
               PRIORITIZE_WELIB: true
-            command: # don't run startup script, since it doesn't work on a read-only fs
-              - bash
-              - -c
-              - touch /usr/local/lib/python3.10/site-packages/seleniumbase/drivers/__init__.py && python -m app
+            command: ["python", "-m", "app"] # don't run startup script, since it doesn't work on a read-only fs
             probes:
               liveness: &probes
                 enabled: true
@@ -64,8 +61,8 @@ spec:
     defaultPodOptions:
       automountServiceAccountToken: false
       enableServiceLinks: false
-      annotations:
-        setDownloadGateway: "true"
+      # annotations:
+      #   setDownloadGateway: "true"
       securityContext:
         runAsNonRoot: true
         runAsUser: 2000
