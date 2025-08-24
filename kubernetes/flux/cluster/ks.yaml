@@ -5,7 +5,7 @@
 #   name: home-kubernetes
 #   namespace: flux-system
 # spec:
-#   interval: 1d
+#   interval: 24h
 #   url: "https://github.com/chaijunkin/home-ops"
 #   ref:
 #     branch: "main"
@@ -21,7 +21,7 @@ metadata:
   name: cluster-apps
   namespace: flux-system
 spec:
-  interval: 1d
+  interval: 24h
   path: ./kubernetes/apps
   prune: true
   wait: false

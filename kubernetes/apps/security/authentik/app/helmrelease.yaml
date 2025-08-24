@@ -17,7 +17,7 @@ kind: HelmRelease
 metadata:
   name: authentik
 spec:
-  interval: 1d
+  interval: 24h
   values:
     global:
       podAnnotations:

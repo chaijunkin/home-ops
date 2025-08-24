@@ -16,7 +16,7 @@ kind: HelmRelease
 metadata:
   name: cloudnative-pg
 spec:
-  interval: 1d
+  interval: 24h
   maxHistory: 2
   install:
     remediation:

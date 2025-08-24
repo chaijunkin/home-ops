@@ -83,7 +83,7 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  interval: 1d
+  interval: 24h
   retryInterval: 1m
   timeout: 5m
 EOF

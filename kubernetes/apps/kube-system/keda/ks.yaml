@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: keda
-  interval: 1d
+  interval: 24h
   timeout: 5m
   path: ./kubernetes/apps/kube-system/keda/app
   prune: true

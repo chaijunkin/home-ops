@@ -16,7 +16,7 @@ kind: HelmRelease
 metadata:
   name: openebs
 spec:
-  interval: 1d
+  interval: 24h
   install:
     remediation:
       retries: 3

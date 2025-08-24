@@ -16,7 +16,7 @@ spec:
       app.kubernetes.io/name: external-secrets
   targetNamespace: kube-system
   wait: true
-  interval: 1d
+  interval: 24h
   retryInterval: 1m
   timeout: 5m
 ---
@@ -37,7 +37,7 @@ spec:
       app.kubernetes.io/name: external-secrets-bitwarden
   targetNamespace: kube-system
   wait: true
-  interval: 1d
+  interval: 24h
   retryInterval: 1m
   timeout: 5m
 ---
@@ -57,7 +57,7 @@ spec:
     labels:
       app.kubernetes.io/name: external-secrets-stores
   wait: true
-  interval: 1d
+  interval: 24h
   retryInterval: 1m
   timeout: 5m
   targetNamespace: kube-system

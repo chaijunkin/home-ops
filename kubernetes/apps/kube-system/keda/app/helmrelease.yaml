@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: keda
 spec:
-  interval: 1d
+  interval: 24h
   chartRef:
     kind: OCIRepository
     name: keda

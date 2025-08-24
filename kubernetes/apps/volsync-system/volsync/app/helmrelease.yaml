@@ -17,7 +17,7 @@
 # metadata:
 #   name: volsync
 # spec:
-#   interval: 1d
+#   interval: 24h
 #   maxHistory: 2
 #   install:
 #     remediation:
@@ -56,7 +56,7 @@ kind: HelmRelease
 metadata:
   name: volsync
 spec:
-  interval: 1d
+  interval: 24h
   maxHistory: 2
   install:
     remediation:
