@@ -21,14 +21,6 @@ spec:
   values:
     controllers:
       main:
-        pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            fsGroup: 2000
-            runAsNonRoot: true
-            supplementalGroups: [65534] # nobody group, required since calibre-web-automated tries to use root on startup
-            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           *app :
             image:
@@ -69,12 +61,18 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 2Gi
-            securityContext:
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
-              allowPrivilegeEscalation: false
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      annotations:
+        setDownloadGateway: "true"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        supplementalGroups: [65534] # nobody group, required since calibre-web-automated tries to use root on startup
+        fsGroupChangePolicy: "OnRootMismatch"
     service:
       *app :
         controller: main
