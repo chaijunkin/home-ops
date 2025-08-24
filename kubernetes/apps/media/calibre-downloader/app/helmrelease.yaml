@@ -49,7 +49,7 @@ spec:
               BOOK_LANGUAGE: en
               # CUSTOM_DNS: cloudflare
               # USE_DOH: true
-              HTTP_PROXY: http://flaresolverr.downloads:8191
+              # HTTP_PROXY: http://flaresolverr.downloads:8191
               USE_BOOK_TITLE: true
               PUID: 2000
               PGID: 2000
