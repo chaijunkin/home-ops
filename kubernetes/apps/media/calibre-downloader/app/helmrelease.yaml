@@ -33,10 +33,6 @@ spec:
             # envFrom:
             #   - secretRef:
             #       name: *app
-            securityContext: &securityContext
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
 
         containers:
           app:
@@ -65,7 +61,7 @@ spec:
                     port: *port
               readiness: *probe
               startup: *probe
-            securityContext: *securityContext
+            # securityContext: *securityContext
             resources:
               requests:
                 cpu: 5m
