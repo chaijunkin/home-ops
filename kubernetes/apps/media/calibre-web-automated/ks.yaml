@@ -17,7 +17,7 @@ spec:
   postBuild:
     substitute:
       APP: calibre-web-automated
-      GATUS_SUBDOMAIN: ebooks-auto
+      GATUS_SUBDOMAIN: books
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false

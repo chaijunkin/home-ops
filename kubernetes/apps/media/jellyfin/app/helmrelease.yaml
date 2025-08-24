@@ -84,7 +84,7 @@ spec:
         type: emptyDir
         advancedMounts:
           jellyfin:
-            main:
+            app:
               - path: /cache
                 subPath: cache
               - path: /config/log
