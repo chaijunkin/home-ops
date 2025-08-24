@@ -20,14 +20,29 @@ spec:
       retries: 1
   values:
     controllers:
-      main:
-        containers:
-          *app :
-            image:
+      *app :
+        initContainers:
+          init:
+            image: &image
               repository: ghcr.io/calibrain/calibre-web-automated-book-downloader
-              tag: v0.1.6@sha256:f3fad13bd50dad5db92c55a0ef5b3ab45c5e0d9be479b6d3831bdba7c2bf69c5
+              tag: 20250815@sha256:6b25a35de28e31e91f13a86d1be227ef9eb61c034c4d7edf27f09c5c07ab29c0
+            command:
+              - bash
+              - -c
+              - "exec cp -r /usr/local/lib/python3.10/site-packages/seleniumbase/drivers/* /mnt"
+            envFrom:
+              - secretRef:
+                  name: *app
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+
+        containers:
+          app:
+            image: *image
             env:
-              FLASK_PORT: 8084
+              FLASK_PORT: &port 8084
               FLASK_DEBUG: false
               AA_BASE_URL: https://annas-archive.li
               INGEST_DIR: &ingest /cwa-book-ingest
@@ -38,34 +53,27 @@ spec:
               PUID: 2000
               PGID: 2000
               PRIORITIZE_WELIB: true
-            command: # don't run startup script, since it doesn't work on a read-only fs
-              - bash
-              - -c
-              - touch /usr/local/lib/python3.10/site-packages/seleniumbase/drivers/__init__.py && python -m app
+            command: [python, -m, app] # don't run annoying init script
             probes:
-              liveness: &probes
+              liveness: &probe
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /request/api/status
-                    port: 8084
-                  initialDelaySeconds: 5
-                  periodSeconds: 30
-                  timeoutSeconds: 30
-                  failureThreshold: 3
-              readiness: *probes
+                    port: *port
+              readiness: *probe
+              startup: *probe
+            securityContext: *securityContext
             resources:
               requests:
-                cpu: 10m
-                memory: 50Mi
+                cpu: 5m
+                memory: 128Mi
               limits:
-                memory: 2Gi
+                memory: 512Mi
     defaultPodOptions:
       automountServiceAccountToken: false
       enableServiceLinks: false
-      # annotations:
-      #   setDownloadGateway: "true"
       securityContext:
         runAsNonRoot: true
         runAsUser: 2000
@@ -81,19 +89,24 @@ spec:
     persistence:
       tmpfs:
         type: emptyDir
-        globalMounts:
-          # chromium needs the XDG_CONFIG_HOME created
-          # because user 1000 doesn't exist, ~ = /
-          - path: /.config
-            subPath: config
-          - path: /tmp
-            subPath: tmp
-          - path: /var/log/cwa-book-downloader/
-            subPath: log
-          - path: /app/downloaded_files
-            subPath: download
-          - path: /usr/local/lib/python3.10/site-packages/seleniumbase/drivers
-            subPath: drivers
+        advancedMounts:
+          *app :
+            app:
+              # chromium needs the XDG_CONFIG_HOME created
+              # because user 1000 doesn't exist, ~ = /
+              - path: /.config
+                subPath: config
+              - path: /tmp
+                subPath: tmp
+              - path: /var/log/cwa-book-downloader/
+                subPath: log
+              - path: /app/downloaded_files
+                subPath: download
+              - path: /usr/local/lib/python3.10/site-packages/seleniumbase/drivers
+                subPath: drivers
+            init:
+              - path: /mnt
+                subPath: drivers
       media:
         enabled: true
         type: nfs
