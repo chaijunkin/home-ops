@@ -98,7 +98,7 @@ spec:
         server: smb.cloudjur.com
         path: /tank/Storage
         advancedMounts:
-          calbire-downloader:
+          calibre-downloader:
             app:
               - path: /cwa-book-ingest
                 subPath: Downloads/Books
