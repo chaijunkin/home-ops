@@ -17,6 +17,7 @@ spec:
   postBuild:
     substitute:
       APP: calibre-downloader
+      GATUS_SUBDOMAIN: dl-books
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false
