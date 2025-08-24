@@ -38,7 +38,10 @@ spec:
               PUID: 2000
               PGID: 2000
               PRIORITIZE_WELIB: true
-            command: ["python", "-m", "app"] # don't run startup script, since it doesn't work on a read-only fs
+            command: # don't run startup script, since it doesn't work on a read-only fs
+              - bash
+              - -c
+              - touch /usr/local/lib/python3.10/site-packages/seleniumbase/drivers/__init__.py && python -m app
             probes:
               liveness: &probes
                 enabled: true
