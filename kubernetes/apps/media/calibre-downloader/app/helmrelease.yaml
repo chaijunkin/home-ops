@@ -45,6 +45,7 @@ spec:
               USE_BOOK_TITLE: true
               PUID: 2000
               PGID: 2000
+              PRIORITIZE_WELIB: true
             command: ["python", "-m", "app"]
             probes:
               liveness: &probes
