@@ -97,7 +97,3 @@ spec:
           - name: internal
             namespace: kube-system
             sectionName: https
-        rules:
-          - backendRefs:
-              - port: 80
-                name: *app
