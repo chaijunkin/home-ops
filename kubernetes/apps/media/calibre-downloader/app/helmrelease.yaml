@@ -71,8 +71,7 @@ spec:
         supplementalGroups: [65534] # nobody group, required since calibre-web-automated tries to use root on startup
         fsGroupChangePolicy: "OnRootMismatch"
     service:
-      *app :
-        controller: main
+      app:
         ports:
           http:
             port: 8084
