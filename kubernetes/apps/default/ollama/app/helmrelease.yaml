@@ -29,7 +29,7 @@ spec:
             image:
               repository: docker.io/intelanalytics/ipex-llm-inference-cpp-xpu
               # repository: ghcr.io/joryirving/ollama-intel-gpu
-              tag: 2.3.0-SNAPSHOT@sha256:ce55300ac5eaeea3639a473314d54adbd80bcb8113c99addbe1673272e3b34f4
+              tag: 2.3.0-SNAPSHOT@sha256:0b1caab07fd18e294d263fb9aa49967413bf3e6e03033b79281fc9332c134ab4
               # tag: ipex-llm-v.0.0.1-2
             command:
               - /bin/sh
