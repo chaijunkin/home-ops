@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 1h
+  interval: 1440h
   path: ./kubernetes/apps/kube-system/certificates/import
   prune: true
   retryInterval: 2m
@@ -34,7 +34,7 @@ spec:
   dependsOn:
     - name: certificates-import
       namespace: kube-system
-  interval: 1h
+  interval: 1440h
   path: ./kubernetes/apps/kube-system/certificates/export
   prune: true
   retryInterval: 2m

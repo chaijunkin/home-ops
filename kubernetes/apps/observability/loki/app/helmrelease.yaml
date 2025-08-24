@@ -19,7 +19,7 @@ kind: HelmRelease
 metadata:
   name: loki
 spec:
-  interval: 1h
+  interval: 1440h
   chartRef:
     kind: OCIRepository
     name: loki

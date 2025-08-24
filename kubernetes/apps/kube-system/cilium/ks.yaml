@@ -33,7 +33,7 @@ spec:
   dependsOn:
     - name: certificates-import
       namespace: kube-system
-  interval: 1h
+  interval: 1440h
   path: ./kubernetes/apps/kube-system/cilium/gateway
   prune: true
   sourceRef:

@@ -19,7 +19,7 @@ kind: HelmRelease
 metadata:
   name: &app headlamp
 spec:
-  interval: 1h
+  interval: 1440h
   chartRef:
     kind: OCIRepository
     name: headlamp

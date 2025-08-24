@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 1h
+  interval: 1440h
   retryInterval: 2m
   path: ./kubernetes/apps/kube-system/generic-device-plugin/app
   prune: true

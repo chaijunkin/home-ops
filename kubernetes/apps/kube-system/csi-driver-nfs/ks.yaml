@@ -9,7 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 1h
+  interval: 1440h
   path: ./kubernetes/apps/kube-system/csi-driver-nfs/app
   prune: true
   retryInterval: 2m
