@@ -38,7 +38,7 @@ spec:
               FLASK_PORT: 8084
               FLASK_DEBUG: false
               AA_BASE_URL: https://annas-archive.li
-              INGEST_DIR: &ingest /media/Downloads/Books
+              INGEST_DIR: &ingest /cwa-book-ingest
               BOOK_LANGUAGE: en
               CUSTOM_DNS: cloudflare
               USE_DOH: true
@@ -85,20 +85,28 @@ spec:
       tmpfs:
         type: emptyDir
         globalMounts:
+          # chromium needs the XDG_CONFIG_HOME created
+          # because user 1000 doesn't exist, ~ = /
+          - path: /.config
+            subPath: config
           - path: /tmp
             subPath: tmp
-          - path: /app/downloaded_files
-            subPath: downloads
           - path: /var/log/cwa-book-downloader/
-            subPath: logs
+            subPath: log
+          - path: /app/downloaded_files
+            subPath: download
+          - path: /usr/local/lib/python3.10/site-packages/seleniumbase/drivers
+            subPath: drivers
       media:
         enabled: true
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
-        globalMounts:
-          - path: /media
-            readOnly: false
+        advancedMounts:
+          calbire-downloader:
+            app:
+              - path: /cwa-book-ingest
+                subPath: Downloads/Books
     route:
       app:
         hostnames:
