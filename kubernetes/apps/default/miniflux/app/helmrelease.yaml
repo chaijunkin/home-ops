@@ -66,7 +66,6 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.66
-          io.cilium/bgp: "true"
         ports:
           http:
             port: 80
@@ -76,7 +75,7 @@ spec:
         hostnames:
           - miniflux.cloudjur.com
         parentRefs:
-          - name: external
+          - name: internal
             namespace: kube-system
             sectionName: https
         rules:
