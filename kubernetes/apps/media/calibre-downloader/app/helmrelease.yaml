@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app calibre-web-automated-downloader
+  name: &app calibre-downloader
 spec:
   interval: 24h
   chartRef:
@@ -27,7 +27,8 @@ spec:
             runAsGroup: 2000
             fsGroup: 2000
             runAsNonRoot: true
-            seccompProfile: {type: RuntimeDefault}
+            supplementalGroups: [65534] # nobody group, required since calibre-web-automated tries to use root on startup
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           *app :
             image:
@@ -35,10 +36,12 @@ spec:
               tag: v0.1.6@sha256:f3fad13bd50dad5db92c55a0ef5b3ab45c5e0d9be479b6d3831bdba7c2bf69c5
             env:
               FLASK_PORT: 8084
+              FLASK_DEBUG: false
               AA_BASE_URL: https://annas-archive.li
               INGEST_DIR: &ingest /media/Downloads/Books
               BOOK_LANGUAGE: en
-              USE_CF_BYPASS: false
+              CUSTOM_DNS: cloudflare
+              USE_DOH: true
               USE_BOOK_TITLE: true
             command: ["python", "-m", "app"]
             probes:
