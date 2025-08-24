@@ -38,8 +38,7 @@ endpoints:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
       - "[STATUS] == 404"
-
-announcements:
-  - timestamp: 2025-08-15T14:00:00Z
-    type: outage
-    message: "Scheduled maintenance on database servers from 14:00 to 16:00 UTC"
+# announcements:
+#   - timestamp: 2025-08-15T14:00:00Z
+#     type: outage
+#     message: "Scheduled maintenance on database servers from 14:00 to 16:00 UTC"

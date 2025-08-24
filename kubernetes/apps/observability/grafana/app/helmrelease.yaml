@@ -260,16 +260,16 @@ spec:
       #     revision: 3
       #     datasource:
       #       - { name: DS_PROMETHEUS, value: Prometheus }
-      flux:
-        flux-cluster:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-          datasource: Prometheus
-        flux-control-plane:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
-          datasource: Prometheus
-        flux-logs:
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/logs.json
-          datasource: Prometheus
+      # flux:
+      #   flux-cluster:
+      #     url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
+      #     datasource: Prometheus
+      #   flux-control-plane:
+      #     url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
+      #     datasource: Prometheus
+      #   flux-logs:
+      #     url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/logs.json
+      #     datasource: Prometheus
       kubernetes:
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
@@ -298,7 +298,7 @@ spec:
           datasource: Prometheus
         kubernetes-prometheus:
           # renovate: depName="Prometheus"
-          gNetId: 19105
+          gnetId: 19105
           revision: 3
           datasource: Prometheus
         smartctl-exporter:
