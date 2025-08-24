@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: &app calibre-web-automated-downloader
 spec:
-  interval: 30m
+  interval: 1d
   chartRef:
     kind: OCIRepository
     name: app-template

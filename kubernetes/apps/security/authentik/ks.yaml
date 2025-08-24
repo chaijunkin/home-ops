@@ -23,7 +23,7 @@ spec:
       namespace: database
     - name: cloudnative-pg
       namespace: database
-  interval: 30m
+  interval: 1d
   retryInterval: 1m
   timeout: 5m
   postBuild:

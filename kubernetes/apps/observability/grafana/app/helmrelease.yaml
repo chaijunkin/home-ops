@@ -17,7 +17,7 @@ kind: HelmRelease
 metadata:
   name: &app grafana
 spec:
-  interval: 30m
+  interval: 1d
   maxHistory: 2
   install:
     remediation:

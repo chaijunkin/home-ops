@@ -21,6 +21,6 @@ spec:
       namespace: kube-system
   prune: true
   wait: false
-  interval: 30m
+  interval: 1d
   retryInterval: 1m
   timeout: 5m
