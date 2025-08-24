@@ -113,7 +113,7 @@ spec:
           *app :
             app:
               - path: *ingest
-                subPath: downloads/openbookss
+                subPath: Downloads/Books
     route:
       app:
         hostnames:
