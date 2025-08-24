@@ -43,6 +43,8 @@ spec:
               CUSTOM_DNS: cloudflare
               USE_DOH: true
               USE_BOOK_TITLE: true
+              PUID: 2000
+              PGID: 2000
             command: ["python", "-m", "app"]
             probes:
               liveness: &probes
