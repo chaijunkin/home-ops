@@ -47,8 +47,8 @@ spec:
               AA_BASE_URL: https://annas-archive.li
               INGEST_DIR: &ingest /cwa-book-ingest
               BOOK_LANGUAGE: en
-              CUSTOM_DNS: cloudflare
-              USE_DOH: true
+              # CUSTOM_DNS: cloudflare
+              # USE_DOH: true
               USE_BOOK_TITLE: true
               PUID: 2000
               PGID: 2000
