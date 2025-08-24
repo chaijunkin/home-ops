@@ -85,7 +85,7 @@ spec:
       app:
         ports:
           http:
-            port: 8084
+            port: *port
     persistence:
       tmpfs:
         type: emptyDir
@@ -112,9 +112,11 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
-        globalMounts:
-          - path: /cwa-book-ingest
-            subPath: Downloads/Books
+        advancedMounts:
+          *app :
+            app:
+              - path: *ingest
+                subPath: downloads/openbookss
     route:
       app:
         hostnames:
