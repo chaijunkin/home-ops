@@ -96,11 +96,9 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Storage
-        advancedMounts:
-          calibre-downloader:
-            app:
-              - path: /cwa-book-ingest
-                subPath: Downloads/Books
+        globalMounts:
+          - path: /cwa-book-ingest
+            subPath: Downloads/Books
     route:
       app:
         hostnames:
