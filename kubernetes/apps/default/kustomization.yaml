@@ -7,9 +7,10 @@ components:
 resources:
   - ./cyberchef/ks.yaml
   - ./firefly-iii/ks.yaml
+  - ./freshrss/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
-  - ./miniflux/ks.yaml
+  - ./n8n/ks.yaml
   # - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
