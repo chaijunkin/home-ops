@@ -16,8 +16,8 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        pod:
-          hostUsers: false
+        # pod:
+        #   hostUsers: false
 
         containers:
           app:
