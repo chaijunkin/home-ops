@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/n8n-io/n8n
-              tag: 1.108.1
+              tag: 1.75.2 # 1.108.1
             env:
               DB_SQLITE_VACUUM_ON_STARTUP: true
               EXECUTIONS_DATA_PRUNE: true
@@ -40,11 +40,11 @@ spec:
               N8N_HOST: &hostName n8n.cloudjur.com
               N8N_LOG_LEVEL: info
               N8N_LOG_OUTPUT: console
-              # N8N_ENCRYPTION_KEY:
-              #   valueFrom:
-              #     secretKeyRef:
-              #       name: n8n-secret
-              #       key: N8N_ENCRYPTION_KEY
+              N8N_ENCRYPTION_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: n8n-secret
+                    key: N8N_ENCRYPTION_KEY
             resources:
               requests:
                 cpu: 5m
