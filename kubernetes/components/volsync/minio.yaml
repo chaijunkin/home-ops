@@ -78,7 +78,10 @@ metadata:
 spec:
   sourcePVC: "${CLAIM:-${APP}}"
   trigger:
-    schedule: "0 * * * *"
+    # previous configuration:
+    # schedule: "0 * * * *"
+    # changed to run every 8 hours (00:00, 08:00, 16:00)
+    schedule: "0 */8 * * *"
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
     pruneIntervalDays: 7
@@ -104,7 +107,13 @@ spec:
     #           matchExpressions:
     #             - key: kubernetes.io/metadata.name
     #               operator: Exists
+    # previous retain settings:
+    # retain:
+    #   hourly: 24
+    #   daily: 7
+    #   weekly: 5
+    # adjusted for 8-hour interval (3 snapshots cover ~24h)
     retain:
-      hourly: 24
+      hourly: 3
       daily: 7
       weekly: 5

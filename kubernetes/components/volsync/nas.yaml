@@ -50,7 +50,10 @@ metadata:
 spec:
   sourcePVC: "${CLAIM:-${APP}}"
   trigger:
-    schedule: "0 * * * *"
+    # previous configuration:
+    # schedule: "0 * * * *"
+    # changed to run every 8 hours (00:00, 08:00, 16:00)
+    schedule: "0 */8 * * *"
   restic:
     repository: "${APP}-volsync"
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
@@ -65,17 +68,22 @@ spec:
       runAsUser: "${VOLSYNC_UID:-2000}"
       runAsGroup: "${VOLSYNC_GID:-2000}"
       fsGroup: "${VOLSYNC_GID:-2000}"
-    moverAffinity:
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - topologyKey: kubernetes.io/hostname
-            labelSelector:
-              matchLabels:
-                app.kubernetes.io/created-by: volsync
-            namespaceSelector:
-              matchExpressions:
-                - key: kubernetes.io/metadata.name
-                  operator: Exists
+    # moverAffinity:
+    #   podAntiAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       - topologyKey: kubernetes.io/hostname
+    #         labelSelector:
+    #           matchLabels:
+    #             app.kubernetes.io/created-by: volsync
+    #         namespaceSelector:
+    #           matchExpressions:
+    #             - key: kubernetes.io/metadata.name
+    #               operator: Exists
+    # previous retain settings:
+    # retain:
+    #   hourly: 24
+    #   daily: 7
+    # adjusted for 8-hour interval (3 snapshots cover ~24h)
     retain:
-      hourly: 24
+      hourly: 3
       daily: 7
