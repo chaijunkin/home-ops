@@ -17,4 +17,4 @@ resources:
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./thelounge/ks.yaml
-  - ./wikijs/ks.yaml
+  # - ./wikijs/ks.yaml
