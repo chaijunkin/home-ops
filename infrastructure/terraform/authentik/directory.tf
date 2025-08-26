@@ -22,6 +22,11 @@ resource "authentik_group" "grafana_admin" {
   name         = "Grafana Admins"
   is_superuser = false
   users        = [data.authentik_user.akadmin.id]
+  lifecycle {
+    ignore_changes = [
+      users,
+    ]
+  }
 }
 
 resource "authentik_group" "default" {
@@ -29,6 +34,12 @@ resource "authentik_group" "default" {
   name         = each.value.name
   is_superuser = false
   users        = [data.authentik_user.akadmin.id]
+
+  lifecycle {
+    ignore_changes = [
+      users,
+    ]
+  }
 }
 
 resource "authentik_policy_binding" "application_policy_binding" {

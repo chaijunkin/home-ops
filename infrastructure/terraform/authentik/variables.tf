@@ -56,6 +56,21 @@ variable "headlamp_secret" {
   default     = null
 }
 
+variable "jellyfin_id" {
+  type        = string
+  description = "Jellyfin Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "jellyfin_secret" {
+  type        = string
+  description = "Jellyfin Client Secret"
+  sensitive   = true
+  default     = null
+}
+
+
 variable "ocis_id" {
   type        = string
   description = "OCIS Client ID"
