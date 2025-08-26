@@ -55,8 +55,8 @@ spec:
         reporting_enabled: false
       auth:
         signout_redirect_url: https://auth.cloudjur.com/application/o/grafana/end-session/
-        oauth_auto_login: true
-        oauth_allow_insecure_email_lookup: false
+        oauth_auto_login: false
+        oauth_allow_insecure_email_lookup: true
       # # auth.anonymous:
       # #   enabled: true
       # #   org_name: Main Org.
