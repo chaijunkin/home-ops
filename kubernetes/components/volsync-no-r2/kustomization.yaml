@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/component.json
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  # - ./kopia.yaml
+  - ../volsync/pvc.yaml
+  - ../volsync/minio.yaml
+  # R2 intentionally omitted for this component
+  # - ../volsync/r2.yaml
+  # - ../volsync/nas.yaml

@@ -28,5 +28,5 @@ spec:
       CLAIM: ocis-data
       VOLSYNC_CAPACITY: 15Gi
   components:
-    - ../../../../components/volsync
-    # - ../../../../components/gatus/external
+    - ../../../../components/volsync-no-r2
+      # - ../../../../components/gatus/external
