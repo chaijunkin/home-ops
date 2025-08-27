@@ -95,14 +95,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
-          - name: node-monitoring
-            orgId: 1
-            folder: Node
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/node-monitoring
           - name: cilium
             orgId: 1
             folder: Cilium
@@ -119,14 +111,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/data
-          - name: media
+          - name: games
             orgId: 1
-            folder: Media
+            folder: Games
             type: file
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/media
+              path: /var/lib/grafana/dashboards/games
           - name: flux
             orgId: 1
             folder: Flux
@@ -151,14 +143,22 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/network
-          - name: nginx
+          # - name: nginx
+          #   orgId: 1
+          #   folder: Nginx
+          #   type: file
+          #   disableDeletion: false
+          #   editable: true
+          #   options:
+          #     path: /var/lib/grafana/dashboards/nginx
+          - name: storage
             orgId: 1
-            folder: Nginx
+            folder: Storage
             type: file
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/nginx
+              path: /var/lib/grafana/dashboards/storage
           - name: system
             orgId: 1
             folder: System
@@ -227,20 +227,6 @@ spec:
       #   host-overview:
       #     url: https://raw.githubusercontent.com/ceph/ceph/main/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
       #     datasource: Prometheus
-      node-monitoring:
-        node-exporter-full:
-          # renovate: depName="Node Exporter Full"
-          gnetId: 1860
-          revision: 41
-          datasource: Prometheus
-        node-exporter-bsd:
-          # renovate: depName="Node Exporter BSD"
-          gnetId: 4260
-          revision: 15
-          datasource: Prometheus
-        node-feature-discovery:
-          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource: Prometheus
       data:
         dragonfly:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly/e1b03d605c5376fe36d8a45633ee964f52a70af0/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json
@@ -248,28 +234,13 @@ spec:
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
-        # zfs:
-        #   # renovate: depName="ZFS"
-        #   gnetId: 7845
-        #   revision: 4
-        #   datasource: Prometheus
-      # default:
-      #   palworld:
-      #     # renovate: depName="Palworld"
-      #     gnetId: 20421
-      #     revision: 3
-      #     datasource:
-      #       - { name: DS_PROMETHEUS, value: Prometheus }
-      # flux:
-      #   flux-cluster:
-      #     url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-      #     datasource: Prometheus
-      #   flux-control-plane:
-      #     url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
-      #     datasource: Prometheus
-      #   flux-logs:
-      #     url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/logs.json
-      #     datasource: Prometheus
+      games:
+        palworld:
+          # renovate: depName="Palworld"
+          gnetId: 20421
+          revision: 3
+          datasource:
+            - {name: DS_PROMETHEUS, value: Prometheus}
       kubernetes:
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
@@ -316,10 +287,6 @@ spec:
           # renovate: depName="Kubernetes / Views / Pods"
           gnetId: 15760
           revision: 36
-          datasource: Prometheus
-      media:
-        miniflux:
-          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
       network:
         apc-ups:
@@ -387,27 +354,40 @@ spec:
         #   gnetId: 11312
         #   revision: 9
         #   datasource: Prometheus
-      nginx:
-        nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-          datasource: Prometheus
+      # nginx:
+      #   nginx:
+      #     url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
+      #     datasource: Prometheus
+      #   nginx-request-handling-performance:
+      #     url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+      #     datasource: Prometheus
       system:
-        volsync:
-          # renovate: depName="VolSync Dashboard"
-          gnetId: 21356
-          revision: 3
+        node-exporter-full:
+          # renovate: depName="Node Exporter Full"
+          gnetId: 1860
+          revision: 41
+          datasource: Prometheus
+        node-exporter-bsd:
+          # renovate: depName="Node Exporter BSD"
+          gnetId: 4260
+          revision: 15
+          datasource: Prometheus
+        node-feature-discovery:
+          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
+          datasource: Prometheus
+        smartctl-exporter:
+          # renovate: depName="SMARTctl Exporter Dashboard"
+          gnetId: 22604
+          revision: 2
           datasource:
             - {name: DS_PROMETHEUS, value: Prometheus}
-            - {name: VAR_REPLICATIONDESTNAME, value: ".*-bootstrap"}
-        # kasa:
-        #   # renovate: depName="Kasa"
-        #   gnetId: 10957
-        #   revision: 3
-        #   datasource:
-        #     - { name: DS_PROMETHEUS, value: Prometheus }
+        spegel:
+          # renovate: depName="Spegel"
+          gnetId: 18089
+          revision: 1
+          datasource:
+            - {name: DS_PROMETHEUS, value: Prometheus}
+      storage:
         minio:
           # renovate: depName="MinIO Dashboard"
           gnetId: 13502
@@ -421,6 +401,33 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: Prometheus
+        etcd-storage:
+          # renovate: depName="etcd"
+          gnetId: 22236
+          revision: 1
+          datasource:
+            - {name: DS_VICTORIAMETRICS, value: Prometheus}
+        host-overview:
+          url: https://raw.githubusercontent.com/ceph/ceph/main/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
+          datasource: Prometheus
+        kubernetes-pvc:
+          # renovate: depName="Kubernetes PVC Stats"
+          gnetId: 23233
+          revision: 6
+          datasource:
+            - {name: DS_PROMETHEUS, value: Prometheus}
+        volsync:
+          # renovate: depName="VolSync Dashboard"
+          gnetId: 21356
+          revision: 3
+          datasource:
+            - {name: DS_PROMETHEUS, value: Prometheus}
+            - {name: VAR_REPLICATIONDESTNAME, value: ".*-dst"}
+        zfs:
+          # renovate: depName="ZFS"
+          gnetId: 7845
+          revision: 4
+          datasource: Prometheus
       # thanos:
       #   thanos-bucket-replicate:
       #     url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/bucket-replicate.json
