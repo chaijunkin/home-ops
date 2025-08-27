@@ -30,6 +30,16 @@ spec:
       firefly:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom: &envFrom
+              - secretRef:
+                  name: firefly-secret
+              # TODO: set smtp secret
         containers:
           app:
             image:
@@ -100,8 +110,6 @@ spec:
         advancedMounts:
           firefly:
             app:
-              - subPath: data
-                path: /var/www/html/storage
               - subPath: upload
                 path: /var/www/html/storage/upload
           data-importer:
