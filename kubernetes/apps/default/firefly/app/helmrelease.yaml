@@ -42,11 +42,11 @@ spec:
               TZ: "Asia/Kuala_Lumpur"
               APP_URL: https://money.cloudjur.com
               TRUSTED_PROXIES: "*"
-            securityContext:
-              &sc # readOnlyRootFilesystem: true # nginx init stuff
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop: ["ALL"]
+            # securityContext:
+            #   &sc # readOnlyRootFilesystem: true # nginx init stuff
+            #   allowPrivilegeEscalation: false
+            #   capabilities:
+            #     drop: ["ALL"]
             resources:
               requests:
                 cpu: 10m
@@ -65,7 +65,7 @@ spec:
               TZ: "Asia/Kuala_Lumpur"
               FIREFLY_III_URL: http://firefly.default.svc.cluster.local:8080
               VANITY_URL: "https://money.cloudjur.com"
-            securityContext: *sc
+            # securityContext: *sc
             resources:
               requests:
                 cpu: "10m"
