@@ -23,7 +23,7 @@ spec:
         runAsNonRoot: true
         runAsUser: &uid 33
         runAsGroup: *uid
-        fsGroup: 2000
+        fsGroup: 33
         fsGroupChangePolicy: Always
         seccompProfile: {type: "RuntimeDefault"}
     controllers:
