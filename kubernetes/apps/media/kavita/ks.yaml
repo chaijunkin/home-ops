@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/apps/media/kavita
+  path: ./kubernetes/apps/media/kavita/app
   postBuild:
     substitute:
       APP: *app
