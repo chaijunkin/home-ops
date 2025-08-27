@@ -120,7 +120,7 @@ spec:
         rules:
           - backendRefs:
               - port: 8080
-                name: *app
+                name: firefly
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
@@ -145,7 +145,7 @@ spec:
         rules:
           - backendRefs:
               - port: 8080
-                name: *app
+                name: data-importer
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
