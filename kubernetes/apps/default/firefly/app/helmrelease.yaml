@@ -95,7 +95,7 @@ spec:
             appProtocol: http
 
     persistence:
-      data:
+      database:
         existingClaim: firefly
         advancedMounts:
           firefly:
@@ -104,6 +104,8 @@ spec:
                 path: /var/www/html/storage
               - subPath: upload
                 path: /var/www/html/storage/upload
+              - subPath: database
+                path: /database/database.sqlite
           data-importer:
             app:
               - subPath: importer
