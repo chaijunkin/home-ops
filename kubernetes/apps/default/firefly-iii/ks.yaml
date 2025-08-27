@@ -22,3 +22,8 @@ spec:
       namespace: kube-system
     - name: cloudnative-pg
       namespace: database
+  postBuild:
+    substitute:
+      GATUS_SUBDOMAIN: money
+  components:
+    - ../../../../components/gatus/internal

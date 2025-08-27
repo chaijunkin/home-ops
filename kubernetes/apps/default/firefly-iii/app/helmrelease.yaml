@@ -57,7 +57,7 @@ spec:
     route:
       app:
         hostnames:
-          - firefly-iii.cloudjur.com
+          - money.cloudjur.com
         parentRefs:
           - name: internal
             namespace: kube-system
