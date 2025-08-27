@@ -152,7 +152,7 @@ spec:
         rules:
           - backendRefs:
               - port: 8080
-                name: data-importer
+                name: firefly-data-importer
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
