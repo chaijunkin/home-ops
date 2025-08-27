@@ -101,29 +101,29 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 1Gi
-          codeserver:
-            image:
-              repository: ghcr.io/coder/code-server
-              tag: 4.89.1
-            env:
-              TZ: Asia/Kuala_Lumpur
-            # probes: *probes
-            args:
-              - --auth
-              - "none"
-              - "--port"
-              - "12321"
-              - --user-data-dir
-              - "/config/.vscode"
-              - --extensions-dir
-              - "/config/.vscode"
-              - "/config"
-            resources:
-              requests:
-                cpu: 10m
-                memory: 50Mi
-              limits:
-                memory: 512Mi
+          # codeserver:
+          #   image:
+          #     repository: ghcr.io/coder/code-server
+          #     tag: 4.89.1
+          #   env:
+          #     TZ: Asia/Kuala_Lumpur
+          #   # probes: *probes
+          #   args:
+          #     - --auth
+          #     - "none"
+          #     - "--port"
+          #     - "12321"
+          #     - --user-data-dir
+          #     - "/config/.vscode"
+          #     - --extensions-dir
+          #     - "/config/.vscode"
+          #     - "/config"
+          #   resources:
+          #     requests:
+          #       cpu: 10m
+          #       memory: 50Mi
+          #     limits:
+          #       memory: 512Mi
     service:
       app:
         type: LoadBalancer
@@ -132,8 +132,8 @@ spec:
         ports:
           http:
             port: &port 8123
-          codeserver:
-            port: &codeserverPort 12321
+          # codeserver:
+          #   port: &codeserverPort 12321
     persistence:
       config:
         existingClaim: *app
@@ -157,8 +157,8 @@ spec:
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.cloudjur.com"
           - hass.cloudjur.com
+          - "{{ .Release.Name }}.cloudjur.com"
         parentRefs:
           - name: external
             namespace: kube-system
@@ -173,24 +173,13 @@ spec:
           gethomepage.dev/name: Home-Assistant
           gethomepage.dev/icon: home-assistant.png
           gethomepage.dev/description: Home Automation Software
-      codeserver:
-        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.cloudjur.com"]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *codeserverPort
-      # code-server:
-      #   hostnames:
-      #     - "hass-code.cloudjur.com"
+      # codeserver:
+      #   hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.cloudjur.com"]
       #   parentRefs:
       #     - name: internal
       #       namespace: kube-system
       #       sectionName: https
       #   rules:
       #     - backendRefs:
-      #         - identifier: app
-      #           port: 12321
+      #         - name: "{{ .Release.Name }}"
+      #           port: *codeserverPort
