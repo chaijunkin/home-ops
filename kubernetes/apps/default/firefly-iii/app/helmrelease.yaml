@@ -137,7 +137,7 @@ spec:
 
       data-importer:
         hostnames:
-          - money.cloudjur.com
+          - import-money.cloudjur.com
         parentRefs:
           - name: internal
             namespace: kube-system
