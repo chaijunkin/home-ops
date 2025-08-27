@@ -27,6 +27,18 @@ spec:
 apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
+  name: compute-high-memory
+spec:
+  matchers:
+    - name: alertname
+      value: NodeMemoryHighUtilization
+    - name: instance
+      value: 10.10.30.10:9100
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
   name: keda-hpa-maxed-out
 spec:
   matchers:
