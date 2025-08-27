@@ -13,7 +13,7 @@ spec:
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/volsync
   interval: 1h
-  path: ./kubernetes/apps/base/media/kavita
+  path: ./kubernetes/apps/media/kavita
   postBuild:
     substitute:
       APP: *app

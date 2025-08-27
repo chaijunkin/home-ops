@@ -2,15 +2,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: firefly-iii
+  name: firefly
   namespace: default
 spec:
   targetNamespace: default
   commonMetadata:
     labels:
-      app.kubernetes.io/name: firefly-iii
+      app.kubernetes.io/name: firefly
   interval: 10m
-  path: ./kubernetes/apps/default/firefly-iii/app
+  path: ./kubernetes/apps/default/firefly/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -20,10 +20,9 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: kube-system
-    - name: cloudnative-pg
-      namespace: database
   postBuild:
     substitute:
       GATUS_SUBDOMAIN: money
   components:
     - ../../../../components/gatus/internal
+    - ../../../../components/volsync

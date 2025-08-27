@@ -1,0 +1,155 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/app/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app firefly
+spec:
+  interval: 24h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      # hostAliases:
+      #   - ip: "${APP_IP_AUTHENTIK:=127.0.0.1}"
+      #     hostnames: ["${APP_DNS_AUTHENTIK:=authentik}"]
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      hostUsers: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: &uid 2000
+        runAsGroup: *uid
+        fsGroup: *uid
+        fsGroupChangePolicy: Always
+        seccompProfile: {type: "RuntimeDefault"}
+    controllers:
+      firefly:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: fireflyiii/core
+              tag: version-6.1.8
+            envFrom:
+              - secretRef:
+                  name: firefly-secret
+            env:
+              TZ: "Asia/Kuala_Lumpur"
+              APP_URL: https://money.cloudjur.com
+              TRUSTED_PROXIES: "*"
+            securityContext:
+              &sc # readOnlyRootFilesystem: true # nginx init stuff
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 256Mi
+      data-importer:
+        type: deployment
+        replicas: 1
+        containers:
+          main:
+            image:
+              repository: docker.io/fireflyiii/data-importer
+              tag: version-1.6.1@sha256:40e10f996a7bf72285dd6475c49424a02255fb02437904fe2ee6c44bc07e1bfc
+            env:
+              TZ: "Asia/Kuala_Lumpur"
+              FIREFLY_III_URL: http://firefly.default.svc.cluster.local:8080
+              VANITY_URL: "https://money.cloudjur.com"
+            securityContext: *sc
+            resources:
+              requests:
+                cpu: "10m"
+                memory: "100Mi"
+              limits:
+                cpu: "1"
+                memory: "1Gi"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+    service:
+      firefly:
+        controller: firefly
+        ports:
+          http:
+            port: 8080
+            protocol: HTTP
+            appProtocol: http
+      data-importer:
+        controller: data-importer
+        ports:
+          http:
+            port: 8080
+            protocol: HTTP
+            appProtocol: http
+
+    persistence:
+      data:
+        existingClaim: firefly
+        advancedMounts:
+          firefly:
+            app:
+              - subPath: data
+                path: /var/www/html/storage
+              - subPath: upload
+                path: /var/www/html/storage/upload
+          data-importer:
+            app:
+              - subPath: importer
+                path: /var/www/html/storage/uploads
+    route:
+      app:
+        hostnames:
+          - money.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 8080
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: firefly
+          gethomepage.dev/description: Personal finance service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
+      # api:
+      #   hostnames:
+      #     - money.cloudjur.com
+      #   parentRefs:
+      #     - name: internal
+      #       namespace: kube-system
+      #       sectionName: https
+
+      data-importer:
+        app:
+          hostnames:
+            - money.cloudjur.com
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
+          rules:
+            - backendRefs:
+                - port: 8080
+                  name: *app
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/group: Application Service
+            gethomepage.dev/name: firefly importer
+            gethomepage.dev/description: Personal finance service importer
+            gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
