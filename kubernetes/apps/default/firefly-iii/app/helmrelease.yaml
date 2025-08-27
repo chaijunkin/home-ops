@@ -110,7 +110,7 @@ spec:
               - subPath: importer
                 path: /var/www/html/storage/uploads
     route:
-      app:
+      firefly:
         hostnames:
           - money.cloudjur.com
         parentRefs:
@@ -136,20 +136,19 @@ spec:
       #       sectionName: https
 
       data-importer:
-        app:
-          hostnames:
-            - money.cloudjur.com
-          parentRefs:
-            - name: internal
-              namespace: kube-system
-              sectionName: https
-          rules:
-            - backendRefs:
-                - port: 8080
-                  name: *app
-          annotations:
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/group: Application Service
-            gethomepage.dev/name: firefly importer
-            gethomepage.dev/description: Personal finance service importer
-            gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
+        hostnames:
+          - money.cloudjur.com
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: 8080
+                name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: firefly importer
+          gethomepage.dev/description: Personal finance service importer
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
