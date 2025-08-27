@@ -6,7 +6,7 @@ components:
   - ../../components/common
 resources:
   - ./cyberchef/ks.yaml
-  - ./firefly-iii/ks.yaml
+  - ./firefly/ks.yaml
   - ./freshrss/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
