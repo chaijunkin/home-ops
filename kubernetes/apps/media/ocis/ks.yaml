@@ -29,4 +29,4 @@ spec:
       VOLSYNC_CAPACITY: 15Gi
   components:
     - ../../../../components/volsync-no-r2
-      # - ../../../../components/gatus/external
+    - ../../../../components/gatus/external
