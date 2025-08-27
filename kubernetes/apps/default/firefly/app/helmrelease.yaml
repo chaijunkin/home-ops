@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: fireflyiii/core
-              tag: version-6.3.2
+              tag: version-6.1.8
             envFrom:
               - secretRef:
                   name: firefly-secret
@@ -100,7 +100,10 @@ spec:
         advancedMounts:
           firefly:
             app:
-              - path: /var/www/html/storage/upload
+              - subPath: data
+                path: /var/www/html/storage
+              - subPath: upload
+                path: /var/www/html/storage/upload
           data-importer:
             app:
               - subPath: importer
