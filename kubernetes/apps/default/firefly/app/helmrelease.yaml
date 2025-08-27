@@ -21,9 +21,9 @@ spec:
             value: "1"
       securityContext:
         runAsNonRoot: true
-        runAsUser: &uid 2000
+        runAsUser: &uid 33
         runAsGroup: *uid
-        fsGroup: *uid
+        fsGroup: 2000
         fsGroupChangePolicy: Always
         seccompProfile: {type: "RuntimeDefault"}
     controllers:
