@@ -1,0 +1,110 @@
+---
+- name: Install and run node_exporter on Proxmox controllers
+  hosts: proxmox:controllers
+  become: true
+  vars:
+    node_exporter_version: "1.9.1"
+    node_exporter_tarball: "node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+    node_exporter_url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/{{ node_exporter_tarball }}"
+    install_dir: /usr/local/bin
+    service_port: 9100
+    prometheus_user: prometheus
+
+  tasks:
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - wget
+          - tar
+        state: present
+        update_cache: yes
+
+    - name: Create prometheus system user
+      user:
+        name: "{{ prometheus_user }}"
+        system: yes
+        shell: /usr/sbin/nologin
+        create_home: no
+
+    - name: Create temporary directory for download
+      file:
+        path: /tmp/node_exporter
+        state: directory
+        mode: "0755"
+
+    - name: Download node_exporter tarball
+      get_url:
+        url: "{{ node_exporter_url }}"
+        dest: "/tmp/node_exporter/{{ node_exporter_tarball }}"
+        mode: "0644"
+
+    - name: Extract node_exporter
+      unarchive:
+        src: "/tmp/node_exporter/{{ node_exporter_tarball }}"
+        dest: /tmp/node_exporter
+        remote_src: yes
+
+    - name: Install node_exporter binary
+      copy:
+        src: "/tmp/node_exporter/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+        dest: "{{ install_dir }}/node_exporter"
+        mode: "0755"
+        remote_src: yes
+      notify: restart node_exporter
+
+    - name: Ensure node_exporter binary ownership
+      file:
+        path: "{{ install_dir }}/node_exporter"
+        owner: "{{ prometheus_user }}"
+        group: "{{ prometheus_user }}"
+        mode: "0755"
+
+    - name: Create systemd service for node_exporter
+      copy:
+        dest: /etc/systemd/system/node_exporter.service
+        content: |
+          [Unit]
+          Description=Prometheus Node Exporter
+          Wants=network-online.target
+          After=network-online.target
+
+          [Service]
+          Type=simple
+          User={{ prometheus_user }}
+          Group={{ prometheus_user }}
+          ExecStart={{ install_dir }}/node_exporter --web.listen-address=0.0.0.0:{{ service_port }}
+          Restart=on-failure
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: Enable and start node_exporter
+      systemd:
+        name: node_exporter
+        enabled: yes
+        state: started
+
+    - name: Wait for node_exporter to be reachable
+      wait_for:
+        host: 127.0.0.1
+        port: "{{ service_port }}"
+        timeout: 30
+
+    - name: Show node_exporter systemd status
+      command: systemctl status node_exporter --no-pager -l
+      register: node_service_status
+      failed_when: false
+
+    - name: Debug node_exporter status
+      debug:
+        var: node_service_status.stdout_lines
+
+  handlers:
+    - name: restart node_exporter
+      systemd:
+        name: node_exporter
+        state: restarted
