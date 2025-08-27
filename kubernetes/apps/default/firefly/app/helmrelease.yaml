@@ -10,8 +10,8 @@ spec:
     name: app-template
   values:
     defaultPodOptions:
-      automountServiceAccountToken: false
-      enableServiceLinks: false
+      # automountServiceAccountToken: false
+      # enableServiceLinks: false
       # hostAliases:
       #   - ip: "${APP_IP_AUTHENTIK:=127.0.0.1}"
       #     hostnames: ["${APP_DNS_AUTHENTIK:=authentik}"]
