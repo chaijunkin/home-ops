@@ -15,10 +15,6 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: comics
-  components:
-    # - ../../../../components/gatus/external
-    - ../../../../components/keda/nfs-scaler
-    - ../../../../components/volsync
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -28,3 +24,7 @@ spec:
   targetNamespace: media
   timeout: 5m
   wait: false
+  components:
+    - ../../../../components/volsync
+    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/gatus/guarded
