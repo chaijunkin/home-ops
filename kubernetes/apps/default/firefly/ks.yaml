@@ -22,6 +22,7 @@ spec:
       namespace: kube-system
   postBuild:
     substitute:
+      APP: firefly
       GATUS_SUBDOMAIN: money
   components:
     - ../../../../components/gatus/guarded
