@@ -6,14 +6,14 @@ on:
     branches:
       - main
     paths:
-      - infrastructure/fly.io/vaultwarden/Dockerfile
-      - infrastructure/fly.io/vaultwarden/fly.toml
-      - infrastructure/fly.io/vaultwarden/config/**
-      - infrastructure/fly.io/vaultwarden/scripts/**
-      - infrastructure/fly.io/gatus/Dockerfile
-      - infrastructure/fly.io/gatus/fly.toml
-      - infrastructure/fly.io/gatus/config/**
-      - infrastructure/fly.io/gatus/gatus/**
+      - infrastructure/flyio/vaultwarden/Dockerfile
+      - infrastructure/flyio/vaultwarden/fly.toml
+      - infrastructure/flyio/vaultwarden/config/**
+      - infrastructure/flyio/vaultwarden/scripts/**
+      - infrastructure/flyio/gatus/Dockerfile
+      - infrastructure/flyio/gatus/fly.toml
+      - infrastructure/flyio/gatus/config/**
+      - infrastructure/flyio/gatus/gatus/**
 
 jobs:
   check-fly-secret:
