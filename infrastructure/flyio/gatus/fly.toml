@@ -22,7 +22,7 @@ GATUS_CONFIG_PATH = "/config"
 
 [[services]]
   protocol = "tcp"
-  internal_port = 80
+  internal_port = 8080
   processes = ["app"]
 
   [[services.ports]]
