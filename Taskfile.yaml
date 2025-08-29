@@ -29,8 +29,8 @@ dotenv:
   # - "{{.ROOT_DIR}}/onepassword.env"
   - "{{.ROOT_DIR}}/.config.env"
   ### yikes, taskfiles doesn't support dotenv in include, on-demand deployment
-  # - "{{.FLY_DIR}}/gatus/.config.env"
-  - "{{.FLY_DIR}}/vaultwarden/.config.env"
+  - "{{.FLY_DIR}}/gatus/.config.env"
+  # - "{{.FLY_DIR}}/vaultwarden/.config.env"
   - "{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env"
 
 env:

@@ -20,6 +20,11 @@ TZ = "Asia/Kuala_Lumpur"
 GATUS_LOG_LEVEL = "INFO"
 GATUS_CONFIG_PATH = "/config"
 
+[http_service]
+  internal_port = 80
+  force_https = true
+  min_machines_running = 1
+
 [[mounts]]
 source = 'gatus_data'
 destination = '/data'
