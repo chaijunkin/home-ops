@@ -20,20 +20,15 @@ TZ = "Asia/Kuala_Lumpur"
 GATUS_LOG_LEVEL = "INFO"
 GATUS_CONFIG_PATH = "/config"
 
-[http_service]
+[[services]]
+  protocol = "tcp"
   internal_port = 80
-  force_https = true
-  min_machines_running = 1
+  processes = ["app"]
 
-[checks]
-  [checks.alive]
-    grace_period = "30s"
-    interval = "15s"
-    method = "get"
-    path = "/alive"
+  [[services.ports]]
     port = 80
-    timeout = "10s"
-    type = "http"
+    handlers = ["http"]
+    force_https = true
 
 [[mounts]]
 source = 'gatus_data'
