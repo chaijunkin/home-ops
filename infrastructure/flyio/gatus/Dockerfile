@@ -13,7 +13,7 @@ FROM twinproduction/gatus:${GATUS_VERSION} as gatus
 #
 # Overmind
 #
-FROM alpine:3.21 as overmind
+FROM alpine:3.22 as overmind
 
 ARG OVERMIND_VERSION
 ARG OVERMIND
