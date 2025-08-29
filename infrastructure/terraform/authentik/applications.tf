@@ -1,28 +1,46 @@
-locals {
-  oauth_apps = [
-    # "dashbrr",
-    "grafana",
-    "headlamp",
-    "ocis",
-    # "kyoo",
-    # "lubelogger",
-    "open-webui",
-    "jellyfin",
-    # "paperless",
-    # "portainer"
-  ]
-}
+### NOT SUPPORTED YET IN CILIUM
+# locals {
+#   proxy = [
+#     {
+#       name     = "n8n"
+#       icon_url = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/n8n.svg"
+#       description = "Workflow automation tool"
+#       group = "automation"
+#       slug = "n8n"
+#       auth_groups = [authentik_group.default["infrastructure"].id]
+#     }
+#   ]
+# }
+
+# module "proxy" {
+
+#   for_each = { for proxy in local.proxy : proxy.name => proxy }
+
+#   source = "./modules/proxy_application"
+
+#   name               = each.value.name
+#   description        = each.value.description
+#   icon_url           = each.value.icon_url
+#   group              = each.value.group
+#   slug               = each.value.slug
+#   domain             = var.CLUSTER_DOMAIN
+#   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+#   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+#   auth_groups        = each.value.auth_groups
+# }
+
+# data "authentik_service_connection_kubernetes" "local" {
+#   name = "Local Kubernetes Cluster"
+# }
+
+# resource "authentik_outpost" "proxy" {
+#   name = "proxy"
+#   protocol_providers = values(module.proxy)[*].id
+#   service_connection = data.authentik_service_connection_kubernetes.local.id
+# }
 
 locals {
   applications = {
-    # dashbrr = {
-    #   client_id     = module.onepassword_application["dashbrr"].fields["DASHBRR_CLIENT_ID"]
-    #   client_secret = module.onepassword_application["dashbrr"].fields["DASHBRR_CLIENT_SECRET"]
-    #   group         = "downloads"
-    #   icon_url      = "https://raw.githubusercontent.com/joryirving/home-ops/main/docs/src/assets/icons/dashbrr.png"
-    #   redirect_uri  = "https://dashbrr.${var.CLUSTER_DOMAIN}/api/auth/callback"
-    #   launch_url    = "https://dashbrr.${var.CLUSTER_DOMAIN}/api/auth/callback"
-    # },
     grafana = {
       client_id     = var.grafana_id
       client_secret = var.grafana_secret
@@ -47,30 +65,6 @@ locals {
       redirect_uri  = "https://jellyfin.${var.CLUSTER_DOMAIN}/sso/OID/redirect/authentik"
       launch_url    = "https://jellyfin.${var.CLUSTER_DOMAIN}/sso/OID/start/authentik"
     },
-    # drive = {  # owncloud
-    #   client_id     = var.ocis_id
-    #   client_secret = var.ocis_secret
-    #   group         = "media"
-    #   icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
-    #   redirect_uri  = "https://drive.${var.CLUSTER_DOMAIN}/sso/OID/start/authentik"
-    #   launch_url    = "https://drive.${var.CLUSTER_DOMAIN}/"
-    # },
-    # kyoo = {
-    #   client_id     = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_ID"]
-    #   client_secret = module.onepassword_application["kyoo"].fields["KYOO_CLIENT_SECRET"]
-    #   group         = "media"
-    #   icon_url      = "https://raw.githubusercontent.com/zoriya/Kyoo/master/icons/icon-256x256.png"
-    #   redirect_uri  = "https://kyoo.${var.CLUSTER_DOMAIN}/api/auth/logged/authentik"
-    #   launch_url    = "https://kyoo.${var.CLUSTER_DOMAIN}/api/auth/login/authentik?redirectUrl=https://kyoo.${var.CLUSTER_DOMAIN}/login/callback"
-    # },
-    # lubelogger = {
-    #   client_id     = module.onepassword_application["lubelogger"].fields["LUBELOGGER_CLIENT_ID"]
-    #   client_secret = module.onepassword_application["lubelogger"].fields["LUBELOGGER_CLIENT_SECRET"]
-    #   group         = "home"
-    #   icon_url      = "https://demo.lubelogger.com/defaults/lubelogger_icon_72.png"
-    #   redirect_uri  = "https://lubelogger.${var.CLUSTER_DOMAIN}/Login/RemoteAuth"
-    #   launch_url    = "https://lubelogger.${var.CLUSTER_DOMAIN}/Login/RemoteAuth"
-    # },
     open-webui = {
       client_id     = var.open_webui_id
       client_secret = var.open_webui_secret
@@ -79,22 +73,6 @@ locals {
       redirect_uri  = "https://chat.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
       launch_url    = "https://chat.${var.CLUSTER_DOMAIN}/auth"
     },
-    # paperless = {
-    #   client_id     = module.onepassword_application["paperless"].fields["PAPERLESS_CLIENT_ID"]
-    #   client_secret = module.onepassword_application["paperless"].fields["PAPERLESS_CLIENT_SECRET"]
-    #   group         = "home"
-    #   icon_url      = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/paperless.png"
-    #   redirect_uri  = "https://paperless.${var.CLUSTER_DOMAIN}/accounts/oidc/authentik/login/callback/"
-    #   launch_url    = "https://paperless.${var.CLUSTER_DOMAIN}/"
-    # },
-    # portainer = {
-    #   client_id     = module.onepassword_application["portainer"].fields["PORTAINER_CLIENT_ID"]
-    #   client_secret = module.onepassword_application["portainer"].fields["PORTAINER_CLIENT_SECRET"]
-    #   group         = "infrastructure"
-    #   icon_url      = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/portainer.png"
-    #   redirect_uri  = "https://portainer.${var.CLUSTER_DOMAIN}/"
-    #   launch_url    = "https://portainer.${var.CLUSTER_DOMAIN}/"
-    # }
   }
 }
 

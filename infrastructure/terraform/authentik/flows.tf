@@ -83,6 +83,18 @@ resource "authentik_flow_stage_binding" "invalidation-flow-binding-00" {
   order  = 0
 }
 
+## Provider invalidation flow
+resource "authentik_flow" "provider-invalidation" {
+  name               = "Logged out of application"
+  title              = "You've logged out of %(app)s."
+  slug               = "provider-invalidation-flow"
+  policy_engine_mode = "any"
+  designation        = "invalidation"
+  denied_action      = "continue"
+  # background         = "https://placeholder.jpeg"
+}
+
+
 ## Password recovery flow
 resource "authentik_flow" "recovery" {
   name               = "recovery-flow"
