@@ -92,7 +92,6 @@ spec:
       app:
         hostnames:
           - "{{ .Release.Name }}.cloudjur.com"
-          - status.cloudjur.com
         parentRefs:
           - name: external
             namespace: kube-system

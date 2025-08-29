@@ -1,0 +1,12 @@
+---
+version: "3"
+
+tasks:
+  create:
+    cmds:
+      - fly volumes create {{.APP}}_data --size 1 -a {{.FLY_APP}}
+    desc: Create a volume for a Fly app [APP=required]
+    requires:
+      vars:
+        - APP
+    dir: infrastructure/flyio/{{.APP}}

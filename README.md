@@ -53,6 +53,218 @@ There is a template over at [onedr0p/flux-cluster-template](https://github.com/o
 
 My cluster is [k3s](https://k3s.io/) provisioned overtop bare-metal Debian using the [Ansible](https://www.ansible.com/) galaxy role [ansible-role-k3s](https://github.com/PyratLabs/ansible-role-k3s). This is a semi-hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate NAS server with ZFS for NFS/SMB shares, bulk file storage and backups.
 
+### Configuration
+
+
+### Taskfile Usage for Fly Apps
+
+This repository uses [Taskfile](https://taskfile.dev) to automate Fly app management. Each Fly app task loads its environment variables from a per-app `.config.env` file, ensuring isolation and security for each app.
+
+#### How it works
+
+- Each Fly app (e.g., `gatus`) has its own directory under `infrastructure/flyio/<APP>` containing a `.config.env` file with the required environment variables for that app.
+- The Taskfile tasks (e.g., `fly:app:create`, `fly:app:deploy`, `fly:volume:create`, etc.) use the `APP` variable to select which app to operate on.
+- When you run a task, the Taskfile loads the environment from `infrastructure/flyio/<APP>/.config.env` using the `dotenv:` key at the task level. This ensures all commands for that app use the correct environment.
+
+#### Example: Using the Taskfile with the `gatus` app
+
+Suppose you want to deploy or manage the `gatus` Fly app. First, ensure you have a `.config.env` file at `infrastructure/flyio/gatus/.config.env` with all required variables.
+
+To create a volume for `gatus`:
+
+```sh
+task fly:volume:create APP=gatus
+```
+
+To deploy the app:
+
+```sh
+task fly:app:deploy APP=gatus
+```
+
+To view logs:
+
+```sh
+task fly:app:logs APP=gatus
+```
+
+All these commands will automatically load environment variables from `infrastructure/flyio/gatus/.config.env`.
+
+> **Note:** You do not need to manually export environment variables or use a global `.config.env`. Each app is fully isolated.
+
+---
+
+### Configuration
+
+The `.config.env` file contains environment variables needed to deploy the apps in this template. Each app has its own `.config.env` file as described above.
+
+1. Copy the `.config.sample.env` to `.config.env` in the appropriate app directory and fill out all the environment variables. **All uncommented variables are required**.
+
+### [Fly.io] setup
+
+For some commands below, we use a task instead of `flyctl` because we
+the task writes (on app creation) and reads (subsequent commands) your
+app name from the config file. This is the only way to keep your app
+name hidden.
+
+1. Signup to Fly
+
+   If you already have a Fly account, use `flyctl auth login` instead.
+
+   ```sh
+   flyctl auth signup
+   ```
+
+1. Create a new fly app
+
+   If this is your first app, you'll be asked to add credit card
+   information, but, don't worry, you'll not be charged by this app.
+
+   ```sh
+   task fly:app:create APP=gatus
+   ```
+
+1. Create a new volume
+
+   This will show you a warning about invididual volumes.
+   It's ok to have a single volume because we're not
+   concerned about downtime for our gatus instance.
+
+   ```sh
+   task fly:volume:create APP=gatus
+   ```
+
+1. Deploy your app
+
+   ```sh
+   task fly:app:deploy APP=gatus
+   ```
+
+1. Setup your custom domain
+
+   After your app is deployed, follow the steps [here](https://fly.io/docs/app-guides/custom-domains-with-fly/) to setup your custom domain.
+
+1. Open your new gatus website
+
+   That's all! Now you can open your custom domain and gatus should
+   work.
+
+## Keeping dependencies up to date
+
+This template uses [Renovatebot](https://www.mend.io/free-developer-tools/renovate/) to scan and open new PRs when dependencies are out of date.
+
+To enable this, open their [Github app](https://github.com/apps/renovate) page, click the "Configure" button, then choose your repo. The template already provides Renovate configs and there's no need for further action.
+
+## Troubleshooting
+
+If your deployment failed or you can't open gatus web, you can see
+the logs with:
+
+```sh
+task fly:app:logs APP=gatus
+```
+
+If that command fails (eg, if the machine is stopped), try opening your
+logs in the browser:
+
+```sh
+task fly:app:logs:web APP=gatus
+```
+
+You can also ssh in the machine with:
+
+```sh
+task fly:app:ssh
+```
+
+and check individual logs using [overmind](https://github.com/DarthSim/overmind):
+
+```sh
+# Run this command inside your fly machine
+overmind connect gatus
+```
+
+This will open a tmux window with gatus logs.
+You can scroll your tmux window with `Ctrl-B-]` and use
+`Ctrl-B-D` to exit the tmux window.
+
+Substitute `gatus` with `caddy`, or `backup` to see logs for
+other apps.
+
+## Continuous deployment
+
+After your first manual deploy to Fly.io, per instructions above, you can setup continuous deployment via Github Actions.
+
+1. Install [Github CLI](https://cli.github.com)
+
+   ```sh
+   brew install gh
+   ```
+
+1. Login to Github
+
+   ```sh
+   gh auth login
+   ```
+
+1. Set Fly secrets to your Github repo
+
+   ```sh
+   task github:secrets:set
+   ```
+
+1. Test your workflow deployment
+
+   ```sh
+   task github:workflow:deploy
+   ```
+
+That's all! Now, any changes to your `Dockerfile`, `fly.toml` or
+`scripts`/`config` will trigger a fly deploy.
+
+## FAQ
+
+1. Why every `fly` command I run errors with: `Error: the config for your app is missing an app name`?
+
+   For security reasons the app name is not sdaved in the [fly.toml] file.
+   In that case, you have to add `-a your-app-name` to all `fly` commands.
+
+   Your app name is found in your `.config.env` file.
+
+   Example:
+
+   ```sh
+   fly secrets list -a your-app-name
+   ```
+
+   Or you can add:
+
+   ```yaml
+   app = "your-app-name"
+   ```
+
+   to the beginning of your [fly.toml] file.
+
+2. How do I update the environment variables?
+
+   After updating the `.config.env` file, you can update your environment variables in two different ways:
+
+   ```sh
+   task fly:secrets:set APP=gatus
+   ```
+
+   will read your `.config.env` file and import every defined variable to your fly app, Or you can just do a new deployment:
+
+   ```sh
+   task fly:app:deploy APP=gatus
+   ```
+
+   which will run the command above and do a new deployment afterwards.
+
+[Fly.io]: https://fly.io
+[fly.toml]: fly.toml
+
+
 ### Core Components
 
 - [actions-runner-controller](https://github.com/actions/actions-runner-controller): self-hosted Github runners
@@ -113,14 +325,14 @@ graph TD;
 
 While most of my infrastructure and workloads are self-hosted I do rely upon the cloud for certain key parts of my setup. This saves me from having to worry about two things. (1) Dealing with chicken/egg scenarios and (2) services I critically need whether my cluster is online or not.
 
-The alternative solution to these two problems would be to host a Kubernetes cluster in the cloud and deploy applications like [HCVault](https://www.vaultproject.io/), [Vaultwarden](https://github.com/dani-garcia/vaultwarden), [ntfy](https://ntfy.sh/), and [Gatus](https://gatus.io/). However, maintaining another cluster and monitoring another group of workloads is a lot more time and effort than I am willing to put in.
+The alternative solution to these two problems would be to host a Kubernetes cluster in the cloud and deploy applications like [HCVault](https://www.vaultproject.io/) and [ntfy](https://ntfy.sh/). However, maintaining another cluster and monitoring another group of workloads is a lot more time and effort than I am willing to put in.
 
 | Service                                         | Use                                                               | Cost           |
 |-------------------------------------------------|-------------------------------------------------------------------|----------------|
 | [Bitwarden](https://bitwarden.com/)             | Secrets with [External Secrets](https://external-secrets.io/)     | ~$TBC/yr       |
 | [Cloudflare](https://www.cloudflare.com/)       | Domain and S3                                                     | ~$TBC/yr       |
 | [GitHub](https://github.com/)                   | Hosting this repository and continuous integration/deployments    | Free           |
-| [Uptimekuma](https://uptimerobot.com/)          | Monitoring internet connectivity and external facing applications | Free           |
+| [Gatus](https://gatus.ioi/)          | Monitoring internet connectivity and external facing applications | Free           |
 |                                                 |                                                                   | Total: ~$TBC/mo|
 
 ---

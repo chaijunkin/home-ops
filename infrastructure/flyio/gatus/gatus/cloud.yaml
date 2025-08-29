@@ -1,0 +1,22 @@
+---
+fly-default-endpoint: &fly-defaults
+  group: Cloud
+  interval: 1m
+  client:
+    timeout: 30s
+  conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
+  alerts:
+    - type: pushover
+endpoints:
+  - name: Main website
+    url: https://www.cloudjur.com
+    <<: *fly-defaults
+  - name: Mail
+    url: https://mail.cloudjur.com
+    <<: *fly-defaults
+  - name: Webmail
+    url: https://webmail.cloudjur.com
+    <<: *fly-defaults
+  - name: Vault
+    url: https://vw.cloudjur.com
+    <<: *fly-defaults

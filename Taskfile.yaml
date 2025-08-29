@@ -22,9 +22,15 @@ vars:
   PYTHON_BIN: python3
   K8S_DIR: "{{.ROOT_DIR}}/kubernetes"
   TALOS_DIR: "{{.K8S_DIR}}/talos"
+  # FLY IO
+  FLY_DIR: "{{.ROOT_DIR}}/infrastructure/flyio"
 
 dotenv:
-  - "{{.ROOT_DIR}}/onepassword.env"
+  # - "{{.ROOT_DIR}}/onepassword.env"
+  - "{{.ROOT_DIR}}/.config.env"
+  ### yikes, taskfiles doesn't support dotenv in include, on-demand deployment
+  - "{{.FLY_DIR}}/gatus/.config.env"
+  # - "{{.FLY_DIR}}/vaultwarden/.config.env"
   - "{{.KUBERNETES_DIR}}/apps/system-upgrade/versions.env"
 
 env:
@@ -52,6 +58,8 @@ includes:
     taskfile: .taskfiles/user
     optional: true
   volsync: .taskfiles/volsync
+  fly: .taskfiles/fly/tasks.yaml
+  github: .taskfiles/github/tasks.yaml
 
 tasks:
   default:

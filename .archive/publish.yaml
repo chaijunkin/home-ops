@@ -1,0 +1,53 @@
+---
+name: Publish container
+
+on:
+  workflow_dispatch: {}
+  push:
+    tags:
+      - "*"
+    branches:
+      - main
+    paths:
+      - infrastructure/flyio/gatus/config/** # update me
+      - infrastructure/flyio/gatus/gatus/** # update me
+      - infrastructure/flyio/gatus/DOCKERFILE # update me
+      # - infrastructure/flyio/vaultwarden/DOCKERFILE  # update me
+      # - infrastructure/flyio/vaultwarden/config/**  # update me
+      # - infrastructure/flyio/vaultwarden/gatus/**  # update me
+
+jobs:
+  build-push:
+    if: github.repository == 'chaijunkin/home-ops'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Login to ghcr
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Container meta
+        id: meta
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw, value=latest, enable={{is_default_branch}}
+            type=semver, pattern={{version}}
+            type=ref, event=branch
+            type=ref, event=tag
+            type=ref, event=pr
+
+      - name: Build and push to ghcr
+        uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
