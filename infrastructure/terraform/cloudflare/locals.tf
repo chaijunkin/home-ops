@@ -109,7 +109,7 @@ locals {
     # }
     "vaultwarden" = {
       name    = "vw"
-      value   = "blue-cherry-8641.fly.dev"
+      value   = var.vaultwarden_private_url
       type    = "CNAME"
       proxied = true
       ### STEP 1 turn this off and terraform apply
@@ -118,25 +118,25 @@ locals {
       ### fly certs add vw.{SECRET_DOMAIN} --app {SECRET_APP}
       ### STEP 3 turn this on
     }
-    "external-uptimekuma" = {
-      name    = "ext-uptime"
-      value   = "uptime-kuma-rdm12exn709.fly.dev"
+    "gatus" = {
+      name    = "status"
+      value   = var.gatus_private_url
       type    = "CNAME"
-      proxied = true
+      proxied = false
     }
 
-    "external-uptimekuma-ext" = {
-      name    = "ext-status"
-      value   = "uptime-kuma-rdm12exn709.fly.dev"
-      type    = "CNAME"
-      proxied = true
-    }
+    # "external-uptimekuma-ext" = {
+    #   name    = "ext-status"
+    #   value   = "uptime-kuma-rdm12exn709.fly.dev"
+    #   type    = "CNAME"
+    #   proxied = true
+    # }
 
-    "internal-uptimekuma-ext" = {
-      name  = "int-status"
-      value = "uptime-kuma-rdm12exn709.fly.dev"
-      type  = "CNAME"
-    }
+    # "internal-uptimekuma-ext" = {
+    #   name  = "int-status"
+    #   value = "uptime-kuma-rdm12exn709.fly.dev"
+    #   type  = "CNAME"
+    # }
   }
 
   github_A_record = [

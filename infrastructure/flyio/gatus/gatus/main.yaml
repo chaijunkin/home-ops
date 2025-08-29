@@ -1,0 +1,40 @@
+---
+ui:
+  title: Status | Gatus
+  header: Status
+  logo: https://avatars.githubusercontent.com/u/88609082?v=4
+  link: https://github.com/chaijunkin
+  buttons:
+    - name: Github
+      link: https://github.com/chaijunkin
+    - name: Homelab
+      link: https://github.com/chaijunkin/home-ops
+alerting:
+  pushover:
+    application-token: ${PUSHOVER_APPLICATION_TOKEN}
+    user-key: ${PUSHOVER_USER_KEY}
+    priority: 1
+    default-alert:
+      send-on-resolved: true
+      failure-threshold: 5
+      success-threshold: 5
+  discord:
+    webhook-url: ${DISCORD_WEBHOOK_URL}
+    default-alert:
+      description: health-check failed
+      send-on-resolved: true
+      failure-threshold: 5
+      success-threshold: 2
+disable-monitoring-lock: true
+metrics: true
+storage:
+  type: sqlite
+  path: /data/data.db
+endpoints:
+  - name: healthchecks.io
+    group:
+    url: https://hc-ping.com/${HC_PING_UUID}
+    interval: 30m
+    conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
+    alerts:
+      - type: pushover

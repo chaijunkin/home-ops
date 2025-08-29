@@ -1,0 +1,20 @@
+---
+version: "3"
+
+tasks:
+  default:
+    cmds:
+      - fly logs -a {{.FLY_APP}}
+    desc: Show logs for a Fly app [APP=required]
+    requires:
+      vars:
+        - APP
+    dir: infrastructure/flyio/{{.APP}}
+  web:
+    cmds:
+      - open https://fly.io/apps/{{.FLY_APP}}/monitoring
+    desc: Open the Fly app monitoring page [APP=required]
+    requires:
+      vars:
+        - APP
+    dir: infrastructure/flyio/{{.APP}}

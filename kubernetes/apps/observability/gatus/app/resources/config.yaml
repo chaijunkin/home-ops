@@ -5,8 +5,8 @@ web:
 metrics: true
 
 ui:
-  title: Status | Gatus
-  header: Status
+  title: Int Status | Gatus
+  header: Int Status
   logo: https://avatars.githubusercontent.com/u/88609082?v=4
   link: https://github.com/chaijunkin
   buttons:

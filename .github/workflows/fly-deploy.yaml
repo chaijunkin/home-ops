@@ -1,0 +1,73 @@
+name: Deploy to Fly
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+    paths:
+      - infrastructure/flyio/**
+
+jobs:
+  check-fly-secret:
+    runs-on: ubuntu-latest
+    outputs:
+      fly-secret-exists: ${{ steps.fly-secret-check.outputs.defined }}
+    steps:
+      - name: Check for Fly secrets availability
+        id: fly-secret-check
+        # perform secret check & put boolean result as an output
+        shell: bash
+        run: |
+          if [ "${{ secrets.FLY_API_TOKEN }}" != '' ] && [ "${{ secrets.FLY_APP }}" != '' ]; then
+            echo "defined=true" >> $GITHUB_OUTPUT;
+          else
+            echo "defined=false" >> $GITHUB_OUTPUT;
+          fi
+
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    needs: [check-fly-secret]
+    if: needs.check-fly-secret.outputs.fly-secret-exists == 'true'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.1.54
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          # renovate: datasource=github-releases depName=go-task/task
+          version: 3.27.1
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install jq
+        run: |
+          sudo apt-get update -y && sudo apt-get install -y jq
+      - name: Deploy app(s) from `FLY_APP` JSON
+        shell: bash
+        env:
+          FLY_APP_JSON: ${{ secrets.FLY_APP }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          if [ -z "$FLY_APP_JSON" ]; then
+            echo "FLY_APP secret is empty" >&2
+            exit 1
+          fi
+
+          count=$(echo "$FLY_APP_JSON" | jq -r 'length')
+          if [ "$count" = "0" ] || [ "$count" = "null" ]; then
+            echo "no apps in FLY_APP" >&2
+            exit 1
+          fi
+
+          for i in $(seq 0 $((count - 1))); do
+            app_name=$(echo "$FLY_APP_JSON" | jq -r ".[$i].app_name")
+            fly_name=$(echo "$FLY_APP_JSON" | jq -r ".[$i].fly_app_name")
+            [ -n "$app_name" ] || continue
+            [ -n "$fly_name" ] || continue
+            dir="infrastructure/flyio/$app_name"
+            if [ -d "$dir" ]; then
+              (cd "$dir" && flyctl deploy --remote-only -a "$fly_name")
+            fi
+          done
