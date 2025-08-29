@@ -15,6 +15,15 @@ variable "cloudflare_zone_name" {
   description = "Cloudflare Zone Name (DNS name)"
 }
 
+variable "gatus_private_url" {
+  description = "Gatus private URL"
+  sensitive   = true
+}
+
+variable "vaultwarden_private_url" {
+  description = "Vaultwarden private URL"
+  sensitive   = true
+}
 
 variable "mail_txt_value" {
   description = "Mail TXT value"
