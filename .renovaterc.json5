@@ -17,7 +17,7 @@
     ":timezone(Asia/Kuala_Lumpur)",
   ],
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
-  gitIgnoredAuthors: "renovate[bot]",
+  gitIgnoredAuthors: ["renovate[bot]"],
   suppressNotifications: [
     "prEditedNotification",
     "prIgnoreNotification",
