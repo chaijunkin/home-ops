@@ -30,11 +30,11 @@ metrics: true
 storage:
   type: sqlite
   path: /data/data.db
-endpoints:
-  - name: healthchecks.io
-    group:
-    url: https://hc-ping.com/${HC_PING_UUID}
-    interval: 30m
-    conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
-    alerts:
-      - type: pushover
+# endpoints:
+#   - name: healthchecks.io
+#     group:
+#     url: https://hc-ping.com/${HC_PING_UUID}
+#     interval: 30m
+#     conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
+#     alerts:
+#       - type: pushover

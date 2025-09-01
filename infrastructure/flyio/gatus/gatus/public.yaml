@@ -16,12 +16,19 @@ endpoints:
     <<: *public-defaults
   - name: flux-webhook
     url: https://flux-webhook.cloudjur.com
-    <<: *public-defaults
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
   - name: grafana
     url: https://grafana.cloudjur.com
     <<: *public-defaults
   - name: home-assistant
     url: https://hass.cloudjur.com
+    <<: *public-defaults
+  - name: jellyseerr
+    url: https://jellyfin.cloudjur.com
     <<: *public-defaults
   - name: jellyseerr
     url: https://requests.cloudjur.com
@@ -31,7 +38,11 @@ endpoints:
     <<: *public-defaults
   - name: kromgo
     url: https://kromgo.cloudjur.com
-    <<: *public-defaults
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == ${GATUS_STATUS:=200}"
   - name: ocis
     url: https://drive.cloudjur.com
     <<: *public-defaults
@@ -39,5 +50,5 @@ endpoints:
     url: https://chat.cloudjur.com
     <<: *public-defaults
   - name: plex
-    url: https://plex.cloudjur.com
+    url: https://plex.cloudjur.com/web/index.html
     <<: *public-defaults
