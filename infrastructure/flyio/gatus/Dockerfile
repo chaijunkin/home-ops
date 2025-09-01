@@ -33,10 +33,7 @@ FROM caddy:2.8.4-alpine
 
 ARG OVERMIND
 
-ENV ROCKET_PROFILE="release" \
-  ROCKET_ADDRESS=0.0.0.0 \
-  ROCKET_PORT=8080 \
-  SSL_CERT_DIR=/etc/ssl/certs
+ENV SSL_CERT_DIR=/etc/ssl/certs
 
 RUN apk add --no-cache \
   ca-certificates \

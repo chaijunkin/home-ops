@@ -125,6 +125,20 @@ locals {
       proxied = false
     }
 
+    "gatus-acme" = {
+      name    = "_acme-challenge.status"
+      value   = "status.cloudjur.com.2mqyj55.flydns.net."
+      type    = "CNAME"
+      proxied = false
+    }
+
+    # "gatus-status" = {
+    #   name    = "status"
+    #   value   = "2mqyj55.quiet-sun-5203.fly.dev"
+    #   type    = "CNAME"
+    #   proxied = false
+    # }
+
     # "external-uptimekuma-ext" = {
     #   name    = "ext-status"
     #   value   = "uptime-kuma-rdm12exn709.fly.dev"

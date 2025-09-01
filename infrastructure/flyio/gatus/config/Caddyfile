@@ -10,7 +10,7 @@
 	}
 }
 
-{$DOMAIN_NAME}:80 {
+:80 {
 	encode gzip
 
 	header / {
@@ -32,13 +32,7 @@
 		-Last-Modified
 	}
 
-	# The negotiation endpoint is also proxied to Rocket
-	reverse_proxy /notifications/hub/negotiate localhost:8080
-
-	# Notifications redirected to the websockets server
-	reverse_proxy /notifications/hub localhost:3012
-
-	# Proxy everything else to Rocket
+	# Proxy everything else to the Gatus process running on loopback
 	reverse_proxy localhost:8080 {
 		# Send the true remote IP to Rocket, so that gatus can put this in the log
 		header_up X-Real-IP {remote_host}
