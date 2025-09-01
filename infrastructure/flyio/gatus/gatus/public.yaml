@@ -20,7 +20,7 @@ endpoints:
   - name: home-assistant
     url: https://hass.cloudjur.com
     <<: *public-defaults
-  - name: jellyseerr
+  - name: jellyfin
     url: https://jellyfin.cloudjur.com
     <<: *public-defaults
   - name: jellyseerr

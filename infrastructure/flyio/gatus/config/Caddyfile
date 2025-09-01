@@ -10,7 +10,7 @@
 	}
 }
 
-:80 {
+{$DOMAIN_NAME}:80 {
 	encode gzip
 
 	header / {
