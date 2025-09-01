@@ -14,13 +14,6 @@ endpoints:
   - name: calibre-web-automated
     url: https://books.cloudjur.com
     <<: *public-defaults
-  - name: flux-webhook
-    url: https://flux-webhook.cloudjur.com
-    interval: 1m
-    client:
-      dns-resolver: tcp://1.1.1.1:53
-    conditions:
-      - "[STATUS] == 404"
   - name: grafana
     url: https://grafana.cloudjur.com
     <<: *public-defaults

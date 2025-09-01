@@ -30,11 +30,18 @@ metrics: true
 storage:
   type: sqlite
   path: /data/data.db
-# endpoints:
-#   - name: healthchecks.io
-#     group:
-#     url: https://hc-ping.com/${HC_PING_UUID}
-#     interval: 30m
-#     conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
-#     alerts:
-#       - type: pushover
+endpoints:
+  # - name: healthchecks.io
+  #   group:
+  #   url: https://hc-ping.com/${HC_PING_UUID}
+  #   interval: 30m
+  #   conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
+  #   alerts:
+  #     - type: pushover
+  - name: flux-webhook
+    url: https://flux-webhook.cloudjur.com
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
