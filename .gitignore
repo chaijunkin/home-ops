@@ -84,3 +84,5 @@ terraform.rc
 
 # Ignore private key
 *.pem
+
+httproutes.csv

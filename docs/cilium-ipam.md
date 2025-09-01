@@ -3,41 +3,99 @@
 ## IP Address Allocation
 
 ### Ranges
-- **Internal**: `10.10.30.32/27` (10.10.30.32 - 10.10.30.63)
-- **External**: `10.10.30.64/27` (10.10.30.64 - 10.10.30.95)
-- **Gateway**: `10.10.30.96/27` (10.10.30.96 - 10.10.30.127)
+- ** httproute Internal**: `10.10.30.25/27`
+- **httproute External**: `10.10.30.26/27`
+- **k8s-Gateway**: `10.10.30.27/27`
 
-### Reserved/Allocated IPs
-- `10.10.30.12` - home-assistant
-- `10.10.30.13` - qbittorrent
-- `10.10.30.14` - plex
-- `10.10.30.50` - vector-aggregator
-- `10.10.30.17` - jellyfin
-- `10.10.30.18` - jellyseerr
-- `10.10.30.20` - rustdesk
-- `10.10.30.21` - rustdesk
-- `10.10.30.27` - Reserved
-- `10.10.30.28` - Reserved
-- `10.10.30.29` - Reserved
-- `10.10.30.33` - headlamp
-- `10.10.30.35` - firefly-iii
-- `10.10.30.36` - cyberchef
-- `10.10.30.37` - cross-seed
-- `10.10.30.38` - ollama
-- `10.10.30.39` - it-tools
-- `10.10.30.40` - radarr
-- `10.10.30.41` - readarr
-- `10.10.30.42` - omada-controller
-- `10.10.30.43` - lidarr
-- `10.10.30.44` - webhook
-- `10.10.30.45` - open-webui
-- `10.10.30.46` - searxng
-- `10.10.30.47` - autobrr
-- `10.10.30.48` - excalidraw
-- `10.10.30.52` - autobangumi
-- `10.10.30.56` - minio
-- `10.10.30.66` - miniflux
-- `10.10.30.67` - gatus
-- `10.10.30.68` - kromgo
-- `192.168.42.124` - go2rtc
-- `192.168.42.127` - slskd
+### HTTPRoute Services (auto-generated)
+
+#### External services
+- `n8n-webhook.cloudjur.com` - default/n8n-webhooks (parent: external)
+- `chat.cloudjur.com` - default/open-webui (parent: external)
+- `flux-webhook.cloudjur.com` - flux-system/github-webhook (parent: external)
+- `hass.cloudjur.com` - home-automation/home-assistant (parent: external)
+- `home-assistant.cloudjur.com` - home-automation/home-assistant (parent: external)
+- `books.cloudjur.com` - media/calibre-web-automated (parent: external)
+- `jellyfin.cloudjur.com` - media/jellyfin (parent: external)
+- `jellyseerr.cloudjur.com` - media/jellyseerr (parent: external)
+- `requests.cloudjur.com` - media/jellyseerr (parent: external)
+- `request.cloudjur.com` - media/jellyseerr (parent: external)
+- `comics.cloudjur.com` - media/kavita (parent: external)
+- `drive.cloudjur.com` - media/ocis (parent: external)
+- `plex.cloudjur.com` - media/plex (parent: external)
+- `echo-server-external-auth.cloudjur.com` - network/echo-server-ext-auth-route (parent: external)
+- `echo-server-external.cloudjur.com` - network/echo-server-ext-route (parent: external)
+- `gatus.cloudjur.com` - observability/gatus (parent: external)
+- `grafana.cloudjur.com` - observability/grafana (parent: external)
+- `kromgo.cloudjur.com` - observability/kromgo (parent: external)
+- `auth.cloudjur.com` - security/authentik (parent: external)
+
+#### Internal services
+- `cyberchef.cloudjur.com` - default/cyberchef (parent: internal)
+- `money.cloudjur.com` - default/firefly (parent: internal)
+- `import-money.cloudjur.com` - default/firefly-data-importer (parent: internal)
+- `freshrss.cloudjur.com` - default/freshrss (parent: internal)
+- `homepage.cloudjur.com` - default/homepage (parent: internal)
+- `it-tools.cloudjur.com` - default/it-tools (parent: internal)
+- `n8n.cloudjur.com` - default/n8n-app (parent: internal)
+- `privatebin.cloudjur.com` - default/privatebin (parent: internal)
+- `hbbr.cloudjur.com` - default/rustdesk-hbbr (parent: internal)
+- `hbbs.cloudjur.com` - default/rustdesk-hbbs (parent: internal)
+- `searxng.cloudjur.com` - default/searxng (parent: internal)
+- `thelounge.cloudjur.com` - default/thelounge (parent: internal)
+- `autobangumi.cloudjur.com` - downloads/autobangumi (parent: internal)
+- `autobrr.cloudjur.com` - downloads/autobrr (parent: internal)
+- `bazarr.cloudjur.com` - downloads/bazarr (parent: internal)
+- `lidarr.cloudjur.com` - downloads/lidarr (parent: internal)
+- `metube.cloudjur.com` - downloads/metube (parent: internal)
+- `prowlarr.cloudjur.com` - downloads/prowlarr (parent: internal)
+- `qbittorrent.cloudjur.com` - downloads/qbittorrent (parent: internal)
+- `qb.cloudjur.com` - downloads/qbittorrent (parent: internal)
+- `radarr.cloudjur.com` - downloads/radarr (parent: internal)
+- `sabnzbd.cloudjur.com` - downloads/sabnzbd (parent: internal)
+- `sab.cloudjur.com` - downloads/sabnzbd (parent: internal)
+- `sonarr.cloudjur.com` - downloads/sonarr (parent: internal)
+- `webhook.cloudjur.com` - downloads/webhook (parent: internal)
+- `headlamp.cloudjur.com` - flux-system/headlamp (parent: internal)
+- `frigate.cloudjur.com` - home-automation/frigate (parent: internal)
+- `dl-books.cloudjur.com` - media/calibre-downloader (parent: internal)
+- `filebrowser.cloudjur.com` - media/filebrowser (parent: internal)
+- `minio.cloudjur.com` - media/minio-main (parent: internal)
+- `s3.cloudjur.com` - media/minio-s3 (parent: internal)
+- `slskd.cloudjur.com` - media/slskd (parent: internal)
+- `tautulli.cloudjur.com` - media/tautulli (parent: internal)
+- `adguard.cloudjur.com` - network/adguard (parent: internal)
+- `ap.cloudjur.com` - network/ap (parent: internal)
+- `echo-server-internal-auth.cloudjur.com` - network/echo-server-int-auth-route (parent: internal)
+- `echo-server-internal.cloudjur.com` - network/echo-server-int-route (parent: internal)
+- `nas.cloudjur.com` - network/nas (parent: internal)
+- `proxmox.cloudjur.com` - network/proxmox (parent: internal)
+- `switch.cloudjur.com` - network/switch (parent: internal)
+- `alertmanager.cloudjur.com` - observability/kube-prometheus-stack-alertmanager (parent: internal)
+- `prometheus.cloudjur.com` - observability/kube-prometheus-stack-prometheus (parent: internal)
+
+#### Reserved IPs (excerpt)
+```
+
+
+- 10.10.30.1 - default/cyberchef (port: 80)
+- 10.10.30.39 - default/it-tools (port: 80)
+- 10.10.30.45 - default/open-webui (port: 8080)
+- 10.10.30.46 - default/searxng (port: 8080)
+- 10.10.30.52 - downloads/autobangumi (port: 7892)
+- 10.10.30.47 - downloads/autobrr (port: 80)
+- 10.10.30.43 - downloads/lidarr (port: 80)
+- 10.10.30.44 - downloads/webhook (port: 80)
+- 10.10.30.69 - flux-system/headlamp (port: 80)
+- 10.10.30.16 - home-automation/frigate (port: 5000)
+- 10.10.30.50 - home-automation/home-assistant (port: 8123)
+- 10.10.30.50 - home-automation/home-assistant (port: 8123)
+- 10.10.30.17 - media/jellyfin (port: 8096)
+- 10.10.30.18 - media/jellyseerr (port: 80)
+- 10.10.30.18 - media/jellyseerr (port: 80)
+- 10.10.30.18 - media/jellyseerr (port: 80)
+- 10.10.30.56 - media/minio (port: 9001)
+- 10.10.30.56 - media/minio (port: 9000)
+- 10.10.30.14 - media/plex (port: 32400)
+- 10.10.30.14 - media/plex (port: 32400)
+```
