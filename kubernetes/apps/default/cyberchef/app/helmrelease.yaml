@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: docker.io/mpepping/cyberchef
-              tag: v10.19.4@sha256:c70ed5a307f4fb02afcfdc4a6fa76e487c1ae893abb714ca155b208b2abe5e90
+              tag: v10.19.4@sha256:91e04eaaa1ba1eac6b8e410d6f7b340e1ea0450d48ccbb52ec67ce6faa3672c5
               pullPolicy: IfNotPresent
             resources:
               requests:
