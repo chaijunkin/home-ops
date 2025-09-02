@@ -8,6 +8,7 @@
     "github>chaijunkin/home-ops//.renovate/customManagers.json5",
     "github>chaijunkin/home-ops//.renovate/grafanaDashboards.json5",
     "github>chaijunkin/home-ops//.renovate/groups.json5",
+    "github>chaijunkin/home-ops//.renovate/overrides.json5",
     "github>chaijunkin/home-ops//.renovate/labels.json5",
     "github>chaijunkin/home-ops//.renovate/semanticCommits.json5",
     ":automergeBranch",
@@ -25,6 +26,7 @@
   ignorePaths: [
     "**/*.sops.*",
     "**/resources/**",
+    "**/archive/**",
   ],
   flux: {
     managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
