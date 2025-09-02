@@ -56,11 +56,11 @@ data "talos_machine_configuration" "this" {
   config_patches = [
     ## please make boolean to variables in case anything happen
 
-      yamlencode(false ? [] : [
+    yamlencode(false ? [] : [
       {
-        op = "replace"
+        op   = "replace"
         path = "/cluster/apiServer/admissionControl"
-        value: []
+        value : []
       }
     ])
     ,
@@ -72,13 +72,13 @@ data "talos_machine_configuration" "this" {
       kubelet            = var.cluster.kubelet
     }), each.value.machine_type == "controlplane" ?
     templatefile("${path.module}/machine-config/control-plane.yaml.tftpl", {
-      ip              = each.value.ip
-      network_devices = each.value.network_devices
-      gateway         = var.cluster.gateway
-      subnet_mask     = var.cluster.subnet_mask
-      vip             = var.cluster.vip
+      ip               = each.value.ip
+      network_devices  = each.value.network_devices
+      gateway          = var.cluster.gateway
+      subnet_mask      = var.cluster.subnet_mask
+      vip              = var.cluster.vip
       extra_manifests  = jsonencode(local.extra_manifests)
-      api_server = var.cluster.api_server
+      api_server       = var.cluster.api_server
       inline_manifests = jsonencode(terraform_data.cilium_bootstrap_inline_manifests.output)
     }) :
     templatefile("${path.module}/machine-config/worker.yaml.tftpl", {

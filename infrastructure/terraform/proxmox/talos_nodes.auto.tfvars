@@ -42,7 +42,7 @@ talos_nodes = {
     igpu          = true
     dns           = ["10.10.30.1"]
     dns_domain    = "cloudjur.com"
-    datastore_id = "fast"
+    datastore_id  = "fast"
     disks = [
       {
         datastore_id = "fast"

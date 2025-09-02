@@ -32,13 +32,13 @@ variable "auth_groups" {
 }
 
 variable "client_id" {
-  type = string
+  type      = string
   sensitive = true
 }
 
 variable "client_secret" {
-  type    = string
-  default = null
+  type      = string
+  default   = null
   sensitive = true
 }
 

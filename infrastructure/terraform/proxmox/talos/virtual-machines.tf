@@ -44,7 +44,7 @@ resource "proxmox_virtual_environment_vm" "this" {
         cache        = each.value.disk_cache
         discard      = each.value.disk_discard
         ssd          = each.value.disk_ssd
-        file_format   = each.value.disk_file_format
+        file_format  = each.value.disk_file_format
         size         = each.value.disk_size
         # interface will be set below
       }
@@ -52,14 +52,14 @@ resource "proxmox_virtual_environment_vm" "this" {
     content {
       datastore_id = disk.value.datastore_id
       # Assign unique interface for each disk: scsi0, scsi1, ...
-      interface    = try(disk.value.interface, "scsi${disk.key}")
-      iothread     = disk.value.iothread
-      cache        = disk.value.cache
-      discard      = disk.value.discard
-      ssd          = disk.value.ssd
-      file_format  = disk.value.file_format
-      size         = disk.value.size
-      file_id      = (
+      interface   = try(disk.value.interface, "scsi${disk.key}")
+      iothread    = disk.value.iothread
+      cache       = disk.value.cache
+      discard     = disk.value.discard
+      ssd         = disk.value.ssd
+      file_format = disk.value.file_format
+      size        = disk.value.size
+      file_id = (
         disk.key == 0 ?
         proxmox_virtual_environment_download_file.this["${each.value.host_node}_${each.value.update == true ? local.update_image_id : local.image_id}"].id :
         null
@@ -109,7 +109,7 @@ resource "proxmox_virtual_environment_vm" "this" {
       # ### PHYSICAL
       # device  = "hostpci0"
       # mapping = "iGPU"
-      pcie    = true
+      pcie = true
       # rombar  = true
       # xvga    = false
     }

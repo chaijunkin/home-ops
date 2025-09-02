@@ -38,7 +38,7 @@ resource "random_password" "user_secret" {
 }
 
 resource "minio_accesskey" "owner_access_key" {
-  user      = "root"
+  user       = "root"
   access_key = var.owner_access_key
   secret_key = var.owner_secret_key
 

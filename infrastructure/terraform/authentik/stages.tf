@@ -33,8 +33,8 @@ resource "authentik_stage_password" "authentication-password" {
 }
 
 resource "authentik_stage_authenticator_validate" "authentication-mfa-validation" {
-  name                  = "authentication-mfa-validation"
-  device_classes        = ["static", "totp", "webauthn"]
+  name           = "authentication-mfa-validation"
+  device_classes = ["static", "totp", "webauthn"]
   # not_configured_action = "skip"
   not_configured_action = "configure"
   configuration_stages = [

@@ -1,15 +1,13 @@
 resource "cloudflare_zone" "cloudflare_zone" {
-  account = {
-    id = local.cloudflare_account_id
-  }
-  name       = local.cloudflare_zone_name
+  account_id = local.cloudflare_account_id
+  zone       = local.cloudflare_zone_name
 }
 
 resource "cloudflare_zone_dnssec" "cloudflare_zone_dnssec" {
   zone_id = cloudflare_zone.cloudflare_zone.id
 }
 
-resource "cloudflare_dns_record" "records" {
+resource "cloudflare_record" "records" {
   for_each = local.cloudflare_record
   zone_id  = cloudflare_zone.cloudflare_zone.id
   name     = each.value.name
@@ -17,25 +15,23 @@ resource "cloudflare_dns_record" "records" {
   type     = each.value.type
   priority = try(each.value.priority, null)
   proxied  = try(each.value.proxied, false)
-  ttl      = try(each.value.ttl, 1)
+  ttl      = try(each.value.ttl, null)
 }
 
-resource "cloudflare_dns_record" "github_A_record" {
+resource "cloudflare_record" "github_A_record" {
   for_each = toset(local.github_A_record)
   zone_id  = cloudflare_zone.cloudflare_zone.id
   name     = "@"
   content  = each.value
-  ttl      = try(each.value.ttl, 1)
   type     = "A"
   proxied  = true
 }
 
-resource "cloudflare_dns_record" "github_AAAA_record" {
+resource "cloudflare_record" "github_AAAA_record" {
   for_each = toset(local.github_AAAA_record)
   zone_id  = cloudflare_zone.cloudflare_zone.id
   name     = "@"
   content  = each.value
-  ttl      = try(each.value.ttl, 1)
   type     = "AAAA"
   proxied  = true
 }

@@ -66,10 +66,10 @@ variable "nodes" {
     # disk_ssd         = optional(bool, true)
     # disk_file_format = optional(string, "raw")
     # disk_size        = optional(number, 50)
-    vm_id            = number
-    cpu              = number
-    ram_dedicated    = number
-    update           = optional(bool, false)
-    igpu             = optional(bool, false)
+    vm_id         = number
+    cpu           = number
+    ram_dedicated = number
+    update        = optional(bool, false)
+    igpu          = optional(bool, false)
   }))
 }
