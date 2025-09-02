@@ -41,6 +41,7 @@ endpoints:
   - name: flux-webhook
     url: https://flux-webhook.cloudjur.com
     interval: 1m
+    group: Public
     client:
       dns-resolver: tcp://1.1.1.1:53
     conditions:

@@ -39,7 +39,7 @@ spec:
         type: LoadBalancer
         ports:
           http:
-            port: 80
+            port: &port 8000
     env:
       TZ: Asia/Kuala_Lumpur
     route:
@@ -47,13 +47,13 @@ spec:
         hostnames:
           - cyberchef.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: main
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
-              - port: 80
-                name: *app
+              - name: *app
+                port: *port
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Utility Service

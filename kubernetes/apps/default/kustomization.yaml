@@ -5,6 +5,7 @@ namespace: default
 components:
   - ../../components/common
 resources:
+  - ./convertx/ks.yaml
   - ./cyberchef/ks.yaml
   - ./firefly/ks.yaml
   - ./freshrss/ks.yaml

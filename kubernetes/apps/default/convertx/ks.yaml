@@ -2,11 +2,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cyberchef
+  name: &app convertx
   namespace: default
 spec:
   targetNamespace: default
-  path: ./kubernetes/apps/default/cyberchef/app
+  path: ./kubernetes/apps/default/convertx/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -16,3 +16,10 @@ spec:
   interval: 24h
   retryInterval: 1m
   timeout: 5m
+  components:
+    - ../../../../components/volsync
+    - ../../../../components/gatus/external
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 2Gi
