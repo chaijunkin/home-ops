@@ -2,14 +2,14 @@ terraform {
   required_providers {
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 5.0"
+      version = "~> 5"
     }
     random = {
       source = "hashicorp/random"
     }
     sops = {
       source  = "carlpett/sops"
-      version = "1.0.0"
+      version = "1.2.1"
     }
   }
   cloud {
