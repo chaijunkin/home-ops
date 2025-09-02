@@ -5,9 +5,11 @@ iface lo inet loopback
 
 auto eno1
 iface eno1 inet manual
+  post-up ethtool -K eno1 tso off gso off
 
 auto enp8s0
 iface enp8s0 inet manual
+  post-up ethtool -K enp8s0 tso off gso off
 
 auto vlan30
 iface vlan30 inet static
