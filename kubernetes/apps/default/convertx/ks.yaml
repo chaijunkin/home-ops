@@ -18,7 +18,7 @@ spec:
   timeout: 5m
   components:
     - ../../../../components/volsync
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       APP: *app

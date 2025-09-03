@@ -38,9 +38,9 @@ endpoints:
   - name: plex
     url: https://plex.cloudjur.com/web/index.html
     <<: *public-defaults
-  - name: convertx
-    url: https://convertx.cloudjur.com
-    <<: *public-defaults
+  # - name: convertx
+  #   url: https://convertx.cloudjur.com
+  #   <<: *public-defaults
   # - name: kromgo
   #   url: https://kromgo.cloudjur.com
   #   interval: 1m
