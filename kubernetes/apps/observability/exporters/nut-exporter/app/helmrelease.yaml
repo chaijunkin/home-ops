@@ -1,20 +1,21 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app nut-exporter
 spec:
-  interval: 24h
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
+  dependsOn: []
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     fullnameOverride: *app
@@ -26,9 +27,9 @@ spec:
           app:
             image:
               repository: ghcr.io/druggeri/nut_exporter
-              tag: "3.2.1"
+              tag: 3.2.1
             env:
-              TZ: Asia/Kuala_Lumpur
+              TZ: America/Edmonton
             args:
               # the first time I set this, the first and last entries were ignored, so I have doubled them.
               - --nut.vars_enable="battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,output.voltage,output.voltage.nominal,ups.realpower,ups.load,ups.status,ups.status"
@@ -41,17 +42,14 @@ spec:
                 enabled: true
             resources:
               limits:
-                memory: 100Mi
-              requests:
-                cpu: 10m
-                memory: 50Mi
+                cpu: 100m
+                memory: 200Mi
     service:
       app:
-        controller: *app
         ports:
           metrics:
             enabled: true
             protocol: TCP
             port: 9199
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: exporters.cloudjur.com
