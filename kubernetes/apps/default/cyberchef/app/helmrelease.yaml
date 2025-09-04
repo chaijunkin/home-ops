@@ -39,7 +39,7 @@ spec:
         type: LoadBalancer
         ports:
           http:
-            port: &port 8000
+            port: &port 80
     env:
       TZ: Asia/Kuala_Lumpur
     route:
@@ -50,13 +50,22 @@ spec:
           - name: main
             namespace: network
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Utility Service
           gethomepage.dev/name: CyberChef
           gethomepage.dev/description: Cyber operation tools
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
+    persistence:
+      cache:
+        type: emptyDir
+        advancedMounts:
+          cyberchef:
+            app:
+              - path: /var/cache/nginx
+      run:
+        type: emptyDir
+        advancedMounts:
+          cyberchef:
+            app:
+              - path: /var/run # nginx.pid
