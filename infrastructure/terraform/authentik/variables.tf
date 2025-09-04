@@ -85,6 +85,20 @@ variable "ocis_secret" {
   default     = null
 }
 
+variable "calibre_web_automated_id" {
+  type        = string
+  description = "calibre_web_automated client id"
+  sensitive   = true
+  default     = null
+}
+
+variable "calibre_web_automated_secret" {
+  type        = string
+  description = "calibre_web_automated client secret"
+  sensitive   = true
+  default     = null
+}
+
 # variable "paperless_id" {
 #   type        = string
 #   description = "Paperless Client ID"

@@ -73,6 +73,14 @@ locals {
       redirect_uri  = "https://chat.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
       launch_url    = "https://chat.${var.CLUSTER_DOMAIN}/auth"
     },
+    calibre-web-automated = {
+      client_id     = var.calibre_web_automated_id
+      client_secret = var.calibre_web_automated_secret
+      group         = "media"
+      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/calibre-web.png"
+      redirect_uri  = "https://books.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
+      launch_url    = "https://books.${var.CLUSTER_DOMAIN}/auth"
+    },
   }
 }
 
