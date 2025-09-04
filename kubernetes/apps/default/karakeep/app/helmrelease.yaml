@@ -53,6 +53,7 @@ spec:
               NEXTAUTH_URL: https://karakeep.cloudjur.com
               DISABLE_NEW_RELEASE_CHECK: true
               COREPACK_INTEGRITY_KEYS: 0
+              OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: true
             probes:
               liveness:
                 enabled: true
