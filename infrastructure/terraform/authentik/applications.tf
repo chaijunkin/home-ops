@@ -86,7 +86,7 @@ locals {
       client_secret = var.karakeep_secret
       group         = "home"
       icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/karakeep.png"
-      redirect_uri  = "https://karakeep.${var.CLUSTER_DOMAIN}/oauth/oidc/callback"
+      redirect_uri  = "https://karakeep.${var.CLUSTER_DOMAIN}/api/auth/callback/custom"
       launch_url    = "https://karakeep.${var.CLUSTER_DOMAIN}/auth"
     },
   }
