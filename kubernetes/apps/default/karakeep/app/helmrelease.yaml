@@ -39,6 +39,7 @@ spec:
               CRAWLER_STORE_SCREENSHOT: true
               DATA_DIR: /data
               # DISABLE_SIGNUPS: true
+              DISABLE_PASSWORD_AUTH: true
               MEILI_ADDR: http://karakeep-meilisearch.default.svc.cluster.local:7700
               MEILI_MASTER_KEY:
                 valueFrom:
