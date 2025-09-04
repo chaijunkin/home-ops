@@ -55,6 +55,7 @@ spec:
               DISABLE_NEW_RELEASE_CHECK: true
               COREPACK_INTEGRITY_KEYS: 0
               OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: true
+              TZ: Asia/Kuala_Lumpur
             probes:
               liveness:
                 enabled: true
