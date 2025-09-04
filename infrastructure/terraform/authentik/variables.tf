@@ -99,6 +99,20 @@ variable "calibre_web_automated_secret" {
   default     = null
 }
 
+variable "karakeep_id" {
+  type        = string
+  description = "karakeep client id"
+  sensitive   = true
+  default     = null
+}
+
+variable "karakeep_secret" {
+  type        = string
+  description = "karakeep client secret"
+  sensitive   = true
+  default     = null
+}
+
 # variable "paperless_id" {
 #   type        = string
 #   description = "Paperless Client ID"
