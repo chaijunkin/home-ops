@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: ocis
-      CLAIM: ocis-data
+      VOLSYNC_CLAIM: ocis-data
       VOLSYNC_CAPACITY: 15Gi
       GATUS_SUBDOMAIN: drive
   components:

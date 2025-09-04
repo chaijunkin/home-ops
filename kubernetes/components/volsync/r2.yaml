@@ -55,7 +55,7 @@ kind: ReplicationSource
 metadata:
   name: "${APP}-r2"
 spec:
-  sourcePVC: "${CLAIM:-${APP}}"
+  sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
   trigger:
     # previous configuration (daily at midnight):
     # schedule: "0 0 * * *"

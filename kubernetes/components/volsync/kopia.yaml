@@ -87,7 +87,7 @@ spec:
 # metadata:
 #   name: "${APP}"
 # spec:
-#   sourcePVC: "${CLAIM:-${APP}}"
+#   sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
 #   trigger:
 #     schedule: "0 * * * *"
 #   restic:
