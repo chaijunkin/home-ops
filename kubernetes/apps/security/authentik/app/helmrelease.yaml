@@ -58,12 +58,6 @@ spec:
     prometheus:
       rules:
         enabled: true
-
-      # AUTHENTIK_REDIS__PASSWORD:
-      #   secretKeyRef:
-      #     name: authentik-secret
-      #     key: AUTHENTIK_REDIS__PASSWORD
-
     postgresql:
       enabled: false
 

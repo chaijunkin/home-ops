@@ -88,7 +88,7 @@ spec:
       main:
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Compute/Storage Infrastructure
+          gethomepage.dev/group: Platform Infrastructure
           gethomepage.dev/name: MinIO
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/minio.png
           gethomepage.dev/description: Object Storage Service

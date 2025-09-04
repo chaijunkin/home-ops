@@ -38,16 +38,6 @@ metadata:
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
-  # annotations:
-  #   gethomepage.dev/enabled: "true"
-  #   gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proxmox.png
-  #   gethomepage.dev/name: Proxmox (Dashy)
-  #   gethomepage.dev/group: Compute/Storage Infrastructure
-  #   gethomepage.dev/description: Compute hypervisor
-  #   gethomepage.dev/widget.type: proxmox
-  #   gethomepage.dev/widget.url: https://dashy.cloudjur.com
-  #   gethomepage.dev/widget.username: "{{HOMEPAGE_VAR_PROXMOX_USERNAME}}"
-  #   gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_PROXMOX_PASSWORD}}"
 spec:
   parentRefs:
     - name: internal

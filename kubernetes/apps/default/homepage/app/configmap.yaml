@@ -39,9 +39,9 @@ data:
                 - type: radarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
                   service_group: Downloads Service # group name where widget exists
                   service_name: Radarr # service name for that widget
-                - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
-                  service_group: Downloads Service # group name where widget exists
-                  service_name: Readarr # service name for that widget
+                # - type: readarr # active widget type that is currently enabled on homepage - possible values: radarr, sonarr, lidarr, readarr
+                #   service_group: Downloads Service # group name where widget exists
+                #   service_name: Readarr # service name for that widget
     - Application Service:
         - VaultWarden:
             description: Primary Password manager
@@ -215,7 +215,7 @@ data:
         tab: Second
         style: column
         icon: mdi-toolbox
-      Compute/Storage Infrastructure:
+      Platform Infrastructure:
         tab: Second
         style: column
         icon: mdi-server
