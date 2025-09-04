@@ -114,4 +114,4 @@ spec:
           gethomepage.dev/widget.type: calibreweb
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_CALIBREWEB_USERNAME}}` }}"
           gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_CALIBREWEB_PASSWORD}}` }}"
-          gethomepage.dev/widget.url: http://calibre-web-automated.default.svc.cluster.local:8083
+          gethomepage.dev/widget.url: http://calibre-web-automated.media.svc.cluster.local:8083
