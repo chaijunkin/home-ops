@@ -10,7 +10,7 @@ metadata:
 spec:
   clusterIP: None
   ports:
-    - name: websecure
+    - name: https
       port: 8006
       targetPort: 8006
       protocol: TCP
@@ -28,7 +28,7 @@ subsets:
       - ip: 10.10.30.10
     ports:
       - port: 8006
-        name: websecure
+        name: https
         protocol: TCP
 
 ---
