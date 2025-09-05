@@ -25,6 +25,21 @@ variable "vaultwarden_private_url" {
   sensitive   = true
 }
 
+variable "google_verification_txt_value" {
+  description = "Google verification TXT value"
+  sensitive   = true
+}
+
+variable "mail_domain_verification_key_txt_hostname" {
+  description = "Mail domain verification key TXT hostname"
+  sensitive   = true
+}
+
+variable "mail_domain_verification_key_txt_value" {
+  description = "Mail domain verification key TXT value"
+  sensitive   = true
+}
+
 variable "mail_txt_value" {
   description = "Mail TXT value"
   sensitive   = true

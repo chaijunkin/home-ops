@@ -4,12 +4,17 @@ locals {
   cloudflare_account_id = var.cloudflare_account_id
   cloudflare_api_token  = var.cloudflare_api_token
 
-  mail_txt_value = var.mail_txt_value
-  mail_mx1_value = var.mail_mx1_value
-  mail_mx2_value = var.mail_mx2_value
-  mail_spf_value = var.mail_spf_value
-  dkim_value     = var.dkim_value
-  dmarc_value    = var.dmarc_value
+  mail_txt_value                            = var.mail_txt_value
+  mail_mx1_value                            = var.mail_mx1_value
+  mail_mx2_value                            = var.mail_mx2_value
+  mail_spf_value                            = var.mail_spf_value
+  mail_domain_verification_key_txt_hostname = var.mail_domain_verification_key_txt_hostname
+  mail_domain_verification_key_txt_value    = var.mail_domain_verification_key_txt_value
+  dkim_value                                = var.dkim_value
+  dmarc_value                               = var.dmarc_value
+
+  # google auth
+  google_verification_txt_value = var.google_verification_txt_value
 
   cloudflare_record = {
     # "mail_txt" = {
@@ -70,6 +75,17 @@ locals {
       name  = "@"
       value = local.mail_spf_value
       type  = "TXT"
+    }
+    "mail_domain_verification_key" = {
+      name  = local.mail_domain_verification_key_txt_hostname
+      value = local.mail_domain_verification_key_txt_value
+      type  = "TXT"
+    }
+    "google_verification" = {
+      name  = local.cloudflare_zone_name
+      value = local.google_verification_txt_value
+      type  = "TXT"
+      ttl   = 1
     }
     "mail_dkim" = {
       name  = "x._domainkey"
