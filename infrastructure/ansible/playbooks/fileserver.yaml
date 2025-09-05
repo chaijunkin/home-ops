@@ -33,6 +33,30 @@
     smb_password: "{{ (lookup('community.sops.sops', playbook_dir ~ '/../samba_user.sops.yaml') | from_yaml).smb_password }}"
     nas_password: "{{ (lookup('community.sops.sops', playbook_dir ~ '/../samba_user.sops.yaml') | from_yaml).nas_password }}"
     smb_shares:
+      - name: Workstation
+        path: /tank/Backup/Workstation
+        guest_ok: "no"
+        read_only: "no"
+        browsable: "yes"
+        vfs_objects: "fruit streams_xattr acl_xattr"
+        fruit_time_machine: "yes"
+        fruit_time_machine_max_size: "1000G"
+        min_protocol: "SMB2"
+        fruit_metadata: "stream"
+        fruit_aapl: "yes"
+        spotlight: "no"
+        inherit_acls: "yes"
+        ea_support: "yes"
+        store_dos_attributes: "yes"
+        veto_files: /.DS_Store/
+        delete_veto_files: "yes"
+        fruit_posix_rename: "yes"
+        fruit_veto_appledouble: "no"
+        fruit_zero_file_id: "yes"
+        load_printers: "no"
+        printing: "bsd"
+        printcap_name: "/dev/null"
+        disable_spoolss: "yes"
       - name: Default
         path: /tank/Default
         guest_ok: "no"
@@ -115,6 +139,7 @@
         - /tank/Backup/Database
         - /tank/Backup/Volsync
         - /tank/Backup/Personal
+        - /tank/Backup/Workstation
         - /tank/Storage/Desktop
         - /tank/Storage/Documents
         - /tank/Storage/Downloads
@@ -155,6 +180,7 @@
         name:
           - samba
           - samba-common
+          - samba-vfs-modules
         state: present
 
     - name: Set Samba password for nas user
@@ -191,6 +217,63 @@
           force group = {{ smb_group }}
           create mask = 0660
           directory mask = 0770
+          {% if share.min_protocol is defined %}
+          min protocol = {{ share.min_protocol }}
+          {% endif %}
+          {% if share.vfs_objects is defined %}
+          vfs objects = {{ share.vfs_objects }}
+          {% endif %}
+          {% if share.fruit_time_machine is defined %}
+          fruit:time machine = {{ share.fruit_time_machine }}
+          {% endif %}
+          {% if share.fruit_time_machine_max_size is defined %}
+          fruit:time machine max size = {{ share.fruit_time_machine_max_size }}
+          {% endif %}
+          {% if share.fruit_metadata is defined %}
+          fruit:metadata = {{ share.fruit_metadata }}
+          {% endif %}
+          {% if share.fruit_aapl is defined %}
+          fruit:aapl = {{ share.fruit_aapl }}
+          {% endif %}
+          {% if share.spotlight is defined %}
+          spotlight = {{ share.spotlight }}
+          {% endif %}
+          {% if share.inherit_acls is defined %}
+          inherit acls = {{ share.inherit_acls }}
+          {% endif %}
+          {% if share.ea_support is defined %}
+          ea support = {{ share.ea_support }}
+          {% endif %}
+          {% if share.store_dos_attributes is defined %}
+          store dos attributes = {{ share.store_dos_attributes }}
+          {% endif %}
+          {% if share.veto_files is defined %}
+          veto files = {{ share.veto_files }}
+          {% endif %}
+          {% if share.delete_veto_files is defined %}
+          delete veto files = {{ share.delete_veto_files }}
+          {% endif %}
+          {% if share.fruit_posix_rename is defined %}
+          fruit:posix rename = {{ share.fruit_posix_rename }}
+          {% endif %}
+          {% if share.fruit_veto_appledouble is defined %}
+          fruit:veto appledouble = {{ share.fruit_veto_appledouble }}
+          {% endif %}
+          {% if share.fruit_zero_file_id is defined %}
+          fruit:zero file id = {{ share.fruit_zero_file_id }}
+          {% endif %}
+          {% if share.load_printers is defined %}
+          load printers = {{ share.load_printers }}
+          {% endif %}
+          {% if share.printing is defined %}
+          printing = {{ share.printing }}
+          {% endif %}
+          {% if share.printcap_name is defined %}
+          printcap name = {{ share.printcap_name }}
+          {% endif %}
+          {% if share.disable_spoolss is defined %}
+          disable spoolss = {{ share.disable_spoolss }}
+          {% endif %}
           {% endfor %}
         owner: root
         group: root
