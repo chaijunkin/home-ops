@@ -28,7 +28,6 @@ spec:
           app:
             image:
               repository: docker.io/intelanalytics/ipex-llm-inference-cpp-xpu
-              # repository: ghcr.io/joryirving/ollama-intel-gpu
               tag: 2.3.0-SNAPSHOT@sha256:74c7fba6e12a083ff664ae54e1ff16a977a39caa03d272125db406eeddaee09e
               # tag: ipex-llm-v.0.0.1-2
             command:
@@ -52,7 +51,7 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 16Gi
+                memory: 8Gi
                 # gpu.intel.com/i915: 1
         pod:
           affinity:
