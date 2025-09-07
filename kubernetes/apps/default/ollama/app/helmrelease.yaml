@@ -53,7 +53,7 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 8Gi
-                # gpu.intel.com/i915: 1
+                gpu.intel.com/i915: 1
         pod:
           affinity:
             podAntiAffinity:

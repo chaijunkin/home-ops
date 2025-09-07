@@ -102,7 +102,7 @@ resource "proxmox_virtual_environment_vm" "this" {
       ### VIRTUAL
       device = "hostpci0"
       id     = "0000:00:02.0"
-      # mdev   = "i915-GVTg_V5_4"
+      mdev   = "i915-GVTg_V5_4"
       rombar = true
 
       # pcie   = false
