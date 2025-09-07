@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app cloudnative-pg-backup
 spec:
-  interval: 1440h
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template

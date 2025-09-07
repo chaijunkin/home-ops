@@ -14,7 +14,7 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: *namespace
-  interval: 1440h
+  interval: 1h
   path: ./kubernetes/apps/system-upgrade/system-upgrade-controller/app
   prune: true
   retryInterval: 2m
@@ -38,7 +38,7 @@ spec:
   dependsOn:
     - name: system-upgrade-controller
       namespace: system-upgrade
-  interval: 1440h
+  interval: 1h
   path: ./kubernetes/apps/system-upgrade/system-upgrade-controller/plans
   prune: true
   retryInterval: 2m

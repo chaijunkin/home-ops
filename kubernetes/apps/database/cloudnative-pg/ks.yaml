@@ -54,7 +54,7 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: *namespace
-  interval: 1440h
+  interval: 1h
   path: ./kubernetes/apps/database/cloudnative-pg/backup
   prune: true
   retryInterval: 2m
