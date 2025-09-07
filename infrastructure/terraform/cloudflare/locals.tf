@@ -138,7 +138,7 @@ locals {
       name    = "wiki"
       value   = "cname.vercel-dns.com."
       type    = "CNAME"
-      proxied = true
+      proxied = false
     }
     "gatus" = {
       name    = "status"
