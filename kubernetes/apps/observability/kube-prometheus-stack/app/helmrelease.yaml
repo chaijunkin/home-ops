@@ -42,7 +42,7 @@ spec:
           hostnames: ["alertmanager.cloudjur.com"]
           parentRefs:
             - name: internal
-              namespace: kube-system
+              namespace: istio-system
               sectionName: https
       alertmanagerSpec:
         replicas: 1
@@ -73,7 +73,7 @@ spec:
           hostnames: ["prometheus.cloudjur.com"]
           parentRefs:
             - name: internal
-              namespace: kube-system
+              namespace: istio-system
               sectionName: https
       prometheusSpec:
         image:
