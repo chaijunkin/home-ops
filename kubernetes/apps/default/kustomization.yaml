@@ -13,7 +13,7 @@ resources:
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
   - ./n8n/ks.yaml
-  # - ./ollama/ks.yaml
+  - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
   - ./rustdesk/ks.yaml

@@ -53,7 +53,7 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 8Gi
-                # gpu.intel.com/i915: 1
+                gpu.intel.com/i915: 1
         pod:
           affinity:
             podAntiAffinity:
@@ -73,13 +73,6 @@ spec:
         ports:
           http:
             port: &port 11434
-    # route:
-    #   app:
-    #     hostnames: ["{{ .Release.Name }}.cloudjur.com"]
-    #     parentRefs:
-    #       - name: internal
-    #         namespace: kube-system
-    #         sectionName: https
     persistence:
       ollama:
         existingClaim: "{{ .Release.Name }}"

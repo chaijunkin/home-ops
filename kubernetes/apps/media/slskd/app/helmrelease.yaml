@@ -86,17 +86,6 @@ spec:
           soulseek-tcp:
             port: *soulseekPort
             protocol: TCP
-    # route:
-    #   app:
-    #     hostnames: ["{{ .Release.Name }}.cloudjur.com"]
-    #     parentRefs:
-    #       - name: internal
-    #         namespace: kube-system
-    #         sectionName: https
-    #     rules:
-    #       - backendRefs:
-    #           - identifier: app
-    #             port: *port
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"

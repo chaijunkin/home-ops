@@ -134,14 +134,6 @@ spec:
           gethomepage.dev/name: firefly
           gethomepage.dev/description: Personal finance service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
-      # api:
-      #   hostnames:
-      #     - money.cloudjur.com
-      #   parentRefs:
-      #     - name: internal
-      #       namespace: kube-system
-      #       sectionName: https
-
       data-importer:
         hostnames:
           - import-money.cloudjur.com
