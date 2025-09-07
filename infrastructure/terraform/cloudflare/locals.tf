@@ -134,6 +134,12 @@ locals {
       ### fly certs add vw.{SECRET_DOMAIN} --app {SECRET_APP}
       ### STEP 3 turn this on
     }
+    "wiki" = {
+      name    = "wiki"
+      value   = "cname.vercel-dns.com."
+      type    = "CNAME"
+      proxied = true
+    }
     "gatus" = {
       name    = "status"
       value   = var.gatus_private_url
