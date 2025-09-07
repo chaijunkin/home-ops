@@ -25,9 +25,9 @@ endpointRoutes:
   enabled: true
 enableIPv4BIGTCP: true
 envoy:
-
-gatewayAPI:
-  enabled: true
+  enabled: false
+# gatewayAPI:
+#   enabled: true
 hubble:
   enabled: false
 ipam:
