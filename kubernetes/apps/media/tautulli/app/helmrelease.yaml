@@ -90,7 +90,7 @@ spec:
           - tautulli.cloudjur.com
         parentRefs:
           - name: internal
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
         annotations:
           gethomepage.dev/enabled: "true"

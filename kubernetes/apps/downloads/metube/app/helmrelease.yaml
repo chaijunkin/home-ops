@@ -80,7 +80,7 @@ spec:
           - metube.cloudjur.com
         parentRefs:
           - name: internal
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
         rules:
           - backendRefs:

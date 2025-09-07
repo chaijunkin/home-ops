@@ -16,7 +16,7 @@ spec:
   hostnames: ["auth.cloudjur.com"]
   parentRefs:
     - name: external
-      namespace: kube-system
+      namespace: istio-system
       sectionName: https
   rules:
     - backendRefs:

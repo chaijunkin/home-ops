@@ -73,7 +73,7 @@ spec:
           - echo-server-internal.cloudjur.com
         parentRefs:
           - name: internal
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
         rules:
           - backendRefs:
@@ -84,7 +84,7 @@ spec:
           - echo-server-internal-auth.cloudjur.com
         parentRefs:
           - name: internal
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
         rules:
           - backendRefs:
@@ -95,7 +95,7 @@ spec:
           - echo-server-external.cloudjur.com
         parentRefs:
           - name: external
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
         rules:
           - backendRefs:
@@ -106,7 +106,7 @@ spec:
           - echo-server-external-auth.cloudjur.com
         parentRefs:
           - name: external
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
         rules:
           - backendRefs:
