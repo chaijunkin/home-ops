@@ -92,6 +92,7 @@ spec:
       rcon:
         enabled: true
       serviceType: LoadBalancer
+      loadbalancerIP: 10.10.30.41
   valuesFrom:
     - kind: Secret
       name: minecraft-secret
