@@ -49,7 +49,7 @@ metadata:
 spec:
   parentRefs:
     - name: internal
-      namespace: kube-system
+      namespace: istio-system
       sectionName: https
   hostnames:
     - pve.cloudjur.com
@@ -60,5 +60,5 @@ spec:
             value: /
       backendRefs:
         - name: *app
-        
+
           port: 8006

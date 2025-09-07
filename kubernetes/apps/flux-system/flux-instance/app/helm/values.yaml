@@ -15,7 +15,7 @@ instance:
     url: https://github.com/chaijunkin/home-ops
     ref: refs/heads/main
     path: kubernetes/flux/cluster
-    interval: 1440h # interval: 1h
+    interval: 1h # interval: 1h
   commonMetadata:
     labels:
       app.kubernetes.io/name: flux

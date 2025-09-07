@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: gatus
 spec:
-  interval: 1440h
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -94,7 +94,7 @@ spec:
           - "{{ .Release.Name }}.cloudjur.com"
         parentRefs:
           - name: external
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
     rbac:
       roles:

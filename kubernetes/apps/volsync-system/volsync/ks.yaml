@@ -21,7 +21,7 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: *namespace
-  interval: 1440h
+  interval: 1h
   path: ./kubernetes/apps/volsync-system/volsync/app
   postBuild:
     substitute:

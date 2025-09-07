@@ -54,7 +54,7 @@ metadata:
 spec:
   parentRefs:
     - name: internal
-      namespace: kube-system
+      namespace: istio-system
       sectionName: https
   hostnames:
     - adguard.cloudjur.com

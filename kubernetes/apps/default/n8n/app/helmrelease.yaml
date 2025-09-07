@@ -72,7 +72,7 @@ spec:
           - *hostName
         parentRefs:
           - name: internal
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
 
       webhooks:
@@ -80,7 +80,7 @@ spec:
           - n8n-webhook.cloudjur.com
         parentRefs:
           - name: external
-            namespace: kube-system
+            namespace: istio-system
             sectionName: https
         rules:
           - matches:

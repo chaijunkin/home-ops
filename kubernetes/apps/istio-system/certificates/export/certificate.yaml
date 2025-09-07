@@ -10,4 +10,6 @@ spec:
     name: letsencrypt-production
     kind: ClusterIssuer
   commonName: cloudjur.com
-  dnsNames: ["cloudjur.com", "*.cloudjur.com"]
+  dnsNames:
+    - cloudjur.com
+    - "*.cloudjur.com"
