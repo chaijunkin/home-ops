@@ -4,7 +4,7 @@ originRequest:
 
 ingress:
   - hostname: cloudjur.com
-    service: &svc https://external-istio.istio-system.kube-system.svc.cluster.local
+    service: &svc https://external-istio.istio-system.svc.cluster.local
   - hostname: "*.cloudjur.com"
     service: *svc
   # - hostname: "cloudjur.com"
