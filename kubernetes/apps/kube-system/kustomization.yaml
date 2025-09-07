@@ -10,10 +10,11 @@ resources:
   - ./coredns/ks.yaml
   - ./csi-driver-nfs/ks.yaml
   - ./external-secrets/ks.yaml
+  - ./gateway-api-crds/ks.yaml
   # - ./generic-device-plugin/ks.yaml
-  - ./intel-device-plugin/ks.yaml
+  - ./intel-device-plugin-operator/ks.yaml
   - ./keda/ks.yaml
   - ./metrics-server/ks.yaml
-  - ./node-feature-discovery/ks.yaml
+  # - ./node-feature-discovery/ks.yaml
   - ./reloader/ks.yaml
   - ./spegel/ks.yaml
