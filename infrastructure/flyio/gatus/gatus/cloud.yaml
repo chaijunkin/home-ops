@@ -11,6 +11,9 @@ endpoints:
   - name: Main website
     url: https://www.cloudjur.com
     <<: *fly-defaults
+  - name: Wiki
+    url: https://wiki.cloudjur.com
+    <<: *fly-defaults
   - name: Mail
     url: https://mail.cloudjur.com
     <<: *fly-defaults
