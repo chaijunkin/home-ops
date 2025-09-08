@@ -35,6 +35,9 @@ endpoints:
   - name: open-webui
     url: https://chat.cloudjur.com
     <<: *public-defaults
+  - name: wiki
+    url: https://wiki.cloudjur.com
+    <<: *public-defaults
   - name: plex
     url: https://plex.cloudjur.com/web/index.html
     <<: *public-defaults
