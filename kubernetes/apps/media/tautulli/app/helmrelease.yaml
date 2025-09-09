@@ -89,8 +89,8 @@ spec:
         hostnames:
           - tautulli.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         annotations:
           gethomepage.dev/enabled: "true"

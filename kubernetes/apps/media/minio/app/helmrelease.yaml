@@ -94,8 +94,8 @@ spec:
           gethomepage.dev/description: Object Storage Service
         hostnames: ["minio.cloudjur.com"]
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             port: 443
         rules:
           - backendRefs:
@@ -104,8 +104,8 @@ spec:
       s3:
         hostnames: ["s3.cloudjur.com"]
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             port: 443
         rules:
           - backendRefs:

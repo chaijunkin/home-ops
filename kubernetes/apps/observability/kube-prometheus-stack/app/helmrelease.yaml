@@ -41,8 +41,8 @@ spec:
           enabled: true
           hostnames: ["alertmanager.cloudjur.com"]
           parentRefs:
-            - name: internal
-              namespace: istio-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       alertmanagerSpec:
         replicas: 1
@@ -72,8 +72,8 @@ spec:
           enabled: true
           hostnames: ["prometheus.cloudjur.com"]
           parentRefs:
-            - name: internal
-              namespace: istio-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
       prometheusSpec:
         image:

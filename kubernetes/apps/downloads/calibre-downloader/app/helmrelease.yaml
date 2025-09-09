@@ -119,6 +119,6 @@ spec:
         hostnames:
           - dl-books.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https

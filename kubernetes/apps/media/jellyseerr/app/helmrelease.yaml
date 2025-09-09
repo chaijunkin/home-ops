@@ -97,8 +97,8 @@ spec:
           - requests.cloudjur.com
           - request.cloudjur.com
         parentRefs:
-          - name: external
-            namespace: istio-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

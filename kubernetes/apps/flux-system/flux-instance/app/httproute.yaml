@@ -8,7 +8,7 @@ spec:
   hostnames: ["flux-webhook.cloudjur.com"]
   parentRefs:
     - name: external
-      namespace: istio-system
+      namespace: network
       sectionName: https
   rules:
     - backendRefs:

@@ -160,8 +160,8 @@ spec:
           - hass.cloudjur.com
           - "{{ .Release.Name }}.cloudjur.com"
         parentRefs:
-          - name: external
-            namespace: istio-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -176,8 +176,8 @@ spec:
       # codeserver:
       #   hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.cloudjur.com"]
       #   parentRefs:
-      #     - name: internal
-      #       namespace: istio-system
+      #     - name: envoy-internal
+      #       namespace: network
       #       sectionName: https
       #   rules:
       #     - backendRefs:

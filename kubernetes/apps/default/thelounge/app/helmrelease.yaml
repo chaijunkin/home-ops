@@ -58,8 +58,8 @@ spec:
       app:
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
     persistence:
       config:

@@ -16,7 +16,7 @@ spec:
   hostnames: ["auth.cloudjur.com"]
   parentRefs:
     - name: external
-      namespace: istio-system
+      namespace: network
       sectionName: https
   rules:
     - backendRefs:

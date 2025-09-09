@@ -171,8 +171,8 @@ spec:
         hostnames:
           - karakeep.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

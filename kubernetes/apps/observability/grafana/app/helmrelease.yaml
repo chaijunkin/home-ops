@@ -494,8 +494,8 @@ spec:
         enabled: true
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
         parentRefs:
-          - name: external
-            namespace: istio-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
   chartRef:
     kind: OCIRepository
