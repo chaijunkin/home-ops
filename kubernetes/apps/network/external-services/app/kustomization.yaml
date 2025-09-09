@@ -4,6 +4,6 @@ kind: Kustomization
 resources:
   - ./ap.yaml
   - ./dns.yaml
-  - ./hypervisor.yaml
   - ./nas.yaml
+  - ./proxmox.yaml
   - ./switch.yaml
