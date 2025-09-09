@@ -48,8 +48,8 @@ metadata:
     gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_PROXMOX_PASSWORD}}"
 spec:
   parentRefs:
-    - name: internal
-      namespace: istio-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   hostnames:
     - pve.cloudjur.com

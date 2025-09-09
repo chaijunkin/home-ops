@@ -40,8 +40,8 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   parentRefs:
-    - name: internal
-      namespace: istio-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   hostnames:
     - nas.cloudjur.com

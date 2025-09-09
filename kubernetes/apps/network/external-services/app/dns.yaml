@@ -53,8 +53,8 @@ metadata:
     gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
 spec:
   parentRefs:
-    - name: internal
-      namespace: istio-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   hostnames:
     - adguard.cloudjur.com

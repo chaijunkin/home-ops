@@ -43,8 +43,8 @@ metadata:
     app.kubernetes.io/instance: switch
 spec:
   parentRefs:
-    - name: internal
-      namespace: istio-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   hostnames:
     - switch.cloudjur.com

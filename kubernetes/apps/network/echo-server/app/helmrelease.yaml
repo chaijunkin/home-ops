@@ -72,8 +72,8 @@ spec:
         hostnames:
           - echo-server-internal.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -83,8 +83,8 @@ spec:
         hostnames:
           - echo-server-internal-auth.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: istio-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -94,8 +94,8 @@ spec:
         hostnames:
           - echo-server-external.cloudjur.com
         parentRefs:
-          - name: external
-            namespace: istio-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -105,8 +105,8 @@ spec:
         hostnames:
           - echo-server-external-auth.cloudjur.com
         parentRefs:
-          - name: external
-            namespace: istio-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
