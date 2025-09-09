@@ -4,9 +4,9 @@ originRequest:
 
 ingress:
   - hostname: cloudjur.com
-    service: &svc https://external-istio.istio-system.svc.cluster.local
+    service: &service https://envoy-external.network.svc.cluster.local
   - hostname: "*.cloudjur.com"
-    service: *svc
+    service: *service
   # - hostname: "cloudjur.com"
   #   service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
   # - hostname: "*.cloudjur.com"
