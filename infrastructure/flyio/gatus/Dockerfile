@@ -48,7 +48,7 @@ RUN apk add --no-cache \
   jq \
   bash
 
-VOLUME /config
+VOLUME /data
 
 EXPOSE 80
 

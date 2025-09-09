@@ -27,7 +27,7 @@ GATUS_CONFIG_PATH = "/config"
 
 [[mounts]]
 source = 'gatus_data'
-destination = '/config'
+destination = '/data'
 
 [[vm]]
 cpu_kind = "shared"
