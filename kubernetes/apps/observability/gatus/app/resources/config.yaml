@@ -42,3 +42,8 @@ endpoints:
 #   - timestamp: 2025-08-15T14:00:00Z
 #     type: outage
 #     message: "Scheduled maintenance on database servers from 14:00 to 16:00 UTC"
+
+remote:
+  instances:
+    - endpoint-prefix: ""
+      url: "https://status.cloudjur.com/api/v1/endpoints/statuses"
