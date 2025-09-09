@@ -52,8 +52,8 @@ spec:
               TZ: "Asia/Kuala_Lumpur"
               APP_URL: https://money.cloudjur.com
               TRUSTED_PROXIES: "*"
-              ENABLE_EXCHANGE_RATES: "true"
-              ENABLE_EXTERNAL_RATES: "true"
+              # ENABLE_EXCHANGE_RATES: "true"
+              # ENABLE_EXTERNAL_RATES: "true"
 
               # COOKIE_PATH: "/"
               # COOKIE_DOMAIN: "money.cloudjur.com"
