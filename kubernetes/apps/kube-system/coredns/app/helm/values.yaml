@@ -1,7 +1,7 @@
 k8sAppLabelOverride: "kube-dns"
 image:
   repository: coredns/coredns
-  tag: 1.12.3
+  tag: 1.12.4
 
 fullnameOverride: coredns
 
