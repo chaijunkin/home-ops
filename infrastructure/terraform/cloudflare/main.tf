@@ -36,7 +36,6 @@ resource "cloudflare_record" "github_AAAA_record" {
   proxied  = true
 }
 
-
 # resource "random_id" "tunnel_secret" {
 #   byte_length = 35
 # }

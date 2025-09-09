@@ -31,6 +31,16 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      # -- Container image registry
+      registry: ghcr.io
+      # -- Container image name
+      repository: headlamp-k8s/headlamp
+      # -- Image pull policy. One of Always, Never, IfNotPresent
+      pullPolicy: IfNotPresent
+      # -- Container image tag, If "" uses appVersion in Chart.yaml
+      tag: "0.35.0"
+
     podAnnotations:
       reloader.stakater.com/auto: "true"
     fullnameOverride: headlamp
