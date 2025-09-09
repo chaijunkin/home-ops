@@ -52,6 +52,13 @@ spec:
               TZ: "Asia/Kuala_Lumpur"
               APP_URL: https://money.cloudjur.com
               TRUSTED_PROXIES: "*"
+              ENABLE_EXCHANGE_RATES: "true"
+              ENABLE_EXTERNAL_RATES: "true"
+              CACHE_DRIVER: "redis"
+              SESSION_DRIVER: "redis"
+              REDIS_HOST: "dragonfly.database.svc"
+              REDIS_DB: 7
+              REDIS_CACHE_DB: 8
             # securityContext:
             #   &sc # readOnlyRootFilesystem: true # nginx init stuff
             #   allowPrivilegeEscalation: false
