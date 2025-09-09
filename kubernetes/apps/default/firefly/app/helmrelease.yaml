@@ -54,6 +54,12 @@ spec:
               TRUSTED_PROXIES: "*"
               ENABLE_EXCHANGE_RATES: "true"
               ENABLE_EXTERNAL_RATES: "true"
+
+              COOKIE_PATH: "/"
+              COOKIE_DOMAIN: "money.cloudjur.com"
+              COOKIE_SECURE: "true"
+              COOKIE_SAMESITE: "lax"
+
               CACHE_DRIVER: "redis"
               SESSION_DRIVER: "redis"
               REDIS_HOST: "dragonfly.database.svc"
