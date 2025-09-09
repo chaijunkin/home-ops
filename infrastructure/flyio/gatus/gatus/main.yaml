@@ -29,7 +29,7 @@ disable-monitoring-lock: true
 metrics: true
 storage:
   type: sqlite
-  path: /data/data.db
+  path: /config/sqlite.db
 endpoints:
   # - name: healthchecks.io
   #   group:
