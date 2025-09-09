@@ -136,7 +136,13 @@ locals {
     }
     "wiki" = {
       name    = "wiki"
-      value   = "cname.vercel-dns.com."
+      value   = var.wiki_private_url
+      type    = "CNAME"
+      proxied = false
+    }
+    "wiki-preview" = {
+      name    = "wiki-preview"
+      value   = var.wiki_preview_private_url # too lazy to uppdate in secret.sops.yaml
       type    = "CNAME"
       proxied = false
     }

@@ -10,6 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
+  components:
+    - ../../../../components/volsync
   path: ./kubernetes/apps/observability/gatus/app
   postBuild:
     substitute:
