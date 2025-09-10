@@ -5,8 +5,10 @@ namespace: default
 components:
   - ../../components/common
 resources:
+  - ./atuin/ks.yaml
   - ./convertx/ks.yaml
   - ./cyberchef/ks.yaml
+  - ./changedetection/ks.yaml
   - ./firefly/ks.yaml
   - ./freshrss/ks.yaml
   - ./homepage/ks.yaml
@@ -16,6 +18,7 @@ resources:
   # - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./privatebin/ks.yaml
+  - ./pdf-tool/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./thelounge/ks.yaml
