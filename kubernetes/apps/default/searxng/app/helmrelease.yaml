@@ -92,7 +92,7 @@ spec:
     route:
       app:
         hostnames:
-          - searxng.cloudjur.com
+          - search.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
