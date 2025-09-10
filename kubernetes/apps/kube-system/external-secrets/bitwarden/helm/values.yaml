@@ -1,3 +1,8 @@
+defaultPodOptions:
+  securityContext:
+    runAsUser: 769
+    runAsGroup: 769
+    runAsNonRoot: true
 controllers:
   bitwarden:
     containers:
