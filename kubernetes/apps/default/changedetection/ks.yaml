@@ -17,7 +17,7 @@ spec:
     namespace: flux-system
   dependsOn:
     - name: volsync
-      namespace: system
+      namespace: volsync-system
   components:
     - ../../../../components/volsync
   postBuild:
