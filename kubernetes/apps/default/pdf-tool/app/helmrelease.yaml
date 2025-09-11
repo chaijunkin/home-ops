@@ -33,6 +33,12 @@ spec:
             port: 8080
     route:
       internal:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: PDF Tool
+          gethomepage.dev/description: PDF tools
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/pdf-tool.png
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
         parentRefs:
           - name: envoy-internal

@@ -13,6 +13,9 @@ spec:
   path: ./kubernetes/apps/default/pdf-tool/app
   components:
     - ../../../../components/gatus/guarded
+  postBuild:
+    substitute:
+      APP: *app
   sourceRef:
     kind: GitRepository
     name: flux-system

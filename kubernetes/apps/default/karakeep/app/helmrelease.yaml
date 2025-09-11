@@ -168,6 +168,12 @@ spec:
 
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: KaraKeep
+          gethomepage.dev/description: Webpage archiving tools
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/karakeep.png
         hostnames:
           - karakeep.cloudjur.com
         parentRefs:

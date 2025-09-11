@@ -56,6 +56,12 @@ spec:
             port: *port
     route:
       internal:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: Changedetection
+          gethomepage.dev/description: Changedetection tools
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/changedetection.png
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
         parentRefs:
           - name: envoy-internal
