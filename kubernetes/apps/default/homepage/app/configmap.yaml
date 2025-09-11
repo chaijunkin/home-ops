@@ -112,10 +112,10 @@ data:
             description: Edge computing platform
             href: https://fly.io/dashboard
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/fly-io.png
-        - Tailscale:
-            description: Mesh VPN provider
-            href: https://login.tailscale.com/admin/machines
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/tailscale.png
+        # - Tailscale:
+        #     description: Mesh VPN provider
+        #     href: https://login.tailscale.com/admin/machines
+        #     icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/tailscale.png
         - BackBlaze:
             description: External backup provider
             href: https://secure.backblaze.com/user_overview.htm
@@ -128,11 +128,6 @@ data:
             description: Proton VPN
             href: https://account.protonvpn.com/login
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proton-vpn.png
-        - Uptime Kuma:
-            description: External Uptime monitoring
-            href: https://ext-uptime.cloudjur.com
-            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/uptime-kuma.png
-
 
     - Management Tools:
         - VsCode:
@@ -203,10 +198,6 @@ data:
         tab: General
         style: column
         icon: mdi-play-circle
-      External Service:
-        tab: General
-        style: column
-        icon: mdi-cloud
       Downloads Service:
         tab: General
         style: column
@@ -219,6 +210,10 @@ data:
         tab: Platform
         style: column
         icon: mdi-server
+      External Service:
+        tab: Platform
+        style: column
+        icon: mdi-cloud
       Network Infrastructure:
         tab: Platform
         style: column

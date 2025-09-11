@@ -82,6 +82,12 @@ spec:
           - path: /media
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Platform Infrastructure
+          gethomepage.dev/name: FileBrowser
+          gethomepage.dev/description: File Management Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/filebrowser.png
         hostnames:
           - filebrowser.cloudjur.com
         parentRefs:

@@ -120,7 +120,7 @@ spec:
                 name: *app
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
+          gethomepage.dev/group: Utility Service
           gethomepage.dev/name: Slskd
           gethomepage.dev/description: File Sharing Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
