@@ -11,6 +11,7 @@ resources:
   - ./changedetection/ks.yaml
   - ./firefly/ks.yaml
   - ./freshrss/ks.yaml
+  - ./glance/ks.yaml
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
