@@ -12,6 +12,7 @@ spec:
   interval: 1h
   components:
     - ../../../../components/volsync
+    - ../../../../components/gatus/external
   path: ./kubernetes/apps/observability/gatus/app
   postBuild:
     substitute:
