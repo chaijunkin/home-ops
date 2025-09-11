@@ -83,7 +83,7 @@ pages:
             repositories:
               - dani-garcia/vaultwarden
           - type: change-detection
-            instance-url: https://changedetection.cloudjur.com/
+            instance-url: https://changedetection.cloudjur.com
             token: ${CHANGE_DETECTION_TOKEN}
   - name: Others
     columns:
