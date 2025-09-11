@@ -81,7 +81,7 @@ spec:
           http:
             port: &port 80
       k8s-extension:
-        controller: glance
+        controller: k8s-extension
         ports:
           http:
             port: 8080
