@@ -1,14 +1,11 @@
 ---
-originRequest:
-  originServerName: "external.cloudjur.com"
-
 ingress:
   - hostname: cloudjur.com
-    service: &service https://envoy-external.network.svc.cluster.local
+    originRequest:
+      originServerName: cloudjur.com
+    service: https://envoy-external.network.svc.cluster.local:443
   - hostname: "*.cloudjur.com"
-    service: *service
-  # - hostname: "cloudjur.com"
-  #   service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
-  # - hostname: "*.cloudjur.com"
-  #   service: https://ingress-nginx-external-controller.network.svc.cluster.local:443
+    originRequest:
+      originServerName: external.cloudjur.com
+    service: https://envoy-external.network.svc.cluster.local:443
   - service: http_status:404

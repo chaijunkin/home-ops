@@ -129,6 +129,12 @@ data:
             href: https://account.protonvpn.com/login
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/proton-vpn.png
 
+    - Observability Service:
+        - MAIN Status Page:
+            description: Centralized Status page
+            href: https://status.cloudjur.com/
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/gatus.png
+
     - Management Tools:
         - VsCode:
             description: Coding services

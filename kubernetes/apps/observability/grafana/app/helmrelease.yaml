@@ -493,6 +493,12 @@ spec:
       main:
         enabled: true
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Observability Service
+          gethomepage.dev/name: Grafana
+          gethomepage.dev/description: Analytics & Monitoring
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
         parentRefs:
           - name: envoy-external
             namespace: network

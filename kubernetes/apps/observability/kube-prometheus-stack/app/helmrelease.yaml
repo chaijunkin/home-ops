@@ -44,6 +44,12 @@ spec:
             - name: envoy-internal
               namespace: network
               sectionName: https
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/group: Observability Service
+            gethomepage.dev/name: Alertmanager
+            gethomepage.dev/description: Alert Management
+            gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/alertmanager.png
       alertmanagerSpec:
         replicas: 1
         useExistingSecret: true
@@ -75,6 +81,12 @@ spec:
             - name: envoy-internal
               namespace: network
               sectionName: https
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/group: Observability Service
+            gethomepage.dev/name: Prometheus
+            gethomepage.dev/description: Monitoring & Alerting
+            gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/mains
       prometheusSpec:
         image:
           registry: docker.io

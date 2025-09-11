@@ -73,6 +73,6 @@ spec:
         enabled: true
         existingClaim: *app
         advancedMounts:
-          main:
-            main:
+          changedetection:
+            app:
               - path: /datastore
