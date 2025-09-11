@@ -15,30 +15,31 @@ pages:
               - timezone: Asia/Kuala_Lumpur
                 label: MY Time
           - type: calendar
-
-          # - type: rss
-          #   limit: 10
-          #   collapse-after: 3
-          #   cache: 3h
-          #   feeds:
-          #     - url: https://ciechanow.ski/atom.xml
-          #     - url: https://www.joshwcomeau.com/rss.xml
-          #       title: Josh Comeau
-          #     - url: https://samwho.dev/rss.xml
-          #     - url: https://awesomekling.github.io/feed.xml
-          #     - url: https://ishadeed.com/feed.xml
-          #       title: Ahmad Shadeed
-
-          # - type: twitch-channels
-          #   channels:
-          #     - ferretsoftware
-          #     - theprimeagen
-          #     - cohhcarnage
-          #     - christitustech
-          #     - blurbs
-          #     - asmongold
-          #     - jembawls
-
+          - type: markets
+            markets:
+              - symbol: SPY
+                name: S&P 500
+              - symbol: CSPX
+                name: CSPX
+              - symbol: VWRA
+                name: VWRA
+              - symbol: MYR-USD
+                name: MYR-USD
+              - symbol: USD-MYR
+                name: USD-MYR
+              - symbol: SGD-MYR
+                name: SGD-MYR
+              - symbol: MYR-SGD
+                name: MYR-SGD
+              - symbol: BTC-MYR
+                name: Bitcoin MYR
+              - symbol: BTC-USD
+                name: Bitcoin USD
+                chart-link: https://www.tradingview.com/chart/?symbol=INDEX:BTCUSD
+              - symbol: ETH-USD
+                name: Ethereum USD
+              - symbol: ETH-MYR
+                name: Ethereum MYR
       - size: full
         widgets:
           # - type: extension
@@ -56,6 +57,70 @@ pages:
               - UCv6J_jJa8GJqFwQNgNrMuww # ServeTheHome
               - UCIgNWXsJcFwvFptmUic6wSw # apalrd's adventures
 
+          - type: group
+            widgets:
+              - type: reddit
+                subreddit: selfhosted
+                show-thumbnails: true
+                collapse-after: 6
+              - type: reddit
+                subreddit: malaysia
+              - type: reddit
+                subreddit: MalaysianPF
+                show-thumbnails: true
+
+      - size: small
+        widgets:
+          - type: weather
+            units: imperial
+            location: Kampar, Perak, Malaysia
+          - type: repository
+            repository: chaijunkin/home-ops
+            pull-requests-limit: 5
+            issues-limit: 3
+          - type: releases
+            show-source-icon: true
+            repositories:
+              - dani-garcia/vaultwarden
+          # - type: change-detection
+          #   instance-url: https://changedetection.cloudjur.com/
+          #   token: ${CHANGE_DETECTION_TOKEN}
+  - name: Others
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 12h
+            timezones:
+              - timezone: Asia/Kuala_Lumpur
+                label: MY Time
+          - type: calendar
+
+          - type: rss
+            limit: 10
+            collapse-after: 3
+            cache: 3h
+            feeds:
+              - url: https://ciechanow.ski/atom.xml
+              - url: https://www.joshwcomeau.com/rss.xml
+                title: Josh Comeau
+              - url: https://samwho.dev/rss.xml
+              - url: https://awesomekling.github.io/feed.xml
+              - url: https://ishadeed.com/feed.xml
+                title: Ahmad Shadeed
+
+          - type: twitch-channels
+            channels:
+              - ferretsoftware
+              - theprimeagen
+              - cohhcarnage
+              - christitustech
+              - blurbs
+              - asmongold
+              - jembawls
+
+      - size: full
+        widgets:
           - type: reddit
             subreddit: selfhosted
 
@@ -68,14 +133,3 @@ pages:
             repository: chaijunkin/home-ops
             pull-requests-limit: 5
             issues-limit: 3
-          # - type: monitor
-          #   cache: 1m
-          #   title: Services
-          #   style: compact
-          #   sites:
-          #     - title: Home Assistant
-          #       url: https://hass.ok8.sh
-          #     - title: Grafana
-          #       url: https://grafana.ok8.sh
-          #     - title: BlueMap
-          #       url: https://map.ok8.sh
