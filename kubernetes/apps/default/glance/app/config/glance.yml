@@ -16,6 +16,8 @@ pages:
                 label: MY Time
           - type: calendar
           - type: markets
+            symbol-link-template: https://www.google.com/search?tbm=nws&q={SYMBOL}
+            chart-link-template: https://www.tradingview.com/chart/?symbol={SYMBOL}
             markets:
               - symbol: SPY
                 name: S&P 500
