@@ -68,6 +68,12 @@ spec:
 
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: n8n
+          gethomepage.dev/description: Workflow Automation Tool
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/n8n.png
         hostnames:
           - *hostName
         parentRefs:

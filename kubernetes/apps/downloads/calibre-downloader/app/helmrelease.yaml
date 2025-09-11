@@ -116,6 +116,12 @@ spec:
                 subPath: Downloads/Books
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: Calibre Downloader
+          gethomepage.dev/description: Ebook Downloader Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/calibre-web-automated-book-downloader.png
         hostnames:
           - dl-books.cloudjur.com
         parentRefs:

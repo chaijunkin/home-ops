@@ -1,27 +1,31 @@
+defaultPodOptions:
+  securityContext:
+    runAsUser: 769
+    runAsGroup: 769
+    runAsNonRoot: true
 controllers:
   bitwarden:
     containers:
       app:
         image:
-          repository: ghcr.io/larivierec/bitwarden-cli
-          tag: 2024.9.0
+          repository: ghcr.io/chaijunkin/bw
+          tag: 2025.8.0@sha256:3ff0ff4335996d083735f0320a8930c65ffc579496f7bb589fe38c93caffe173
         envFrom:
           - secretRef:
               name: bitwarden-cli
-        # securityContext:
-        #   readOnlyRootFilesystem: true
+        securityContext:
+          readOnlyRootFilesystem: true
         probes:
           liveness:
             enabled: true
             custom: true
             spec:
+              periodSeconds: 120
               exec:
                 command:
-                  [
-                    "sh",
-                    "-c",
-                    "curl -X POST -s http://127.0.0.1:8087/sync | jq -e '.success == true'",
-                  ]
+                  - sh
+                  - -c
+                  - /healthcheck.sh
               timeoutSeconds: 5
           readiness:
             enabled: false

@@ -20,6 +20,7 @@ spec:
   wait: false
   components:
     - ../../../../components/volsync
+    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       APP: *appname

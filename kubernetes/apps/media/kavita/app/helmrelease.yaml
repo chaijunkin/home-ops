@@ -42,6 +42,12 @@ spec:
             port: &port 5000
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Kavita
+          gethomepage.dev/description: Manga Reader
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kavita.png
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.cloudjur.com"]
         parentRefs:
           - name: envoy-external

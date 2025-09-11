@@ -79,6 +79,12 @@ spec:
           - backendRefs:
               - port: *port
                 name: echo-server
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server Internal
+          gethomepage.dev/description: HTTP & HTTPS Echo Server Internal
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
       int-auth-route:
         hostnames:
           - echo-server-internal-auth.cloudjur.com
@@ -90,6 +96,12 @@ spec:
           - backendRefs:
               - port: *port
                 name: echo-server
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server Internal Auth
+          gethomepage.dev/description: HTTP & HTTPS Echo Server Internal Auth
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
       ext-route:
         hostnames:
           - echo-server-external.cloudjur.com
@@ -101,6 +113,12 @@ spec:
           - backendRefs:
               - port: *port
                 name: echo-server
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server External
+          gethomepage.dev/description: HTTP & HTTPS Echo Server External
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
       ext-auth-route:
         hostnames:
           - echo-server-external-auth.cloudjur.com
@@ -112,3 +130,9 @@ spec:
           - backendRefs:
               - port: *port
                 name: echo-server
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server External Auth
+          gethomepage.dev/description: HTTP & HTTPS Echo Server External Auth
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
