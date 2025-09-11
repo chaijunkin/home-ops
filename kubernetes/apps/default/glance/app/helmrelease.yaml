@@ -90,7 +90,7 @@ spec:
         hostnames: ["{{ .Release.Name }}.cloudjur.com", "g.cloudjur.com"]
         parentRefs:
           - name: envoy-internal
-            namespace: networking
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
