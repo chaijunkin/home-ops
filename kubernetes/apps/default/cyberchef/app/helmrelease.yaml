@@ -47,7 +47,7 @@ spec:
         hostnames:
           - cyberchef.cloudjur.com
         parentRefs:
-          - name: main
+          - name: envoy-internal
             namespace: network
             sectionName: https
         annotations:

@@ -11,6 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/default/pdf-tool/app
+  components:
+    - ../../../../components/gatus/guarded
   sourceRef:
     kind: GitRepository
     name: flux-system
