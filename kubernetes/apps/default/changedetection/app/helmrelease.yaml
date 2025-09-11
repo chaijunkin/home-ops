@@ -56,7 +56,7 @@ spec:
           http:
             port: *port
     route:
-      internal:
+      app:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Utility Service
@@ -68,8 +68,6 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
-        rules:
-          - backendRefs: [{}]
     persistence:
       config:
         enabled: true
