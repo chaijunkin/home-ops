@@ -28,7 +28,7 @@ metrics:
       - {color: red, min: 76, max: 9999}
 
   - name: cluster_power_usage
-    query: network_ups_tools_input_voltage{server="server"} # NAS Load % * 900W + Network Load % * 330W
+    query: round(network_ups_tools_input_voltage{server="server"}) # NAS Load % * 900W + Network Load % * 330W
     suffix: "W"
     colors:
       - {color: "green", min: 0, max: 600}
