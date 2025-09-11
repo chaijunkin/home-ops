@@ -1,0 +1,124 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app glance
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      glance:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          glance:
+            image:
+              repository: glanceapp/glance
+              tag: v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
+            env:
+              TZ: Asia/Kuala_Lumpur
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 64Mi
+              limits:
+                memory: 96Mi
+          k8s-extension:
+            image:
+              repository: ghcr.io/lukasdietrich/glance-k8s/glance-k8s
+              tag: v0.3.5@sha256:9dad71e553b3978d335d92c725593713e31cd588aa4526da3e3652fb782efd11
+            env:
+              TZ: Asia/Kuala_Lumpur
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources: {}
+        serviceAccount:
+          identifier: *app
+        pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            runAsNonRoot: true
+            fsGroup: 2000
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: glance
+        ports:
+          http:
+            port: &port 8080
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Tools
+          gethomepage.dev/name: Glance
+          gethomepage.dev/description: Peak and glance
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/glance.png
+        hostnames: ["{{ .Release.Name }}.cloudjur.com", "g.cloudjur.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      config-file:
+        type: configMap
+        name: glance-configmap
+        globalMounts:
+          - path: /app/config/glance.yml
+            subPath: glance.yml
+            readOnly: true
+    serviceAccount:
+      glance:
+        enabled: true
+    rbac:
+      roles:
+        list:
+          type: ClusterRole
+          forceRename: *app
+          rules:
+            - apiGroups: ["", "metrics.k8s.io"]
+              resources: ["nodes"]
+              verbs: ["list"]
+            - apiGroups: [""]
+              resources: ["services"]
+              verbs: ["list"]
+            - apiGroups: ["networking.k8s.io"] # networking.k8s.io/v1
+              resources: ["ingresses", "ingressclasses"]
+              verbs: ["list"]
+            - apiGroups: ["apps"]
+              resources: ["deployments", "statefulsets", "daemonsets"]
+              verbs: ["list"]
+      bindings:
+        list:
+          type: ClusterRoleBinding
+          forceRename: *app
+          roleRef:
+            kind: ClusterRole
+            name: *app
+          subjects:
+            - kind: ServiceAccount
+              name: *app
+              namespace: "{{ .Release.Namespace }}"
