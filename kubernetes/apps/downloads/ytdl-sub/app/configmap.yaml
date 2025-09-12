@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: ytdl-sub-config
 data:
-  config.yml: |
+  config.yaml: |
     configuration:
       working_directory: "/tmp/ytdl-sub/"
 
