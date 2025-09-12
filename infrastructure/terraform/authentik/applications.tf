@@ -37,7 +37,7 @@ module "proxy" {
   name               = each.value.name
   description        = each.value.description
   icon_url           = each.value.icon_url
-  group              = each.value.group
+  group              = authentik_group.default[each.value.group].name
   slug               = each.value.slug
   domain             = var.public_domain
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
