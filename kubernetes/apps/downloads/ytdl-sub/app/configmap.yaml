@@ -58,7 +58,7 @@ data:
         # final_ext: m4a
         cachedir: "/tmp/ytdl-sub/"
     YouTube Full Albums:
-      = Chill:  # Sets genre tag to "Chill"
+      = J-Pop:  # Sets genre tag to "J-Pop"
         "JAPAN": "https://youtube.com/playlist?list=PLkxXh7ZaWJdfvWz7-9fopddgvPd7boqLT&si=JCPK_rG0itTJ3rIQ"
         ## "ARTIST": "RELEASE URL/PLAYLIST URL/SONG URL"
 
