@@ -30,7 +30,7 @@ data:
     #       download_before: "now"
     #       download_after: "19000101"
 
-  subscriptions.yml: |-
+  subscriptions.yaml: |-
     __preset__:
       overrides:
         music_directory: "/media/Music/youtube"
