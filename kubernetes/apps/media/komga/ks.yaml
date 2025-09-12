@@ -14,7 +14,7 @@ spec:
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/volsync
   interval: 1h
-  path: ./kubernetes/apps/media/komga
+  path: ./kubernetes/apps/media/komga/app
   postBuild:
     substitute:
       APP: *app
