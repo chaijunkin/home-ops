@@ -1,52 +1,38 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app proxmox
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
+  name: proxmox
 spec:
-  type: ClusterIP
   ports:
-    - port: 8006
+    - name: https
       protocol: TCP
+      port: 443
       targetPort: 8006
-
 ---
-apiVersion: v1
-kind: Endpoints
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
-  name: &app proxmox
+  name: proxmox
   labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
-subsets:
+    kubernetes.io/service-name: proxmox
+    endpointslice.kubernetes.io/managed-by: cluster-admins
+addressType: IPv4
+ports:
+  - name: https
+    protocol: TCP
+    port: 8006
+endpoints:
   - addresses:
-      - ip: 10.10.30.10
-    ports:
-      - port: 8006
+      - 10.10.30.10
+    conditions: {} # https://github.com/argoproj/argo-cd/issues/15554
 ---
 apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+kind: TLSRoute
 metadata:
-  name: &app proxmox
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
-  annotations: ingress.cilium.io/ssl-passthrough
+  name: proxmox
 spec:
   parentRefs:
-    - name: internal
-      namespace: kube-system
-      sectionName: https
-  hostnames:
-    - pve.cloudjur.com
+    - {name: envoy-internal, namespace: network}
+  hostnames: [pve.cloudjur.com]
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: *app
-          port: 8006
+    - backendRefs: [{name: proxmox, port: 443}]
