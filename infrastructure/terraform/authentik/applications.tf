@@ -16,7 +16,7 @@ locals {
       group = "home"
       slug = "echo-server-ext-auth"
       auth_groups = [authentik_group.default["home"].id]
-    }
+    },
     {
       name     = "echo-server-int-auth"
       icon_url = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png"
