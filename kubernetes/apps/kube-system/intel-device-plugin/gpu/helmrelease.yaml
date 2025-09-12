@@ -33,6 +33,9 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    name: intel-gpu-plugin
-    sharedDevNum: 3
+    name: igpu
+    sharedDevNum: 5
+    enableMonitoring: true
     nodeFeatureRule: false
+    nodeSelector:
+      intel.feature.node.kubernetes.io/gpu: "true"
