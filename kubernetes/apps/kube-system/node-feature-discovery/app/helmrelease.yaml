@@ -34,7 +34,11 @@ spec:
     worker:
       config:
         core:
-          sources:
-            - pci
-            - system
-            - usb
+          sleepInterval: 0s
+    # worker:
+    #   config:
+    #     core:
+    #       sources:
+    #         - pci
+    #         - system
+    #         - usb
