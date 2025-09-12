@@ -17,7 +17,7 @@ spec:
       retries: 3
   values:
     controllers:
-      ytdl-sub:
+      *app :
         type: cronjob
         annotations:
           reloader.stakater.com/auto: "true"
@@ -37,7 +37,7 @@ spec:
         #     fsGroup: *group
         #     fsGroupChangePolicy: "OnRootMismatch"
         containers:
-          app:
+          *app :
             image:
               repository: ghcr.io/jmbannon/ytdl-sub
               tag: "2025.09.09"
