@@ -1,5 +1,5 @@
 
-variable "CLUSTER_DOMAIN" {
+variable "public_domain" {
   type        = string
   description = "Domain for Authentik"
   sensitive   = true

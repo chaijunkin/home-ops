@@ -21,7 +21,7 @@
 #   config = jsonencode({
 #     "log_level"                      = "info"
 #     "docker_labels"                  = null
-#     "authentik_host"                 = "https://auth.${var.CLUSTER_DOMAIN}/"
+#     "authentik_host"                 = "https://auth.${var.public_domain}/"
 #     "authentik_host_browser"         = ""
 #     "docker_network"                 = null
 #     "container_image"                = null
@@ -48,7 +48,7 @@
 #   config = jsonencode({
 #     "log_level"                      = "info"
 #     "docker_labels"                  = null
-#     "authentik_host"                 = "https://auth.${var.CLUSTER_DOMAIN}/"
+#     "authentik_host"                 = "https://auth.${var.public_domain}/"
 #     "authentik_host_browser"         = ""
 #     "docker_network"                 = null
 #     "container_image"                = null
@@ -65,7 +65,7 @@
 #     "kubernetes_disabled_components" = []
 #     "kubernetes_ingress_annotations" = {
 #       "external-dns/is-public" : "true"
-#       "external-dns.alpha.kubernetes.io/target" : "external.${var.CLUSTER_DOMAIN}"
+#       "external-dns.alpha.kubernetes.io/target" : "external.${var.public_domain}"
 #     }
 #     "kubernetes_ingress_secret_name" = "authentik-outpost-tls"
 #   })

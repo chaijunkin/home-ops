@@ -4,7 +4,7 @@
 #   slug   = "echo_server_internal"
 
 #   name   = "Echo Server"
-#   domain = "echo-server-internal-auth.${var.CLUSTER_DOMAIN}"
+#   domain = "echo-server-internal-auth.${var.public_domain}"
 #   group  = authentik_group.default["infrastructure"].id
 
 #   policy_engine_mode      = "any"
@@ -25,7 +25,7 @@
 #   slug   = "echo_server_external"
 
 #   name   = "Echo Server External"
-#   domain = "echo-server-external-auth.${var.CLUSTER_DOMAIN}"
+#   domain = "echo-server-external-auth.${var.public_domain}"
 #   group  = authentik_group.default["infrastructure"].id
 
 #   policy_engine_mode      = "any"

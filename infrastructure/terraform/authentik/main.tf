@@ -9,6 +9,6 @@ terraform {
 }
 
 provider "authentik" {
-  url   = "https://auth.${var.CLUSTER_DOMAIN}"
+  url   = "https://auth.${var.public_domain}"
   token = var.authentik_token
 }

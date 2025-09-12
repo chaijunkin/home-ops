@@ -14,8 +14,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      EXT_AUTH_TARGET: echo-server-int-auth-route
-      EXT_AUTH_TARGET_2: echo-server-ext-auth-route
+      EXT_AUTH_TARGET: echo-server-int-auth
+      EXT_AUTH_TARGET_2: echo-server-ext-auth
   components:
     - ../../../../components/ext-auth
     - ../../../../components/ext-auth/two
