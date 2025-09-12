@@ -35,7 +35,10 @@ data:
       overrides:
         music_directory: "/media/Music/youtube"
       ytdl_options:
-        cookiefile: "/config/cookie.txt"
+        cookiefile: "/config/cookies-rw.txt"
+        ignoreerrors: True
+        break_on_existing: False
+        break_on_reject: False
         # http_headers": '{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}'
         check_formats: True
         throttle_protection:
@@ -50,8 +53,6 @@ data:
             max: 36
           subscription_download_probability: 1.0
           subscription_download_probability: 1.0
-        break_on_existing: True
-        break_on_reject: True
         # final_ext: m4a
         cachedir: "/tmp/ytdl-sub/"
     YouTube Full Albums:
