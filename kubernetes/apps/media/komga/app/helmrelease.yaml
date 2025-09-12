@@ -56,5 +56,5 @@ spec:
         server: smb.cloudjur.com
         path: /tank/Storage
         globalMounts:
-          - path: /data
+          - path: /media
             subPath: Books
