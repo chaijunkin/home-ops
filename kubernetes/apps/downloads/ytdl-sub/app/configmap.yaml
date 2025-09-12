@@ -34,6 +34,8 @@ data:
     __preset__:
       overrides:
         music_directory: "/media/Music/youtube"
+        tv_show_directory: "/TV Shows"
+        music_video_directory: "/Videos"
       ytdl_options:
         cookiefile: "/config/cookies-rw.txt"
         ignoreerrors: True
