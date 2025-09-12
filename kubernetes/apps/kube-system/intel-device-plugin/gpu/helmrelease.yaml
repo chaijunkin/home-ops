@@ -33,9 +33,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    name: igpu
-    sharedDevNum: 5
-    enableMonitoring: true
-    nodeFeatureRule: false
-    nodeSelector:
-      intel.feature.node.kubernetes.io/gpu: "true"
+    name: intel-gpu-plugin
+    sharedDevNum: 2 # TODO: the higher the number, the less resrouce slices each client gets, consider setting this to 1
+    nodeFeatureRule: true
