@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: echo-server
+  name: &app echo-server
   namespace: network
 spec:
   targetNamespace: network
@@ -11,6 +11,14 @@ spec:
       app.kubernetes.io/name: echo-server
   path: ./kubernetes/apps/network/echo-server/app
   prune: true
+  postBuild:
+    substitute:
+      APP: *app
+      EXT_AUTH_TARGET: echo-server-int-auth-route
+      EXT_AUTH_TARGET_2: echo-server-ext-auth-route
+  components:
+    - ../../../../components/ext-auth
+    - ../../../../components/ext-auth/two
   sourceRef:
     kind: GitRepository
     name: flux-system
