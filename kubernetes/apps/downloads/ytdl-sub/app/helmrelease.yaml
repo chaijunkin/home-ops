@@ -45,7 +45,7 @@ spec:
               - bash
               - -c
               - |
-                cp /config/cookies.txt /config/cookies-rw.txt
+                # cp /config/cookies.txt /config/cookies-rw.txt
                 ytdl-sub --log-level=debug --config=/config/config.yaml sub /media/youtube/subscriptions.yaml
                 echo "[cronjob:command] Fixing permissions, started at $$(date --rfc-2822)"
                 find $${MEDIA_FOLDER} -user root -exec chown 2000:2000 "{}" \; -exec chmod 777 "{}" \;
@@ -76,16 +76,16 @@ spec:
               - path: /config/config.yaml
                 subPath: config.yaml
                 readOnly: true
-      ## yt-dlp doesn't like a readonly cookies file. Changing readOnly has no
-      ## effect.
-      cookies:
-        name: ytdl-sub-cookies
-        type: secret
-        advancedMounts:
-          *app :
-            *app :
-              - path: /config/cookies.txt
-                subPath: cookies.txt
+      # ## yt-dlp doesn't like a readonly cookies file. Changing readOnly has no
+      # ## effect.
+      # cookies:
+      #   name: ytdl-sub-cookies
+      #   type: secret
+      #   advancedMounts:
+      #     *app :
+      #       *app :
+      #         - path: /config/cookies.txt
+      #           subPath: cookies.txt
       tmp:
         type: emptyDir
         advancedMounts:
