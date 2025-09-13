@@ -54,32 +54,28 @@ resource "authentik_service_connection_kubernetes" "local" {
   local = true
 }
 
-# resource "authentik_outpost" "proxyoutpost" {
-#   name               = "proxy-outpost"
-#   type               = "proxy"
-#   service_connection = authentik_service_connection_kubernetes.local.id
-#   protocol_providers = [
-#     module.proxy-transmission.id,
-#     module.proxy-prowlarr.id,
-#   ]
-#   config = jsonencode({
-#     authentik_host          = "https://auth.${var.public_domain}",
-#     authentik_host_insecure = false,
-#     authentik_host_browser  = "",
-#     log_level               = "debug",
-#     object_naming_template  = "ak-outpost-%(name)s",
-#     docker_network          = null,
-#     docker_map_ports        = true,
-#     docker_labels           = null,
-#     container_image         = null,
-#     kubernetes_replicas     = 1,
-#     kubernetes_namespace    = "security",
-#     kubernetes_ingress_annotations = {
-#       "cert-manager.io/cluster-issuer" = "letsencrypt-production"
-#     },
-#     kubernetes_ingress_secret_name = "proxy-outpost-tls",
-#     kubernetes_service_type        = "ClusterIP",
-#     kubernetes_disabled_components = [],
-#     kubernetes_image_pull_secrets  = []
-#   })
-# }
+resource "authentik_outpost" "proxyoutpost" {
+  name               = "proxy-outpost"
+  type               = "proxy"
+  service_connection = authentik_service_connection_kubernetes.local.id
+  protocol_providers = [
+    module.proxy["echo-server-int-auth"].id,
+    module.proxy["echo-server-ext-auth"].id,
+  ]
+  config = jsonencode({
+    authentik_host          = "https://auth.${var.public_domain}",
+    log_level               = "warning",
+    object_naming_template  = "ak-outpost-%(name)s",
+    kubernetes_replicas     = 1,
+    kubernetes_namespace    = "security",
+    kubernetes_httproute_parent_refs = [{
+      group       = "gateway.networking.k8s.io"
+      kind        = "Gateway"
+      name        = "envoy-external"
+      namespace   = "network"
+      sectionName = "https"
+    }]
+    kubernetes_service_type        = "ClusterIP",
+    kubernetes_disabled_components = ["ingress"],
+  })
+}

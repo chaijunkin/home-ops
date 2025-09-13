@@ -20,6 +20,22 @@
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
+  name: downloads-ref-authentik-svc
+spec:
+  from:
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: downloads
+  to:
+    - group: ""
+      kind: Service
+      name: ${AUTH_SVC}
+---
+# yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
+# adapted from https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
   name: home-automation-ref-authentik-svc
 spec:
   from:
