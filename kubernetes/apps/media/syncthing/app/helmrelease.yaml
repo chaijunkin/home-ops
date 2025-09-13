@@ -109,7 +109,7 @@ spec:
       app:
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Services
+          gethomepage.dev/group: Application Service
           gethomepage.dev/name: Syncthing
           gethomepage.dev/description: File Synchronization Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/syncthing.png
