@@ -1,169 +1,112 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2beta2.schema.json
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app syncthing
+  name: syncthing
 spec:
-  interval: 24h
+  interval: 1h
+  maxHistory: 1
   chartRef:
     kind: OCIRepository
     name: app-template
+    namespace: flux-system
   install:
+    crds: CreateReplace
+    timeout: 2m
     remediation:
-      retries: 3
+      retries: 1
   upgrade:
-    cleanupOnFail: true
+    crds: CreateReplace
+    timeout: 2m
     remediation:
-      strategy: rollback
-      retries: 3
+      retries: 1
   values:
     controllers:
-      syncthing:
-        containers:
-          app:
-            image:
-              repository: ghcr.io/syncthing/syncthing
-              tag: 2.0.9@sha256:e1bc00b65c67e3d76f455af8bab01f95a380cd1962dd3bdfa52a702f07f0a5d0
-            env:
-              TZ: ${TIMEZONE}
-              PGID: 2000
-              PUID: 2000
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /rest/noauth/health
-                    port: &port 8384
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-            resources:
-              requests:
-                cpu: 15m
-                memory: 150M
-              limits:
-                memory: 300M
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
-      browser:
-        containers:
-          app:
-            image:
-              repository: docker.io/filebrowser/filebrowser
-              tag: v2.43.0
-            env:
-              TZ: ${TIMEZONE:=Asia/Kuala_Lumpur}
-              FB_DATABASE: /config/filebrowser.db
-              FB_ROOT: /media
-              FB_LOG: stdout
-              FB_NOAUTH: true
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: &browserPort 80
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-            resources:
-              requests:
-                cpu: 10m
-                memory: 50Mi
-              limits:
-                memory: 500Mi
+      ${APP}:
         pod:
           securityContext:
+            runAsNonRoot: true
             runAsUser: 2000
             runAsGroup: 2000
             fsGroup: 2000
-            fsGroupChangePolicy: "OnRootMismatch"
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile: {type: RuntimeDefault}
+        containers:
+          main:
+            image:
+              repository: ghcr.io/syncthing/syncthing
+              tag: 2.0.9@sha256:e1bc00b65c67e3d76f455af8bab01f95a380cd1962dd3bdfa52a702f07f0a5d0
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 500Mi
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    port: &port 8384
+                    path: /rest/noauth/health
+              readiness: *probes
     service:
-      app:
-        controller: syncthing
-        type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: "10.10.30.9"
-        # ipFamilyPolicy: PreferDualStack
-        primary: true
+      main:
+        controller: ${APP}
         ports:
           http:
-            port: 8384
-            primary: true
-      listen:
-        controller: syncthing
-        annotations:
-          lbipam.cilium.io/ips: "10.10.30.8"
-        type: LoadBalancer
-        # externalTrafficPolicy: Local
-        # ipFamilies: [IPv4, IPv6]
-        # ipFamilyPolicy: PreferDualStack
-        ports:
-          listen:
+            port: *port
+          tcp:
             port: 22000
-            protocol: TCP
-            targetPort: 22000
-          listen-udp:
-            enabled: true
+          quic:
             port: 22000
             protocol: UDP
-          discovery:
-            enabled: true
-            port: 21027
-            protocol: UDP
-            targetPort: 21027
-      browser:
-        controller: browser
-        ipFamilyPolicy: PreferDualStack
-        ports:
-          http:
-            port: *browserPort
     route:
-      app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Syncthing
-          gethomepage.dev/description: File Synchronization Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/syncthing.png
-        hostnames: ["{{ .Release.Name }}.cloudjur.com"]
+      main:
+        hostnames:
+          - ${APP}.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: app
-                port: 8384
-      browser:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Platform Infrastructure
-          gethomepage.dev/name: FileBrowser
-          gethomepage.dev/description: File Management Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/filebrowser.png
-        hostnames: ["filebrowser.cloudjur.com"]
+              - identifier: main
+                port: *port
+            timeouts:
+              request: 0s
+      tcp:
+        kind: TCPRoute
         parentRefs:
-          - name: envoy-internal
+          - name: internal
             namespace: network
-            sectionName: https
+            sectionName: syncthing-tcp
         rules:
           - backendRefs:
-              - identifier: browser
-                port: *browserPort
+              - identifier: main
+                port: 22000
+      quic:
+        kind: UDPRoute
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: syncthing-quic
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: 22000
     persistence:
       config:
-        existingClaim: *app
+        existingClaim: ${APP}
+        globalMounts:
+          - path: /var/syncthing
       media:
         type: nfs
         server: smb.cloudjur.com
