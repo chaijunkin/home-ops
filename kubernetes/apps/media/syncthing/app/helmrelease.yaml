@@ -33,7 +33,7 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
             seccompProfile: {type: RuntimeDefault}
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/syncthing/syncthing
               tag: 2.0.9@sha256:e1bc00b65c67e3d76f455af8bab01f95a380cd1962dd3bdfa52a702f07f0a5d0
@@ -61,18 +61,31 @@ spec:
                     path: /rest/noauth/health
               readiness: *probes
     service:
-      main:
-        controller: ${APP}
+      app:
+        forceRename: syncthing
+        primary: true
+        controller: syncthing
         ports:
           http:
-            port: *port
-          tcp:
+            port: &port 8384
+      listen:
+        controller: syncthing
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: ${SVC_SYNCTHING_ADDR}
+        ports:
+          listen-tcp:
             port: 22000
-          quic:
+            protocol: TCP
+          listen-udp:
             port: 22000
             protocol: UDP
+          discovery:
+            port: 21027
+            protocol: UDP
+
     route:
-      main:
+      app:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
@@ -87,30 +100,30 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: main
+              - identifier: app
                 port: *port
             timeouts:
               request: 0s
-      tcp:
-        kind: TCPRoute
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: syncthing-tcp
-        rules:
-          - backendRefs:
-              - identifier: main
-                port: 22000
-      quic:
-        kind: UDPRoute
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: syncthing-quic
-        rules:
-          - backendRefs:
-              - identifier: main
-                port: 22000
+      # tcp:
+      #   kind: TCPRoute
+      #   parentRefs:
+      #     - name: envoy-internal
+      #       namespace: network
+      #       sectionName: syncthing-tcp
+      #   rules:
+      #     - backendRefs:
+      #         - identifier: main
+      #           port: 22000
+      # quic:
+      #   kind: UDPRoute
+      #   parentRefs:
+      #     - name: envoy-internal
+      #       namespace: network
+      #       sectionName: syncthing-quic
+      #   rules:
+      #     - backendRefs:
+      #         - identifier: main
+      #           port: 22000
     persistence:
       config:
         existingClaim: ${APP}
