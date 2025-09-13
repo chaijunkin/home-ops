@@ -23,18 +23,34 @@ spec:
           app:
             image:
               repository: ghcr.io/syncthing/syncthing
-              tag: 2.0.9
+              tag: 2.0.9@sha256:e1bc00b65c67e3d76f455af8bab01f95a380cd1962dd3bdfa52a702f07f0a5d0
+            env:
+              TZ: ${TIMEZONE}
+              PGID: 2000
+              PUID: 2000
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /rest/noauth/health
+                    port: &port 8384
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             resources:
               requests:
                 cpu: 15m
                 memory: 150M
               limits:
                 memory: 300M
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
       browser:
         containers:
           app:
@@ -94,6 +110,10 @@ spec:
             port: 22000
             protocol: TCP
             targetPort: 22000
+          listen-udp:
+            enabled: true
+            port: 22000
+            protocol: UDP
           discovery:
             enabled: true
             port: 21027
