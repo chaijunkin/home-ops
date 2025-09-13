@@ -136,7 +136,7 @@ data:
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/gatus.png
             widget:
               type: gatus
-              url: https://status.cloudjur.com
+              url: http://status.cloudjur.com
 
     - Management Tools:
         - VsCode:
