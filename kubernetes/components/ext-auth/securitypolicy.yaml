@@ -12,7 +12,7 @@ spec:
       - cookie
     http:
       backendRefs:
-        - name: ak-outpost-proxy-outpost
+        - name: ${EXT_AUTH_BACKEND_REF:-ak-outpost-proxy-outpost-external}
           namespace: security
           port: 9000
       path: /outpost.goauthentik.io/auth/envoy
