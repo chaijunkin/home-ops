@@ -16,7 +16,7 @@ spec:
       APP: *app
       EXT_AUTH_TARGET: echo-server-int-auth
       EXT_AUTH_TARGET_2: echo-server-ext-auth
-      EXT_AUTH_BACKEND_REF: ak-outpost-proxy-outpost-interal
+      EXT_AUTH_BACKEND_REF: ak-outpost-proxy-outpost-internal
   components:
     - ../../../../components/ext-auth
     - ../../../../components/ext-auth/two
