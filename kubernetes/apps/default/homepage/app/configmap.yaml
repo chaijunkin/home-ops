@@ -134,9 +134,9 @@ data:
             description: Centralized Status page
             href: https://status.cloudjur.com/
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/gatus.png
-            widget:
-              type: gatus
-              url: http://status.cloudjur.com
+            # widget:
+            #   type: gatus
+            #   url: http://status.cloudjur.com
 
     - Management Tools:
         - VsCode:
