@@ -500,7 +500,7 @@ spec:
           gethomepage.dev/description: Analytics & Monitoring
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
           gethomepage.dev/widget.type: grafana
-          gethomepage.dev/widget.url: "http://grafana.observability:3000"
+          gethomepage.dev/widget.url: "http://grafana.observability.svc.cluster.local:3000"
           gethomepage.dev/widget.alerts: alertmanager
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_GRAFANA_USERNAME`}} }}"
           gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_GRAFANA_PASSWORD`}} }}"

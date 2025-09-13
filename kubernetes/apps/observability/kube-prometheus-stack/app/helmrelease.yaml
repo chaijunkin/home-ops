@@ -88,7 +88,7 @@ spec:
             gethomepage.dev/description: Monitoring & Alerting
             gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/prometheus.png
             gethomepage.dev/widget.type: prometheus
-            gethomepage.dev/widget.url: "http://prometheus.observability:9090"
+            gethomepage.dev/widget.url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       prometheusSpec:
         image:
           registry: docker.io
