@@ -50,8 +50,6 @@ spec:
             gethomepage.dev/name: Alertmanager
             gethomepage.dev/description: Alert Management
             gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/alertmanager.png
-            gethomepage.dev/widget.type: alertmanager
-            gethomepage.dev/widget.url: "http://prometheus.observability:9090"
       alertmanagerSpec:
         replicas: 1
         useExistingSecret: true
