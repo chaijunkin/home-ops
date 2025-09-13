@@ -50,7 +50,7 @@ spec:
           gethomepage.dev/description: Comics/Manga Server
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/komga.png
           gethomepage.dev/widget.type: komga
-          gethomepage.dev/widget.url: "http://komga.media:80"
+          gethomepage.dev/widget.url: "http://komga.media.svc.cluster.local:80"
           gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_KOMGA_USERNAME`}} }}"
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_KOMGA_PASSWORD`}} }}"
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]

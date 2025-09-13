@@ -129,7 +129,7 @@ spec:
           gethomepage.dev/description: NVR with AI capabilities
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/frigate.png
           gethomepage.dev/widget.type: frigate
-          gethomepage.dev/widget.url: "http://frigate.home-automation:5000"
+          gethomepage.dev/widget.url: "http://frigate.home-automation.svc.cluster.local:5000"
           gethomepage.dev/widget.enableRecentEvents: "true"
         hostnames:
           - frigate.cloudjur.com
