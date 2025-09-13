@@ -49,15 +49,20 @@ resource "authentik_brand" "home" {
   flow_user_settings  = authentik_flow.user-settings.uuid
 }
 
-resource "authentik_service_connection_kubernetes" "local" {
-  name  = "local"
-  local = true
+# resource "authentik_service_connection_kubernetes" "local" {
+#   name  = "local"
+#   local = true
+# }
+
+
+data "authentik_service_connection_kubernetes" "local" {
+  name = "Local Kubernetes Cluster"
 }
 
 resource "authentik_outpost" "proxyoutpostinternal" {
   name               = "proxy-outpost-internal"
   type               = "proxy"
-  service_connection = authentik_service_connection_kubernetes.local.id
+  service_connection = data.authentik_service_connection_kubernetes.local.id
   protocol_providers = [
     module.proxy["echo-server-int-auth"].id,
   ]
@@ -82,7 +87,7 @@ resource "authentik_outpost" "proxyoutpostinternal" {
 resource "authentik_outpost" "proxyoutpostexternal" {
   name               = "proxy-outpost-external"
   type               = "proxy"
-  service_connection = authentik_service_connection_kubernetes.local.id
+  service_connection = data.authentik_service_connection_kubernetes.local.id
   protocol_providers = [
     module.proxy["echo-server-ext-auth"].id,
   ]

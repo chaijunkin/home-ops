@@ -7,7 +7,6 @@ components:
 resources:
   # # # Flux-Kustomizations
   - ./calibre-web-automated/ks.yaml
-  - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
   - ./minio/ks.yaml
   - ./jellyseerr/ks.yaml
@@ -16,6 +15,7 @@ resources:
   - ./ocis/ks.yaml
   - ./plex/ks.yaml
   - ./slskd/ks.yaml
+  - ./syncthing/ks.yaml
   - ./tautulli/ks.yaml
 
   ### WISHLIST

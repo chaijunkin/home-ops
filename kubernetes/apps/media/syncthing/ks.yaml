@@ -2,14 +2,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: filebrowser
+  name: syncthing
   namespace: media
 spec:
   targetNamespace: media
   commonMetadata:
     labels:
-      app.kubernetes.io/name: filebrowser
-  path: ./kubernetes/apps/media/filebrowser/app
+      app.kubernetes.io/name: syncthing
+  path: ./kubernetes/apps/media/syncthing/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -21,7 +21,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      APP: filebrowser
+      APP: syncthing
       VOLSYNC_CAPACITY: 5Gi
   components:
     - ../../../../components/volsync
