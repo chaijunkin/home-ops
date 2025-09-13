@@ -37,6 +37,9 @@ spec:
             image:
               repository: ghcr.io/syncthing/syncthing
               tag: 2.0.9@sha256:e1bc00b65c67e3d76f455af8bab01f95a380cd1962dd3bdfa52a702f07f0a5d0
+            env:
+              PGID: 2000
+              PUID: 2000
             resources:
               requests:
                 cpu: 100m
@@ -91,7 +94,7 @@ spec:
       tcp:
         kind: TCPRoute
         parentRefs:
-          - name: internal
+          - name: envoy-internal
             namespace: network
             sectionName: syncthing-tcp
         rules:
@@ -101,7 +104,7 @@ spec:
       quic:
         kind: UDPRoute
         parentRefs:
-          - name: internal
+          - name: envoy-internal
             namespace: network
             sectionName: syncthing-quic
         rules:
