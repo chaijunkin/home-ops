@@ -48,6 +48,10 @@ spec:
           gethomepage.dev/name: Kavita
           gethomepage.dev/description: Manga Reader
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kavita.png
+          gethomepage.dev/widget.type: kavita
+          gethomepage.dev/widget.url: "http://kavita.media:5000"
+          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_CALIBREWEB_USERNAME}}` }}"
+          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_CALIBREWEB_PASSWORD}}` }}"
         hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.cloudjur.com"]
         parentRefs:
           - name: envoy-external

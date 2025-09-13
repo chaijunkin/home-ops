@@ -125,5 +125,7 @@ spec:
           gethomepage.dev/name: jellyfin
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/jellyfin.png
           gethomepage.dev/description: Media Player
-          # gethomepage.dev/widget.type: jellyfin
-          # gethomepage.dev/widget.url: http://jellyfin.media:8096
+          gethomepage.dev/widget.type: jellyfin
+          gethomepage.dev/widget.url: http://jellyfin.media:8096
+          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_JELLYFIN_USERNAME`}} }}"
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYFIN_PASSWORD`}} }}"

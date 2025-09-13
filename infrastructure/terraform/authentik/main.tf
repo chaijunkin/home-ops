@@ -12,3 +12,10 @@ provider "authentik" {
   url   = "https://auth.${var.public_domain}"
   token = var.authentik_token
 }
+
+terraform {
+  cloud {
+    organization = "chaijunkin"
+    workspaces { name = "authentik-workspace" }
+  }
+}

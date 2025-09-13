@@ -96,6 +96,8 @@ spec:
           gethomepage.dev/name: Int Gatus
           gethomepage.dev/description: Status Page & Monitoring
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/gatus.png
+          gethomepage.dev/widget.type: gatus
+          gethomepage.dev/widget.url: "http://gatus.observability:80"
         hostnames:
           - "{{ .Release.Name }}.cloudjur.com"
         parentRefs:

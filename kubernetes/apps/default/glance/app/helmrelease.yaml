@@ -99,6 +99,12 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Glance
+          gethomepage.dev/description: Self-hosted Startpage & Dashboard
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/glance.png
     persistence:
       config-file:
         type: configMap
