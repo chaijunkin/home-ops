@@ -1,95 +1,34 @@
-# ---
-# # yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
-# # adapted from https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
-# apiVersion: gateway.networking.k8s.io/v1beta1
-# kind: ReferenceGrant
-# metadata:
-#   name: flux-system-ref-authentik-svc
-# spec:
-#   from:
-#     - group: gateway.envoyproxy.io
-#       kind: SecurityPolicy
-#       namespace: flux-system
-#   to:
-#     - group: ""
-#       kind: Service
-#       name: ${AUTH_SVC}
 ---
 # yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
-# adapted from https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
+# Consolidated ReferenceGrant: aggregates multiple SecurityPolicy sources into a single grant
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: downloads-ref-authentik-svc
+  # neutral name (no namespace embedded)
+  name: ref-authentik-svc
 spec:
   from:
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: flux-system
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
       namespace: downloads
-  to:
-    - group: ""
-      kind: Service
-      name: ${AUTH_SVC}
----
-# yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
-# adapted from https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
-apiVersion: gateway.networking.k8s.io/v1beta1
-kind: ReferenceGrant
-metadata:
-  name: home-automation-ref-authentik-svc
-spec:
-  from:
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
       namespace: home-automation
-  to:
-    - group: ""
-      kind: Service
-      name: ${AUTH_SVC}
----
-# yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
-# adapted from https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
-apiVersion: gateway.networking.k8s.io/v1beta1
-kind: ReferenceGrant
-metadata:
-  name: media-ref-authentik-svc
-spec:
-  from:
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
       namespace: media
-  to:
-    - group: ""
-      kind: Service
-      name: ${AUTH_SVC}
----
-# yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
-# adapted from https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
-apiVersion: gateway.networking.k8s.io/v1beta1
-kind: ReferenceGrant
-metadata:
-  name: observability-ref-authentik-svc
-spec:
-  from:
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
       namespace: observability
-  to:
-    - group: ""
-      kind: Service
-      name: ${AUTH_SVC}
----
-# yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
-# adapted from https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
-apiVersion: gateway.networking.k8s.io/v1beta1
-kind: ReferenceGrant
-metadata:
-  name: default-ref-authentik-svc
-spec:
-  from:
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
       namespace: default
+    - group: gateway.envoyproxy.io
+      kind: SecurityPolicy
+      namespace: network
   to:
     - group: ""
       kind: Service
