@@ -8,7 +8,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: *app
+    name: app-template
   install:
     remediation:
       retries: 3
@@ -28,7 +28,7 @@ spec:
               repository: glanceapp/glance
               tag: v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
             env:
-              TZ: America/Los_Angeles
+              TZ: Asia/Kuala_Lumpur
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -44,7 +44,7 @@ spec:
               repository: ghcr.io/lukasdietrich/glance-k8s/glance-k8s
               tag: v0.3.5@sha256:9dad71e553b3978d335d92c725593713e31cd588aa4526da3e3652fb782efd11
             env:
-              TZ: America/Los_Angeles
+              TZ: Asia/Kuala_Lumpur
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -69,10 +69,10 @@ spec:
           identifier: *app
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 2000
+            runAsGroup: 2000
             runAsNonRoot: true
-            fsGroup: 568
+            fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
     service:
       glance:
