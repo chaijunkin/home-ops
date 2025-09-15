@@ -42,32 +42,32 @@ spec:
                 memory: 64Mi
               limits:
                 memory: 96Mi
-          # k8s-extension:
-          #   image:
-          #     repository: ghcr.io/lukasdietrich/glance-k8s/glance-k8s
-          #     tag: v0.3.5@sha256:9dad71e553b3978d335d92c725593713e31cd588aa4526da3e3652fb782efd11
-          #   env:
-          #     TZ: Asia/Kuala_Lumpur
-          #   securityContext:
-          #     allowPrivilegeEscalation: false
-          #     readOnlyRootFilesystem: true
-          #     capabilities: {drop: ["ALL"]}
-          #   resources: {}
-          #   probes:
-          #     liveness:
-          #       enabled: true
-          #       custom: true
-          #       spec:
-          #         httpGet:
-          #           path: /healthz
-          #           port: 8080
-          #     readiness:
-          #       enabled: true
-          #       custom: true
-          #       spec:
-          #         httpGet:
-          #           path: /healthz
-          #           port: 8080
+          k8s-extension:
+            image:
+              repository: ghcr.io/lukasdietrich/glance-k8s/glance-k8s
+              tag: v0.3.5@sha256:9dad71e553b3978d335d92c725593713e31cd588aa4526da3e3652fb782efd11
+            env:
+              TZ: Asia/Kuala_Lumpur
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources: {}
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: 80
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthz
+                    port: 80
         serviceAccount:
           identifier: *app
         pod:
@@ -82,12 +82,12 @@ spec:
         controller: glance
         ports:
           http:
-            port: &port 80
-      # k8s-extension:
-      #   controller: glance
-      #   ports:
-      #     http:
-      #       port: 8080
+            port: &port 8080
+      k8s-extension:
+        controller: glance
+        ports:
+          http:
+            port: 80
     route:
       glance:
         hostnames: ["{{ .Release.Name }}.cloudjur.com", "g.cloudjur.com"]
