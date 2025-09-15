@@ -18,7 +18,7 @@ resources:
   - ./slskd/ks.yaml
   - ./syncthing/ks.yaml
   - ./tautulli/ks.yaml
-
+  - ./watchstate/ks.yaml
   ### WISHLIST
   # - ./paperless/ks.yaml
   # - ./neko/ks.yaml
