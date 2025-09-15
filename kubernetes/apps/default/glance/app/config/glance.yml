@@ -21,26 +21,26 @@ pages:
             markets:
               - symbol: SPY
                 name: S&P 500
-              - symbol: CSPX
-                name: CSPX
-              - symbol: VWRA
-                name: VWRA
-              - symbol: MYR-USD
+              - symbol: CSPX.L
+                name: CSPX (LSE)
+              - symbol: VWRA.L
+                name: VWRA (LSE)
+              - symbol: MYRUSD=X
                 name: MYR-USD
-              - symbol: USD-MYR
+              - symbol: USDMYR=X
                 name: USD-MYR
-              - symbol: SGD-MYR
+              - symbol: SGDMYR=X
                 name: SGD-MYR
-              - symbol: MYR-SGD
+              - symbol: MYRSGD=X
                 name: MYR-SGD
-              - symbol: BTC-MYR
+              - symbol: BTCMYR=X
                 name: Bitcoin MYR
               - symbol: BTC-USD
                 name: Bitcoin USD
                 chart-link: https://www.tradingview.com/chart/?symbol=INDEX:BTCUSD
               - symbol: ETH-USD
                 name: Ethereum USD
-              - symbol: ETH-MYR
+              - symbol: ETHMYR=X
                 name: Ethereum MYR
       - size: full
         widgets:
