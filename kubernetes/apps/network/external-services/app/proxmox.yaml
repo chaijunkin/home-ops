@@ -24,7 +24,9 @@ ports:
 endpoints:
   - addresses:
       - 10.10.30.10
-    conditions: {} # https://github.com/argoproj/argo-cd/issues/15554
+      - 192.168.1.10
+    conditions:
+      ready: true # https://github.com/argoproj/argo-cd/issues/15554
 ---
 apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: TLSRoute
