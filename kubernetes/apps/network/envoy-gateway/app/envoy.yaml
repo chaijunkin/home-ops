@@ -94,6 +94,9 @@ spec:
       hostname: "*.cloudjur.com"
       tls:
         mode: Passthrough
+        certificateRefs:
+          - kind: Secret
+            name: cloudjur-com-tls
       allowedRoutes:
         namespaces:
           from: All

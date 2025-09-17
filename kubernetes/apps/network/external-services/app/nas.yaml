@@ -1,55 +1,40 @@
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: &app nas
-  namespace: network
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
+  name: nas
 spec:
-  type: ClusterIP
   ports:
-    - port: 9000
+    - name: https
       protocol: TCP
-      targetPort: 9000
-
+      port: 443
+      targetPort: 9090
 ---
-apiVersion: v1
-kind: Endpoints
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
 metadata:
-  name: &app nas
-  namespace: network
+  name: nas
   labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
-subsets:
+    kubernetes.io/service-name: nas
+    endpointslice.kubernetes.io/managed-by: cluster-admins
+addressType: IPv4
+ports:
+  - name: https
+    protocol: TCP
+    port: 9090
+endpoints:
   - addresses:
-      - ip: 10.10.30.10
-    ports:
-      - port: 9000
-
+      - 10.10.30.10
+      - 192.168.1.10
+    conditions:
+      ready: true # https://github.com/argoproj/argo-cd/issues/15554
 ---
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TLSRoute
 metadata:
-  name: &app nas
-  namespace: network
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
+  name: nas
 spec:
   parentRefs:
-    - name: envoy-internal
-      namespace: network
-      sectionName: https
-  hostnames:
-    - nas.cloudjur.com
+    - {name: envoy-internal, namespace: network}
+  hostnames: [nas.cloudjur.com]
   rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: *app
-          port: 9000
+    - backendRefs: [{name: nas, port: 443}]
