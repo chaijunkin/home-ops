@@ -93,13 +93,25 @@ spec:
       name: tls-passthrough
       hostname: "*.cloudjur.com"
       tls:
-        mode: Passthrough
-        # certificateRefs:
-        #   - kind: Secret
-        #     name: cloudjur-com-tls
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: cloudjur-com-tls
       allowedRoutes:
         namespaces:
           from: All
+    # - protocol: TLS
+    #   port: 443
+    #   name: tls-passthrough
+    #   hostname: "*.cloudjur.com"
+    #   tls:
+    #     mode: Passthrough
+    #     # certificateRefs:
+    #     #   - kind: Secret
+    #     #     name: cloudjur-com-tls
+    #   allowedRoutes:
+    #     namespaces:
+    #       from: All
     # - name: syncthing-quic
     #   protocol: UDP
     #   port: 22000
