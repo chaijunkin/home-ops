@@ -10,3 +10,5 @@ configMapGenerator:
   - name: tqm-configmap
     files:
       - ./resources/config.yaml
+generatorOptions:
+  disableNameSuffixHash: true
