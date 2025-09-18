@@ -17,7 +17,7 @@ spec:
       retries: 3
   dependsOn:
     - name: qbittorrent
-      namespace: default
+      namespace: downloads
   values:
     controllers:
       tqm:
@@ -97,7 +97,7 @@ spec:
         # type: nfs
         # server: expanse.internal
         # path: /mnt/eros/Media
-        # globalMounts:
-        #   - path: /media/Downloads/qbittorrent
-        #     subPath: Downloads/qbittorrent
-        #     readOnly: true
+        globalMounts:
+          - path: /media/Downloads/qbittorrent
+            subPath: Downloads/qbittorrent
+            readOnly: true
