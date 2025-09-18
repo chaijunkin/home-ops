@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   # - ./config.sops.yaml
   - ./helmrelease.yaml
-  - ./externalsecret.yaml
+  # - ./externalsecret.yaml
 configMapGenerator:
   - name: tqm-configmap
     files:
