@@ -12,7 +12,7 @@ resources:
   - ./jellyseerr/ks.yaml
   - ./kavita/ks.yaml
   - ./komga/ks.yaml
-  # - ./maintainerr/ks.yaml
+  - ./maintainerr/ks.yaml
   - ./minio/ks.yaml
   - ./ocis/ks.yaml
   - ./plex/ks.yaml
