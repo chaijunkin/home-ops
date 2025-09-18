@@ -11,8 +11,9 @@ spec:
       app.kubernetes.io/name: *appname
   components:
     - ../../../../components/volsync
+  dependsOn:
     - name: volsync
-      namespace: system
+      namespace: volsync-system
   interval: 30m
   path: "./kubernetes/apps/media/maintainerr/app"
   postBuild:
