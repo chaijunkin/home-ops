@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.1.1/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app neko
+  namespace: flux-system
+spec:
+  releaseName: *app
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  values:
+    controllers:
+      *app :
+        replicas: 1 # active nas
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          *app :
+            image:
+              # repository: ghcr.io/m1k1o/neko/intel-firefox
+              repository: ghcr.io/m1k1o/neko/firefox
+              tag: "3.0.8"
+            env:
+              NEKO_SCREEN: 1280x720@30
+              NEKO_PROXY: "true"
+              NEKO_TCPMUX: &mux "5101"
+              NEKO_UDPMUX: *mux
+              NEKO_ICELITE: "true"
+            resources:
+              requests:
+                cpu: 1000m
+
+    persistence:
+      config:
+        name: neko-firefox-config
+        type: configMap
+        advancedMounts:
+          *app :
+            *app :
+              - path: /usr/lib/firefox/distribution/policies.json
+                readOnly: true
+                subPath: policies.json
+      profile:
+        existingClaim: neko-firefox-profile
+        advancedMounts:
+          *app :
+            *app :
+              - path: /home/neko/.mozilla/firefox/profile.default
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
+      shm:
+        type: hostPath
+        hostPath: /dev/shm
+
+    service:
+      app:
+        controller: *app
+        type: ClusterIP
+        ports:
+          http:
+            port: 80
+            targetPort: 8080
+          mux:
+            port: &port 5101
+          muxudp:
+            port: *port
+            protocol: UDP
+
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Neko
+          gethomepage.dev/icon-url: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/neko.png
+          gethomepage.dev/description: Virtual browser
+        hostnames:
+          - movienight.cloudjur.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
