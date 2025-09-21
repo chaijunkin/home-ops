@@ -31,9 +31,9 @@ spec:
               NEKO_TCPMUX: &mux "5101"
               NEKO_UDPMUX: *mux
               NEKO_ICELITE: "true"
-            resources:
-              requests:
-                cpu: 1000m
+            # resources:
+            #   requests:
+            #     cpu: 10m
 
     persistence:
       config:
