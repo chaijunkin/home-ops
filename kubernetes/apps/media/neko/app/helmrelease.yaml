@@ -5,6 +5,7 @@ metadata:
   name: &app neko
   namespace: flux-system
 spec:
+  interval: 24h
   releaseName: *app
   chartRef:
     kind: OCIRepository
@@ -59,8 +60,6 @@ spec:
 
     service:
       app:
-        controller: *app
-        type: ClusterIP
         ports:
           http:
             port: 80
