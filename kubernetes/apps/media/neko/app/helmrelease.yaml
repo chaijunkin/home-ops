@@ -14,7 +14,7 @@ spec:
     controllers:
       *app :
         replicas: 1 # active nas
-        type: statefulset
+        # type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
 
