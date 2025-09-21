@@ -51,12 +51,12 @@ spec:
           *app :
             *app :
               - path: /home/neko/.mozilla/firefox/profile.default
-      dri:
-        type: hostPath
-        hostPath: /dev/dri
-      shm:
-        type: hostPath
-        hostPath: /dev/shm
+      # dri:
+      #   type: hostPath
+      #   hostPath: /dev/dri
+      # shm:
+      #   type: hostPath
+      #   hostPath: /dev/shm
 
     service:
       app:
