@@ -92,10 +92,10 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: 80
-            timeouts:
-              request: 14400s
-              backendRequest: 14400s
+        # rules:
+        #   - backendRefs:
+        #       - identifier: app
+        #         port: 80
+        #     timeouts:
+        #       request: 14400s
+        #       backendRequest: 14400s
