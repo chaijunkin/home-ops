@@ -32,6 +32,7 @@ spec:
               NEKO_UDPMUX: *mux
               NEKO_ICELITE: "true"
               # NEKO_NAT1TO1: 10.10.30.48
+              NEKO_NAT1TO1: 127.0.0.1
               NEKO_SESSION_HEARTBEAT_INTERVAL: 30
             envFrom:
               - secretRef:
