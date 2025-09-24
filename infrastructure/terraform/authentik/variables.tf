@@ -125,6 +125,20 @@ variable "karakeep_secret" {
 #   sensitive   = true
 # }
 
+variable "romm_id" {
+  type        = string
+  description = "Romm Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "romm_secret" {
+  type        = string
+  description = "Romm Client Secret"
+  sensitive   = true
+  default     = null
+}
+
 variable "oauth_client_id" {
   type        = string
   description = "OAuth Client ID (google)"

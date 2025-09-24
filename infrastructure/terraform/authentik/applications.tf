@@ -73,6 +73,14 @@ locals {
       redirect_uri  = "https://headlamp.${var.public_domain}/oidc-callback"
       launch_url    = "https://headlamp.${var.public_domain}/"
     },
+    romm = {
+      client_id     = var.romm_id
+      client_secret = var.romm_secret
+      group         = "media"
+      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/romm.svg"
+      redirect_uri  = "https://romm.${var.public_domain}/api/oauth/openid"
+      launch_url    = "https://romm.${var.public_domain}/"
+    },
     jellyfin = {
       client_id     = var.jellyfin_id
       client_secret = var.jellyfin_secret
