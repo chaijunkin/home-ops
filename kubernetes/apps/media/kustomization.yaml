@@ -17,7 +17,7 @@ resources:
   # - ./neko/ks.yaml  # cloudflare tunnel doesn't support UDP (paid)
   - ./ocis/ks.yaml
   - ./plex/ks.yaml
-  # - ./romm/ks.yaml  # yikes, twitch 2fa not available in SEA
+  - ./romm/ks.yaml
   - ./slskd/ks.yaml
   - ./syncthing/ks.yaml
   - ./tautulli/ks.yaml
