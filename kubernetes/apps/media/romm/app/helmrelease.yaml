@@ -102,10 +102,10 @@ spec:
             app:
               - path: /romm/config
                 subPath: config
-              - path: /romm/assets
-                subPath: assets
-              - path: /romm/resources
-                subPath: resources
+              # - path: /romm/assets
+              #   subPath: assets
+              # - path: /romm/resources
+              #   subPath: resources
       tmp:
         type: emptyDir
         globalMounts:
