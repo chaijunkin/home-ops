@@ -1,5 +1,5 @@
 # renovate: datasource=github-releases depName=TwiN/gatus
-ARG GATUS_VERSION=v5.23.2
+ARG GATUS_VERSION=v5.25.2
 
 # renovate: datasource=github-releases depName=DarthSim/overmind
 ARG OVERMIND_VERSION=v2.5.1
