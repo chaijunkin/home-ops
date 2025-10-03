@@ -1,24 +1,24 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: cluster-apps
   namespace: flux-system
 spec:
-  decryption:
-    provider: sops
-  deletionPolicy: WaitForTermination
-  interval: 1h
+  interval: 24h
   path: ./kubernetes/apps
   prune: true
+  wait: false
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
   patches:
-    - # Add Kustomization defaults for all child Kustomizations
+    - # Add Sops decryption to child Kustomizations
       patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
@@ -27,32 +27,8 @@ spec:
         spec:
           decryption:
             provider: sops
-          deletionPolicy: WaitForTermination
-          patches:
-            - patch: |-
-                apiVersion: helm.toolkit.fluxcd.io/v2
-                kind: HelmRelease
-                metadata:
-                  name: not-used
-                spec:
-                  install:
-                    crds: CreateReplace
-                    strategy:
-                      name: RetryOnFailure
-                  rollback:
-                    cleanupOnFail: true
-                    recreate: true
-                  upgrade:
-                    cleanupOnFail: true
-                    crds: CreateReplace
-                    strategy:
-                      name: RemediateOnFailure
-                    remediation:
-                      remediateLastFailure: true
-                      retries: 2
-              target:
-                group: helm.toolkit.fluxcd.io
-                kind: HelmRelease
+            secretRef:
+              name: sops-age
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
