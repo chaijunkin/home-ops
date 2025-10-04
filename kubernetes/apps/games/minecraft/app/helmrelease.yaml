@@ -70,6 +70,7 @@ spec:
       mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
     minecraftServer:
       eula: true
+      # renovate: datasource=custom.minecraft-release
       version: 1.21.8
       type: PAPER
       # overrideServerProperties: true
