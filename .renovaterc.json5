@@ -28,7 +28,7 @@
   ignorePaths: [
     "**/*.sops.*",
     "**/resources/**",
-    "**/archive/**",
+    "**/.archive/**",
   ],
   flux: {
     managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
