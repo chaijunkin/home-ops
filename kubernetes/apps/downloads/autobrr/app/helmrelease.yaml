@@ -110,3 +110,6 @@ spec:
           gethomepage.dev/name: Autobrr
           gethomepage.dev/description: Autobrr Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/autobrr.png
+          gethomepage.dev/widget.type: autobrr
+          gethomepage.dev/widget.url: http://autobrr.downloads:80
+          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_AUTOBRR_TOKEN}}` }}"
