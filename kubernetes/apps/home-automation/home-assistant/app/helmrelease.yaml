@@ -76,7 +76,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: 2025.8.3
+              tag: 2025.10.1
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
@@ -146,8 +146,8 @@ spec:
         advancedMounts:
           home-assistant:
             app:
-              - path: /config/.venv
-                subPath: .venv
+              # - path: /config/.venv
+              #   subPath: .venv
               - path: /config/logs
                 subPath: logs
               - path: /config/tts
@@ -160,8 +160,8 @@ spec:
           - hass.cloudjur.com
           - "{{ .Release.Name }}.cloudjur.com"
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -176,8 +176,8 @@ spec:
       # codeserver:
       #   hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.cloudjur.com"]
       #   parentRefs:
-      #     - name: internal
-      #       namespace: kube-system
+      #     - name: envoy-internal
+      #       namespace: network
       #       sectionName: https
       #   rules:
       #     - backendRefs:

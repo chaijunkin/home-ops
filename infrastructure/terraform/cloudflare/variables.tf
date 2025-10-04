@@ -20,6 +20,17 @@ variable "gatus_private_url" {
   sensitive   = true
 }
 
+variable "wiki_private_url" {
+  description = "Wiki private URL"
+  sensitive   = true
+}
+
+variable "wiki_preview_private_url" {
+  description = "Wiki preview private URL"
+  sensitive   = true
+}
+
+
 variable "vaultwarden_private_url" {
   description = "Vaultwarden private URL"
   sensitive   = true

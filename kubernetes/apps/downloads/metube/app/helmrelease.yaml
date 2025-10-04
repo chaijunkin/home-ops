@@ -76,11 +76,17 @@ spec:
       #       subPath: metube
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: MeTube
+          gethomepage.dev/description: YouTube Downloader & Media Server
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/metube.png
         hostnames:
           - metube.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

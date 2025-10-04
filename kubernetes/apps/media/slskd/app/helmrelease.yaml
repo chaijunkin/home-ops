@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: &app slskd
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -69,7 +69,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 2000
         runAsGroup: 2000
-        fsGroup: 1000
+        fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -86,17 +86,6 @@ spec:
           soulseek-tcp:
             port: *soulseekPort
             protocol: TCP
-    # route:
-    #   app:
-    #     hostnames: ["{{ .Release.Name }}.cloudjur.com"]
-    #     parentRefs:
-    #       - name: internal
-    #         namespace: kube-system
-    #         sectionName: https
-    #     rules:
-    #       - backendRefs:
-    #           - identifier: app
-    #             port: *port
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
@@ -122,8 +111,8 @@ spec:
         hostnames:
           - slskd.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -131,7 +120,7 @@ spec:
                 name: *app
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
+          gethomepage.dev/group: Utility Service
           gethomepage.dev/name: Slskd
           gethomepage.dev/description: File Sharing Service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png

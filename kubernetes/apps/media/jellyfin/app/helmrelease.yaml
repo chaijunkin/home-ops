@@ -112,8 +112,8 @@ spec:
         hostnames:
           - jellyfin.cloudjur.com
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -127,3 +127,5 @@ spec:
           gethomepage.dev/description: Media Player
           # gethomepage.dev/widget.type: jellyfin
           # gethomepage.dev/widget.url: http://jellyfin.media:8096
+          # gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_JELLYFIN_USERNAME`}} }}"
+          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYFIN_PASSWORD`}} }}"

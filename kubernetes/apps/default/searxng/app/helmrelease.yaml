@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: &app searxng
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     apiVersion: source.toolkit.fluxcd.io/v1
@@ -92,10 +92,10 @@ spec:
     route:
       app:
         hostnames:
-          - searxng.cloudjur.com
+          - search.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

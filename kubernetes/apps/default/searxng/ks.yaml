@@ -26,6 +26,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
+      GATUS_SUBDOMAIN: search
       APP: searxng
   components:
     - ../../../../components/gatus/guarded

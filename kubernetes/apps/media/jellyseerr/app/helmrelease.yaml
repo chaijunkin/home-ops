@@ -97,8 +97,8 @@ spec:
           - requests.cloudjur.com
           - request.cloudjur.com
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -110,6 +110,6 @@ spec:
           gethomepage.dev/name: Jellyseerr
           gethomepage.dev/icon: jellyseerr.png
           gethomepage.dev/description: Media Request Management
-          gethomepage.dev/widget.type: jellyseerr
-          gethomepage.dev/widget.url: http://jellyseerr.media:5055
-          gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_OVERSEERR_TOKEN}}` }}"
+          # gethomepage.dev/widget.type: jellyseerr
+          # gethomepage.dev/widget.url: http://jellyseerr.media:5055
+          # gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_JELLYSEERR_TOKEN}}` }}"

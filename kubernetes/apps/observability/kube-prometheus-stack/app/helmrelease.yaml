@@ -10,7 +10,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 77.5.0
+    tag: 77.13.0
   url: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
@@ -19,7 +19,7 @@ kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
 spec:
-  interval: 1440h
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: kube-prometheus-stack
@@ -41,9 +41,15 @@ spec:
           enabled: true
           hostnames: ["alertmanager.cloudjur.com"]
           parentRefs:
-            - name: internal
-              namespace: kube-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/group: Observability Service
+            gethomepage.dev/name: Alertmanager
+            gethomepage.dev/description: Alert Management
+            gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/alertmanager.png
       alertmanagerSpec:
         replicas: 1
         useExistingSecret: true
@@ -72,9 +78,17 @@ spec:
           enabled: true
           hostnames: ["prometheus.cloudjur.com"]
           parentRefs:
-            - name: internal
-              namespace: kube-system
+            - name: envoy-internal
+              namespace: network
               sectionName: https
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/group: Observability Service
+            gethomepage.dev/name: Prometheus
+            gethomepage.dev/description: Monitoring & Alerting
+            gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/prometheus.png
+            gethomepage.dev/widget.type: prometheus
+            gethomepage.dev/widget.url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       prometheusSpec:
         image:
           registry: docker.io

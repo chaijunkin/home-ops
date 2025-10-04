@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/lidarr
-              tag: 2.14.1.4714
+              tag: 2.14.4.4809
             env:
               TZ: Asia/Kuala_Lumpur
               # LIDARR__AUTHENTICATION_METHOD: External
@@ -89,8 +89,8 @@ spec:
         hostnames:
           - lidarr.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

@@ -10,18 +10,17 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.32.1
+    tag: 0.34.0
   url: oci://ghcr.io/home-operations/charts-mirror/intel-device-plugins-gpu
   verify:
     provider: cosign
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: intel-device-plugin-gpu
 spec:
-  interval: 24h
+  interval: 30m
   chartRef:
     kind: OCIRepository
     name: intel-device-plugins-gpu
@@ -33,10 +32,7 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: intel-device-plugin-operator
-      namespace: kube-system
   values:
-    name: i915
-    sharedDevNum: 99
-    nodeFeatureRule: false
+    name: intel-gpu-plugin
+    sharedDevNum: 2 # TODO: the higher the number, the less resrouce slices each client gets, consider setting this to 1
+    nodeFeatureRule: true

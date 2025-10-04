@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: autobrr
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/autobrr/autobrr
-              tag: v1.65.0
+              tag: v1.67.0
             env:
               AUTOBRR__HOST: 0.0.0.0
               AUTOBRR__PORT: &port 80
@@ -97,8 +97,8 @@ spec:
         hostnames:
           - autobrr.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

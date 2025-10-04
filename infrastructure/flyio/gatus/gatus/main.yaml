@@ -29,7 +29,7 @@ disable-monitoring-lock: true
 metrics: true
 storage:
   type: sqlite
-  path: /data/data.db
+  path: /data/sqlite.db
 endpoints:
   # - name: healthchecks.io
   #   group:
@@ -46,3 +46,8 @@ endpoints:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
       - "[STATUS] == 404"
+
+remote:
+  instances:
+    - endpoint-prefix: ""
+      url: "https://gatus.cloudjur.com/api/v1/endpoints/statuses"

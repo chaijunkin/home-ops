@@ -31,7 +31,7 @@ ports:
     port: 3000
 endpoints:
   - addresses:
-      - "10.10.31.1"
+      - "10.10.30.1"
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -53,8 +53,8 @@ metadata:
     gethomepage.dev/widget.password: "{{HOMEPAGE_VAR_ADGUARD_PASSWORD}}"
 spec:
   parentRefs:
-    - name: internal
-      namespace: kube-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   hostnames:
     - adguard.cloudjur.com

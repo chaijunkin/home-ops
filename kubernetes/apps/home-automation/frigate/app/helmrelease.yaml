@@ -122,11 +122,20 @@ spec:
             subPath: Frigate
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Frigate
+          gethomepage.dev/description: NVR with AI capabilities
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/frigate.png
+          gethomepage.dev/widget.type: frigate
+          gethomepage.dev/widget.url: "http://frigate.home-automation.svc.cluster.local:5000"
+          gethomepage.dev/widget.enableRecentEvents: "true"
         hostnames:
           - frigate.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

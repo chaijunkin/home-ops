@@ -52,6 +52,24 @@ spec:
               TZ: "Asia/Kuala_Lumpur"
               APP_URL: https://money.cloudjur.com
               TRUSTED_PROXIES: "*"
+              # ENABLE_EXCHANGE_RATES: "true"
+              # ENABLE_EXTERNAL_RATES: "true"
+
+              # COOKIE_PATH: "/"
+              # COOKIE_DOMAIN: "money.cloudjur.com"
+              # COOKIE_SECURE: "true"
+              # COOKIE_SAMESITE: "lax"
+              # DISABLE_FRAME_HEADER: "false" # just to be sure
+              # DISABLE_CSP_HEADER: "false" # just to be sure
+
+              # TRACKER_SITE_ID: "" # just to be sure
+              # TRACKER_URL: "" # just to be sure
+
+              # CACHE_DRIVER: "redis"
+              # SESSION_DRIVER: "redis"
+              # REDIS_HOST: "dragonfly.database.svc"
+              # REDIS_DB: 7
+              # REDIS_CACHE_DB: 8
             # securityContext:
             #   &sc # readOnlyRootFilesystem: true # nginx init stuff
             #   allowPrivilegeEscalation: false
@@ -121,8 +139,8 @@ spec:
         hostnames:
           - money.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -134,20 +152,12 @@ spec:
           gethomepage.dev/name: firefly
           gethomepage.dev/description: Personal finance service
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/firefly.png
-      # api:
-      #   hostnames:
-      #     - money.cloudjur.com
-      #   parentRefs:
-      #     - name: internal
-      #       namespace: kube-system
-      #       sectionName: https
-
       data-importer:
         hostnames:
           - import-money.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

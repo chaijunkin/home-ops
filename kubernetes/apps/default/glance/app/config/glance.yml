@@ -1,0 +1,137 @@
+theme:
+  background-color: 240 21 15
+  contrast-multiplier: 1.2
+  primary-color: 217 92 83
+  positive-color: 115 54 76
+  negative-color: 347 70 65
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 12h
+            timezones:
+              - timezone: Asia/Kuala_Lumpur
+                label: MY Time
+          - type: calendar
+          - type: markets
+            symbol-link-template: https://www.google.com/search?tbm=nws&q={SYMBOL}
+            chart-link-template: https://www.tradingview.com/chart/?symbol={SYMBOL}
+            markets:
+              - symbol: SPY
+                name: S&P 500
+              - symbol: CSPX.L
+                name: CSPX (LSE)
+              - symbol: VWRA.L
+                name: VWRA (LSE)
+              - symbol: MYRUSD=X
+                name: MYR-USD
+              - symbol: USDMYR=X
+                name: USD-MYR
+              - symbol: SGDMYR=X
+                name: SGD-MYR
+              - symbol: MYRSGD=X
+                name: MYR-SGD
+              - symbol: BTCMYR=X
+                name: Bitcoin MYR
+              - symbol: BTC-USD
+                name: Bitcoin USD
+                chart-link: https://www.tradingview.com/chart/?symbol=INDEX:BTCUSD
+              - symbol: ETH-USD
+                name: Ethereum USD
+              - symbol: ETHMYR=X
+                name: Ethereum MYR
+      - size: full
+        widgets:
+          # - type: extension
+          #   url: http://glance-k8s-extension:8080/extension/nodes
+          #   allow-potentially-dangerous-html: true
+          #   cache: 1s
+          #   parameters:
+          #     # namespace, name annotations
+          #     show-if: |
+          #       namespace != kube-system &&
+          #       ("glance/hide" not in annotations || annotations["glance/hide"] != "true")
+          - type: hacker-news
+          - type: videos
+            channels:
+              - UCv6J_jJa8GJqFwQNgNrMuww # ServeTheHome
+              - UCIgNWXsJcFwvFptmUic6wSw # apalrd's adventures
+
+          - type: group
+            widgets:
+              - type: reddit
+                subreddit: selfhosted
+                show-thumbnails: true
+                collapse-after: 6
+              - type: reddit
+                subreddit: malaysia
+              - type: reddit
+                subreddit: MalaysianPF
+                show-thumbnails: true
+
+      - size: small
+        widgets:
+          - type: weather
+            units: metric
+            location: Kampar, Perak, Malaysia
+          - type: repository
+            repository: chaijunkin/home-ops
+            pull-requests-limit: 5
+            issues-limit: 3
+          - type: releases
+            show-source-icon: true
+            repositories:
+              - dani-garcia/vaultwarden
+          - type: change-detection
+            instance-url: https://changedetection.cloudjur.com
+            token: ${CHANGE_DETECTION_TOKEN}
+  - name: Others
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 12h
+            timezones:
+              - timezone: Asia/Kuala_Lumpur
+                label: MY Time
+          - type: calendar
+
+          - type: rss
+            limit: 10
+            collapse-after: 3
+            cache: 3h
+            feeds:
+              - url: https://ciechanow.ski/atom.xml
+              - url: https://www.joshwcomeau.com/rss.xml
+                title: Josh Comeau
+              - url: https://samwho.dev/rss.xml
+              - url: https://awesomekling.github.io/feed.xml
+              - url: https://ishadeed.com/feed.xml
+                title: Ahmad Shadeed
+
+          - type: twitch-channels
+            channels:
+              - ferretsoftware
+              - theprimeagen
+              - cohhcarnage
+              - christitustech
+              - blurbs
+              - asmongold
+              - jembawls
+
+      - size: full
+        widgets:
+          - type: reddit
+            subreddit: selfhosted
+
+      - size: small
+        widgets:
+          - type: weather
+            units: imperial
+            location: Kampar, Perak, Malaysia
+          - type: repository
+            repository: chaijunkin/home-ops
+            pull-requests-limit: 5
+            issues-limit: 3

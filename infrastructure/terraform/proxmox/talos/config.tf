@@ -62,8 +62,7 @@ data "talos_machine_configuration" "this" {
         path = "/cluster/apiServer/admissionControl"
         value : []
       }
-    ])
-    ,
+    ]),
     templatefile("${path.module}/machine-config/common.yaml.tftpl", {
       node_name          = each.value.host_node
       cluster_name       = var.cluster.proxmox_cluster

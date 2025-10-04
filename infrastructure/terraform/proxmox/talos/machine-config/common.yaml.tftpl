@@ -78,7 +78,10 @@ machine:
     sunrpc.tcp_max_slot_table_entries: "128"
     sunrpc.tcp_slot_table_entries: "128"
     vm.nr_hugepages: 1024                  # PostgreSQL
-
+  # udev:
+  #   rules:
+  #     # Intel GPU # this might cause issue in bootstrap, take care
+  #     - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660"
 cluster:
   clusterName: main
   controlPlane:

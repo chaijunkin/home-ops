@@ -9,14 +9,17 @@ spec:
     operation: copy
   url: oci://ghcr.io/home-operations/charts-mirror/node-feature-discovery
   ref:
-    tag: 0.17.3
+    tag: 0.18.0
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: node-feature-discovery
 spec:
-  interval: 24h
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: node-feature-discovery
   install:
     crds: CreateReplace
     remediation:
@@ -25,16 +28,17 @@ spec:
     cleanupOnFail: true
     crds: CreateReplace
     remediation:
+      strategy: rollback
       retries: 3
-  uninstall:
-    keepHistory: false
   values:
     worker:
       config:
         core:
-          labelSources: ["pci", "system", "usb"]
-    prometheus:
-      enable: true
-  chartRef:
-    kind: OCIRepository
-    name: node-feature-discovery
+          sleepInterval: 0s
+    # worker:
+    #   config:
+    #     core:
+    #       sources:
+    #         - pci
+    #         - system
+    #         - usb

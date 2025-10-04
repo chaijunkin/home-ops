@@ -17,7 +17,7 @@ spec:
       retries: 3
   values:
     controllers:
-      ytdl-sub:
+      *app :
         type: cronjob
         annotations:
           reloader.stakater.com/auto: "true"
@@ -37,18 +37,19 @@ spec:
         #     fsGroup: *group
         #     fsGroupChangePolicy: "OnRootMismatch"
         containers:
-          app:
+          *app :
             image:
               repository: ghcr.io/jmbannon/ytdl-sub
-              tag: "2025.09.01"
+              tag: "2025.09.27"
             command:
               - bash
               - -c
               - |
-                set -e
-                ytdl-sub --log-level=debug \
-                        --config=/config/config.yml \
-                        sub /config/subscriptions.yml
+                # cp /config/cookies.txt /config/cookies-rw.txt
+                ytdl-sub --log-level=debug --config=/config/config.yaml sub /config/subscriptions.yaml
+                echo "[cronjob:command] Fixing permissions, started at $$(date --rfc-2822)"
+                find $${MEDIA_FOLDER} -user root -exec chown 2000:2000 "{}" \; -exec chmod 777 "{}" \;
+                echo "[cronjob:command] Fixed permissions, ended at $$(date --rfc-2822)"
             # securityContext:
             #   allowPrivilegeEscalation: false
             #   capabilities:
@@ -56,8 +57,8 @@ spec:
             #       - ALL
             env:
               TZ: Asia/Kuala_Lumpur
-              PUID: 0
-              PGID: 0
+              PUID: 2000
+              PGID: 2000
               MEDIA_FOLDER: /media/Music
             resources:
               requests:
@@ -67,16 +68,33 @@ spec:
                 memory: 2000Mi
     persistence:
       config:
-        name: "{{ .Release.Name }}-config"
+        name: ytdl-sub-config
         type: configMap
-        # defaultMode: 0755
-        globalMounts:
-          - path: /config
-            # readOnly: true
+        advancedMounts:
+          *app :
+            *app :
+              - path: /config/config.yaml
+                subPath: config.yaml
+                readOnly: true
+              - path: /config/subscriptions.yaml
+                subPath: subscriptions.yaml
+                readOnly: true
+      # ## yt-dlp doesn't like a readonly cookies file. Changing readOnly has no
+      # ## effect.
+      # cookies:
+      #   name: ytdl-sub-cookies
+      #   type: secret
+      #   advancedMounts:
+      #     *app :
+      #       *app :
+      #         - path: /config/cookies.txt
+      #           subPath: cookies.txt
       tmp:
         type: emptyDir
-        globalMounts:
-          - path: /tmp/ytdl-sub
+        advancedMounts:
+          *app :
+            *app :
+              - path: /tmp/ytdl-sub
       media:
         enabled: true
         type: nfs

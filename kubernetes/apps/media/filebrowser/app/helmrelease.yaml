@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: docker.io/filebrowser/filebrowser
-              tag: v2.30.0@sha256:862a8f4f4829cb2747ced869aea8593204bbc718c92f0f11c97e7b669a54b53d
+              tag: v2.43.0
             env:
               TZ: Asia/Kuala_Lumpur
               FB_DATABASE: /config/filebrowser.db
@@ -57,14 +57,12 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 512Mi
-        # pod:
-        #   securityContext:
-        #     runAsUser: 568
-        #     runAsGroup: 568
-        #     runAsNonRoot: true
-        #     fsGroup: 568
-        #     fsGroupChangePolicy: OnRootMismatch
-        #     supplementalGroups: [10000]
+        pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
+            fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
         controller: filebrowser
@@ -82,11 +80,17 @@ spec:
           - path: /media
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Platform Infrastructure
+          gethomepage.dev/name: FileBrowser
+          gethomepage.dev/description: File Management Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/filebrowser.png
         hostnames:
           - filebrowser.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

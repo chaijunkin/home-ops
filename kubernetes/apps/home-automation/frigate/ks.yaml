@@ -12,8 +12,8 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: kube-system
-    - name: intel-device-plugin-gpu
-      namespace: kube-system
+    # - name: intel-device-plugin-gpu
+    #   namespace: kube-system
     - name: volsync
       namespace: volsync-system
   path: ./kubernetes/apps/home-automation/frigate/app

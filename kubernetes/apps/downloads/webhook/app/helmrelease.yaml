@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: webhook
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -69,8 +69,8 @@ spec:
         hostnames:
           - webhook.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

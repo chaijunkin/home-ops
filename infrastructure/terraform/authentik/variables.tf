@@ -1,5 +1,5 @@
 
-variable "CLUSTER_DOMAIN" {
+variable "public_domain" {
   type        = string
   description = "Domain for Authentik"
   sensitive   = true
@@ -124,6 +124,20 @@ variable "karakeep_secret" {
 #   description = "Paperless Client Secret"
 #   sensitive   = true
 # }
+
+variable "romm_id" {
+  type        = string
+  description = "Romm Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "romm_secret" {
+  type        = string
+  description = "Romm Client Secret"
+  sensitive   = true
+  default     = null
+}
 
 variable "oauth_client_id" {
   type        = string

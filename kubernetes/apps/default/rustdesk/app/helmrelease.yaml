@@ -82,8 +82,8 @@ spec:
       hbbr:
         hostnames: ["hbbr.cloudjur.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
@@ -92,8 +92,8 @@ spec:
       hbbs:
         hostnames: ["hbbs.cloudjur.com"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

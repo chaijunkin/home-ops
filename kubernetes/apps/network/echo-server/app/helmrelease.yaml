@@ -68,47 +68,71 @@ spec:
           http:
             port: *port
     route:
-      int-route:
+      int:
         hostnames:
-          - echo-server-internal.cloudjur.com
+          - echo-server-int.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - port: *port
                 name: echo-server
-      int-auth-route:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server Internal
+          gethomepage.dev/description: HTTP & HTTPS Echo Server Internal
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+      int-auth:
         hostnames:
-          - echo-server-internal-auth.cloudjur.com
+          - echo-server-int-auth.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - port: *port
                 name: echo-server
-      ext-route:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server Internal Auth
+          gethomepage.dev/description: HTTP & HTTPS Echo Server Internal Auth
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+      ext:
         hostnames:
-          - echo-server-external.cloudjur.com
+          - echo-server-ext.cloudjur.com
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - port: *port
                 name: echo-server
-      ext-auth-route:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server External
+          gethomepage.dev/description: HTTP & HTTPS Echo Server External
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+      ext-auth:
         hostnames:
-          - echo-server-external-auth.cloudjur.com
+          - echo-server-ext-auth.cloudjur.com
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:
               - port: *port
                 name: echo-server
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Management Tools
+          gethomepage.dev/name: Echo Server External Auth
+          gethomepage.dev/description: HTTP & HTTPS Echo Server External Auth
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png

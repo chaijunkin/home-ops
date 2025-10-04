@@ -19,7 +19,7 @@ kind: HelmRelease
 metadata:
   name: &app minecraft
 spec:
-  interval: 1440h
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: minecraft
@@ -35,7 +35,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: ghcr.io/itzg/minecraft-server
-      tag: 2025.9.0@sha256:030b2a0e3028ef0ec08884ced75b28f1f225b85bf058dcaffb8f9ffb0b9d246d
+      tag: 2025.10.0@sha256:f3cf2772c81d39a0cc0b254f74316fd917a40ea23031229f7d2f763e770751c7
     resources:
       requests:
         memory: 512Mi
@@ -70,6 +70,7 @@ spec:
       mc-router.itzg.me/externalServerName: minecraft.cloudjur.com
     minecraftServer:
       eula: true
+      # renovate: datasource=custom.minecraft-release
       version: 1.21.8
       type: PAPER
       # overrideServerProperties: true
@@ -91,7 +92,8 @@ spec:
       # - 36618 #Prom Exporter
       rcon:
         enabled: true
-      serviceType: LoadBalancer
+      # serviceType: LoadBalancer
+      # loadbalancerIP: 10.10.30.41
   valuesFrom:
     - kind: Secret
       name: minecraft-secret

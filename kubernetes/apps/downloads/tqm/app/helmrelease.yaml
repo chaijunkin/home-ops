@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: tqm
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -17,7 +17,7 @@ spec:
       retries: 3
   dependsOn:
     - name: qbittorrent
-      namespace: default
+      namespace: downloads
   values:
     controllers:
       tqm:
@@ -73,18 +73,18 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
         type: emptyDir
         globalMounts:
           - path: /.config/tqm
-      secret-file:
-        type: secret
-        name: tqm-secret
+      config-file:
+        type: configMap
+        name: tqm-configmap
         globalMounts:
           - path: /.config/tqm/config.yaml
             subPath: config.yaml
@@ -97,7 +97,7 @@ spec:
         # type: nfs
         # server: expanse.internal
         # path: /mnt/eros/Media
-        # globalMounts:
-        #   - path: /media/Downloads/qbittorrent
-        #     subPath: Downloads/qbittorrent
-        #     readOnly: true
+        globalMounts:
+          - path: /media/Downloads/qbittorrent
+            subPath: Downloads/qbittorrent
+            readOnly: true

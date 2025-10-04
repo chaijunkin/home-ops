@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: sabnzbd
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -77,12 +77,18 @@ spec:
             port: *port
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: SABnzbd
+          gethomepage.dev/description: Usenet Binary Downloader
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/sabnzbd.png
         hostnames:
           - "{{ .Release.Name }}.cloudjur.com"
           - sab.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
     persistence:
       config:

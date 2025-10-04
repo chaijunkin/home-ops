@@ -18,6 +18,7 @@ customization:
   systemExtensions:
     officialExtensions:
       - siderolabs/i915-ucode
+      # - siderolabs/i915
       - siderolabs/intel-ucode
       - siderolabs/qemu-guest-agent
       - siderolabs/mei

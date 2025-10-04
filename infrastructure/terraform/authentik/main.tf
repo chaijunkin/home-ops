@@ -2,13 +2,20 @@ terraform {
   required_providers {
     authentik = {
       source  = "goauthentik/authentik"
-      version = "2025.8.0"
+      version = "2025.8.1"
     }
 
   }
 }
 
 provider "authentik" {
-  url   = "https://auth.${var.CLUSTER_DOMAIN}"
+  url   = "https://auth.${var.public_domain}"
   token = var.authentik_token
+}
+
+terraform {
+  cloud {
+    organization = "chaijunkin"
+    workspaces { name = "authentik-workspace" }
+  }
 }

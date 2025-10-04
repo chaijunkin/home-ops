@@ -1,18 +1,18 @@
 ---
 clients:
   qb:
-    download_path: /downloads
+    download_path: /media/Downloads/qbittorrent
     enabled: true
     filter: default
     type: qbittorrent
     url: http://qbittorrent.downloads.svc.cluster.local:8080
 
-notifications:
-  detailed: true
-  skip_empty_run: true
-  service:
-    discord:
-      webhook_url: http://webhook.default.svc.cluster.local/hooks/tqm-pushover
+# notifications:
+#   detailed: true
+#   skip_empty_run: true
+#   service:
+#     discord:
+#       webhook_url: http://webhook.downloads.svc.cluster.local/hooks/tqm-pushover
 
 filters:
   default:
@@ -109,4 +109,4 @@ filters:
 
     orphan:
       ignore_paths:
-        - /downloads/manual
+        - /media/Downloads/manual

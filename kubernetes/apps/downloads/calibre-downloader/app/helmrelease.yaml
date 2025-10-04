@@ -25,7 +25,7 @@ spec:
           init:
             image: &image
               repository: ghcr.io/calibrain/calibre-web-automated-book-downloader
-              tag: v0.2.0@sha256:99e8d42199dd69cfb36498e4ca99c13c93ab513980ee33c1b9837aa1ab163fb9
+              tag: v0.2.2@sha256:a709fc56f80e132c48360cbd042543d8ab8534af21c376a21c26d94917a4c918
             command:
               - bash
               - -c
@@ -67,7 +67,7 @@ spec:
                 cpu: 5m
                 memory: 128Mi
               limits:
-                memory: 512Mi
+                memory: 4096Mi
     defaultPodOptions:
       automountServiceAccountToken: false
       enableServiceLinks: false
@@ -116,9 +116,15 @@ spec:
                 subPath: Downloads/Books
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: Calibre Downloader
+          gethomepage.dev/description: Ebook Downloader Service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/calibre-web-automated-book-downloader.png
         hostnames:
           - dl-books.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https

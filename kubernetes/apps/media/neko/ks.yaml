@@ -1,0 +1,30 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: neko
+  namespace: media
+spec:
+  targetNamespace: media
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: neko
+  path: ./kubernetes/apps/media/neko/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false
+  interval: 24h
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      APP: neko
+      VOLSYNC_CLAIM: neko-firefox-profile
+      VOLSYNC_CAPACITY: 15Gi
+      GATUS_SUBDOMAIN: movienight
+  components:
+    - ../../../../components/volsync
+    - ../../../../components/gatus/external

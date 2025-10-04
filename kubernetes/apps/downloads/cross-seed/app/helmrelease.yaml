@@ -4,7 +4,7 @@ kind: HelmRelease
 metadata:
   name: cross-seed
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/cross-seed/cross-seed
-              tag: 6.13.2
+              tag: 6.13.5
             env:
               CROSS_SEED_PORT: &port 80
               TZ: Asia/Kuala_Lumpur

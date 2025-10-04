@@ -4,11 +4,17 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: headlamp
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Platform Infrastructure
+    gethomepage.dev/name: Headlamp
+    gethomepage.dev/description: Kubernetes Dashboard
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/headlamp.png
 spec:
   hostnames: ["headlamp.cloudjur.com"]
   parentRefs:
-    - name: internal
-      namespace: kube-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   rules:
     - backendRefs:

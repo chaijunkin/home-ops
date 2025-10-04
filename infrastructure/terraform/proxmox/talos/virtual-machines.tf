@@ -15,6 +15,7 @@ resource "proxmox_virtual_environment_vm" "this" {
 
   agent {
     enabled = true
+    # timeout = "1m"
   }
 
   cpu {
@@ -101,16 +102,21 @@ resource "proxmox_virtual_environment_vm" "this" {
       # Passthrough iGPU
       ### VIRTUAL
       device = "hostpci0"
-      id     = "0000:00:02.0"
-      # mdev   = "i915-GVTg_V5_4"
-      rombar = true
-
-      # pcie   = false
-      # ### PHYSICAL
-      # device  = "hostpci0"
       # mapping = "iGPU"
-      pcie = true
-      # rombar  = true
+      pcie    = true
+      rombar  = true
+      xvga    = false
+
+      id     = "0000:00:02.0"
+      mdev   = "i915-GVTg_V5_8"
+      # rombar = true
+
+      # # pcie   = false
+      # # ### PHYSICAL
+      # # device  = "hostpci0"
+      # # mapping = "iGPU"
+      # pcie = true
+      # # rombar  = true
       # xvga    = false
     }
   }

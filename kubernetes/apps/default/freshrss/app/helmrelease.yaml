@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: freshrss/freshrss
-              tag: 1.27.0-alpine
+              tag: 1.27.1-alpine
             env:
               CRON_MIN: "*"
               DOMAIN: freshrss.cloudjur.com
@@ -61,9 +61,15 @@ spec:
 
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: FreshRSS
+          gethomepage.dev/description: Self-hosted RSS feed aggregator
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/freshrss.png
         hostnames:
           - freshrss.cloudjur.com
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https

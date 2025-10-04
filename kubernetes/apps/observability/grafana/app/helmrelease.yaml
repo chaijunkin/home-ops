@@ -9,7 +9,7 @@ spec:
     operation: copy
   url: oci://ghcr.io/grafana/helm-charts/grafana
   ref:
-    tag: 9.4.4
+    tag: 10.0.0
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -365,12 +365,12 @@ spec:
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
-          revision: 41
+          revision: 42
           datasource: Prometheus
         node-exporter-bsd:
           # renovate: depName="Node Exporter BSD"
           gnetId: 4260
-          revision: 15
+          revision: 16
           datasource: Prometheus
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
@@ -404,7 +404,7 @@ spec:
         etcd-storage:
           # renovate: depName="etcd"
           gnetId: 22236
-          revision: 1
+          revision: 4
           datasource:
             - {name: DS_VICTORIAMETRICS, value: Prometheus}
         host-overview:
@@ -493,9 +493,20 @@ spec:
       main:
         enabled: true
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Observability Service
+          gethomepage.dev/name: Grafana
+          gethomepage.dev/description: Analytics & Monitoring
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
+          # gethomepage.dev/widget.type: grafana
+          # gethomepage.dev/widget.url: "http://grafana.observability.svc.cluster.local:3000"
+          # gethomepage.dev/widget.alerts: alertmanager
+          # gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_GRAFANA_USERNAME`}} }}"
+          # gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_GRAFANA_PASSWORD`}} }}"
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
   chartRef:
     kind: OCIRepository

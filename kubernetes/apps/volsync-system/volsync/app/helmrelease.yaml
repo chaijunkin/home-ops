@@ -47,7 +47,7 @@ metadata:
   name: volsync
   namespace: volsync-system
 spec:
-  interval: 1440h
+  interval: 1h
   url: https://perfectra1n.github.io/volsync/charts/
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
@@ -73,7 +73,7 @@ spec:
   values:
     image: &image
       repository: ghcr.io/perfectra1n/volsync
-      tag: v0.15.40
+      tag: v0.16.10
     kopia: *image
     rclone: *image
     restic: *image
@@ -94,7 +94,7 @@ spec:
   chart:
     spec:
       chart: volsync
-      version: 0.16.7
+      version: 0.17.11
       sourceRef:
         kind: HelmRepository
         name: volsync

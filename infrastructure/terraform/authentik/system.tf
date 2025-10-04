@@ -38,7 +38,7 @@ resource "authentik_brand" "default" {
 }
 
 resource "authentik_brand" "home" {
-  domain           = var.CLUSTER_DOMAIN
+  domain           = var.public_domain
   default          = false
   branding_title   = "Home"
   branding_logo    = "/static/dist/assets/icons/icon_left_brand.svg"
@@ -49,14 +49,62 @@ resource "authentik_brand" "home" {
   flow_user_settings  = authentik_flow.user-settings.uuid
 }
 
-resource "authentik_service_connection_kubernetes" "local" {
-  name  = "local"
-  local = true
+# resource "authentik_service_connection_kubernetes" "local" {
+#   name  = "local"
+#   local = true
+# }
+
+
+data "authentik_service_connection_kubernetes" "local" {
+  name = "Local Kubernetes Cluster"
 }
 
-terraform {
-  cloud {
-    organization = "chaijunkin"
-    workspaces { name = "authentik-workspace" }
-  }
+resource "authentik_outpost" "proxyoutpostinternal" {
+  name               = "proxy-outpost-internal"
+  type               = "proxy"
+  service_connection = data.authentik_service_connection_kubernetes.local.id
+  protocol_providers = [
+    module.proxy["echo-server-int-auth"].id,
+  ]
+  config = jsonencode({
+    authentik_host          = "https://auth.${var.public_domain}",
+    log_level               = "warning",
+    object_naming_template  = "ak-outpost-%(name)s",
+    kubernetes_replicas     = 1,
+    kubernetes_namespace    = "security",
+    kubernetes_httproute_parent_refs = [{
+      group       = "gateway.networking.k8s.io"
+      kind        = "Gateway"
+      name        = "envoy-internal"
+      namespace   = "network"
+      sectionName = "https"
+    }]
+    kubernetes_service_type        = "ClusterIP",
+    kubernetes_disabled_components = ["ingress"],
+  })
+}
+
+resource "authentik_outpost" "proxyoutpostexternal" {
+  name               = "proxy-outpost-external"
+  type               = "proxy"
+  service_connection = data.authentik_service_connection_kubernetes.local.id
+  protocol_providers = [
+    module.proxy["echo-server-ext-auth"].id,
+  ]
+  config = jsonencode({
+    authentik_host          = "https://auth.${var.public_domain}",
+    log_level               = "warning",
+    object_naming_template  = "ak-outpost-%(name)s",
+    kubernetes_replicas     = 1,
+    kubernetes_namespace    = "security",
+    kubernetes_httproute_parent_refs = [{
+      group       = "gateway.networking.k8s.io"
+      kind        = "Gateway"
+      name        = "envoy-external"
+      namespace   = "network"
+      sectionName = "https"
+    }]
+    kubernetes_service_type        = "ClusterIP",
+    kubernetes_disabled_components = ["ingress"],
+  })
 }

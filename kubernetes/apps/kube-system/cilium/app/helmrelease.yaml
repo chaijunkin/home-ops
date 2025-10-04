@@ -10,7 +10,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.18.1
+    tag: 1.18.2
   url: oci://ghcr.io/home-operations/charts-mirror/cilium
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -18,7 +18,7 @@ kind: HelmRelease
 metadata:
   name: cilium
 spec:
-  interval: 1440h # interval: 1h
+  interval: 1h # interval: 1h
   chartRef:
     kind: OCIRepository
     name: cilium
