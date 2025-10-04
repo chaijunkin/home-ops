@@ -33,6 +33,15 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    name: intel-gpu-plugin
-    sharedDevNum: 2 # TODO: the higher the number, the less resrouce slices each client gets, consider setting this to 1
+    name: gpudeviceplugin
+
+    sharedDevNum: 5
+    logLevel: 2
+    resourceManager: false
+    enableMonitoring: true
+    allocationPolicy: "none"
+
+    nodeSelector:
+      intel.feature.node.kubernetes.io/gpu: "true"
+
     nodeFeatureRule: true
