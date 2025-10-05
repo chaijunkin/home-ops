@@ -42,11 +42,9 @@ spec:
         lbipam.cilium.io/ips: "10.10.30.27"
       externalTrafficPolicy: Cluster
     watchedResources:
-      [
-        "Ingress",
-        "Service",
-        "HTTPRoute",
-        "TLSRoute",
-        "GRPCRoute",
-        "DNSEndpoint",
-      ]
+      - "Ingress"
+      - "Service"
+      - "HTTPRoute"
+      - "TLSRoute"
+      - "GRPCRoute"
+      - "DNSEndpoint"
