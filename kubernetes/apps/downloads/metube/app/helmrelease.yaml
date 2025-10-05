@@ -33,7 +33,7 @@ spec:
               tag: "2025-07-01"
             env:
               DOWNLOAD_DIR: "/media/Downloads/metube"
-              AUDIO_DOWNLOAD_DIR: "/media/Music"
+              AUDIO_DOWNLOAD_DIR: "/media/Downloads/metube/music"
               DOWNLOAD_DIRS_INDEXABLE: "true"
               CUSTOM_DIRS: "true"
               CREATE_CUSTOM_DIRS: "true"

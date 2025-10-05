@@ -144,6 +144,8 @@
         - /tank/Storage/Documents
         - /tank/Storage/Downloads
         - /tank/Storage/Downloads/Books
+        - /tank/Storage/Downloads/metube # optional, auto created by metube if doesn't exist
+        - /tank/Storage/Downloads/metube/music # optional, auto created by metube if doesn't exist
         - /tank/Storage/Downloads/slskd
         - /tank/Storage/Downloads/slskd/complete
         - /tank/Storage/Downloads/slskd/incomplete
