@@ -1,28 +1,20 @@
-k8sAppLabelOverride: "kube-dns"
-image:
-  repository: coredns/coredns
-  tag: 1.12.4
-
 fullnameOverride: coredns
-
-replicaCount: 3
-
+image:
+  repository: mirror.gcr.io/coredns/coredns
+replicaCount: 2
+k8sAppLabelOverride: kube-dns
+serviceAccount:
+  create: true
 service:
   name: kube-dns
   clusterIP: 10.96.0.10
   annotations:
     fix.coredns.template: "fnord"
-
-serviceAccount:
-  create: true
-
 prometheus:
   service:
     enabled: true
-
 podAnnotations:
   reloader.stakater.com/auto: "true"
-
 servers:
   - zones:
       - zone: .
@@ -30,7 +22,6 @@ servers:
         use_tcp: true
     port: 53
     plugins:
-      - name: log
       - name: errors
       - name: health
         configBlock: |-
@@ -39,33 +30,40 @@ servers:
       - name: kubernetes
         parameters: cluster.local in-addr.arpa ip6.arpa
         configBlock: |-
-          pods insecure
+          pods verified
           fallthrough in-addr.arpa ip6.arpa
-          ttl 30
-      # - name: hosts
-      #   parameters: /etc/coredns/NodeHosts
-      #   configBlock: |-
-      #     ttl 60
-      #     reload 15s
-      #     fallthrough
-      - name: prometheus
-        parameters: 0.0.0.0:9153
+      - name: autopath
+        parameters: "@kubernetes"
       - name: forward
         parameters: . /etc/resolv.conf
       - name: cache
-        parameters: 30
+        configBlock: |-
+          prefetch 20
+          serve_stale
       - name: loop
       - name: reload
       - name: loadbalance
-
+      - name: prometheus
+        parameters: 0.0.0.0:9153
+      - name: log
+        configBlock: |-
+          class error
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
 tolerations:
+  - key: CriticalAddonsOnly
+    operator: Exists
   - key: node-role.kubernetes.io/control-plane
     operator: Exists
   - key: node-role.kubernetes.io/master
     operator: Exists
   - key: node-role.kubernetes.io/etcd
     operator: Exists
-
 topologySpreadConstraints:
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
