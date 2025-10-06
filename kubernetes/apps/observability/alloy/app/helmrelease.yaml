@@ -36,7 +36,7 @@ spec:
       mounts:
         extra:
           - name: alloy-config-volume
-            mountPath: /etc/alloy
+            mountPath: /etc/alloy/config
       extraPorts:
         - name: otlp
           port: 4317
@@ -46,9 +46,9 @@ spec:
           targetPort: 4318
       configMap:
         create: false
-        content: null
+        # content: null
         name: &name alloy-configmap
-        key: " "
+        key: "config"
     controller:
       volumes:
         extra:
@@ -78,7 +78,7 @@ spec:
           volumeMounts:
             - name: alloy-config-volume
               mountPath: /etc/alloy
-      podAnnotations:
-        reloader.stakater.com/auto: "true"
+      # podAnnotations:
+      #   reloader.stakater.com/auto: "true"
     serviceMonitor:
       enabled: true
