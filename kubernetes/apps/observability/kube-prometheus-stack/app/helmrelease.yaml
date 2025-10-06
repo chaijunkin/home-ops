@@ -91,7 +91,7 @@ spec:
             gethomepage.dev/widget.url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       prometheusSpec:
         additionalArgs:
-          - name: web.enable-write-receiver # prompp specific flag to enable remote write receiver
+          - name: web.otlp-write-receiver # prompp specific flag to enable otlp write receiver
             value: ""
         enableOTLPReceiver: true # this is kube-prom default value
         enableRemoteWriteReceiver: true
