@@ -207,6 +207,20 @@ spec:
             url: http://kube-prometheus-stack-alertmanager.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
+          - name: Tempo
+            type: tempo
+            url: http://tempo.observability.svc.cluster.local:3200
+            access: proxy
+            editable: true
+            jsonData:
+              nodeGraph:
+                enabled: true
+              tracesToLogs:
+                datasourceUid: loki
+                filterByTraceID: true
+                spanEndTimeShift: "500ms"
+                spanStartTimeShift: "-500ms"
+                tags: ["container", "namespace", "pod"]
     dashboards:
       # ceph:
       #   ceph-cluster:
