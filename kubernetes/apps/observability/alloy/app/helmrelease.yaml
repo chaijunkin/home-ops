@@ -38,6 +38,34 @@ spec:
         name: &name alloy-configmap
         key: .
     controller:
+      volumes:
+        extra:
+          - name: alloy-config-volume
+            emptyDir: {}
+      extraContainers:
+        - name: alloy-config-volume
+          image: ghcr.io/kiwigrid/k8s-sidecar:1.30.10
+          env:
+            - name: FOLDER
+              value: /etc/alloy
+            - name: LABEL
+              value: grafana.alloy/enabled
+            - name: NAMESPACE
+              value: ALL
+            - name: RESOURCE
+              value: both
+            - name: UNIQUE_FILENAMES
+              value: "true"
+            - name: METHOD
+              value: WATCH
+          resources:
+            requests:
+              cpu: 10m
+            limits:
+              memory: 128Mi
+          volumeMounts:
+            - name: alloy-config-volume
+              mountPath: /etc/alloy
       podAnnotations:
         reloader.stakater.com/auto: "true"
     serviceMonitor:
