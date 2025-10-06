@@ -50,10 +50,10 @@ spec:
         name: &name alloy-configmap
         key: .
     controller:
-      volumes:
-        extra:
-          - name: alloy-config-volume
-            emptyDir: {}
+      # volumes:
+      #   extra:
+      #     - name: alloy-config-volume
+      #       emptyDir: {}
       extraContainers:
         - name: alloy-config-volume
           image: ghcr.io/kiwigrid/k8s-sidecar:1.30.10
@@ -76,7 +76,7 @@ spec:
             limits:
               memory: 128Mi
           volumeMounts:
-            - name: alloy-config-volume
+            - name: config
               mountPath: /etc/alloy
       podAnnotations:
         reloader.stakater.com/auto: "true"
