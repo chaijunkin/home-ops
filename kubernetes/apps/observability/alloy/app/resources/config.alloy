@@ -207,7 +207,7 @@ otelcol.exporter.prometheus "default" {
 // Prometheus remote write configuration
 prometheus.remote_write "default" {
   endpoint {
-    url = "http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090/api/v1/push"
+    url = "http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090/api/v1/write"
 
     // Headers for authentication if needed
     // headers = {
