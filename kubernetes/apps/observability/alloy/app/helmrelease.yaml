@@ -32,7 +32,13 @@ spec:
       retries: 3
   values:
     fullnameOverride: alloy
+    configReloader:
+      customArgs:
+        args:
+          - --watched-dir=/etc/alloy/config
+          - --reload-url=http://localhost:12345/-/reload
     alloy:
+      listenPort: &listenPort 12345
       mounts:
         extra:
           - name: alloy-config-volume
