@@ -90,6 +90,8 @@ spec:
             gethomepage.dev/widget.type: prometheus
             gethomepage.dev/widget.url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       prometheusSpec:
+        enableOTLPReceiver: true
+        enableRemoteWriteReceiver: true
         image:
           registry: docker.io
           repository: prompp/prompp

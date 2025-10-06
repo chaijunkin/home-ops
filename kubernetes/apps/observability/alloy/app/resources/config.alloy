@@ -157,3 +157,64 @@ otelcol.receiver.otlp "default" {
     traces  = [otelcol.processor.batch.default.input]
   }
 }
+
+// Batch processor for efficient metrics/trace processing
+otelcol.processor.batch "default" {
+  timeout               = "5s"
+  send_batch_size      = 1024
+  send_batch_max_size  = 2048
+
+  output {
+    metrics = [otelcol.processor.attributes.default.input]
+    logs    = [otelcol.processor.attributes.default.input]
+    traces  = [otelcol.processor.attributes.default.input]
+  }
+}
+
+// Add cluster and environment attributes
+otelcol.processor.attributes "default" {
+  action {
+    key    = "cluster"
+    value  = "main"
+    action = "insert"
+  }
+
+  action {
+    key    = "region"
+    value  = "main"
+    action = "insert"
+  }
+
+  output {
+    metrics = [otelcol.exporter.prometheus.mimir.input]
+    logs    = [otelcol.exporter.loki.default.input]
+    traces  = [otelcol.exporter.otlp.tempo.input]
+  }
+}
+
+// Export traces to Tempo
+otelcol.exporter.otlp "tempo" {
+  client {
+    endpoint = "tempo-distributor.observability.svc.cluster.local:4317"
+    tls {
+      insecure = true
+    }
+  }
+}
+
+// Export logs to Loki
+otelcol.exporter.loki "default" {
+  forward_to = [loki.write.default.receiver]
+}
+
+// Prometheus remote write configuration
+prometheus.remote_write "prometheus" {
+  endpoint {
+    url = "http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090/api/v1/push"
+
+    // Headers for authentication if needed
+    // headers = {
+    //   "X-Scope-OrgID" = "1"
+    // }
+  }
+}

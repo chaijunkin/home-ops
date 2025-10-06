@@ -6,10 +6,11 @@ components:
   - ../../components/common
 resources:
   - ./alloy/ks.yaml
+  - ./exporters
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./silence-operator/ks.yaml
-  - ./exporters
+  - ./tempo/ks.yaml
