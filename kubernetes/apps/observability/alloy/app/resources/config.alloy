@@ -160,9 +160,9 @@ otelcol.processor.batch "default" {
   send_batch_max_size  = 2048
 
   output {
-    metrics = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default]
-    logs    = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default]
-    traces  = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default]
+    metrics = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input]
+    logs    = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input]
+    traces  = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input]
   }
 }
 
