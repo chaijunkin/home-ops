@@ -196,9 +196,6 @@ otelcol.processor.attributes "default" {
 otelcol.exporter.otlp "tempo" {
   client {
     endpoint = "tempo-distributor.observability.svc.cluster.local:4317"
-    tls {
-      insecure = true
-    }
   }
 }
 
