@@ -140,11 +140,6 @@ loki.write "default" {
 otelcol.receiver.otlp "default" {
   grpc {
     endpoint = "0.0.0.0:4317"
-
-    // TLS configuration for secure communication
-    tls {
-      insecure = true  // Set to false in production with proper certs
-    }
   }
 
   http {
