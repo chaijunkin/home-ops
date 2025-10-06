@@ -186,7 +186,7 @@ otelcol.processor.attributes "default" {
   }
 
   output {
-    metrics = [otelcol.exporter.prometheus.mimir.input]
+    metrics = [otelcol.exporter.prometheus.metrics.input]
     logs    = [otelcol.exporter.loki.default.input]
     traces  = [otelcol.exporter.otlp.tempo.input]
   }
@@ -208,7 +208,7 @@ otelcol.exporter.loki "default" {
 }
 
 // Prometheus remote write configuration
-prometheus.remote_write "prometheus" {
+prometheus.remote_write "metrics" {
   endpoint {
     url = "http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090/api/v1/push"
 
