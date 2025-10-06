@@ -166,6 +166,20 @@ otelcol.processor.batch "default" {
   }
 }
 
+otelcol.processor.k8sattributes "default" {
+  extract {
+    metadata = [
+      "k8s.namespace.name",
+      "k8s.pod.name",
+      "k8s.container.name"
+    ]
+  }
+
+  output {
+    traces = [otelcol.exporter.otlp.default.input]
+  }
+}
+
 // Add cluster and environment attributes
 otelcol.processor.attributes "default" {
   action {
