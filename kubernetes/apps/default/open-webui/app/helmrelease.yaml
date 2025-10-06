@@ -40,7 +40,7 @@ spec:
               ENABLE_OTEL_METRICS: true
               OTEL_SERVICE_NAME: open-webui
               OTEL_EXPORTER_OTLP_ENDPOINT: http://alloy.observability:4317
-              # OTEL_EXPORTER_OTLP_INSECURE: true
+              OTEL_EXPORTER_OTLP_INSECURE: true
               ENABLE_OTEL_TRACES: true
               # Image Generation
               ENABLE_OPENAI_API: false
