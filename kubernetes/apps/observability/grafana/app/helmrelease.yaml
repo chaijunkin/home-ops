@@ -211,34 +211,37 @@ spec:
             type: tempo
             url: http://tempo.observability.svc.cluster.local:3200
             access: proxy
-            nodeGraph:
-              enabled: true
-            spanBar:
-              type: None
-            timeout: 15
-            traceIdTimeParams:
-              enabled: true
-            tracesToLogsV2:
-              customQuery: false
-              datasourceUid: loki
-              spanStartTimeShift: "1h"
-              spanEndTimeShift: "-1h"
-              tags: ["job", "instance", "pod", "namespace"]
-              filterByTraceID: false
-              filterBySpanID: false
-              query: 'method="$${__span.tags.method}"'
-            tracesToMetrics:
-              datasourceUid: prometheus
-              spanStartTimeShift: "1h"
-              spanEndTimeShift: "-1h"
-              tags: [{key: "service.name", value: "service"}, {key: "job"}]
-              queries:
-                - name: "Sample query"
-                  query: "sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))"
-            traceQuery:
-              timeShiftEnabled: true
-              spanStartTimeShift: "1h"
-              spanEndTimeShift: "-1h"
+            jsonData:
+              nodeGraph:
+                enabled: true
+              spanBar:
+                type: None
+              timeout: 15
+              traceIdTimeParams:
+                enabled: true
+              tracesToLogsV2:
+                customQuery: false
+                datasourceUid: loki
+                spanStartTimeShift: "1h"
+                spanEndTimeShift: "-1h"
+                tags: ["job", "instance", "pod", "namespace"]
+                filterByTraceID: false
+                filterBySpanID: false
+                query: 'method="$${__span.tags.method}"'
+              lokiSearch:
+                datasourceUid: loki
+              tracesToMetrics:
+                datasourceUid: prometheus
+                spanStartTimeShift: "1h"
+                spanEndTimeShift: "-1h"
+                tags: [{key: "service.name", value: "service"}, {key: "job"}]
+                queries:
+                  - name: "Sample query"
+                    query: "sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))"
+              traceQuery:
+                timeShiftEnabled: true
+                spanStartTimeShift: "1h"
+                spanEndTimeShift: "-1h"
           - name: pyroscope
             type: grafana-pyroscope-datasource
             uid: pyroscope
