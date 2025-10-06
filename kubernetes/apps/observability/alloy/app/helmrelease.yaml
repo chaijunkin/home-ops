@@ -44,15 +44,10 @@ spec:
         - name: otlphttp
           port: 4318
           targetPort: 4318
-      extraEnv:
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
       configMap:
         create: false
         name: &name alloy-configmap
-        key: .
+        key: "*"
     controller:
       volumes:
         extra:
