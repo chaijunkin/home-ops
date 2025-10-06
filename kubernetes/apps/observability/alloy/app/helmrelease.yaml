@@ -31,6 +31,10 @@ spec:
     remediation:
       retries: 3
   values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    serviceMonitor:
+      enabled: true
     fullnameOverride: alloy
     alloy:
       extraPorts:
@@ -98,7 +102,3 @@ spec:
     #       volumeMounts:
     #         - name: alloy-config-volume
     #           mountPath: /etc/alloy
-    # podAnnotations:
-    #   reloader.stakater.com/auto: "true"
-    serviceMonitor:
-      enabled: true
