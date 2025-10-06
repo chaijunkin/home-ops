@@ -491,6 +491,7 @@ spec:
       - pr0ps-trackmap-panel
       - vonage-status-panel
       - fifemon-graphql-datasource
+      - grafana-pyroscope-app
     serviceMonitor:
       enabled: true
     persistence:
