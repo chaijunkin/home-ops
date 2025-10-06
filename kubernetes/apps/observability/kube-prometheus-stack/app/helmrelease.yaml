@@ -92,7 +92,7 @@ spec:
       prometheusSpec:
         enableFeatures:
           - "otlp-write-receiver"
-          - remote-write-receiver
+          # - remote-write-receiver
         enableOTLPReceiver: true # this is kube-prom default value
         enableRemoteWriteReceiver: true
         image:
