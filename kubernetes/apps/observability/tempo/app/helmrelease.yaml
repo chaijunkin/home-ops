@@ -94,14 +94,3 @@ spec:
       enabled: true
       storageClassName: openebs-hostpath
       size: 10Gi
-
-    distributor:
-      enabled: true
-    ingester:
-      enabled: true
-    querier:
-      enabled: true
-    queryFrontend:
-      enabled: true
-    compactor:
-      enabled: true

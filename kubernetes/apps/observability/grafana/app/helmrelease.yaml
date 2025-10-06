@@ -220,6 +220,20 @@ spec:
                 spanEndTimeShift: "500ms"
                 spanStartTimeShift: "-500ms"
                 tags: ["container", "namespace", "pod"]
+          - name: pyroscope
+            type: grafana-pyroscope-datasource
+            uid: pyroscope
+            access: proxy
+            url: http://pyroscope.observability.svc.cluster.local:4040
+            # user: ''
+            # database: ''
+            # basicAuth: false
+            # basicAuthUser: ''
+            # withCredentials: false
+            isDefault: false
+            jsonData: {}
+            secureJsonFields: {}
+            readOnly: false
     dashboards:
       # ceph:
       #   ceph-cluster:

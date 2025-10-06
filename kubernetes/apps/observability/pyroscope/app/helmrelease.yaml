@@ -1,0 +1,54 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: pyroscope
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  url: oci://ghcr.io/grafana/helm-charts/pyroscope
+  ref:
+    tag: 1.15.0
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pyroscope
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: pyroscope
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    pyroscope:
+      components:
+        querier:
+          kind: Deployment
+          replicaCount: 1
+        query-frontend:
+          kind: Deployment
+          replicaCount: 1
+        query-scheduler:
+          kind: Deployment
+          replicaCount: 1
+        distributor:
+          kind: Deployment
+          replicaCount: 1
+        ingester:
+          kind: StatefulSet
+          replicaCount: 1
+        store-gateway:
+          kind: StatefulSet
+          replicaCount: 1
+          persistence:
+            enabled: false
