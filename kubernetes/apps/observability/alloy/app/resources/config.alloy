@@ -204,20 +204,20 @@ otelcol.processor.attributes "default" {
 otelcol.exporter.otlp "tempo" {
   client {
     endpoint = "http://tempo.observability:4317"
-    tls {
-      insecure = true
-      insecure_skip_verify = true
-    }
+    // tls {
+    //   insecure = true
+    //   insecure_skip_verify = true
+    // }
   }
 }
 
 otelcol.exporter.otlphttp "tempo" {
   client {
     endpoint = "http://tempo.observability:4318"
-    tls {
-      insecure = true
-      insecure_skip_verify = true
-    }
+    // tls {
+    //   insecure = true
+    //   insecure_skip_verify = true
+    // }
     headers = {
       "Content-Type" = "application/json",
     }
