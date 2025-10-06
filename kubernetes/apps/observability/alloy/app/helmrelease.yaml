@@ -48,7 +48,7 @@ spec:
         create: false
         # content: null
         name: &name alloy-configmap
-        key: "config"
+        key: "config/"
     controller:
       volumes:
         extra:
