@@ -31,24 +31,8 @@ spec:
       retries: 3
   values:
     pyroscope:
-      components:
-        querier:
-          kind: Deployment
-          replicaCount: 1
-        query-frontend:
-          kind: Deployment
-          replicaCount: 1
-        query-scheduler:
-          kind: Deployment
-          replicaCount: 1
-        distributor:
-          kind: Deployment
-          replicaCount: 1
-        ingester:
-          kind: StatefulSet
-          replicaCount: 1
-        store-gateway:
-          kind: StatefulSet
-          replicaCount: 1
-          persistence:
-            enabled: false
+      replicaCount: 1
+    agent:
+      enabled: false
+    alloy:
+      enabled: false
