@@ -197,14 +197,30 @@ otelcol.processor.attributes "default" {
   output {
     metrics = [otelcol.exporter.prometheus.default.input]
     logs    = [otelcol.exporter.loki.default.input]
-    traces  = [otelcol.exporter.otlp.tempo.input]
+    traces  = [otelcol.exporter.otlp.tempo.input, otelcol.exporter.otlphttp.tempo.input]
   }
 }
 
-// Export traces to Tempo
 otelcol.exporter.otlp "tempo" {
   client {
-    endpoint = "tempo.observability.svc.cluster.local:4317"
+    endpoint = "http://tempo.observability:4317"
+    tls {
+      insecure = true
+      insecure_skip_verify = true
+    }
+  }
+}
+
+otelcol.exporter.otlphttp "tempo" {
+  client {
+    endpoint = "http://tempo.observability:4318"
+    tls {
+      insecure = true
+      insecure_skip_verify = true
+    }
+    headers = {
+      "Content-Type" = "application/json",
+    }
   }
 }
 
