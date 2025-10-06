@@ -211,7 +211,6 @@ spec:
             type: tempo
             url: http://tempo.observability.svc.cluster.local:3200
             access: proxy
-            editable: true
             jsonData:
               nodeGraph:
                 enabled: true
