@@ -190,7 +190,7 @@ otelcol.processor.attributes "default" {
 // Export traces to Tempo
 otelcol.exporter.otlp "tempo" {
   client {
-    endpoint = "tempo-distributor.observability.svc.cluster.local:4317"
+    endpoint = "tempo.observability.svc.cluster.local:4317"
   }
 }
 
