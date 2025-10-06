@@ -14,4 +14,4 @@ resources:
   - ./loki/ks.yaml
   - ./pyroscope/ks.yaml
   - ./silence-operator/ks.yaml
-  # - ./tempo/ks.yaml
+  - ./tempo/ks.yaml
