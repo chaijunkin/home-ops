@@ -33,6 +33,10 @@ spec:
   values:
     fullnameOverride: alloy
     alloy:
+      mounts:
+        extra:
+          - name: alloy-config-volume
+            mountPath: /etc/alloy
       extraPorts:
         - name: otlp
           port: 4317
