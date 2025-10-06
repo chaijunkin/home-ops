@@ -32,16 +32,7 @@ spec:
       retries: 3
   values:
     fullnameOverride: alloy
-    configReloader:
-      customArgs:
-        - --watched-dir=/etc/alloy/config
-        - --reload-url=http://localhost:12345/-/reload
     alloy:
-      listenPort: &listenPort 12345
-      mounts:
-        extra:
-          - name: alloy-config-volume
-            mountPath: /etc/alloy/config
       extraPorts:
         - name: otlp
           port: 4317
@@ -53,37 +44,61 @@ spec:
         create: false
         # content: null
         name: &name alloy-configmap
-        key: "config/"
-    controller:
-      volumes:
-        extra:
-          - name: alloy-config-volume
-            emptyDir: {}
-      extraContainers:
-        - name: alloy-config-volume
-          image: ghcr.io/kiwigrid/k8s-sidecar:1.30.10
-          env:
-            - name: FOLDER
-              value: /etc/alloy
-            - name: LABEL
-              value: grafana.alloy/enabled
-            - name: NAMESPACE
-              value: ALL
-            - name: RESOURCE
-              value: both
-            - name: UNIQUE_FILENAMES
-              value: "true"
-            - name: METHOD
-              value: WATCH
-          resources:
-            requests:
-              cpu: 10m
-            limits:
-              memory: 128Mi
-          volumeMounts:
-            - name: alloy-config-volume
-              mountPath: /etc/alloy
-      # podAnnotations:
-      #   reloader.stakater.com/auto: "true"
+        key: "."
+    # prometheus config reloader doesn't work with initContainer afterward (alloy helm chart issue)
+    # fullnameOverride: alloy
+    # configReloader:
+    #   customArgs:
+    #     - --watched-dir=/etc/alloy/config
+    #     - --reload-url=http://localhost:12345/-/reload
+    # alloy:
+    #   listenPort: &listenPort 12345
+    #   mounts:
+    #     extra:
+    #       - name: alloy-config-volume
+    #         mountPath: /etc/alloy/config
+    #   extraPorts:
+    #     - name: otlp
+    #       port: 4317
+    #       targetPort: 4317
+    #     - name: otlphttp
+    #       port: 4318
+    #       targetPort: 4318
+    #   configMap:
+    #     create: false
+    #     # content: null
+    #     name: &name alloy-configmap
+    #     key: "config/"
+    # controller:
+    #   volumes:
+    #     extra:
+    #       - name: alloy-config-volume
+    #         emptyDir: {}
+    #   extraContainers:
+    #     - name: alloy-config-volume
+    #       image: ghcr.io/kiwigrid/k8s-sidecar:1.30.10
+    #       env:
+    #         - name: FOLDER
+    #           value: /etc/alloy
+    #         - name: LABEL
+    #           value: grafana.alloy/enabled
+    #         - name: NAMESPACE
+    #           value: ALL
+    #         - name: RESOURCE
+    #           value: both
+    #         - name: UNIQUE_FILENAMES
+    #           value: "true"
+    #         - name: METHOD
+    #           value: WATCH
+    #       resources:
+    #         requests:
+    #           cpu: 10m
+    #         limits:
+    #           memory: 128Mi
+    #       volumeMounts:
+    #         - name: alloy-config-volume
+    #           mountPath: /etc/alloy
+    # podAnnotations:
+    #   reloader.stakater.com/auto: "true"
     serviceMonitor:
       enabled: true
