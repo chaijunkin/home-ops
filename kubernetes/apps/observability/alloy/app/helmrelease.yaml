@@ -46,6 +46,7 @@ spec:
           targetPort: 4318
       configMap:
         create: false
+        content: null
         name: &name alloy-configmap
         key: " "
     controller:

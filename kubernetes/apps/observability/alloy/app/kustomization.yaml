@@ -11,3 +11,5 @@ configMapGenerator:
       - config.alloy=./resources/config.alloy
 generatorOptions:
   disableNameSuffixHash: true
+  labels:
+    grafana.alloy/enabled: "true"
