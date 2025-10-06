@@ -36,7 +36,7 @@ spec:
       mounts:
         extra:
           - name: alloy-config-volume
-            mountPath: /etc/alloy
+            mountPath: /etc/alloy/test
       extraPorts:
         - name: otlp
           port: 4317
