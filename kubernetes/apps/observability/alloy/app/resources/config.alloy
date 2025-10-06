@@ -176,7 +176,9 @@ otelcol.processor.k8sattributes "default" {
   }
 
   output {
-    traces = [otelcol.exporter.otlp.default.input]
+    metrics = [otelcol.exporter.prometheus.default.input]
+    logs    = [otelcol.exporter.loki.default.input]
+    traces  = [otelcol.exporter.otlp.tempo.input, otelcol.exporter.otlphttp.tempo.input]
   }
 }
 
