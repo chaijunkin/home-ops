@@ -192,12 +192,6 @@ otelcol.processor.k8sattributes "default" {
     }
   }
   extract {
-    label {
-      from      = "pod"
-      key_regex = "(.*)/(.*)"
-      tag_name  = "$1.$2"
-    }
-
     metadata = [
       "k8s.namespace.name",
       "k8s.deployment.name",
