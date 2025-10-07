@@ -171,17 +171,28 @@ otelcol.processor.batch "default" {
 }
 
 otelcol.processor.k8sattributes "default" {
+  pod_association {
+    source {
+      from = "resource_attribute"
+      name = "k8s.pod.ip"
+    }
+  }
+  pod_association {
+    source {
+      from = "resource_attribute"
+      name = "k8s.pod.uid"
+    }
+  }
+  pod_association {
+    source {
+      from = "connection"
+    }
+  }
   extract {
     label {
       from      = "pod"
       key_regex = "(.*)/(.*)"
       tag_name  = "$1.$2"
-    }
-
-    pod_association {
-      source {
-        from = "connection"
-      }
     }
 
     metadata = [
