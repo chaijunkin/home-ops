@@ -209,9 +209,9 @@ otelcol.processor.transform "add_kube_attrs" {
   }
 
   output {
-    metrics = [otelcol.exporter.prometheus.default.input]
-    logs    = [otelcol.exporter.loki.default.input]
-    traces  = [otelcol.exporter.otlp.tempo.input, otelcol.exporter.otlphttp.tempo.input]
+    metrics = [otelcol.processor.attributes.default.input]
+    logs    = [otelcol.processor.attributes.default.input]
+    traces  = [otelcol.processor.attributes.default.input]
   }
 }
 
