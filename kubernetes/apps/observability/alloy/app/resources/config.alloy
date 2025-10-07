@@ -171,17 +171,17 @@ otelcol.processor.batch "default" {
 }
 
 otelcol.processor.k8sattributes "default" {
-  pod_association {
-    source {
-      from = "connection"
-    }
-  }
-
   extract {
     label {
       from      = "pod"
       key_regex = "(.*)/(.*)"
       tag_name  = "$1.$2"
+    }
+
+    pod_association {
+      source {
+        from = "connection"
+      }
     }
 
     metadata = [
