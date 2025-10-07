@@ -160,9 +160,9 @@ otelcol.processor.batch "default" {
   send_batch_max_size  = 2048
 
   output {
-    metrics = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input]
-    logs    = [otelcol.processor.attributes.default.input]
-    traces  = [otelcol.processor.attributes.default.input]
+    metrics = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input, otelcol.processor.transform.add_kube_attrs]
+    logs    = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input, otelcol.processor.transform.add_kube_attrs]
+    traces  = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input, otelcol.processor.transform.add_kube_attrs]
   }
 }
 
@@ -191,11 +191,30 @@ otelcol.processor.k8sattributes "default" {
   }
 
   output {
+    metrics = [otelcol.processor.transform.add_kube_attrs.input]
+    logs    = [otelcol.processor.transform.add_kube_attrs.input]
+    traces  = [otelcol.processor.transform.add_kube_attrs.input]
+  }
+}
+
+otelcol.processor.transform "add_kube_attrs" {
+  error_mode = "ignore"
+
+  metric_statements {
+    context = "datapoint"
+    statements = [
+      "set(attributes[\"k8s.pod.name\"], resource.attributes[\"k8s.pod.name\"])",
+      "set(attributes[\"k8s.namespace.name\"], resource.attributes[\"k8s.namespace.name\"])",
+    ]
+  }
+
+  output {
     metrics = [otelcol.exporter.prometheus.default.input]
     logs    = [otelcol.exporter.loki.default.input]
     traces  = [otelcol.exporter.otlp.tempo.input, otelcol.exporter.otlphttp.tempo.input]
   }
 }
+
 
 // Add cluster and environment attributes
 otelcol.processor.attributes "default" {
