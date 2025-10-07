@@ -151,9 +151,9 @@ otelcol.receiver.otlp "default" {
   }
 
   output {
-    metrics = [otelcol.processor.k8sattributes.default.input]
-    logs    = [otelcol.processor.k8sattributes.default.input]
-    traces  = [otelcol.processor.k8sattributes.default.input]
+    metrics = [otelcol.processor.resourcedetection.default.input]
+    logs    = [otelcol.processor.resourcedetection.default.input]
+    traces  = [otelcol.processor.resourcedetection.default.input]
   }
 }
 
