@@ -161,7 +161,7 @@ otelcol.processor.batch "default" {
 
   output {
     metrics = [otelcol.processor.k8sattributes.default.input]
-    logs    = [otelcol.processor.attributes.default.input]
+    logs    = [otelcol.processor.k8sattributes.default.input]
     traces  = [otelcol.processor.k8sattributes.default.input]
   }
 }
@@ -205,29 +205,9 @@ otelcol.processor.transform "add_kube_attrs" {
     statements = [
       "set(attributes[\"k8s.pod.name\"], resource.attributes[\"k8s.pod.name\"])",
       "set(attributes[\"k8s.namespace.name\"], resource.attributes[\"k8s.namespace.name\"])",
+      "set(attributes[\"cluster\"], \"main\")",
+      "set(attributes[\"region\"], \"main\")",
     ]
-  }
-
-  output {
-    metrics = [otelcol.processor.attributes.default.input]
-    logs    = [otelcol.processor.attributes.default.input]
-    traces  = [otelcol.processor.attributes.default.input]
-  }
-}
-
-
-// Add cluster and environment attributes
-otelcol.processor.attributes "default" {
-  action {
-    key    = "cluster"
-    value  = "main"
-    action = "insert"
-  }
-
-  action {
-    key    = "region"
-    value  = "main"
-    action = "insert"
   }
 
   output {
