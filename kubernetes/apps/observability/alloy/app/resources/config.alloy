@@ -1,3 +1,7 @@
+livedebugging {
+  enabled = true
+}
+
 logging {
 	level    = "debug"
 	format   = "json"
