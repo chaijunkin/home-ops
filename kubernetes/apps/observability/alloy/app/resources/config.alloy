@@ -151,22 +151,25 @@ otelcol.receiver.otlp "default" {
   }
 
   output {
-    metrics = [otelcol.processor.batch.default.input]
-    logs    = [otelcol.processor.batch.default.input]
-    traces  = [otelcol.processor.batch.default.input]
-  }
-}
-
-// Batch processor for efficient metrics/trace processing
-otelcol.processor.batch "default" {
-  timeout               = "5s"
-  send_batch_size      = 1024
-  send_batch_max_size  = 2048
-
-  output {
     metrics = [otelcol.processor.k8sattributes.default.input]
     logs    = [otelcol.processor.k8sattributes.default.input]
     traces  = [otelcol.processor.k8sattributes.default.input]
+  }
+}
+
+// Resource Detection Processor
+otelcol.processor.resourcedetection "default" {
+  detectors = ["env","system"]
+  override = true
+
+  system {
+    hostname_sources = ["os"]
+  }
+
+  output {
+    metrics = [otelcol.processor.k8sattributes.default.input]
+    logs = [otelcol.processor.k8sattributes.default.input]
+    traces = [otelcol.processor.k8sattributes.default.input]
   }
 }
 
@@ -218,6 +221,15 @@ otelcol.processor.k8sattributes "default" {
   }
 }
 
+// Host Info Connector
+otelcol.connector.host_info "default" {
+  host_identifiers = [ "k8s.node.name" ]
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+  }
+}
+
 otelcol.processor.transform "add_kube_attrs" {
   error_mode = "ignore"
 
@@ -230,6 +242,19 @@ otelcol.processor.transform "add_kube_attrs" {
       "set(attributes[\"region\"], \"main\")",
     ]
   }
+
+  output {
+    metrics = [otelcol.processor.batch.default.input]
+    logs = [otelcol.processor.batch.default.input]
+    traces = [otelcol.processor.batch.default.input]
+  }
+}
+
+// Batch Processor
+otelcol.processor.batch "default" {
+  send_batch_size = 8192
+  send_batch_max_size = 0
+  timeout = "2s"
 
   output {
     metrics = [otelcol.exporter.prometheus.default.input]
