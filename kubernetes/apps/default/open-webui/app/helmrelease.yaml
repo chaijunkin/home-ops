@@ -41,6 +41,7 @@ spec:
               OTEL_SERVICE_NAME: open-webui
               # OTEL_EXPORTER_OTLP_ENDPOINT: http://alloy.observability:4317
               OTEL_EXPORTER_OTLP_ENDPOINT: http://kube-prometheus-stack-prometheus.observability:9090/api/v1/otlp/v1/metrics
+              OTEL_METRICS_OTLP_SPAN_EXPORTER: http
               OTEL_EXPORTER_OTLP_INSECURE: true
               # ENABLE_OTEL_TRACES: true
               # Image Generation
