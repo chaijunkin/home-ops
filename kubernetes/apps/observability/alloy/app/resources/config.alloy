@@ -197,9 +197,9 @@ otelcol.processor.k8sattributes "default" {
   }
 
   output {
-    metrics = [otelcol.processor.transform.add_kube_attrs.input]
-    logs    = [otelcol.processor.transform.add_kube_attrs.input]
-    traces  = [otelcol.processor.transform.add_kube_attrs.input]
+    metrics = [otelcol.processor.transform.default.input]
+    logs    = [otelcol.processor.transform.default.input]
+    traces  = [otelcol.processor.transform.default.input, , otelcol.connector.host_info.default.input]
   }
 }
 
@@ -212,7 +212,7 @@ otelcol.connector.host_info "default" {
   }
 }
 
-otelcol.processor.transform "add_kube_attrs" {
+otelcol.processor.transform "default" {
   error_mode = "ignore"
 
   metric_statements {
