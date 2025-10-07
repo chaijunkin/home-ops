@@ -216,7 +216,7 @@ otelcol.processor.transform "default" {
   error_mode = "ignore"
 
   metric_statements {
-    context = "datapoint"
+    context = "datapoint",
     statements = [
       "set(attributes[\"pod\"], attributes[\"k8s.pod.name\"])",
       "set(attributes[\"namespace\"], attributes[\"k8s.namespace.name\"])",
