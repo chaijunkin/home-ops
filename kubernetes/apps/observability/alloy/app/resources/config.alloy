@@ -199,7 +199,7 @@ otelcol.processor.k8sattributes "default" {
   output {
     metrics = [otelcol.processor.transform.default.input]
     logs    = [otelcol.processor.transform.default.input]
-    traces  = [otelcol.processor.transform.default.input, , otelcol.connector.host_info.default.input]
+    traces  = [otelcol.processor.transform.default.input, otelcol.connector.host_info.default.input]
   }
 }
 
