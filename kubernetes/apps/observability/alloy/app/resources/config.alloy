@@ -161,7 +161,7 @@ otelcol.processor.batch "default" {
 
   output {
     metrics = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input, otelcol.processor.transform.add_kube_attrs]
-    logs    = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input, otelcol.processor.transform.add_kube_attrs]
+    logs    = [otelcol.processor.attributes.default.input]
     traces  = [otelcol.processor.attributes.default.input, otelcol.processor.k8sattributes.default.input, otelcol.processor.transform.add_kube_attrs]
   }
 }
