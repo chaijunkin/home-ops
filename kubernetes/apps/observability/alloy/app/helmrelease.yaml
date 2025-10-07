@@ -37,6 +37,8 @@ spec:
       enabled: true
     fullnameOverride: alloy
     alloy:
+      liveDebugging:
+        enabled: true
       extraPorts:
         - name: otlp
           port: 4317
