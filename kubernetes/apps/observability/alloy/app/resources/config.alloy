@@ -223,6 +223,11 @@ otelcol.processor.transform "default" {
       "set(attributes[\"cluster\"], \"main\")",
       "set(attributes[\"region\"], \"main\")",
     ]
+    label {
+      from = "pod"
+      key_regex = "kubernetes.io/(.*)"
+      tag_name = "$1"
+    }
   }
 
   log_statements {
