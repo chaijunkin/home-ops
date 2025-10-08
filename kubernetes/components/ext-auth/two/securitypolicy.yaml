@@ -9,6 +9,7 @@ spec:
   extAuth:
     failOpen: false
     headersToExtAuth:
+      - X-Forwarded-Proto
       - cookie
     http:
       backendRefs:
