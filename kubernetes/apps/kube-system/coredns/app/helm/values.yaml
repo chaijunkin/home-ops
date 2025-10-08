@@ -1,7 +1,7 @@
 fullnameOverride: coredns
 image:
   repository: mirror.gcr.io/coredns/coredns
-replicaCount: 2
+replicaCount: 1
 k8sAppLabelOverride: kube-dns
 serviceAccount:
   create: true
@@ -38,7 +38,9 @@ servers:
         parameters: . /etc/resolv.conf
       - name: cache
         configBlock: |-
-          prefetch 20
+          success 9984
+          denial 9984
+          prefetch 20 90s
           serve_stale
       - name: loop
       - name: reload
@@ -46,8 +48,8 @@ servers:
       - name: prometheus
         parameters: 0.0.0.0:9153
       - name: log
-        # configBlock: |-
-        #   class error
+        configBlock: |-
+          class error
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
