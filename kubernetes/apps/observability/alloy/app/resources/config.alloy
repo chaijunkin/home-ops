@@ -174,23 +174,24 @@ otelcol.processor.resourcedetection "default" {
 }
 
 otelcol.processor.k8sattributes "default" {
-  pod_association {
-    source {
-      from = "resource_attribute"
-      name = "k8s.pod.ip"
-    }
-  }
-  pod_association {
-    source {
-      from = "resource_attribute"
-      name = "k8s.pod.uid"
-    }
-  }
-  pod_association {
-    source {
-      from = "connection"
-    }
-  }
+  wait_for_metadata = true
+  // pod_association {
+  //   source {
+  //     from = "resource_attribute"
+  //     name = "k8s.pod.ip"
+  //   }
+  // }
+  // pod_association {
+  //   source {
+  //     from = "resource_attribute"
+  //     name = "k8s.pod.uid"
+  //   }
+  // }
+  // pod_association {
+  //   source {
+  //     from = "connection"
+  //   }
+  // }
   extract {
     metadata = [
       "k8s.namespace.name",
