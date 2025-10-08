@@ -176,9 +176,6 @@ otelcol.processor.resourcedetection "default" {
 otelcol.processor.k8sattributes "default" {
   wait_for_metadata = true
   extract {
-    label {
-      from = "pod"
-    }
     metadata = [
       "k8s.namespace.name",
       "k8s.deployment.name",
