@@ -175,24 +175,29 @@ otelcol.processor.resourcedetection "default" {
 
 otelcol.processor.k8sattributes "default" {
   wait_for_metadata = true
-  // pod_association {
-  //   source {
-  //     from = "resource_attribute"
-  //     name = "k8s.pod.ip"
-  //   }
-  // }
-  // pod_association {
-  //   source {
-  //     from = "resource_attribute"
-  //     name = "k8s.pod.uid"
-  //   }
-  // }
-  // pod_association {
-  //   source {
-  //     from = "connection"
-  //   }
-  // }
+  pod_association {
+    source {
+      from = "resource_attribute"
+      name = "k8s.pod.ip"
+    }
+  }
+  pod_association {
+    source {
+      from = "resource_attribute"
+      name = "k8s.pod.uid"
+    }
+  }
+  pod_association {
+    source {
+      from = "connection"
+    }
+  }
   extract {
+    label {
+      from      = "pod"
+      key_regex = "(.*)/(.*)"
+      tag_name  = "$1.$2"
+    }
     metadata = [
       "k8s.namespace.name",
       "k8s.deployment.name",
