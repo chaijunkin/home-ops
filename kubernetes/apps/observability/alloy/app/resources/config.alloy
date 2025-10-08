@@ -14,9 +14,9 @@ discovery.kubernetes "pod" {
 	role = "pod"
 }
 
-discovery.kubernetes "service" {
-	role = "service"
-}
+// discovery.kubernetes "service" {
+// 	role = "service"
+// }
 
 // discovery.relabel rewrites the label set of the input targets by applying one or more relabeling rules.
 // If no rules are defined, then the input targets are exported as-is.
@@ -151,47 +151,30 @@ otelcol.receiver.otlp "default" {
   }
 
   output {
+    metrics = [otelcol.processor.resourcedetection.default.input]
+    logs    = [otelcol.processor.resourcedetection.default.input]
+    traces  = [otelcol.processor.resourcedetection.default.input]
+  }
+}
+
+// Resource Detection Processor
+otelcol.processor.resourcedetection "default" {
+  detectors = ["env","system"]
+  override = true
+
+  system {
+    hostname_sources = ["os"]
+  }
+
+  output {
     metrics = [otelcol.processor.k8sattributes.default.input]
     logs = [otelcol.processor.k8sattributes.default.input]
     traces = [otelcol.processor.k8sattributes.default.input]
   }
 }
 
-// Resource Detection Processor
-// otelcol.processor.resourcedetection "default" {
-//   detectors = ["env","system"]
-//   override = true
-//
-//   system {
-//     hostname_sources = ["os"]
-//   }
-//
-//   output {
-//     metrics = [otelcol.processor.k8sattributes.default.input]
-//     logs = [otelcol.processor.k8sattributes.default.input]
-//     traces = [otelcol.processor.k8sattributes.default.input]
-//   }
-// }
-
 otelcol.processor.k8sattributes "default" {
   wait_for_metadata = true
-  pod_association {
-    source {
-      from = "resource_attribute"
-      name = "k8s.pod.ip"
-    }
-  }
-  pod_association {
-    source {
-      from = "resource_attribute"
-      name = "k8s.pod.uid"
-    }
-  }
-  pod_association {
-    source {
-      from = "connection"
-    }
-  }
   extract {
     label {
       from      = "pod"
@@ -212,6 +195,12 @@ otelcol.processor.k8sattributes "default" {
     ]
 
     otel_annotations = true
+  }
+
+  pod_association {
+    source {
+      from = "connection"
+    }
   }
   output {
     metrics = [otelcol.processor.transform.default.input]
