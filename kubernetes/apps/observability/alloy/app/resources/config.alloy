@@ -174,32 +174,28 @@ otelcol.processor.resourcedetection "default" {
 }
 
 otelcol.processor.k8sattributes "default" {
-  passthrough = false
+  error_mode = "ignore"
+  // passthrough = false
   extract {
     metadata = ["k8s.namespace.name","k8s.pod.name","k8s.deployment.name","k8s.statefulset.name","k8s.daemonset.name","k8s.cronjob.name","k8s.job.name","k8s.node.name","k8s.pod.uid","k8s.pod.start_time"]
-    label {
-      from      = "pod"
-      key_regex = "(.*)/(.*)"
-      tag_name  = "$1.$2"
-    }
   }
-  pod_association {
-    source {
-      from = "resource_attribute"
-      name = "k8s.pod.ip"
-    }
-  }
-  pod_association {
-    source {
-      from = "resource_attribute"
-      name = "k8s.pod.uid"
-    }
-  }
-  pod_association {
-    source {
-      from = "connection"
-    }
-  }
+  // pod_association {
+  //   source {
+  //     from = "resource_attribute"
+  //     name = "k8s.pod.ip"
+  //   }
+  // }
+  // pod_association {
+  //   source {
+  //     from = "resource_attribute"
+  //     name = "k8s.pod.uid"
+  //   }
+  // }
+  // pod_association {
+  //   source {
+  //     from = "connection"
+  //   }
+  // }
 
   output {
     metrics = [otelcol.processor.transform.default.input]
