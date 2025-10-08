@@ -151,27 +151,27 @@ otelcol.receiver.otlp "default" {
   }
 
   output {
-    metrics = [otelcol.processor.resourcedetection.default.input]
-    logs    = [otelcol.processor.resourcedetection.default.input]
-    traces  = [otelcol.processor.resourcedetection.default.input]
-  }
-}
-
-// Resource Detection Processor
-otelcol.processor.resourcedetection "default" {
-  detectors = ["env","system"]
-  override = true
-
-  system {
-    hostname_sources = ["os"]
-  }
-
-  output {
     metrics = [otelcol.processor.k8sattributes.default.input]
     logs = [otelcol.processor.k8sattributes.default.input]
     traces = [otelcol.processor.k8sattributes.default.input]
   }
 }
+
+// Resource Detection Processor
+// otelcol.processor.resourcedetection "default" {
+//   detectors = ["env","system"]
+//   override = true
+//
+//   system {
+//     hostname_sources = ["os"]
+//   }
+//
+//   output {
+//     metrics = [otelcol.processor.k8sattributes.default.input]
+//     logs = [otelcol.processor.k8sattributes.default.input]
+//     traces = [otelcol.processor.k8sattributes.default.input]
+//   }
+// }
 
 otelcol.processor.k8sattributes "default" {
   wait_for_metadata = true
