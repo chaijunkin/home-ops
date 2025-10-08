@@ -177,9 +177,7 @@ otelcol.processor.k8sattributes "default" {
   wait_for_metadata = true
   extract {
     label {
-      from      = "pod"
-      key_regex = "(.*)/(.*)"
-      tag_name  = "$1.$2"
+      from = "pod"
     }
     metadata = [
       "k8s.namespace.name",
