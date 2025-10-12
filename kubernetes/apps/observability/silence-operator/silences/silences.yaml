@@ -69,3 +69,13 @@ spec:
   matchers:
     - name: alertname
       value: KubeAPIErrorBudgetBurn
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: authentik
+spec:
+  matchers:
+    - name: alertname
+      value: DisconnectedOutposts # not sure why, disable temporary
