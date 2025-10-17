@@ -22,3 +22,4 @@ resources:
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./thelounge/ks.yaml
+  - ./tika/ks.yaml
