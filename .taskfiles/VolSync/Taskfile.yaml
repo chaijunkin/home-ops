@@ -61,6 +61,36 @@ tasks:
       - kubectl --namespace {{.NS}} get replicationsources {{.APP}}
       - which kubectl
 
+  snapshot-r2:
+    desc: Snapshot an app [NS=default] [APP=required]
+    cmds:
+      - kubectl --namespace {{.NS}} patch replicationsources {{.APP}}-r2 --type merge -p '{"spec":{"trigger":{"manual":"{{now | unixEpoch}}"}}}'
+      - until kubectl --namespace {{.NS}} get job/{{.JOB}} &>/dev/null; do sleep 5; done
+      - kubectl --namespace {{.NS}} wait job/{{.JOB}} --for=condition=complete --timeout=120m
+    vars:
+      NS: '{{.NS | default "default"}}'
+      JOB: volsync-src-{{.APP}}-r2
+    requires:
+      vars: [APP]
+    preconditions:
+      - kubectl --namespace {{.NS}} get replicationsources {{.APP}}
+      - which kubectl
+
+  snapshot-kopia:
+    desc: Snapshot an app [NS=default] [APP=required]
+    cmds:
+      - kubectl --namespace {{.NS}} patch replicationsources {{.APP}}-kopia --type merge -p '{"spec":{"trigger":{"manual":"{{now | unixEpoch}}"}}}'
+      - until kubectl --namespace {{.NS}} get job/{{.JOB}} &>/dev/null; do sleep 5; done
+      - kubectl --namespace {{.NS}} wait job/{{.JOB}} --for=condition=complete --timeout=120m
+    vars:
+      NS: '{{.NS | default "default"}}'
+      JOB: volsync-src-{{.APP}}-kopia
+    requires:
+      vars: [APP]
+    preconditions:
+      - kubectl --namespace {{.NS}} get replicationsources {{.APP}}
+      - which kubectl
+
   restore:
     desc: Restore an app [NS=default] [APP=required] [PREVIOUS=required]
     cmds:
