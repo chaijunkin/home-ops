@@ -2,11 +2,11 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: "${APP}-volsync-secret"
+  name: "${APP}-volsync"
   # name: "${APP}-volsync"
 spec:
   target:
-    deletionPolicy: Delete
+    name: "${APP}-volsync-secret"
     template:
       type: Opaque
       data:
