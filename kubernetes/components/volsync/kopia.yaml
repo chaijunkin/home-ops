@@ -80,7 +80,8 @@ spec:
     parallelism: 2
     repository: ${APP}-volsync-secret
     retain:
-      hourly: 24
+      hourly: 3
       daily: 7
+      weekly: 5
     storageClassName: ${VOLSYNC_STORAGECLASS:=local-hostpath}
     volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=local-hostpath}
