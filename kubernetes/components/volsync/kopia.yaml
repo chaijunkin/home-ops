@@ -61,7 +61,7 @@ kind: ReplicationSource
 metadata:
   name: ${APP}-kopia
 spec:
-  sourcePVC: ${APP}
+  sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
   trigger:
     schedule: 0 * * * *
   kopia:
