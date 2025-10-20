@@ -10,15 +10,16 @@
     nfs_exports:
       - {
           path: "/tank/Apps",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash) 10.10.10.0/24(ro,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash)",
         }
       - {
           path: "/tank/Storage",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(rw,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash) 10.10.10.0/24(rw,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash)",
         }
       - {
           path: "/tank/Backup",
-          clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
+          # clients: "10.10.30.0/24(rw,sync,no_subtree_check,no_root_squash) 10.10.10.0/24(ro,sync,no_subtree_check,no_root_squash)",
+          clients: "10.10.30.0/24(rw,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash) 10.10.10.0/24(ro,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash)",
         }
       - {
           path: "/tank/Shared",
