@@ -88,7 +88,7 @@ tasks:
     requires:
       vars: [APP]
     preconditions:
-      - kubectl --namespace {{.NS}} get replicationsources {{.APP}}
+      - kubectl --namespace {{.NS}} get replicationsources {{.APP}}-kopia
       - which kubectl
 
   restore:
