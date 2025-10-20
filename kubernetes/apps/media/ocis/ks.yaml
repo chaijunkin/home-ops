@@ -29,5 +29,5 @@ spec:
       VOLSYNC_CAPACITY: 15Gi
       GATUS_SUBDOMAIN: drive
   components:
-    - ../../../../components/volsync
+    - ../../../../components/volsync-no-r2
     - ../../../../components/gatus/external
