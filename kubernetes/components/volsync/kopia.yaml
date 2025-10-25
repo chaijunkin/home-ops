@@ -52,8 +52,8 @@ spec:
     repository: ${APP}-volsync-secret
     sourceIdentity:
       sourceName: ${APP}
-    storageClassName: ${VOLSYNC_STORAGECLASS:=local-hostpat}
-    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=local-hostpat}
+    storageClassName: ${VOLSYNC_STORAGECLASS:=local-hostpath}
+    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=local-hostpath}
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
