@@ -5,6 +5,6 @@ kind: Component
 resources:
   - ../volsync/kopia.yaml
   - ../volsync/pvc.yaml
-  - ../volsync/minio.yaml
+  # - ../volsync/minio.yaml
   # R2 intentionally omitted for this component
   # - ../volsync/r2.yaml
