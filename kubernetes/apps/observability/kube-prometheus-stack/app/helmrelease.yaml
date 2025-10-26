@@ -90,6 +90,7 @@ spec:
             gethomepage.dev/widget.type: prometheus
             gethomepage.dev/widget.url: "http://prometheus-operated.observability.svc.cluster.local:9090"
       prometheusSpec:
+        externalUrl: https://prometheus.cloudjur.com
         # enableFeatures:
         #   - "otlp-write-receiver"
         # - remote-write-receiver

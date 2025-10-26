@@ -1,0 +1,83 @@
+kind: ScaledObject
+apiVersion: keda.sh/v1alpha1
+metadata:
+  name: envoy-gateway
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: envoy-gateway
+  cooldownPeriod: 5
+  minReplicaCount: 1 # Enable scale-to-zero
+  maxReplicaCount: 2
+  fallback:
+    failureThreshold: 2
+    replicas: 1
+  advanced:
+    restoreToOriginalReplicaCount: true
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 5
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
+        query: gatus_results_endpoint_success{group="external"}
+        threshold: "1"
+---
+kind: ScaledObject
+apiVersion: keda.sh/v1alpha1
+metadata:
+  name: envoy-internal
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: envoy-internal
+  cooldownPeriod: 5
+  minReplicaCount: 1 # Enable scale-to-zero
+  maxReplicaCount: 2
+  fallback:
+    failureThreshold: 2
+    replicas: 1
+  advanced:
+    restoreToOriginalReplicaCount: true
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 5
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
+        query: gatus_results_endpoint_success{group="external"}
+        threshold: "0"
+---
+kind: ScaledObject
+apiVersion: keda.sh/v1alpha1
+metadata:
+  name: envoy-external
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: envoy-external
+  cooldownPeriod: 5
+  minReplicaCount: 1 # Enable scale-to-zero
+  maxReplicaCount: 2
+  fallback:
+    failureThreshold: 2
+    replicas: 1
+  advanced:
+    restoreToOriginalReplicaCount: true
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 5
+  triggers:
+    - type: prometheus
+      metadata:
+        serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
+        query: gatus_results_endpoint_success{group="external"}
+        threshold: "0"
