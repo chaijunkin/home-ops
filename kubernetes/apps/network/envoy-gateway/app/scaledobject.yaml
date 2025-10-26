@@ -23,7 +23,7 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
-        query: gatus_results_endpoint_success{group="external"}
+        query: min(gatus_results_endpoint_success{group="external"})
         threshold: "0"
 ---
 kind: ScaledObject
@@ -51,7 +51,7 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
-        query: gatus_results_endpoint_success{group="external"}
+        query: min(gatus_results_endpoint_success{group="external"})
         threshold: "0"
 ---
 kind: ScaledObject
@@ -79,5 +79,5 @@ spec:
     - type: prometheus
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
-        query: gatus_results_endpoint_success{group="external"}
+        query: min(gatus_results_endpoint_success{group="external"})
         threshold: "0"
