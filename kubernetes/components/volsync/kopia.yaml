@@ -2,7 +2,7 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: "${APP}-volsync-secret"
+  name: "${APP}-volsync"
   # name: "${APP}-volsync"
 spec:
   target:
@@ -27,7 +27,7 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${APP}-bootstrap"
+  name: "${APP}-dst"
   labels:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
