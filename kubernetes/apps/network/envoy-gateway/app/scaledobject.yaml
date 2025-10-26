@@ -24,7 +24,7 @@ spec:
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
         query: min(gatus_results_endpoint_success{group="external"})
-        threshold: "0"
+        threshold: "1"
 ---
 kind: ScaledObject
 apiVersion: keda.sh/v1alpha1
@@ -52,7 +52,7 @@ spec:
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
         query: min(gatus_results_endpoint_success{group="external"})
-        threshold: "0"
+        threshold: "1"
 ---
 kind: ScaledObject
 apiVersion: keda.sh/v1alpha1
@@ -80,4 +80,4 @@ spec:
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
         query: min(gatus_results_endpoint_success{group="external"})
-        threshold: "0"
+        threshold: "1"
