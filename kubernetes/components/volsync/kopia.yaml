@@ -27,7 +27,7 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${APP}-dst"
+  name: "${APP}-bootstrap"
   labels:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
