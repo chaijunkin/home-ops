@@ -24,7 +24,7 @@ spec:
       metadata:
         serverAddress: http://prometheus-operated.observability.svc.cluster.local:9090
         query: gatus_results_endpoint_success{group="external"}
-        threshold: "1"
+        threshold: "0"
 ---
 kind: ScaledObject
 apiVersion: keda.sh/v1alpha1
