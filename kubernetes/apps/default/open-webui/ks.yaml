@@ -23,4 +23,4 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/gatus/external
-    - ../../../../components/volsync
+    - ../../../../components/volsync-no-r2
