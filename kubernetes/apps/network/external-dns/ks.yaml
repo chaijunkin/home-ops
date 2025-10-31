@@ -38,7 +38,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: adguard-home-external-dns
-  path: ./kubernetes/apps/network/adguard-home/app
+  path: ./kubernetes/apps/network/external-dns/adguard-home
   prune: true
   sourceRef:
     kind: GitRepository
