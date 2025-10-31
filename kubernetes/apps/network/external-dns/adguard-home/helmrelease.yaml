@@ -30,17 +30,17 @@ spec:
           - name: &name ADGUARD_URL
             valueFrom:
               secretKeyRef:
-                name: *app
+                name: external-dns-adguard-home-secret
                 key: *name
           - name: &name ADGUARD_USER
             valueFrom:
               secretKeyRef:
-                name: *app
+                name: external-dns-adguard-home-secret
                 key: *name
           - name: &name ADGUARD_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: *app
+                name: external-dns-adguard-home-secret
                 key: *name
           - name: SERVER_HOST
             value: 0.0.0.0
