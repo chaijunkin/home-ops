@@ -28,6 +28,11 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    service:
+      type: LoadBalancer
+      annotations:
+        lbipam.cilium.io/ips: 10.10.30.51
+    fullnameOverride: *app
     # extraInitContainers:
     #   - name: 01-init-db
     #     image: ghcr.io/home-operations/postgres-init:17
