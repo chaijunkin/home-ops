@@ -46,8 +46,8 @@ spec:
                 key: *name
           - name: SERVER_HOST
             value: 0.0.0.0
-          - name: DRY_RUN
-            value: "true"
+          # - name: DRY_RUN
+          #   value: "true"
         securityContext:
           readOnlyRootFilesystem: true
         livenessProbe:
