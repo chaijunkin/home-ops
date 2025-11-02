@@ -31,12 +31,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: external-dns-opnsense-secret
-                key: api_secret
+                key: OPNSENSE_API_SECRET
           - name: OPNSENSE_API_KEY
             valueFrom:
               secretKeyRef:
                 name: external-dns-opnsense-secret
-                key: api_key
+                key: OPNSENSE_API_KEY
           - name: OPNSENSE_HOST
             valueFrom:
               secretKeyRef:
