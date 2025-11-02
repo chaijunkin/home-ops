@@ -49,7 +49,7 @@ spec:
           - name: OPNSENSE_SKIP_TLS_VERIFY
             value: "true"
           - name: LOG_LEVEL
-            value: "info"
+            value: "debug"
         securityContext:
           readOnlyRootFilesystem: true
         livenessProbe:
