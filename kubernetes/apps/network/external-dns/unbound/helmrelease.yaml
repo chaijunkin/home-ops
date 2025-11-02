@@ -74,7 +74,7 @@ spec:
       - gateway-tlsroute
       - gateway-udproute
       - gateway-tcproute
-      - service
+      # - service
 
     txtOwnerId: default
     txtPrefix: k8s.
