@@ -83,7 +83,7 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: internal.cloudjur.com,10.10.30.25
+    external-dns.alpha.kubernetes.io/target: 10.10.30.25
 spec:
   gatewayClassName: envoy
   addresses:
