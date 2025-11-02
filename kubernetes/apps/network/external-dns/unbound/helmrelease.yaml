@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app external-dns-unbound
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: external-dns
+  install:
+    disableSchemaValidation: true
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    disableSchemaValidation: true
+    remediation:
+      retries: 3
+  values:
+    fullnameOverride: *app
+    provider:
+      name: webhook
+      webhook:
+        image:
+          repository: ghcr.io/crutonjohn/external-dns-opnsense-webhook
+          tag: pr-29@sha256:be9dba76644664a939dc152c4fcd86a39d7933874104120eba31f846d518b96e
+        env:
+          - name: OPNSENSE_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: external-dns-opnsense-secret
+                key: api_secret
+          - name: OPNSENSE_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: external-dns-opnsense-secret
+                key: api_key
+          - name: OPNSENSE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: external-dns-opnsense-secret
+                key: host
+          - name: OPNSENSE_SKIP_TLS_VERIFY
+            value: "true"
+          - name: LOG_LEVEL
+            value: "info"
+        securityContext:
+          readOnlyRootFilesystem: true
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+    triggerLoopOnEvent: true
+    policy: sync
+    # extraArgs:
+    #   - --gateway-name=envoy-internal
+    registry: noop
+    sources:
+      - crd
+      #- ingress
+      - gateway-grpcroute
+      - gateway-httproute
+      - gateway-tlsroute
+      - gateway-udproute
+      - gateway-tcproute
+      - service
+
+    txtOwnerId: default
+    txtPrefix: k8s.
+    domainFilters:
+      - cloudjur.com
+
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
