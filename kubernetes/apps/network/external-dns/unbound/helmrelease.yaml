@@ -29,6 +29,8 @@ spec:
         env:
           # - name: SERVER_HOST
           #   value: 0.0.0.0
+          # - name: SERVER_PORT
+          #   value: "8080"
           - name: OPNSENSE_API_SECRET
             valueFrom:
               secretKeyRef:
