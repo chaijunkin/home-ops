@@ -41,7 +41,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: external-dns-opnsense-secret
-                key: host
+                key: OPNSENSE_HOST
           - name: OPNSENSE_SKIP_TLS_VERIFY
             value: "true"
           - name: LOG_LEVEL
