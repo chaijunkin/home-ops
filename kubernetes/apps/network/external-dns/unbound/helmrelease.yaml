@@ -27,8 +27,8 @@ spec:
           repository: ghcr.io/crutonjohn/external-dns-opnsense-webhook
           tag: v0.1.0
         env:
-          - name: SERVER_HOST
-            value: 0.0.0.0
+          # - name: SERVER_HOST
+          #   value: 0.0.0.0
           - name: OPNSENSE_API_SECRET
             valueFrom:
               secretKeyRef:
@@ -65,8 +65,8 @@ spec:
     # triggerLoopOnEvent: true
     logLevel: debug
     policy: sync
-    extraArgs:
-      - --webhook-provider-url=http://0.0.0.0:8080
+    # extraArgs:
+    #   - --webhook-provider-url=http://0.0.0.0:8080
     #   - --gateway-name=envoy-internal
     registry: noop
     sources:
