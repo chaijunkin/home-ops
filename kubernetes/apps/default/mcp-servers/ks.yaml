@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname n8n
+  name: &appname mcp-time
   namespace: &namespace default
 spec:
   targetNamespace: *namespace
@@ -19,12 +19,11 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  components:
-    - ../../../../components/volsync
-    - ../../../../components/gatus/guarded
-  postBuild:
-    substitute:
-      APP: *appname
-      APP_UID: "1000"
-      APP_GID: "1000"
-      VOLSYNC_CAPACITY: 5Gi
+  # components:
+  #   - ../../../../components/gatus/guarded
+  # postBuild:
+  #   substitute:
+  #     APP: *appname
+  #     APP_UID: "1000"
+  #     APP_GID: "1000"
+  #     VOLSYNC_CAPACITY: 5Gi
