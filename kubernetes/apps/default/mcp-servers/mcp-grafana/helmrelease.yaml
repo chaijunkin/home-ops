@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app mcp-time
+  name: &app mcp-grafana
 spec:
   interval: 1h
   chartRef:
@@ -21,21 +21,35 @@ spec:
 
   values:
     controllers:
-      mcp-time:
+      mcp-grafana:
         containers:
           app:
             image:
-              repository: mcp/time
+              repository: mcp/grafana
               tag: latest
               pullPolicy: Always
 
             args:
-              - --local-timezone
-              - "Asia/Kuala_Lumpur"
+              - "run"
+              - "--rm"
+              - "-i"
+              - "-e"
+              - "GRAFANA_URL"
+              - "-e"
+              - "GRAFANA_USERNAME"
+              - "-e"
+              - "GRAFANA_PASSWORD"
+              - "mcp/grafana"
+              - "-t"
+              - "stdio"
 
             env:
               TZ: "Asia/Kuala_Lumpur"
+              GRAFANA_URL: http://grafana.observability.svc.cluster.local
 
+            envFrom:
+              - secretRef:
+                  name: mcp-grafana-secret
             probes:
               liveness:
                 enabled: false
@@ -68,7 +82,7 @@ spec:
         controller: *app
         ports:
           http:
-            port: 8002
+            port: 8000
 
     persistence:
       tmp:

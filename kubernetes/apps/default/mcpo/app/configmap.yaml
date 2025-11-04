@@ -7,9 +7,9 @@ data:
   config.json: |
     {
       "mcpServers": {
-        "time": {
+        "grafana": {
           "type": "sse",
-          "url": "http://mcp-time.default.svc.cluster.local:8002/mcp/sse"
+          "url": "http://mcp-grafana.default.svc.cluster.local:8000/sse"
         }
       }
     }
