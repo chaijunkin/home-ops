@@ -15,6 +15,8 @@ resources:
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
+  - ./mcp-servers/ks.yaml
+  - ./mcpo/ks.yaml
   - ./n8n/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
