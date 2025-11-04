@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/cross-seed/cross-seed
-              tag: 6.13.5
+              tag: 6.13.6
             env:
               CROSS_SEED_PORT: &port 80
               TZ: Asia/Kuala_Lumpur
