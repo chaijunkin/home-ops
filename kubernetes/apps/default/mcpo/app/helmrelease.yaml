@@ -103,7 +103,7 @@ spec:
           gethomepage.dev/icon: mdi-transit-connection-variant
           gethomepage.dev/name: MCPO
           gethomepage.dev/app: *app
-        hostnames: ["mcpo.${SECRET_DOMAIN}"]
+        hostnames: ["mcpo.cloudjur.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
