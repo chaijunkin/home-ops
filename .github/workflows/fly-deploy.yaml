@@ -16,21 +16,21 @@ on:
       - infrastructure/flyio/gatus/gatus/**
 
 jobs:
-  check-fly-secret:
-    runs-on: ubuntu-latest
-    outputs:
-      fly-secret-exists: ${{ steps.fly-secret-check.outputs.defined }}
-    steps:
-      - name: Check for Fly secrets availability
-        id: fly-secret-check
-        # perform secret check & put boolean result as an output
-        shell: bash
-        run: |
-          if [ "${{ secrets.FLY_API_TOKEN }}" != '' ] && [ "${{ secrets.FLY_APP }}" != '' ]; then
-            echo "defined=true" >> $GITHUB_OUTPUT;
-          else
-            echo "defined=false" >> $GITHUB_OUTPUT;
-          fi
+  # check-fly-secret:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     fly-secret-exists: ${{ steps.fly-secret-check.outputs.defined }}
+  #   steps:
+  #     - name: Check for Fly secrets availability
+  #       id: fly-secret-check
+  #       # perform secret check & put boolean result as an output
+  #       shell: bash
+  #       run: |
+  #         if [ "${{ secrets.FLY_API_TOKEN }}" != '' ] && [ "${{ secrets.FLY_APP }}" != '' ]; then
+  #           echo "defined=true" >> $GITHUB_OUTPUT;
+  #         else
+  #           echo "defined=false" >> $GITHUB_OUTPUT;
+  #         fi
 
   deploy:
     name: Deploy app
