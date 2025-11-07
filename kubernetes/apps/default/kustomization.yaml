@@ -21,7 +21,7 @@ resources:
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./pdf-tool/ks.yaml
-  - ./rustdesk/ks.yaml
+  # - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./thelounge/ks.yaml
   - ./tika/ks.yaml
