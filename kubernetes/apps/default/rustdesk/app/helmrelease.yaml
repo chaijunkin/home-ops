@@ -29,6 +29,7 @@ spec:
             env:
               TZ: Asia/Kuala_Lumpur
               DB_URL: /db/db_v2.sqlite3
+              ENCRYPTED_ONLY: "1"
               RELAY: "10.10.30.20:21117"
             command: ["hbbs", "-r rustdesk-hbbr:21117"]
     # Because using docker host mode
