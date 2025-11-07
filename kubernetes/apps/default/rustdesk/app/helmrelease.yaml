@@ -31,7 +31,7 @@ spec:
               DB_URL: /db/db_v2.sqlite3
               ENCRYPTED_ONLY: "1"
               RELAY: "10.10.30.20:21117"
-            command: ["hbbs", "-r rustdesk-hbbr:21117"]
+            command: ["hbbs", "-r 10.10.30.20:21117"]
     # Because using docker host mode
     # Just in case you forgot the ports:
     # 21114 TCP for web console, only available in Pro version
@@ -79,27 +79,27 @@ spec:
             enabled: true
             port: 21118
             protocol: "TCP"
-    route:
-      hbbr:
-        hostnames: ["hbbr.cloudjur.com"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - port: 21117
-                name: hbbr
-      hbbs:
-        hostnames: ["hbbs.cloudjur.com"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - port: 21116
-                name: hbbs
+    # route:
+    #   hbbr:
+    #     hostnames: ["hbbr.cloudjur.com"]
+    #     parentRefs:
+    #       - name: envoy-internal
+    #         namespace: network
+    #         sectionName: https
+    #     rules:
+    #       - backendRefs:
+    #           - port: 21117
+    #             name: hbbr
+    #   hbbs:
+    #     hostnames: ["hbbs.cloudjur.com"]
+    #     parentRefs:
+    #       - name: envoy-internal
+    #         namespace: network
+    #         sectionName: https
+    #     rules:
+    #       - backendRefs:
+    #           - port: 21116
+    #             name: hbbs
     # ingress:
     #   hbbr:
     #     enabled: true
