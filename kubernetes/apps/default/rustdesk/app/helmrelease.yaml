@@ -64,21 +64,36 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: rustdesk.cloudjur.com
         ports:
           rustdesk-1:
-            enabled: true
-            port: 21115
-            protocol: "TCP"
+            port: 21114
           rustdesk-2:
-            enabled: true
-            port: 21116 # ID server
-            protocol: "TCP"
+            port: 21115
           rustdesk-3:
-            enabled: true
-            port: 21116
-            protocol: "UDP"
+            port: &port 21116 # ID server
           rustdesk-4:
-            enabled: true
+            port: *port
+            protocol: UDP
+          rustdesk-5-relay:
+            port: 21117
+          rustdesk-6:
             port: 21118
-            protocol: "TCP"
+          rustdesk-7-relay:
+            port: 21119
+          # rustdesk-1:
+          #   enabled: true
+          #   port: 21115
+          #   protocol: "TCP"
+          # rustdesk-2:
+          #   enabled: true
+          #   port: 21116 # ID server
+          #   protocol: "TCP"
+          # rustdesk-3:
+          #   enabled: true
+          #   port: 21116
+          #   protocol: "UDP"
+          # rustdesk-4:
+          #   enabled: true
+          #   port: 21118
+          #   protocol: "TCP"
     # route:
     #   hbbr:
     #     hostnames: ["hbbr.cloudjur.com"]
