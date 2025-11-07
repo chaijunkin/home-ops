@@ -27,9 +27,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    preUpgradeHook:
+      enabled: false
     ndm:
       enabled: false
     localprovisioner:
+      analytics:
+        enabled: false
       localpv:
         image:
           registry: quay.io/
