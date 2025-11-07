@@ -16,3 +16,11 @@ spec:
   interval: 24h
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: rustdesk
+      VOLSYNC_CLAIM: rustdesk-data
+      VOLSYNC_CAPACITY: 20Gi
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync-no-r2
