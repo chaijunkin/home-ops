@@ -9,7 +9,7 @@ talos_cluster_config = {
   # Uncomment to use this instead of version from talos_image.
   # talos_machine_config_version = "v1.9.2"
   proxmox_cluster    = "main"
-  kubernetes_version = "v1.33.3" # renovate: github-releases=kubernetes/kubernetes
+  kubernetes_version = "v1.34.1" # renovate: github-releases=kubernetes/kubernetes
   cilium = {
     bootstrap_manifest_path = "talos/inline-manifests/cilium-install.yaml"
     values_file_path        = "../../../kubernetes/apps/kube-system/cilium/app/helm/values.yaml"
