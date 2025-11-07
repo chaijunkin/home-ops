@@ -57,6 +57,11 @@ jobs:
           FLY_APP_JSON: ${{ secrets.FLY_APP }}
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
+          if [ -z "$FLY_API_TOKEN" ]; then
+            echo "FLY_API_TOKEN is not set" >&2
+            exit 1
+          fi
+
           if [ -z "$FLY_APP_JSON" ]; then
             echo "FLY_APP secret is empty" >&2
             exit 1
