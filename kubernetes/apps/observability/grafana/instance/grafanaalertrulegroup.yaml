@@ -33,7 +33,7 @@ spec:
               )
             refId: A
         - refId: B
-          datasourceUid: prometheus_on_fly
+          datasourceUid: "prometheus_on_fly"
           model:
             type: reduce
             refId: B
@@ -262,7 +262,7 @@ spec:
               sum(increase(fly_app_hard_limit_reached_count[5m]))
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: prometheus_on_fly
           model:
             type: threshold
             refId: B
@@ -352,13 +352,13 @@ spec:
               sum(rate(fly_edge_tcp_connects_count[5m]))
             refId: B
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: prometheus_on_fly
           model:
             type: math
             refId: C
             expression: "($A / $B) * 100"
         - refId: D
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: prometheus_on_fly
           model:
             type: threshold
             refId: D
@@ -374,7 +374,7 @@ spec:
         summary: "High connection churn detected"
         description: "Most connections are short-lived. Check application health."
       labels:
-        severity: warning
+        severity: medium
         alertname: HighConnectionChurn
         job: fly-io
         team: platform
@@ -566,7 +566,7 @@ spec:
         team: platform
         service: fly-io
 
-    # 13. TLS IP Limit Reached
+    # 13. TLS IP Limit Reached (FIXED)
     - uid: fly-tls-ip-limit
       title: "Fly - TLS IP Limit Reached"
       condition: C
@@ -1050,7 +1050,7 @@ spec:
         team: infrastructure
         service: fly-io
 
-    # 23. Network Packet Drops (FIXED)
+    # 23. Network Packet Drops
     - uid: fly-network-drops
       title: "Fly - Network Packet Drops"
       condition: C
