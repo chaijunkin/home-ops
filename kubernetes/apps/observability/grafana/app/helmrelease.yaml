@@ -594,19 +594,3 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: true
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: Grafana
-metadata:
-  name: grafana
-  labels:
-    dashboards: "grafana"
-spec:
-  external:
-    url: http://grafana.observability:80 # Grafana URL
-    adminPassword:
-      name: grafana-secret
-      key: GF_SECURITY_ADMIN_PASSWORD
-    adminUser:
-      name: grafana-secret
-      key: GF_SECURITY_ADMIN_USER
