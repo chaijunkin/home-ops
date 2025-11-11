@@ -610,49 +610,49 @@ spec:
         team: platform
         service: fly-io
 
-    # 14. Instance Down
-    - uid: fly-instance-down
-      title: "Fly - Instance Down"
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 300
-            to: 0
-          datasourceUid: prometheus_on_fly
-          model:
-            expr: |
-              up
-            refId: A
-        - refId: B
-          datasourceUid: "-100"
-          model:
-            type: reduce
-            refId: B
-            expression: A
-            reducer: last
-        - refId: C
-          datasourceUid: "-100"
-          model:
-            type: threshold
-            refId: C
-            expression: B
-            conditions:
-              - evaluator:
-                  params: [1]
-                  type: lt
-      for: 1m
-      noDataState: Alerting
-      execErrState: Alerting
-      annotations:
-        summary: "Instance is down"
-        description: "Fly.io instance is unreachable. Immediate action required."
-      labels:
-        severity: critical
-        alertname: InstanceDown
-        job: fly-io
-        team: platform
-        service: fly-io
+    # # 14. Instance Down
+    # - uid: fly-instance-down
+    #   title: "Fly - Instance Down"
+    #   condition: C
+    #   data:
+    #     - refId: A
+    #       relativeTimeRange:
+    #         from: 300
+    #         to: 0
+    #       datasourceUid: prometheus_on_fly
+    #       model:
+    #         expr: |
+    #           up
+    #         refId: A
+    #     - refId: B
+    #       datasourceUid: "-100"
+    #       model:
+    #         type: reduce
+    #         refId: B
+    #         expression: A
+    #         reducer: last
+    #     - refId: C
+    #       datasourceUid: "-100"
+    #       model:
+    #         type: threshold
+    #         refId: C
+    #         expression: B
+    #         conditions:
+    #           - evaluator:
+    #               params: [1]
+    #               type: lt
+    #   for: 1m
+    #   noDataState: Alerting
+    #   execErrState: Alerting
+    #   annotations:
+    #     summary: "Instance is down"
+    #     description: "Fly.io instance is unreachable. Immediate action required."
+    #   labels:
+    #     severity: critical
+    #     alertname: InstanceDown
+    #     job: fly-io
+    #     team: platform
+    #     service: fly-io
 
     # 15. High Memory Usage
     - uid: fly-instance-high-memory
