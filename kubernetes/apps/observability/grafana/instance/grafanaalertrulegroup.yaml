@@ -928,7 +928,7 @@ spec:
       annotations:
         summary: "TLS SNI concurrency limit reached for {{ $labels.servername }}"
         description: "TLS handshakes queued due to SNI limits. Possible targeted attack."
-        __dashboardUid__: "fly-edge"
+        # __dashboardUid__: "fly-edge"
       labels:
         severity: "critical"
         alertname: "TLSSNILimit"
