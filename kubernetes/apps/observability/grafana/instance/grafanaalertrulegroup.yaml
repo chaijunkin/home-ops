@@ -395,7 +395,7 @@ spec:
         summary: "High connection churn detected"
         description: "Most connections are short-lived. Check application health."
       labels:
-        severity: medium
+        severity: warning
         alertname: HighConnectionChurn
         job: fly-io
         team: platform
