@@ -23,7 +23,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               histogram_quantile(0.95,
@@ -72,7 +72,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum by(app) (
@@ -83,7 +83,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum by(app) (
@@ -129,7 +129,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               fly_instance_memory_pressure_full{pressure_duration="avg60"}
@@ -174,7 +174,7 @@ spec:
           relativeTimeRange:
             from: 300
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               fly_instance_up
@@ -219,7 +219,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               rate(fly_instance_cpu_throttle[5m])
@@ -264,7 +264,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum by(app, region) (
@@ -311,7 +311,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum by(app) (
@@ -322,7 +322,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum by(app) (
@@ -368,7 +368,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum(increase(fly_edge_tls_handshake_errors[5m]))
@@ -413,7 +413,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum(rate(fly_edge_tcp_connects_count[5m]))
@@ -458,7 +458,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum(rate(fly_app_tcp_disconnects_count[5m]))
@@ -467,7 +467,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum(rate(fly_app_tcp_connects_count[5m]))
@@ -511,7 +511,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               max(fly_instance_load_average{minutes="1"})
@@ -556,7 +556,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum(rate(fly_instance_net_sent_bytes{device="eth0"}[5m])) +
@@ -602,7 +602,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               avg(fly_instance_memory_mem_available)
@@ -611,7 +611,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               avg(fly_instance_memory_mem_total)
@@ -655,7 +655,7 @@ spec:
           relativeTimeRange:
             from: 600
             to: 0
-          datasourceUid: fly-io-prometheus
+          datasourceUid: prometheus_on_fly
           model:
             expr: |
               sum(irate(fly_instance_cpu{mode="iowait"}[5m])) * 100
