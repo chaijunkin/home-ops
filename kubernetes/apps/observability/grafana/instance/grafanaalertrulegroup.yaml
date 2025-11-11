@@ -1282,7 +1282,7 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "High connection churn detected"
+        summary: "High connection churn detected!"
         description: "Connection churn rate is {{ $values.E.Value | humanize }}% - Most connections are short-lived"
         # __dashboardUid__: "fly-edge"
       labels:
