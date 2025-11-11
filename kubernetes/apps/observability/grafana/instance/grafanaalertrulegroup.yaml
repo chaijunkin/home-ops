@@ -13,6 +13,7 @@ spec:
   name: "Fly App Monitoring"
 
   rules:
+    # 1. High Response Time Alert
     - uid: fly-app-response-time
       title: "Fly App - High Response Time"
       condition: C
@@ -51,13 +52,17 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "Response time exceeded 5 seconds"
-        description: "95th percentile response time is {{ $values.A.Value }}s"
+        summary: "Response time exceeded 5 seconds for {{ $labels.app }}"
+        description: "95th percentile response time is {{ $values.A.Value }}s. Consider declaring an incident."
+        dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: critical
         alertname: HighResponseTime
         job: fly-app
+        team: platform
+        service: fly-app
 
+    # 2. High Error Rate Alert
     - uid: fly-app-error-rate
       title: "Fly App - High Error Rate"
       condition: D
@@ -89,7 +94,7 @@ spec:
           model:
             type: math
             refId: C
-            expression: "(A / B) * 100"
+            expression: "$A / $B * 100"
         - refId: D
           datasourceUid: "-100"
           model:
@@ -104,15 +109,19 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "Error rate above 5%"
-        description: "HTTP 5xx error rate exceeds threshold"
+        summary: "Error rate above 5% for {{ $labels.app }}"
+        description: "HTTP 5xx error rate is {{ $values.C.Value | humanizePercentage }}. Investigate immediately."
+        dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: critical
         alertname: HighErrorRate
         job: fly-app
+        team: platform
+        service: fly-app
 
+    # 3. Memory Pressure Alert
     - uid: fly-app-memory-pressure
-      title: "Fly App - Memory Pressure"
+      title: "Fly App - High Memory Pressure"
       condition: B
       data:
         - refId: A
@@ -138,13 +147,17 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "Memory pressure detected"
-        description: "Memory pressure avg60 is high"
+        summary: "Memory pressure detected on {{ $labels.app }}"
+        description: "Memory pressure avg60 is {{ $values.A.Value }}. Escalate to infrastructure team."
+        dashboard: "/d/eiRE4umnz/fly-app"
       labels:
-        severity: warning
+        severity: high
         alertname: HighMemoryPressure
         job: fly-app
+        team: infrastructure
+        service: fly-app
 
+    # 4. Instance Down Alert
     - uid: fly-app-instance-down
       title: "Fly App - Instance Down"
       condition: B
@@ -172,9 +185,90 @@ spec:
       noDataState: Alerting
       execErrState: Alerting
       annotations:
-        summary: "Instance is down"
-        description: "Fly instance unreachable"
+        summary: "Instance {{ $labels.instance }} is down"
+        description: "Fly.io instance for {{ $labels.app }} is unreachable."
+        dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: critical
         alertname: InstanceDown
         job: fly-app
+        team: platform
+        service: fly-app
+
+    # 5. CPU Throttling Alert
+    - uid: fly-app-cpu-throttle
+      title: "Fly App - CPU Throttling"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              rate(fly_instance_cpu_throttle[5m])
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [0]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "CPU throttling on {{ $labels.app }}"
+        description: "Instance {{ $labels.instance }} is experiencing CPU throttling. Consider scaling."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: warning
+        alertname: CPUThrottling
+        job: fly-app
+        team: platform
+        service: fly-app
+
+    # 6. Edge Error Rate Alert
+    - uid: fly-app-edge-errors
+      title: "Fly App - High Edge Error Rate"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              sum by(app, region) (
+                rate(fly_edge_error_count[5m])
+              )
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "Edge errors in {{ $labels.region }} for {{ $labels.app }}"
+        description: "Error rate is {{ $values.A.Value }}/sec in region {{ $labels.region }}."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: medium
+        alertname: HighEdgeErrorRate
+        job: fly-app
+        team: platform
+        service: fly-app
