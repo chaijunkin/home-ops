@@ -11,4 +11,4 @@ spec:
   grafanaCom:
     id: 14741
     revision: 1
-  folderRef: external
+  folderRef: external-folder
