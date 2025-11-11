@@ -1,3 +1,4 @@
+## sauce - https://github.com/superfly/dashboards/tree/fly-app-metrics/grafana
 # ---
 # apiVersion: grafana.integreatly.org/v1beta1
 # kind: GrafanaDashboard
@@ -65,10 +66,10 @@ spec:
         ]
       },
       "description": "General Fly App metrics.",
-      "editable": true,
+      "editable": false,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 122821,
+      "id": 25,
       "links": [
         {
           "asDropdown": false,
@@ -2264,7 +2265,9 @@ spec:
       "templating": {
         "list": [
           {
-            "current": {},
+            "current": {
+              "selected": false
+            },
             "datasource": {
               "type": "prometheus",
               "uid": "prometheus_on_fly"
@@ -2306,7 +2309,7 @@ spec:
       "timezone": "",
       "title": "Fly App",
       "uid": "fly-app",
-      "version": 6,
+      "version": 2,
       "weekStart": ""
     }
 ---
@@ -2366,10 +2369,10 @@ spec:
           }
         ]
       },
-      "editable": true,
+      "editable": false,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 122823,
+      "id": 28,
       "links": [
         {
           "asDropdown": false,
@@ -6474,7 +6477,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       },
                       {
                         "color": "red",
@@ -6582,7 +6586,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       },
                       {
                         "color": "red",
@@ -6654,7 +6659,9 @@ spec:
       "templating": {
         "list": [
           {
-            "current": {},
+            "current": {
+              "selected": false
+            },
             "datasource": {
               "type": "prometheus",
               "uid": "prometheus_on_fly"
@@ -6677,7 +6684,9 @@ spec:
             "type": "query"
           },
           {
-            "current": {},
+            "current": {
+              "selected": false
+            },
             "datasource": {
               "type": "prometheus",
               "uid": "prometheus_on_fly"
@@ -6719,7 +6728,7 @@ spec:
       "timezone": "",
       "title": "Fly Instance",
       "uid": "fly-instance",
-      "version": 10,
+      "version": 2,
       "weekStart": ""
     }
 
@@ -6757,10 +6766,10 @@ spec:
           }
         ]
       },
-      "editable": true,
+      "editable": false,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 122822,
+      "id": 27,
       "links": [
         {
           "asDropdown": false,
@@ -6811,7 +6820,8 @@ spec:
                     "mode": "percentage",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       }
                     ]
                   },
@@ -6941,7 +6951,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       }
                     ]
                   },
@@ -7125,7 +7136,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       }
                     ]
                   }
@@ -7195,101 +7207,102 @@ spec:
               "type": "timeseries"
             },
             {
+              "type": "timeseries",
+              "title": "Rate limits",
+              "gridPos": {
+                "x": 12,
+                "y": 2,
+                "w": 12,
+                "h": 8
+              },
               "datasource": {
                 "name": "${source}",
-                "type": "prometheus",
-                "uid": "${source}"
+                "uid": "${source}",
+                "type": "prometheus"
               },
-              "description": "Servers have a limit on how many TCP connections they will accept and how many TLS handshakes they will process each second. When these limits are reached, incoming connections are dropped. This chart shows how many connections have been dropped per rate limit type.",
+              "id": 33,
+              "targets": [
+                {
+                  "refId": "A",
+                  "expr": "sum(increase(fly_edge_tcp_rate_limited_count{app=~\"$app\",region=~\"$region\",host=~\"$host\"})) by (type, region) > 0",
+                  "range": true,
+                  "instant": false,
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${source}"
+                  },
+                  "editorMode": "code",
+                  "legendFormat": "{{type}} - {{region}}"
+                }
+              ],
+              "options": {
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
+                },
+                "legend": {
+                  "showLegend": true,
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "calcs": []
+                }
+              },
               "fieldConfig": {
                 "defaults": {
-                  "color": {
-                    "mode": "palette-classic"
-                  },
                   "custom": {
-                    "axisBorderShow": false,
-                    "axisCenteredZero": false,
-                    "axisColorMode": "text",
-                    "axisLabel": "",
-                    "axisPlacement": "auto",
+                    "drawStyle": "bars",
+                    "lineInterpolation": "linear",
                     "barAlignment": 0,
                     "barWidthFactor": 0.6,
-                    "drawStyle": "bars",
+                    "lineWidth": 1,
                     "fillOpacity": 0,
                     "gradientMode": "none",
-                    "hideFrom": {
-                      "legend": false,
-                      "tooltip": false,
-                      "viz": false
-                    },
+                    "spanNulls": false,
                     "insertNulls": false,
-                    "lineInterpolation": "linear",
-                    "lineWidth": 1,
+                    "showPoints": "auto",
                     "pointSize": 5,
+                    "stacking": {
+                      "mode": "none",
+                      "group": "A"
+                    },
+                    "axisPlacement": "auto",
+                    "axisLabel": "",
+                    "axisColorMode": "text",
+                    "axisBorderShow": false,
                     "scaleDistribution": {
                       "type": "linear"
                     },
-                    "showPoints": "auto",
-                    "spanNulls": false,
-                    "stacking": {
-                      "group": "A",
-                      "mode": "none"
+                    "axisCenteredZero": false,
+                    "hideFrom": {
+                      "tooltip": false,
+                      "viz": false,
+                      "legend": false
                     },
                     "thresholdsStyle": {
                       "mode": "off"
                     }
+                  },
+                  "color": {
+                    "mode": "palette-classic"
                   },
                   "mappings": [],
                   "thresholds": {
                     "mode": "absolute",
                     "steps": [
                       {
+                        "value": null,
                         "color": "green"
                       },
                       {
-                        "color": "red",
-                        "value": 80
+                        "value": 80,
+                        "color": "red"
                       }
                     ]
                   }
                 },
                 "overrides": []
               },
-              "gridPos": {
-                "h": 8,
-                "w": 12,
-                "x": 12,
-                "y": 2
-              },
-              "id": 33,
-              "options": {
-                "legend": {
-                  "calcs": [],
-                  "displayMode": "list",
-                  "placement": "bottom",
-                  "showLegend": true
-                },
-                "tooltip": {
-                  "mode": "single",
-                  "sort": "none"
-                }
-              },
-              "targets": [
-                {
-                  "datasource": {
-                    "type": "prometheus",
-                    "uid": "${source}"
-                  },
-                  "editorMode": "code",
-                  "expr": "sum(increase(fly_edge_tcp_rate_limited_count{app=~\"$app\",region=~\"$region\",host=~\"$host\"})) by (type, region) > 0",
-                  "instant": false,
-                  "legendFormat": "{{type}} - {{region}}",
-                  "range": true,
-                  "refId": "A"
-                }
-              ],
-              "title": "Rate limits",
-              "type": "timeseries"
+              "description": "Servers have a limit on how many TCP connections they will accept and how many TLS handshakes they will process each second. When these limits are reached, incoming connections are dropped. This chart shows how many connections have been dropped per rate limit type."
             }
           ],
           "title": "TCP",
@@ -7354,7 +7367,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       }
                     ]
                   }
@@ -7525,7 +7539,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       },
                       {
                         "color": "red",
@@ -7878,7 +7893,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       }
                     ]
                   },
@@ -8000,7 +8016,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       },
                       {
                         "color": "red",
@@ -8107,7 +8124,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       }
                     ]
                   }
@@ -8200,7 +8218,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       },
                       {
                         "color": "red",
@@ -8441,7 +8460,8 @@ spec:
                     "mode": "absolute",
                     "steps": [
                       {
-                        "color": "green"
+                        "color": "green",
+                        "value": null
                       },
                       {
                         "color": "red",
@@ -8458,7 +8478,7 @@ spec:
                 "x": 0,
                 "y": 5
               },
-              "id": 34,
+              "id": 6,
               "options": {
                 "legend": {
                   "calcs": [],
@@ -8506,7 +8526,11 @@ spec:
       "templating": {
         "list": [
           {
-            "current": {},
+            "current": {
+              "selected": false,
+              "text": "Prometheus on Fly",
+              "value": "prometheus_on_fly"
+            },
             "hide": 2,
             "includeAll": false,
             "multi": false,
@@ -8521,7 +8545,9 @@ spec:
           },
           {
             "allValue": "",
-            "current": {},
+            "current": {
+              "selected": false
+            },
             "datasource": {
               "uid": "${source}"
             },
@@ -8545,9 +8571,7 @@ spec:
           {
             "allValue": ".*",
             "current": {
-              "selected": false,
-              "text": "All",
-              "value": "$__all"
+              "selected": false
             },
             "datasource": {
               "uid": "${source}"
@@ -8571,9 +8595,7 @@ spec:
           {
             "allValue": ".*",
             "current": {
-              "selected": false,
-              "text": "All",
-              "value": "$__all"
+              "selected": false
             },
             "datasource": {
               "uid": "${source}"
@@ -8614,6 +8636,6 @@ spec:
       "timezone": "",
       "title": "Fly Edge",
       "uid": "fly-edge",
-      "version": 4,
+      "version": 1,
       "weekStart": ""
     }
