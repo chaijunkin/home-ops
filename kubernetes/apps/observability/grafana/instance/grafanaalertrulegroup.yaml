@@ -33,14 +33,14 @@ spec:
               )
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -86,13 +86,13 @@ spec:
               sum(increase(fly_app_http_responses_count[5m]))
             refId: B
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: math
             refId: C
             expression: "($A / $B) * 100"
         - refId: D
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: D
@@ -138,13 +138,13 @@ spec:
               sum(increase(fly_app_http_responses_count[5m]))
             refId: B
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: math
             refId: C
             expression: "($A / $B) * 100"
         - refId: D
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: D
@@ -181,14 +181,14 @@ spec:
               sum(fly_app_concurrency) by (instance, region)
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -210,93 +210,79 @@ spec:
         team: platform
         service: fly-io
 
-    # # 5. App Soft Limit Reached (FIXED)
-    # - uid: fly-soft-limit-reached
-    #   title: "Fly - App Soft Limit Reached"
-    #   condition: C
-    #   data:
-    #     - refId: A
-    #       relativeTimeRange:
-    #         from: 600
-    #         to: 0
-    #       datasourceUid: prometheus_on_fly
-    #       model:
-    #         expr: |
-    #           sum(increase(fly_app_soft_limit_reached_count[5m]))
-    #         refId: A
-    #     - refId: B
-    #       datasourceUid: "prometheus_on_fly"
-    #       model:
-    #         type: reduce
-    #         refId: B
-    #         expression: A
-    #         reducer: last
-    #     - refId: C
-    #       datasourceUid: "prometheus_on_fly"
-    #       model:
-    #         type: threshold
-    #         refId: C
-    #         expression: B
-    #         conditions:
-    #           - evaluator:
-    #               params: [5]
-    #               type: gt
-    #   for: 5m
-    #   noDataState: NoData
-    #   execErrState: Alerting
-    #   annotations:
-    #     summary: "App soft concurrency limit reached"
-    #     description: "App is hitting soft limits. Consider scaling."
-    #   labels:
-    #     severity: warning
-    #     alertname: SoftLimitReached
-    #     job: fly-io
-    #     team: platform
-    #     service: fly-io
+    # 5. App Soft Limit Reached
+    - uid: fly-soft-limit-reached
+      title: "Fly - App Soft Limit Reached"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: prometheus_on_fly
+          model:
+            expr: |
+              sum(increase(fly_app_soft_limit_reached_count[5m]))
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [5]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "App soft concurrency limit reached"
+        description: "App is hitting soft limits. Consider scaling."
+      labels:
+        severity: warning
+        alertname: SoftLimitReached
+        job: fly-io
+        team: platform
+        service: fly-io
 
-    # # 6. App Hard Limit Reached (FIXED)
-    # - uid: fly-hard-limit-reached
-    #   title: "Fly - App Hard Limit Reached"
-    #   condition: C
-    #   data:
-    #     - refId: A
-    #       relativeTimeRange:
-    #         from: 600
-    #         to: 0
-    #       datasourceUid: prometheus_on_fly
-    #       model:
-    #         expr: |
-    #           sum(increase(fly_app_hard_limit_reached_count[5m]))
-    #         refId: A
-    #     - refId: B
-    #       datasourceUid: "prometheus_on_fly"
-    #       model:
-    #         type: reduce
-    #         refId: B
-    #         expression: A
-    #         reducer: last
-    #     - refId: C
-    #       datasourceUid: "prometheus_on_fly"
-    #       model:
-    #         type: threshold
-    #         refId: C
-    #         expression: B
-    #         conditions:
-    #           - evaluator:
-    #               params: [0]
-    #               type: gt
-    #   for: 1m
-    #   noDataState: NoData
-    #   execErrState: Alerting
-    #   annotations:
-    #     summary: "App hard concurrency limit reached"
-    #     description: "App is rejecting connections at hard limit. Scale immediately."
-    #   labels:
-    #     severity: critical
-    #     alertname: HardLimitReached
-    #     job: fly-io
-    #     team: platform
-    #     service: fly-io
+    # 6. App Hard Limit Reached
+    - uid: fly-hard-limit-reached
+      title: "Fly - App Hard Limit Reached"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: prometheus_on_fly
+          model:
+            expr: |
+              sum(increase(fly_app_hard_limit_reached_count[5m]))
+            refId: A
+        - refId: B
+          datasourceUid: "prometheus_on_fly"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [0]
+                  type: gt
+      for: 1m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "App hard concurrency limit reached"
+        description: "App is rejecting connections at hard limit. Scale immediately."
+      labels:
+        severity: critical
+        alertname: HardLimitReached
+        job: fly-io
+        team: platform
+        service: fly-io
 
     # 7. High TCP Connection Rate
     - uid: fly-edge-high-connection-rate
@@ -313,14 +299,14 @@ spec:
               sum(rate(fly_edge_tcp_connects_count[5m]))
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -342,64 +328,57 @@ spec:
         team: platform
         service: fly-io
 
-    # # 8. High Connection Churn (FIXED)
-    # - uid: fly-edge-connection-churn
-    #   title: "Fly - High Connection Churn"
-    #   condition: E
-    #   data:
-    #     - refId: A
-    #       relativeTimeRange:
-    #         from: 600
-    #         to: 0
-    #       datasourceUid: prometheus_on_fly
-    #       model:
-    #         expr: |
-    #           sum(rate(fly_edge_tcp_disconnects_count[5m]))
-    #         refId: A
-    #     - refId: B
-    #       relativeTimeRange:
-    #         from: 600
-    #         to: 0
-    #       datasourceUid: prometheus_on_fly
-    #       model:
-    #         expr: |
-    #           sum(rate(fly_edge_tcp_connects_count[5m]))
-    #         refId: B
-    #     - refId: C
-    #       datasourceUid: "prometheus_on_fly"
-    #       model:
-    #         type: math
-    #         refId: C
-    #         expression: "($A / $B) * 100"
-    #     - refId: D
-    #       datasourceUid: "prometheus_on_fly"
-    #       model:
-    #         type: reduce
-    #         refId: D
-    #         expression: C
-    #         reducer: last
-    #     - refId: E
-    #       datasourceUid: "prometheus_on_fly"
-    #       model:
-    #         type: threshold
-    #         refId: E
-    #         expression: D
-    #         conditions:
-    #           - evaluator:
-    #               params: [80]
-    #               type: gt
-    #   for: 10m
-    #   noDataState: NoData
-    #   execErrState: Alerting
-    #   annotations:
-    #     summary: "High connection churn detected"
-    #     description: "Most connections are short-lived. Check application health."
-    #   labels:
-    #     severity: warning
-    #     alertname: HighConnectionChurn
-    #     job: fly-io
-    #     team: platform
-    #     service: fly-io
+    # 8. High Connection Churn
+    - uid: fly-edge-connection-churn
+      title: "Fly - High Connection Churn"
+      condition: D
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: prometheus_on_fly
+          model:
+            expr: |
+              sum(rate(fly_edge_tcp_disconnects_count[5m]))
+            refId: A
+        - refId: B
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: prometheus_on_fly
+          model:
+            expr: |
+              sum(rate(fly_edge_tcp_connects_count[5m]))
+            refId: B
+        - refId: C
+          datasourceUid: "prometheus_on_fly"
+          model:
+            type: math
+            refId: C
+            expression: "($A / $B) * 100"
+        - refId: D
+          datasourceUid: "prometheus_on_fly"
+          model:
+            type: threshold
+            refId: D
+            expression: C
+            conditions:
+              - evaluator:
+                  params: [80]
+                  type: gt
+      for: 10m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "High connection churn detected"
+        description: "Most connections are short-lived. Check application health."
+      labels:
+        severity: warning
+        alertname: HighConnectionChurn
+        job: fly-io
+        team: platform
+        service: fly-io
 
     # 9. Edge High 5xx Response Rate
     - uid: fly-edge-5xx-rate
@@ -425,13 +404,13 @@ spec:
               sum(increase(fly_edge_http_responses_count[5m]))
             refId: B
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: math
             refId: C
             expression: "($A / $B) * 100"
         - refId: D
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: D
@@ -468,14 +447,14 @@ spec:
               sum(increase(fly_edge_tls_handshake_errors[5m]))
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -491,7 +470,7 @@ spec:
         summary: "TLS handshake errors detected"
         description: "Check certificate validity and TLS configuration."
       labels:
-        severity: critical
+        severity: high
         alertname: TLSHandshakeErrors
         job: fly-io
         team: platform
@@ -514,14 +493,14 @@ spec:
               )
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -537,7 +516,7 @@ spec:
         summary: "Edge connections being rate limited"
         description: "Edge is dropping connections due to rate limits. Possible DDoS or need scaling."
       labels:
-        severity: critical
+        severity: high
         alertname: EdgeRateLimited
         job: fly-io
         team: platform
@@ -558,14 +537,14 @@ spec:
               sum(rate(fly_edge_data_in[5m])) + sum(rate(fly_edge_data_out[5m]))
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -602,14 +581,14 @@ spec:
               sum(increase(fly_edge_tls_ip_limit_reached_count[5m])) > 0
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -625,7 +604,7 @@ spec:
         summary: "TLS IP concurrency limit reached"
         description: "TLS handshakes queued due to IP limits. Possible attack."
       labels:
-        severity: critical
+        severity: high
         alertname: TLSIPLimit
         job: fly-io
         team: platform
@@ -646,14 +625,14 @@ spec:
     #           up
     #         refId: A
     #     - refId: B
-    #       datasourceUid: "prometheus_on_fly"
+    #       datasourceUid: "-100"
     #       model:
     #         type: reduce
     #         refId: B
     #         expression: A
     #         reducer: last
     #     - refId: C
-    #       datasourceUid: "prometheus_on_fly"
+    #       datasourceUid: "-100"
     #       model:
     #         type: threshold
     #         refId: C
@@ -699,13 +678,13 @@ spec:
               fly_instance_memory_mem_total
             refId: B
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: math
             refId: C
             expression: "($A / $B) * 100"
         - refId: D
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: D
@@ -721,7 +700,7 @@ spec:
         summary: "Low available memory"
         description: "Risk of OOM. Escalate to infrastructure team for persistent memory issues."
       labels:
-        severity: critical
+        severity: high
         alertname: LowMemoryAvailable
         job: fly-io
         team: infrastructure
@@ -743,14 +722,14 @@ spec:
               count(fly_instance_cpu{mode="idle"}) by (instance, region) * 100
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -788,14 +767,14 @@ spec:
               count(fly_instance_cpu{mode="idle"}) without(cpu_id, mode) * 100
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -833,14 +812,14 @@ spec:
               sum(count(fly_instance_cpu{mode="idle"}) without(cpu)) by (instance, region)
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -878,14 +857,14 @@ spec:
               sum(rate(fly_instance_net_recv_bytes{device="eth0"}[5m]))
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -922,14 +901,14 @@ spec:
               sum(rate(fly_instance_cpu{mode="iowait"}[5m])) by (instance, region) * 100
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -977,20 +956,20 @@ spec:
               fly_instance_filesystem_block_size{mount="/.fly-upper-layer"}
             refId: B
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: math
             refId: C
             expression: "($A - $B) / $A * 100"
         - refId: D
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: D
             expression: C
             reducer: last
         - refId: E
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: E
@@ -1006,7 +985,7 @@ spec:
         summary: "High disk usage on Fly instance"
         description: "Root filesystem usage is above 85%. Clean up or expand storage."
       labels:
-        severity: critical
+        severity: high
         alertname: HighDiskUsage
         job: fly-io
         team: infrastructure
@@ -1036,20 +1015,20 @@ spec:
               fly_instance_filefd_maximum
             refId: B
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: math
             refId: C
             expression: "$A / $B * 100"
         - refId: D
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: D
             expression: C
             reducer: last
         - refId: E
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: E
@@ -1065,7 +1044,7 @@ spec:
         summary: "High file descriptor usage"
         description: "File descriptor usage is above 80%. May cause connection failures."
       labels:
-        severity: critical
+        severity: high
         alertname: HighFileDescriptors
         job: fly-io
         team: infrastructure
@@ -1087,14 +1066,14 @@ spec:
               sum(rate(fly_instance_net_sent_drop{device="eth0"}[5m]))
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -1131,14 +1110,14 @@ spec:
               rate(fly_instance_disk_time_io[5m]) / 1000
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
@@ -1175,14 +1154,14 @@ spec:
               rate(fly_instance_disk_time_io_weighted[5m]) / 1000
             refId: A
         - refId: B
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: reduce
             refId: B
             expression: A
             reducer: last
         - refId: C
-          datasourceUid: "prometheus_on_fly"
+          datasourceUid: "-100"
           model:
             type: threshold
             refId: C
