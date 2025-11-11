@@ -329,10 +329,10 @@ spec:
                   type: last
                 type: query
 
-    # Alert: Hard Limit Reached
+    # Alert: Hard Limit Reached (FIXED)
     - uid: fly-hard-limit-reached
       title: "Hard Limit Reached (CRITICAL)"
-      condition: B
+      condition: C # Changed from B to C
       for: 1m
       noDataState: NoData
       execErrState: Alerting
@@ -357,9 +357,16 @@ spec:
         - refId: B
           datasourceUid: __expr__
           model:
-            type: threshold
+            type: reduce
             expression: A
+            reducer: last
             refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
             conditions:
               - evaluator:
                   params: [0]
@@ -367,11 +374,10 @@ spec:
                 operator:
                   type: and
                 query:
-                  params: [B]
+                  params: [C]
                 reducer:
                   type: last
                 type: query
----
 
 ---
 apiVersion: grafana.integreatly.org/v1beta1
@@ -481,6 +487,56 @@ spec:
             conditions:
               - evaluator:
                   params: [90]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    # Alert: Fly Volume High Usage
+    - uid: fly-volume-high-usage
+      title: "Fly Volume High Usage"
+      condition: C
+      for: 10m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "Fly volume {{ $labels.mount }} usage is high"
+        description: "Volume usage is {{ $values.C.Value | humanize }}% on {{ $labels.instance }}"
+        __dashboardUid__: "fly-instance"
+      labels:
+        severity: "warning"
+        alertname: "HighVolumeUsage"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: '((fly_instance_filesystem_blocks{mount!="/",mount!="/.fly-upper-layer"} - fly_instance_filesystem_blocks_avail{mount!="/",mount!="/.fly-upper-layer"}) / fly_instance_filesystem_blocks{mount!="/",mount!="/.fly-upper-layer"}) * 100'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [85]
                   type: gt
                 operator:
                   type: and
@@ -862,6 +918,55 @@ spec:
   name: "Fly Network & Edge"
 
   rules:
+    # Alert: TLS SNI Limit Reached
+    - uid: fly-tls-sni-limit
+      title: "TLS SNI Limit Reached"
+      condition: C
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "TLS SNI concurrency limit reached for {{ $labels.servername }}"
+        description: "TLS handshakes queued due to SNI limits. Possible targeted attack."
+        __dashboardUid__: "fly-edge"
+      labels:
+        severity: "critical"
+        alertname: "TLSSNILimit"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum by(servername) (increase(fly_edge_tls_sni_limit_reached_count[5m])) > 0"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [0]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
     # Alert: Network Packet Drops/Errors
     - uid: fly-network-errors
       title: "Network Packet Drops/Errors"
@@ -1169,17 +1274,17 @@ spec:
                   type: last
                 type: query
 
-    # Alert: High Connection Churn
+    # Alert: High Connection Churn (FIXED)
     - uid: fly-edge-connection-churn
       title: "High Connection Churn"
-      condition: D
+      condition: E
       for: 10m
       noDataState: NoData
       execErrState: Alerting
       annotations:
         summary: "High connection churn detected"
-        description: "Connection churn rate is {{ $values.D.Value | humanize }}% - Most connections are short-lived"
-      #        __dashboardUid__: "fly-edge"
+        description: "Connection churn rate is {{ $values.E.Value | humanize }}% - Most connections are short-lived"
+        # __dashboardUid__: "fly-edge"
       labels:
         severity: "warning"
         alertname: "HighConnectionChurn"
@@ -1211,9 +1316,16 @@ spec:
         - refId: D
           datasourceUid: __expr__
           model:
-            type: threshold
+            type: reduce
             expression: C
+            reducer: last
             refId: D
+        - refId: E
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: D
+            refId: E
             conditions:
               - evaluator:
                   params: [80]
@@ -1221,7 +1333,7 @@ spec:
                 operator:
                   type: and
                 query:
-                  params: [D]
+                  params: [E]
                 reducer:
                   type: last
                 type: query
