@@ -281,12 +281,6 @@ spec:
       #   host-overview:
       #     url: https://raw.githubusercontent.com/ceph/ceph/main/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
       #     datasource: Prometheus
-      default:
-        # renovate: depName="Fly App"
-        fly-io:
-          gnetId: 14741
-          revision: 1
-          datasource: fly-io-prometheus
       data:
         dragonfly:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly/e1b03d605c5376fe36d8a45633ee964f52a70af0/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json
