@@ -10,7 +10,7 @@ spec:
     url: http://grafana.observability:80 # Grafana URL
     adminPassword:
       name: grafana-secret
-      key: GF_SECURITY_ADMIN_PASSWORD
+      key: adminPass
     adminUser:
       name: grafana-secret
-      key: GF_SECURITY_ADMIN_USER
+      key: adminUser
