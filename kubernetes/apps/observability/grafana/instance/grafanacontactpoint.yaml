@@ -1,0 +1,23 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaContactPoint
+metadata:
+  name: external-alertmanager
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+
+  name: alertmanager
+
+  settings:
+    alertmanager:
+      - uid: alertmanager
+        type: alertmanager
+        settings:
+          url: "http://alertmanager.observability.svc.cluster.local:9093"
+          # Optional basic auth if Alertmanager has authentication
+          # basicAuthUser: "admin"
+          # basicAuthPassword:
+          #   name: alertmanager-auth
+          #   key: password
