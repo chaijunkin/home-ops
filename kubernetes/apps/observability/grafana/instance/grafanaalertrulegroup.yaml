@@ -3,7 +3,6 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaAlertRuleGroup
 metadata:
   name: fly-app-alerts
-  namespace: observability
 spec:
   instanceSelector:
     matchLabels:
@@ -11,12 +10,270 @@ spec:
 
   folderRef: "external-folder"
   interval: 1m
-  name: "Fly App Extended Monitoring"
+  name: "Fly App Monitoring"
 
   rules:
-    # === HTTP Alerts ===
+    # 1. High Response Time Alert
+    - uid: fly-app-response-time
+      title: "Fly App - High Response Time"
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              histogram_quantile(0.95,
+                sum by(app, status, le) (
+                  rate(fly_app_http_response_time_seconds_bucket[5m])
+                )
+              )
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: reduce
+            refId: B
+            expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
+            conditions:
+              - evaluator:
+                  params: [5]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "Response time exceeded 5 seconds"
+        description: "95th percentile response time is too high. Consider declaring an incident."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: critical
+        alertname: HighResponseTime
+        job: fly-app
+        team: platform
+        service: fly-app
 
-    # 1. High 4xx Error Rate
+    # 2. High Error Rate Alert
+    - uid: fly-app-error-rate
+      title: "Fly App - High Error Rate"
+      condition: D
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              sum by(app) (
+                rate(fly_app_http_responses_count{status=~"5.*"}[5m])
+              )
+            refId: A
+        - refId: B
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              sum by(app) (
+                rate(fly_app_http_responses_count[5m])
+              )
+            refId: B
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: math
+            refId: C
+            expression: "$A / $B * 100"
+        - refId: D
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: D
+            expression: C
+            conditions:
+              - evaluator:
+                  params: [5]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "Error rate above 5%"
+        description: "HTTP 5xx error rate exceeds threshold. Investigate immediately."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: critical
+        alertname: HighErrorRate
+        job: fly-app
+        team: platform
+        service: fly-app
+
+    # 3. Memory Pressure Alert
+    - uid: fly-app-memory-pressure
+      title: "Fly App - High Memory Pressure"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              fly_instance_memory_pressure_full{pressure_duration="avg60"}
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [50]
+                  type: gt
+      for: 10m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "Memory pressure detected"
+        description: "Memory pressure avg60 is high. Escalate to infrastructure team."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: high
+        alertname: HighMemoryPressure
+        job: fly-app
+        team: infrastructure
+        service: fly-app
+
+    # 4. Instance Down Alert
+    - uid: fly-app-instance-down
+      title: "Fly App - Instance Down"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 300
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              fly_instance_up
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [1]
+                  type: lt
+      for: 1m
+      noDataState: Alerting
+      execErrState: Alerting
+      annotations:
+        summary: "Instance is down"
+        description: "Fly.io instance is unreachable."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: critical
+        alertname: InstanceDown
+        job: fly-app
+        team: platform
+        service: fly-app
+
+    # 5. CPU Throttling Alert
+    - uid: fly-app-cpu-throttle
+      title: "Fly App - CPU Throttling"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              rate(fly_instance_cpu_throttle[5m])
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [0]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "CPU throttling detected"
+        description: "Instance is experiencing CPU throttling. Consider scaling."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: warning
+        alertname: CPUThrottling
+        job: fly-app
+        team: platform
+        service: fly-app
+
+    # 6. Edge Error Rate Alert
+    - uid: fly-app-edge-errors
+      title: "Fly App - High Edge Error Rate"
+      condition: B
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: fly-io-prometheus
+          model:
+            expr: |
+              sum by(app, region) (
+                rate(fly_edge_error_count[5m])
+              )
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: B
+            expression: A
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "High edge error rate detected"
+        description: "Edge errors exceeding threshold. Check CDN and network."
+        dashboard: "/d/eiRE4umnz/fly-app"
+      labels:
+        severity: medium
+        alertname: HighEdgeErrorRate
+        job: fly-app
+        team: platform
+        service: fly-app
+
+    # 7. High 4xx Error Rate
     - uid: fly-app-4xx-rate
       title: "Fly App - High 4xx Error Rate"
       condition: D
@@ -63,8 +320,8 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "High 4xx rate for {{ $labels.app }}"
-        description: "Client error rate is {{ $values.C.Value | humanizePercentage }}. Check for invalid requests or API changes."
+        summary: "High 4xx client error rate"
+        description: "Client error rate exceeds 15%. Check for invalid requests or API changes."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: warning
@@ -73,58 +330,7 @@ spec:
         team: platform
         service: fly-app
 
-    # 2. Edge Response Time Spike
-    - uid: fly-app-edge-latency
-      title: "Fly App - High Edge Response Time"
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: fly-io-prometheus
-          model:
-            expr: |
-              histogram_quantile(0.95,
-                sum by(app, le) (
-                  rate(fly_edge_http_response_time_seconds_bucket[5m])
-                )
-              )
-            refId: A
-        - refId: B
-          datasourceUid: "-100"
-          model:
-            type: reduce
-            refId: B
-            expression: A
-            reducer: last
-        - refId: C
-          datasourceUid: "-100"
-          model:
-            type: threshold
-            refId: C
-            expression: B
-            conditions:
-              - evaluator:
-                  params: [2]
-                  type: gt
-      for: 5m
-      noDataState: NoData
-      execErrState: Alerting
-      annotations:
-        summary: "Edge response time elevated for {{ $labels.app }}"
-        description: "Edge p95 latency is {{ $values.A.Value }}s. Check CDN and network."
-        dashboard: "/d/eiRE4umnz/fly-app"
-      labels:
-        severity: warning
-        alertname: HighEdgeLatency
-        job: fly-app
-        team: platform
-        service: fly-app
-
-    # === TLS/SSL Alerts ===
-
-    # 3. TLS Handshake Errors
+    # 8. TLS Handshake Errors
     - uid: fly-app-tls-errors
       title: "Fly App - TLS Handshake Errors"
       condition: B
@@ -153,7 +359,7 @@ spec:
       execErrState: Alerting
       annotations:
         summary: "TLS handshake errors detected"
-        description: "{{ $values.A.Value }} TLS handshake errors in the last 5 minutes. Check certificate validity."
+        description: "Multiple TLS handshake errors in the last 5 minutes. Check certificate validity."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: high
@@ -162,96 +368,7 @@ spec:
         team: platform
         service: fly-app
 
-    # 4. TLS SNI Limit Reached
-    - uid: fly-app-sni-limit
-      title: "Fly App - TLS SNI Limit Reached"
-      condition: B
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: fly-io-prometheus
-          model:
-            expr: |
-              sum(increase(fly_edge_tls_sni_limit_reached_count[5m])) > 0
-            refId: A
-        - refId: B
-          datasourceUid: "-100"
-          model:
-            type: threshold
-            refId: B
-            expression: A
-            conditions:
-              - evaluator:
-                  params: [0]
-                  type: gt
-      for: 5m
-      noDataState: NoData
-      execErrState: Alerting
-      annotations:
-        summary: "TLS SNI concurrency limit reached"
-        description: "Server reached TLS SNI limit. Handshakes are being queued."
-        dashboard: "/d/eiRE4umnz/fly-app"
-      labels:
-        severity: warning
-        alertname: TLSSNILimit
-        job: fly-app
-        team: platform
-        service: fly-app
-
-    # 5. Slow TLS Handshakes
-    - uid: fly-app-slow-tls
-      title: "Fly App - Slow TLS Handshakes"
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: fly-io-prometheus
-          model:
-            expr: |
-              histogram_quantile(0.95,
-                sum by(le) (
-                  rate(fly_edge_tls_handshake_time_seconds_bucket[5m])
-                )
-              )
-            refId: A
-        - refId: B
-          datasourceUid: "-100"
-          model:
-            type: reduce
-            refId: B
-            expression: A
-            reducer: last
-        - refId: C
-          datasourceUid: "-100"
-          model:
-            type: threshold
-            refId: C
-            expression: B
-            conditions:
-              - evaluator:
-                  params: [1]
-                  type: gt
-      for: 10m
-      noDataState: NoData
-      execErrState: Alerting
-      annotations:
-        summary: "TLS handshakes are slow"
-        description: "P95 handshake time is {{ $values.A.Value }}s. May impact user experience."
-        dashboard: "/d/eiRE4umnz/fly-app"
-      labels:
-        severity: warning
-        alertname: SlowTLSHandshakes
-        job: fly-app
-        team: platform
-        service: fly-app
-
-    # === TCP Connection Alerts ===
-
-    # 6. High Connection Rate
+    # 9. High Connection Rate
     - uid: fly-app-high-connections
       title: "Fly App - High Connection Rate"
       condition: B
@@ -280,7 +397,7 @@ spec:
       execErrState: Alerting
       annotations:
         summary: "Unusually high connection rate"
-        description: "{{ $values.A.Value }}/sec connection rate. Possible traffic spike or DDoS."
+        description: "High connection rate detected. Possible traffic spike or DDoS."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: warning
@@ -289,7 +406,7 @@ spec:
         team: platform
         service: fly-app
 
-    # 7. Connection Churn (High Disconnect Rate)
+    # 10. Connection Churn
     - uid: fly-app-connection-churn
       title: "Fly App - High Connection Churn"
       condition: D
@@ -333,18 +450,16 @@ spec:
       execErrState: Alerting
       annotations:
         summary: "High connection churn detected"
-        description: "{{ $values.C.Value }}% of connections are short-lived. Check app health."
+        description: "Most connections are short-lived. Check application health."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
-        severity: warning
+        severity: medium
         alertname: HighConnectionChurn
         job: fly-app
         team: platform
         service: fly-app
 
-    # === Machine/Resource Alerts ===
-
-    # 8. High Load Average
+    # 11. High Load Average
     - uid: fly-app-high-load
       title: "Fly App - High Load Average"
       condition: B
@@ -372,8 +487,8 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "High load average on {{ $labels.app }}"
-        description: "1-minute load average is {{ $values.A.Value }}. CPU may be saturated."
+        summary: "High load average detected"
+        description: "1-minute load average is high. CPU may be saturated."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: warning
@@ -382,7 +497,7 @@ spec:
         team: platform
         service: fly-app
 
-    # 9. High Network Transfer
+    # 12. High Network Transfer
     - uid: fly-app-high-network
       title: "Fly App - High Network Transfer"
       condition: B
@@ -411,8 +526,8 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "High network traffic for {{ $labels.app }}"
-        description: "Network transfer is {{ $values.A.Value | humanize1024 }}B/s. Monitor bandwidth costs."
+        summary: "High network traffic detected"
+        description: "Network transfer is elevated. Monitor bandwidth costs."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: info
@@ -421,7 +536,7 @@ spec:
         team: platform
         service: fly-app
 
-    # 10. Low Memory Available
+    # 13. Low Memory Available
     - uid: fly-app-low-memory
       title: "Fly App - Low Memory Available"
       condition: D
@@ -464,8 +579,8 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "Low available memory on {{ $labels.app }}"
-        description: "Only {{ $values.C.Value }}% memory available. Risk of OOM."
+        summary: "Low available memory"
+        description: "Memory available is critically low. Risk of OOM."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: high
@@ -474,7 +589,7 @@ spec:
         team: infrastructure
         service: fly-app
 
-    # 11. High CPU IO Wait
+    # 14. High CPU IO Wait
     - uid: fly-app-high-iowait
       title: "Fly App - High CPU IO Wait"
       condition: B
@@ -502,61 +617,12 @@ spec:
       noDataState: NoData
       execErrState: Alerting
       annotations:
-        summary: "High CPU IO wait on {{ $labels.app }}"
-        description: "IO wait is {{ $values.A.Value }}%. Disk may be slow."
+        summary: "High CPU IO wait detected"
+        description: "IO wait is elevated. Disk may be slow."
         dashboard: "/d/eiRE4umnz/fly-app"
       labels:
         severity: warning
         alertname: HighIOWait
         job: fly-app
         team: infrastructure
-        service: fly-app
-
-    # 12. App Connect Time Spike
-    - uid: fly-app-slow-connect
-      title: "Fly App - Slow App Connect Time"
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: fly-io-prometheus
-          model:
-            expr: |
-              histogram_quantile(0.95,
-                sum by(le) (
-                  rate(fly_app_connect_time_seconds_bucket[5m])
-                )
-              )
-            refId: A
-        - refId: B
-          datasourceUid: "-100"
-          model:
-            type: reduce
-            refId: B
-            expression: A
-            reducer: last
-        - refId: C
-          datasourceUid: "-100"
-          model:
-            type: threshold
-            refId: C
-            expression: B
-            conditions:
-              - evaluator:
-                  params: [0.5]
-                  type: gt
-      for: 5m
-      noDataState: NoData
-      execErrState: Alerting
-      annotations:
-        summary: "Slow connection time to app"
-        description: "P95 connect time is {{ $values.A.Value }}s. App may be slow to accept connections."
-        dashboard: "/d/eiRE4umnz/fly-app"
-      labels:
-        severity: warning
-        alertname: SlowAppConnect
-        job: fly-app
-        team: platform
         service: fly-app
