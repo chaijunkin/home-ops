@@ -2,7 +2,6 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaAlertRuleGroup
 metadata:
   name: fly-app-alerts
-  namespace: grafana
 spec:
   # Reference to your GrafanaInstance
   instanceSelector:
