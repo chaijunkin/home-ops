@@ -6,6 +6,6 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      dashboards: "grafana"
+      grafana.internal/instance: grafana
   title: "External"
   uid: "external-folder"
