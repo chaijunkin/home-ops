@@ -9,15 +9,7 @@ spec:
       grafana.internal/instance: grafana
 
   name: alertmanager
+  type: alertmanager
 
   settings:
-    alertmanager:
-      - uid: alertmanager
-        type: alertmanager
-        settings:
-          url: "http://alertmanager.observability.svc.cluster.local:9093"
-          # Optional basic auth if Alertmanager has authentication
-          # basicAuthUser: "admin"
-          # basicAuthPassword:
-          #   name: alertmanager-auth
-          #   key: password
+    url: "http://alertmanager.observability.svc.cluster.local:9093"
