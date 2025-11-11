@@ -9,7 +9,7 @@ spec:
       grafana.internal/instance: grafana
 
   name: alertmanager
-  type: alertmanager
+  type: prometheus-alertmanager
 
   settings:
     url: "http://kube-prometheus-stack-alertmanager.observability.svc.cluster.local:9093"
