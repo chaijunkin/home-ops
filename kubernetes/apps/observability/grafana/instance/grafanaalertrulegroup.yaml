@@ -26,9 +26,9 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              `histogram_quantile`(0.99,
+              histogram_quantile(0.99,
                 sum by(app, le) (
-                  increase(`fly_app_http_response_time_seconds_bucket`[5m])
+                  increase(fly_app_http_response_time_seconds_bucket[5m])
                 )
               )
             refId: A
@@ -74,7 +74,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_app_http_responses_count`{status=~"5.."}[5m]))
+              sum(increase(fly_app_http_responses_count{status=~"5.."}[5m]))
             refId: A
         - refId: B
           relativeTimeRange:
@@ -83,7 +83,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_app_http_responses_count`[5m]))
+              sum(increase(fly_app_http_responses_count[5m]))
             refId: B
         - refId: C
           datasourceUid: "-100"
@@ -126,7 +126,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_app_http_responses_count`{status=~"4.."}[5m]))
+              sum(increase(fly_app_http_responses_count{status=~"4.."}[5m]))
             refId: A
         - refId: B
           relativeTimeRange:
@@ -135,7 +135,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_app_http_responses_count`[5m]))
+              sum(increase(fly_app_http_responses_count[5m]))
             refId: B
         - refId: C
           datasourceUid: "-100"
@@ -178,7 +178,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(`fly_app_concurrency`) by (instance, region)
+              sum(fly_app_concurrency) by (instance, region)
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -222,7 +222,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_app_soft_limit_reached_count`[5m]))
+              sum(increase(fly_app_soft_limit_reached_count[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -259,7 +259,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_app_hard_limit_reached_count`[5m]))
+              sum(increase(fly_app_hard_limit_reached_count[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -296,7 +296,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_edge_tcp_connects_count`[5m]))
+              sum(rate(fly_edge_tcp_connects_count[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -340,7 +340,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_edge_tcp_disconnects_count`[5m]))
+              sum(rate(fly_edge_tcp_disconnects_count[5m]))
             refId: A
         - refId: B
           relativeTimeRange:
@@ -349,7 +349,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_edge_tcp_connects_count`[5m]))
+              sum(rate(fly_edge_tcp_connects_count[5m]))
             refId: B
         - refId: C
           datasourceUid: "-100"
@@ -392,7 +392,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_edge_http_responses_count`{status=~"5.."}[5m]))
+              sum(increase(fly_edge_http_responses_count{status=~"5.."}[5m]))
             refId: A
         - refId: B
           relativeTimeRange:
@@ -401,7 +401,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_edge_http_responses_count`[5m]))
+              sum(increase(fly_edge_http_responses_count[5m]))
             refId: B
         - refId: C
           datasourceUid: "-100"
@@ -444,7 +444,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_edge_tls_handshake_errors`[5m]))
+              sum(increase(fly_edge_tls_handshake_errors[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -489,7 +489,7 @@ spec:
           model:
             expr: |
               sum by(type, region) (
-                increase(`fly_edge_tcp_rate_limited_count`[5m])
+                increase(fly_edge_tcp_rate_limited_count[5m])
               )
             refId: A
         - refId: B
@@ -534,7 +534,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_edge_data_in`[5m])) + sum(rate(`fly_edge_data_out`[5m]))
+              sum(rate(fly_edge_data_in[5m])) + sum(rate(fly_edge_data_out[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -578,7 +578,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(increase(`fly_edge_tls_ip_limit_reached_count`[5m])) > 0
+              sum(increase(fly_edge_tls_ip_limit_reached_count[5m])) > 0
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -666,7 +666,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              `fly_instance_memory_mem_available`
+              fly_instance_memory_mem_available
             refId: A
         - refId: B
           relativeTimeRange:
@@ -675,7 +675,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              `fly_instance_memory_mem_total`
+              fly_instance_memory_mem_total
             refId: B
         - refId: C
           datasourceUid: "-100"
@@ -718,8 +718,8 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_instance_cpu`{mode!="idle", mode!="steal"}[60s])) by (instance, region) /
-              count(`fly_instance_cpu`{mode="idle"}) by (instance, region) * 100
+              sum(rate(fly_instance_cpu{mode!="idle", mode!="steal"}[60s])) by (instance, region) /
+              count(fly_instance_cpu{mode="idle"}) by (instance, region) * 100
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -763,8 +763,8 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              rate(`fly_instance_cpu_throttle`[60s]) /
-              count(`fly_instance_cpu`{mode="idle"}) without(`cpu_id`, mode) * 100
+              rate(fly_instance_cpu_throttle[60s]) /
+              count(fly_instance_cpu{mode="idle"}) without(cpu_id, mode) * 100
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -808,8 +808,8 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(`fly_instance_load_average`{minutes="1"}) by (instance, region) /
-              sum(count(`fly_instance_cpu`{mode="idle"}) without(cpu)) by (instance, region)
+              sum(fly_instance_load_average{minutes="1"}) by (instance, region) /
+              sum(count(fly_instance_cpu{mode="idle"}) without(cpu)) by (instance, region)
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -853,8 +853,8 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_instance_net_sent_bytes`{device="eth0"}[5m])) +
-              sum(rate(`fly_instance_net_recv_bytes`{device="eth0"}[5m]))
+              sum(rate(fly_instance_net_sent_bytes{device="eth0"}[5m])) +
+              sum(rate(fly_instance_net_recv_bytes{device="eth0"}[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -898,7 +898,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_instance_cpu`{mode="iowait"}[5m])) by (instance, region) * 100
+              sum(rate(fly_instance_cpu{mode="iowait"}[5m])) by (instance, region) * 100
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -942,8 +942,8 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              `fly_instance_filesystem_blocks`{mount="/.fly-upper-layer"} *
-              `fly_instance_filesystem_block_size`{mount="/.fly-upper-layer"}
+              fly_instance_filesystem_blocks{mount="/.fly-upper-layer"} *
+              fly_instance_filesystem_block_size{mount="/.fly-upper-layer"}
             refId: A
         - refId: B
           relativeTimeRange:
@@ -952,8 +952,8 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              `fly_instance_filesystem_blocks_avail`{mount="/.fly-upper-layer"} *
-              `fly_instance_filesystem_block_size`{mount="/.fly-upper-layer"}
+              fly_instance_filesystem_blocks_avail{mount="/.fly-upper-layer"} *
+              fly_instance_filesystem_block_size{mount="/.fly-upper-layer"}
             refId: B
         - refId: C
           datasourceUid: "-100"
@@ -1003,7 +1003,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              `fly_instance_filefd_allocated`
+              fly_instance_filefd_allocated
             refId: A
         - refId: B
           relativeTimeRange:
@@ -1012,7 +1012,7 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              `fly_instance_filefd_maximum`
+              fly_instance_filefd_maximum
             refId: B
         - refId: C
           datasourceUid: "-100"
