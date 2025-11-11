@@ -9,6 +9,6 @@ spec:
     matchLabels:
       dashboards: "grafana"
   grafanaCom:
-    gnetId: 14741
+    id: 14741
     revision: 1
   folderRef: external
