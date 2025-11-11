@@ -210,93 +210,93 @@ spec:
         team: platform
         service: fly-io
 
-    # 5. App Soft Limit Reached (FIXED)
-    - uid: fly-soft-limit-reached
-      title: "Fly - App Soft Limit Reached"
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: prometheus_on_fly
-          model:
-            expr: |
-              sum(increase(fly_app_soft_limit_reached_count[5m]))
-            refId: A
-        - refId: B
-          datasourceUid: "prometheus_on_fly"
-          model:
-            type: reduce
-            refId: B
-            expression: A
-            reducer: last
-        - refId: C
-          datasourceUid: "prometheus_on_fly"
-          model:
-            type: threshold
-            refId: C
-            expression: B
-            conditions:
-              - evaluator:
-                  params: [5]
-                  type: gt
-      for: 5m
-      noDataState: NoData
-      execErrState: Alerting
-      annotations:
-        summary: "App soft concurrency limit reached"
-        description: "App is hitting soft limits. Consider scaling."
-      labels:
-        severity: warning
-        alertname: SoftLimitReached
-        job: fly-io
-        team: platform
-        service: fly-io
+    # # 5. App Soft Limit Reached (FIXED)
+    # - uid: fly-soft-limit-reached
+    #   title: "Fly - App Soft Limit Reached"
+    #   condition: C
+    #   data:
+    #     - refId: A
+    #       relativeTimeRange:
+    #         from: 600
+    #         to: 0
+    #       datasourceUid: prometheus_on_fly
+    #       model:
+    #         expr: |
+    #           sum(increase(fly_app_soft_limit_reached_count[5m]))
+    #         refId: A
+    #     - refId: B
+    #       datasourceUid: "prometheus_on_fly"
+    #       model:
+    #         type: reduce
+    #         refId: B
+    #         expression: A
+    #         reducer: last
+    #     - refId: C
+    #       datasourceUid: "prometheus_on_fly"
+    #       model:
+    #         type: threshold
+    #         refId: C
+    #         expression: B
+    #         conditions:
+    #           - evaluator:
+    #               params: [5]
+    #               type: gt
+    #   for: 5m
+    #   noDataState: NoData
+    #   execErrState: Alerting
+    #   annotations:
+    #     summary: "App soft concurrency limit reached"
+    #     description: "App is hitting soft limits. Consider scaling."
+    #   labels:
+    #     severity: warning
+    #     alertname: SoftLimitReached
+    #     job: fly-io
+    #     team: platform
+    #     service: fly-io
 
-    # 6. App Hard Limit Reached (FIXED)
-    - uid: fly-hard-limit-reached
-      title: "Fly - App Hard Limit Reached"
-      condition: C
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: prometheus_on_fly
-          model:
-            expr: |
-              sum(increase(fly_app_hard_limit_reached_count[5m]))
-            refId: A
-        - refId: B
-          datasourceUid: "prometheus_on_fly"
-          model:
-            type: reduce
-            refId: B
-            expression: A
-            reducer: last
-        - refId: C
-          datasourceUid: "prometheus_on_fly"
-          model:
-            type: threshold
-            refId: C
-            expression: B
-            conditions:
-              - evaluator:
-                  params: [0]
-                  type: gt
-      for: 1m
-      noDataState: NoData
-      execErrState: Alerting
-      annotations:
-        summary: "App hard concurrency limit reached"
-        description: "App is rejecting connections at hard limit. Scale immediately."
-      labels:
-        severity: critical
-        alertname: HardLimitReached
-        job: fly-io
-        team: platform
-        service: fly-io
+    # # 6. App Hard Limit Reached (FIXED)
+    # - uid: fly-hard-limit-reached
+    #   title: "Fly - App Hard Limit Reached"
+    #   condition: C
+    #   data:
+    #     - refId: A
+    #       relativeTimeRange:
+    #         from: 600
+    #         to: 0
+    #       datasourceUid: prometheus_on_fly
+    #       model:
+    #         expr: |
+    #           sum(increase(fly_app_hard_limit_reached_count[5m]))
+    #         refId: A
+    #     - refId: B
+    #       datasourceUid: "prometheus_on_fly"
+    #       model:
+    #         type: reduce
+    #         refId: B
+    #         expression: A
+    #         reducer: last
+    #     - refId: C
+    #       datasourceUid: "prometheus_on_fly"
+    #       model:
+    #         type: threshold
+    #         refId: C
+    #         expression: B
+    #         conditions:
+    #           - evaluator:
+    #               params: [0]
+    #               type: gt
+    #   for: 1m
+    #   noDataState: NoData
+    #   execErrState: Alerting
+    #   annotations:
+    #     summary: "App hard concurrency limit reached"
+    #     description: "App is rejecting connections at hard limit. Scale immediately."
+    #   labels:
+    #     severity: critical
+    #     alertname: HardLimitReached
+    #     job: fly-io
+    #     team: platform
+    #     service: fly-io
 
     # 7. High TCP Connection Rate
     - uid: fly-edge-high-connection-rate
@@ -342,64 +342,64 @@ spec:
         team: platform
         service: fly-io
 
-    # 8. High Connection Churn (FIXED)
-    - uid: fly-edge-connection-churn
-      title: "Fly - High Connection Churn"
-      condition: E
-      data:
-        - refId: A
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: prometheus_on_fly
-          model:
-            expr: |
-              sum(rate(fly_edge_tcp_disconnects_count[5m]))
-            refId: A
-        - refId: B
-          relativeTimeRange:
-            from: 600
-            to: 0
-          datasourceUid: prometheus_on_fly
-          model:
-            expr: |
-              sum(rate(fly_edge_tcp_connects_count[5m]))
-            refId: B
-        - refId: C
-          datasourceUid: "prometheus_on_fly"
-          model:
-            type: math
-            refId: C
-            expression: "($A / $B) * 100"
-        - refId: D
-          datasourceUid: "prometheus_on_fly"
-          model:
-            type: reduce
-            refId: D
-            expression: C
-            reducer: last
-        - refId: E
-          datasourceUid: "prometheus_on_fly"
-          model:
-            type: threshold
-            refId: E
-            expression: D
-            conditions:
-              - evaluator:
-                  params: [80]
-                  type: gt
-      for: 10m
-      noDataState: NoData
-      execErrState: Alerting
-      annotations:
-        summary: "High connection churn detected"
-        description: "Most connections are short-lived. Check application health."
-      labels:
-        severity: warning
-        alertname: HighConnectionChurn
-        job: fly-io
-        team: platform
-        service: fly-io
+    # # 8. High Connection Churn (FIXED)
+    # - uid: fly-edge-connection-churn
+    #   title: "Fly - High Connection Churn"
+    #   condition: E
+    #   data:
+    #     - refId: A
+    #       relativeTimeRange:
+    #         from: 600
+    #         to: 0
+    #       datasourceUid: prometheus_on_fly
+    #       model:
+    #         expr: |
+    #           sum(rate(fly_edge_tcp_disconnects_count[5m]))
+    #         refId: A
+    #     - refId: B
+    #       relativeTimeRange:
+    #         from: 600
+    #         to: 0
+    #       datasourceUid: prometheus_on_fly
+    #       model:
+    #         expr: |
+    #           sum(rate(fly_edge_tcp_connects_count[5m]))
+    #         refId: B
+    #     - refId: C
+    #       datasourceUid: "prometheus_on_fly"
+    #       model:
+    #         type: math
+    #         refId: C
+    #         expression: "($A / $B) * 100"
+    #     - refId: D
+    #       datasourceUid: "prometheus_on_fly"
+    #       model:
+    #         type: reduce
+    #         refId: D
+    #         expression: C
+    #         reducer: last
+    #     - refId: E
+    #       datasourceUid: "prometheus_on_fly"
+    #       model:
+    #         type: threshold
+    #         refId: E
+    #         expression: D
+    #         conditions:
+    #           - evaluator:
+    #               params: [80]
+    #               type: gt
+    #   for: 10m
+    #   noDataState: NoData
+    #   execErrState: Alerting
+    #   annotations:
+    #     summary: "High connection churn detected"
+    #     description: "Most connections are short-lived. Check application health."
+    #   labels:
+    #     severity: warning
+    #     alertname: HighConnectionChurn
+    #     job: fly-io
+    #     team: platform
+    #     service: fly-io
 
     # 9. Edge High 5xx Response Rate
     - uid: fly-edge-5xx-rate
