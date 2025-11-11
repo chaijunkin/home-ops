@@ -24,7 +24,7 @@ spec:
       annotations:
         summary: "High rate of 5xx errors detected for {{ $labels.app }} instance {{ $labels.instance }}"
         description: "5xx error rate is {{ $values.C.Value | humanize }}/sec, which exceeds the threshold of 10/sec"
-        __dashboardUid__: "fly-app"
+      #        __dashboardUid__: "fly-app"
       labels:
         severity: "critical"
         alertname: "HTTP5xxErrorSpike"
@@ -74,7 +74,7 @@ spec:
       annotations:
         summary: "HTTP response time exceeds 5 seconds for {{ $labels.app }}"
         description: "P99 response time is {{ $values.C.Value | humanize }}s - Consider declaring an incident"
-        __dashboardUid__: "fly-app"
+      #        __dashboardUid__: "fly-app"
       labels:
         severity: "critical"
         alertname: "HighResponseTimeP99"
@@ -125,7 +125,7 @@ spec:
       annotations:
         summary: "HTTP 5xx error rate above 5%"
         description: "5xx error rate is {{ $values.D.Value | humanize }}% - Check recent deployments immediately"
-        __dashboardUid__: "fly-app"
+      #        __dashboardUid__: "fly-app"
       labels:
         severity: "critical"
         alertname: "High5xxRate"
@@ -182,7 +182,7 @@ spec:
       annotations:
         summary: "Client error rate exceeds 15%"
         description: "4xx error rate is {{ $values.D.Value | humanize }}% - Check for invalid requests or API changes"
-        __dashboardUid__: "fly-app"
+      #        __dashboardUid__: "fly-app"
       labels:
         severity: "warning"
         alertname: "High4xxRate"
@@ -239,7 +239,7 @@ spec:
       annotations:
         summary: "App concurrency is high"
         description: "Concurrency is {{ $values.C.Value | humanize }} - Consider scaling the application"
-        __dashboardUid__: "fly-app"
+      #        __dashboardUid__: "fly-app"
       labels:
         severity: "warning"
         alertname: "HighConcurrency"
@@ -289,7 +289,7 @@ spec:
       annotations:
         summary: "App soft concurrency limit reached"
         description: "Soft limit hit {{ $values.C.Value | humanize }} times in 5 minutes - Consider scaling"
-        __dashboardUid__: "fly-app"
+      #        __dashboardUid__: "fly-app"
       labels:
         severity: "warning"
         alertname: "SoftLimitReached"
@@ -339,7 +339,7 @@ spec:
       annotations:
         summary: "App hard concurrency limit reached"
         description: "App is rejecting connections at hard limit. Scale immediately!"
-        __dashboardUid__: "fly-app"
+      #        __dashboardUid__: "fly-app"
       labels:
         severity: "critical"
         alertname: "HardLimitReached"
@@ -399,7 +399,7 @@ spec:
       annotations:
         summary: "Critical memory shortage on {{ $labels.app }} instance {{ $labels.instance }}"
         description: "Available memory is {{ $values.C.Value | humanize }}% - Escalate to infrastructure team"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "critical"
         alertname: "LowMemoryAvailable"
@@ -450,7 +450,7 @@ spec:
       annotations:
         summary: "Disk space critical on {{ $labels.app }} instance {{ $labels.instance }}"
         description: "Root filesystem usage is {{ $values.C.Value | humanize }}% - Immediate action required"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "critical"
         alertname: "HighDiskUsage"
@@ -500,7 +500,7 @@ spec:
       annotations:
         summary: "CPU throttling detected on {{ $labels.app }} instance {{ $labels.instance }}"
         description: "CPU is being throttled at {{ $values.C.Value | humanizePercentage }}"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "critical"
         alertname: "CPUThrottling"
@@ -550,7 +550,7 @@ spec:
       annotations:
         summary: "CPU utilization is high on {{ $labels.instance }}"
         description: "CPU usage is {{ $values.C.Value | humanize }}% - Check recent deployments"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "warning"
         alertname: "HighCPUUtilization"
@@ -600,7 +600,7 @@ spec:
       annotations:
         summary: "Load average exceeds CPU count on {{ $labels.instance }}"
         description: "5-minute load average is {{ $values.C.Value | humanize }}x CPU count"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "warning"
         alertname: "HighLoadAverage"
@@ -650,7 +650,7 @@ spec:
       annotations:
         summary: "High CPU IO wait detected"
         description: "IO wait is {{ $values.C.Value | humanize }}% - Disk may be slow"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "warning"
         alertname: "HighIOWait"
@@ -700,7 +700,7 @@ spec:
       annotations:
         summary: "High file descriptor usage"
         description: "File descriptor usage is {{ $values.D.Value | humanize }}% - May cause connection failures"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "critical"
         alertname: "HighFileDescriptors"
@@ -757,7 +757,7 @@ spec:
       annotations:
         summary: "High disk I/O utilization"
         description: "Disk I/O utilization above 80% - Storage may be bottleneck"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "warning"
         alertname: "HighDiskIOUtilization"
@@ -807,7 +807,7 @@ spec:
       annotations:
         summary: "High disk queue depth"
         description: "Disk queue depth is high - I/O backlog accumulating"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "warning"
         alertname: "HighDiskQueueDepth"
@@ -872,7 +872,7 @@ spec:
       annotations:
         summary: "Network issues detected on {{ $labels.app }} instance {{ $labels.instance }}"
         description: "Network drops/errors at {{ $values.C.Value | humanize }} packets/sec"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "warning"
         alertname: "NetworkPacketDrops"
@@ -922,7 +922,7 @@ spec:
       annotations:
         summary: "TLS handshake errors on edge host {{ $labels.host }}"
         description: "{{ $values.C.Value | humanize }} TLS handshake errors - Reason: {{ $labels.reason }}"
-        __dashboardUid__: "fly-edge"
+      #        __dashboardUid__: "fly-edge"
       labels:
         severity: "critical"
         alertname: "TLSHandshakeErrors"
@@ -972,7 +972,7 @@ spec:
       annotations:
         summary: "Edge 5xx error rate above threshold"
         description: "Edge 5xx error rate is {{ $values.D.Value | humanize }}% - Check edge proxy and backend health"
-        __dashboardUid__: "fly-edge"
+      #        __dashboardUid__: "fly-edge"
       labels:
         severity: "critical"
         alertname: "EdgeHigh5xxRate"
@@ -1029,7 +1029,7 @@ spec:
       annotations:
         summary: "Edge connections being rate limited"
         description: "Edge is dropping connections due to rate limits - Possible DDoS or need scaling"
-        __dashboardUid__: "fly-edge"
+      #        __dashboardUid__: "fly-edge"
       labels:
         severity: "critical"
         alertname: "EdgeRateLimited"
@@ -1079,7 +1079,7 @@ spec:
       annotations:
         summary: "TLS IP concurrency limit reached"
         description: "TLS handshakes queued due to IP limits - Possible attack"
-        __dashboardUid__: "fly-edge"
+      #        __dashboardUid__: "fly-edge"
       labels:
         severity: "critical"
         alertname: "TLSIPLimit"
@@ -1129,7 +1129,7 @@ spec:
       annotations:
         summary: "Unusually high TCP connection rate"
         description: "TCP connection rate is {{ $values.C.Value | humanize }}/sec - Possible traffic spike or DDoS"
-        __dashboardUid__: "fly-edge"
+      #        __dashboardUid__: "fly-edge"
       labels:
         severity: "warning"
         alertname: "HighTCPConnectionRate"
@@ -1179,7 +1179,7 @@ spec:
       annotations:
         summary: "High connection churn detected"
         description: "Connection churn rate is {{ $values.D.Value | humanize }}% - Most connections are short-lived"
-        __dashboardUid__: "fly-edge"
+      #        __dashboardUid__: "fly-edge"
       labels:
         severity: "warning"
         alertname: "HighConnectionChurn"
@@ -1236,7 +1236,7 @@ spec:
       annotations:
         summary: "High edge data transfer detected"
         description: "Edge data transfer is {{ $values.C.Value | humanize }} bytes/sec - Monitor bandwidth costs"
-        __dashboardUid__: "fly-edge"
+      #        __dashboardUid__: "fly-edge"
       labels:
         severity: "info"
         alertname: "HighEdgeDataTransfer"
@@ -1286,7 +1286,7 @@ spec:
       annotations:
         summary: "High network traffic on instance"
         description: "Network transfer is {{ $values.C.Value | humanize }} bytes/sec - Monitor bandwidth usage"
-        __dashboardUid__: "fly-instance"
+      #        __dashboardUid__: "fly-instance"
       labels:
         severity: "info"
         alertname: "HighInstanceNetworkTransfer"
