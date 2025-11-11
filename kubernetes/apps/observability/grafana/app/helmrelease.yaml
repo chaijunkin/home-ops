@@ -213,6 +213,7 @@ spec:
             url: http://kube-prometheus-stack-alertmanager.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
+              handleGrafanaManagedAlerts: true
           - name: Tempo
             type: tempo
             url: http://tempo.observability.svc.cluster.local:3200
