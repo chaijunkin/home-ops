@@ -210,10 +210,10 @@ spec:
         team: platform
         service: fly-io
 
-    # 5. App Soft Limit Reached
+    # 5. App Soft Limit Reached (FIXED)
     - uid: fly-soft-limit-reached
       title: "Fly - App Soft Limit Reached"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -227,9 +227,16 @@ spec:
         - refId: B
           datasourceUid: "prometheus_on_fly"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "prometheus_on_fly"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [5]
@@ -247,10 +254,10 @@ spec:
         team: platform
         service: fly-io
 
-    # 6. App Hard Limit Reached
+    # 6. App Hard Limit Reached (FIXED)
     - uid: fly-hard-limit-reached
       title: "Fly - App Hard Limit Reached"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -264,9 +271,16 @@ spec:
         - refId: B
           datasourceUid: "prometheus_on_fly"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "prometheus_on_fly"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [0]
@@ -328,10 +342,10 @@ spec:
         team: platform
         service: fly-io
 
-    # 8. High Connection Churn
+    # 8. High Connection Churn (FIXED)
     - uid: fly-edge-connection-churn
       title: "Fly - High Connection Churn"
-      condition: D
+      condition: E
       data:
         - refId: A
           relativeTimeRange:
@@ -360,9 +374,16 @@ spec:
         - refId: D
           datasourceUid: "prometheus_on_fly"
           model:
-            type: threshold
+            type: reduce
             refId: D
             expression: C
+            reducer: last
+        - refId: E
+          datasourceUid: "prometheus_on_fly"
+          model:
+            type: threshold
+            refId: E
+            expression: D
             conditions:
               - evaluator:
                   params: [80]
@@ -374,7 +395,7 @@ spec:
         summary: "High connection churn detected"
         description: "Most connections are short-lived. Check application health."
       labels:
-        severity: warning
+        severity: medium
         alertname: HighConnectionChurn
         job: fly-io
         team: platform
