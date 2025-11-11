@@ -603,7 +603,7 @@ metadata:
     dashboards: "grafana"
 spec:
   external:
-    url: http://grafana.observability:3000 # Grafana URL
+    url: http://grafana.observability:80 # Grafana URL
     adminPassword:
       name: grafana-secret
       key: GF_SECURITY_ADMIN_PASSWORD
