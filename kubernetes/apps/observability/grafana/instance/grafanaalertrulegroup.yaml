@@ -1284,7 +1284,7 @@ spec:
       annotations:
         summary: "High connection churn detected"
         description: "Connection churn rate is {{ $values.E.Value | humanize }}% - Most connections are short-lived"
-        # __dashboardUid__: "fly-edge"
+        __dashboardUid__: "fly-edge"
       labels:
         severity: "warning"
         alertname: "HighConnectionChurn"
@@ -1309,12 +1309,18 @@ spec:
             refId: B
         - refId: C
           datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
           model:
             type: math
             expression: "($A / $B) * 100"
             refId: C
         - refId: D
           datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
           model:
             type: reduce
             expression: C
@@ -1322,6 +1328,9 @@ spec:
             refId: D
         - refId: E
           datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
           model:
             type: threshold
             expression: D
