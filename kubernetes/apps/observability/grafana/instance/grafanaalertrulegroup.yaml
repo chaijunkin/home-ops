@@ -1050,7 +1050,7 @@ spec:
         team: infrastructure
         service: fly-io
 
-    # 23. Network Packet Drops
+    # 23. Network Packet Drops (FIXED)
     - uid: fly-network-drops
       title: "Fly - Network Packet Drops"
       condition: C
@@ -1062,8 +1062,8 @@ spec:
           datasourceUid: prometheus_on_fly
           model:
             expr: |
-              sum(rate(`fly_instance_net_recv_drop`{device="eth0"}[5m])) +
-              sum(rate(`fly_instance_net_sent_drop`{device="eth0"}[5m]))
+              sum(rate(fly_instance_net_recv_drop{device="eth0"}[5m])) +
+              sum(rate(fly_instance_net_sent_drop{device="eth0"}[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
@@ -1081,3 +1081,104 @@ spec:
             conditions:
               - evaluator:
                   params: [10]
+                  type: gt
+      for: 5m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "Network packets being dropped"
+        description: "Network packet drops detected. Check network health."
+      labels:
+        severity: warning
+        alertname: NetworkPacketDrops
+        job: fly-io
+        team: infrastructure
+        service: fly-io
+
+    # 24. High Disk I/O Utilization
+    - uid: fly-high-disk-io
+      title: "Fly - High Disk I/O Utilization"
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: prometheus_on_fly
+          model:
+            expr: |
+              rate(fly_instance_disk_time_io[5m]) / 1000
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: reduce
+            refId: B
+            expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
+            conditions:
+              - evaluator:
+                  params: [0.8]
+                  type: gt
+      for: 10m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "High disk I/O utilization"
+        description: "Disk I/O utilization above 80%. Storage may be bottleneck."
+      labels:
+        severity: warning
+        alertname: HighDiskIOUtilization
+        job: fly-io
+        team: infrastructure
+        service: fly-io
+
+    # 25. High Disk Queue Depth
+    - uid: fly-high-disk-queue
+      title: "Fly - High Disk Queue Depth"
+      condition: C
+      data:
+        - refId: A
+          relativeTimeRange:
+            from: 600
+            to: 0
+          datasourceUid: prometheus_on_fly
+          model:
+            expr: |
+              rate(fly_instance_disk_time_io_weighted[5m]) / 1000
+            refId: A
+        - refId: B
+          datasourceUid: "-100"
+          model:
+            type: reduce
+            refId: B
+            expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: gt
+      for: 10m
+      noDataState: NoData
+      execErrState: Alerting
+      annotations:
+        summary: "High disk queue depth"
+        description: "Disk queue depth is high. I/O backlog accumulating."
+      labels:
+        severity: warning
+        alertname: HighDiskQueueDepth
+        job: fly-io
+        team: infrastructure
+        service: fly-io
