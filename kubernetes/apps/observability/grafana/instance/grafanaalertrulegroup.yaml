@@ -3,6 +3,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaAlertRuleGroup
 metadata:
   name: fly-app-alerts
+  namespace: observability
 spec:
   instanceSelector:
     matchLabels:
@@ -122,7 +123,7 @@ spec:
     # 3. Memory Pressure Alert
     - uid: fly-app-memory-pressure
       title: "Fly App - High Memory Pressure"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -136,9 +137,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [50]
@@ -160,7 +168,7 @@ spec:
     # 4. Instance Down Alert
     - uid: fly-app-instance-down
       title: "Fly App - Instance Down"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -174,9 +182,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [1]
@@ -198,7 +213,7 @@ spec:
     # 5. CPU Throttling Alert
     - uid: fly-app-cpu-throttle
       title: "Fly App - CPU Throttling"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -212,9 +227,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [0]
@@ -236,7 +258,7 @@ spec:
     # 6. Edge Error Rate Alert
     - uid: fly-app-edge-errors
       title: "Fly App - High Edge Error Rate"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -252,9 +274,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [10]
@@ -333,7 +362,7 @@ spec:
     # 8. TLS Handshake Errors
     - uid: fly-app-tls-errors
       title: "Fly App - TLS Handshake Errors"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -342,14 +371,21 @@ spec:
           datasourceUid: fly-io-prometheus
           model:
             expr: |
-              sum(increase(fly_edge_tls_handshake_errors[5m])) > 0
+              sum(increase(fly_edge_tls_handshake_errors[5m]))
             refId: A
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [10]
@@ -371,7 +407,7 @@ spec:
     # 9. High Connection Rate
     - uid: fly-app-high-connections
       title: "Fly App - High Connection Rate"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -385,9 +421,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [1000]
@@ -462,7 +505,7 @@ spec:
     # 11. High Load Average
     - uid: fly-app-high-load
       title: "Fly App - High Load Average"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -476,9 +519,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [4]
@@ -500,7 +550,7 @@ spec:
     # 12. High Network Transfer
     - uid: fly-app-high-network
       title: "Fly App - High Network Transfer"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -515,9 +565,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [104857600]
@@ -592,7 +649,7 @@ spec:
     # 14. High CPU IO Wait
     - uid: fly-app-high-iowait
       title: "Fly App - High CPU IO Wait"
-      condition: B
+      condition: C
       data:
         - refId: A
           relativeTimeRange:
@@ -606,9 +663,16 @@ spec:
         - refId: B
           datasourceUid: "-100"
           model:
-            type: threshold
+            type: reduce
             refId: B
             expression: A
+            reducer: last
+        - refId: C
+          datasourceUid: "-100"
+          model:
+            type: threshold
+            refId: C
+            expression: B
             conditions:
               - evaluator:
                   params: [20]
