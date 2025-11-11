@@ -11,7 +11,7 @@ spec:
 
   folderRef: "external-folder"
   interval: 1m
-  name: "Fly.io App Monitoring"
+  name: "Fly App Monitoring"
 
   rules:
     # === Instance-Level Alerts ===
