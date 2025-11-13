@@ -975,7 +975,7 @@ spec:
         description: "{{ $values.E.Value | humanize }}% of connections are short-lived"
         slo_target: "<20% churn rate (80% remain stable)"
       labels:
-        severity: "warning"
+        severity: "info"
         alertname: "HighConnectionChurn"
         team: "platform"
         service: "fly-io"
