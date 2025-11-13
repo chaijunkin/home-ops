@@ -10,6 +10,25 @@ data:
         "grafana": {
           "type": "sse",
           "url": "http://mcp-grafana.default.svc.cluster.local:8000/sse"
+        },
+        "prometheus": {
+          "command": "node",
+          "args": ["/shared/lib/node_modules/prometheus-mcp/dist/index.mjs", "stdio"],
+          "env": {
+            "PROMETHEUS_URL": "http://prometheus-operated.observability.svc.cluster.local:9090"
+          }
+        },
+        "alertmanager": {
+          "command": "uvx",
+          "args": ["alertmanager-mcp-server"],
+          "env": {
+            "ALERTMANAGER_URL": "http://alertmanager-operated.observability.svc.cluster.local:9093"
+          }
+        },
+        "kubernetes": {
+          "command": "uvx",
+          "args": ["mcp-kubernetes-server", "--disable-write", "--disable-delete"],
+          "env": {}
         }
       }
     }
