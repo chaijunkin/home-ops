@@ -9,7 +9,7 @@ data:
       "mcpServers": {
         "grafana": {
           "type": "streamable-http",
-          "url": "http://mcp-grafana.default.svc.cluster.local:8000/sse"
+          "url": "http://mcp-grafana.default.svc.cluster.local:8000/mcp"
         }
       }
     }
