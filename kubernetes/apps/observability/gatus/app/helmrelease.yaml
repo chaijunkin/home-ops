@@ -30,6 +30,9 @@ spec:
               - --auto-httproute
               - --enable-httproute
               - --enable-service
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
             resources:
               requests:
                 cpu: 10m
@@ -67,6 +70,9 @@ spec:
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
               GATUS_WEB_PORT: &port 80
+            envFrom:
+              - secretRef:
+                  name: gatus-secret
             probes:
               liveness: &probes
                 enabled: true
