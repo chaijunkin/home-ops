@@ -80,8 +80,8 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.45
-          gatus.home-operations.com/endpoint: |
-            name: "open-webui-lb"
+          # gatus.home-operations.com/endpoint: |
+          #   name: "open-webui-lb"
         ports:
           http:
             port: &port 8080
