@@ -77,10 +77,11 @@ spec:
                 memory: 2Gi
     service:
       app:
-        # type: LoadBalancer
-        # annotations:
-        #   lbipam.cilium.io/ips: 10.10.30.45
-        #   gatus.home-operations.com/name: open-webui-lb
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.45
+          gatus.home-operations.com/endpoint: |
+            name: "open-webui-lb"
         ports:
           http:
             port: &port 8080
