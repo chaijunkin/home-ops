@@ -157,7 +157,14 @@ spec:
         globalMounts:
           - path: /app/config
             readOnly: true
-
+      runtime-tools:
+        type: emptyDir
+        advancedMounts:
+          mcpo:
+            app:
+              - path: /shared
+            runtime-setup:
+              - path: /shared
       tmp:
         enabled: true
         type: emptyDir
