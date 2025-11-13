@@ -7,7 +7,7 @@ components:
 resources:
   - ./alloy/ks.yaml
   - ./exporters
-  # - ./gatus/ks.yaml
+  - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
