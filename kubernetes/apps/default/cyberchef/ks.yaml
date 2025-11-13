@@ -8,8 +8,6 @@ spec:
   targetNamespace: default
   path: ./kubernetes/apps/default/cyberchef/app
   prune: true
-  components:
-    - ../../../../components/gatus/guarded
   sourceRef:
     kind: GitRepository
     name: flux-system

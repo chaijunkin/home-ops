@@ -29,8 +29,6 @@ spec:
   postBuild:
     substitute:
       APP: authentik
-      GATUS_SUBDOMAIN: auth
+      SUBDOMAIN: auth
       # AUTH_SVC: ak-outpost-authentik-embedded-outpost
       AUTH_SVC: ak-outpost-proxy-outpost
-  components:
-    - ../../../../components/gatus/external

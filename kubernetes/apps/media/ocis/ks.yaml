@@ -27,7 +27,6 @@ spec:
       APP: ocis
       VOLSYNC_CLAIM: ocis-data
       VOLSYNC_CAPACITY: 15Gi
-      GATUS_SUBDOMAIN: drive
+      SUBDOMAIN: drive
   components:
     - ../../../../components/volsync-no-r2
-    - ../../../../components/gatus/external

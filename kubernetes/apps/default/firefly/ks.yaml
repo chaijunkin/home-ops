@@ -23,7 +23,6 @@ spec:
   postBuild:
     substitute:
       APP: firefly
-      GATUS_SUBDOMAIN: money
+      SUBDOMAIN: money
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/volsync

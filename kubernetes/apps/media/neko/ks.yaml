@@ -24,7 +24,6 @@ spec:
       APP: neko
       VOLSYNC_CLAIM: neko-firefox-profile
       VOLSYNC_CAPACITY: 15Gi
-      GATUS_SUBDOMAIN: movienight
+      SUBDOMAIN: movienight
   components:
     - ../../../../components/volsync
-    - ../../../../components/gatus/external

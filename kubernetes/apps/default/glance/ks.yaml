@@ -8,8 +8,6 @@ spec:
   targetNamespace: default
   path: ./kubernetes/apps/default/glance/app
   prune: true
-  components:
-    - ../../../../components/gatus/guarded
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -17,7 +15,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: glance
+      SUBDOMAIN: glance
   wait: false
   interval: 24h
   retryInterval: 1m

@@ -19,8 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: open-webui
-      GATUS_SUBDOMAIN: chat
+      SUBDOMAIN: chat
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/volsync-no-r2

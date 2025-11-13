@@ -27,8 +27,7 @@ spec:
   postBuild:
     substitute:
       APP: minio
-      GATUS_SUBDOMAIN: s3
-      GATUS_STATUS: "403"
+      SUBDOMAIN: s3
+      STATUS: "403"
   components:
     - ../../../../components/keda/nfs-scaler
-    - ../../../../components/gatus/guarded

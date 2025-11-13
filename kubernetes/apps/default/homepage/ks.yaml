@@ -27,5 +27,3 @@ spec:
   postBuild:
     substitute:
       APP: homepage
-  components:
-    - ../../../../components/gatus/guarded

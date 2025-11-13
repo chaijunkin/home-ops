@@ -17,12 +17,11 @@ spec:
   postBuild:
     substitute:
       APP: calibre-downloader
-      GATUS_SUBDOMAIN: dl-books
+      SUBDOMAIN: dl-books
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false
   interval: 24h
   timeout: 5m
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler

@@ -176,7 +176,7 @@ spec:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 200"]
       # codeserver:
-      #   hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.cloudjur.com"]
+      #   hostnames: ["${SUBDOMAIN:=${APP}}-code.cloudjur.com"]
       #   parentRefs:
       #     - name: envoy-internal
       #       namespace: network
