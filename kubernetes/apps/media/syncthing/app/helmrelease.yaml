@@ -73,6 +73,9 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.9
+          gatus.home-operations.com/endpoint: |-
+            name: syncthing-lb
+            group: services
         ports:
           listen-tcp:
             port: 22000

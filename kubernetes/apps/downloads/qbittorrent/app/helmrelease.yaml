@@ -127,6 +127,9 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.13
+          gatus.home-operations.com/endpoint: |-
+            name: bittorrent-lb
+            group: services
         ports:
           bittorrent-tcp:
             port: *torrentPort
