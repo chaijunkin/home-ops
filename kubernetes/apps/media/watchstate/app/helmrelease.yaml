@@ -69,7 +69,7 @@ spec:
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
-      tmpfs:
+      tmpfs: # hello world
         type: emptyDir
         advancedMounts:
           watchstate:
