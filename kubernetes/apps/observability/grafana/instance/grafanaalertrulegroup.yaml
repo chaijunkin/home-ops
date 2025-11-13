@@ -962,18 +962,18 @@ spec:
                 type: query
 
     # ============================================
-    # SLO: Connection Churn < 1%
+    # SLO: Connection Churn < 20%
     # ============================================
     - uid: fly-edge-connection-churn
-      title: "High Connection Churn Exceeds 1% SLO"
+      title: "High Connection Churn Exceeds 20% SLO"
       condition: E
       for: 10m
       noDataState: OK
       execErrState: OK
       annotations:
-        summary: "Connection churn {{ $values.E.Value | humanize }}% exceeds 1% SLO"
+        summary: "Connection churn {{ $values.E.Value | humanize }}% exceeds 20% SLO"
         description: "{{ $values.E.Value | humanize }}% of connections are short-lived"
-        slo_target: "<1% churn rate"
+        slo_target: "<20% churn rate (80% remain stable)"
       labels:
         severity: "warning"
         alertname: "HighConnectionChurn"
@@ -1027,7 +1027,7 @@ spec:
             refId: E
             conditions:
               - evaluator:
-                  params: [1]
+                  params: [20]
                   type: gt
                 operator:
                   type: and
