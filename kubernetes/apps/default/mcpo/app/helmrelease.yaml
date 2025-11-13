@@ -92,7 +92,14 @@ spec:
               - "8000"
 
             env:
-              TZ: "Asia/Kuala_Lumpur"
+              - name: PATH
+                value: "/shared/bin:/app/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+              - name: NODE_PATH
+                value: "/shared/lib/node_modules"
+              - name: TZ
+                value: "Asia/Kuala_Lumpur"
+              - name: PORT
+                value: "8000"
 
             probes:
               liveness:
@@ -101,13 +108,18 @@ spec:
                 enabled: true
               startup:
                 enabled: true
+                spec:
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 60
 
             resources:
               requests:
                 cpu: 100m
                 memory: 256Mi
               limits:
-                memory: 512Mi
+                memory: 1Gi
 
             securityContext:
               allowPrivilegeEscalation: false
@@ -128,7 +140,8 @@ spec:
       app:
         controller: *app
         type: LoadBalancer
-        lbipam.cilium.io/ips: 10.10.30.55
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.55
         ports:
           http:
             protocol: TCP
