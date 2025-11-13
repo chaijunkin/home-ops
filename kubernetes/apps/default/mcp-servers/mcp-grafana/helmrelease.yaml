@@ -45,7 +45,7 @@ spec:
 
             env:
               TZ: "Asia/Kuala_Lumpur"
-              GRAFANA_URL: http://grafana.observability:80
+              GRAFANA_URL: http://grafana.observability:3000
 
             envFrom:
               - secretRef:
