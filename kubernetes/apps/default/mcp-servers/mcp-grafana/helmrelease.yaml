@@ -41,7 +41,7 @@ spec:
               - "GRAFANA_PASSWORD"
               - "mcp/grafana"
               - "-t"
-              - "stdio"
+              - "streamable-http"
 
             env:
               TZ: "Asia/Kuala_Lumpur"
