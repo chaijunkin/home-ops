@@ -29,6 +29,9 @@ spec:
             image:
               repository: python
               tag: 3.11-slim
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
             command:
               - /bin/sh
               - -c
