@@ -535,6 +535,7 @@ spec:
       - vonage-status-panel
       - fifemon-graphql-datasource
       - grafana-pyroscope-app
+      - yesoreyeram-infinity-datasource
     serviceMonitor:
       enabled: true
     persistence:
