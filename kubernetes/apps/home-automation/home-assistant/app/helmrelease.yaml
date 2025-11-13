@@ -173,6 +173,8 @@ spec:
           gethomepage.dev/name: Home-Assistant
           gethomepage.dev/icon: home-assistant.png
           gethomepage.dev/description: Home Automation Software
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
       # codeserver:
       #   hostnames: ["${GATUS_SUBDOMAIN:=${APP}}-code.cloudjur.com"]
       #   parentRefs:

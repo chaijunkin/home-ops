@@ -43,6 +43,60 @@ endpoints:
       dns-resolver: tcp://1.1.1.1:53
     conditions:
       - "[STATUS] == 404"
+  - name: status
+    group: external
+    url: 1.1.1.1
+    interval: 1m
+    ui:
+      hide-hostname: true
+      hide-url: true
+    dns:
+      query-name: "status.cloudjur.com"
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+  - name: gatus
+    group: external
+    url: 1.1.1.1
+    interval: 1m
+    ui:
+      hide-hostname: true
+      hide-url: true
+    dns:
+      query-name: "gatus.cloudjur.com"
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+  - name: external
+    group: external
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: "external.cloudjur.com"
+      query-type: A
+    conditions:
+      - "len([BODY]) > 0"
+
+  - name: Cloudflare
+    group: connectivity
+    url: icmp://1.1.1.1
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: Google
+    group: connectivity
+    url: icmp://8.8.8.8
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+
+  - name: Quad9
+    group: connectivity
+    url: icmp://9.9.9.9
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
 # announcements:
 #   - timestamp: 2025-08-15T14:00:00Z
 #     type: outage

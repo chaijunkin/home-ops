@@ -7,6 +7,8 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/hostname: postgres.cloudjur.com
     lbipam.cilium.io/ips: 10.10.30.11
+    gatus.home-operations.com/endpoint: |-
+      group: services
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster
