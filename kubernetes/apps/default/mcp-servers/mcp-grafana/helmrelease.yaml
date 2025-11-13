@@ -41,7 +41,7 @@ spec:
               - "GRAFANA_PASSWORD"
               - "mcp/grafana"
               - "-t"
-              - "stdio"
+              - "sse"
 
             env:
               TZ: "Asia/Kuala_Lumpur"
@@ -80,6 +80,8 @@ spec:
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        lbipam.cilium.io/ips: 10.10.30.55
         ports:
           http:
             port: 8000

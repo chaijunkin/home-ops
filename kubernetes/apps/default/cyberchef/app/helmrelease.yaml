@@ -39,6 +39,7 @@ spec:
       app:
         controller: *app
         type: LoadBalancer
+        lbipam.cilium.io/ips: 10.10.30.54
         ports:
           http:
             port: &port 8000
