@@ -35,18 +35,12 @@ connectivity:
     interval: 1m
 
 endpoints:
-  - name: status
-    group: external
-    url: 1.1.1.1
+  - name: status-buddy
+    group: Cloud
     interval: 1m
-    ui:
-      hide-hostname: true
-      hide-url: true
-    dns:
-      query-name: "status.cloudjur.com"
-      query-type: A
-    conditions:
-      - "len([BODY]) == 0"
+    client:
+      timeout: 30s
+    conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
   - name: external
     group: external
     url: 1.1.1.1
@@ -56,26 +50,26 @@ endpoints:
       query-type: A
     conditions:
       - "len([BODY]) > 0"
-  - name: Cloudflare
-    group: connectivity
-    url: icmp://1.1.1.1
-    interval: 1m
-    conditions:
-      - "[CONNECTED] == true"
+  # - name: Cloudflare
+  #   group: connectivity
+  #   url: icmp://1.1.1.1
+  #   interval: 1m
+  #   conditions:
+  #     - "[CONNECTED] == true"
 
-  - name: Google
-    group: connectivity
-    url: icmp://8.8.8.8
-    interval: 1m
-    conditions:
-      - "[CONNECTED] == true"
+  # - name: Google
+  #   group: connectivity
+  #   url: icmp://8.8.8.8
+  #   interval: 1m
+  #   conditions:
+  #     - "[CONNECTED] == true"
 
-  - name: Quad9
-    group: connectivity
-    url: icmp://9.9.9.9
-    interval: 1m
-    conditions:
-      - "[CONNECTED] == true"
+  # - name: Quad9
+  #   group: connectivity
+  #   url: icmp://9.9.9.9
+  #   interval: 1m
+  #   conditions:
+  #     - "[CONNECTED] == true"
 # announcements:
 #   - timestamp: 2025-08-15T14:00:00Z
 #     type: outage
