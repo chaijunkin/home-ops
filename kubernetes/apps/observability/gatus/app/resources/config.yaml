@@ -35,14 +35,6 @@ connectivity:
     interval: 1m
 
 endpoints:
-  - name: flux-webhook
-    group: external
-    url: https://flux-webhook.cloudjur.com
-    interval: 1m
-    client:
-      dns-resolver: tcp://1.1.1.1:53
-    conditions:
-      - "[STATUS] == 404"
   - name: status
     group: external
     url: 1.1.1.1
@@ -55,18 +47,6 @@ endpoints:
       query-type: A
     conditions:
       - "len([BODY]) == 0"
-  - name: gatus
-    group: external
-    url: 1.1.1.1
-    interval: 1m
-    ui:
-      hide-hostname: true
-      hide-url: true
-    dns:
-      query-name: "gatus.cloudjur.com"
-      query-type: A
-    conditions:
-      - "len([BODY]) == 0"
   - name: external
     group: external
     url: 1.1.1.1
@@ -76,7 +56,6 @@ endpoints:
       query-type: A
     conditions:
       - "len([BODY]) > 0"
-
   - name: Cloudflare
     group: connectivity
     url: icmp://1.1.1.1
