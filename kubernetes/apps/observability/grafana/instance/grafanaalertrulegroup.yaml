@@ -15,18 +15,18 @@ spec:
 
   rules:
     # ============================================
-    # SLO: App 5xx Error Rate < 1% (99% availability)
+    # SLO: App 5xx Error Rate < 50% (50% availability)
     # ============================================
     - uid: fly-app-5xx-rate-pct
-      title: "App 5xx Error Rate Exceeds 1% SLO"
+      title: "App 5xx Error Rate Exceeds 50% SLO"
       condition: E
       for: 5m
       noDataState: OK
       execErrState: OK
       annotations:
-        summary: "App 5xx error rate {{ $values.E.Value | humanize }}% exceeds 1% SLO"
+        summary: "App 5xx error rate {{ $values.E.Value | humanize }}% exceeds 50% SLO"
         description: "5xx error rate is {{ $values.E.Value | humanize }}% - Check recent deployments"
-        slo_target: "99% availability (<1% error rate)"
+        slo_target: "50% availability (<50% error rate)"
       labels:
         severity: "critical"
         alertname: "AppHigh5xxRate"
@@ -80,7 +80,7 @@ spec:
             refId: E
             conditions:
               - evaluator:
-                  params: [1]
+                  params: [50]
                   type: gt
                 operator:
                   type: and
@@ -886,18 +886,18 @@ spec:
 
   rules:
     # ============================================
-    # SLO: Edge 5xx Error Rate < 1% (99% availability)
+    # SLO: Edge 5xx Error Rate < 50% (50% availability)
     # ============================================
     - uid: fly-edge-5xx-rate
-      title: "Edge 5xx Error Rate Exceeds 1% SLO"
+      title: "Edge 5xx Error Rate Exceeds 50% SLO"
       condition: E
       for: 5m
       noDataState: OK
       execErrState: OK
       annotations:
-        summary: "Edge 5xx error rate {{ $values.E.Value | humanize }}% exceeds 1% SLO"
+        summary: "Edge 5xx error rate {{ $values.E.Value | humanize }}% exceeds 50% SLO"
         description: "Edge error rate {{ $values.E.Value | humanize }}% - Check edge proxy and backend health"
-        slo_target: "99% availability (<1% error rate)"
+        slo_target: "50% availability (<50% error rate)"
       labels:
         severity: "critical"
         alertname: "EdgeHigh5xxRate"
@@ -951,7 +951,7 @@ spec:
             refId: E
             conditions:
               - evaluator:
-                  params: [1]
+                  params: [50]
                   type: gt
                 operator:
                   type: and
@@ -962,18 +962,18 @@ spec:
                 type: query
 
     # ============================================
-    # SLO: Connection Churn < 80%
+    # SLO: Connection Churn < 1%
     # ============================================
     - uid: fly-edge-connection-churn
-      title: "High Connection Churn Exceeds 80% SLO"
+      title: "High Connection Churn Exceeds 1% SLO"
       condition: E
       for: 10m
       noDataState: OK
       execErrState: OK
       annotations:
-        summary: "Connection churn {{ $values.E.Value | humanize }}% exceeds 80% SLO"
+        summary: "Connection churn {{ $values.E.Value | humanize }}% exceeds 1% SLO"
         description: "{{ $values.E.Value | humanize }}% of connections are short-lived"
-        slo_target: "<80% churn rate"
+        slo_target: "<1% churn rate"
       labels:
         severity: "warning"
         alertname: "HighConnectionChurn"
@@ -1027,7 +1027,7 @@ spec:
             refId: E
             conditions:
               - evaluator:
-                  params: [80]
+                  params: [1]
                   type: gt
                 operator:
                   type: and
