@@ -45,7 +45,7 @@ spec:
 
             env:
               TZ: "Asia/Kuala_Lumpur"
-              GRAFANA_URL: https://grafana.cloudjur.com
+              GRAFANA_URL: http://grafana.observability:80
 
             envFrom:
               - secretRef:
