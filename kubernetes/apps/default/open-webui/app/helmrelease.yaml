@@ -43,7 +43,7 @@ spec:
               # OTEL_EXPORTER_OTLP_ENDPOINT: http://kube-prometheus-stack-prometheus.observability:9090/api/v1/otlp/v1/metrics
               # OTEL_METRICS_OTLP_SPAN_EXPORTER: http
               OTEL_EXPORTER_OTLP_INSECURE: true
-              # ENABLE_OTEL_TRACES: true
+              ENABLE_OTEL_TRACES: true
               # Image Generation
               ENABLE_OPENAI_API: false
               ENABLE_OLLAMA_API: true
