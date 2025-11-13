@@ -119,6 +119,8 @@ spec:
           gethomepage.dev/name: Echo Server External
           gethomepage.dev/description: HTTP & HTTPS Echo Server External
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 404"]
       ext-auth:
         hostnames:
           - echo-server-ext-auth.cloudjur.com
