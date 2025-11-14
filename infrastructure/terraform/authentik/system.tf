@@ -67,11 +67,11 @@ resource "authentik_outpost" "proxyoutpostinternal" {
     module.proxy["echo-server-int-auth"].id,
   ]
   config = jsonencode({
-    authentik_host          = "https://auth.${var.public_domain}",
-    log_level               = "warning",
-    object_naming_template  = "ak-outpost-%(name)s",
-    kubernetes_replicas     = 1,
-    kubernetes_namespace    = "security",
+    authentik_host         = "https://auth.${var.public_domain}",
+    log_level              = "warning",
+    object_naming_template = "ak-outpost-%(name)s",
+    kubernetes_replicas    = 1,
+    kubernetes_namespace   = "security",
     kubernetes_httproute_parent_refs = [{
       group       = "gateway.networking.k8s.io"
       kind        = "Gateway"
@@ -92,11 +92,11 @@ resource "authentik_outpost" "proxyoutpostexternal" {
     module.proxy["echo-server-ext-auth"].id,
   ]
   config = jsonencode({
-    authentik_host          = "https://auth.${var.public_domain}",
-    log_level               = "warning",
-    object_naming_template  = "ak-outpost-%(name)s",
-    kubernetes_replicas     = 1,
-    kubernetes_namespace    = "security",
+    authentik_host         = "https://auth.${var.public_domain}",
+    log_level              = "warning",
+    object_naming_template = "ak-outpost-%(name)s",
+    kubernetes_replicas    = 1,
+    kubernetes_namespace   = "security",
     kubernetes_httproute_parent_refs = [{
       group       = "gateway.networking.k8s.io"
       kind        = "Gateway"

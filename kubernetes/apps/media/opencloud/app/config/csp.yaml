@@ -6,7 +6,7 @@ directives:
     - "'self'"
     - "blob:"
     - "https://raw.githubusercontent.com/opencloud-eu/awesome-apps/"
-    - "https://${AUTH_HOSTNAME}/"
+    - "https://drive.cloudjur.com/"
   default-src:
     - "'none'"
   font-src:

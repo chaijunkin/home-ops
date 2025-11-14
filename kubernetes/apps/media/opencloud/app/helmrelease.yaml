@@ -16,10 +16,10 @@ spec:
           secret.reloader.stakater.com/reload: &secret opencloud-secret
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 2000
+            runAsGroup: 2000
             runAsNonRoot: true
-            fsGroup: 568
+            fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
         containers:
           webfiger-proxy:
@@ -28,8 +28,8 @@ spec:
               tag: v1.0.0
             env:
               PORT: "9201"
-              UPSTREAM_URL: https://${HOSTNAME}
-              HREF_PATTERN: &href https://${AUTH_HOSTNAME}/application/o/
+              UPSTREAM_URL: https://drive.cloudjur.com
+              HREF_PATTERN: &href https://auth.cloudjur.com/application/o/
               HREF_REPLACEMENT: *href
               DEFAULT_SUFFIX: opencloud
           opencloud:
@@ -43,8 +43,9 @@ spec:
                   name: *secret
             env:
               OC_INSECURE: true
-              OC_URL: https://${HOSTNAME}
+              OC_URL: https://drive.cloudjur.com
               OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
+              OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
               OCIS_LOG_COLOR: false
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: false
@@ -60,6 +61,7 @@ spec:
               SETTINGS_SETUP_DEFAULT_ASSIGNMENTS: false
               GRAPH_ASSIGN_DEFAULT_USER_ROLE: false
               GRAPH_USERNAME_MATCH: none
+              DEMO_USERS: "false"
             resources:
               requests:
                 cpu: 100m
@@ -93,10 +95,11 @@ spec:
       app:
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Selfhosted
+          gethomepage.dev/group: Application Service
           gethomepage.dev/name: OpenCloud
-          gethomepage.dev/icon: sh-opencloud.svg
-        hostnames: ["${HOSTNAME}"]
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/opencloud.png
+          gethomepage.dev/description: File Sync and Share
+        hostnames: ["drive.cloudjur.com"]
         parentRefs:
           - name: envoy-external
             namespace: network
@@ -189,7 +192,7 @@ spec:
             subPath: csp.yaml
             readOnly: true
       data:
-        existingClaim: ${PVC_CLAIM}
+        existingClaim: opencloud-data
         globalMounts:
           - path: /var/lib/opencloud
             subPath: data
