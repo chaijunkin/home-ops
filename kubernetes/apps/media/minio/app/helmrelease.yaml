@@ -104,7 +104,7 @@ spec:
       s3:
         hostnames: ["s3.cloudjur.com"]
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
             port: 443
         rules:
