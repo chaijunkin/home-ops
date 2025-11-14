@@ -161,7 +161,7 @@ module "oauth2-opencloud" {
   invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
   client_id          = "web"
   # client_id          = var.ocis_id
-  client_secret = var.ocis_secret
+  # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
   redirect_uris = [
     "https://drive.cloudjur.com",
