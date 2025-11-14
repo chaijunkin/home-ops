@@ -7,17 +7,20 @@ metadata:
 spec:
   trigger:
     manual: restore-once
-  restic:
-    repository: {{ ENV.APP }}-volsync-r2 # we can append the -r2 to use r2 backup
-    destinationPVC: {{ ENV.CLAIM }}
+  kopia:
+    accessModes:
+      - {{ ENV.ACCESS_MODES }}
     copyMethod: Direct
-    storageClassName: {{ ENV.STORAGE_CLASS_NAME }}
-    accessModes: {{ ENV.ACCESS_MODES }}
-    previous: {{ ENV.PREVIOUS }}
+    destinationPVC: {{ ENV.CLAIM }}
     moverSecurityContext:
       runAsUser: {{ ENV.PUID }}
       runAsGroup: {{ ENV.PGID }}
       fsGroup: {{ ENV.PGID }}
-    enableFileDeletion: true
-    cleanupCachePVC: true
-    cleanupTempPVC: true
+{% if ENV.PREVIOUS %}
+    previous: {{ ENV.PREVIOUS }}
+{% endif %}
+{% if ENV.ASOF %}
+    restoreAsOf: {{ ENV.ASOF }}
+{% endif %}
+    repository: {{ ENV.APP }}-volsync-secret
+    storageClassName: {{ ENV.STORAGE_CLASS_NAME }}
