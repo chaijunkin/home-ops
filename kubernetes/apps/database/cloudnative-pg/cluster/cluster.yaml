@@ -41,7 +41,7 @@ spec:
       endpointURL: "http://minio.media.svc.cluster.local:9000"
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster postgres-v9
+      serverName: &currentCluster postgres-v10
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
