@@ -62,7 +62,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      # lbipam.cilium.io/ips: 10.10.30.26
+      lbipam.cilium.io/ips: 10.10.30.26
   listeners:
     - name: http
       protocol: HTTP
@@ -102,7 +102,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: internal.cloudjur.com
-      # lbipam.cilium.io/ips: 10.10.30.25
+      lbipam.cilium.io/ips: 10.10.30.25
   listeners:
     # TODO: backend don't have cert (expected), need to use alternative solution
     - protocol: TLS
