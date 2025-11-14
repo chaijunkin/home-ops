@@ -23,7 +23,7 @@ route:
       matchers:
         - severity = "critical"
     - receiver: pushover
-      continue: true
+      # continue: true
       matchers:
         - severity = "critical"
 inhibit_rules:
@@ -38,6 +38,31 @@ receivers:
       - send_resolved: true
         url: "{{ .ALERTMANAGER_HEARTBEAT_URL }}"
   - name: "null"
+  - name: discord
+    discord_configs:
+      - send_resolved: true
+        webhook_url: "{{ .DISCORD_WEBHOOK_URL }}"
+        title: >-
+          {{ "{{" }} .CommonLabels.alertname {{ "}}" }}
+          [{{ "{{" }} .Status | toUpper {{ "}}" }}{{ "{{" }} if eq .Status "firing" {{ "}}" }}:{{ "{{" }} .Alerts.Firing | len {{ "}}" }}{{ "{{" }} end {{ "}}" }}]
+        message: |-
+          {{ "{{-" }} range .Alerts {{ "}}" }}
+            {{ "{{-" }} if ne .Annotations.description "" {{ "}}" }}
+              {{ "{{" }} .Annotations.description {{ "}}" }}
+            {{ "{{-" }} else if ne .Annotations.summary "" {{ "}}" }}
+              {{ "{{" }} .Annotations.summary {{ "}}" }}
+            {{ "{{-" }} else if ne .Annotations.message "" {{ "}}" }}
+              {{ "{{" }} .Annotations.message {{ "}}" }}
+            {{ "{{-" }} else {{ "}}" }}
+              Alert description not available
+            {{ "{{-" }} end {{ "}}" }}
+            {{ "{{-" }} if gt (len .Labels.SortedPairs) 0 {{ "}}" }}
+              {{ "{{-" }} range .Labels.SortedPairs {{ "}}" }}
+                **{{ "{{" }} .Name {{ "}}" }}:** {{ "{{" }} .Value {{ "}}" }}
+              {{ "{{-" }} end {{ "}}" }}
+            {{ "{{-" }} end {{ "}}" }}
+          {{ "{{-" }} end {{ "}}" }}
+
   - name: pushover
     pushover_configs:
       - html: true
@@ -72,28 +97,3 @@ receivers:
         title: >-
           {{ "{{" }} .CommonLabels.alertname {{ "}}" }}
           [{{ "{{" }} .Status | toUpper {{ "}}" }}{{ "{{" }} if eq .Status "firing" {{ "}}" }}:{{ "{{" }} .Alerts.Firing | len {{ "}}" }}{{ "{{" }} end {{ "}}" }}]
-
-  - name: discord
-    discord_configs:
-      - send_resolved: true
-        webhook_url: "{{ .DISCORD_WEBHOOK_URL }}"
-        title: >-
-          {{ "{{" }} .CommonLabels.alertname {{ "}}" }}
-          [{{ "{{" }} .Status | toUpper {{ "}}" }}{{ "{{" }} if eq .Status "firing" {{ "}}" }}:{{ "{{" }} .Alerts.Firing | len {{ "}}" }}{{ "{{" }} end {{ "}}" }}]
-        message: |-
-          {{ "{{-" }} range .Alerts {{ "}}" }}
-            {{ "{{-" }} if ne .Annotations.description "" {{ "}}" }}
-              {{ "{{" }} .Annotations.description {{ "}}" }}
-            {{ "{{-" }} else if ne .Annotations.summary "" {{ "}}" }}
-              {{ "{{" }} .Annotations.summary {{ "}}" }}
-            {{ "{{-" }} else if ne .Annotations.message "" {{ "}}" }}
-              {{ "{{" }} .Annotations.message {{ "}}" }}
-            {{ "{{-" }} else {{ "}}" }}
-              Alert description not available
-            {{ "{{-" }} end {{ "}}" }}
-            {{ "{{-" }} if gt (len .Labels.SortedPairs) 0 {{ "}}" }}
-              {{ "{{-" }} range .Labels.SortedPairs {{ "}}" }}
-                **{{ "{{" }} .Name {{ "}}" }}:** {{ "{{" }} .Value {{ "}}" }}
-              {{ "{{-" }} end {{ "}}" }}
-            {{ "{{-" }} end {{ "}}" }}
-          {{ "{{-" }} end {{ "}}" }}
