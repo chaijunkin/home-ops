@@ -158,7 +158,7 @@ module "oauth2-opencloud" {
   auth_groups        = [authentik_group.default["media"].id]
   client_type        = "public"
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
+  invalidation_flow  = data.authentik_flow.provider-invalidation.uuid
   client_id          = "web"
   # client_id          = var.ocis_id
   # client_secret = var.ocis_secret
