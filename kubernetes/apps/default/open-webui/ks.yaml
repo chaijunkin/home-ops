@@ -20,6 +20,6 @@ spec:
     substitute:
       APP: open-webui
       SUBDOMAIN: chat
-      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_CAPACITY: 20Gi
   components:
     - ../../../../components/volsync-no-r2
