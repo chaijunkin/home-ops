@@ -1,3 +1,9 @@
+resource "cloudflare_r2_bucket" "tf_state_bucket" {
+  account_id = local.cloudflare_account_id
+  name = "tf-state-bucket-cloudjur-com"
+  location = "APAC"
+}
+
 resource "cloudflare_zone" "cloudflare_zone" {
   account_id = local.cloudflare_account_id
   zone       = local.cloudflare_zone_name
