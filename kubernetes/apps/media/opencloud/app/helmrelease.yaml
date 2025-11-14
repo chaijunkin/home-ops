@@ -101,7 +101,7 @@ spec:
           gethomepage.dev/description: File Sync and Share
         hostnames: ["drive.cloudjur.com"]
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
             sectionName: https
         rules:
