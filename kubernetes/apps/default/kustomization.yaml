@@ -19,7 +19,7 @@ resources:
   - ./mcpo/ks.yaml
   - ./n8n/ks.yaml
   - ./ollama/ks.yaml
-  # - ./open-webui/ks.yaml
+  - ./open-webui/ks.yaml
   - ./pdf-tool/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
