@@ -27,12 +27,5 @@ talos_cluster_config = {
       - rw
   EOT
   api_server          = <<-EOT
-  extraArgs:
-    oidc-issuer-url: "https://auth.cloudjur.com"
-    oidc-client-id: "kubectl"
-    oidc-username-claim: "preferred_username"
-    oidc-username-prefix: "authentik:"
-    oidc-groups-claim: "groups"
-    oidc-groups-prefix: "authentik:"
   EOT
 }
