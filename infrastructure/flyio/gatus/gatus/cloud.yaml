@@ -24,3 +24,15 @@ endpoints:
   - name: Vault
     url: https://vw.cloudjur.com
     <<: *fly-defaults
+  - name: Google
+    group: Cloud
+    url: icmp://8.8.8.8
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+  - name: Cloudflare
+    group: Cloud
+    url: icmp://1.1.1.1
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
