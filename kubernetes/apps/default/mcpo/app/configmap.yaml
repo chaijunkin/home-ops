@@ -33,7 +33,7 @@ data:
         "firefly-iii": {
           "command": "npx",
           "args": [
-            "@firefly-iii-mcp/local",
+            "@firefly-iii-mcp/server",
             "--pat",
             "${FIREFLY_PAT}",
             "--baseUrl",
