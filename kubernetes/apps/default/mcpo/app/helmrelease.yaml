@@ -104,6 +104,10 @@ spec:
               - name: PORT
                 value: "8000"
 
+            envFrom:
+              - secretRef:
+                  name: mcpo-secret
+
             probes:
               liveness:
                 enabled: true
