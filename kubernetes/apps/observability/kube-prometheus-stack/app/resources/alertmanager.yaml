@@ -5,7 +5,7 @@ route:
   group_by: ["alertname", "job"]
   group_interval: 10m
   group_wait: 1m
-  receiver: pushover
+  receiver: discord
   repeat_interval: 12h
   routes:
     - receiver: heartbeat
@@ -23,7 +23,7 @@ route:
       matchers:
         - severity = "critical"
     - receiver: pushover
-      # continue: true
+      continue: true
       matchers:
         - severity = "critical"
 inhibit_rules:
