@@ -48,18 +48,32 @@ endpoints:
   - name: gatus
     url: https://gatus.cloudjur.com
     <<: *public-defaults
-  - name: github-webhook
-    url: https://flux-webhook.cloudjur.com
-    <<: *public-defaults
   - name: komga
     url: https://komga.cloudjur.com
     <<: *public-defaults
-  - name: kromgo
-    url: https://kromgo.cloudjur.com
-    <<: *public-defaults
-  # - name: convertx
-  #   url: https://convertx.cloudjur.com
-  #   <<: *public-defaults
+  - name: flux-webhook
+    url: https://flux-webhook.cloudjur.com
+    interval: 1m
+    group: Public
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
+    alerts:
+      - type: pushover
+      - type: discord
+  - name: external
+    group: Public
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: "external.cloudjur.com"
+      query-type: A
+    conditions:
+      - "len([BODY]) > 0"
+    alerts:
+      - type: pushover
+      - type: discord
   # - name: kromgo
   #   url: https://kromgo.cloudjur.com
   #   interval: 1m
