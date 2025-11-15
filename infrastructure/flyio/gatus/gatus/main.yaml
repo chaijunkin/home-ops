@@ -32,7 +32,7 @@ storage:
   path: /data/sqlite.db
 endpoints:
   - name: healthchecks.io
-    group:
+    group: Cloud
     url: https://hc-ping.com/${HC_PING_UUID}
     interval: 30m
     conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
