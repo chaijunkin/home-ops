@@ -87,8 +87,7 @@ jobs:
             exit 1
           fi
 
-          # 1. Parse the JSON list of changed app names
-          #    jq -r '.[]' converts ["gatus", "vaultwarden"] to "gatus\nvaultwarden"
+          # 1. Parse the JSON list of changed app names from the 'filter_paths' job
           changed_app_names=$(echo "$CHANGED_APPS" | jq -r '.[]')
           if [ -z "$changed_app_names" ]; then
             echo "No relevant app paths were changed. Skipping deployment."
@@ -97,25 +96,12 @@ jobs:
 
           # 2. Iterate over each CHANGED app name (e.g., vaultwarden, gatus)
           for app_name in $changed_app_names; do
-            # 3. Use 'app_name' to find the matching 'fly_app_name' from the FLY_APP_JSON secret.
-            #    We assume the position in the JSON array corresponds to the app name.
-            #    Since we removed 'app_name' from the JSON, we need a way to link the changed
-            #    app name (from paths-filter) to the correct fly_app_name (from the secret).
 
-            # This is complex and fragile if the JSON order isn't guaranteed to match the changed path order.
-            # A better approach is to ADD 'app_name' BACK to the JSON and use it as the lookup key.
-
-            # --- RECOMMENDED HYBRID APPROACH (Best way to avoid 'app_name' duplication in JSON) ---
-            # Use 'app_name' as the key in a JSON object, not an array element.
-
-            # Example NEW FLY_APP_JSON format:
-            # {
-            #   "vaultwarden": "my-vaultwarden-prod",
-            #   "gatus": "gatus-monitor-prod"
-            # }
-
-            # If you adopt this object format, the script becomes much cleaner:
-            fly_name=$(echo "$FLY_APP_JSON" | jq -r ".$app_name")
+            # 3. Use JQ to search the FLY_APP_JSON array for an object
+            #    where the 'app_name' key matches the current $app_name,
+            #    and extract its 'fly_app_name' value.
+            fly_name=$(echo "$FLY_APP_JSON" | jq -r --arg app_name_key "$app_name" \
+              '.[] | select(.app_name == $app_name_key) | .fly_app_name')
 
             if [ "$fly_name" != "null" ] && [ -n "$fly_name" ]; then
               echo "✅ Deploying $app_name to Fly app"
@@ -126,6 +112,6 @@ jobs:
                 echo "Warning: Directory $dir not found for app $app_name. Skipping."
               fi
             else
-              echo "Warning: Could not find fly_app_name for changed app '$app_name' in FLY_APP_JSON. Skipping."
+              echo "Warning: Could not find configuration for changed app '$app_name' in FLY_APP_JSON. Skipping."
             fi
           done
