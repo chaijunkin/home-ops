@@ -38,9 +38,9 @@ spec:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
               [{
-              "name": "multus-not",
-              "namespace": "network",
-              "ips": ["10.10.32.250/24"]
+                "name": "multus-not",
+                "namespace": "network",
+                "ips": ["10.10.32.250/24"]
               },
               {
                 "name": "multus-iot",
