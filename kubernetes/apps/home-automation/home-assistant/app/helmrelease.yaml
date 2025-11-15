@@ -34,24 +34,24 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         ### I MIGHT NOT NEED MULTUS DUE TO OPENVSWITCH CONFIGURATION
-        # pod:
-        #   annotations:
-        #     k8s.v1.cni.cncf.io/networks: |
-        #       [{
-        #       "name": "multus-not",
-        #       "namespace": "network",
-        #       "ips": ["10.10.32.250/24"]
-        #       },
-        #       {
-        #         "name": "multus-iot",
-        #         "namespace": "network",
-        #         "ips": ["10.10.33.250/24"]
-        #       }
-        #       ,{
-        #         "name": "multus-trust",
-        #         "namespace": "network",
-        #         "ips": ["10.10.10.250/24"]
-        #       }]
+        pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+              "name": "multus-not",
+              "namespace": "network",
+              "ips": ["10.10.32.250/24"]
+              },
+              {
+                "name": "multus-iot",
+                "namespace": "network",
+                "ips": ["10.10.33.250/24"]
+              }
+              ,{
+                "name": "multus-trust",
+                "namespace": "network",
+                "ips": ["10.10.10.250/24"]
+              }]
         # k8s.v1.cni.cncf.io/networks: |
         #   [{
         #   "name": "multus-not",

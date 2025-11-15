@@ -19,6 +19,12 @@ spec:
 
           "ipam": {
             "type": "static",
+            "addresses": [
+              {
+                "address": "10.10.10.254/24",
+                "gateway": "10.10.10.1"
+              }
+            ],
             "routes": [
               { "dst": "0.0.0.0/0", "gw": "10.10.10.1" }
             ]
