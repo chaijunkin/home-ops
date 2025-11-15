@@ -145,3 +145,6 @@ spec:
           - port: http
             scheme: http
             path: /metrics
+            bearerTokenSecret:
+              name: syncthing-secret
+              key: SYNCTHING_API_KEY
