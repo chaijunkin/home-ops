@@ -7,3 +7,4 @@ resources:
   # - ./net-attach-iot.yaml
   # - ./net-attach-not.yaml
   # - ./net-attach-trust.yaml
+# TODO explore next time https://www.itguyjournals.com/installing-cilium-and-multus-on-talos-os-for-advanced-kubernetes-networking/
