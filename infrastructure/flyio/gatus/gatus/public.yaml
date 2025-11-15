@@ -7,6 +7,7 @@ public-endpoint: &public-defaults
   conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
   alerts:
     - type: pushover
+    - type: discord
 endpoints:
   - name: authentik
     url: https://auth.cloudjur.com
@@ -29,7 +30,7 @@ endpoints:
   - name: kavita
     url: https://comics.cloudjur.com
     <<: *public-defaults
-  - name: ocis
+  - name: opencloud
     url: https://drive.cloudjur.com
     <<: *public-defaults
   - name: open-webui
@@ -37,6 +38,24 @@ endpoints:
     <<: *public-defaults
   - name: plex
     url: https://plex.cloudjur.com/web/index.html
+    <<: *public-defaults
+  - name: echo-server-ext
+    url: https://echo-server-ext.cloudjur.com
+    <<: *public-defaults
+  - name: echo-server-ext-auth
+    url: https://echo-server-ext-auth.cloudjur.com
+    <<: *public-defaults
+  - name: gatus
+    url: https://gatus.cloudjur.com
+    <<: *public-defaults
+  - name: github-webhook
+    url: https://flux-webhook.cloudjur.com
+    <<: *public-defaults
+  - name: komga
+    url: https://komga.cloudjur.com
+    <<: *public-defaults
+  - name: kromgo
+    url: https://kromgo.cloudjur.com
     <<: *public-defaults
   # - name: convertx
   #   url: https://convertx.cloudjur.com
