@@ -138,3 +138,10 @@ spec:
         path: /tank/Storage
         globalMounts:
           - path: /media
+    serviceMonitor:
+      app:
+        serviceName: syncthing
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
