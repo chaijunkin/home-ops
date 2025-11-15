@@ -35,7 +35,7 @@ connectivity:
     interval: 1m
 
 fly-default-endpoint: &fly-defaults
-  group: Cloud-Gatus
+  group: Cloud-From-Home
   interval: 1m
   client:
     timeout: 30s
