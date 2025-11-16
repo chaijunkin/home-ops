@@ -3,7 +3,7 @@ livedebugging {
 }
 
 logging {
-	level    = "debug"
+	// level    = "debug"
 	format   = "json"
 	write_to = [loki.write.default.receiver]
 }
