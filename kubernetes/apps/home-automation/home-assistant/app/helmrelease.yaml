@@ -80,7 +80,7 @@ spec:
                 cpu: 10m
                 memory: 50Mi
               limits:
-                memory: 1Gi
+                memory: 2Gi
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
@@ -127,16 +127,16 @@ spec:
     persistence:
       config:
         existingClaim: *app
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /config
-                subPath: config
-            code-server:
-              - path: /config
-                subPath: config
-              - path: /data
-                subPath: code-server
+        # advancedMounts:
+        #   home-assistant:
+        #     app:
+        #       - path: /config
+        #         subPath: config
+        #     code-server:
+        #       - path: /config
+        #         subPath: config
+        #       - path: /data
+        #         subPath: code-server
       config-cache:
         existingClaim: "{{ .Release.Name }}-cache"
         globalMounts:
