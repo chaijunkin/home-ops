@@ -177,6 +177,7 @@ module "oauth2-opencloud-android" {
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_type      = "public"
   client_id          = "OpenCloudAndroid"
   # client_secret      = "dInFYGV33xKzhbRmpqQltYNdfLdJIfJ9L5ISoKhNoT9qZftpdWSP71VrpGR9pmoD"
   redirect_uris = ["oc://android.opencloud.eu"]
@@ -189,6 +190,7 @@ module "oauth2-opencloud-desktop" {
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_type      = "public"
   client_id          = "OpenCloudDesktop"
   # client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
   redirect_uris = [
