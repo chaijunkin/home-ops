@@ -114,9 +114,13 @@ spec:
             group: services
         ports:
           http:
+            appProtocol: kubernetes.io/wss
             port: &port 8123
-          codeserver:
-            port: &codeserverPort 12321
+        primary: true
+      code-server:
+        ports:
+          code-server:
+            port: 12321
     persistence:
       config:
         existingClaim: *app
@@ -166,5 +170,5 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *codeserverPort
+              - identifier: code-server
+                port: 12321
