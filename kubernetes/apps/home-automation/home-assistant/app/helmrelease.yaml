@@ -152,8 +152,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *port
+              - identifier: app
+                port: 8123
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
