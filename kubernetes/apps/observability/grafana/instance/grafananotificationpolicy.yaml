@@ -11,7 +11,14 @@ spec:
   route:
     receiver: alertmanager
     group_by:
+      - grafana_folder
       - alertname
     group_wait: 1m
     group_interval: 10m
     repeat_interval: 12h
+    routes:
+      - receiver: alertmanager
+        object_matchers:
+          - - severity
+            - =
+            - critical
