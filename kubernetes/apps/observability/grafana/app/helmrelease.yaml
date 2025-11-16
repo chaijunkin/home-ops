@@ -293,7 +293,7 @@ spec:
         syncthing-overview:
           # renovate: depName="Syncthing / Overview"
           gnetId: 24238
-          revision: 3
+          revision: 2
           datasource: Prometheus
       games:
         palworld:
