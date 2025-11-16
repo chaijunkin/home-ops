@@ -327,7 +327,7 @@ spec:
         {
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "cf49zen0wivi8e"
+            "uid": "infinity-cloudflare"
           },
           "description": "Storage distribution by bucket",
           "fieldConfig": {
@@ -406,7 +406,7 @@ spec:
               ],
               "datasource": {
                 "type": "yesoreyeram-infinity-datasource",
-                "uid": "cf49zen0wivi8e"
+                "uid": "infinity-cloudflare"
               },
               "hide": false,
               "range": true,
@@ -944,7 +944,7 @@ spec:
         {
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "cf49zen0wivi8e"
+            "uid": "infinity-cloudflare"
           },
           "description": "Class A operations per bucket",
           "fieldConfig": {
@@ -1018,7 +1018,7 @@ spec:
               ],
               "datasource": {
                 "type": "yesoreyeram-infinity-datasource",
-                "uid": "cf49zen0wivi8e"
+                "uid": "infinity-cloudflare"
               },
               "hide": false,
               "range": true,
@@ -1401,7 +1401,7 @@ spec:
         {
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
-            "uid": "cf49zen0wivi8e"
+            "uid": "infinity-cloudflare"
           },
           "description": "Class B operations per bucket",
           "fieldConfig": {
@@ -1477,7 +1477,7 @@ spec:
               ],
               "datasource": {
                 "type": "yesoreyeram-infinity-datasource",
-                "uid": "cf49zen0wivi8e"
+                "uid": "infinity-cloudflare"
               },
               "hide": false,
               "range": true,
