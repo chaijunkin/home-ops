@@ -50,6 +50,11 @@ spec:
                 pip install --upgrade pip
                 pip install uv
 
+                # --- NEW CRITICAL STEP: Install npm to the shared prefix to create the bin/npx-cli.js file ---
+                echo "Installing npm to the shared prefix..."
+                npm install -g --prefix /shared npm@10
+                # ---------------------------------------------------------------------------------------------
+
                 echo "Installing MCP server npm packages..."
                 npm install -g --prefix /shared \
                   @upstash/context7-mcp \
