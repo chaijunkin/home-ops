@@ -91,12 +91,14 @@ spec:
             args:
               - --auth
               - "none"
+              - --disable-telemetry
+              - --disable-update-check
               - "--port"
               - "12321"
               - --user-data-dir
-              - "/config/.vscode"
+              - /data/user-data
               - --extensions-dir
-              - "/config/.vscode"
+              - /data/extensions
               - "/config"
             resources:
               requests:
@@ -124,6 +126,16 @@ spec:
     persistence:
       config:
         existingClaim: *app
+        advancedMounts:
+          home-assistant:
+            app:
+              - path: /config
+                subPath: config
+            code-server:
+              - path: /config
+                subPath: config
+              - path: /data
+                subPath: code-server
       config-cache:
         existingClaim: "{{ .Release.Name }}-cache"
         globalMounts:
