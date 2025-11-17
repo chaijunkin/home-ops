@@ -6,8 +6,10 @@ import re
 #
 # !!! IMPORTANT: REPLACE THESE PLACEHOLDERS WITH YOUR ACTUAL VALUES !!!
 #
-OPEN_WEBUI_BASE_URL = ""  # Replace with your Open WebUI URL
-API_KEY = ""       # Replace with your Open WebUI Bearer Token
+# Replace with your Open WebUI URL
+OPEN_WEBUI_BASE_URL = ""
+# Replace with your Open WebUI Bearer Token
+API_KEY = ""
 # ---------------------
 
 
