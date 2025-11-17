@@ -35,7 +35,7 @@ spec:
               repository: ghcr.io/open-webui/open-webui
               tag: v0.6.36@sha256:dfe43b30a5474164b1a81e1cce298a6769bb22144f74df556beefee4ccca5394
             env:
-              # ENV: dev
+              ENV: dev
               CORS_ALLOW_ORIGIN: https://chat.cloudjur.com
               # Monitoring
               ENABLE_OTEL: true
@@ -94,22 +94,22 @@ spec:
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
           - path: /app/backend/data
-    route:
-      app:
-        hostnames:
-          # - open-webui.cloudjur.com
-          - chat.cloudjur.com
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - port: *port
-                name: open-webui
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Application Service
-          gethomepage.dev/name: Open WebUI
-          gethomepage.dev/description: AI Chat services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
+    # route:
+    #   app:
+    #     hostnames:
+    #       # - open-webui.cloudjur.com
+    #       - chat.cloudjur.com
+    #     parentRefs:
+    #       - name: envoy-external
+    #         namespace: network
+    #         sectionName: https
+    #     rules:
+    #       - backendRefs:
+    #           - port: *port
+    #             name: open-webui
+    #     annotations:
+    #       gethomepage.dev/enabled: "true"
+    #       gethomepage.dev/group: Application Service
+    #       gethomepage.dev/name: Open WebUI
+    #       gethomepage.dev/description: AI Chat services
+    #       gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
