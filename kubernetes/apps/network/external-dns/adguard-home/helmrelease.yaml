@@ -64,8 +64,8 @@ spec:
           timeoutSeconds: 5
     triggerLoopOnEvent: true
     policy: sync
-    # extraArgs:
-    #   - --gateway-name=envoy-internal
+    extraArgs:
+      - --gateway-name=envoy-external
     registry: txt
     sources:
       #- crd
