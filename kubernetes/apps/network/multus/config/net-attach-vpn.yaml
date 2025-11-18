@@ -16,12 +16,6 @@ spec:
           "mode": "bridge",
           "ipam": {
             "type": "static",
-            "addresses": [
-              {
-                "address": "10.10.27.254/24",
-                "gateway": "10.10.27.1"
-              }
-            ],
             "routes": [
               {"dst": "0.0.0.0/5", "gw": "10.10.27.1"},
               {"dst": "8.0.0.0/7", "gw": "10.10.27.1"},
