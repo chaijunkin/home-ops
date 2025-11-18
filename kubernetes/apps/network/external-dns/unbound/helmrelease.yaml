@@ -67,9 +67,9 @@ spec:
     triggerLoopOnEvent: true
     # logLevel: debug
     policy: sync
-    # extraArgs:
-    #   - --webhook-provider-url=http://0.0.0.0:8080
-    #   - --gateway-name=envoy-internal
+    extraArgs:
+      #   - --webhook-provider-url=http://0.0.0.0:8080
+      - --gateway-name=envoy-internal
     registry: noop
     sources:
       # - crd
