@@ -98,19 +98,15 @@ spec:
       external-dns.alpha.kubernetes.io/hostname: internal.cloudjur.com
       lbipam.cilium.io/ips: 10.10.30.25
   listeners:
-    # # TODO: backend don't have cert (expected), need to use alternative solution
-    # - protocol: TLS
-    #   port: 443
-    #   name: tls-passthrough
-    #   hostname: "*.cloudjur.com"
-    #   tls:
-    #     mode: Passthrough
-    #     # certificateRefs:
-    #     #   - kind: Secret
-    #     #     name: cloudjur-com-tls
-    #   allowedRoutes:
-    #     namespaces:
-    #       from: All
+    - protocol: TLS
+      port: 443
+      name: tls-passthrough
+      hostname: "*.cloudjur.com"
+      tls:
+        mode: Passthrough
+      allowedRoutes:
+        namespaces:
+          from: All
     # - name: syncthing-quic
     #   protocol: UDP
     #   port: 22000
