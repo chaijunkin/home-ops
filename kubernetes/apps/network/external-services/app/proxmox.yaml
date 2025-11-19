@@ -50,7 +50,7 @@ endpoints:
       - 10.10.30.10
       - 192.168.1.10
     conditions:
-      ready: {} # https://github.com/argoproj/argo-cd/issues/15554
+      ready: true # https://github.com/argoproj/argo-cd/issues/15554
 ---
 apiVersion: v1
 kind: Service
