@@ -72,7 +72,7 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: 10.10.30.25
 spec:
   parentRefs:
-    - {name: envoy-internal, namespace: network}
+    - {name: envoy-internal, namespace: network, port: 6443}
   hostnames: [pve.cloudjur.com]
   rules:
-    - backendRefs: [{name: proxmox, port: 6443}]
+    - backendRefs: [{name: proxmox, port: 443}]
