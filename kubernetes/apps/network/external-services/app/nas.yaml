@@ -72,4 +72,4 @@ spec:
     - {name: envoy-internal, namespace: network}
   hostnames: [nas.cloudjur.com]
   rules:
-    - backendRefs: [{name: nas, port: 443}]
+    - backendRefs: [{name: nas, port: 6443}]

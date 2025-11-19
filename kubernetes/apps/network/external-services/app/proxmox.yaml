@@ -75,4 +75,4 @@ spec:
     - {name: envoy-internal, namespace: network}
   hostnames: [pve.cloudjur.com]
   rules:
-    - backendRefs: [{name: proxmox, port: 443}]
+    - backendRefs: [{name: proxmox, port: 6443}]
