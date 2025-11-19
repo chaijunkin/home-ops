@@ -39,7 +39,7 @@ spec:
     - name: https
       protocol: TCP
       port: 443
-      # appProtocol: kubernetes.io/h2c
+      appProtocol: https
       targetPort: 9090
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io_backendtlspolicy_v1.json
