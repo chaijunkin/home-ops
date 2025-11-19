@@ -50,7 +50,7 @@ spec:
             value: /
       backendRefs:
         - name: proxmox
-          port: 8006
+          # port: 8006
 # ---
 # apiVersion: gateway.networking.k8s.io/v1alpha2
 # kind: TLSRoute
