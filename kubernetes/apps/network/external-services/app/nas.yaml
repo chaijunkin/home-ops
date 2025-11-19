@@ -51,7 +51,7 @@ spec:
             value: /
       backendRefs:
         - name: nas
-          port: 3000
+          port: 9090
 # apiVersion: gateway.networking.k8s.io/v1alpha2
 # kind: TLSRoute
 # metadata:
