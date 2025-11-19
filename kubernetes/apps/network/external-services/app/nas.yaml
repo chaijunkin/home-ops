@@ -39,8 +39,41 @@ spec:
     - name: https
       protocol: TCP
       port: 443
-      appProtocol: kubernetes.io/h2c
+      # appProtocol: kubernetes.io/h2c
       targetPort: 9090
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io_backendtlspolicy_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: BackendTLSPolicy
+metadata:
+  name: nas-backend-tls
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: nas
+  validation:
+    wellKnownCACertificates: System
+    hostname: nas.cloudjur.com
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: nas-backend
+  namespace: network
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: nas
+  useClientProtocol: true
+  connection:
+    bufferLimit: 8Mi
+  timeout:
+    http:
+      requestTimeout: 0s
+      connectionIdleTimeout: 3600s
 ---
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
@@ -61,15 +94,38 @@ endpoints:
     conditions:
       ready: true # https://github.com/argoproj/argo-cd/issues/15554
 ---
-apiVersion: gateway.networking.k8s.io/v1alpha2
-kind: TLSRoute
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
 metadata:
-  name: nas
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: 10.10.30.25
+  name: truenas
+  labels:
+    app.kubernetes.io/name: truenas
+    app.kubernetes.io/instance: truenas
 spec:
   parentRefs:
-    - {name: envoy-internal, namespace: network, port: 6443}
-  hostnames: [nas.cloudjur.com]
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  hostnames:
+    - nas.cloudjur.com
   rules:
-    - backendRefs: [{name: nas, port: 443}]
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: nas
+          port: 443
+# ---
+# apiVersion: gateway.networking.k8s.io/v1alpha2
+# kind: TLSRoute
+# metadata:
+#   name: nas
+#   annotations:
+#     external-dns.alpha.kubernetes.io/hostname: 10.10.30.25
+# spec:
+#   parentRefs:
+#     - {name: envoy-internal, namespace: network, port: 6443}
+#   hostnames: [nas.cloudjur.com]
+#   rules:
+#     - backendRefs: [{name: nas, port: 443}]
