@@ -87,7 +87,7 @@ metadata:
     gatus.home-operations.com/enabled: "false"
 spec:
   parentRefs:
-    - name: internal
+    - name: envoy-internal
       namespace: networking
       sectionName: https
   hostnames:
