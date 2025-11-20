@@ -63,7 +63,7 @@ jobs:
         uses: arduino/setup-task@v1
         with:
           # renovate: datasource=github-releases depName=go-task/task
-          version: 3.45.4
+          version: 3.45.5
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install jq
         run: |
