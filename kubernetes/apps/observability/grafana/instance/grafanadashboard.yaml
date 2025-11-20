@@ -16,6 +16,1693 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
+  name: cloudflare-r2-dashboard
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  folderRef: external-folder
+  json: |-
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 0,
+      "links": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Total storage across all R2 buckets",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 107374182400
+                  },
+                  {
+                    "color": "red",
+                    "value": 536870912000
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 3,
+            "x": 0,
+            "y": 0
+          },
+          "id": 1,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.bucketName",
+                  "text": "Bucket",
+                  "type": "string"
+                },
+                {
+                  "selector": "max.metadataSize",
+                  "text": "metadataSize",
+                  "type": "number"
+                },
+                {
+                  "selector": "max.payloadSize",
+                  "text": "payloadSize",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].storage",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { storage: r2StorageAdaptiveGroups(orderBy: [bucketName_ASC], limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\"}) { dimensions { bucketName } max { metadataSize payloadSize } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Account Total Storage Usage",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Total",
+                "binary": {
+                  "left": "metadataSize",
+                  "operator": "+",
+                  "right": "payloadSize"
+                },
+                "mode": "binary"
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "reducers": [
+                  "sum"
+                ]
+              }
+            }
+          ],
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Storage metrics breakdown",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-GrYlRd"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 3,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "displayMode": "basic",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [],
+              "fields": "",
+              "values": true
+            },
+            "showUnfilled": true,
+            "showValue": "always",
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.bucketName",
+                  "text": "Bucket",
+                  "type": "string"
+                },
+                {
+                  "selector": "max.metadataSize",
+                  "text": "metadataSize",
+                  "type": "number"
+                },
+                {
+                  "selector": "max.payloadSize",
+                  "text": "payloadSize",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].storage",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { storage: r2StorageAdaptiveGroups(orderBy: [bucketName_ASC], limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\"}) { dimensions { bucketName } max { metadataSize payloadSize } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Storage Breakdown",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Metadata",
+                "mode": "reduceRow",
+                "reduce": {
+                  "include": [
+                    "metadataSize"
+                  ],
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Payload",
+                "mode": "reduceRow",
+                "reduce": {
+                  "include": [
+                    "payloadSize"
+                  ],
+                  "reducer": "sum"
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Bucket": true,
+                  "metadataSize": true,
+                  "payloadSize": true
+                }
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "reducers": [
+                  "sum"
+                ]
+              }
+            }
+          ],
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Storage distribution by bucket",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "footer": {
+                  "reducers": []
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 7,
+            "x": 6,
+            "y": 0
+          },
+          "id": 14,
+          "options": {
+            "cellHeight": "sm",
+            "enablePagination": true,
+            "footer": {
+              "countRows": false,
+              "enablePagination": false,
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Total Storage"
+              }
+            ]
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.bucketName",
+                  "text": "Bucket",
+                  "type": "string"
+                },
+                {
+                  "selector": "max.metadataSize",
+                  "text": "metadataSize",
+                  "type": "number"
+                },
+                {
+                  "selector": "max.payloadSize",
+                  "text": "payloadSize",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "hide": false,
+              "range": true,
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].storage",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_content_type": "text/plain",
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { storage: r2StorageAdaptiveGroups(orderBy: [bucketName_ASC], limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\"}) { dimensions { bucketName } max { metadataSize payloadSize } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Bucket Total Storage Usage",
+          "transformations": [
+            {
+              "disabled": false,
+              "id": "calculateField",
+              "options": {
+                "alias": "Total Storage",
+                "binary": {
+                  "left": "metadataSize",
+                  "operator": "+",
+                  "right": "payloadSize"
+                },
+                "mode": "binary"
+              }
+            }
+          ],
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Storage usage per bucket over time",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 10,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "decbytes"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 11,
+            "x": 13,
+            "y": 0
+          },
+          "id": 5,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.bucketName",
+                  "text": "Bucket",
+                  "type": "string"
+                },
+                {
+                  "selector": "dimensions.time",
+                  "text": "Time",
+                  "type": "timestamp"
+                },
+                {
+                  "selector": "max.metadataSize",
+                  "text": "metadataSize",
+                  "type": "number"
+                },
+                {
+                  "selector": "max.payloadSize",
+                  "text": "payloadSize",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].storage",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { storage: r2StorageAdaptiveGroups(orderBy: [datetimeHour_ASC], limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\"}) { dimensions { bucketName time: datetimeHour } max { metadataSize payloadSize } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Bucket Storage Size",
+          "transformations": [
+            {
+              "id": "calculateField",
+              "options": {
+                "alias": "Storage",
+                "binary": {
+                  "left": "metadataSize",
+                  "operator": "+",
+                  "right": "payloadSize"
+                },
+                "mode": "binary"
+              }
+            },
+            {
+              "id": "groupBy",
+              "options": {
+                "fields": {
+                  "Bucket": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "Storage": {
+                    "aggregations": [
+                      "sum"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "Time": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  }
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Object count and upload metrics",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-GrYlRd"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 4,
+            "w": 3,
+            "x": 3,
+            "y": 4
+          },
+          "id": 3,
+          "options": {
+            "displayMode": "basic",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [],
+              "fields": "",
+              "values": true
+            },
+            "showUnfilled": true,
+            "showValue": "always",
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.bucketName",
+                  "text": "Bucket",
+                  "type": "string"
+                },
+                {
+                  "selector": "max.objectCount",
+                  "text": "objectCount",
+                  "type": "number"
+                },
+                {
+                  "selector": "max.uploadCount",
+                  "text": "uploadCount",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].storage",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { storage: r2StorageAdaptiveGroups(orderBy: [bucketName_ASC], limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\"}) { dimensions { bucketName } max { objectCount uploadCount } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Objects & Uploads",
+          "transformations": [
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Bucket": true
+                },
+                "renameByName": {
+                  "objectCount": "Objects",
+                  "uploadCount": "Uploads"
+                }
+              }
+            },
+            {
+              "id": "reduce",
+              "options": {
+                "reducers": [
+                  "sum"
+                ]
+              }
+            }
+          ],
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Total Class A operations",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 1000000
+                  },
+                  {
+                    "color": "red",
+                    "value": 10000000
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 3,
+            "x": 0,
+            "y": 8
+          },
+          "id": 6,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.actionType",
+                  "text": "Action",
+                  "type": "string"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classA",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classA: r2OperationsAdaptiveGroups(limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"ListBuckets\", \"PutBucket\", \"ListObjects\", \"PutObject\", \"CopyObject\", \"CompleteMultipartUpload\", \"CreateMultipartUpload\", \"UploadPart\", \"UploadPartCopy\", \"PutBucketEncryption\", \"ListMultipartUploads\"]}) { dimensions { actionType } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Account Total Class A Ops",
+          "transformations": [
+            {
+              "id": "reduce",
+              "options": {
+                "reducers": [
+                  "sum"
+                ]
+              }
+            }
+          ],
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Class A operations breakdown",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-GrYlRd"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 3,
+            "x": 3,
+            "y": 8
+          },
+          "id": 7,
+          "options": {
+            "displayMode": "basic",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "showUnfilled": true,
+            "showValue": "always",
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.actionType",
+                  "text": "Action",
+                  "type": "string"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classA",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classA: r2OperationsAdaptiveGroups(limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"ListBuckets\", \"PutBucket\", \"ListObjects\", \"PutObject\", \"CopyObject\", \"CompleteMultipartUpload\", \"CreateMultipartUpload\", \"UploadPart\", \"UploadPartCopy\", \"PutBucketEncryption\", \"ListMultipartUploads\"]}) { dimensions { actionType } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Class A Ops Breakdown",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Class A operations per bucket",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "footer": {
+                  "reducers": []
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 7,
+            "x": 6,
+            "y": 8
+          },
+          "id": 15,
+          "options": {
+            "cellHeight": "sm",
+            "enablePagination": true,
+            "footer": {
+              "countRows": false,
+              "enablePagination": false,
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Requests"
+              }
+            ]
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.bucketName",
+                  "text": "Bucket",
+                  "type": "string"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "hide": false,
+              "range": true,
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classA",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_content_type": "text/plain",
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classA: r2OperationsAdaptiveGroups(limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"ListBuckets\", \"PutBucket\", \"ListObjects\", \"PutObject\", \"CopyObject\", \"CompleteMultipartUpload\", \"CreateMultipartUpload\", \"UploadPart\", \"UploadPartCopy\", \"PutBucketEncryption\", \"ListMultipartUploads\"]}) { dimensions { bucketName } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Bucket Total Class A Ops",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Class A operations over time",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 11,
+            "x": 13,
+            "y": 8
+          },
+          "id": 9,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.actionType",
+                  "text": "Action",
+                  "type": "string"
+                },
+                {
+                  "selector": "dimensions.time",
+                  "text": "Time",
+                  "type": "timestamp"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classA",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classA: r2OperationsAdaptiveGroups(orderBy: [datetimeHour_ASC], limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"ListBuckets\", \"PutBucket\", \"ListObjects\", \"PutObject\", \"CopyObject\", \"CompleteMultipartUpload\", \"CreateMultipartUpload\", \"UploadPart\", \"UploadPartCopy\", \"PutBucketEncryption\", \"ListMultipartUploads\"]}) { dimensions { actionType time: datetimeHour } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Class A Operations",
+          "transformations": [
+            {
+              "id": "groupBy",
+              "options": {
+                "fields": {
+                  "Action": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "Requests": {
+                    "aggregations": [
+                      "sum"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "Time": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  }
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Total Class B operations",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 1000000
+                  },
+                  {
+                    "color": "red",
+                    "value": 10000000
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 3,
+            "x": 0,
+            "y": 16
+          },
+          "id": 10,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.actionType",
+                  "text": "Action",
+                  "type": "string"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classB",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classB: r2OperationsAdaptiveGroups(limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"HeadBucket\", \"HeadObject\", \"GetObject\", \"ReportUsageSummary\", \"GetBucketEncryption\", \"GetBucketLocation\"]}) { dimensions { actionType } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Account Total Class B Ops",
+          "transformations": [
+            {
+              "id": "reduce",
+              "options": {
+                "reducers": [
+                  "sum"
+                ]
+              }
+            }
+          ],
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Class B operations breakdown",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-GrYlRd"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 3,
+            "x": 3,
+            "y": 16
+          },
+          "id": 11,
+          "options": {
+            "displayMode": "basic",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 16,
+            "minVizWidth": 8,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": true
+            },
+            "showUnfilled": true,
+            "showValue": "always",
+            "sizing": "auto",
+            "valueMode": "color"
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.actionType",
+                  "text": "Action",
+                  "type": "string"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classB",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classB: r2OperationsAdaptiveGroups(limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"HeadBucket\", \"HeadObject\", \"GetObject\", \"ReportUsageSummary\", \"GetBucketEncryption\", \"GetBucketLocation\"]}) { dimensions { actionType } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Class B Ops Breakdown",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Class B operations per bucket",
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "filterable": true,
+                "footer": {
+                  "reducers": []
+                },
+                "inspect": false,
+                "wrapHeaderText": false,
+                "wrapText": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 7,
+            "x": 6,
+            "y": 16
+          },
+          "id": 16,
+          "options": {
+            "cellHeight": "sm",
+            "enablePagination": true,
+            "footer": {
+              "countRows": false,
+              "enablePagination": false,
+              "show": false
+            },
+            "showHeader": true,
+            "sortBy": [
+              {
+                "desc": true,
+                "displayName": "Requests"
+              }
+            ]
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.bucketName",
+                  "text": "Bucket",
+                  "type": "string"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "hide": false,
+              "range": true,
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classB",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_content_type": "text/plain",
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classB: r2OperationsAdaptiveGroups(limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"HeadBucket\", \"HeadObject\", \"GetObject\", \"ReportUsageSummary\", \"GetBucketEncryption\", \"GetBucketLocation\"]}) { dimensions { bucketName } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Bucket Total Class B Ops",
+          "type": "table"
+        },
+        {
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "$datasource"
+          },
+          "description": "Class B operations over time",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "showValues": false,
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": 0
+                  }
+                ]
+              },
+              "unit": "short"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 11,
+            "x": 13,
+            "y": 16
+          },
+          "id": 13,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "hideZeros": false,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "12.4.0-19174562009.patch3",
+          "targets": [
+            {
+              "columns": [
+                {
+                  "selector": "dimensions.actionType",
+                  "text": "Action",
+                  "type": "string"
+                },
+                {
+                  "selector": "dimensions.time",
+                  "text": "Time",
+                  "type": "timestamp"
+                },
+                {
+                  "selector": "sum.requests",
+                  "text": "Requests",
+                  "type": "number"
+                }
+              ],
+              "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "$datasource"
+              },
+              "format": "table",
+              "refId": "A",
+              "root_selector": "data.viewer.accounts[0].classB",
+              "source": "url",
+              "type": "graphql",
+              "url": "https://api.cloudflare.com/client/v4/graphql",
+              "url_options": {
+                "body_graphql_query": "query { viewer { accounts(filter: {accountTag: \"${accountTag}\"}) { classB: r2OperationsAdaptiveGroups(orderBy: [datetimeHour_ASC], limit: 1000, filter: {date_geq: \"${__from:date:YYYY-MM-DD}\", date_leq: \"${__to:date:YYYY-MM-DD}\", actionStatus: \"success\", actionType_in: [\"HeadBucket\", \"HeadObject\", \"GetObject\", \"ReportUsageSummary\", \"GetBucketEncryption\", \"GetBucketLocation\"]}) { dimensions { actionType time: datetimeHour } sum { requests } } } } }",
+                "body_type": "graphql",
+                "headers": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST"
+              }
+            }
+          ],
+          "title": "Class B Operations",
+          "transformations": [
+            {
+              "id": "groupBy",
+              "options": {
+                "fields": {
+                  "Action": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "Requests": {
+                    "aggregations": [
+                      "sum"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "Time": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  }
+                }
+              }
+            }
+          ],
+          "type": "timeseries"
+        }
+      ],
+      "preload": false,
+      "refresh": "",
+      "schemaVersion": 42,
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "allowCustomValue": true,
+            "current": {
+              "text": "infinity-cloudflare",
+              "value": "infinity-cloudflare"
+            },
+            "name": "datasource",
+            "options": [],
+            "query": "yesoreyeram-infinity-datasource",
+            "refresh": 1,
+            "regex": "",
+            "type": "datasource"
+          },
+          {
+            "current": {
+              "text": "8550295d25a8172e9fe4f9f7a7f327be",
+              "value": "8550295d25a8172e9fe4f9f7a7f327be"
+            },
+            "name": "accountTag",
+            "options": [
+              {
+                "selected": true,
+                "text": "8550295d25a8172e9fe4f9f7a7f327be",
+                "value": "8550295d25a8172e9fe4f9f7a7f327be"
+              }
+            ],
+            "query": "8550295d25a8172e9fe4f9f7a7f327be",
+            "type": "textbox"
+          }
+        ]
+      },
+      "time": {
+        "from": "now/M",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Cloudflare-GraphQL-R2",
+      "uid": "ukV4w2J4z",
+      "version": 9
+    }
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
   name: fly-app-dashboard
 spec:
   instanceSelector:

@@ -28,7 +28,7 @@ spec:
           runtime-setup:
             image:
               repository: python
-              tag: 3.11-slim
+              tag: 3.14-slim
             securityContext:
               runAsUser: 0
               runAsGroup: 0
@@ -49,6 +49,11 @@ spec:
                 echo "Installing Python uv..."
                 pip install --upgrade pip
                 pip install uv
+
+                # --- NEW CRITICAL STEP: Install npm to the shared prefix to create the bin/npx-cli.js file ---
+                echo "Installing npm to the shared prefix..."
+                npm install -g --prefix /shared npm@10
+                # ---------------------------------------------------------------------------------------------
 
                 echo "Installing MCP server npm packages..."
                 npm install -g --prefix /shared \
@@ -103,6 +108,10 @@ spec:
                 value: "Asia/Kuala_Lumpur"
               - name: PORT
                 value: "8000"
+
+            envFrom:
+              - secretRef:
+                  name: mcpo-secret
 
             probes:
               liveness:

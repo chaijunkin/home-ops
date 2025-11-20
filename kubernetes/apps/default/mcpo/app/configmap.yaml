@@ -29,6 +29,21 @@ data:
           "command": "uvx",
           "args": ["mcp-kubernetes-server", "--disable-write", "--disable-delete"],
           "env": {}
+        },
+        "firefly-iii": {
+          "command": "npx",
+          "args": [
+            "@firefly-iii-mcp/server",
+            "--pat",
+            "${FIREFLY_PAT}",
+            "--baseUrl",
+            "${FIREFLY_BASE_URL}",
+            "--preset",
+            "default"
+          ],
+          "env": {
+            "FIREFLY_BASE_URL": "http://firefly.default:8080"
+          }
         }
       }
     }

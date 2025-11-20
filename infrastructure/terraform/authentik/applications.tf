@@ -159,9 +159,9 @@ module "oauth2-opencloud" {
   client_type        = "public"
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
-  # client_id          = "web"
-  client_id          = var.ocis_id
-  client_secret = var.ocis_secret
+  client_id          = "web"
+  # client_id          = var.ocis_id
+  # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
   redirect_uris = [
     "https://drive.cloudjur.com",
@@ -177,6 +177,7 @@ module "oauth2-opencloud-android" {
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_type      = "public"
   client_id          = "OpenCloudAndroid"
   # client_secret      = "dInFYGV33xKzhbRmpqQltYNdfLdJIfJ9L5ISoKhNoT9qZftpdWSP71VrpGR9pmoD"
   redirect_uris = ["oc://android.opencloud.eu"]
@@ -189,6 +190,7 @@ module "oauth2-opencloud-desktop" {
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_type      = "public"
   client_id          = "OpenCloudDesktop"
   # client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
   redirect_uris = [

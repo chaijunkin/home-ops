@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./net-attach-iot.yaml
+  - ./net-attach-not.yaml
+  - ./net-attach-trust.yaml
+  - ./net-attach-vpn.yaml
+# TODO explore next time https://www.itguyjournals.com/installing-cilium-and-multus-on-talos-os-for-advanced-kubernetes-networking/
