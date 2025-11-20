@@ -39,7 +39,7 @@ jobs:
       changed_apps: ${{ steps.filter.outputs.changes }} # This output will be a JSON array of changed app names
     steps:
       - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
-      - uses: dorny/paths-filter@v3 # Use the paths-filter action
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3 # Use the paths-filter action
         id: filter
         with:
           # Define a mapping of friendly name (the app name) to path pattern
