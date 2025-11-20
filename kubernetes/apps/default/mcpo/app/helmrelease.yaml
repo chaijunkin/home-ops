@@ -28,7 +28,7 @@ spec:
           runtime-setup:
             image:
               repository: python
-              tag: 3.11-slim
+              tag: 3.14-slim
             securityContext:
               runAsUser: 0
               runAsGroup: 0
