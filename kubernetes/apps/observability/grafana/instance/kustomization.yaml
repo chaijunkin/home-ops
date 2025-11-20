@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./grafana.yaml
+  - ./grafanacontactpoint.yaml
+  - ./grafanafolder.yaml
+  - ./grafanadashboard.yaml
+  - ./grafanaalertrulegroup.yaml
+  - ./grafananotificationpolicy.yaml

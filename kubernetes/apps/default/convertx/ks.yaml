@@ -17,8 +17,7 @@ spec:
   retryInterval: 1m
   timeout: 5m
   components:
-    - ../../../../components/volsync
-    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync-no-r2
   postBuild:
     substitute:
       APP: *app

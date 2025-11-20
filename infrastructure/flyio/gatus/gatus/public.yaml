@@ -7,6 +7,7 @@ public-endpoint: &public-defaults
   conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
   alerts:
     - type: pushover
+    - type: discord
 endpoints:
   - name: authentik
     url: https://auth.cloudjur.com
@@ -29,7 +30,7 @@ endpoints:
   - name: kavita
     url: https://comics.cloudjur.com
     <<: *public-defaults
-  - name: ocis
+  - name: opencloud
     url: https://drive.cloudjur.com
     <<: *public-defaults
   - name: open-webui
@@ -38,9 +39,41 @@ endpoints:
   - name: plex
     url: https://plex.cloudjur.com/web/index.html
     <<: *public-defaults
-  # - name: convertx
-  #   url: https://convertx.cloudjur.com
-  #   <<: *public-defaults
+  - name: echo-server-ext
+    url: https://echo-server-ext.cloudjur.com
+    <<: *public-defaults
+  - name: echo-server-ext-auth
+    url: https://echo-server-ext-auth.cloudjur.com
+    <<: *public-defaults
+  - name: gatus
+    url: https://gatus.cloudjur.com
+    <<: *public-defaults
+  - name: komga
+    url: https://komga.cloudjur.com
+    <<: *public-defaults
+  - name: flux-webhook
+    url: https://flux-webhook.cloudjur.com
+    interval: 1m
+    group: Public
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
+    alerts:
+      - type: pushover
+      - type: discord
+  - name: external
+    group: Public
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: "external.cloudjur.com"
+      query-type: A
+    conditions:
+      - "len([BODY]) > 0"
+    alerts:
+      - type: pushover
+      - type: discord
   # - name: kromgo
   #   url: https://kromgo.cloudjur.com
   #   interval: 1m

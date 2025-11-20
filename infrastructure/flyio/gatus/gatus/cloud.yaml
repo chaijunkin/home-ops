@@ -7,6 +7,7 @@ fly-default-endpoint: &fly-defaults
   conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
   alerts:
     - type: pushover
+    - type: discord
 endpoints:
   - name: Main website
     url: https://www.cloudjur.com
@@ -23,3 +24,15 @@ endpoints:
   - name: Vault
     url: https://vw.cloudjur.com
     <<: *fly-defaults
+  - name: Google DNS
+    group: Cloud
+    url: icmp://8.8.8.8
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+  - name: Cloudflare DNS
+    group: Cloud
+    url: icmp://1.1.1.1
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"

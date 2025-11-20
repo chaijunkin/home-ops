@@ -123,3 +123,8 @@ variable "talos_nodes" {
 #     })
 #   )
 # }
+
+variable "cloudflare_account_id" {
+  description = "Cloudflare Account ID"
+  sensitive   = true
+}

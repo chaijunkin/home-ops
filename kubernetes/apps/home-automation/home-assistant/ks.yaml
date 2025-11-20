@@ -19,8 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: home-assistant
-      GATUS_SUBDOMAIN: hass
+      SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
   components:
     - ../../../../components/volsync
-    - ../../../../components/gatus/external

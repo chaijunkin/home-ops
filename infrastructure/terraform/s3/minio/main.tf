@@ -5,6 +5,7 @@ locals {
     "ocis",
     "volsync",
     "postgresql",
+    "opencloud"
     # "tempo"
   ]
 }

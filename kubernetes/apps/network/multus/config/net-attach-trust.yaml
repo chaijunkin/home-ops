@@ -1,0 +1,37 @@
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: multus-trust
+spec:
+  config: |-
+    {
+      "cniVersion": "0.3.1",
+      "name": "multus-trust",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "master": "eth4",
+          "mode": "bridge",
+          "capabilities": {
+            "ips": true
+          },
+
+          "ipam": {
+            "type": "static",
+            "addresses": [
+              {
+                "address": "10.10.10.254/24",
+                "gateway": "10.10.10.1"
+              }
+            ],
+            "routes": [
+              { "dst": "0.0.0.0/0", "gw": "10.10.10.1" }
+            ]
+          }
+        },
+        {
+          "type": "sbr"
+        }
+      ]
+    }

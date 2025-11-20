@@ -34,15 +34,60 @@ connectivity:
     target: 1.1.1.1:53
     interval: 1m
 
+fly-default-endpoint: &fly-defaults
+  group: Cloud-From-Home
+  interval: 1m
+  client:
+    timeout: 30s
+  conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
+  alerts:
+    - type: pushover
+
 endpoints:
-  - name: flux-webhook
+  - name: Main website
+    url: https://www.cloudjur.com
+    <<: *fly-defaults
+  - name: Wiki
+    url: https://wiki.cloudjur.com
+    <<: *fly-defaults
+  - name: Mail
+    url: https://mail.cloudjur.com
+    <<: *fly-defaults
+  - name: Webmail
+    url: https://webmail.cloudjur.com
+    <<: *fly-defaults
+  - name: Vault
+    url: https://vw.cloudjur.com
+    <<: *fly-defaults
+  - name: external
     group: external
-    url: https://flux-webhook.cloudjur.com
+    url: 1.1.1.1
     interval: 1m
-    client:
-      dns-resolver: tcp://1.1.1.1:53
+    dns:
+      query-name: "external.cloudjur.com"
+      query-type: A
     conditions:
-      - "[STATUS] == 404"
+      - "len([BODY]) > 0"
+  # - name: Cloudflare
+  #   group: connectivity
+  #   url: icmp://1.1.1.1
+  #   interval: 1m
+  #   conditions:
+  #     - "[CONNECTED] == true"
+
+  # - name: Google
+  #   group: connectivity
+  #   url: icmp://8.8.8.8
+  #   interval: 1m
+  #   conditions:
+  #     - "[CONNECTED] == true"
+
+  # - name: Quad9
+  #   group: connectivity
+  #   url: icmp://9.9.9.9
+  #   interval: 1m
+  #   conditions:
+  #     - "[CONNECTED] == true"
 # announcements:
 #   - timestamp: 2025-08-15T14:00:00Z
 #     type: outage

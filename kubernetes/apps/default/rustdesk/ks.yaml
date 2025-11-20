@@ -22,5 +22,4 @@ spec:
       VOLSYNC_CLAIM: rustdesk-data
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/volsync-no-r2

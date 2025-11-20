@@ -1,0 +1,1431 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaAlertRuleGroup
+metadata:
+  name: fly-app-http-alerts
+  namespace: observability
+
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  folderRef: "external-folder"
+  interval: 1m
+  name: "Fly App - HTTP & Application"
+
+  rules:
+    # ============================================
+    # SLO: App 5xx Error Rate < 50% (50% availability)
+    # ============================================
+    - uid: fly-app-5xx-rate-pct
+      title: "App 5xx Error Rate Exceeds 50% SLO"
+      condition: E
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "App 5xx error rate {{ $values.E.Value | humanize }}% exceeds 50% SLO"
+        description: "5xx error rate is {{ $values.E.Value | humanize }}% - Check recent deployments"
+        slo_target: "50% availability (<50% error rate)"
+      labels:
+        severity: "critical"
+        alertname: "AppHigh5xxRate"
+        team: "platform"
+        service: "fly-io"
+        slo_type: "availability"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'sum(increase(fly_app_http_responses_count{status=~"5.."}[5m]))'
+            refId: A
+        - refId: B
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(increase(fly_app_http_responses_count[5m]))"
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: math
+            expression: "($A / $B) * 100"
+            refId: C
+        - refId: D
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: reduce
+            expression: C
+            reducer: last
+            refId: D
+        - refId: E
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: threshold
+            expression: D
+            refId: E
+            conditions:
+              - evaluator:
+                  params: [50]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [E]
+                reducer:
+                  type: last
+                type: query
+
+    # ============================================
+    # SLO: Response Time P99 < 1s (99% under 1s)
+    # ============================================
+    - uid: fly-http-response-time-5s
+      title: "Response Time Exceeds 5s Incident Threshold"
+      condition: C
+      for: 3m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "P99 response time {{ $values.C.Value | humanize }}s exceeds 5s incident threshold"
+        description: "P99 is {{ $values.C.Value | humanize }}s - Consider declaring an incident"
+        slo_target: "99% under 1s"
+        incident_threshold: "5s"
+      labels:
+        severity: "critical"
+        alertname: "ResponseTimeIncident"
+        team: "platform"
+        service: "fly-io"
+        incident: "true"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "histogram_quantile(0.99, sum by(app, le) (rate(fly_app_http_response_time_seconds_bucket[5m])))"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [5]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    # ============================================
+    # SLO: Client 4xx Error Rate < 10%
+    # ============================================
+    - uid: fly-app-4xx-rate
+      title: "Client 4xx Error Rate Exceeds 10% SLO"
+      condition: E
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Client error rate {{ $values.E.Value | humanize }}% exceeds 10% SLO"
+        description: "4xx error rate is {{ $values.E.Value | humanize }}% - Check for invalid requests or API changes"
+        slo_target: "<10% client errors"
+      labels:
+        severity: "warning"
+        alertname: "High4xxRate"
+        team: "platform"
+        service: "fly-io"
+        slo_type: "client_errors"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'sum(increase(fly_app_http_responses_count{status=~"4.."}[10m]))'
+            refId: A
+        - refId: B
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(increase(fly_app_http_responses_count[10m]))"
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: math
+            expression: "($A / $B) * 100"
+            refId: C
+        - refId: D
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: reduce
+            expression: C
+            reducer: last
+            refId: D
+        - refId: E
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: threshold
+            expression: D
+            refId: E
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [E]
+                reducer:
+                  type: last
+                type: query
+
+    # ============================================
+    # Capacity Alerts
+    # ============================================
+    - uid: fly-app-high-concurrency
+      title: "High App Concurrency"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "App concurrency is high"
+        description: "Concurrency is {{ $values.C.Value | humanize }} - Consider scaling"
+      labels:
+        severity: "warning"
+        alertname: "HighConcurrency"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(fly_app_concurrency) by (instance, region)"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [100]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-soft-limit-reached
+      title: "Soft Limit Reached Frequently"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "App soft limit reached"
+        description: "Soft limit hit {{ $values.C.Value | humanize }} times in 5m - Consider scaling"
+      labels:
+        severity: "warning"
+        alertname: "SoftLimitReached"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum by(app, instance) (increase(fly_app_soft_limit_reached_count[5m]))"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [5]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-hard-limit-reached
+      title: "Hard Limit Reached (CRITICAL)"
+      condition: C
+      for: 1m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "App hard limit reached - SCALE IMMEDIATELY"
+        description: "App rejecting connections at hard limit - Scale now"
+      labels:
+        severity: "critical"
+        alertname: "HardLimitReached"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(increase(fly_app_hard_limit_reached_count[5m]))"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [0]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaAlertRuleGroup
+metadata:
+  name: fly-infrastructure-alerts
+  namespace: observability
+
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  folderRef: "external-folder"
+  interval: 1m
+  name: "Fly Infrastructure - Resources"
+
+  rules:
+    - uid: fly-memory-critical
+      title: "Memory Available < 10%"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Critical memory shortage on {{ $labels.instance }}"
+        description: "Available memory {{ $values.C.Value | humanize }}% - Escalate to infrastructure team"
+      labels:
+        severity: "critical"
+        alertname: "LowMemoryAvailable"
+        team: "infrastructure"
+        service: "fly-io"
+        escalate: "true"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "(fly_instance_memory_mem_available / fly_instance_memory_mem_total) * 100"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: lt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-disk-critical
+      title: "Disk Space Critical > 90%"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Disk space critical on {{ $labels.instance }}"
+        description: "Root filesystem usage {{ $values.C.Value | humanize }}% - Immediate action required"
+      labels:
+        severity: "critical"
+        alertname: "HighDiskUsage"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: '((fly_instance_filesystem_blocks{mount="/.fly-upper-layer"} - fly_instance_filesystem_blocks_avail{mount="/.fly-upper-layer"}) / fly_instance_filesystem_blocks{mount="/.fly-upper-layer"}) * 100'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [90]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-volume-high-usage
+      title: "Fly Volume High Usage"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Volume {{ $labels.mount }} usage is high"
+        description: "Volume usage {{ $values.C.Value | humanize }}% on {{ $labels.instance }}"
+      labels:
+        severity: "warning"
+        alertname: "HighVolumeUsage"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: '((fly_instance_filesystem_blocks{mount!="/",mount!="/.fly-upper-layer"} - fly_instance_filesystem_blocks_avail{mount!="/",mount!="/.fly-upper-layer"}) / fly_instance_filesystem_blocks{mount!="/",mount!="/.fly-upper-layer"}) * 100'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [85]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-cpu-throttling
+      title: "CPU Throttling Detected"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "CPU throttling on {{ $labels.instance }}"
+        description: "CPU throttled at {{ $values.C.Value | humanizePercentage }}"
+      labels:
+        severity: "critical"
+        alertname: "CPUThrottling"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'rate(fly_instance_cpu_throttle[5m]) / count without(cpu) (fly_instance_cpu{mode="idle"})'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [0.05]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-instance-high-cpu
+      title: "High CPU Utilization"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "CPU utilization high on {{ $labels.instance }}"
+        description: "CPU usage {{ $values.C.Value | humanize }}% - Check recent deployments"
+      labels:
+        severity: "warning"
+        alertname: "HighCPUUtilization"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'sum(rate(fly_instance_cpu{mode!="idle", mode!="steal"}[60s])) by (instance, region) / count(fly_instance_cpu{mode="idle"}) by (instance, region) * 100'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [80]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-load-average-high
+      title: "Load Average Exceeds CPU Count"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Load average exceeds CPU count on {{ $labels.instance }}"
+        description: "5m load average {{ $values.C.Value | humanize }}x CPU count"
+      labels:
+        severity: "warning"
+        alertname: "HighLoadAverage"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'fly_instance_load_average{minutes="5"} / count without(cpu) (fly_instance_cpu{mode="idle"})'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [1]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-instance-high-iowait
+      title: "High CPU IO Wait"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "High CPU IO wait detected"
+        description: "IO wait {{ $values.C.Value | humanize }}% - Disk may be slow"
+      labels:
+        severity: "warning"
+        alertname: "HighIOWait"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'sum(rate(fly_instance_cpu{mode="iowait"}[5m])) by (instance, region) * 100'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [20]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-high-fd-usage
+      title: "High File Descriptor Usage"
+      condition: D
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "High file descriptor usage"
+        description: "FD usage {{ $values.D.Value | humanize }}% - May cause connection failures"
+      labels:
+        severity: "critical"
+        alertname: "HighFileDescriptors"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "fly_instance_filefd_allocated"
+            refId: A
+        - refId: B
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "fly_instance_filefd_maximum"
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: math
+            expression: "$A / $B * 100"
+            refId: C
+        - refId: D
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: C
+            refId: D
+            conditions:
+              - evaluator:
+                  params: [80]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [D]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-high-disk-io
+      title: "High Disk I/O Utilization"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "High disk I/O utilization"
+        description: "Disk I/O above 80% - Storage may be bottleneck"
+      labels:
+        severity: "warning"
+        alertname: "HighDiskIOUtilization"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "rate(fly_instance_disk_time_io[5m]) / 1000"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [0.8]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-high-disk-queue
+      title: "High Disk Queue Depth"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "High disk queue depth"
+        description: "Disk queue depth high - I/O backlog accumulating"
+      labels:
+        severity: "warning"
+        alertname: "HighDiskQueueDepth"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "rate(fly_instance_disk_time_io_weighted[5m]) / 1000"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaAlertRuleGroup
+metadata:
+  name: fly-network-edge-alerts
+  namespace: observability
+
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  folderRef: "external-folder"
+  interval: 1m
+  name: "Fly Network & Edge"
+
+  rules:
+    # ============================================
+    # SLO: Edge 5xx Error Rate < 50% (50% availability)
+    # ============================================
+    - uid: fly-edge-5xx-rate
+      title: "Edge 5xx Error Rate Exceeds 50% SLO"
+      condition: E
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Edge 5xx error rate {{ $values.E.Value | humanize }}% exceeds 50% SLO"
+        description: "Edge error rate {{ $values.E.Value | humanize }}% - Check edge proxy and backend health"
+        slo_target: "50% availability (<50% error rate)"
+      labels:
+        severity: "critical"
+        alertname: "EdgeHigh5xxRate"
+        team: "platform"
+        service: "fly-io"
+        slo_type: "availability"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'sum(increase(fly_edge_http_responses_count{status=~"5.."}[5m]))'
+            refId: A
+        - refId: B
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(increase(fly_edge_http_responses_count[5m]))"
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: math
+            expression: "($A / $B) * 100"
+            refId: C
+        - refId: D
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: reduce
+            expression: C
+            reducer: last
+            refId: D
+        - refId: E
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: threshold
+            expression: D
+            refId: E
+            conditions:
+              - evaluator:
+                  params: [50]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [E]
+                reducer:
+                  type: last
+                type: query
+
+    # ============================================
+    # SLO: Connection Churn < 20%
+    # ============================================
+    - uid: fly-edge-connection-churn
+      title: "High Connection Churn Exceeds 20% SLO"
+      condition: E
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Connection churn {{ $values.E.Value | humanize }}% exceeds 20% SLO"
+        description: "{{ $values.E.Value | humanize }}% of connections are short-lived"
+        slo_target: "<20% churn rate (80% remain stable)"
+      labels:
+        severity: "info"
+        alertname: "HighConnectionChurn"
+        team: "platform"
+        service: "fly-io"
+        slo_type: "connection_health"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(rate(fly_edge_tcp_disconnects_count[5m]))"
+            refId: A
+        - refId: B
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(rate(fly_edge_tcp_connects_count[5m]))"
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: math
+            expression: "($A / $B) * 100"
+            refId: C
+        - refId: D
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: reduce
+            expression: C
+            reducer: last
+            refId: D
+        - refId: E
+          datasourceUid: __expr__
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            type: threshold
+            expression: D
+            refId: E
+            conditions:
+              - evaluator:
+                  params: [20]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [E]
+                reducer:
+                  type: last
+                type: query
+
+    # ============================================
+    # TLS & Security Alerts
+    # ============================================
+    - uid: fly-tls-sni-limit
+      title: "TLS SNI Limit Reached"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "TLS SNI limit reached for {{ $labels.servername }}"
+        description: "TLS handshakes queued due to SNI limits - Possible targeted attack"
+      labels:
+        severity: "critical"
+        alertname: "TLSSNILimit"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum by(servername) (increase(fly_edge_tls_sni_limit_reached_count[5m])) > 0"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [0]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-tls-ip-limit
+      title: "TLS IP Limit Reached"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "TLS IP limit reached"
+        description: "TLS handshakes queued due to IP limits - Possible attack"
+      labels:
+        severity: "critical"
+        alertname: "TLSIPLimit"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(increase(fly_edge_tls_ip_limit_reached_count[5m])) > 0"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [0]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-tls-handshake-errors
+      title: "TLS Handshake Errors"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "TLS handshake errors on {{ $labels.host }}"
+        description: "{{ $values.C.Value | humanize }} TLS handshake errors - Reason: {{ $labels.reason }}"
+      labels:
+        severity: "critical"
+        alertname: "TLSHandshakeErrors"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum by(host, reason) (increase(fly_edge_tls_handshake_errors[5m]))"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    # ============================================
+    # Rate Limiting & Traffic Alerts
+    # ============================================
+    - uid: fly-edge-rate-limited
+      title: "Edge Rate Limited"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Edge connections being rate limited"
+        description: "Edge dropping connections due to rate limits - Possible DDoS or need scaling"
+      labels:
+        severity: "critical"
+        alertname: "EdgeRateLimited"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum by(type, region) (increase(fly_edge_tcp_rate_limited_count[5m]))"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [10]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-edge-high-connection-rate
+      title: "High TCP Connection Rate"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Unusually high TCP connection rate"
+        description: "TCP rate {{ $values.C.Value | humanize }}/sec - Possible traffic spike or DDoS"
+      labels:
+        severity: "warning"
+        alertname: "HighTCPConnectionRate"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(rate(fly_edge_tcp_connects_count[5m]))"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [1000]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    # ============================================
+    # Network Health Alerts
+    # ============================================
+    - uid: fly-network-errors
+      title: "Network Packet Drops/Errors"
+      condition: C
+      for: 5m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "Network issues on {{ $labels.instance }}"
+        description: "Network drops/errors at {{ $values.C.Value | humanize }} packets/sec"
+      labels:
+        severity: "warning"
+        alertname: "NetworkPacketDrops"
+        team: "infrastructure"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'sum by(app, instance) (rate(fly_instance_net_recv_drop{device="eth0"}[5m]) + rate(fly_instance_net_sent_drop{device="eth0"}[5m]) + rate(fly_instance_net_recv_errs{device="eth0"}[5m]) + rate(fly_instance_net_sent_errs{device="eth0"}[5m]))'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [1]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-high-edge-data
+      title: "High Edge Data Transfer"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "High edge data transfer"
+        description: "Edge transfer {{ $values.C.Value | humanize }} bytes/sec - Monitor bandwidth costs"
+      labels:
+        severity: "info"
+        alertname: "HighEdgeDataTransfer"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: "sum(rate(fly_edge_data_in[5m])) + sum(rate(fly_edge_data_out[5m]))"
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [1000000000]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query
+
+    - uid: fly-instance-high-network
+      title: "High Instance Network Transfer"
+      condition: C
+      for: 10m
+      noDataState: OK
+      execErrState: OK
+      annotations:
+        summary: "High network traffic on instance"
+        description: "Network transfer {{ $values.C.Value | humanize }} bytes/sec - Monitor bandwidth"
+      labels:
+        severity: "info"
+        alertname: "HighInstanceNetworkTransfer"
+        team: "platform"
+        service: "fly-io"
+      data:
+        - refId: A
+          datasourceUid: prometheus_on_fly
+          relativeTimeRange:
+            from: 600
+            to: 0
+          model:
+            expr: 'sum(rate(fly_instance_net_sent_bytes{device="eth0"}[5m])) + sum(rate(fly_instance_net_recv_bytes{device="eth0"}[5m]))'
+            refId: A
+        - refId: B
+          datasourceUid: __expr__
+          model:
+            type: reduce
+            expression: A
+            reducer: last
+            refId: B
+        - refId: C
+          datasourceUid: __expr__
+          model:
+            type: threshold
+            expression: B
+            refId: C
+            conditions:
+              - evaluator:
+                  params: [104857600]
+                  type: gt
+                operator:
+                  type: and
+                query:
+                  params: [C]
+                reducer:
+                  type: last
+                type: query

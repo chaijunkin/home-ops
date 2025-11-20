@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/n8n-io/n8n
-              tag: 1.119.0
+              tag: 1.121.2
             env:
               DB_SQLITE_VACUUM_ON_STARTUP: true
               EXECUTIONS_DATA_PRUNE: true
@@ -92,4 +92,11 @@ spec:
           - matches:
               - path:
                   value: /webhook
-            backendRefs: [{}]
+              - path:
+                  value: /webhook-test
+            backendRefs:
+              - {}
+        annotations:
+          gatus.home-operations.com/enabled: "false"
+          # gatus.home-operations.com/endpoint: |
+          #   name: "open-webui-lb"

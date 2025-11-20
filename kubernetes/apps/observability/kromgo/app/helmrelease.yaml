@@ -75,6 +75,9 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 404"]
         rules:
           - backendRefs:
               - identifier: app

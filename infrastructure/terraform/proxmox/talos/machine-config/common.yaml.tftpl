@@ -1,8 +1,8 @@
 machine:
-  # kernel:
-  #   modules:
+  kernel:
+    modules:
   #     - name: i915
-  #     - name: nbd
+      - name: nbd
   certSANs: ["127.0.0.1", "k8s.cloudjur.com", "10.10.30.31"]
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -44,6 +44,7 @@ machine:
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
         [plugins."io.containerd.cri.v1.runtime"]
+          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
           device_ownership_from_security_context = true
     - op: overwrite
       path: /etc/nfsmount.conf
@@ -56,6 +57,7 @@ machine:
         noatime=True
   nodeLabels:
     intel.feature.node.kubernetes.io/gpu: "true"
+    node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/region: ${cluster_name}
     topology.kubernetes.io/zone: ${node_name}
   network:
@@ -77,6 +79,7 @@ machine:
     net.ipv4.tcp_window_scaling: 1         # 10Gb/s
     sunrpc.tcp_max_slot_table_entries: "128"
     sunrpc.tcp_slot_table_entries: "128"
+    user.max_user_namespaces: "11255"
     vm.nr_hugepages: 1024                  # PostgreSQL
   # udev:
   #   rules:
@@ -107,7 +110,13 @@ cluster:
     extraArgs:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
-      runtime-config: admissionregistration.k8s.io/v1alpha1=true
+      runtime-config: admissionregistration.k8s.io/v1beta1=true
+      oidc-issuer-url: "https://auth.cloudjur.com/application/o/headlamp"
+      oidc-client-id: "xH2fp7ogZSGJhlJPeQRBYIoqNoempXIJG4MZEwbX"
+      oidc-username-claim: "email"
+      oidc-username-prefix: "authentik:"
+      oidc-groups-claim: "groups"
+      oidc-groups-prefix: "authentik:"
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0

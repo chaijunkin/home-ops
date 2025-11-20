@@ -1,0 +1,24 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaNotificationPolicy
+metadata:
+  name: use-external-alertmanager
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+
+  route:
+    receiver: alertmanager
+    group_by:
+      - grafana_folder
+      - alertname
+    group_wait: 1m
+    group_interval: 10m
+    repeat_interval: 12h
+    routes:
+      - receiver: alertmanager
+        object_matchers:
+          - - severity
+            - =
+            - critical

@@ -19,6 +19,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      # GATUS_SUBDOMAIN: k8s
-  components:
-    - ../../../../components/gatus/guarded
+      # SUBDOMAIN: k8s

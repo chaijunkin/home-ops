@@ -26,8 +26,7 @@ spec:
     substitute:
       APP: sabnzbd
       VOLSYNC_CAPACITY: 1Gi
-      GATUS_SUBDOMAIN: sab
+      SUBDOMAIN: sab
   components:
     - ../../../../components/volsync
-    - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler

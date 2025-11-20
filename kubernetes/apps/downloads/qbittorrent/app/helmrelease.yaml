@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/qbittorrent
-              tag: 5.1.2
+              tag: 5.1.4
             env:
               TZ: Asia/Kuala_Lumpur
               QBT_WEBUI_PORT: &port 8080
@@ -127,6 +127,10 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.13
+          gatus.home-operations.com/enabled: "false"
+          gatus.home-operations.com/endpoint: |-
+            name: bittorrent-lb
+            group: services
         ports:
           bittorrent-tcp:
             port: *torrentPort

@@ -9,7 +9,7 @@ spec:
     operation: copy
   url: oci://ghcr.io/grafana/helm-charts/grafana
   ref:
-    tag: 10.1.4
+    tag: 10.1.5
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -208,10 +208,12 @@ spec:
               maxLines: 250
           - name: Alertmanager
             type: alertmanager
+            uid: alertmanager
             access: proxy
             url: http://kube-prometheus-stack-alertmanager.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
+              handleGrafanaManagedAlerts: true
           - name: Tempo
             type: tempo
             url: http://tempo.observability.svc.cluster.local:3200
@@ -287,6 +289,11 @@ spec:
           datasource: Prometheus
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
+          datasource: Prometheus
+        syncthing-overview:
+          # renovate: depName="Syncthing / Overview"
+          gnetId: 24238
+          revision: 2
           datasource: Prometheus
       games:
         palworld:
@@ -533,6 +540,7 @@ spec:
       - vonage-status-panel
       - fifemon-graphql-datasource
       - grafana-pyroscope-app
+      - yesoreyeram-infinity-datasource
     serviceMonitor:
       enabled: true
     persistence:
@@ -566,3 +574,31 @@ spec:
   chartRef:
     kind: OCIRepository
     name: grafana
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: grafana-operator
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: v5.20.0
+  url: oci://ghcr.io/grafana/helm-charts/grafana-operator
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana-operator
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: grafana-operator
+  interval: 24h
+  values:
+    dashboard:
+      enabled: true
+    serviceMonitor:
+      enabled: true

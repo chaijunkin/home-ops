@@ -14,7 +14,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: comics
+      SUBDOMAIN: comics
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -27,4 +27,3 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/keda/nfs-scaler
-    - ../../../../components/gatus/external

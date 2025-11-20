@@ -32,13 +32,30 @@ jobs:
   #           echo "defined=false" >> $GITHUB_OUTPUT;
   #         fi
 
-  deploy:
-    name: Deploy app
+  filter_paths:
+    name: Filter Changed Apps
     runs-on: ubuntu-latest
-    # needs: [check-fly-secret]
-    # if: needs.check-fly-secret.outputs.fly-secret-exists == 'true'
+    outputs:
+      changed_apps: ${{ steps.filter.outputs.changes }} # This output will be a JSON array of changed app names
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: dorny/paths-filter@v3 # Use the paths-filter action
+        id: filter
+        with:
+          # Define a mapping of friendly name (the app name) to path pattern
+          filters: |
+            vaultwarden:
+              - 'infrastructure/flyio/vaultwarden/**'
+            gatus:
+              - 'infrastructure/flyio/gatus/**'
+
+  deploy:
+    name: Deploy Changed App(s)
+    runs-on: ubuntu-latest
+    needs: [filter_paths] # Dependency on the path filtering job
+    if: needs.filter_paths.outputs.changed_apps != '[]' # Only run if changes are detected
+    steps:
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
           version: 0.1.54
@@ -51,11 +68,14 @@ jobs:
       - name: Install jq
         run: |
           sudo apt-get update -y && sudo apt-get install -y jq
-      - name: Deploy app(s) from `FLY_APP` JSON
+
+      - name: Deploy only changed app(s)
         shell: bash
         env:
           FLY_APP_JSON: ${{ secrets.FLY_APP }}
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          # The output from the filter_paths job, containing names of changed apps (e.g., ["gatus"])
+          CHANGED_APPS: ${{ needs.filter_paths.outputs.changed_apps }}
         run: |
           if [ -z "$FLY_API_TOKEN" ]; then
             echo "FLY_API_TOKEN is not set" >&2
@@ -67,19 +87,31 @@ jobs:
             exit 1
           fi
 
-          count=$(echo "$FLY_APP_JSON" | jq -r 'length')
-          if [ "$count" = "0" ] || [ "$count" = "null" ]; then
-            echo "no apps in FLY_APP" >&2
-            exit 1
+          # 1. Parse the JSON list of changed app names from the 'filter_paths' job
+          changed_app_names=$(echo "$CHANGED_APPS" | jq -r '.[]')
+          if [ -z "$changed_app_names" ]; then
+            echo "No relevant app paths were changed. Skipping deployment."
+            exit 0
           fi
 
-          for i in $(seq 0 $((count - 1))); do
-            app_name=$(echo "$FLY_APP_JSON" | jq -r ".[$i].app_name")
-            fly_name=$(echo "$FLY_APP_JSON" | jq -r ".[$i].fly_app_name")
-            [ -n "$app_name" ] || continue
-            [ -n "$fly_name" ] || continue
-            dir="infrastructure/flyio/$app_name"
-            if [ -d "$dir" ]; then
-              (cd "$dir" && flyctl deploy --remote-only -a "$fly_name")
+          # 2. Iterate over each CHANGED app name (e.g., vaultwarden, gatus)
+          for app_name in $changed_app_names; do
+
+            # 3. Use JQ to search the FLY_APP_JSON array for an object
+            #    where the 'app_name' key matches the current $app_name,
+            #    and extract its 'fly_app_name' value.
+            fly_name=$(echo "$FLY_APP_JSON" | jq -r --arg app_name_key "$app_name" \
+              '.[] | select(.app_name == $app_name_key) | .fly_app_name')
+
+            if [ "$fly_name" != "null" ] && [ -n "$fly_name" ]; then
+              echo "✅ Deploying $app_name to Fly app"
+              dir="infrastructure/flyio/$app_name"
+              if [ -d "$dir" ]; then
+                (cd "$dir" && flyctl deploy --remote-only -a "$fly_name")
+              else
+                echo "Warning: Directory $dir not found for app $app_name. Skipping."
+              fi
+            else
+              echo "Warning: Could not find configuration for changed app '$app_name' in FLY_APP_JSON. Skipping."
             fi
           done

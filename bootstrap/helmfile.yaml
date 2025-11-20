@@ -7,16 +7,36 @@ helmDefaults:
   waitForJobs: true
 
 releases:
-  - name: envoy-gateway
-    namespace: network
-    chart: oci://docker.io/envoyproxy/gateway-helm
-    version: 1.5.4
+  # - name: envoy-gateway
+  #   namespace: network
+  #   chart: oci://docker.io/envoyproxy/gateway-helm
+  #   version: 1.5.4
 
   - name: cilium
     namespace: kube-system
     chart: oci://ghcr.io/home-operations/charts-mirror/cilium
-    version: 1.18.3
+    version: 1.18.4
     values: ["../kubernetes/apps/kube-system/cilium/app/helm/values.yaml"]
+    # hooks:
+    #   - # Wait for Cilium CRDs to be available
+    #     command: bash
+    #     args:
+    #       - -c
+    #       - until kubectl get crd ciliumloadbalancerippools.cilium.io ciliumbgpadvertisements.cilium.io ciliumbgppeerconfigs.cilium.io ciliumbgpclusterconfigs.cilium.io &>/dev/null; do sleep 5; done
+    #     events:
+    #       - postsync
+    #     showlogs: true
+    #   - # Apply Cilium Resources
+    #     command: kubectl
+    #     args:
+    #       - apply
+    #       - --namespace=kube-system
+    #       - --server-side
+    #       - --field-manager=kustomize-controller
+    #       - --filename=../../kubernetes/apps/kube-system/cilium/app/networking.yaml
+    #     events:
+    #       - postsync
+    #     showlogs: true
 
   ## helm upgrade -i coredns oci://ghcr.io/coredns/charts/coredns --version 1.43.3 -
   # -namespace kube-system --values kubernetes/apps/kube-system/coredns/app/helm/valu
@@ -52,7 +72,7 @@ releases:
       [
         "../kubernetes/apps/kube-system/external-secrets/bitwarden/helm/values.yaml",
       ]
-    needs: ["kube-system/coredns"]
+    needs: ["kube-system/coredns", "kube-system/external-secrets"]
     hooks:
       - events: ["presync"]
         command: sh

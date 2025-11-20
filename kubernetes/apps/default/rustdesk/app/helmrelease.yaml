@@ -47,6 +47,8 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: rustdesk-relay.cloudjur.com
           lbipam.cilium.io/ips: "10.10.30.21"
+          gatus.home-operations.com/endpoint: |-
+            group: services
         ports:
           rustdesk-5:
             enabled: true
@@ -62,6 +64,9 @@ spec:
         annotations:
           lbipam.cilium.io/ips: "10.10.30.20"
           external-dns.alpha.kubernetes.io/hostname: rustdesk.cloudjur.com
+          gatus.home-operations.com/enabled: "false"
+          gatus.home-operations.com/endpoint: |-
+            group: services
         ports:
           rustdesk-1:
             port: 21114

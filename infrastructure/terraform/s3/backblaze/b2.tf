@@ -8,6 +8,26 @@ resource "b2_bucket" "cnpg-backup" {
 
 }
 
+# resource "b2_bucket" "tf-s3-state" {
+#   bucket_name = "tf-s3-state-${random_pet.server.id}"
+#   bucket_type = "allPrivate"
+# }
+
+# resource "b2_application_key" "tf-s3-state" {
+#   key_name = "tf-s3-state"
+#   capabilities = [
+#     "deleteFiles",
+#     "listAllBucketNames",
+#     "listBuckets",
+#     "listFiles",
+#     "readBuckets",
+#     "writeBuckets",
+#     "readFiles",
+#     "shareFiles",
+#     "writeFiles"
+#   ]
+# }
+
 resource "b2_bucket" "vw-backup" {
 
   bucket_name = "vw-backup-${random_pet.server.id}"

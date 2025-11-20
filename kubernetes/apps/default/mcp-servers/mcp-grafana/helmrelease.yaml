@@ -41,11 +41,11 @@ spec:
               - "GRAFANA_PASSWORD"
               - "mcp/grafana"
               - "-t"
-              - "stdio"
+              - "sse"
 
             env:
               TZ: "Asia/Kuala_Lumpur"
-              GRAFANA_URL: http://grafana.observability.svc.cluster.local
+              GRAFANA_URL: http://grafana.observability:80
 
             envFrom:
               - secretRef:

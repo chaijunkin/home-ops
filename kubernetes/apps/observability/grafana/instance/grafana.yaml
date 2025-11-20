@@ -1,0 +1,16 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana
+  labels:
+    grafana.internal/instance: grafana
+spec:
+  external:
+    url: http://grafana.observability:80 # Grafana URL
+    adminPassword:
+      name: grafana-secret
+      key: adminPass
+    adminUser:
+      name: grafana-secret
+      key: adminUser

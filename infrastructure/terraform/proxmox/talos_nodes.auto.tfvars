@@ -34,6 +34,12 @@ talos_nodes = {
         ip_address  = "10.10.10.254"
         # gateway     = "10.10.10.1"
       }
+      ,
+      {
+        mac_address = "16:44:BB:A0:A4:33"
+        tag         = 27
+        ip_address  = "10.10.27.254"
+      },
     ]
 
     vm_id         = 3031

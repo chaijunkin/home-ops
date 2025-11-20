@@ -7,8 +7,6 @@ metadata:
 spec:
   targetNamespace: default
   path: ./kubernetes/apps/default/it-tools/app
-  components:
-    - ../../../../components/gatus/guarded
   postBuild:
     substitute:
       APP: *app

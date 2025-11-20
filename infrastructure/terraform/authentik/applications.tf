@@ -10,19 +10,19 @@ locals {
     #   auth_groups = [authentik_group.default["infrastructure"].id]
     # }
     {
-      name     = "echo-server-ext-auth"
-      icon_url = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png"
+      name        = "echo-server-ext-auth"
+      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png"
       description = ""
-      group = "home"
-      slug = "echo-server-ext-auth"
+      group       = "home"
+      slug        = "echo-server-ext-auth"
       auth_groups = [authentik_group.default["home"].id]
     },
     {
-      name     = "echo-server-int-auth"
-      icon_url = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png"
+      name        = "echo-server-int-auth"
+      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png"
       description = ""
-      group = "home"
-      slug = "echo-server-int-auth"
+      group       = "home"
+      slug        = "echo-server-int-auth"
       auth_groups = [authentik_group.default["home"].id]
     }
   ]
@@ -147,20 +147,21 @@ resource "authentik_application" "application" {
   policy_engine_mode = "all"
 }
 
-module "oauth2-ocis" {
+module "oauth2-opencloud" {
   source             = "./modules/oauth2_application"
-  name               = "Owncloud"
-  icon_url           = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/owncloud.svg"
+  name               = "OpenCloud"
+  icon_url           = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/opencloud.svg"
   launch_url         = "https://drive.cloudjur.com"
-  description        = "ownCloud Infinite Scale"
+  description        = "OpenCloud"
   newtab             = true
   group              = "Media"
   auth_groups        = [authentik_group.default["media"].id]
   client_type        = "public"
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
-  client_id          = var.ocis_id
-  client_secret      = var.ocis_secret
+  invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_id          = "web"
+  # client_id          = var.ocis_id
+  # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
   redirect_uris = [
     "https://drive.cloudjur.com",
@@ -169,29 +170,43 @@ module "oauth2-ocis" {
   ]
 }
 
-module "oauth2-ocis-android" {
+module "oauth2-opencloud-android" {
   source             = "./modules/oauth2_application"
-  name               = "Owncloud-android"
+  name               = "OpenCloudAndroid"
   launch_url         = "blank://blank"
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
-  client_id          = "e4rAsNUSIUs0lF4nbv9FmCeUkTlV9GdgTLDH1b5uie7syb90SzEVrbN7HIpmWJeD"
-  client_secret      = "dInFYGV33xKzhbRmpqQltYNdfLdJIfJ9L5ISoKhNoT9qZftpdWSP71VrpGR9pmoD"
-  redirect_uris      = ["oc://android.owncloud.com"]
+  invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_type      = "public"
+  client_id          = "OpenCloudAndroid"
+  # client_secret      = "dInFYGV33xKzhbRmpqQltYNdfLdJIfJ9L5ISoKhNoT9qZftpdWSP71VrpGR9pmoD"
+  redirect_uris = ["oc://android.opencloud.eu"]
 }
 
-module "oauth2-ocis-desktop" {
+module "oauth2-opencloud-desktop" {
   source             = "./modules/oauth2_application"
-  name               = "Owncloud-desktop"
+  name               = "OpenCloudDesktop"
   launch_url         = "blank://blank"
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow  = data.authentik_flow.default-provider-invalidation-flow.id
-  client_id          = "xdXOt13JKxym1B1QcEncf2XDkLAexMBFwiT9j6EfhhHFJhs2KM9jbjTmf8JBXE69"
-  client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
+  invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_type      = "public"
+  client_id          = "OpenCloudDesktop"
+  # client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
   redirect_uris = [
     { matching_mode = "regex", url = "http://127.0.0.1(:.*)?" },
     { matching_mode = "regex", url = "http://localhost(:.*)?" }
   ]
+}
+
+module "oauth2-opencloud-ios" {
+  source             = "./modules/oauth2_application"
+  name               = "OpenCloudIOS"
+  launch_url         = "blank://blank"
+  auth_groups        = [authentik_group.default["media"].id]
+  client_type        = "public"
+  authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+  invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_id          = "OpenCloudIOS"
+  redirect_uris      = ["oc://ios.opencloud.eu"]
 }

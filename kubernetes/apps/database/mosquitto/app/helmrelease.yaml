@@ -47,6 +47,8 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mosquitto.cloudjur.com
+          gatus.home-operations.com/endpoint: |-
+            group: services
           lbipam.cilium.io/ips: 10.10.30.12
         ports:
           http:

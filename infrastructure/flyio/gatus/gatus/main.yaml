@@ -31,21 +31,17 @@ storage:
   type: sqlite
   path: /data/sqlite.db
 endpoints:
-  # - name: healthchecks.io
-  #   group:
-  #   url: https://hc-ping.com/${HC_PING_UUID}
-  #   interval: 30m
-  #   conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
-  #   alerts:
-  #     - type: pushover
-  - name: flux-webhook
-    url: https://flux-webhook.cloudjur.com
-    interval: 1m
-    group: Public
-    client:
-      dns-resolver: tcp://1.1.1.1:53
-    conditions:
-      - "[STATUS] == 404"
+  - name: healthchecks.io
+    group: Cloud
+    url: https://hc-ping.com/${HC_PING_UUID}
+    interval: 30m
+    conditions: ["[STATUS] < 300", "[CERTIFICATE_EXPIRATION] > 48h"]
+    ui:
+      hide-url: true
+      hide-hostname: true
+    alerts:
+      - type: pushover
+      - type: discord
 
 remote:
   instances:

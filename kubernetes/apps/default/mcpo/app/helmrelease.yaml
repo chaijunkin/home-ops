@@ -24,6 +24,65 @@ spec:
       mcpo:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          runtime-setup:
+            image:
+              repository: python
+              tag: 3.14-slim
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+            command:
+              - /bin/sh
+              - -c
+              - |
+                set -e
+                echo "Installing Node.js and npm..."
+                apt-get update
+                apt-get install -y curl ca-certificates gnupg
+                mkdir -p /etc/apt/keyrings
+                curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+                echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+                apt-get update
+                apt-get install -y nodejs
+
+                echo "Installing Python uv..."
+                pip install --upgrade pip
+                pip install uv
+
+                # --- NEW CRITICAL STEP: Install npm to the shared prefix to create the bin/npx-cli.js file ---
+                echo "Installing npm to the shared prefix..."
+                npm install -g --prefix /shared npm@10
+                # ---------------------------------------------------------------------------------------------
+
+                echo "Installing MCP server npm packages..."
+                npm install -g --prefix /shared \
+                  @upstash/context7-mcp \
+                  prometheus-mcp \
+                  @modelcontextprotocol/server-github
+
+                echo "Copying Node.js and tools..."
+                mkdir -p /shared/bin
+                cp /usr/bin/node /shared/bin/
+                cp /usr/local/bin/uv /shared/bin/
+                cp /usr/local/bin/uvx /shared/bin/
+
+                echo "Creating wrapper scripts..."
+                # Create npm wrapper
+                echo '#!/bin/sh' > /shared/bin/npm
+                echo 'export NODE_PATH="/shared/lib/node_modules"' >> /shared/bin/npm
+                echo 'exec /shared/bin/node /shared/lib/node_modules/npm/bin/npm-cli.js "$@"' >> /shared/bin/npm
+                chmod +x /shared/bin/npm
+
+                # Create npx wrapper
+                echo '#!/bin/sh' > /shared/bin/npx
+                echo 'export NODE_PATH="/shared/lib/node_modules"' >> /shared/bin/npx
+                echo 'exec /shared/bin/node /shared/lib/node_modules/npm/bin/npx-cli.js "$@"' >> /shared/bin/npx
+                chmod +x /shared/bin/npx
+
+                echo "Runtime setup complete"
+                ls -la /shared/bin/
+                ls -la /shared/lib/node_modules/ | head -20
         containers:
           app:
             image:
@@ -34,13 +93,25 @@ spec:
             args:
               - --config
               - /app/config/config.json
+              - "--hot-reload"
               - --host
               - 0.0.0.0
               - --port
               - "8000"
 
             env:
-              TZ: "Asia/Kuala_Lumpur"
+              - name: PATH
+                value: "/shared/bin:/app/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+              - name: NODE_PATH
+                value: "/shared/lib/node_modules"
+              - name: TZ
+                value: "Asia/Kuala_Lumpur"
+              - name: PORT
+                value: "8000"
+
+            envFrom:
+              - secretRef:
+                  name: mcpo-secret
 
             probes:
               liveness:
@@ -49,35 +120,46 @@ spec:
                 enabled: true
               startup:
                 enabled: true
+                spec:
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 60
 
             resources:
               requests:
                 cpu: 100m
                 memory: 256Mi
               limits:
-                memory: 512Mi
+                memory: 1Gi
 
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities:
-                drop:
-                  - ALL
+    #         securityContext:
+    #           allowPrivilegeEscalation: false
+    #           readOnlyRootFilesystem: true
+    #           capabilities:
+    #             drop:
+    #               - ALL
 
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: true
+    #     runAsUser: 1000
+    #     runAsGroup: 1000
+    #     fsGroup: 1000
+    #     fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
         controller: *app
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.55
         ports:
           http:
+            protocol: TCP
+            enabled: true
             port: 8000
+            targetPort: 8000
 
     persistence:
       config:
@@ -87,7 +169,14 @@ spec:
         globalMounts:
           - path: /app/config
             readOnly: true
-
+      runtime-tools:
+        type: emptyDir
+        advancedMounts:
+          mcpo:
+            app:
+              - path: /shared
+            runtime-setup:
+              - path: /shared
       tmp:
         enabled: true
         type: emptyDir

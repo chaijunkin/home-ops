@@ -40,7 +40,7 @@ _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/reno
 
 ## Overview
 
-This is a monorepository is for my home k3s clusters.
+This is a monorepository is for my home talos clusters.
 I try to adhere to Infrastructure as Code (IaC) and GitOps practices using tools like [Ansible](https://www.ansible.com/), [Terraform](https://www.terraform.io/), [Kubernetes](https://kubernetes.io/), [Flux](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate), and [GitHub Actions](https://github.com/features/actions).
 
 The purpose here is to learn k8s, while practicing Gitops.

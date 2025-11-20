@@ -173,7 +173,7 @@ done
 if [[ -s "$RESV_TMP" ]]; then
   printf '%s
 ' "" >> docs/cilium-ipam.md
-  cat "$RESV_TMP" >> docs/cilium-ipam.md
+  sort -V -t' ' -k2 "$RESV_TMP" >> docs/cilium-ipam.md
 fi
 
 cat >> docs/cilium-ipam.md <<'DOCS'

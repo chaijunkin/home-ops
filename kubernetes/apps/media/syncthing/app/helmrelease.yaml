@@ -73,6 +73,9 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.9
+          gatus.home-operations.com/endpoint: |-
+            name: syncthing-lb
+            group: services
         ports:
           listen-tcp:
             port: 22000
@@ -135,3 +138,13 @@ spec:
         path: /tank/Storage
         globalMounts:
           - path: /media
+    serviceMonitor:
+      app:
+        serviceName: syncthing
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            bearerTokenSecret:
+              name: syncthing-secret
+              key: SYNCTHING_API_KEY

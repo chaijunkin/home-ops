@@ -24,6 +24,5 @@ spec:
       APP: metube
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/volsync
+    - ../../../../components/volsync-no-r2
     - ../../../../components/keda/nfs-scaler
-    - ../../../../components/gatus/guarded
