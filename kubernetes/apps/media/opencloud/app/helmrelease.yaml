@@ -45,7 +45,7 @@ spec:
               OC_INSECURE: true
               OC_URL: https://drive.cloudjur.com
               OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD: false
-              OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
+              # OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD: true
               OCIS_LOG_COLOR: false
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: false
