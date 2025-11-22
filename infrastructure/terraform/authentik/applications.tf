@@ -159,8 +159,8 @@ module "oauth2-opencloud" {
   client_type        = "public"
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
-  # client_id          = "web"
-  client_id          = var.ocis_id
+  client_id          = "web"
+  # client_id          = var.ocis_id
   # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
   redirect_uris = [
