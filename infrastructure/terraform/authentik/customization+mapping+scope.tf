@@ -7,41 +7,64 @@ resource "authentik_policy_password" "password-complexity" {
   error_message    = "Minimum password length: 10. At least 1 of each required: uppercase, lowercase, digit"
 }
 
+resource "authentik_policy_expression" "user-settings-avatar-authorization" {
+  name       = "user-settings-avatar-authorization"
+  expression = file("./expressions/user-settings-avatar-authorization.py")
+}
+
 resource "authentik_policy_expression" "user-settings-authorization" {
   name       = "user-settings-authorization"
-  expression = <<-EOT
-  from authentik.lib.config import CONFIG
-  from authentik.core.models import (
-      USER_ATTRIBUTE_CHANGE_EMAIL,
-      USER_ATTRIBUTE_CHANGE_NAME,
-      USER_ATTRIBUTE_CHANGE_USERNAME
-  )
-  prompt_data = request.context.get('prompt_data')
-
-  if not request.user.group_attributes(request.http_request).get(
-      USER_ATTRIBUTE_CHANGE_EMAIL, CONFIG.y_bool('default_user_change_email', True)
-  ):
-      if prompt_data.get('email') != request.user.email:
-          ak_message('Not allowed to change email address.')
-          return False
-
-  if not request.user.group_attributes(request.http_request).get(
-      USER_ATTRIBUTE_CHANGE_NAME, CONFIG.y_bool('default_user_change_name', True)
-  ):
-      if prompt_data.get('name') != request.user.name:
-          ak_message('Not allowed to change name.')
-          return False
-
-  if not request.user.group_attributes(request.http_request).get(
-      USER_ATTRIBUTE_CHANGE_USERNAME, CONFIG.y_bool('default_user_change_username', True)
-  ):
-      if prompt_data.get('username') != request.user.username:
-          ak_message('Not allowed to change username.')
-          return False
-
-  return True
-  EOT
+  expression = file("./expressions/user-settings-authorization.py")
 }
+
+resource "authentik_property_mapping_provider_scope" "profile" {
+  name       = "OAuth Mapping: OpenID 'profile'"
+  scope_name = "profile"
+  expression = file("./expressions/openid-scope-profile.py")
+}
+
+resource "authentik_property_mapping_provider_scope" "openid-nextcloud" {
+  name       = "OAuth Mapping: OpenID 'nextcloud'"
+  scope_name = "nextcloud"
+  expression = file("./expressions/openid-scope-nextcloud.py")
+}
+
+
+# resource "authentik_policy_expression" "user-settings-authorization" {
+#   name       = "user-settings-authorization"
+#   expression = <<-EOT
+#   from authentik.lib.config import CONFIG
+#   from authentik.core.models import (
+#       USER_ATTRIBUTE_CHANGE_EMAIL,
+#       USER_ATTRIBUTE_CHANGE_NAME,
+#       USER_ATTRIBUTE_CHANGE_USERNAME
+#   )
+#   prompt_data = request.context.get('prompt_data')
+
+#   if not request.user.group_attributes(request.http_request).get(
+#       USER_ATTRIBUTE_CHANGE_EMAIL, CONFIG.y_bool('default_user_change_email', True)
+#   ):
+#       if prompt_data.get('email') != request.user.email:
+#           ak_message('Not allowed to change email address.')
+#           return False
+
+#   if not request.user.group_attributes(request.http_request).get(
+#       USER_ATTRIBUTE_CHANGE_NAME, CONFIG.y_bool('default_user_change_name', True)
+#   ):
+#       if prompt_data.get('name') != request.user.name:
+#           ak_message('Not allowed to change name.')
+#           return False
+
+#   if not request.user.group_attributes(request.http_request).get(
+#       USER_ATTRIBUTE_CHANGE_USERNAME, CONFIG.y_bool('default_user_change_username', True)
+#   ):
+#       if prompt_data.get('username') != request.user.username:
+#           ak_message('Not allowed to change username.')
+#           return False
+
+#   return True
+#   EOT
+# }
 
 data "authentik_property_mapping_provider_scope" "email" {
   managed = "goauthentik.io/providers/oauth2/scope-email"

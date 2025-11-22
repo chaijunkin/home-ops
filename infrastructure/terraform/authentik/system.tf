@@ -31,10 +31,12 @@ resource "authentik_brand" "default" {
   branding_title   = "authentik"
   branding_logo    = "/static/dist/assets/icons/icon_left_brand.svg"
   branding_favicon = "/static/dist/assets/icons/icon.png"
+  # branding_default_flow_background = "/static/dist/assets/backgrounds/brand-default-background.jpg"
 
   flow_authentication = data.authentik_flow.default-brand-authentication.id
   flow_invalidation   = data.authentik_flow.default-brand-invalidation.id
   flow_user_settings  = data.authentik_flow.default-brand-user-settings.id
+  flow_recovery       = authentik_flow.recovery.uuid
 }
 
 resource "authentik_brand" "home" {
@@ -46,6 +48,7 @@ resource "authentik_brand" "home" {
 
   flow_authentication = authentik_flow.authentication.uuid
   flow_invalidation   = authentik_flow.invalidation.uuid
+  flow_recovery       = authentik_flow.recovery.uuid
   flow_user_settings  = authentik_flow.user-settings.uuid
 }
 
@@ -107,4 +110,10 @@ resource "authentik_outpost" "proxyoutpostexternal" {
     kubernetes_service_type        = "ClusterIP",
     kubernetes_disabled_components = ["ingress"],
   })
+}
+
+resource "authentik_system_settings" "settings" {
+  avatars                   = "attributes.avatar, initials"
+  default_user_change_email = true
+  event_retention           = "days=14"
 }

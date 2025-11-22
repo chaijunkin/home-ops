@@ -67,3 +67,21 @@ resource "authentik_stage_prompt_field" "password-repeat" {
   required      = true
   order         = 301
 }
+
+resource "authentik_stage_prompt_field" "avatar" {
+  name      = "avatar"
+  field_key = "attributes.avatar"
+  type      = "file"
+  label     = "Picture"
+  sub_text  = "Upload a profile picture"
+  required  = false
+  order     = 400
+}
+
+resource "authentik_stage_prompt_field" "avatar-reset" {
+  name      = "avatar-reset"
+  field_key = "attributes.avatar_reset"
+  type      = "checkbox"
+  label     = "Remove picture"
+  order     = 401
+}

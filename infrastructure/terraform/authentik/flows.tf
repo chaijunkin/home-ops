@@ -131,9 +131,9 @@ resource "authentik_flow_stage_binding" "recovery-flow-binding-30" {
 
 ## Invitation flow
 
-data "authentik_flow" "default-source-enrollment" {
-  slug = "default-source-enrollment"
-}
+# data "authentik_flow" "default-source-enrollment" {
+#   slug = "default-source-enrollment"
+# }
 
 resource "authentik_flow" "enrollment-invitation" {
   name               = "enrollment-invitation-flow"

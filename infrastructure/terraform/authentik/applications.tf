@@ -32,7 +32,7 @@ module "proxy" {
 
   for_each = { for proxy in local.proxy : proxy.name => proxy }
 
-  source = "./modules/proxy_application"
+  source = "./proxy_application"
 
   name               = each.value.name
   description        = each.value.description
@@ -148,7 +148,7 @@ resource "authentik_application" "application" {
 }
 
 module "oauth2-opencloud" {
-  source             = "./modules/oauth2_application"
+  source             = "./oauth2_application"
   name               = "OpenCloud"
   icon_url           = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/opencloud.svg"
   launch_url         = "https://drive.cloudjur.com"
@@ -171,7 +171,7 @@ module "oauth2-opencloud" {
 }
 
 module "oauth2-opencloud-android" {
-  source             = "./modules/oauth2_application"
+  source             = "./oauth2_application"
   name               = "OpenCloudAndroid"
   launch_url         = "blank://blank"
   auth_groups        = [authentik_group.default["media"].id]
@@ -184,7 +184,7 @@ module "oauth2-opencloud-android" {
 }
 
 module "oauth2-opencloud-desktop" {
-  source             = "./modules/oauth2_application"
+  source             = "./oauth2_application"
   name               = "OpenCloudDesktop"
   launch_url         = "blank://blank"
   auth_groups        = [authentik_group.default["media"].id]
@@ -200,7 +200,7 @@ module "oauth2-opencloud-desktop" {
 }
 
 module "oauth2-opencloud-ios" {
-  source             = "./modules/oauth2_application"
+  source             = "./oauth2_application"
   name               = "OpenCloudIOS"
   launch_url         = "blank://blank"
   auth_groups        = [authentik_group.default["media"].id]

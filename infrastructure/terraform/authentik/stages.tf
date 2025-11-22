@@ -14,6 +14,13 @@ resource "authentik_stage_authenticator_webauthn" "authenticator-webauthn-setup"
   configure_flow           = authentik_flow.authenticator-webauthn-setup.uuid
 }
 
+resource "authentik_stage_authenticator_email" "authenticator-email" {
+  name          = "authenticator-email-setup"
+  friendly_name = "Email code"
+  subject       = "Authentication code"
+  template      = "email/email_otp.html"
+}
+
 ## Authorization stages
 resource "authentik_stage_identification" "authentication-identification" {
   name                      = "authentication-identification"
@@ -21,6 +28,7 @@ resource "authentik_stage_identification" "authentication-identification" {
   case_insensitive_matching = false
   show_source_labels        = true
   show_matched_user         = false
+  enable_remember_me        = true
   password_stage            = authentik_stage_password.authentication-password.id
   recovery_flow             = authentik_flow.recovery.uuid
   sources                   = [authentik_source_oauth.google.uuid]
@@ -34,11 +42,12 @@ resource "authentik_stage_password" "authentication-password" {
 
 resource "authentik_stage_authenticator_validate" "authentication-mfa-validation" {
   name           = "authentication-mfa-validation"
-  device_classes = ["static", "totp", "webauthn"]
+  device_classes = ["totp", "email"]
   # not_configured_action = "skip"
   not_configured_action = "configure"
   configuration_stages = [
-    authentik_stage_authenticator_webauthn.authenticator-webauthn-setup.id,
+    # authentik_stage_authenticator_webauthn.authenticator-webauthn-setup.id,
+    authentik_stage_authenticator_email.authenticator-email.id,
     authentik_stage_authenticator_totp.authenticator-totp-setup.id
   ]
 }
@@ -55,6 +64,7 @@ resource "authentik_stage_authenticator_validate" "authentication-passkey-valida
 
 resource "authentik_stage_user_login" "authentication-login" {
   name = "authentication-login"
+  session_duration = "hours=24"
 }
 
 ## Invalidation stages
@@ -73,8 +83,8 @@ resource "authentik_stage_identification" "recovery-identification" {
 
 resource "authentik_stage_email" "recovery-email" {
   name                     = "recovery-email"
-  activate_user_on_success = true
-  use_global_settings      = true
+  # activate_user_on_success = true
+  # use_global_settings      = true
   template                 = "email/password_reset.html"
   subject                  = "Password recovery"
 }
@@ -108,10 +118,12 @@ resource "authentik_stage_prompt" "source-enrollment-prompt" {
     resource.authentik_stage_prompt_field.name.id,
     resource.authentik_stage_prompt_field.email.id,
     resource.authentik_stage_prompt_field.password.id,
-    resource.authentik_stage_prompt_field.password-repeat.id
+    resource.authentik_stage_prompt_field.password-repeat.id,
+    resource.authentik_stage_prompt_field.avatar.id
   ]
   validation_policies = [
-    resource.authentik_policy_password.password-complexity.id
+    resource.authentik_policy_password.password-complexity.id,
+    resource.authentik_policy_expression.user-settings-avatar-authorization.id
   ]
 }
 
@@ -133,11 +145,14 @@ resource "authentik_stage_prompt" "user-settings" {
     resource.authentik_stage_prompt_field.username.id,
     resource.authentik_stage_prompt_field.name.id,
     resource.authentik_stage_prompt_field.email.id,
-    resource.authentik_stage_prompt_field.locale.id
+    resource.authentik_stage_prompt_field.locale.id,
+    resource.authentik_stage_prompt_field.avatar.id,
+    resource.authentik_stage_prompt_field.avatar-reset.id
   ]
 
   validation_policies = [
-    resource.authentik_policy_expression.user-settings-authorization.id
+    resource.authentik_policy_expression.user-settings-authorization.id,
+    resource.authentik_policy_expression.user-settings-avatar-authorization.id
   ]
 
 }
