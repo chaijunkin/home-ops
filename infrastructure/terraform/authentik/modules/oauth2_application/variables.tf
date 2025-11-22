@@ -32,14 +32,17 @@ variable "auth_groups" {
 }
 
 variable "client_id" {
-  type      = string
-  sensitive = true
+  type = string
 }
 
 variable "client_secret" {
-  type      = string
-  default   = null
-  sensitive = true
+  type    = string
+  default = null
+}
+
+variable "slug" {
+  type    = string
+  default = null
 }
 
 variable "authorization_flow" {
@@ -87,6 +90,16 @@ variable "additional_property_mappings" {
 
 variable "redirect_uris" {
   type = list(any)
+}
+
+variable "logout_method" {
+  type    = string
+  default = "backchannel"
+}
+
+variable "logout_uri" {
+  type    = string
+  default = ""
 }
 
 locals {
