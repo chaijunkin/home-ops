@@ -6,7 +6,7 @@ metadata:
   name: &app remediation
   namespace: jobs
 spec:
-  targetNamespace: media
+  targetNamespace: jobs
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
