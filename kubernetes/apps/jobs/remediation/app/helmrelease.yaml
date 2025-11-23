@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: volsync-remediation
+  name: &app remediation
 spec:
   interval: 30m
   chartRef:
@@ -48,29 +48,32 @@ spec:
         pod:
           restartPolicy: OnFailure
         serviceAccount:
-          identifier: remediation
+          identifier: *app
     service:
       app:
-        controller: remediation
+        controller: *app
         enabled: false
     serviceAccount:
-      remediation:
-        create: true
-        name: volsync-remediation
+      *app :
+        enabled: true
+      identifier: *app
     rbac:
       roles:
-        remediation:
-          type: Role
+        list:
+          type: ClusterRole
+          forceRename: *app
           rules:
             - apiGroups: ["volsync.backube"]
               resources: ["replicationsources"]
               verbs: ["get", "list", "patch"]
       bindings:
-        remediation:
-          type: RoleBinding
+        list:
+          type: ClusterRoleBinding
+          forceRename: *app
           roleRef:
-            kind: Role
-            name: volsync-remediation
+            kind: ClusterRole
+            name: *app
           subjects:
             - kind: ServiceAccount
-              name: volsync-remediation
+              name: *app
+              namespace: "{{ .Release.Namespace }}"
