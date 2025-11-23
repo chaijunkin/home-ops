@@ -18,6 +18,10 @@ route:
       matchers:
         - severity = "none"
         - alertname =~ "InfoInhibitor|Watchdog"
+    - receiver: remediation-webhook
+      matchers:
+        - alertname = "VolSyncVolumeOutOfSync"
+      repeat_interval: 5m
     - receiver: discord
       continue: true
       matchers:
@@ -38,6 +42,10 @@ receivers:
       - send_resolved: true
         url: "{{ .ALERTMANAGER_HEARTBEAT_URL }}"
   - name: "null"
+  - name: remediation-webhook
+    webhook_configs:
+      - send_resolved: false
+        url: "http://remediation-webhook.observability.svc.cluster.local:80/hooks/volsync-remediation"
   - name: discord
     discord_configs:
       - send_resolved: true

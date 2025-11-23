@@ -15,3 +15,4 @@ resources:
   - ./pyroscope/ks.yaml
   - ./silence-operator/ks.yaml
   - ./tempo/ks.yaml
+  - ./webhook/ks.yaml
