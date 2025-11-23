@@ -35,7 +35,7 @@ spec:
               - -c
               - |
                 # Install dependencies
-                apk add --no-cache kubectl curl jq
+                # Tools are pre-installed in the image; no need to install at runtime
 
                 # Query Prometheus for VolSyncVolumeOutOfSync alerts
                 alerts=$(curl -s "http://prometheus-operated.observability.svc.cluster.local:9090/api/v1/alerts")
