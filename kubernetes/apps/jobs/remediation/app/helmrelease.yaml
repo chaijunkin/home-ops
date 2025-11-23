@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: docker.io/library/alpine
-              tag: latest
+              tag: "3.21"
             command:
               - /bin/bash
               - -c
