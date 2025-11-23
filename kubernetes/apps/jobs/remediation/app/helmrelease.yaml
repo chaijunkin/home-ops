@@ -78,6 +78,9 @@ spec:
             - apiGroups: ["volsync.backube"]
               resources: ["replicationsources"]
               verbs: ["get", "list", "patch"]
+            - apiGroups: ["snapshot.storage.k8s.io"]
+              resources: ["volumesnapshots"]
+              verbs: ["delete", "get", "list"]
       bindings:
         list:
           type: ClusterRoleBinding
