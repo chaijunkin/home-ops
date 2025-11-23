@@ -46,7 +46,7 @@ spec:
                     echo "Triggering manual sync for $namespace/$name"
                     kubectl patch replicationsource "$name" -n "$namespace" --type merge -p "{\"spec\":{\"trigger\":{\"manual\":\"$(date +%s)\"}}}"
                     # Delete associated VolumeSnapshot to address etcd timeout
-                    kubectl delete volumesnapshot "$name" -n "$namespace" --ignore-not-found
+                    kubectl delete volumesnapshot "$name"-src -n "$namespace" --ignore-not-found
                   fi
                 done
             securityContext:
