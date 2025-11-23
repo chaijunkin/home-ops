@@ -81,7 +81,7 @@ spec:
               verbs: ["get", "list", "patch"]
             - apiGroups: ["snapshot.storage.k8s.io"]
               resources: ["volumesnapshots"]
-              verbs: ["delete", "get", "list", "watch"]
+              verbs: ["delete", "get", "list", "watch", "patch"]
       bindings:
         list:
           type: ClusterRoleBinding
