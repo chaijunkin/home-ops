@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: jobs
 components:
   - ../../components/common
-resources: []
-  # - remediation/ks.yaml
+resources:
+  - remediation/ks.yaml
