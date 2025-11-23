@@ -56,7 +56,6 @@ spec:
     serviceAccount:
       remediation:
         enabled: true
-      identifier: *app
     rbac:
       roles:
         list:
