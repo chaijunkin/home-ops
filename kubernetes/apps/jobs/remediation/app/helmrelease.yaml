@@ -31,7 +31,7 @@ spec:
               repository: docker.io/library/alpine
               tag: "3.21"
             command:
-              - /bin/bash
+              - /bin/sh
               - -c
               - |
                 # Install dependencies
