@@ -45,7 +45,8 @@ spec:
                   if [ -n "$namespace" ] && [ -n "$name" ]; then
                     echo "Triggering manual sync for $namespace/$name"
                     kubectl patch replicationsource "$name" -n "$namespace" --type merge -p "{\"spec\":{\"trigger\":{\"manual\":\"$(date +%s)\"}}}"
-                    # Delete associated VolumeSnapshot to address etcd timeout
+                    # Remove finalizers from the VolumeSnapshot and delete it
+                    kubectl patch volumesnapshot "volsync-$name-src" -n "$namespace" -p '{"metadata":{"finalizers":[]}}' --type merge || true
                     kubectl delete volumesnapshot "volsync-$name-src" -n "$namespace" --ignore-not-found
                   fi
                 done
