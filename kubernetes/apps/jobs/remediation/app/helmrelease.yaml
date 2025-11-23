@@ -54,7 +54,7 @@ spec:
         controller: *app
         enabled: false
     serviceAccount:
-      *app :
+      remediation:
         enabled: true
       identifier: *app
     rbac:
