@@ -28,14 +28,25 @@ spec:
         containers:
           app:
             image:
-              repository: registry.k8s.io/kubectl
-              tag: v1.32.1
+              repository: docker.io/library/alpine
+              tag: latest
             command:
-              - /bin/sh
+              - /bin/bash
               - -c
               - |
-                echo "Triggering manual VolSync backup for opencloud..."
-                kubectl patch replicationsource opencloud --type merge -p "{\"spec\":{\"trigger\":{\"manual\":\"$(date +%s)\"}}}"
+                # Install dependencies
+                apk add --no-cache kubectl curl jq
+
+                # Query Prometheus for VolSyncVolumeOutOfSync alerts
+                alerts=$(curl -s "http://prometheus-operated.observability.svc.cluster.local:9090/api/v1/alerts")
+
+                # Filter and iterate
+                echo "$alerts" | jq -r '.data.alerts[] | select(.labels.alertname == "VolSyncVolumeOutOfSync") | "\(.labels.obj_namespace) \(.labels.obj_name)"' | while read -r namespace name; do
+                  if [ -n "$namespace" ] && [ -n "$name" ]; then
+                    echo "Triggering manual sync for $namespace/$name"
+                    kubectl patch replicationsource "$name" -n "$namespace" --type merge -p "{\"spec\":{\"trigger\":{\"manual\":\"$(date +%s)\"}}}"
+                  fi
+                done
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
