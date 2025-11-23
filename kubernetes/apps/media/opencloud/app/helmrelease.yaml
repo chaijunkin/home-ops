@@ -22,7 +22,7 @@ spec:
             fsGroup: 2000
             fsGroupChangePolicy: OnRootMismatch
         containers:
-          webfiger-proxy:
+          webfinger-proxy:
             image:
               repository: ghcr.io/2bros-group/opencloud-oidc-webfinger-proxy
               tag: v1.0.0
