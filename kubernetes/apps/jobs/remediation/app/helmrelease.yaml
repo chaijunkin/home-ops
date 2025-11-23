@@ -46,15 +46,17 @@ spec:
               limits:
                 memory: 128Mi
         pod:
-          serviceAccountName: volsync-remediation
           restartPolicy: OnFailure
+        serviceAccount:
+          identifier: remediation
     service:
       app:
         controller: remediation
         enabled: false
     serviceAccount:
-      create: true
-      name: volsync-remediation
+      remediation:
+        create: true
+        name: volsync-remediation
     rbac:
       roles:
         remediation:
