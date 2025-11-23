@@ -21,7 +21,7 @@ spec:
       remediation:
         type: cronjob
         cronjob:
-          schedule: "0 1,9,17 * * *"
+          schedule: "0 0 30 2 *"  # Feb 30th (never) - manual trigger only
           concurrencyPolicy: Forbid
           successfulJobsHistory: 1
           failedJobsHistory: 1

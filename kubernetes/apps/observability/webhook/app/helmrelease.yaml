@@ -19,6 +19,20 @@ spec:
     controllers:
       webhook:
         strategy: RollingUpdate
+        initContainers:
+          copy-kubectl:
+            image:
+              repository: ghcr.io/chaijunkin/linux-utility
+              tag: rolling@sha256:8e1fde2ace5bbab379a53b97768dac83456a2bef02825ad9d8deca46f1d30856
+            command:
+              - /bin/sh
+              - -c
+              - cp $(which kubectl) /kubectl/kubectl && chmod +x /kubectl/kubectl
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
         containers:
           app:
             image:
@@ -57,6 +71,10 @@ spec:
         defaultMode: 0775
         globalMounts:
           - readOnly: true
+      kubectl-bin:
+        type: emptyDir
+        globalMounts:
+          - path: /kubectl
     # route:
     #   app:
     #     hostnames:
@@ -75,12 +93,13 @@ spec:
           type: ClusterRole
           forceRename: *app
           rules:
-            - apiGroups: ["volsync.backube"]
-              resources: ["replicationsources"]
-              verbs: ["get", "list", "patch"]
-            - apiGroups: ["snapshot.storage.k8s.io"]
-              resources: ["volumesnapshots"]
-              verbs: ["delete", "get", "list", "watch", "patch"]
+            - apiGroups: ["batch"]
+              resources: ["jobs"]
+              verbs: ["create"]
+            - apiGroups: ["batch"]
+              resources: ["cronjobs"]
+              verbs: ["get"]
+              resourceNames: ["remediation"]
       bindings:
         list:
           type: ClusterRoleBinding
