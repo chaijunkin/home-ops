@@ -17,12 +17,12 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ ENV.APP }}-volsync-r2
-          volumeMounts:
-            - name: repository
-              mountPath: /repository
+          # volumeMounts:
+          #   - name: repository
+          #     mountPath: /repository
           resources: {}
-      volumes:
-        - name: repository
-          nfs:
-            server: smb.cloudjur.com
-            path: /tank/Apps/Minio/volsync
+      # volumes:
+      #   - name: repository
+      #     nfs:
+      #       server: smb.cloudjur.com
+      #       path: /tank/Apps/Minio/volsync
