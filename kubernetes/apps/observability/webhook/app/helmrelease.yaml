@@ -91,4 +91,4 @@ spec:
           subjects:
             - kind: ServiceAccount
               name: *app
-              namespace: {{ .Release.Namespace }}
+              namespace: "{{ .Release.Namespace }}"
