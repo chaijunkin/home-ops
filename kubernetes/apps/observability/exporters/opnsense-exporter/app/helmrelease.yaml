@@ -32,6 +32,7 @@ spec:
               - --exporter.instance-label=firewall
               - --web.listen-address=:8080
               - --exporter.disable-firmware
+              - --exporter.disable-gateways
             env:
               OPNSENSE_EXPORTER_OPS_PROTOCOL: https
               OPNSENSE_EXPORTER_OPS_INSECURE: true
