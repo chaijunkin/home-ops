@@ -43,11 +43,7 @@ spec:
                 # Filter and iterate
                 echo "$alerts" | jq -r '.data.alerts[] | select(.labels.alertname == "VolSyncVolumeOutOfSync") | "\(.labels.obj_namespace) \(.labels.obj_name)"' | while read -r namespace name; do
                   if [ -n "$namespace" ] && [ -n "$name" ]; then
-                    echo "Triggering manual sync for $namespace/$name"
-                    kubectl patch replicationsource "$name" -n "$namespace" --type merge -p "{\"spec\":{\"trigger\":{\"manual\":\"$(date +%s)\"}}}"
-                    # Remove finalizers from the VolumeSnapshot and delete it
-                    kubectl patch volumesnapshot "volsync-$name-src" -n "$namespace" -p '{"metadata":{"finalizers":[]}}' --type merge || true
-                    kubectl delete volumesnapshot "volsync-$name-src" -n "$namespace" --ignore-not-found
+                    echo "Processing $namespace/$name"
 
                     # Check if volsync job has pods in error state
                     job_name="volsync-src-${name}"
@@ -85,9 +81,18 @@ spec:
                                 name: ${app_name}-volsync-r2
                           resources: {}
                 EOF
+                      echo "Waiting 5 seconds for unlock job to complete..."
+                      sleep 5
                     else
                       echo "No failed pods found in $namespace/$job_name - skipping unlock"
                     fi
+
+                    # Now trigger manual sync and cleanup
+                    echo "Triggering manual sync for $namespace/$name"
+                    kubectl patch replicationsource "$name" -n "$namespace" --type merge -p "{\"spec\":{\"trigger\":{\"manual\":\"$(date +%s)\"}}}"
+                    # Remove finalizers from the VolumeSnapshot and delete it
+                    kubectl patch volumesnapshot "volsync-$name-src" -n "$namespace" -p '{"metadata":{"finalizers":[]}}' --type merge || true
+                    kubectl delete volumesnapshot "volsync-$name-src" -n "$namespace" --ignore-not-found
                   fi
                 done
             securityContext:
