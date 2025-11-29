@@ -48,6 +48,46 @@ spec:
                     # Remove finalizers from the VolumeSnapshot and delete it
                     kubectl patch volumesnapshot "volsync-$name-src" -n "$namespace" -p '{"metadata":{"finalizers":[]}}' --type merge || true
                     kubectl delete volumesnapshot "volsync-$name-src" -n "$namespace" --ignore-not-found
+
+                    # Check if volsync job has pods in error state
+                    job_name="volsync-src-${name}"
+                    echo "Checking for failed pods in job $namespace/$job_name"
+
+                    # Get pods from the job and check for Error/Failed status
+                    failed_pods=$(kubectl get pods -n "$namespace" -l job-name="$job_name" -o jsonpath='{range .items[*]}{.status.phase}{"\n"}{end}' 2>/dev/null | grep -E "Failed|Error" || true)
+
+                    if [ -n "$failed_pods" ]; then
+                      echo "Found failed pods in $namespace/$job_name - likely a restic lock issue"
+
+                      # Extract app name by removing -r2 suffix (ReplicationSource is ${APP}-r2, secret is ${APP}-volsync-r2)
+                      app_name="${name%-r2}"
+
+                      # Create unlock job for r2 repository
+                      echo "Creating unlock job for $namespace/$app_name"
+                      cat <<EOF | kubectl apply -f -
+                apiVersion: batch/v1
+                kind: Job
+                metadata:
+                  name: volsync-unlock-${app_name}-r2
+                  namespace: ${namespace}
+                spec:
+                  ttlSecondsAfterFinished: 3600
+                  template:
+                    spec:
+                      automountServiceAccountToken: false
+                      restartPolicy: OnFailure
+                      containers:
+                        - name: unlock-r2
+                          image: docker.io/restic/restic:latest
+                          args: ["unlock", "--remove-all"]
+                          envFrom:
+                            - secretRef:
+                                name: ${app_name}-volsync-r2
+                          resources: {}
+                EOF
+                    else
+                      echo "No failed pods found in $namespace/$job_name - skipping unlock"
+                    fi
                   fi
                 done
             securityContext:
@@ -82,6 +122,9 @@ spec:
             - apiGroups: ["snapshot.storage.k8s.io"]
               resources: ["volumesnapshots"]
               verbs: ["delete", "get", "list", "watch", "patch"]
+            - apiGroups: ["batch"]
+              resources: ["jobs"]
+              verbs: ["create", "get", "list", "delete"]
       bindings:
         list:
           type: ClusterRoleBinding
