@@ -18,6 +18,8 @@ spec:
   values:
     controllers:
       webhook:
+        serviceAccount:
+          identifier: webhook
         strategy: RollingUpdate
         initContainers:
           copy-kubectl:
