@@ -49,11 +49,28 @@ spec:
                     job_name="volsync-src-${name}"
                     echo "Checking for failed pods in job $namespace/$job_name"
 
-                    # Get pods from the job and check for Error/Failed status
-                    failed_pods=$(kubectl get pods -n "$namespace" -l job-name="$job_name" -o jsonpath='{range .items[*]}{.status.phase}{"\n"}{end}' 2>/dev/null | grep -E "Failed|Error" || true)
+                    # Jobs can create multiple pods when retrying (e.g., 5 failed, 1 running)
+                    # Only unlock if there are ONLY failed pods with no Running/Succeeded attempts
+                    should_unlock="false"
 
-                    if [ -n "$failed_pods" ]; then
-                      echo "Found failed pods in $namespace/$job_name - likely a restic lock issue"
+                    # Check for any Running or Succeeded pods
+                    active_pods=$(kubectl get pods -n "$namespace" -l job-name="$job_name" -o jsonpath='{range .items[*]}{.status.phase}{"\n"}{end}' 2>/dev/null | grep -E "Running|Succeeded" || true)
+
+                    # Check for failed pods
+                    failed_phase=$(kubectl get pods -n "$namespace" -l job-name="$job_name" -o jsonpath='{range .items[*]}{.status.phase}{"\n"}{end}' 2>/dev/null | grep -E "Failed|Error" || true)
+
+                    # Check container states (waiting with reason like CrashLoopBackOff, Error, etc)
+                    error_containers=$(kubectl get pods -n "$namespace" -l job-name="$job_name" -o jsonpath='{range .items[*].status.containerStatuses[*]}{.state.waiting.reason}{"\n"}{.state.terminated.reason}{"\n"}{end}' 2>/dev/null | grep -E "CrashLoopBackOff|Error|ImagePullBackOff" || true)
+
+                    # Only unlock if we have errors AND no active pods
+                    if ([ -n "$failed_phase" ] || [ -n "$error_containers" ]) && [ -z "$active_pods" ]; then
+                      should_unlock="true"
+                      echo "Found only failed pods in $namespace/$job_name with no active attempts - likely a restic lock issue"
+                    elif [ -n "$active_pods" ]; then
+                      echo "Found active pods in $namespace/$job_name - skipping unlock, letting current attempt finish"
+                    fi
+
+                    if [ "$should_unlock" = "true" ]; then
 
                       # Extract app name by removing -r2 suffix (ReplicationSource is ${APP}-r2, secret is ${APP}-volsync-r2)
                       app_name="${name%-r2}"
