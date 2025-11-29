@@ -19,7 +19,7 @@ spec:
     controllers:
       webhook:
         serviceAccount:
-          identifier: webhook
+          identifier: *app
         strategy: RollingUpdate
         initContainers:
           copy-kubectl:
@@ -53,6 +53,9 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 512Mi
+    serviceAccount:
+      *app :
+        enabled: true
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
