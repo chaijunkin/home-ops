@@ -21,6 +21,7 @@ route:
     - receiver: remediation-webhook
       matchers:
         - alertname = "VolSyncVolumeOutOfSync"
+      group_interval: 5m
       repeat_interval: 5m
     - receiver: discord
       continue: true
