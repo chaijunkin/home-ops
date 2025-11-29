@@ -62,6 +62,9 @@ spec:
                     # Check container states (waiting with reason like CrashLoopBackOff, Error, etc)
                     error_containers=$(kubectl get pods -n "$namespace" -l job-name="$job_name" -o jsonpath='{range .items[*].status.containerStatuses[*]}{.state.waiting.reason}{"\n"}{.state.terminated.reason}{"\n"}{end}' 2>/dev/null | grep -E "CrashLoopBackOff|Error|ImagePullBackOff" || true)
 
+                    # Debug output
+                    echo "Debug: active_pods='$active_pods' failed_phase='$failed_phase' error_containers='$error_containers'"
+
                     # Only unlock if we have errors AND no active pods
                     if ([ -n "$failed_phase" ] || [ -n "$error_containers" ]) && [ -z "$active_pods" ]; then
                       should_unlock="true"
@@ -101,7 +104,7 @@ spec:
                       echo "Waiting 5 seconds for unlock job to complete..."
                       sleep 5
                     else
-                      echo "No failed pods found in $namespace/$job_name - skipping unlock"
+                      echo "No unlock needed for $namespace/$job_name - no errors detected or job completed successfully"
                     fi
 
                     # Now trigger manual sync and cleanup
