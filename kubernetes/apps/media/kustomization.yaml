@@ -17,6 +17,7 @@ resources:
   # - ./neko/ks.yaml  # cloudflare tunnel doesn't support UDP (paid)
   - ./opencloud/ks.yaml
   - ./plex/ks.yaml
+  # - ./seerr/ks.yaml
   - ./romm/ks.yaml
   - ./slskd/ks.yaml
   - ./syncthing/ks.yaml
