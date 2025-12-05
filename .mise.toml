@@ -12,6 +12,6 @@ _.file = [
 # _.python.venv = { path = "{{config_root}}/.venv", create = true }
 
 [tools]
-"python" = "3.14.1"
+"python" = "3.14.2"
 "uv" = "latest"
 "pipx:flux-local" = "latest"
