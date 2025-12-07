@@ -31,7 +31,7 @@ spec:
               # - --log.format=json
               - --exporter.instance-label=firewall
               - --web.listen-address=:8080
-              - --exporter.disable-firmware
+              # - --exporter.disable-firmware
               # - --exporter.disable-gateway
             env:
               OPNSENSE_EXPORTER_OPS_PROTOCOL: https
