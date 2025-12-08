@@ -27,9 +27,9 @@ endpoints:
   - name: jellyseerr
     url: https://requests.cloudjur.com
     <<: *public-defaults
-  - name: kavita
-    url: https://comics.cloudjur.com
-    <<: *public-defaults
+  # - name: kavita
+  #   url: https://comics.cloudjur.com
+  #   <<: *public-defaults
   - name: opencloud
     url: https://drive.cloudjur.com
     <<: *public-defaults
@@ -48,9 +48,9 @@ endpoints:
   - name: gatus
     url: https://gatus.cloudjur.com
     <<: *public-defaults
-  - name: komga
-    url: https://komga.cloudjur.com
-    <<: *public-defaults
+  # - name: komga
+  #   url: https://komga.cloudjur.com
+  #   <<: *public-defaults
   - name: flux-webhook
     url: https://flux-webhook.cloudjur.com
     interval: 1m
