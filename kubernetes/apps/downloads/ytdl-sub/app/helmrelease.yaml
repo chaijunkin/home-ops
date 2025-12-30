@@ -40,7 +40,7 @@ spec:
           *app :
             image:
               repository: ghcr.io/jmbannon/ytdl-sub
-              tag: "2025.11.28"
+              tag: "2025.12.30"
             command:
               - bash
               - -c
