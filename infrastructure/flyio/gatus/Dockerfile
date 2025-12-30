@@ -1,5 +1,5 @@
 # renovate: datasource=github-releases depName=TwiN/gatus
-ARG GATUS_VERSION=v5.33.0
+ARG GATUS_VERSION=v5.33.1
 
 # renovate: datasource=github-releases depName=DarthSim/overmind
 ARG OVERMIND_VERSION=v2.5.1
@@ -13,7 +13,7 @@ FROM twinproduction/gatus:${GATUS_VERSION} as gatus
 #
 # Overmind
 #
-FROM alpine:3.22 as overmind
+FROM alpine:3.23 as overmind
 
 ARG OVERMIND_VERSION
 ARG OVERMIND
