@@ -72,6 +72,12 @@ spec:
             port: *port
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: qui
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/c892241cde55f10e9d64f8da5d40378ec7840b27/svg/qui.svg
+          gethomepage.dev/description: Torrent Client
         hostnames:
           - "{{ .Release.Name }}.cloudjur.com"
         parentRefs:
