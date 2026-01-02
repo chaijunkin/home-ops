@@ -131,6 +131,7 @@ resource "authentik_stage_user_write" "enrollment-user-write" {
   name                     = "enrollment-user-write"
   create_users_as_inactive = false
   create_users_group       = authentik_group.default["users"].id
+  user_type = "internal"
 }
 
 resource "authentik_stage_user_login" "source-enrollment-login" {

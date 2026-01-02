@@ -1,11 +1,14 @@
 locals {
   authentik_groups = {
-    downloads      = { name = "Downloads" }
-    home           = { name = "Home" }
-    infrastructure = { name = "Infrastructure" }
-    media          = { name = "Media" }
-    monitoring     = { name = "Monitoring" }
-    users          = { name = "users" }
+    # downloads      = { name = "Downloads" }
+    private      = { name = "Private" }
+    internal      = { name = "Internal" }
+    public      = { name = "Public" }
+    # home           = { name = "Home" }
+    # infrastructure = { name = "Infrastructure" }
+    # media          = { name = "Media" }
+    # monitoring     = { name = "Monitoring" }
+    users          = { name = "users" } # default      = { name = "Default" }
     superusers     = { name = "superusers" }
   }
 }
