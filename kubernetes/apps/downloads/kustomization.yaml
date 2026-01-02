@@ -7,9 +7,8 @@ components:
 resources:
   - ./autobrr/ks.yaml
   - ./autobangumi/ks.yaml
-  - ./bazarr/ks.yaml #
+  - ./bazarr/ks.yaml
   - ./calibre-downloader/ks.yaml
-  - ./cross-seed/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./lidarr/ks.yaml
   - ./metube/ks.yaml
