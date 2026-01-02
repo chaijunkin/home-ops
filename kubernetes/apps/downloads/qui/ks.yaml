@@ -22,3 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: qui
+  components:
+    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/volsync
