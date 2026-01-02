@@ -156,3 +156,17 @@ variable "authentik_token" {
   description = "Authentik Token"
   sensitive   = true
 }
+
+variable "vaultwarden_id" {
+  type        = string
+  description = "Vaultwarden Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "vaultwarden_secret" {
+  type        = string
+  description = "Vaultwarden Client Secret"
+  sensitive   = true
+  default     = null
+}

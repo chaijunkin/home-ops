@@ -113,6 +113,14 @@ locals {
       redirect_uri  = "https://karakeep.${var.public_domain}/api/auth/callback/custom"
       launch_url    = "https://karakeep.${var.public_domain}/auth"
     },
+    vaultwarden = {
+      client_id     = var.vaultwarden_id
+      client_secret = var.vaultwarden_secret
+      group         = "media"
+      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/vaultwarden.svg"
+      redirect_uri  = "https://vw.${var.public_domain}/identity/connect/oidc-signin"
+      launch_url    = "https://vw.${var.public_domain}/"
+    },
   }
 }
 
@@ -177,7 +185,7 @@ module "oauth2-opencloud-android" {
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
-  client_type      = "public"
+  client_type        = "public"
   client_id          = "OpenCloudAndroid"
   # client_secret      = "dInFYGV33xKzhbRmpqQltYNdfLdJIfJ9L5ISoKhNoT9qZftpdWSP71VrpGR9pmoD"
   redirect_uris = ["oc://android.opencloud.eu"]
@@ -190,7 +198,7 @@ module "oauth2-opencloud-desktop" {
   auth_groups        = [authentik_group.default["media"].id]
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
-  client_type      = "public"
+  client_type        = "public"
   client_id          = "OpenCloudDesktop"
   # client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
   redirect_uris = [
