@@ -19,7 +19,7 @@ spec:
       EXT_AUTH_BACKEND_REF: ak-outpost-proxy-outpost-internal
   components:
     - ../../../../components/ext-auth
-    - ../../../../components/ext-auth/two
+    # - ../../../../components/ext-auth/two
   sourceRef:
     kind: GitRepository
     name: flux-system

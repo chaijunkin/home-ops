@@ -119,20 +119,20 @@ spec:
           gethomepage.dev/name: Echo Server External
           gethomepage.dev/description: HTTP & HTTPS Echo Server External
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
-      ext-auth:
-        hostnames:
-          - echo-server-ext-auth.cloudjur.com
-        parentRefs:
-          - name: envoy-external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - port: *port
-                name: echo-server
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Management Tools
-          gethomepage.dev/name: Echo Server External Auth
-          gethomepage.dev/description: HTTP & HTTPS Echo Server External Auth
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+      # ext-auth:
+      #   hostnames:
+      #     - echo-server-ext-auth.cloudjur.com
+      #   parentRefs:
+      #     - name: envoy-external
+      #       namespace: network
+      #       sectionName: https
+      #   rules:
+      #     - backendRefs:
+      #         - port: *port
+      #           name: echo-server
+      #   annotations:
+      #     gethomepage.dev/enabled: "true"
+      #     gethomepage.dev/group: Management Tools
+      #     gethomepage.dev/name: Echo Server External Auth
+      #     gethomepage.dev/description: HTTP & HTTPS Echo Server External Auth
+      #     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
