@@ -16,6 +16,10 @@ locals {
       group       = "public"
       slug        = "echo-server-ext-auth"
       auth_groups = [authentik_group.default["public"].id]
+      # ignore_paths       = <<-EOT
+      # /rest/*
+      # /share/*
+      # EOT
     },
     {
       name        = "echo-server-int-auth"
@@ -24,6 +28,10 @@ locals {
       group       = "public"
       slug        = "echo-server-int-auth"
       auth_groups = [authentik_group.default["public"].id]
+      # ignore_paths       = <<-EOT
+      # /rest/*
+      # /share/*
+      # EOT
     }
   ]
 }
@@ -43,6 +51,7 @@ module "proxy" {
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
   auth_groups        = each.value.auth_groups
+  ignore_paths       = each.value.ignore_path
 }
 
 # data "authentik_service_connection_kubernetes" "local" {
