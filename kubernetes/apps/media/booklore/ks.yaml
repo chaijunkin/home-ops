@@ -1,0 +1,28 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: booklore
+  namespace: media
+spec:
+  targetNamespace: media
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: booklore
+  path: ./kubernetes/apps/media/booklore/app
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      APP: booklore
+      SUBDOMAIN: books
+      VOLSYNC_CAPACITY: 2Gi
+  prune: true
+  wait: false
+  interval: 24h
+  timeout: 5m
+  components:
+    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/volsync

@@ -6,6 +6,7 @@ components:
   - ../../components/common
 resources:
   # # # Flux-Kustomizations
+  - ./booklore/ks.yaml
   - ./calibre-web-automated/ks.yaml
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
