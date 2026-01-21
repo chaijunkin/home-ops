@@ -9,7 +9,7 @@ spec:
     operation: copy
   url: oci://ghcr.io/grafana/helm-charts/grafana
   ref:
-    tag: 10.4.2
+    tag: 10.5.8
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -377,6 +377,15 @@ spec:
           revision: 1
           datasource:
             - {name: DS_AFRANET_PROMETHEUS, value: Prometheus}
+        envoy-overview:
+          datasource: Prometheus
+          url: https://grafana.com/api/dashboards/24459/revisions/1/download
+        envoy-upstream:
+          datasource: Prometheus
+          url: https://grafana.com/api/dashboards/24457/revisions/1/download
+        envoy-downstream:
+          datasource: Prometheus
+          url: https://grafana.com/api/dashboards/24458/revisions/1/download
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
@@ -585,7 +594,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 5.21.3
+    tag: 5.21.4
   url: oci://ghcr.io/grafana/helm-charts/grafana-operator
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2

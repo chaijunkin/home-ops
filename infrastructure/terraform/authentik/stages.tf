@@ -63,7 +63,7 @@ resource "authentik_stage_authenticator_validate" "authentication-passkey-valida
 }
 
 resource "authentik_stage_user_login" "authentication-login" {
-  name = "authentication-login"
+  name             = "authentication-login"
   session_duration = "hours=24"
 }
 
@@ -83,10 +83,10 @@ resource "authentik_stage_identification" "recovery-identification" {
 
 resource "authentik_stage_email" "recovery-email" {
   name                     = "recovery-email"
-  # activate_user_on_success = true
+  activate_user_on_success = true # i think provider update set it to false by default
   # use_global_settings      = true
-  template                 = "email/password_reset.html"
-  subject                  = "Password recovery"
+  template = "email/password_reset.html"
+  subject  = "Password recovery"
 }
 
 resource "authentik_stage_prompt" "password-change-prompt" {
@@ -131,6 +131,7 @@ resource "authentik_stage_user_write" "enrollment-user-write" {
   name                     = "enrollment-user-write"
   create_users_as_inactive = false
   create_users_group       = authentik_group.default["users"].id
+  user_type = "internal"
 }
 
 resource "authentik_stage_user_login" "source-enrollment-login" {

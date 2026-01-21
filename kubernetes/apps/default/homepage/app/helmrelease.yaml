@@ -35,10 +35,10 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v1.8.0
+              tag: v1.9.0
             env:
               TZ: Asia/Kuala_Lumpur
-              HOMEPAGE_ALLOWED_HOSTS: "{{ .Release.Name }}.cloudjur.com"
+              HOMEPAGE_ALLOWED_HOSTS: "h.cloudjur.com"
             envFrom:
               - secretRef:
                   name: homepage-secret
@@ -58,6 +58,7 @@ spec:
       app:
         hostnames:
           - homepage.cloudjur.com
+          - h.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network

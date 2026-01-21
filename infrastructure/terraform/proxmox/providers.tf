@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket   = "tf-state-bucket-cloudjur-com"
-    key      = "terraform.tfstate"
+    bucket       = "tf-state-bucket-cloudjur-com"
+    key          = "terraform.tfstate"
     use_lockfile = true
     endpoints = {
       s3 = "https://8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com"
@@ -22,11 +22,11 @@ terraform {
     }
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.90.0"
+      version = "0.93.0"
     }
     talos = {
       source  = "siderolabs/talos"
-      version = "0.10.0"
+      version = "0.10.1"
     }
   }
 }
