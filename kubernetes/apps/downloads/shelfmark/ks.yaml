@@ -2,21 +2,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: calibre-downloader
+  name: shelfmark
   namespace: downloads
 spec:
   targetNamespace: downloads
   commonMetadata:
     labels:
-      app.kubernetes.io/name: calibre-downloader
-  path: ./kubernetes/apps/downloads/calibre-downloader/app
+      app.kubernetes.io/name: shelfmark
+  path: ./kubernetes/apps/downloads/shelfmark/app
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   postBuild:
     substitute:
-      APP: calibre-downloader
+      APP: shelfmark
       SUBDOMAIN: dl-books
       VOLSYNC_CAPACITY: 2Gi
   prune: true
