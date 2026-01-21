@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/karakeep-app/karakeep
-              tag: 0.29.3@sha256:bbdc3274bbe510cac32551b2a8825019f61d23c261ddb8baa9bb4311caed31c4
+              tag: 0.30.0@sha256:2724d4a9a6d13a7fa3babf53b9245767aae56c34f06042a8463ee983c6b41caf
             envFrom:
               - secretRef:
                   name: karakeep-secret
@@ -117,7 +117,7 @@ spec:
           app:
             image:
               repository: docker.io/getmeili/meilisearch
-              tag: v1.31.0@sha256:1af40ecce0b3a21f9a4ff14defaa80da602af3d456ef40a81e83e20043e97485
+              tag: v1.33.1@sha256:144439b059f67976878bda75ec6b4919b14c3f740bfc8b55246e7c126c7cd857
             args:
               - /bin/meilisearch
               - --experimental-dumpless-upgrade

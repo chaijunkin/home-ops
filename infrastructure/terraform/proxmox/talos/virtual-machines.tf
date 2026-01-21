@@ -103,12 +103,12 @@ resource "proxmox_virtual_environment_vm" "this" {
       ### VIRTUAL
       device = "hostpci0"
       # mapping = "iGPU"
-      pcie    = true
-      rombar  = true
-      xvga    = false
+      pcie   = true
+      rombar = true
+      xvga   = false
 
-      id     = "0000:00:02.0"
-      mdev   = "i915-GVTg_V5_8"
+      id   = "0000:00:02.0"
+      mdev = "i915-GVTg_V5_8"
       # rombar = true
 
       # # pcie   = false

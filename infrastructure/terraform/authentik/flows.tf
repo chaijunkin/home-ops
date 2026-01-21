@@ -77,6 +77,10 @@ resource "authentik_flow" "invalidation" {
   # background         = "https://placeholder.jpeg"
 }
 
+# data "authentik_flow" "default-password-change-write" {
+#   slug = "default-password-change-write"
+# }
+
 resource "authentik_flow_stage_binding" "invalidation-flow-binding-00" {
   target = authentik_flow.invalidation.uuid
   stage  = authentik_stage_user_logout.invalidation-logout.id

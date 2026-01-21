@@ -42,9 +42,9 @@ endpoints:
   - name: echo-server-ext
     url: https://echo-server-ext.cloudjur.com
     <<: *public-defaults
-  - name: echo-server-ext-auth
-    url: https://echo-server-ext-auth.cloudjur.com
-    <<: *public-defaults
+  # - name: echo-server-ext-auth
+  #   url: https://echo-server-ext-auth.cloudjur.com
+  #   <<: *public-defaults
   - name: gatus
     url: https://gatus.cloudjur.com
     <<: *public-defaults
