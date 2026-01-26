@@ -32,7 +32,7 @@ spec:
           shelfmark:
             image:
               repository: ghcr.io/calibrain/shelfmark
-              tag: v1.0.1@sha256:1efbbd45ea434cb4f5abde217e19c35280ea1de9eb2c0baa37e6b8cddac32fae
+              tag: v1.0.3@sha256:85adbbce1eb36ff32bd9ff36fbbd1720a7bd00ca1b592427b9a07b4b3f198a3d
             command:
               - gunicorn
             args:
