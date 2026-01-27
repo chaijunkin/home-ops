@@ -38,7 +38,7 @@ spec:
               tag: v1.9.0
             env:
               TZ: Asia/Kuala_Lumpur
-              HOMEPAGE_ALLOWED_HOSTS: "h.cloudjur.com"
+              HOMEPAGE_ALLOWED_HOSTS: "h.cloudjur.com,homepage.cloudjur.com"
             envFrom:
               - secretRef:
                   name: homepage-secret
