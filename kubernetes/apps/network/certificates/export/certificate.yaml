@@ -9,7 +9,10 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: cloudjur.com
+  # commonName: cloudjur.com
+  usages:
+    - digital signature
+  duration: 160h
   dnsNames:
     - cloudjur.com
     - "*.cloudjur.com"

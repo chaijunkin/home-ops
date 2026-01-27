@@ -172,7 +172,8 @@ spec:
               - path: /books
                 subPath: Books
               - path: /bookdrop
-                subPath: Books/bookdrop
+                subPath: Books/bookdrop # Downloads/Books is used by calibre-web-automated
+
       mysqld:
         type: emptyDir
         medium: Memory
