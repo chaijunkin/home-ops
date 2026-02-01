@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/linux-utility
-              tag: rolling@sha256:8f71e42242dcf3563434fbaa2cd3bac3b2d02ed93ba2cbd7e12bfce822770b77
+              tag: rolling@sha256:474ca66219160454aee790c98907e66deca145a6191bea088fcde6eaf3e5c776
             command:
               - /bin/sh
               - -c
