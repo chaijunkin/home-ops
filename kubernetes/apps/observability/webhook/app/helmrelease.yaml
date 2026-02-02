@@ -25,7 +25,7 @@ spec:
           copy-kubectl:
             image:
               repository: ghcr.io/chaijunkin/linux-utility
-              tag: rolling@sha256:8f71e42242dcf3563434fbaa2cd3bac3b2d02ed93ba2cbd7e12bfce822770b77
+              tag: rolling@sha256:52aaf569e9729761bd857630df10beda18f5d3868d10121edbeaa9fb85347aa7
             command:
               - /bin/sh
               - -c
