@@ -96,7 +96,7 @@ spec:
           - seerr.cloudjur.com
           - requests.cloudjur.com
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
             sectionName: https
         rules:
