@@ -9,7 +9,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/chaijunkin/bw
-          tag: 2025.12.1@sha256:17e0cff610774f941e54b391194abf42a21848f23eb52225350411fcc4fb195e
+          tag: 2026.1.0@sha256:8950cc358e7db5af60685fb75c79a0bf65b2595f28a35d0bc56a435c13a81a44
         envFrom:
           - secretRef:
               name: bitwarden-cli
