@@ -60,6 +60,7 @@ spec:
       extraArgs:
         - --oidc-ca-file=/etc/ssl/certs/headlamp-ca/ca.crt
       oidc:
+        usePKCE: true
         secret:
           create: false
         externalSecret:
