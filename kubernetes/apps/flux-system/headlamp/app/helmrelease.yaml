@@ -40,9 +40,9 @@ spec:
       pullPolicy: IfNotPresent
       # -- Container image tag, If "" uses appVersion in Chart.yaml
       tag: "v0.40.1"
-    env:
-      - name: OIDC_CA_FILE
-        value: /etc/ssl/certs/headlamp-ca/ca.crt
+    # env:
+    #   - name: OIDC_CA_FILE
+    #     value: /etc/ssl/certs/headlamp-ca/ca.crt
     podAnnotations:
       reloader.stakater.com/auto: "true"
     fullnameOverride: headlamp
@@ -60,7 +60,8 @@ spec:
       pluginsDir: /build/plugins
       inCluster: true
       extraArgs:
-        - --oidc-ca-file=/etc/ssl/certs/headlamp-ca/ca.crt
+        # - --oidc-ca-file=/etc/ssl/certs/headlamp-ca/ca.crt
+        - --oidc-skip-tls-verify
       oidc:
         # usePKCE: true
         secret:
@@ -77,18 +78,18 @@ spec:
     volumeMounts:
       - mountPath: /build/plugins
         name: headlamp-plugins
-      - mountPath: /etc/ssl/certs/headlamp-ca
-        name: headlamp-ca-cert
-        readOnly: true
+      # - mountPath: /etc/ssl/certs/headlamp-ca
+      #   name: headlamp-ca-cert
+      #   readOnly: true
     volumes:
       - name: headlamp-plugins
         emptyDir: {}
-      - name: headlamp-ca-cert
-        secret:
-          secretName: headlamp-ca-cert
-          items:
-            - key: ca.crt
-              path: ca.crt
+      # - name: headlamp-ca-cert
+      #   secret:
+      #     secretName: headlamp-ca-cert
+      #     items:
+      #       - key: ca.crt
+      #         path: ca.crt
     service:
       type: LoadBalancer
       loadBalancerIP: 10.10.30.69
