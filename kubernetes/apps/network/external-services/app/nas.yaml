@@ -1,99 +1,5 @@
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: nas
-# spec:
-#   ports:
-#     - name: https
-#       protocol: TCP
-#       port: 9090
-#       targetPort: 9090
-# ---
-# apiVersion: gateway.networking.k8s.io/v1
-# kind: HTTPRoute
-# metadata:
-#   name: nas
-#   namespace: network
-#   labels:
-#     app.kubernetes.io/name: nas
-#     app.kubernetes.io/instance: nas
-# spec:
-#   parentRefs:
-#     - name: envoy-internal
-#       namespace: network
-#       sectionName: https
-#   hostnames:
-#     - nas.cloudjur.com
-#   rules:
-#     - backendRefs:
-#         - name: nas
-#           port: 9090
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: nas
-spec:
-  ports:
-    - name: https
-      protocol: TCP
-      port: 443
-      appProtocol: https
-      targetPort: 9090
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io_backendtlspolicy_v1.json
-apiVersion: gateway.networking.k8s.io/v1
-kind: BackendTLSPolicy
-metadata:
-  name: nas-backend-tls
-spec:
-  targetRefs:
-    - group: ""
-      kind: Service
-      name: nas
-  validation:
-    wellKnownCACertificates: System
-    hostname: nas.cloudjur.com
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: BackendTrafficPolicy
-metadata:
-  name: nas-backend
-  namespace: network
-spec:
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: nas
-  useClientProtocol: true
-  connection:
-    bufferLimit: 8Mi
-  timeout:
-    http:
-      requestTimeout: 0s
-      connectionIdleTimeout: 3600s
----
-apiVersion: discovery.k8s.io/v1
-kind: EndpointSlice
-metadata:
-  name: nas
-  labels:
-    kubernetes.io/service-name: nas
-    endpointslice.kubernetes.io/managed-by: cluster-admins
-addressType: IPv4
-ports:
-  - name: https
-    protocol: TCP
-    port: 9090
-endpoints:
-  - addresses:
-      - 10.10.30.10
-      - 192.168.1.10
-    conditions:
-      ready: true # https://github.com/argoproj/argo-cd/issues/15554
----
+# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
@@ -114,18 +20,42 @@ spec:
             type: PathPrefix
             value: /
       backendRefs:
-        - name: nas
-          port: 443
-# ---
-# apiVersion: gateway.networking.k8s.io/v1alpha2
-# kind: TLSRoute
-# metadata:
-#   name: nas
-#   annotations:
-#     external-dns.alpha.kubernetes.io/hostname: 10.10.30.25
-# spec:
-#   parentRefs:
-#     - {name: envoy-internal, namespace: network, port: 6443}
-#   hostnames: [nas.cloudjur.com]
-#   rules:
-#     - backendRefs: [{name: nas, port: 443}]
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: nas
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.envoyproxy.io/backend_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: nas
+  namespace: network
+spec:
+  endpoints:
+    - ip:
+        address: 10.10.30.10
+        port: 9090
+    - ip:
+        address: 192.168.1.10
+        port: 9090
+  tls:
+    insecureSkipVerify: true
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: nas
+  namespace: network
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: nas
+  useClientProtocol: true
+  connection:
+    bufferLimit: 8Mi
+  timeout:
+    http:
+      requestTimeout: 0s
+      connectionIdleTimeout: 3600s
