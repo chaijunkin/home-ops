@@ -56,8 +56,8 @@ spec:
     config:
       pluginsDir: /build/plugins
       inCluster: true
-      extraArgs:
-        - --oidc-skip-tls-verify
+      # extraArgs:
+      #   - --oidc-skip-tls-verify
       oidc:
         # usePKCE: true
         secret:
@@ -74,18 +74,18 @@ spec:
     volumeMounts:
       - mountPath: /build/plugins
         name: headlamp-plugins
-      - mountPath: /etc/ssl/certs/headlamp-ca
-        name: headlamp-ca-cert
-        readOnly: true
+      # - mountPath: /etc/ssl/certs/headlamp-ca
+      #   name: headlamp-ca-cert
+      #   readOnly: true
     volumes:
       - name: headlamp-plugins
         emptyDir: {}
-      - name: headlamp-ca-cert
-        secret:
-          secretName: headlamp-ca-cert
-          items:
-            - key: ca.crt
-              path: ca.crt
+      # - name: headlamp-ca-cert
+      #   secret:
+      #     secretName: headlamp-ca-cert
+      #     items:
+      #       - key: ca.crt
+      #         path: ca.crt
     service:
       type: LoadBalancer
       loadBalancerIP: 10.10.30.69
