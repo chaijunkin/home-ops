@@ -41,9 +41,6 @@ spec:
       # -- Container image tag, If "" uses appVersion in Chart.yaml
       tag: "v0.40.1"
 
-    extraArgs:
-      - --oidc-ca-file=/etc/ssl/certs/headlamp-ca/ca.crt
-
     podAnnotations:
       reloader.stakater.com/auto: "true"
     fullnameOverride: headlamp
@@ -60,6 +57,8 @@ spec:
     config:
       pluginsDir: /build/plugins
       inCluster: true
+      extraArgs:
+        - --oidc-ca-file=/etc/ssl/certs/headlamp-ca/ca.crt
       oidc:
         secret:
           create: false
