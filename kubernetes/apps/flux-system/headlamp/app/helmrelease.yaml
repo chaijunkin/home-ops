@@ -40,9 +40,6 @@ spec:
       pullPolicy: IfNotPresent
       # -- Container image tag, If "" uses appVersion in Chart.yaml
       tag: "v0.40.1"
-    env:
-      - name: OIDC_CA_FILE
-        value: /etc/ssl/certs/headlamp-ca/ca.crt
     podAnnotations:
       reloader.stakater.com/auto: "true"
     fullnameOverride: headlamp
