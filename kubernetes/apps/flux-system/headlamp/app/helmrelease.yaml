@@ -60,7 +60,6 @@ spec:
       pluginsDir: /build/plugins
       inCluster: true
       extraArgs:
-        - --oidc-ca-file=/etc/ssl/certs/headlamp-ca/ca.crt
         - --oidc-skip-tls-verify
       oidc:
         # usePKCE: true
