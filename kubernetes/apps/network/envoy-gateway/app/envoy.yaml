@@ -133,7 +133,7 @@ spec:
           - kind: Secret
             name: cloudjur-com-tls
     - protocol: TLS
-      port: 6443
+      port: 443
       name: tls-passthrough
       hostname: "*.cloudjur.com"
       tls:

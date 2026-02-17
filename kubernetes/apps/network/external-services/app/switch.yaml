@@ -12,9 +12,9 @@ spec:
   clusterIP: None
   ports:
     - name: http
-      port: &port 80
+      port: 80
       protocol: TCP
-      targetPort: *port
+      targetPort: 80
 ---
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
@@ -33,6 +33,7 @@ endpoints:
   - addresses:
       - "192.168.1.2"
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:

@@ -1,51 +1,53 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.networking.k8s.io/httproute_v1.json
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
+apiVersion: v1
+kind: Service
 metadata:
-  name: pve
+  name: &app pve
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
 spec:
+  ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8006
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: &app pve
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+    kubernetes.io/service-name: *app
+    endpointslice.kubernetes.io/managed-by: *app
+addressType: IPv4
+endpoints:
+  - addresses:
+      - 10.10.30.10
+      - 192.168.1.10
+    conditions:
+      ready: true
+ports:
+  - name: https
+    port: 8006
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.networking.k8s.io/tlsroute_v1alpha2.json
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TLSRoute
+metadata:
+  name: &app pve
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  hostnames: ["pve.cloudjur.com"]
   parentRefs:
     - name: envoy-internal
       namespace: network
-      sectionName: https
-  hostnames:
-    - pve.cloudjur.com
+      sectionName: tls-passthrough
   rules:
     - backendRefs:
-        - group: gateway.envoyproxy.io
-          kind: Backend
-          name: pve
----
-# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.envoyproxy.io/backend_v1alpha1.json
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: Backend
-metadata:
-  name: pve
-spec:
-  endpoints:
-    - ip:
-        address: 192.168.1.10
-        port: 8006
-    - ip:
-        address: 10.10.30.10
-        port: 8006
-  tls:
-    insecureSkipVerify: true
----
-# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
-apiVersion: gateway.envoyproxy.io/v1alpha1
-kind: BackendTrafficPolicy
-metadata:
-  name: pve
-spec:
-  mergeType: StrategicMerge
-  loadBalancer:
-    consistentHash:
-      type: SourceIP
-    type: ConsistentHash
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: HTTPRoute
-      name: pve
-
+        - name: *app
+          port: 443
