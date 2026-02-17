@@ -11,6 +11,12 @@ locals {
     users          = { name = "users" } # default      = { name = "Default" }
     superusers     = { name = "superusers" }
   }
+
+  # Map of all groups (both managed and data sources) for use in policy bindings
+  all_groups = merge(
+    { for k, v in authentik_group.default : k => v },
+    { admins = data.authentik_group.admins }
+  )
 }
 
 data "authentik_user" "akadmin" {
@@ -49,7 +55,7 @@ resource "authentik_policy_binding" "application_policy_binding" {
   for_each = local.applications
 
   target = authentik_application.application[each.key].uuid
-  group  = authentik_group.default[each.value.group].id
+  group  = local.all_groups[each.value.group].id
   order  = 0
 }
 

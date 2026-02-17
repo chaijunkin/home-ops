@@ -10,6 +10,8 @@ metadata:
     gethomepage.dev/name: Headlamp
     gethomepage.dev/description: Kubernetes Dashboard
     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/headlamp.png
+    # Session affinity for OIDC to work properly with multiple replicas
+    # https://github.com/kubernetes-sigs/headlamp/issues/4019
 spec:
   hostnames: ["headlamp.cloudjur.com"]
   parentRefs:

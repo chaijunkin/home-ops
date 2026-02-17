@@ -51,7 +51,7 @@ module "proxy" {
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
   auth_groups        = each.value.auth_groups
-  ignore_paths       = each.value.ignore_path
+  # ignore_paths       = each.value.ignore_path
 }
 
 # data "authentik_service_connection_kubernetes" "local" {
@@ -77,7 +77,7 @@ locals {
     headlamp = {
       client_id     = var.headlamp_id
       client_secret = var.headlamp_secret
-      group         = "private"
+      group         = "admins"
       icon_url      = "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/src/resources/icon-dark.svg"
       redirect_uri  = "https://headlamp.${var.public_domain}/oidc-callback"
       launch_url    = "https://headlamp.${var.public_domain}/"
@@ -157,7 +157,7 @@ resource "authentik_application" "application" {
   name               = title(each.key)
   slug               = each.key
   protocol_provider  = authentik_provider_oauth2.oauth2[each.key].id
-  group              = authentik_group.default[each.value.group].name
+  group              = local.all_groups[each.value.group].id
   open_in_new_tab    = true
   meta_icon          = each.value.icon_url
   meta_launch_url    = each.value.launch_url
