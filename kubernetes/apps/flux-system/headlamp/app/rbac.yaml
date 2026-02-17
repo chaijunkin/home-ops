@@ -34,3 +34,6 @@ subjects:
   - kind: User
     name: junkin@cloudjur.com
     apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: superuser
+    apiGroup: rbac.authorization.k8s.io
