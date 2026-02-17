@@ -1,0 +1,45 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/infra.contrib.fluxcd.io/terraform_v1alpha2.json
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: minio
+  namespace: flux-system
+spec:
+  approvePlan: auto
+  interval: 12h
+  path: ./s3/minio
+  sourceRef:
+    kind: OCIRepository
+    name: terraform
+    namespace: flux-system
+  backendConfig:
+    customConfiguration: |
+      backend "s3" {
+        bucket       = "tf-state-bucket-cloudjur-com"
+        key          = "minio.terraform.tfstate"
+        region       = "auto"
+        endpoints = {
+          s3 = "https://8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com"
+        }
+        skip_credentials_validation = true
+        skip_metadata_api_check     = true
+        skip_region_validation      = true
+        skip_requesting_account_id  = true
+        skip_s3_checksum            = true
+        use_path_style              = true
+      }
+  backendConfigsFrom:
+    - kind: Secret
+      name: terraform-backend-secret
+  runnerPodTemplate:
+    spec:
+      env: []
+      volumeMounts:
+        - name: sops
+          mountPath: /home/runner/.config/sops/age/keys.txt
+          subPath: keys.txt
+      volumes:
+        - name: sops
+          secret:
+            secretName: tf-controller-sops-secret
