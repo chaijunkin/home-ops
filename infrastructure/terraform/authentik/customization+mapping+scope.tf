@@ -29,6 +29,17 @@ resource "authentik_property_mapping_provider_scope" "openid-nextcloud" {
   expression = file("./expressions/openid-scope-nextcloud.py")
 }
 
+resource "authentik_property_mapping_provider_scope" "email_verified" {
+  name       = "Email Verified Scope"
+  scope_name = "email"
+  expression = <<-EOT
+    return {
+      "email": user.email,
+      "email_verified": True,
+    }
+  EOT
+}
+
 
 # resource "authentik_policy_expression" "user-settings-authorization" {
 #   name       = "user-settings-authorization"

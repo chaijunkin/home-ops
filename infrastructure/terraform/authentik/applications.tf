@@ -65,70 +65,80 @@ module "proxy" {
 # }
 
 locals {
+  default_property_mappings = data.authentik_property_mapping_provider_scope.oauth2.ids
+
   applications = {
     grafana = {
-      client_id     = var.grafana_id
-      client_secret = var.grafana_secret
-      group         = "internal"
-      icon_url      = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/grafana.png"
-      redirect_uri  = "https://grafana.${var.public_domain}/login/generic_oauth"
-      launch_url    = "https://grafana.${var.public_domain}/login/generic_oauth"
+      client_id         = var.grafana_id
+      client_secret     = var.grafana_secret
+      group             = "internal"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/grafana.png"
+      redirect_uri      = "https://grafana.${var.public_domain}/login/generic_oauth"
+      launch_url        = "https://grafana.${var.public_domain}/login/generic_oauth"
+      property_mappings = local.default_property_mappings
     },
     headlamp = {
-      client_id     = var.headlamp_id
-      client_secret = var.headlamp_secret
-      group         = "admins"
-      icon_url      = "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/src/resources/icon-dark.svg"
-      redirect_uri  = "https://headlamp.${var.public_domain}/oidc-callback"
-      launch_url    = "https://headlamp.${var.public_domain}/"
+      client_id         = var.headlamp_id
+      client_secret     = var.headlamp_secret
+      group             = "admins"
+      icon_url          = "https://raw.githubusercontent.com/headlamp-k8s/headlamp/refs/heads/main/frontend/src/resources/icon-dark.svg"
+      redirect_uri      = "https://headlamp.${var.public_domain}/oidc-callback"
+      launch_url        = "https://headlamp.${var.public_domain}/"
+      property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.email_verified.id])
     },
     romm = {
-      client_id     = var.romm_id
-      client_secret = var.romm_secret
-      group         = "users"
-      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/romm.svg"
-      redirect_uri  = "https://romm.${var.public_domain}/api/oauth/openid"
-      launch_url    = "https://romm.${var.public_domain}/"
+      client_id         = var.romm_id
+      client_secret     = var.romm_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/romm.svg"
+      redirect_uri      = "https://romm.${var.public_domain}/api/oauth/openid"
+      launch_url        = "https://romm.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
     },
     jellyfin = {
-      client_id     = var.jellyfin_id
-      client_secret = var.jellyfin_secret
-      group         = "users"
-      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/jellyfin.svg"
-      redirect_uri  = "https://jellyfin.${var.public_domain}/sso/OID/redirect/authentik"
-      launch_url    = "https://jellyfin.${var.public_domain}/sso/OID/start/authentik"
+      client_id         = var.jellyfin_id
+      client_secret     = var.jellyfin_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/jellyfin.svg"
+      redirect_uri      = "https://jellyfin.${var.public_domain}/sso/OID/redirect/authentik"
+      launch_url        = "https://jellyfin.${var.public_domain}/sso/OID/start/authentik"
+      property_mappings = local.default_property_mappings
     },
     open-webui = {
-      client_id     = var.open_webui_id
-      client_secret = var.open_webui_secret
-      group         = "users"
-      icon_url      = "https://raw.githubusercontent.com/open-webui/open-webui/refs/heads/main/static/favicon.png"
-      redirect_uri  = "https://chat.${var.public_domain}/oauth/oidc/callback"
-      launch_url    = "https://chat.${var.public_domain}/auth"
+      client_id         = var.open_webui_id
+      client_secret     = var.open_webui_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/open-webui/open-webui/refs/heads/main/static/favicon.png"
+      redirect_uri      = "https://chat.${var.public_domain}/oauth/oidc/callback"
+      launch_url        = "https://chat.${var.public_domain}/auth"
+      property_mappings = local.default_property_mappings
     },
     calibre-web-automated = {
-      client_id     = var.calibre_web_automated_id
-      client_secret = var.calibre_web_automated_secret
-      group         = "users"
-      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/calibre-web.png"
+      client_id         = var.calibre_web_automated_id
+      client_secret     = var.calibre_web_automated_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/calibre-web.png"
       redirect_uri  = "https://books.${var.public_domain}/oauth/oidc/callback"
       launch_url    = "https://books.${var.public_domain}/auth"
+      property_mappings = local.default_property_mappings
     },
     karakeep = {
-      client_id     = var.karakeep_id
-      client_secret = var.karakeep_secret
-      group         = "users"
-      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/karakeep.png"
+      client_id         = var.karakeep_id
+      client_secret     = var.karakeep_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/karakeep.png"
       redirect_uri  = "https://karakeep.${var.public_domain}/api/auth/callback/custom"
       launch_url    = "https://karakeep.${var.public_domain}/auth"
+      property_mappings = local.default_property_mappings
     },
     vaultwarden = {
-      client_id     = var.vaultwarden_id
-      client_secret = var.vaultwarden_secret
-      group         = "users"
-      icon_url      = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/vaultwarden.svg"
+      client_id         = var.vaultwarden_id
+      client_secret     = var.vaultwarden_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/vaultwarden.svg"
       redirect_uri  = "https://vw.${var.public_domain}/identity/connect/oidc-signin"
       launch_url    = "https://vw.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
     },
   }
 }
@@ -141,7 +151,7 @@ resource "authentik_provider_oauth2" "oauth2" {
   authorization_flow    = authentik_flow.provider-authorization-implicit-consent.uuid
   authentication_flow   = authentik_flow.authentication.uuid
   invalidation_flow     = data.authentik_flow.default-provider-invalidation-flow.id
-  property_mappings     = data.authentik_property_mapping_provider_scope.oauth2.ids
+  property_mappings     = each.value.property_mappings
   access_token_validity = "hours=4"
   signing_key           = data.authentik_certificate_key_pair.generated.id
   allowed_redirect_uris = [
