@@ -32,14 +32,6 @@ spec:
   backendConfigsFrom:
     - kind: Secret
       name: terraform-backend-secret
-  runnerPodTemplate:
-    spec:
-      env: []
-      volumeMounts:
-        - name: sops
-          mountPath: /home/runner/.config/sops/age/keys.txt
-          subPath: keys.txt
-      volumes:
-        - name: sops
-          secret:
-            secretName: tf-controller-sops-secret
+  varsFrom:
+    - kind: Secret
+      name: terraform-secret
