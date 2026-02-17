@@ -76,12 +76,8 @@ spec:
           secretKeyRef:
             name: headlamp-secret
             key: OIDC_VALIDATOR_ISSUER_URL
-      - name: OIDC_CA_CERT
-        valueFrom:
-          secretKeyRef:
-            name: headlamp-secret
-            key: OIDC_CA_CERT
-            optional: true
+      - name: OIDC_CA_FILE
+        value: /etc/ssl/certs/headlamp-ca/ca.crt
     initContainers:
       - image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:v0.5.0@sha256:05c3df203b2ff82e09e944e31cd16ab66429f37df7566ba0d47285add7c78c5a
         command:
@@ -110,9 +106,18 @@ spec:
     volumeMounts:
       - mountPath: /build/plugins
         name: headlamp-plugins
+      - mountPath: /etc/ssl/certs/headlamp-ca
+        name: headlamp-ca-cert
+        readOnly: true
     volumes:
       - name: headlamp-plugins
         emptyDir: {}
+      - name: headlamp-ca-cert
+        secret:
+          secretName: headlamp-ca-cert
+          items:
+            - key: ca.crt
+              path: ca.crt
     service:
       type: LoadBalancer
       loadBalancerIP: 10.10.30.69
