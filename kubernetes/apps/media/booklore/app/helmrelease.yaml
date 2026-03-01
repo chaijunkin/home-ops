@@ -64,7 +64,7 @@ spec:
           nginx-config:
             image:
               repository: ghcr.io/booklore-app/booklore
-              tag: v1.18.5@sha256:44a39097fcf69e7373b51df0459da052640d07459fb02b429f2c47cceaa32485
+              tag: v2.0.5@sha256:805c387c5e8e99bc3d2277f85f26a28a22ee58546a85438f4fb2f8e174657c1e
             command:
               - /bin/sh
               - -c
@@ -85,7 +85,7 @@ spec:
           booklore:
             image:
               repository: ghcr.io/booklore-app/booklore
-              tag: v1.18.5@sha256:44a39097fcf69e7373b51df0459da052640d07459fb02b429f2c47cceaa32485
+              tag: v2.0.5@sha256:805c387c5e8e99bc3d2277f85f26a28a22ee58546a85438f4fb2f8e174657c1e
             command:
               - java
             args:
@@ -125,7 +125,7 @@ spec:
           nginx:
             image:
               repository: ghcr.io/booklore-app/booklore
-              tag: v1.18.5@sha256:44a39097fcf69e7373b51df0459da052640d07459fb02b429f2c47cceaa32485
+              tag: v2.0.5@sha256:805c387c5e8e99bc3d2277f85f26a28a22ee58546a85438f4fb2f8e174657c1e
             command:
               - nginx
             args:
