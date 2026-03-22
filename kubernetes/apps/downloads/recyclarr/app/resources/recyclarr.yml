@@ -41,6 +41,39 @@ sonarr:
           - name: SDTV
 
     custom_formats:
+      # 1. Penalize Dual Audio / English Dubs
+      - trash_ids:
+          - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
+        assign_scores_to:
+          - name: Anime-Sonarr-V4
+            score: -10000 # This effectively blocks English Dubs
+
+      # 2. Prioritize Chinese Subtitles
+      - names:
+          - Chinese-Subs
+        include:
+          - name: Chinese-Subs
+            specifications:
+              - name: Release Title
+                implementation: ReleaseTitleSpecification
+                value: '\b(CHT|CHS|GB|BIG5|简体|繁体|中文字幕|简日|繁日)\b'
+        assign_scores_to:
+          - name: Anime-Sonarr-V4
+            score: 5000
+
+      # 3. Prioritize Top Chinese Release Groups
+      - names:
+          - Chinese-Release-Groups
+        include:
+          - name: Chinese-Release-Groups
+            specifications:
+              - name: Release Group
+                implementation: ReleaseGroupSpecification
+                value: 'VCB-Studio|LoliHouse|Mikan|SweetSub|EMTP-Raws|Ohys-Raws'
+        assign_scores_to:
+          - name: Anime-Sonarr-V4
+            score: 2000
+
       - trash_ids:
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
