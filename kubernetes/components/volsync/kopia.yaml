@@ -10,7 +10,7 @@ spec:
     template:
       type: Opaque
       data:
-        KOPIA_FS_PATH: /repository
+        # KOPIA_FS_PATH: /repository
         KOPIA_PASSWORD: "{{ .KOPIA_PASSWORD }}"
         KOPIA_REPOSITORY: filesystem:///mnt/repository
   data:
