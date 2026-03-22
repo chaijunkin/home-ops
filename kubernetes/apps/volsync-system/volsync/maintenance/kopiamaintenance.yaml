@@ -9,5 +9,11 @@ spec:
   enabled: true
   trigger:
     schedule: 30 3 * * *
+  moverVolumes:
+    - mountPath: repository
+      volumeSource:
+        nfs:
+          path: /tank/Backup/Volsync
+          server: smb.cloudjur.com
   repository:
     repository: volsync-maintenance-secret

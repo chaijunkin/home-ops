@@ -45,6 +45,12 @@ spec:
     cleanupTempPVC: true
     copyMethod: Snapshot
     enableFileDeletion: true
+    moverVolumes:
+      - mountPath: repository
+        volumeSource:
+          nfs:
+            path: /tank/Backup/Volsync
+            server: smb.cloudjur.com
     moverSecurityContext:
       runAsUser: ${VOLSYNC_PUID:=2000}
       runAsGroup: ${VOLSYNC_PGID:=2000}
@@ -73,6 +79,12 @@ spec:
     cacheStorageClassName: ${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}
     compression: zstd-fastest
     copyMethod: Snapshot
+    moverVolumes:
+      - mountPath: repository
+        volumeSource:
+          nfs:
+            path: /tank/Backup/Volsync
+            server: smb.cloudjur.com
     moverSecurityContext:
       runAsUser: ${VOLSYNC_PUID:=2000}
       runAsGroup: ${VOLSYNC_PGID:=2000}
