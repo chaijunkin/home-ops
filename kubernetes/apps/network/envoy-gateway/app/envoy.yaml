@@ -14,7 +14,7 @@ spec:
       envoyDeployment:
         replicas: 1
         container:
-          image: mirror.gcr.io/envoyproxy/envoy:v1.37.0
+          image: mirror.gcr.io/envoyproxy/envoy:v1.37.1
           resources:
             requests:
               cpu: 100m
@@ -133,7 +133,7 @@ spec:
           - kind: Secret
             name: cloudjur-com-tls
     - protocol: TLS
-      port: 6443
+      port: 443
       name: tls-passthrough
       hostname: "*.cloudjur.com"
       tls:

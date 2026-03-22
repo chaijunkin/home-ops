@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/slskd/slskd
-              tag: 0.24.4@sha256:4031fc99b824ed2eec3bdbd92914fe6071539f3f71f0742052276afc2c69353d
+              tag: 0.24.5@sha256:17ef977563be206f3b5932080b1e23883b2cb39dc9010640f6f39b4eaec887e3
             env:
               DOTNET_BUNDLE_EXTRACT_BASE_DIR: /tmp/.net
               TZ: Asia/Kuala_Lumpur
@@ -66,12 +66,12 @@ spec:
                 memory: 1Gi
     defaultPodOptions:
       annotations:
-        k8s.v1.cni.cncf.io/networks: |-
-          [{
-            "name": "vpn",
-            "namespace": "network",
-            "ips": ["10.10.31.10/24"]
-          }]
+        #k8s.v1.cni.cncf.io/networks: |-
+        #  [{
+        #    "name": "vpn",
+        #    "namespace": "network",
+        #    "ips": ["10.10.31.10/24"]
+        #  }]
         # ,
         # "mac": "c6:58:f2:a7:62:ce"
       securityContext:
@@ -129,7 +129,7 @@ spec:
                 name: *app
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Utility Service
+          gethomepage.dev/group: Downloads Service
           gethomepage.dev/name: Slskd
-          gethomepage.dev/description: File Sharing Service
+          gethomepage.dev/description: Community File Sharing Service (Music)
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png

@@ -10,7 +10,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 5.1.1
+    tag: 5.1.2
   url: oci://ghcr.io/itzg/minecraft-server-charts/minecraft
 ---
 # yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
@@ -35,7 +35,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: ghcr.io/itzg/minecraft-server
-      tag: 2026.2.1@sha256:44aacf3902c1c2e18dddfe8585dd44badbf56a0a768c773a5e0bcfe4bc1d0443
+      tag: 2026.3.2@sha256:0550bd3c1a184ca1ec76f89846e4fb16f965b96f242dc76102ca074e031be934
     resources:
       requests:
         memory: 512Mi

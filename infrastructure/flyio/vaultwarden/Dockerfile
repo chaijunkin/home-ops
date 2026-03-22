@@ -8,7 +8,7 @@ ARG OVERMIND_VERSION=v2.5.1
 ARG SUPERCRONIC=supercronic-linux-amd64
 ARG OVERMIND=overmind-${OVERMIND_VERSION}-linux-amd64
 
-FROM vaultwarden/server:1.35.3-alpine as vaultwarden
+FROM vaultwarden/server:1.35.4-alpine as vaultwarden
 
 #
 # Supercronic
@@ -46,7 +46,7 @@ RUN wget "$OVERMIND_URL" && gunzip ${OVERMIND_FILE} && chmod +x "$OVERMIND"
 #
 # Fly app
 #
-FROM caddy:2.10.2-alpine
+FROM caddy:2.11.2-alpine
 
 ARG SUPERCRONIC
 ARG OVERMIND

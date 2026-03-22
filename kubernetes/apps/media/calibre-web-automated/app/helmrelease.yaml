@@ -34,11 +34,11 @@ spec:
               TZ: Asia/Kuala_Lumpur
               PUID: 2000
               PGID: 2000
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
+            # probes:
+            #   liveness:
+            #     enabled: true
+            #   readiness:
+            #     enabled: true
             resources:
               requests:
                 cpu: 10m

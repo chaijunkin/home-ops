@@ -1,5 +1,5 @@
 # renovate: datasource=github-releases depName=TwiN/gatus
-ARG GATUS_VERSION=v5.34.0
+ARG GATUS_VERSION=v5.35.0
 
 # renovate: datasource=github-releases depName=DarthSim/overmind
 ARG OVERMIND_VERSION=v2.5.1
@@ -29,7 +29,7 @@ RUN wget "$OVERMIND_URL" && gunzip ${OVERMIND_FILE} && chmod +x "$OVERMIND"
 #
 # Fly app
 #
-FROM caddy:2.10.2-alpine
+FROM caddy:2.11.2-alpine
 
 ARG OVERMIND
 
