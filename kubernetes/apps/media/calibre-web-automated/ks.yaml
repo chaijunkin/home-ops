@@ -18,7 +18,7 @@ spec:
     substitute:
       APP: calibre-web-automated
       SUBDOMAIN: books
-      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   wait: false
   interval: 24h
