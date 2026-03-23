@@ -7,7 +7,7 @@ components:
 resources:
   # # # Flux-Kustomizations
   # - ./booklore/ks.yaml
-  - ./calibre-web-automated/ks.yaml
+  # - ./calibre-web-automated/ks.yaml
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
   # - ./kavita/ks.yaml
