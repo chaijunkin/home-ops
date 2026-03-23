@@ -122,6 +122,8 @@ function apply_crds() {
         https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/experimental-install.yaml
         # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
         https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.90.0/stripped-down-crds.yaml
+        # renovate: datasource=github-releases depName=envoyproxy/gateway
+        https://github.com/envoyproxy/gateway/releases/download/v1.7.1/envoy-gateway-crds.yaml
     )
 
     for crd in "${crds[@]}"; do
