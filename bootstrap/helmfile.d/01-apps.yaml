@@ -94,19 +94,19 @@ releases:
       [
         "../../kubernetes/apps/kube-system/external-secrets/app/helm/values.yaml",
       ]
-    hooks:
-      - # Apply cluster secret store after external-secrets is ready
-        events: ["postsync"]
-        command: kubectl
-        args:
-          - apply
-          - --namespace=kube-system
-          - --server-side
-          - --field-manager=kustomize-controller
-          - --filename
-          - ../../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
-          - --wait=true
-        showlogs: true
+    # hooks:
+    #   - # Apply cluster secret store after external-secrets is ready
+    #     events: ["postsync"]
+    #     command: kubectl
+    #     args:
+    #       - apply
+    #       - --namespace=kube-system
+    #       - --server-side
+    #       - --field-manager=kustomize-controller
+    #       - --filename
+    #       - ../../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
+    #       - --wait=true
+    #     showlogs: true
     needs: ["kube-system/bitwarden"]
 
   - name: flux-operator
@@ -128,6 +128,7 @@ releases:
       - # Deploy bitwarden secret using sops decrypt first
         events: ["postsync"]
         command: sh
+        # showlogs: true
         args:
           - -c
           - |
@@ -135,10 +136,8 @@ releases:
             echo "KUBECONFIG: $KUBECONFIG"
             echo "Decrypting and applying flux bootstrap..."
             # Use sops to decrypt and apply the secret directly
-            sops -d ../bootstrap/resources.sops.yaml | kubectl apply -f -
-            sops -d ../bootstrap/secret.sops.yaml | kubectl apply -f -
+            sops -d ../resources.sops.yaml | kubectl apply -f -
+            sops -d ../secret.sops.yaml | kubectl apply -f -
             sops -d ../../kubernetes/components/common/sops/secret.sops.yaml | kubectl apply -f - -n flux-system
             echo "Flux bootstrap applied successfully"
-            # sops -d bootstrap/resources.sops.yaml | kubectl apply -f -
-            # sops -d bootstrap/secret.sops.yaml | kubectl apply -f -
     #### THIS NEED TO CHANGE TO GET decrypt secret.sops.yaml in bootstrap directly
