@@ -113,33 +113,22 @@ function wait_for_nodes() {
 
 # CRDs to be applied before the helmfile charts are installed
 function apply_crds() {
-    log debug "Applying CRDs"
+    log info "Applying CRDs from Helmfile via OCI"
 
-    local -r crds=(
-        # renovate: datasource=github-releases depName=kubernetes-sigs/external-dns
-        https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.20.0/config/crd/standard/dnsendpoints.externaldns.k8s.io.yaml
-        # # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-        # https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/experimental-install.yaml
-        # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-        https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.90.0/stripped-down-crds.yaml
-        # renovate: datasource=github-releases depName=envoyproxy/gateway
-        https://github.com/envoyproxy/gateway/releases/download/v1.7.1/envoy-gateway-crds.yaml
-    )
+    # Define the path to your CRD helmfile
+    local -r crd_helmfile="${ROOT_DIR}/bootstrap/helmfile.d/00-crds.yaml"
 
-    for crd in "${crds[@]}"; do
-        if kubectl apply --server-side --filename "${crd}" --dry-run=server --force-conflicts &>/dev/null; then
-            log info "CRDs are up-to-date" "crd=${crd}"
-            # Apply anyway to ensure proper annotations
-            kubectl apply --server-side --filename "${crd}" --force-conflicts &>/dev/null || true
-        else
-            log info "Applying CRDs" "crd=${crd}"
-            if kubectl apply --server-side --filename "${crd}" --force-conflicts &>/dev/null; then
-                log info "CRDs applied successfully" "crd=${crd}"
-            else
-                log error "Failed to apply CRDs" "crd=${crd}"
-            fi
-        fi
-    done
+    # 1. Template the OCI charts
+    # 2. Extract only the CustomResourceDefinitions
+    # 3. Apply via Server-Side Apply to handle large CRD sizes (common in Prometheus/Envoy)
+    if helmfile --file "${crd_helmfile}" template --include-crds \
+        | yq 'select(.kind == "CustomResourceDefinition")' \
+        | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
+        log info "CRDs applied successfully from OCI artifacts"
+    else
+        log error "Failed to apply CRDs from Helmfile"
+        return 1
+    fi
 }
 
 # Resources to be applied before the helmfile charts are installed
@@ -169,7 +158,7 @@ function apply_resources() {
 function sync_apps() {
     log info "Syncing Helm releases"
 
-    local -r helmfile_file="${ROOT_DIR}/bootstrap/helmfile.yaml"
+    local -r helmfile_file="${ROOT_DIR}/bootstrap/helmfile.d/01-apps.yaml"
 
     if [[ ! -f "${helmfile_file}" ]]; then
         log fatal "File does not exist" "file" "${helmfile_file}"

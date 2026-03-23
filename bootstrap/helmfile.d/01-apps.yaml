@@ -16,7 +16,7 @@ releases:
     namespace: kube-system
     chart: oci://ghcr.io/home-operations/charts-mirror/cilium
     version: 1.18.6
-    values: ["../kubernetes/apps/kube-system/cilium/app/helm/values.yaml"]
+    values: ["../../kubernetes/apps/kube-system/cilium/app/helm/values.yaml"]
     # hooks:
     #   - # Wait for Cilium CRDs to be available
     #     command: bash
@@ -33,7 +33,7 @@ releases:
     #       - --namespace=kube-system
     #       - --server-side
     #       - --field-manager=kustomize-controller
-    #       - --filename=../../kubernetes/apps/kube-system/cilium/app/networking.yaml
+    #       - --filename=../../../kubernetes/apps/kube-system/cilium/app/networking.yaml
     #     events:
     #       - postsync
     #     showlogs: true
@@ -45,14 +45,14 @@ releases:
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.45.2
-    values: ["../kubernetes/apps/kube-system/coredns/app/helm/values.yaml"]
+    values: ["../../kubernetes/apps/kube-system/coredns/app/helm/values.yaml"]
     needs: ["kube-system/cilium"]
 
   - name: spegel
     namespace: kube-system
     chart: oci://ghcr.io/spegel-org/helm-charts/spegel
     version: 0.5.1 # renovate: ignore
-    values: ["../kubernetes/apps/kube-system/spegel/app/helm/values.yaml"]
+    values: ["../../kubernetes/apps/kube-system/spegel/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
 
   - name: cert-manager
@@ -60,7 +60,7 @@ releases:
     chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.20.0
     values:
-      ["../kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml"]
+      ["../../kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml"]
     needs: ["kube-system/spegel"]
 
   # Deploy bitwarden secrets before external-secrets needs them
@@ -70,9 +70,9 @@ releases:
     version: 4.6.2
     values:
       [
-        "../kubernetes/apps/kube-system/external-secrets/bitwarden/helm/values.yaml",
+        "../../kubernetes/apps/kube-system/external-secrets/bitwarden/helm/values.yaml",
       ]
-    needs: ["kube-system/coredns", "kube-system/external-secrets"]
+    needs: ["kube-system/coredns"]
     hooks:
       - events: ["presync"]
         command: sh
@@ -82,7 +82,7 @@ releases:
             set -x
             echo "KUBECONFIG: $KUBECONFIG"
             kubectl config current-context
-            sops -d ../kubernetes/apps/kube-system/external-secrets/bitwarden/secret.sops.yaml | kubectl apply -f -
+            sops -d ../../kubernetes/apps/kube-system/external-secrets/bitwarden/secret.sops.yaml | kubectl apply -f -
             echo "Bitwarden secret applied successfully"
         showlogs: true
 
@@ -91,7 +91,9 @@ releases:
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
     version: 2.2.0
     values:
-      ["../kubernetes/apps/kube-system/external-secrets/app/helm/values.yaml"]
+      [
+        "../../kubernetes/apps/kube-system/external-secrets/app/helm/values.yaml",
+      ]
     hooks:
       - # Apply cluster secret store after external-secrets is ready
         events: ["postsync"]
@@ -102,7 +104,7 @@ releases:
           - --server-side
           - --field-manager=kustomize-controller
           - --filename
-          - ../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
+          - ../../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
           - --wait=true
         showlogs: true
     needs: ["kube-system/bitwarden"]
@@ -112,7 +114,7 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.45.1
     values:
-      ["../kubernetes/apps/flux-system/flux-operator/app/helm/values.yaml"]
+      ["../../kubernetes/apps/flux-system/flux-operator/app/helm/values.yaml"]
     needs: ["kube-system/external-secrets"]
 
   - name: flux-instance
@@ -120,7 +122,7 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.45.1
     values:
-      ["../kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml"]
+      ["../../kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml"]
     needs: ["flux-system/flux-operator"]
     hooks:
       - # Deploy bitwarden secret using sops decrypt first
@@ -135,7 +137,7 @@ releases:
             # Use sops to decrypt and apply the secret directly
             sops -d ../bootstrap/resources.sops.yaml | kubectl apply -f -
             sops -d ../bootstrap/secret.sops.yaml | kubectl apply -f -
-            sops -d ../kubernetes/components/common/sops/secret.sops.yaml | kubectl apply -f - -n flux-system
+            sops -d ../../kubernetes/components/common/sops/secret.sops.yaml | kubectl apply -f - -n flux-system
             echo "Flux bootstrap applied successfully"
             # sops -d bootstrap/resources.sops.yaml | kubectl apply -f -
             # sops -d bootstrap/secret.sops.yaml | kubectl apply -f -
