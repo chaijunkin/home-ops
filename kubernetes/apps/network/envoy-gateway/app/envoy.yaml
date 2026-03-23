@@ -142,18 +142,24 @@ spec:
         namespaces:
           from: All
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-helm/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
   name: envoy
 spec:
-  compression:
+  compressor:
+    - type: Zstd
+      zstd: {}
     - type: Brotli
+      brotli: {}
     - type: Gzip
-    # - type: Zstd
-  connection:
-    bufferLimit: 8Mi
+      gzip: {}
+  retry:
+    numRetries: 2
+    retryOn:
+      triggers:
+        - reset
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
