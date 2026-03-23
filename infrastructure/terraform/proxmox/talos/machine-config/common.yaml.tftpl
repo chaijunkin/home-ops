@@ -56,8 +56,8 @@ machine:
         nconnect=16
         noatime=True
   nodeLabels:
-    intel.feature.node.kubernetes.io/gpu: "true"
-    node.kubernetes.io/gpu: "true"
+    # intel.feature.node.kubernetes.io/gpu: "true"
+    # node.kubernetes.io/gpu: "true"
     topology.kubernetes.io/region: ${cluster_name}
     topology.kubernetes.io/zone: ${node_name}
   network:

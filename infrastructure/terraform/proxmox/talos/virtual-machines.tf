@@ -9,12 +9,35 @@ resource "proxmox_virtual_environment_vm" "this" {
   on_boot     = true
   vm_id       = each.value.vm_id
 
-  machine       = "q35"
   scsi_hardware = "virtio-scsi-single"
+  ### BIOS ###
+  machine       = "q35"
   bios          = "seabios"
+  ### BIOS ###
+
+  ### EEFI ###
+  # started = false
+  # # 2. UEFI BIOS - Mandatory for Talos and modern Intel Drivers
+  # bios = "ovmf"
+
+  # # 3. Disable Virtual Display to avoid "Connector Leaked" errors
+  # serial_device {}
+  # vga {
+  #   type = "serial0"
+  # }
+
+  #   # # comment if not using ovmf bios, or if you want to use legacy-igd with i440fx machine type.
+  # efi_disk {
+  #   datastore_id = "fast"
+  #   file_format = "raw"
+  #   type = "2m"
+  #   pre_enrolled_keys = false
+  # }
+  ### EEFI ###
 
   agent {
     enabled = true
+    trim = true
     # timeout = "1m"
   }
 
@@ -108,7 +131,10 @@ resource "proxmox_virtual_environment_vm" "this" {
       xvga   = false
 
       id   = "0000:00:02.0"
-      mdev = "i915-GVTg_V5_8"
+      # mdev = "i915-GVTg_V5_8"
+      # rom_file = "/usr/share/kvm/igd.rom"
+      # legacy-igd = 1 # REMEMBERME: This is required for i440fx machine type, but causes "Connector Leaked" errors with OVMF. Since we're using OVMF, we can omit this and it should work fine with modern Intel Drivers.
+
       # rombar = true
 
       # # pcie   = false
