@@ -86,9 +86,12 @@ spec:
               - secretRef:
                   name: qbittorrent-secret
             securityContext:
+              privileged: true
               capabilities:
                 add:
                   - NET_ADMIN
+                  - NET_RAW # newly added
+                  - SYS_MODULE # newly added
         #  vuetorrent:
         #    dependsOn: app
         #    image:
