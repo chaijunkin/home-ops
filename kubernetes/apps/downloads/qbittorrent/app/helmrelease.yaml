@@ -75,6 +75,51 @@ spec:
                 cpu: 100m
               limits:
                 memory: 18Gi
+          qbop:
+            image:
+              repository: ghcr.io/clajiness/qbop
+              tag: v2.5.6@sha256:edcc1e04da2145133102a1b2316f3e7f6a6d89aab1a783e3e02662a5dc4c3277
+            env:
+              # 1. Direct Key-Value Pairs
+              - name: PROTON_GATEWAY
+                value: "10.2.0.1"
+              - name: QBIT_ADDR
+                value: "http://localhost:8080"
+              - name: OPN_INTERFACE_ADDR
+                value: "https://gateway.cloudjur.com"
+              - name: OPN_PROTON_ALIAS_NAME
+                value: "torrent_port"
+
+              # 2. Specific Secret Mapping (OPN_API_KEY)
+              - name: OPN_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: qbittorrent-secret
+                    key: OPN_API_KEY # Replace with the actual key name inside your secret
+
+              # 3. Specific Secret Mapping (OPN_API_SECRET)
+              - name: OPN_API_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: qbittorrent-secret
+                    key: OPN_API_SECRET # Replace with the actual key name inside your secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 128Mi
           # gluetun:
           #   image:
           #     repository: ghcr.io/qdm12/gluetun
@@ -134,6 +179,8 @@ spec:
         ports:
           http:
             port: *port
+          qbop:
+            port: &qbopPort 4567
       bittorrent:
         type: LoadBalancer
         annotations:
@@ -173,6 +220,21 @@ spec:
       #   image: ghcr.io/buroa/qbrr:0.0.29@sha256:5090c88b212f62c40a7c1124dd469b6ce9ee8428e8d0784875ba49d6819d3992
       tmp:
         type: emptyDir
+      qbop:
+        existingClaim: qbittorrent-qbop
+        advancedMounts:
+          qbittorrent:
+            qbop:
+              - path: /opt/qbop/data
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+        advancedMounts:
+          qbittorrent:
+            qbop:
+              - path: /opt/qbop/log
+                subPath: qbop-log
     route:
       app:
         hostnames:
@@ -200,3 +262,13 @@ spec:
           gethomepage.dev/widget.password:
             "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}`
             }}"
+      qbop:
+        hostnames:
+          - qbop.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: qbittorrent
+                port: *qbopPort
