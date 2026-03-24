@@ -21,12 +21,12 @@ spec:
         setGateway: "true"
       annotations:
         setGateway: "true"
-        k8s.v1.cni.cncf.io/networks: |-
-          [{
-            "name": "vpn",
-            "namespace": "network",
-            "ips": ["10.10.31.13/24"]
-          }]
+        # k8s.v1.cni.cncf.io/networks: |-
+        #   [{
+        #     "name": "vpn",
+        #     "namespace": "network",
+        #     "ips": ["10.10.31.13/24"]
+        #   }]
     controllers:
       qbittorrent:
         annotations:
@@ -120,29 +120,57 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 128Mi
-          # gluetun:
-          #   image:
-          #     repository: ghcr.io/qdm12/gluetun
-          #     tag: v3.41.1
-          #   env:
-          #     VPN_SERVICE_PROVIDER: custom
-          #     VPN_TYPE: wireguard
-          #     VPN_INTERFACE: wg0
-          #     VPN_ENDPOINT_PORT: 51820
-          #     VPN_PORT_FORWARDING: on
-          #     VPN_PORT_FORWARDING_PROVIDER: protonvpn
-          #     FIREWALL_INPUT_PORTS: 8080
-          #     FIREWALL_OUTBOUND_SUBNETS: 10.69.0.0/16,10.96.0.0/16 # Allow access to k8s subnets
-          #   envFrom:
-          #     - secretRef:
-          #         name: qbittorrent-secret
-          #   securityContext:
-          #     privileged: true
-          #     capabilities:
-          #       add:
-          #         - NET_ADMIN
-          #         - NET_RAW # newly added
-          #         - SYS_MODULE # newly added
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.41.1
+            env:
+              - name: VPN_SERVICE_PROVIDER
+                value: custom
+              - name: VPN_TYPE
+                value: wireguard
+              - name: VPN_INTERFACE
+                value: wg0
+              - name: VPN_ENDPOINT_PORT
+                value: 51820
+              - name: VPN_PORT_FORWARDING
+                value: on
+              - name: VPN_PORT_FORWARDING_PROVIDER
+                value: protonvpn
+              - name: FIREWALL_INPUT_PORTS
+                value: 8080
+              - name: FIREWALL_OUTBOUND_SUBNETS
+                value: 10.69.0.0/16,10.96.0.0/16 # Allow access to k8s subnets
+              - name: VPN_ENDPOINT_IP
+                valueFrom:
+                  secretKeyRef:
+                    name: qbittorrent-secret
+                    key: VPN_ENDPOINT_IP
+              - name: WIREGUARD_PUBLIC_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: qbittorrent-secret
+                    key: WIREGUARD_PUBLIC_KEY
+              - name: WIREGUARD_PRIVATE_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: qbittorrent-secret
+                    key: WIREGUARD_PRIVATE_KEY
+              - name: WIREGUARD_ADDRESSES
+                valueFrom:
+                  secretKeyRef:
+                    name: qbittorrent-secret
+                    key: WIREGUARD_ADDRESSES
+            envFrom:
+              - secretRef:
+                  name: qbittorrent-secret
+            securityContext:
+              privileged: true
+              capabilities:
+                add:
+                  - NET_ADMIN
+                  - NET_RAW # newly added
+                  - SYS_MODULE # newly added
         #  vuetorrent:
         #    dependsOn: app
         #    image:
