@@ -10,8 +10,8 @@ resources:
   - ./calibre-web-automated/ks.yaml
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
-  - ./kavita/ks.yaml
-  # - ./komga/ks.yaml
+  # - ./kavita/ks.yaml
+  - ./komga/ks.yaml
   - ./maintainerr/ks.yaml
   - ./minio/ks.yaml
   # - ./neko/ks.yaml  # cloudflare tunnel doesn't support UDP (paid)
