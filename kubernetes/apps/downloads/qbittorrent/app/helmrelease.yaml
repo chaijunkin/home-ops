@@ -21,6 +21,7 @@ spec:
         setGateway: "true"
       annotations:
         setGateway: "true"
+        # TODO: convert from glueten to router-based routing
         # k8s.v1.cni.cncf.io/networks: |-
         #   [{
         #     "name": "vpn",
