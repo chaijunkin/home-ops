@@ -331,7 +331,7 @@ spec:
         kubernetes-prometheus:
           # renovate: depName="Prometheus"
           gnetId: 19105
-          revision: 8
+          revision: 9
           datasource: Prometheus
         smartctl-exporter:
           # renovate: depName="SMARTctl Exporter Dashboard"
