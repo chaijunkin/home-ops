@@ -45,6 +45,13 @@ spec:
               MAX_CONCURRENT_DOWNLOADS: 5 #only used with limited, default to 3
               YTDL_OPTIONS: '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"},"cookiefile":"/config/cookies.txt"}'
     defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "vpn",
+            "namespace": "network",
+            "ips": ["10.10.31.12/24"]
+          }]
       securityContext:
         runAsNonRoot: true
         runAsUser: 2000
