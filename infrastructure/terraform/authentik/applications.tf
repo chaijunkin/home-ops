@@ -118,8 +118,8 @@ locals {
       client_secret     = var.calibre_web_automated_secret
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/calibre-web.png"
-      redirect_uri  = "https://books.${var.public_domain}/oauth/oidc/callback"
-      launch_url    = "https://books.${var.public_domain}/auth"
+      redirect_uri  = "https://books.${var.public_domain}/login/generic/authorized"
+      launch_url    = "https://books.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
     karakeep = {
