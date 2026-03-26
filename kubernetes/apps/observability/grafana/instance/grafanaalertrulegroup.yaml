@@ -93,14 +93,14 @@ spec:
     # ============================================
     # SLO: Response Time P99 < 1s (99% under 1s)
     # ============================================
-    - uid: fly-http-response-time-5s
-      title: "Response Time Exceeds 5s Incident Threshold"
+    - uid: fly-http-response-time-15s
+      title: "Response Time Exceeds 15s Incident Threshold"
       condition: C
       for: 3m
       noDataState: OK
       execErrState: OK
       annotations:
-        summary: "P99 response time {{ $values.C.Value | humanize }}s exceeds 5s incident threshold"
+        summary: "P99 response time {{ $values.C.Value | humanize }}s exceeds 15s incident threshold"
         description: "P99 is {{ $values.C.Value | humanize }}s - Consider declaring an incident"
         slo_target: "99% under 1s"
         incident_threshold: "5s"
@@ -134,7 +134,7 @@ spec:
             refId: C
             conditions:
               - evaluator:
-                  params: [5]
+                  params: [15]
                   type: gt
                 operator:
                   type: and
