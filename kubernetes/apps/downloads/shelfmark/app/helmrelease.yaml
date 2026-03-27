@@ -19,6 +19,14 @@ spec:
       strategy: rollback
       retries: 1
   values:
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "vpn",
+            "namespace": "network",
+            "ips": ["10.10.31.16/24"]
+          }]
     controllers:
       shelfmark:
         pod:
