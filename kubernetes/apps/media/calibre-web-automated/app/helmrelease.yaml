@@ -62,7 +62,9 @@ spec:
       securityContext:
         runAsNonRoot: false # because S6 overlay
         runAsUser: 0 # because S6 overlay
-        runAsGroup: 0 # because S6 overlay
+        # runAsGroup: 0 # because S6 overlay
+        runAsGroup: 2000
+        fsGroup: 2000
         seccompProfile: {type: RuntimeDefault}
     service:
       app:
