@@ -80,3 +80,14 @@ variable "dmarc_value" {
   description = "DMARC value, DMARC is an email authentication protocol. It builds on the widely deployed SPF and DKIM protocols. Additionally, it includes a reporting function that allows senders and receivers to monitor and protect their domain from fraudulent email."
   sensitive   = true
 }
+
+variable "vaultwarden_txt_name" {
+  description = "Vaultwarden TXT record name"
+  sensitive   = true
+
+}
+
+variable "vaultwarden_txt_value" {
+  description = "Vaultwarden TXT record value"
+  sensitive   = true
+}

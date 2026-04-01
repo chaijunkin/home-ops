@@ -123,6 +123,11 @@ locals {
     #   type    = "CNAME"
     #   proxied = true
     # }
+    "vaultwarden-txt" = {
+      name  = var.vaultwarden_txt_name
+      value = var.vaultwarden_txt_value
+      type  = "TXT"
+    }
     "vaultwarden" = {
       name    = "vw"
       value   = var.vaultwarden_private_url
