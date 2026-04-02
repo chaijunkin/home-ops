@@ -77,7 +77,7 @@ spec:
             sectionName: https
         annotations:
           gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 404"]
+            conditions: ["[STATUS] == 200"]
         rules:
           - backendRefs:
               - identifier: app
