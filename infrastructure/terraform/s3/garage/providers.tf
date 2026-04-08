@@ -21,13 +21,9 @@ terraform {
       source  = "schwitzd/garage"
       version = "1.2.2"
     }
-    garage-123 = {
-      source  = "jkossis/garage"
-      version = "1.0.4"
-    }
   }
 }
 provider "garage" {
-  host   = "https://s3-temp.cloudjur.com"
+  host   = "s3-temp.cloudjur.com"
   token     = var.GARAGE_ADMIN_TOKEN
 }

@@ -9,38 +9,19 @@ locals {
     "tempo"
   ]
 }
-
-module "garage_bucket" {
+# Create buckets dynamically using the garage module
+module "buckets" {
   for_each    = toset(local.buckets)
   source      = "./modules/garage"
   bucket_name = each.key
-  # user_name   = random_password.user_name[each.key].result
-  access_key = random_password.access_key[each.key].result
-  secret_key = random_password.secret_key[each.key].result
-  # owner_access_key = var.owner_access_key
-  # owner_secret_key = var.owner_secret_key
+  admin_user  = garage_key.admin_key.id
+
   providers = {
     garage = garage
   }
 }
 
-output "garage_bucket_outputs" {
-  value     = module.garage_bucket
-  sensitive = true
-}
-
-resource "random_password" "user_name" {
-  for_each = toset(local.buckets)
-  length   = 32
-  special  = false
-}
-
-resource "random_password" "access_key" {
-  for_each = toset(local.buckets)
-  length   = 64
-}
-
-resource "random_password" "secret_key" {
-  for_each = toset(local.buckets)
-  length   = 64
+# Admin key for managing garage buckets
+resource "garage_key" "admin_key" {
+  name = "admin-user"
 }
