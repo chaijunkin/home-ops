@@ -46,7 +46,7 @@ spec:
           http:
             port: 3909
         annotations:
-          lbipam.cilium.io/ips: 10.10.30.56
+          lbipam.cilium.io/ips: 10.10.30.58
     route:
       app:
         annotations:
