@@ -75,7 +75,7 @@ spec:
             subPath: Garage/data
       meta:
         type: nfs
-        server: truenas.rafaribe.com
+        server: smb.cloudjur.com
         path: /tank/Apps
         globalMounts:
           - path: /meta
