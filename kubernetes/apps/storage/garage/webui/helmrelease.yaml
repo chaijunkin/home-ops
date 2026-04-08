@@ -41,9 +41,12 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
+        type: LoadBalancer
         ports:
           http:
             port: 3909
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.56
     route:
       app:
         annotations:
