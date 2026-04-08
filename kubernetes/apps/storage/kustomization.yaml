@@ -7,3 +7,4 @@ components:
 resources:
   - ./democratic-csi/ks.yaml
   - ./openebs/ks.yaml
+  - ./garage/ks.yaml

@@ -87,3 +87,4 @@ terraform.rc
 
 httproutes.csv
 .terraform.lock.hcl
+.reference

@@ -137,6 +137,9 @@
       loop:
         - /tank/Apps/Frigate
         - /tank/Apps/Minio
+        - /tank/Apps/Garage
+        - /tank/Apps/Garage/data
+        - /tank/Apps/Garage/meta
         - /tank/Backup/Database
         - /tank/Backup/Volsync
         - /tank/Backup/Personal
