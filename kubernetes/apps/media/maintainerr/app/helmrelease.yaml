@@ -25,8 +25,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/jorenn92/maintainerr
-              tag: 2.19.0
+              repository: ghcr.io/maintainerr/maintainerr
+              tag: 3.4.0@sha256:efe5a335360d14093c0078bf2d710adf05f95a57adfbef6ae7988daa314bd59b
             probes:
               liveness:
                 enabled: true
