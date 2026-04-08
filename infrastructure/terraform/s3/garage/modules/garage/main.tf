@@ -1,7 +1,8 @@
 terraform {
   required_providers {
     garage = {
-      source = "registry.terraform.io/jkossis/garage"
+      source = "schwitzd/garage"
+      version = "1.2.2"
     }
   }
 }

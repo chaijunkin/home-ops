@@ -18,12 +18,16 @@ terraform {
   }
   required_providers {
     garage = {
-      source  = "registry.terraform.io/jkossis/garage"
+      source  = "schwitzd/garage"
+      version = "1.2.2"
+    }
+    garage-123 = {
+      source  = "jkossis/garage"
       version = "1.0.4"
     }
   }
 }
 provider "garage" {
-  endpoint   = "https://s3-temp.cloudjur.com"
+  host   = "https://s3-temp.cloudjur.com"
   token     = var.GARAGE_ADMIN_TOKEN
 }
