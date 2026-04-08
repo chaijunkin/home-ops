@@ -5,5 +5,5 @@ namespace: jobs
 components:
   - ../../components/common
 resources:
-  []
-  # - remediation/ks.yaml
+  # []
+  - remediation/ks.yaml
