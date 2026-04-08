@@ -56,7 +56,7 @@ spec:
           - "s3-temp.cloudjur.com"
         parentRefs:
           - name: envoy-internal
-            namespace: networking
+            namespace: network
         rules:
           - backendRefs:
               - identifier: app

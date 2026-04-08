@@ -55,7 +55,7 @@ spec:
           - "garage.cloudjur.com"
         parentRefs:
           - name: envoy-internal
-            namespace: networking
+            namespace: network
     persistence:
       config:
         type: secret
