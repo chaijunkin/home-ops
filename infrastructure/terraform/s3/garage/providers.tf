@@ -24,6 +24,7 @@ terraform {
   }
 }
 provider "garage" {
-  host   = "s3-temp.cloudjur.com"
+  host   = "10.10.30.59:3903"
+  scheme = "http"
   token     = var.GARAGE_ADMIN_TOKEN
 }
