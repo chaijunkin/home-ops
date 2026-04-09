@@ -28,5 +28,5 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       SUBDOMAIN: sab
   components:
-    - ../../../../components/volsync
+    - ../../../../components/volsync-no-r2
     - ../../../../components/keda/nfs-scaler
