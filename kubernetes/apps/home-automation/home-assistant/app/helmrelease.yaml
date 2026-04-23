@@ -90,7 +90,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.112.0@sha256:ddd9b0b854fec5a3c65ec0095b5c59fb8505ad44d8a18d00d6fcf6a3179692dd
+              tag: 4.117.0@sha256:e6702766518b961c7e3c41095c129c7c9a82b041578c53326c52fa363a057727
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_SERVER: https://hass.cloudjur.com
