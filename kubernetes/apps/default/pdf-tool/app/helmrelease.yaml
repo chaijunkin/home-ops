@@ -31,7 +31,7 @@ spec:
                 memory: 2Gi
             image:
               repository: ghcr.io/stirling-tools/s-pdf
-              tag: 2.7.3@sha256:f2e9ab8c82174cc96d573889d91228ad01f489dcbfe0ef7916c969e3a61cafca
+              tag: 2.10.0@sha256:4d9abedcd57a9aa4d36ffb8fc9a4801aea2d295bf6ad349e23dd4b45661a5e42
               pullPolicy: IfNotPresent
     service:
       main:
