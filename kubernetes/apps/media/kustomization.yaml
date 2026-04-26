@@ -13,7 +13,7 @@ resources:
   # - ./kavita/ks.yaml
   - ./komga/ks.yaml
   - ./maintainerr/ks.yaml
-  - ./minio/ks.yaml # TODO READY
+  # - ./minio/ks.yaml
   # - ./neko/ks.yaml  # cloudflare tunnel doesn't support UDP (paid)
   - ./opencloud/ks.yaml
   - ./plex/ks.yaml
