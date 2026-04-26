@@ -54,7 +54,7 @@ spec:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 403"]
         hostnames:
-          - "s3-temp.cloudjur.com" # TODO READY
+          - "s3.cloudjur.com" # TODO READY
         parentRefs:
           - name: envoy-internal
             namespace: network
