@@ -4,9 +4,9 @@ locals {
     # "thanos",
     # "ocis",
     # "volsync",
-    # "postgresql",
-    # "opencloud"
-    "tempo"
+    "postgresql",
+    "opencloud"
+    # "tempo"
   ]
 }
 # Create buckets dynamically using the garage module
