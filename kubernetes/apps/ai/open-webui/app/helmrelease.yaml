@@ -100,7 +100,7 @@ spec:
           # - open-webui.cloudjur.com
           - chat.cloudjur.com
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: network
             sectionName: https
         rules:
