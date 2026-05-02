@@ -9,5 +9,5 @@ resources:
   - ./ha-mcp/ks.yaml
   # - ./memory-mcp/ks.yaml
   - ./ollama/ks.yaml
-  - ./open-webui/ks.yaml
+  # - ./open-webui/ks.yaml
   - ./toolhive/ks.yaml
