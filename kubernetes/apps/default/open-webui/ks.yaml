@@ -22,4 +22,4 @@ spec:
       SUBDOMAIN: chat
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/volsync-no-r2
+    - ../../../../components/volsync
