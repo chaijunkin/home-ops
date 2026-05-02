@@ -59,12 +59,12 @@ spec:
               # AUTOMATIC1111_SAMPLER: DPM++ SDE
               # AUTOMATIC1111_SCHEDULER: Karras
               # Open-webui settings
-              OLLAMA_BASE_URL: http://ollama:11434
+              OLLAMA_BASE_URL: http://ollama.ai:11434
               ENABLE_RAG_WEB_SEARCH: true
               ENABLE_SEARCH_QUERY: true
               WEB_SEARCH_ENGINE: searxng
               RAG_WEB_SEARCH_ENGINE: searxng
-              SEARXNG_QUERY_URL: http://searxng:8080/search?q=<query>
+              SEARXNG_QUERY_URL: http://searxng.default:8080/search?q=<query>
               ENABLE_WEBSOCKET_SUPPORT: "true"
               WEBSOCKET_MANAGER: "redis"
               WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
