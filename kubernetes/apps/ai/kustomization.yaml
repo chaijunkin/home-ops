@@ -6,8 +6,8 @@ namespace: ai
 components:
   - ../../components/common
 resources:
-  - ./ha-mcp/ks.yaml
+  # - ./ha-mcp/ks.yaml
   # - ./memory-mcp/ks.yaml
   - ./ollama/ks.yaml
   # - ./open-webui/ks.yaml
-  - ./toolhive/ks.yaml
+  # - ./toolhive/ks.yaml
