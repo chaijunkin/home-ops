@@ -163,7 +163,19 @@ variable "vaultwarden_id" {
   sensitive   = true
   default     = null
 }
+variable "toolhive_mcp_gateway_id" {
+  type        = string
+  description = "Toolhive MCP Gateway Client ID"
+  sensitive   = true
+  default     = null
+}
 
+variable "toolhive_mcp_gateway_secret" {
+  type        = string
+  description = "Toolhive MCP Gateway Client Secret"
+  sensitive   = true
+  default     = null
+}
 variable "vaultwarden_secret" {
   type        = string
   description = "Vaultwarden Client Secret"

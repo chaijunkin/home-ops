@@ -1,0 +1,115 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: open-webui
+spec:
+  interval: 1h # interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      open-webui:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        # initContainers:
+        #   init-db:
+        #     image:
+        #       repository: ghcr.io/home-operations/postgres-init
+        #       tag: 17
+        #       pullPolicy: IfNotPresent
+        #     envFrom:
+        #       - secretRef:
+        #           name: open-webui-secret
+        containers:
+          app:
+            image:
+              repository: ghcr.io/open-webui/open-webui
+              tag: v0.9.2@sha256:a7e4796ae894d1e2a0c1824860ade472f35c507608a01c3581377b5c19b0ed49
+            env:
+              # ENV: dev
+              CORS_ALLOW_ORIGIN: https://chat.cloudjur.com
+              # Monitoring
+              ENABLE_OTEL: true
+              ENABLE_OTEL_METRICS: true
+              OTEL_SERVICE_NAME: open-webui
+              OTEL_EXPORTER_OTLP_ENDPOINT: http://alloy.observability:4317
+              # OTEL_EXPORTER_OTLP_ENDPOINT: http://kube-prometheus-stack-prometheus.observability:9090/api/v1/otlp/v1/metrics
+              # OTEL_METRICS_OTLP_SPAN_EXPORTER: http
+              OTEL_EXPORTER_OTLP_INSECURE: true
+              ENABLE_OTEL_TRACES: true
+              # Image Generation
+              ENABLE_OPENAI_API: false
+              ENABLE_OLLAMA_API: true
+              # ENABLE_IMAGE_GENERATION: True
+              # IMAGE_GENERATION_ENGINE: automatic1111
+              # IMAGE_GENERATION_MODEL: dreamshaper_8
+              # IMAGE_SIZE: 400x400
+              # IMAGE_STEPS: 8
+              # AUTOMATIC1111_BASE_URL: http://sdnext:7860/
+              # AUTOMATIC1111_CFG_SCALE: 2
+              # AUTOMATIC1111_SAMPLER: DPM++ SDE
+              # AUTOMATIC1111_SCHEDULER: Karras
+              # Open-webui settings
+              OLLAMA_BASE_URL: http://ollama:11434
+              ENABLE_RAG_WEB_SEARCH: true
+              ENABLE_SEARCH_QUERY: true
+              WEB_SEARCH_ENGINE: searxng
+              RAG_WEB_SEARCH_ENGINE: searxng
+              SEARXNG_QUERY_URL: http://searxng:8080/search?q=<query>
+              ENABLE_WEBSOCKET_SUPPORT: "true"
+              WEBSOCKET_MANAGER: "redis"
+              WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 2Gi
+    service:
+      app:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.45
+          gatus.home-operations.com/endpoint: |-
+            name: open-webui-lb
+            group: services
+        ports:
+          http:
+            port: &port 8080
+    persistence:
+      config:
+        enabled: true
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /app/backend/data
+    route:
+      app:
+        hostnames:
+          # - open-webui.cloudjur.com
+          - chat.cloudjur.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - port: *port
+                name: open-webui
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: Open WebUI
+          gethomepage.dev/description: AI Chat services
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/open-webui.png
