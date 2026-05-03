@@ -47,7 +47,7 @@ spec:
               OTEL_EXPORTER_OTLP_INSECURE: true
               ENABLE_OTEL_TRACES: true
               # Image Generation
-              ENABLE_OPENAI_API: false
+              ENABLE_OPENAI_API: true
               ENABLE_OLLAMA_API: true
               # ENABLE_IMAGE_GENERATION: True
               # IMAGE_GENERATION_ENGINE: automatic1111
