@@ -29,7 +29,7 @@ metadata:
       conditions: ["[STATUS] == 406"]
 spec:
   hostnames:
-    - mcp.cloudjur.com
+    - mcp-direct.cloudjur.com
   parentRefs:
     - name: envoy-internal
       namespace: network
