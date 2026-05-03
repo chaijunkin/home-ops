@@ -649,7 +649,6 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  name: cloudflare-r2-dashboard
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
