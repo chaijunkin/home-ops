@@ -216,6 +216,7 @@ spec:
               handleGrafanaManagedAlerts: true
           - name: Tempo
             type: tempo
+            uid: tempo
             url: http://tempo.observability.svc.cluster.local:3200
             access: proxy
             jsonData:
@@ -245,6 +246,9 @@ spec:
                 queries:
                   - name: "Sample query"
                     query: "sum(rate(traces_spanmetrics_latency_bucket{$$__tags}[5m]))"
+              tracesToProfiles:
+                datasourceUid: pyroscope
+                tags: ["service.name", "service.namespace"]
               traceQuery:
                 timeShiftEnabled: true
                 spanStartTimeShift: "1h"
@@ -260,7 +264,10 @@ spec:
             # basicAuthUser: ''
             # withCredentials: false
             isDefault: false
-            jsonData: {}
+            jsonData:
+              tracesToProfiles:
+                datasourceUid: tempo
+                tags: ["service.name", "service.namespace"]
             secureJsonFields: {}
             readOnly: false
     dashboards:
