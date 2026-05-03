@@ -18,7 +18,9 @@ spec:
   secrets:
     - name: grafana-secret
       key: GRAFANA_USERNAME
+      targetEnvName: GRAFANA_USERNAME
     - name: grafana-secret
       key: GRAFANA_PASSWORD
+      targetEnvName: GRAFANA_PASSWORD
   groupRef:
     name: mcp-tools
