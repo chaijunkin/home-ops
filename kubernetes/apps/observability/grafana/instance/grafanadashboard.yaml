@@ -3,74 +3,6 @@ kind: GrafanaDashboard
 metadata:
   labels:
     grafana.internal/instance: grafana
-  name: data-dragonfly
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: data-folder
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
-  url: https://raw.githubusercontent.com/dragonflydb/dragonfly/e1b03d605c5376fe36d8a45633ee964f52a70af0/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: data-external-secrets
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: data-folder
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
-  url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: data-syncthing-overview
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: data-folder
-  grafanaCom:
-    id: 24238
-    revision: 3
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: games-palworld
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: games-folder
-  grafanaCom:
-    id: 20421
-    revision: 3
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
   name: kubernetes-kubernetes-api-server
 spec:
   datasources:
@@ -179,24 +111,6 @@ kind: GrafanaDashboard
 metadata:
   labels:
     grafana.internal/instance: grafana
-  name: kubernetes-smartctl-exporter
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
-  grafanaCom:
-    id: 22604
-    revision: 2
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
   name: kubernetes-kubernetes-volumes
 spec:
   datasources:
@@ -242,198 +156,6 @@ spec:
   grafanaCom:
     id: 12340
     revision: 1
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-blackbox-exporter
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  grafanaCom:
-    id: 7587
-    revision: 3
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-cert-manager
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  grafanaCom:
-    id: 20842
-    revision: 3
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-frigate
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  grafanaCom:
-    id: 18226
-    revision: 9
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-envoy
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_AFRANET_PROMETHEUS
-  folderRef: network-folder
-  grafanaCom:
-    id: 23239
-    revision: 1
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-envoy-overview
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
-  url: https://grafana.com/api/dashboards/24459/revisions/1/download
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-envoy-upstream
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
-  url: https://grafana.com/api/dashboards/24457/revisions/1/download
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-envoy-downstream
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
-  url: https://grafana.com/api/dashboards/24458/revisions/1/download
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-cloudflared
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  grafanaCom:
-    id: 17457
-    revision: 6
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-external-dns
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  grafanaCom:
-    id: 15038
-    revision: 3
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-opnsense
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS-K0
-  folderRef: network-folder
-  grafanaCom:
-    id: 21113
-    revision: 1
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: network-speedtest-exporter-hub
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: network-folder
-  grafanaCom:
-    id: 13665
-    revision: 4
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -495,24 +217,6 @@ kind: GrafanaDashboard
 metadata:
   labels:
     grafana.internal/instance: grafana
-  name: system-smartctl-exporter
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: system-folder
-  grafanaCom:
-    id: 22604
-    revision: 2
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
   name: system-spegel
 spec:
   datasources:
@@ -522,24 +226,6 @@ spec:
   grafanaCom:
     id: 18089
     revision: 1
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
-  name: storage-minio
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: storage-folder
-  grafanaCom:
-    id: 13502
-    revision: 26
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -619,24 +305,6 @@ kind: GrafanaDashboard
 metadata:
   labels:
     grafana.internal/instance: grafana
-  name: storage-volsync
-spec:
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folderRef: storage-folder
-  grafanaCom:
-    id: 21356
-    revision: 3
-  instanceSelector:
-    matchLabels:
-      grafana.internal/instance: grafana
----
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  labels:
-    grafana.internal/instance: grafana
   name: storage-zfs
 spec:
   datasources:
@@ -653,9 +321,9 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: cloudflare-r2-dashboard
   labels:
     grafana.internal/instance: grafana
+  name: cloudflare-r2-dashboard
 spec:
   instanceSelector:
     matchLabels:

@@ -1,0 +1,17 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: network-opnsense
+spec:
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS-K0
+  folderRef: network-folder
+  grafanaCom:
+    id: 21113
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana

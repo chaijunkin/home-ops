@@ -1,0 +1,17 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: network-frigate
+spec:
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  folderRef: network-folder
+  grafanaCom:
+    id: 18226
+    revision: 9
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana

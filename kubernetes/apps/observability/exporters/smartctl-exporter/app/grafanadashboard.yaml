@@ -1,0 +1,35 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: kubernetes-smartctl-exporter
+spec:
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  folderRef: kubernetes-folder
+  grafanaCom:
+    id: 22604
+    revision: 2
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: system-smartctl-exporter
+spec:
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  folderRef: system-folder
+  grafanaCom:
+    id: 22604
+    revision: 2
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana

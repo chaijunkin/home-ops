@@ -1,0 +1,17 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: games-palworld
+spec:
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  folderRef: games-folder
+  grafanaCom:
+    id: 20421
+    revision: 3
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana

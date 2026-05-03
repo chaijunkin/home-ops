@@ -124,3 +124,62 @@ spec:
       tracesToProfiles:
         datasourceUid: tempo
         tags: ["service.name", "service.namespace"]
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: prometheus-on-fly
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    type: prometheus
+    name: prometheus_on_fly
+    uid: prometheus_on_fly
+    access: proxy
+    url: "${FLY_IO_PROMETHEUS_URL}"
+    jsonData:
+      httpHeaderName1: Authorization
+    secureJsonData:
+      httpHeaderValue1: "${FLY_IO_READONLY_TOKEN}"
+  valuesFrom:
+    - targetPath: "url"
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: fly_io_prometheus_url
+    - targetPath: "secureJsonData.httpHeaderValue1"
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: fly_io_readonly_token
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: infinity-cloudflare
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    type: yesoreyeram-infinity-datasource
+    name: infinity-cloudflare
+    uid: infinity-cloudflare
+    access: proxy
+    url: https://api.cloudflare.com/client/v4
+    isDefault: false
+    editable: true
+    jsonData:
+      httpHeaderName1: "Authorization"
+    secureJsonData:
+      httpHeaderValue1: "Bearer ${RO_USER_API_TOKEN}"
+  valuesFrom:
+    - targetPath: "secureJsonData.httpHeaderValue1"
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: ro_user_api_token

@@ -1,0 +1,15 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: data-dragonfly
+spec:
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  folderRef: data-folder
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  url: https://raw.githubusercontent.com/dragonflydb/dragonfly/e1b03d605c5376fe36d8a45633ee964f52a70af0/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json

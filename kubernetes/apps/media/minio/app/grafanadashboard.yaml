@@ -1,0 +1,17 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    grafana.internal/instance: grafana
+  name: storage-minio
+spec:
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  folderRef: storage-folder
+  grafanaCom:
+    id: 13502
+    revision: 26
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
