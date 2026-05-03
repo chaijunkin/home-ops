@@ -17,7 +17,7 @@ spec:
       value: "http://grafana-service.observability.svc.cluster.local:3000"
     - name: GRAFANA_USERNAME
       value: "admin"
-  secrets:
+  secrets: # multiple secrets are bugged
     - name: grafana-secret
       key: GRAFANA_PASSWORD
       targetEnvName: GRAFANA_PASSWORD
