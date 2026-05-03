@@ -58,6 +58,16 @@ spec:
                 - secretRef:
                     name: grafana-secret
               env:
+                - name: GF_SECURITY_ADMIN_USER
+                  valueFrom:
+                    secretKeyRef:
+                      key: GF_SECURITY_ADMIN_USER
+                      name: grafana-secret
+                - name: GF_SECURITY_ADMIN_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: GF_SECURITY_ADMIN_PASSWORD
+                      name: grafana-secret
                 - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
                   value: "true"
                 - name: GF_EXPLORE_ENABLED
