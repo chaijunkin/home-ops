@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./grafana.yaml
   - ./grafanacontactpoint.yaml
+  - ./grafanadatasource.yaml
   - ./grafanafolder.yaml
   - ./grafanadashboard.yaml
   - ./grafanaalertrulegroup.yaml
