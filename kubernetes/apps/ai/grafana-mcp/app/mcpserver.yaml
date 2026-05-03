@@ -15,10 +15,9 @@ spec:
   env:
     - name: GRAFANA_URL
       value: "http://grafana-service.observability.svc.cluster.local:3000"
+    - name: GRAFANA_USERNAME
+      value: "admin"
   secrets:
-    - name: grafana-secret
-      key: GRAFANA_USERNAME
-      targetEnvName: GRAFANA_USERNAME
     - name: grafana-secret
       key: GRAFANA_PASSWORD
       targetEnvName: GRAFANA_PASSWORD
