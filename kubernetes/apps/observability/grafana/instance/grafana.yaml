@@ -47,7 +47,7 @@ spec:
     server:
       enable_gzip: "true"
       root_url: https://grafana.cloudjur.com
-  disableDefaultAdminSecret: false
+  disableDefaultAdminSecret: true
   deployment:
     spec:
       template:
