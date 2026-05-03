@@ -5,6 +5,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-speedtest-exporter-hub
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS

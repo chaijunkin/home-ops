@@ -5,6 +5,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-smartctl-exporter
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -23,6 +24,7 @@ metadata:
     grafana.internal/instance: grafana
   name: system-smartctl-exporter
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS

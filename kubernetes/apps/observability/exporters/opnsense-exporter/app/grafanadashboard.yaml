@@ -5,6 +5,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-opnsense
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS-K0

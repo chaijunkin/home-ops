@@ -5,6 +5,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-blackbox-exporter
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS

@@ -5,6 +5,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-api-server
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -23,6 +24,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-coredns
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -41,6 +43,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-global
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -59,6 +62,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-namespaces
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -77,6 +81,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-nodes
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -95,6 +100,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-prometheus
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -113,6 +119,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-volumes
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -131,6 +138,7 @@ metadata:
     grafana.internal/instance: grafana
   name: kubernetes-kubernetes-pods
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -149,6 +157,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-apc-ups
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -167,6 +176,7 @@ metadata:
     grafana.internal/instance: grafana
   name: system-node-exporter-full
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -185,6 +195,7 @@ metadata:
     grafana.internal/instance: grafana
   name: system-node-exporter-bsd
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -203,6 +214,7 @@ metadata:
     grafana.internal/instance: grafana
   name: system-node-feature-discovery
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -219,6 +231,7 @@ metadata:
     grafana.internal/instance: grafana
   name: system-spegel
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -237,6 +250,7 @@ metadata:
     grafana.internal/instance: grafana
   name: storage-spegel
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -255,6 +269,7 @@ metadata:
     grafana.internal/instance: grafana
   name: storage-etcd-storage
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_VICTORIAMETRICS
@@ -273,6 +288,7 @@ metadata:
     grafana.internal/instance: grafana
   name: storage-host-overview
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -289,6 +305,7 @@ metadata:
     grafana.internal/instance: grafana
   name: storage-kubernetes-pvc
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -307,6 +324,7 @@ metadata:
     grafana.internal/instance: grafana
   name: storage-zfs
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -325,6 +343,7 @@ metadata:
     grafana.internal/instance: grafana
   name: cloudflare-r2-dashboard
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -2012,6 +2031,7 @@ kind: GrafanaDashboard
 metadata:
   name: fly-app-dashboard
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -4312,6 +4332,7 @@ kind: GrafanaDashboard
 metadata:
   name: fly-instance-dashboard
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -8732,6 +8753,7 @@ kind: GrafanaDashboard
 metadata:
   name: fly-edge-dashboard
 spec:
+  allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana

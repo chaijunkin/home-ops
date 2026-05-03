@@ -5,6 +5,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-envoy
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_AFRANET_PROMETHEUS
@@ -23,6 +24,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-envoy-overview
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -39,6 +41,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-envoy-upstream
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
@@ -55,6 +58,7 @@ metadata:
     grafana.internal/instance: grafana
   name: network-envoy-downstream
 spec:
+  allowCrossNamespaceImport: true
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
