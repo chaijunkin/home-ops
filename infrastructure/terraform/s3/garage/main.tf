@@ -4,6 +4,7 @@ locals {
     # "thanos",
     # "ocis",
     # "volsync",
+    "dragonfly",
     "postgresql",
     "opencloud"
     # "tempo"

@@ -157,6 +157,12 @@ locals {
       type    = "CNAME"
       proxied = false
     }
+    "crd" = {
+      name    = "crd"
+      value   = var.crd_private_url
+      type    = "CNAME"
+      proxied = false
+    }
   }
 
   github_A_record = [

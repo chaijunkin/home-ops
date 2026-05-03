@@ -13,11 +13,24 @@ spec:
         resourceFieldRef:
           resource: limits.memory
           divisor: 1Mi
+    # - name: AWS_ACCESS_KEY_ID
+    #   valueFrom:
+    #     secretKeyRef:
+    #       key: AWS_ACCESS_KEY_ID
+    #       name: dragonfly-secret
+    # - name: AWS_SECRET_ACCESS_KEY
+    #   valueFrom:
+    #     secretKeyRef:
+    #       key: AWS_SECRET_ACCESS_KEY
+    #       name: dragonfly-secret
+  # snapshot:
+  #   dir: "s3://dragonfly"
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
     - --cluster_mode=emulated
     - --lock_on_hashtags
+    # - --s3_endpoint=s3.cloudjur.com
   # topologySpreadConstraints:
   #   - maxSkew: 1
   #     topologyKey: kubernetes.io/hostname
@@ -31,3 +44,16 @@ spec:
       cpu: 100m
     limits:
       memory: 512Mi
+  serviceSpec:
+    annotations:
+      gatus.home-operations.com/enabled: "true"
+      gatus.home-operations.com/endpoint: |
+        conditions:
+          - "[CONNECTED] == true"
+        group: services
+        ui:
+          hide-hostname: true
+          hide-url: true
+        alerts:
+          - type: pushover
+            send-on-resolved: true

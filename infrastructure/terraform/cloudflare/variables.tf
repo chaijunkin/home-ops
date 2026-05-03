@@ -24,6 +24,10 @@ variable "wiki_private_url" {
   description = "Wiki private URL"
   sensitive   = true
 }
+variable "crd_private_url" {
+  description = "CRD private URL"
+  sensitive   = true
+}
 
 variable "wiki_preview_private_url" {
   description = "Wiki preview private URL"
