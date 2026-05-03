@@ -7,6 +7,7 @@ components:
   - ../../components/common
 resources:
   # - ./ha-mcp/ks.yaml
+  - ./kubectl-mcp/ks.yaml
   # - ./memory-mcp/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
