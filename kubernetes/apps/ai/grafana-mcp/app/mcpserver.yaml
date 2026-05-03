@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: grafana
+spec:
+  image: docker.io/grafana/mcp-grafana:0.11.4
+  transport: streamable-http
+  mcpPort: 8000
+  proxyPort: 8080
+  args:
+    - --transport
+    - streamable-http
+  env:
+    - name: GRAFANA_URL
+      value: "http://grafana-service.observability.svc.cluster.local:3000"
+  secrets:
+    - name: GRAFANA_USERNAME
+      key: GRAFANA_USERNAME
+      targetEnvName: grafana-secret
+    - name: GRAFANA_PASSWORD
+      key: GRAFANA_PASSWORD
+      targetEnvName: grafana-secret
+  groupRef:
+    name: mcp-tools
