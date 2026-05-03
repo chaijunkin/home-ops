@@ -16,11 +16,9 @@ spec:
     - name: GRAFANA_URL
       value: "http://grafana-service.observability.svc.cluster.local:3000"
   secrets:
-    - name: GRAFANA_USERNAME
+    - name: grafana-secret
       key: GRAFANA_USERNAME
-      targetEnvName: grafana-secret
-    - name: GRAFANA_PASSWORD
+    - name: grafana-secret
       key: GRAFANA_PASSWORD
-      targetEnvName: grafana-secret
   groupRef:
     name: mcp-tools
