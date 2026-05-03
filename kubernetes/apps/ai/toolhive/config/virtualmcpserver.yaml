@@ -6,7 +6,7 @@ metadata:
   name: mcp-gateway
 spec:
   authServerConfig:
-    issuer: https://auth.cloudjur.com
+    issuer: https://mcp.cloudjur.com
     signingKeySecretRefs:
       - name: toolhive-secret
         key: signing_key
@@ -45,8 +45,8 @@ spec:
     type: oidc
     oidcConfigRef:
       name: authentik
-      audience: https://auth.cloudjur.com/mcp
-      resourceUrl: https://auth.cloudjur.com/mcp
+      audience: https://mcp.cloudjur.com/mcp
+      resourceUrl: https://mcp.cloudjur.com/mcp
       scopes:
         - openid
         - profile

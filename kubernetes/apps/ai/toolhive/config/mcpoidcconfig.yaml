@@ -7,6 +7,6 @@ metadata:
 spec:
   type: inline
   inline:
-    issuer: https://auth.cloudjur.com
+    issuer: https://mcp.cloudjur.com
     jwksAllowPrivateIP: true
     # protectedResourceAllowPrivateIP: true

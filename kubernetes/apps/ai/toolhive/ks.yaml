@@ -56,22 +56,15 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: toolhive-operator-config
+  name: toolhive-config
   namespace: ai
 spec:
   commonMetadata:
     labels:
-      app.kubernetes.io/name: toolhive-operator-config
-  components:
-    - ../../../../components/dragonfly
+      app.kubernetes.io/name: toolhive-config
   dependsOn:
     - name: toolhive-operator-crds
       namespace: ai
-  healthCheckExprs:
-    - apiVersion: dragonflydb.io/v1alpha1
-      kind: Dragonfly
-      failed: status.phase != 'ready'
-      current: status.phase == 'ready'
   interval: 1h
   path: "./kubernetes/apps/ai/toolhive/config"
   postBuild:
