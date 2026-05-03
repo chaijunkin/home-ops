@@ -56,7 +56,7 @@ jobs:
     if: needs.filter_paths.outputs.changed_apps != '[]' # Only run if changes are detected
     steps:
       - uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98
-      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1 # master
         # with:
         #   version: 0.1.54
       - name: Install Task
