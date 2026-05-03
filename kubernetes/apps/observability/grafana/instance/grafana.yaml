@@ -14,7 +14,7 @@ spec:
       feedback_links_enabled: "false"
       reporting_enabled: "false"
     auth:
-      oauth_auto_login: "false"
+      oauth_auto_login: "true"
       disable_login_form: "false"
       oauth_allow_insecure_email_lookup: "true"
     auth.anonymous:
@@ -43,7 +43,6 @@ spec:
       allow_loading_unsigned_plugins: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
     security:
       angular_support_enabled: "true"
-      cookie_samesite: grafana
     server:
       enable_gzip: "true"
       root_url: https://grafana.cloudjur.com
@@ -54,9 +53,9 @@ spec:
         spec:
           containers:
             - name: grafana
-              envFrom:
-                - secretRef:
-                    name: grafana-secret
+              # envFrom:
+              #   - secretRef:
+              #       name: grafana-secret
               env:
                 - name: GF_SECURITY_ADMIN_USER
                   valueFrom:
@@ -68,6 +67,16 @@ spec:
                     secretKeyRef:
                       key: GF_SECURITY_ADMIN_PASSWORD
                       name: grafana-secret
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-secret
+                      key: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-secret
+                      key: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
                 - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
                   value: "true"
                 - name: GF_EXPLORE_ENABLED
@@ -91,6 +100,9 @@ spec:
   httpRoute:
     metadata:
       annotations:
+        gatus.home-operations.com/endpoint: |-
+          name: grafana
+          url: https://grafana.cloudjur.com/api/health
         gethomepage.dev/enabled: "true"
         gethomepage.dev/group: Observability Service
         gethomepage.dev/name: Grafana
@@ -102,4 +114,8 @@ spec:
         - name: envoy-external
           namespace: network
           sectionName: https
+      rules:
+        - backendRefs:
+            - name: grafana-service
+              port: 3000
   disableDefaultSecurityContext: All
