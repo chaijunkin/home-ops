@@ -656,7 +656,7 @@ kind: GrafanaDashboard
 metadata:
   labels:
     grafana.internal/instance: grafana
-  name: data-dragonfly
+  name: cloudflare-r2-dashboard
 spec:
   instanceSelector:
     matchLabels:
