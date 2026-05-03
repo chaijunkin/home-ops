@@ -9,4 +9,5 @@ resources:
   - ./mcpoidcconfig.yaml
   - ./mcptelemetry.yaml
   - ./podmonitor.yaml
+  - ./toolhive-operator-event-rbac.yaml
   - ./virtualmcpserver.yaml
