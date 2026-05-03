@@ -139,11 +139,11 @@ spec:
     name: prometheus_on_fly
     uid: prometheus_on_fly
     access: proxy
-    url: "${FLY_IO_PROMETHEUS_URL}"
+    url: "${fly_io_prometheus_url}"
     jsonData:
       httpHeaderName1: Authorization
     secureJsonData:
-      httpHeaderValue1: "${FLY_IO_READONLY_TOKEN}"
+      httpHeaderValue1: "${fly_io_readonly_token}"
   valuesFrom:
     - targetPath: "url"
       valueFrom:
@@ -176,7 +176,7 @@ spec:
     jsonData:
       httpHeaderName1: "Authorization"
     secureJsonData:
-      httpHeaderValue1: "Bearer ${RO_USER_API_TOKEN}"
+      httpHeaderValue1: "Bearer ${ro_user_api_token}"
   valuesFrom:
     - targetPath: "secureJsonData.httpHeaderValue1"
       valueFrom:
