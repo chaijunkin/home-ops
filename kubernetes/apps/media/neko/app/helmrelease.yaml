@@ -12,14 +12,14 @@ spec:
     name: app-template
     namespace: flux-system
   values:
-    defaultPodOptions:
-      annotations:
-        k8s.v1.cni.cncf.io/networks: |-
-          [{
-            "name": "vpn",
-            "namespace": "network",
-            "ips": ["10.10.31.77/24"]
-          }]
+    # defaultPodOptions:
+    #   annotations:
+    #     k8s.v1.cni.cncf.io/networks: |-
+    #       [{
+    #         "name": "vpn",
+    #         "namespace": "network",
+    #         "ips": ["10.10.31.77/24"]
+    #       }]
     controllers:
       *app :
         replicas: 1 # active nas

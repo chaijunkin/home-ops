@@ -13,7 +13,7 @@ resources:
   # - ./kavita/ks.yaml
   - ./komga/ks.yaml
   - ./maintainerr/ks.yaml
-  - ./neko/ks.yaml # cloudflare tunnel doesn't support UDP (paid)
+  # - ./neko/ks.yaml # cloudflare tunnel doesn't support UDP (paid), VPN is also not working, so neko is disabled for now
   - ./opencloud/ks.yaml
   - ./plex/ks.yaml
   - ./seerr/ks.yaml
