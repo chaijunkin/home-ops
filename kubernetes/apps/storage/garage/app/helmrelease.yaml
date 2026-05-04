@@ -49,7 +49,7 @@ spec:
           api:
             port: 3903
     route:
-      app:
+      s3:
         annotations:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 403"]
@@ -62,6 +62,17 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3
+      api:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 400"]
+        hostnames:
+          - "garage.cloudjur.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
               - identifier: app
                 port: api
     persistence:
