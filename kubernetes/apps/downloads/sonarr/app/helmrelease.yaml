@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/sonarr
-              tag: 4.0.17.2950@sha256:bdc787fe07bb7c0b6af9c030764902f70092ec9a426e52a36716d3a13917fe2d
+              tag: 4.0.17.2967@sha256:4ff5667a371e08b098858fa2457a99a5fef5f6a32640eb8567efe979d13ac9fc
             env:
               SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
