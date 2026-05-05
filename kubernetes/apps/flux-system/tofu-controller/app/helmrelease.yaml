@@ -35,7 +35,7 @@ spec:
     image:
       repository: ghcr.io/flux-iac/tofu-controller
       pullPolicy: IfNotPresent
-      tag: v0.16.1
+      tag: v0.16.3
     runner:
       image:
         repository: ghcr.io/home-operations/opentofu-runner
