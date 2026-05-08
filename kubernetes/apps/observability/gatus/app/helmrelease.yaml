@@ -19,8 +19,6 @@ spec:
   values:
     controllers:
       gatus:
-        serviceAccount:
-          name: gatus
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -171,3 +169,5 @@ spec:
           - path: /config/config.yaml
             subPath: config.yaml
             readOnly: true
+    serviceAccount:
+      gatus: {}
