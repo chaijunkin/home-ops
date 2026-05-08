@@ -11,6 +11,11 @@ web:
           - flux-admin
   httpRoute:
     enabled: true
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/group: Platform Infrastructure
+      gethomepage.dev/name: Flux Operator
+      gethomepage.dev/icon: flux.png
     hostnames:
       - flux-operator.cloudjur.com
     parentRefs:
