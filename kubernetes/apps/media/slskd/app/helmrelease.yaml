@@ -21,12 +21,6 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              storageClass: local-hostpath
-              accessMode: ReadWriteOnce
-              size: 5Gi
         containers:
           app:
             image:
@@ -49,18 +43,27 @@ spec:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"
             probes:
-              liveness: &probes
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /health
                     port: *port
-                  initialDelaySeconds: 0
                   periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -71,6 +74,12 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 1Gi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              storageClass: local-hostpath
+              accessMode: ReadWriteOnce
+              size: 5Gi
     defaultPodOptions:
       annotations:
         k8s.v1.cni.cncf.io/networks: |-
