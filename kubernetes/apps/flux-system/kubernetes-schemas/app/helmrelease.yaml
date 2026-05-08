@@ -10,6 +10,16 @@ spec:
     name: kubernetes-schemas
   interval: 30m
   values:
+    serve:
+      enabled: true
+      port: 8081
+      httpRoute:
+        enabled: true
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        hostnames:
+          - crd.cloudjur.com
     config:
       cfPagesProject: homelab-schema
     existingSecret:
