@@ -21,6 +21,14 @@ spec:
       gatus:
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          automountServiceAccountToken: true
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
         initContainers:
           gatus-sidecar:
             image:
@@ -95,12 +103,6 @@ spec:
                 cpu: 100m
               limits:
                 memory: 256Mi
-    defaultPodOptions:
-      automountServiceAccountToken: true
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
     service:
       app:
         ports:
