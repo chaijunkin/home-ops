@@ -6,7 +6,7 @@ gh pr list  --author "app/cjk-bot" | awk '{print $1}' | xargs -I {} gh pr review
 
 Auto merge EVERY PR (riskier, no checking CI)
 ```
-gh pr list --author "app/cjk-bot" | awk '{print $1}' | xargs -I {} gh pr merge {} --merge --admin
+gh pr list --author "app/cjk-bot" | awk '{print $1}' | xargs -I {} gh pr merge {} --merge --admin --delete-branch
 ```
 
 Auto merge EVERY PR
