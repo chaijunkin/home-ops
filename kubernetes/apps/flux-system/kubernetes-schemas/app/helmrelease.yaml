@@ -19,7 +19,7 @@ spec:
           - name: envoy-external
             namespace: network
         hostnames:
-          - crds.cloudjur.com
+          - crd.cloudjur.com
     existingSecret:
       name: kubernetes-schemas
     fullnameOverride: "kubernetes-schemas"
