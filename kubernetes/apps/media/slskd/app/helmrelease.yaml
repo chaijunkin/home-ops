@@ -27,8 +27,6 @@ spec:
               tag: 0.25.1@sha256:ab9ed50e028b524cefdb7c1dd8ebca368a076e18441ee8ac2326473eb850b4c3
             env:
               DOTNET_BUNDLE_EXTRACT_BASE_DIR: /tmp/.net
-              PUID: "2000"
-              PGID: "2000"
               TZ: Asia/Kuala_Lumpur
               SLSKD_APP_DIR: /config
               SLSKD_NO_VERSION_CHECK: true
@@ -77,9 +75,9 @@ spec:
       # ,
       # "mac": "c6:58:f2:a7:62:ce"
       securityContext:
-        # runAsNonRoot: true
-        # runAsUser: 2000
-        # runAsGroup: 2000
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
     service:
