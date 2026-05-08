@@ -125,7 +125,7 @@ locals {
     # }
     "vaultwarden-txt" = {
       name  = var.vaultwarden_txt_name
-      value = var.vaultwarden_txt_value
+      value = "\"${var.vaultwarden_txt_value}\""
       type  = "TXT"
     }
     "vaultwarden" = {
@@ -157,12 +157,12 @@ locals {
       type    = "CNAME"
       proxied = false
     }
-    # "crd" = {
-    #   name    = "crd"
-    #   value   = var.crd_private_url
-    #   type    = "CNAME"
-    #   proxied = false
-    # }
+    "crd" = {
+      name    = "crd"
+      value   = data.cloudflare_pages_project.crd.subdomain
+      type    = "CNAME"
+      proxied = false
+    }
   }
 
   github_A_record = [

@@ -5,42 +5,44 @@ resource "cloudflare_r2_bucket" "tf_state_bucket" {
 }
 
 resource "cloudflare_zone" "cloudflare_zone" {
-  account_id = local.cloudflare_account_id
-  zone       = local.cloudflare_zone_name
+  name = local.cloudflare_zone_name
+  account = {
+    id = local.cloudflare_account_id
+  }
 }
 
 resource "cloudflare_zone_dnssec" "cloudflare_zone_dnssec" {
   zone_id = cloudflare_zone.cloudflare_zone.id
 }
 
-resource "cloudflare_record" "records" {
-  for_each = local.cloudflare_record
-  zone_id  = cloudflare_zone.cloudflare_zone.id
-  name     = each.value.name
-  content  = each.value.value
-  type     = each.value.type
-  priority = try(each.value.priority, null)
-  proxied  = try(each.value.proxied, false)
-  ttl      = try(each.value.ttl, null)
-}
+# resource "cloudflare_record" "records" {
+#   for_each = local.cloudflare_record
+#   zone_id  = cloudflare_zone.cloudflare_zone.id
+#   name     = each.value.name
+#   content  = each.value.value
+#   type     = each.value.type
+#   priority = try(each.value.priority, null)
+#   proxied  = try(each.value.proxied, false)
+#   ttl      = try(each.value.ttl, null)
+# }
 
-resource "cloudflare_record" "github_A_record" {
-  for_each = toset(local.github_A_record)
-  zone_id  = cloudflare_zone.cloudflare_zone.id
-  name     = "@"
-  content  = each.value
-  type     = "A"
-  proxied  = true
-}
+# resource "cloudflare_record" "github_A_record" {
+#   for_each = toset(local.github_A_record)
+#   zone_id  = cloudflare_zone.cloudflare_zone.id
+#   name     = "@"
+#   content  = each.value
+#   type     = "A"
+#   proxied  = true
+# }
 
-resource "cloudflare_record" "github_AAAA_record" {
-  for_each = toset(local.github_AAAA_record)
-  zone_id  = cloudflare_zone.cloudflare_zone.id
-  name     = "@"
-  content  = each.value
-  type     = "AAAA"
-  proxied  = true
-}
+# resource "cloudflare_record" "github_AAAA_record" {
+#   for_each = toset(local.github_AAAA_record)
+#   zone_id  = cloudflare_zone.cloudflare_zone.id
+#   name     = "@"
+#   content  = each.value
+#   type     = "AAAA"
+#   proxied  = true
+# }
 
 # resource "random_id" "tunnel_secret" {
 #   byte_length = 35
@@ -56,7 +58,7 @@ resource "cloudflare_record" "github_AAAA_record" {
 # resource "cloudflare_record" "me" {
 #   zone_id = cloudflare_zone.cloudflare_zone.id
 #   name    = "me"
-#   value   = "${cloudflare_tunnel.default.id}.cfargotunnel.com"
+#   value   = "${cloudflare_zero_trust_tunnel_cloudflared.default.id}.cfargotunnel.com"
 #   type    = "CNAME"
 #   proxied = true
 # }
@@ -67,7 +69,7 @@ resource "cloudflare_record" "github_AAAA_record" {
 # resource "cloudflare_access_application" "profile_app" {
 #   zone_id          = cloudflare_zone.cloudflare_zone.id
 #   name             = "Access application for profile"
-#   domain           = "me.${cloudflare_zone.cloudflare_zone.zone}"
+#   domain           = "me.${cloudflare_zone.cloudflare_zone.name}"
 #   type             = "self_hosted"
 #   session_duration = "1h"
 #   http_only_cookie_attribute = true
@@ -82,9 +84,9 @@ resource "cloudflare_record" "github_AAAA_record" {
 
 # # Creates an Access policy for the application.
 # resource "cloudflare_access_policy" "profile_policy" {
-#   application_id = cloudflare_access_application.profile_app.id
+#   application_id = cloudflare_zero_trust_access_application.profile_app.id
 #   zone_id        = cloudflare_zone.cloudflare_zone.id
-#   name           = "profile policy for ${cloudflare_zone.cloudflare_zone.zone}"
+#   name           = "profile policy for ${cloudflare_zone.cloudflare_zone.name}"
 #   precedence     = "1"
 #   decision       = "allow"
 #   include {
@@ -146,3 +148,60 @@ resource "cloudflare_record" "github_AAAA_record" {
 #   value   = "v=spf1 include:zoho.com ~all"
 #   type    = "TXT"
 # }
+
+data "cloudflare_pages_project" "crd" {
+  account_id   = local.cloudflare_account_id
+  project_name = var.crd_pages_project_name
+}
+
+resource "cloudflare_pages_domain" "crd" {
+  account_id   = local.cloudflare_account_id
+  project_name = var.crd_pages_project_name
+  name         = "crd.${local.cloudflare_zone_name}"
+}
+
+resource "cloudflare_dns_record" "records" {
+  for_each = local.cloudflare_record
+  zone_id  = cloudflare_zone.cloudflare_zone.id
+  name     = each.value.name
+  content  = each.value.value
+  type     = each.value.type
+  priority = try(each.value.priority, null)
+  proxied  = try(each.value.proxied, false)
+  ttl      = try(each.value.ttl, 1)
+}
+
+moved {
+  from = cloudflare_record.records
+  to   = cloudflare_dns_record.records
+}
+
+resource "cloudflare_dns_record" "github_A_record" {
+  for_each = toset(local.github_A_record)
+  zone_id  = cloudflare_zone.cloudflare_zone.id
+  name     = "@"
+  content  = each.value
+  type     = "A"
+  proxied  = true
+  ttl      = 1
+}
+
+moved {
+  from = cloudflare_record.github_A_record
+  to   = cloudflare_dns_record.github_A_record
+}
+
+resource "cloudflare_dns_record" "github_AAAA_record" {
+  for_each = toset(local.github_AAAA_record)
+  zone_id  = cloudflare_zone.cloudflare_zone.id
+  name     = "@"
+  content  = each.value
+  type     = "AAAA"
+  proxied  = true
+  ttl      = 1
+}
+
+moved {
+  from = cloudflare_record.github_AAAA_record
+  to   = cloudflare_dns_record.github_AAAA_record
+}

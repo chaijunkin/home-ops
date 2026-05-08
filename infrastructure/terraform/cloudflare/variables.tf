@@ -24,10 +24,11 @@ variable "wiki_private_url" {
   description = "Wiki private URL"
   sensitive   = true
 }
-# variable "crd_private_url" {
-#   description = "CRD private URL"
-#   sensitive   = true
-# }
+
+variable "crd_pages_project_name" {
+  description = "Cloudflare Pages project name for the CRD custom domain"
+  default     = "homelab-schema"
+}
 
 variable "wiki_preview_private_url" {
   description = "Wiki preview private URL"
