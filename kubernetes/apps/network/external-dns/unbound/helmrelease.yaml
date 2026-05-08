@@ -25,7 +25,7 @@ spec:
       webhook:
         image:
           repository: ghcr.io/crutonjohn/external-dns-opnsense-webhook
-          tag: pr-11@sha256:2827f2db25ef1acfc090313a3c4dce2be707ffe51fb9ceb1420ac6fd4498d130
+          tag: v1@sha256:0bf02fe18db4fe3a86fe5f561313ee434a203f4dcee7d19e770f67df854f3cff
         env:
           # - name: SERVER_HOST
           #   value: 0.0.0.0
@@ -86,6 +86,10 @@ spec:
     domainFilters:
       - cloudjur.com
 
+    # Metrics
+    metrics:
+      enabled: true
+      port: 7979
     serviceMonitor:
       enabled: true
     podAnnotations:
