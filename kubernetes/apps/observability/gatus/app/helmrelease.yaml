@@ -19,6 +19,8 @@ spec:
   values:
     controllers:
       gatus:
+        serviceAccount:
+          name: gatus
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -96,6 +98,7 @@ spec:
               limits:
                 memory: 256Mi
     defaultPodOptions:
+      automountServiceAccountToken: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -125,40 +128,6 @@ spec:
           - name: envoy-external
             namespace: network
             sectionName: https
-    rbac:
-      roles:
-        gatus:
-          type: ClusterRole
-          rules:
-            - apiGroups: [""]
-              resources: ["configmaps", "secrets"]
-              verbs: ["get", "watch", "list"]
-            - apiGroups:
-                - ""
-              resources:
-                - services
-              verbs:
-                - get
-                - watch
-                - list
-            - apiGroups:
-                - gateway.networking.k8s.io
-              resources:
-                - gateways
-                - httproutes
-              verbs:
-                - get
-                - watch
-                - list
-      bindings:
-        gatus:
-          type: ClusterRoleBinding
-          roleRef:
-            identifier: gatus
-          subjects:
-            - identifier: gatus
-    serviceAccount:
-      gatus: {}
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"
