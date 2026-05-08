@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gotson/komga
-              tag: 1.24.1@sha256:a84a0424e2f8235ba9373ed10b9b903e0feecdbb500a1b4aebac01f08e9e57db
+              tag: 1.24.4@sha256:dae630271561b642d47c9723803ec77900d1f0a803fbe6a42da69db5b21ebaeb
             env:
               TZ: Asia/Kuala_Lumpur
               SERVER_PORT: &port 80
