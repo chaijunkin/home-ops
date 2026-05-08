@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - ./dnsendpoint-crd.yaml
   - ./externalsecret.yaml
+  - ./grafanadashboard.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml

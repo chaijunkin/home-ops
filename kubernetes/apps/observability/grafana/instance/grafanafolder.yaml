@@ -8,3 +8,102 @@ spec:
       grafana.internal/instance: grafana
   title: "External"
   uid: "external-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: default-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Default"
+  uid: "default-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: cilium-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Cilium"
+  uid: "cilium-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: data-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Data"
+  uid: "data-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: games-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Games"
+  uid: "games-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: flux-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Flux"
+  uid: "flux-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: kubernetes-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Kubernetes"
+  uid: "kubernetes-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: network-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Network"
+  uid: "network-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: storage-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "Storage"
+  uid: "storage-folder"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: system-folder
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  title: "System"
+  uid: "system-folder"

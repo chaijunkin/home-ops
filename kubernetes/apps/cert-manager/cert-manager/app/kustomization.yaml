@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./clusterissuer.yaml
+  - ./grafanadashboard.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
 configMapGenerator:

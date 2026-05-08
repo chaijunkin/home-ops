@@ -59,15 +59,15 @@ endpoints:
   - name: Vault
     url: https://vw.cloudjur.com
     <<: *fly-defaults
-  - name: external
-    group: external
-    url: 1.1.1.1
-    interval: 1m
-    dns:
-      query-name: "external.cloudjur.com"
-      query-type: A
-    conditions:
-      - "len([BODY]) > 0"
+  # - name: external
+  #   group: external
+  #   url: 1.1.1.1
+  #   interval: 1m
+  #    dns:
+  #     query-name: "external.cloudjur.com"
+  #     query-type: A
+  #   conditions:
+  #     - "len([BODY]) > 0"
   # - name: Cloudflare
   #   group: connectivity
   #   url: icmp://1.1.1.1

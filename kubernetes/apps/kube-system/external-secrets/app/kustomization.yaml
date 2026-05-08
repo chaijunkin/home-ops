@@ -9,4 +9,5 @@ configMapGenerator:
     files:
       - values.yaml=./helm/values.yaml
 resources:
+  - ./grafanadashboard.yaml
   - ./helmrelease.yaml

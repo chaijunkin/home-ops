@@ -174,6 +174,22 @@ resource "authentik_application" "application" {
   policy_engine_mode = "all"
 }
 
+module "oauth2-toolhive" {
+  source             = "./oauth2_application"
+  name               = "Toolhive"
+  icon_url           = "https://raw.githubusercontent.com/stacklok/toolhive/refs/heads/main/docs/images/stacklok-favicon.svg"
+  launch_url         = "https://mcp.cloudjur.com"
+  description        = "MCPs for Clankers"
+  newtab             = true
+  group              = "users"
+  auth_groups        = [authentik_group.default["users"].id]
+  authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
+  invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
+  client_id          = var.toolhive_mcp_gateway_id
+  client_secret      = var.toolhive_mcp_gateway_secret
+  redirect_uris      = ["https://mcp.cloudjur.com/oauth/callback"]
+}
+
 module "oauth2-opencloud" {
   source             = "./oauth2_application"
   name               = "OpenCloud"

@@ -13,7 +13,7 @@ rpc_secret = "{{ .GARAGE_RPC_SECRET }}"
 [s3_api]
 s3_region = "us-east-1"
 api_bind_addr = "[::]:3900"
-root_domain = ".s3-temp.cloudjur.com"
+root_domain = ".s3.cloudjur.com"
 
 [admin]
 api_bind_addr = "[::]:3903"
