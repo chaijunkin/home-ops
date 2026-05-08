@@ -39,7 +39,7 @@ spec:
     runner:
       image:
         repository: ghcr.io/home-operations/opentofu-runner
-        tag: 1.11.5@sha256:97b33c898abe78bb6ed52a56182063376ba60e142c05dfc101036678f71c8fe0
+        tag: 1.11.6@sha256:32d6b02de653d6dfd1073f365b41c07fa48d78eac06613e1e01e372d8a0d552b
     installCRDs: true
     metrics:
       enabled: true
