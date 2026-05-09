@@ -33,7 +33,7 @@ endpoints:
   - addresses:
       - "192.168.1.2"
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.networking.k8s.io/httproute_v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/service.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:

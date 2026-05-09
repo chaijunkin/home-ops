@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/serviceaccount.json
 ### Token Auth
 apiVersion: v1
 kind: ServiceAccount

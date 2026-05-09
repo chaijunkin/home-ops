@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -21,7 +21,7 @@ spec:
       remediation:
         type: cronjob
         cronjob:
-          schedule: "0 0 30 2 *"  # Feb 30th (never) - manual trigger only
+          schedule: "0 0 30 2 *" # Feb 30th (never) - manual trigger only
           concurrencyPolicy: Forbid
           successfulJobsHistory: 1
           failedJobsHistory: 1

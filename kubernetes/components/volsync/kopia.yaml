@@ -23,7 +23,7 @@ spec:
         key: e93b40f5-5416-4fa9-9c04-97390bfcfd39
         property: kopia_password
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:

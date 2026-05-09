@@ -28,7 +28,7 @@ endpoints:
     conditions:
       ready: true
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.18b.haus/gateway.networking.k8s.io/tlsroute_v1alpha2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/service.json
 apiVersion: gateway.networking.k8s.io/v1alpha2
 kind: TLSRoute
 metadata:

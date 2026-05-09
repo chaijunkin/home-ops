@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://schemas.tholinka.dev/gateway.networking.k8s.io/referencegrant_v1beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/referencegrant_1beta1.json
 # Consolidated ReferenceGrant: aggregates multiple SecurityPolicy sources into a single grant
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant

@@ -22,7 +22,7 @@ spec:
   blocks:
     - cidr: "10.10.30.0/24"
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumbgpadvertisement_v2.json
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliuml2announcementpolicy_2alpha1.json
 apiVersion: cilium.io/v2
 kind: CiliumBGPAdvertisement
 metadata:
