@@ -34,12 +34,12 @@ def get_schema_url(api_version, kind, doc=None):
 
     if group == 'notification.toolkit.fluxcd.io':
         if kind_lower == 'alert':
-            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/alert_{version_raw}.json'
+            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/alert_v{version_raw}.json'
         if kind_lower == 'provider':
             return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/provider_v{version_raw}.json'
         if kind_lower == 'receiver':
-            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/receiver_{version_raw}.json'
-        return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/{kind_lower}_{version_raw}.json'
+            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/receiver_v{version_raw}.json'
+        return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/{kind_lower}_v{version_raw}.json'
 
     if group == 'gateway.envoyproxy.io':
         return f'https://crd.cloudjur.com/gateway.envoyproxy.io/{kind_lower}_v{version_raw}.json'
