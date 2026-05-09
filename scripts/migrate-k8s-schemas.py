@@ -12,7 +12,7 @@ def get_schema_url(api_version, kind, doc=None):
         version = api_version
 
     version_raw = version
-    version_num = version.lstrip('v')
+    version_raw = version.lstrip('v')
     kind_lower = kind.lower()
 
     # Known scalar schema URLs for common Kubernetes tooling resources.
@@ -27,42 +27,39 @@ def get_schema_url(api_version, kind, doc=None):
             chart_ref = doc.get('spec', {}).get('chartRef')
             if isinstance(chart_ref, dict) and chart_ref.get('name') == 'app-template':
                 return 'https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json'
-        return f'https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_{version_raw}.json'
+        return f'https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_{version_raw}.json'
 
     if group == 'source.toolkit.fluxcd.io' and kind == 'OCIRepository':
-        return f'https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_{version_num}.json'
+        return f'https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v{version_raw}.json'
 
     if group == 'notification.toolkit.fluxcd.io':
         if kind_lower == 'alert':
-            return f'https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/alert_{version_raw}.json'
+            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/alert_{version_raw}.json'
         if kind_lower == 'provider':
-            return f'https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/provider_{version_num}.json'
+            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/provider_v{version_raw}.json'
         if kind_lower == 'receiver':
-            return f'https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/receiver_{version_num}.json'
-        return f'https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/{kind_lower}_{version_num}.json'
-
-    if group == 'gateway.networking.k8s.io':
-        return f'https://kubernetes-schemas.pages.dev/gateway.networking.k8s.io/{kind_lower}_{version_num}.json'
+            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/receiver_{version_raw}.json'
+        return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/{kind_lower}_{version_raw}.json'
 
     if group == 'gateway.envoyproxy.io':
-        return f'https://kubernetes-schemas.pages.dev/gateway.envoyproxy.io/{kind_lower}_{version_num}.json'
+        return f'https://crd.cloudjur.com/gateway.envoyproxy.io/{kind_lower}_v{version_raw}.json'
 
     if group == 'monitoring.coreos.com':
-        return f'https://kubernetes-schemas.pages.dev/monitoring.coreos.com/{kind_lower}_{version_num}.json'
+        return f'https://crd.cloudjur.com/monitoring.coreos.com/{kind_lower}_v{version_raw}.json'
 
     if group == 'external-secrets.io':
-        return f'https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_{version_num}.json'
+        return f'https://crd.cloudjur.com/external-secrets.io/externalsecret_v{version_raw}.json'
 
     if group == 'toolhive.stacklok.dev':
-        return f'https://kube-schemas.pages.dev/toolhive.stacklok.dev/{kind_lower}_{version_num}.json'
+        return f'https://kube-schemas.pages.dev/toolhive.stacklok.dev/{kind_lower}_{version_raw}.json'
 
     if group == 'volsync.backube' or group == 'tuppr.home-operations.com' or group == 'grafana.integreatly.org' or group.startswith('cilium.io') or group == 'cert-manager.io' or group == 'dragonflydb.io' or group == 'k8s.cni.cncf.io' or group == 'externaldns.k8s.io':
-        return f'https://kubernetes-schemas.pages.dev/{group}/{kind_lower}_{version_num}.json'
+        return f'https://crd.cloudjur.com/{group}/{kind_lower}_v{version_raw}.json'
 
     if group == '':
         return f'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/{kind_lower}.json'
 
-    return f'https://crd.cloudjur.com/{group}/{kind_lower}_{version_num}.json'
+    return f'https://crd.cloudjur.com/{group}/{kind_lower}_v{version_raw}.json'
 
 def add_schema_to_file(file_path, override=False):
     try:

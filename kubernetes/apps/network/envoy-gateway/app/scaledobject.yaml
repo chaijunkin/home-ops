@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://crd.cloudjur.com/keda.sh/scaledobject_1alpha1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/keda.sh/scaledobject_v1alpha1.json
 ---
 kind: ScaledObject
 apiVersion: keda.sh/v1alpha1
