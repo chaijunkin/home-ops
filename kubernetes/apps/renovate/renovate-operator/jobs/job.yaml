@@ -5,7 +5,9 @@ kind: RenovateJob
 metadata:
   name: chaijunkin
 spec:
-  discoverTopics: [renovate]
+  # discoverTopics: [renovate]
+  discoveryFilters:
+    - chaijunkin/home-ops
   provider:
     name: github
   extraEnv:
