@@ -68,6 +68,26 @@ spec:
     # Features
     # ---------------------------------------------------------------------------
 
+
+
+    annotationAutodiscovery:
+      enabled: true
+      destinations: [localMertics]
+      collector: alloy-metrics
+
+    autoInstrumentation:
+      enabled: true
+      destinations: [localTraces]
+      collector: alloy-receiver
+
+    # Node logs via Loki (DaemonSet file tailing of /var/log/pods/*, equivalent to
+    # the current loki.source.kubernetes pipeline with cluster=main and
+    # namespace/pod/container relabelling).
+    nodeLogs:
+      enabled: true
+      collector: alloy-logs
+      destinations: [localLogs]
+
     # Pod logs via Loki (DaemonSet file tailing of /var/log/pods/*, equivalent to
     # the current loki.source.kubernetes pipeline with cluster=main and
     # namespace/pod/container relabelling).
@@ -172,6 +192,8 @@ spec:
         deploy: false
       node-exporter:
         deploy: false
+      k8s-manifest-tail:
+        deploy: true
 
     # ---------------------------------------------------------------------------
     # Collectors — define the two Alloy instances
