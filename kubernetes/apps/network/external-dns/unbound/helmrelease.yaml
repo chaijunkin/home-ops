@@ -24,7 +24,7 @@ spec:
       webhook:
         image:
           repository: ghcr.io/crutonjohn/external-dns-opnsense-webhook
-          tag: v1@sha256:0bf02fe18db4fe3a86fe5f561313ee434a203f4dcee7d19e770f67df854f3cff
+          tag: v1.0.0
         env:
           # - name: SERVER_HOST
           #   value: 0.0.0.0
@@ -54,13 +54,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 8080
+            port: http-webhook
           initialDelaySeconds: 10
           timeoutSeconds: 5
         readinessProbe:
           httpGet:
-            path: /healthz
-            port: 8080
+            path: /readyz
+            port: http-webhook
           initialDelaySeconds: 10
           timeoutSeconds: 5
     triggerLoopOnEvent: true
