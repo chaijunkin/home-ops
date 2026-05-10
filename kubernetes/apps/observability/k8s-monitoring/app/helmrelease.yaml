@@ -81,11 +81,11 @@ spec:
       collector: alloy-receiver
       beyla:
         config:
-          data:
-        discovery:
-          services:
-            - k8s_namespace: self-hosted
           create: true
+          data:
+            discovery:
+              services:
+                - k8s_namespace: self-hosted
 
     # Node logs via Loki (DaemonSet file tailing of /var/log/pods/*, equivalent to
     # the current loki.source.kubernetes pipeline with cluster=main and
