@@ -44,7 +44,7 @@ resource "talos_image_factory_schematic" "updated" {
 # The key is purposefully made up of the values (image_id contains both schematic id and version),
 # since all values under a key therefore are the same, we can simply select the first element of the value list.
 # Improvements are welcome!
-resource "proxmox_virtual_environment_download_file" "this" {
+resource "proxmox_virtual_environment_download_file" "this" { # proxmox_download_file
   for_each = {
     for k, v in var.nodes :
     "${v.host_node}_${v.update == true ? local.update_image_id : local.image_id}" => {
@@ -52,6 +52,14 @@ resource "proxmox_virtual_environment_download_file" "this" {
       schematic = v.update == true ? talos_image_factory_schematic.updated.id : talos_image_factory_schematic.this.id
       version   = v.update == true ? local.update_version : local.version
     }...
+  }
+
+
+  lifecycle {
+    ignore_changes = [
+      file_name,
+      url,
+    ]
   }
 
   node_name    = each.value[0].host_node
