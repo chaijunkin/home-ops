@@ -182,10 +182,10 @@ spec:
       collector: alloy-profiles
       destinations: [localProfiling]
 
-    kubernetesManifests:
-      enabled: true
-      collector: alloy-logs
-      destinations: [localLogs]
+    # kubernetesManifests:
+    #   enabled: true
+    #   collector: alloy-logs
+    #   destinations: [localLogs]
 
     # ---------------------------------------------------------------------------
     # Disabled features — kube-prometheus-stack already owns these
@@ -210,18 +210,18 @@ spec:
         deploy: false
       node-exporter:
         deploy: false
-      k8s-manifest-tail:
-        deploy: true
-        config:
-          objects:
-            - apiVersion: v1
-              kind: Pod
-            - apiVersion: apps/v1
-              kind: Deployment
-            - apiVersion: apps/v1
-              kind: StatefulSet
-            - apiVersion: apps/v1
-              kind: DaemonSet
+      # k8s-manifest-tail:
+      #   deploy: true
+      #   config:
+      #     objects:
+      #       - apiVersion: v1
+      #         kind: Pod
+      #       - apiVersion: apps/v1
+      #         kind: Deployment
+      #       - apiVersion: apps/v1
+      #         kind: StatefulSet
+      #       - apiVersion: apps/v1
+      #         kind: DaemonSet
 
     # ---------------------------------------------------------------------------
     # Collectors — define the two Alloy instances
