@@ -17,6 +17,39 @@
     "**/*.yaml.j2": "yaml"
   },
   "files.trimTrailingWhitespace": true,
+  "vsicons.associations.files": [
+    { "icon": "template", "extensions": ["gotmpl"], "filename": false, "format": "svg" },
+    { "icon": "helm", "extensions": ["helmfile.yaml"], "filename": true, "format": "svg" },
+    { "icon": "kubernetes", "extensions": ["kubeconfig", "talosconfig"], "filename": true, "format": "svg" }
+  ],
+
+  "vsicons.associations.folders": [
+    // GitHub / CI
+    { "icon": "github", "extensions": ["workflows", "actions-runner-system"], "format": "svg" },
+
+    // Security & Secrets
+    { "icon": "secure", "extensions": [".private", "cert-manager", "external-secrets"], "format": "svg" },
+
+    // Updates & Automation
+    { "icon": "update", "extensions": [".renovate", "system-upgrade"], "format": "svg" },
+
+    // Storage & State
+    { "icon": "database", "extensions": ["openebs-system", "rook-ceph", "bootstrap"], "format": "svg" },
+
+    // Infrastructure & Tools
+    { "icon": "helm", "extensions": ["helmfile.d"], "format": "svg" },
+    { "icon": "git", "extensions": ["flux", "flux-system"], "format": "svg" },
+    { "icon": "linux", "extensions": ["talos"], "format": "svg" },
+    { "icon": "kubernetes", "extensions": ["kube-system"], "format": "svg" },
+    { "icon": "aws", "extensions": ["volsync-system"], "format": "svg" },
+
+    // Networking & Observability
+    { "icon": "api", "extensions": ["network"], "format": "svg" },
+    { "icon": "log", "extensions": ["observability"], "format": "svg" },
+
+    // Base / Default
+    { "icon": "server", "extensions": ["default"], "format": "svg" }
+  ],
   "material-icon-theme.files.associations": {
     "*.gotmpl": "smarty",
     "helmfile.yaml": "helm",
