@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://crd.movishell.pl/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: chaijunkin
+spec:
+  discoverTopics: [renovate]
+  provider:
+    name: github
+  extraEnv:
+    - name: LOG_LEVEL
+      value: debug
+    - name: RENOVATE_ALLOWED_COMMANDS
+      value: '["pnpm run bundle"]'
+    - name: RENOVATE_REDIS_URL
+      value: redis://dragonfly.database.svc.cluster.local:6379/8
+  image: ghcr.io/renovatebot/renovate:43.170.1
+  parallelism: 5
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  schedule: 0 * * * *
+  secretRef: cjk-bot-token
+  webhook:
+    enabled: true

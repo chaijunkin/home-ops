@@ -60,6 +60,7 @@ crash.*.log
 !talos_image.auto.tfvars
 !talos_node.auto.tfvars
 terraform.auto.tfvars
+private-key.pem
 
 *.tfvars
 !terraform.tfvars
