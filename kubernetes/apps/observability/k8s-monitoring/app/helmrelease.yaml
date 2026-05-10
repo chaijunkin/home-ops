@@ -194,6 +194,16 @@ spec:
         deploy: false
       k8s-manifest-tail:
         deploy: true
+        config:
+          objects:
+            - apiVersion: v1
+              kind: Pod
+            - apiVersion: apps/v1
+              kind: Deployment
+            - apiVersion: apps/v1
+              kind: StatefulSet
+            - apiVersion: apps/v1
+              kind: DaemonSet
 
     # ---------------------------------------------------------------------------
     # Collectors — define the two Alloy instances
