@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -25,7 +24,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
             resources:
               requests:
                 cpu: 5m
@@ -55,7 +54,7 @@ spec:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 403"]
         hostnames:
-          - "s3.cloudjur.com"
+          - s3.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -68,7 +67,7 @@ spec:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 400"]
         hostnames:
-          - "garage.cloudjur.com"
+          - garage.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network

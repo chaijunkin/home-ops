@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -11,18 +10,18 @@ resources:
   - ./calibre-web-automated/ks.yaml
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
-  # - ./kavita/ks.yaml
+    # - ./kavita/ks.yaml
   - ./komga/ks.yaml
   - ./maintainerr/ks.yaml
-  # - ./neko/ks.yaml # cloudflare tunnel doesn't support UDP (paid), VPN is also not working, so neko is disabled for now
+    # - ./neko/ks.yaml # cloudflare tunnel doesn't support UDP (paid), VPN is also not working, so neko is disabled for now
   - ./opencloud/ks.yaml
   - ./plex/ks.yaml
   - ./seerr/ks.yaml
-  # - ./romm/ks.yaml
+    # - ./romm/ks.yaml
   - ./slskd/ks.yaml
   - ./syncthing/ks.yaml
   - ./tautulli/ks.yaml
   - ./watchstate/ks.yaml
-  ### WISHLIST
-  # - ./paperless/ks.yaml
-  # - ./tachidesk/ks.yaml
+    ### WISHLIST
+    # - ./paperless/ks.yaml
+    # - ./tachidesk/ks.yaml

@@ -36,10 +36,11 @@ spec:
               repository: ghcr.io/onedr0p/postgres-init
               tag: 16
               pullPolicy: IfNotPresent
-            envFrom: &envFrom
+            envFrom:
               - secretRef:
-                  name: firefly-secret
-              # TODO: set smtp secret
+                  name:
+                    firefly-secret
+                    # TODO: set smtp secret
         containers:
           app:
             image:
@@ -49,7 +50,7 @@ spec:
               - secretRef:
                   name: firefly-secret
             env:
-              TZ: "Asia/Kuala_Lumpur"
+              TZ: Asia/Kuala_Lumpur
               APP_URL: https://money.cloudjur.com
               TRUSTED_PROXIES: "*"
               # ENABLE_EXCHANGE_RATES: "true"
@@ -90,17 +91,17 @@ spec:
               repository: docker.io/fireflyiii/data-importer
               tag: version-1.6.1@sha256:40e10f996a7bf72285dd6475c49424a02255fb02437904fe2ee6c44bc07e1bfc
             env:
-              TZ: "Asia/Kuala_Lumpur"
+              TZ: Asia/Kuala_Lumpur
               FIREFLY_III_URL: http://firefly.default.svc.cluster.local:8080
-              VANITY_URL: "https://money.cloudjur.com"
+              VANITY_URL: https://money.cloudjur.com
             # securityContext: *sc
             resources:
               requests:
-                cpu: "10m"
-                memory: "100Mi"
+                cpu: 10m
+                memory: 100Mi
               limits:
                 cpu: "1"
-                memory: "1Gi"
+                memory: 1Gi
             probes:
               liveness:
                 enabled: true

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
@@ -17,9 +16,9 @@ spec:
         # - hallway-tablet.cloudjur.com
         # - livingroom-vacuum.cloudjur.com
         - smb.cloudjur.com
-        # - pikvm.cloudjur.com
+          # - pikvm.cloudjur.com
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/monitoring.coreos.com/probe_v1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: Probe
 metadata:
@@ -31,4 +30,4 @@ spec:
   targets:
     staticConfig:
       static:
-        - "smb.cloudjur.com:2049"
+        - smb.cloudjur.com:2049

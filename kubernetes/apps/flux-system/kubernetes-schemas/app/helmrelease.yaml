@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_2.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -14,7 +13,7 @@ spec:
       cfPagesProject: homelab-schema
     existingSecret:
       name: kubernetes-schemas
-    fullnameOverride: "kubernetes-schemas"
+    fullnameOverride: kubernetes-schemas
     metrics:
       podMonitor:
         enabled: true

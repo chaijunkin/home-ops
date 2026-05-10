@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -16,7 +15,7 @@ resources:
   - ./qbittorrent/ks.yaml
   - ./qui/ks.yaml
   - ./radarr/ks.yaml
-  # - ./readarr/ks.yaml
+    # - ./readarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml

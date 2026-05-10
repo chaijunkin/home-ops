@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -10,10 +9,10 @@ metadata:
     gethomepage.dev/name: Authentik
     gethomepage.dev/icon: authentik.png
     gethomepage.dev/widget.type: authentik
-    gethomepage.dev/widget.url: "http://authentik-server.security.svc.cluster.local:80"
+    gethomepage.dev/widget.url: http://authentik-server.security.svc.cluster.local:80
     gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
 spec:
-  hostnames: ["auth.cloudjur.com"]
+  hostnames: [auth.cloudjur.com]
   parentRefs:
     - name: envoy-external
       namespace: network

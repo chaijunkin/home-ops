@@ -70,7 +70,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
             envFrom:
               - secretRef:
                   name: home-assistant-secret
@@ -97,16 +97,16 @@ spec:
             # probes: *probes
             args:
               - --auth
-              - "none"
+              - none
               - --disable-telemetry
               - --disable-update-check
-              - "--port"
+              - --port
               - "12321"
               - --user-data-dir
-              - "/config/.vscode"
+              - /config/.vscode
               - --extensions-dir
-              - "/config/.vscode"
-              - "/config"
+              - /config/.vscode
+              - /config
             resources:
               requests:
                 cpu: 10m
@@ -117,7 +117,7 @@ spec:
       app:
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: "10.10.30.50"
+          lbipam.cilium.io/ips: 10.10.30.50
           gatus.home-operations.com/endpoint: |-
             name: home-assistant-lb
             group: services

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -15,7 +14,7 @@ spec:
     - name: volsync
       namespace: volsync-system
   interval: 30m
-  path: "./kubernetes/apps/media/maintainerr/app"
+  path: ./kubernetes/apps/media/maintainerr/app
   postBuild:
     substitute:
       APP: *appname

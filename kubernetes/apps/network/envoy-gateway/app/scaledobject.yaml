@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://crd.cloudjur.com/keda.sh/scaledobject_v1alpha1.json
----
 kind: ScaledObject
 apiVersion: keda.sh/v1alpha1
 metadata:
@@ -28,6 +27,7 @@ spec:
         query: 1 - min(gatus_results_endpoint_success{group="external"})
         threshold: "1"
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/keda.sh/scaledobject_v1alpha1.json
 kind: ScaledObject
 apiVersion: keda.sh/v1alpha1
 metadata:
@@ -56,6 +56,7 @@ spec:
         query: 1 - min(gatus_results_endpoint_success{group="external"})
         threshold: "1"
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/keda.sh/scaledobject_v1alpha1.json
 kind: ScaledObject
 apiVersion: keda.sh/v1alpha1
 metadata:

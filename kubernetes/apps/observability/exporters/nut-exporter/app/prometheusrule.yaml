@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -20,7 +19,8 @@ spec:
         #     severity: critical
         - alert: UpsOnBattery
           annotations:
-            description: UPS {{ $labels.ups }} has lost power and is running on battery.
+            description: UPS {{ $labels.ups }} has lost power and is running on
+              battery.
             summary: UPS is running on battery.
           expr: |
             network_ups_tools_ups_status{flag="OB"} == 1
@@ -30,8 +30,8 @@ spec:
         - alert: UpsLowRuntime
           annotations:
             description:
-              UPS {{ $labels.instance }} battery is low and the system is getting
-              ready to shutdown.
+              UPS {{ $labels.instance }} battery is low and the system is
+              getting ready to shutdown.
             summary: UPS battery is low.
           expr: |
             (
@@ -44,9 +44,8 @@ spec:
             severity: critical
         - alert: UpsShuttingDown
           annotations:
-            description:
-              UPS {{ $labels.ups }} battery is low and the system is getting
-              ready to shutdown.
+            description: UPS {{ $labels.ups }} battery is low and the system is
+              getting ready to shutdown.
             summary: UPS battery is low.
           expr: |
             network_ups_tools_ups_status{flag="OB"} == 1
@@ -58,7 +57,9 @@ spec:
           labels:
             severity: warning
           annotations:
-            description: UPS {{ $labels.instance }} battery charge is {{ $value }} which is below 50%.
+            description:
+              UPS {{ $labels.instance }} battery charge is {{ $value }}
+              which is below 50%.
             summary: UPS battery low
         - alert: UpsBatteryReplace
           annotations:

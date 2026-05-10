@@ -28,8 +28,8 @@ spec:
             env:
               TZ: Asia/Kuala_Lumpur
               PLEX_ADVERTISE_URL: https://plex.cloudjur.com:443,https://10.10.30.14:32400
-              ALLOWED_NETWORKS: "10.0.0.0/8"
-              PLEX_NO_AUTH_NETWORKS: "10.0.0.0/8"
+              ALLOWED_NETWORKS: 10.0.0.0/8
+              PLEX_NO_AUTH_NETWORKS: 10.0.0.0/8
             envFrom:
               - secretRef:
                   name: plex-secret
@@ -54,7 +54,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
             resources:
               requests:
                 memory: 1Gi
@@ -122,7 +122,7 @@ spec:
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
-                  remove: ["Range"]
+                  remove: [Range]
             matches:
               - path:
                   type: PathPrefix

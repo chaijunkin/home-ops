@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/dragonflydb.io/dragonfly_v1alpha1.json
 apiVersion: dragonflydb.io/v1alpha1
 kind: Dragonfly
@@ -13,16 +12,16 @@ spec:
         resourceFieldRef:
           resource: limits.memory
           divisor: 1Mi
-    # - name: AWS_ACCESS_KEY_ID
-    #   valueFrom:
-    #     secretKeyRef:
-    #       key: AWS_ACCESS_KEY_ID
-    #       name: dragonfly-secret
-    # - name: AWS_SECRET_ACCESS_KEY
-    #   valueFrom:
-    #     secretKeyRef:
-    #       key: AWS_SECRET_ACCESS_KEY
-    #       name: dragonfly-secret
+          # - name: AWS_ACCESS_KEY_ID
+          #   valueFrom:
+          #     secretKeyRef:
+          #       key: AWS_ACCESS_KEY_ID
+          #       name: dragonfly-secret
+          # - name: AWS_SECRET_ACCESS_KEY
+          #   valueFrom:
+          #     secretKeyRef:
+          #       key: AWS_SECRET_ACCESS_KEY
+          #       name: dragonfly-secret
   # snapshot:
   #   dir: "s3://dragonfly"
   args:
@@ -30,7 +29,7 @@ spec:
     - --proactor_threads=2
     - --cluster_mode=emulated
     - --lock_on_hashtags
-    # - --s3_endpoint=s3.cloudjur.com
+      # - --s3_endpoint=s3.cloudjur.com
   # topologySpreadConstraints:
   #   - maxSkew: 1
   #     topologyKey: kubernetes.io/hostname

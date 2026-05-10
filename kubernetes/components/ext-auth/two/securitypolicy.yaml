@@ -1,6 +1,4 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
-# adapted from https://docs.goauthentik.io/docs/add-secure-apps/providers/proxy/server_envoy and https://github.com/authelia/authelia/blob/master/docs/content/integration/proxies/envoy.md#secure-route
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:

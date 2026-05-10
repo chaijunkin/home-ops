@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_2.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -36,8 +35,7 @@ spec:
             image:
               repository: docker.io/opencloudeu/opencloud-rolling
               tag: 6.1.0@sha256:235b5d988729aa821bd068bbdc60175270b05bd5fefa77b6d0e2ec5aeadccd0b
-            command:
-              ["/bin/sh", "-c", "opencloud init || true; opencloud server"]
+            command: [/bin/sh, -c, opencloud init || true; opencloud server]
             envFrom:
               - secretRef:
                   name: *secret
@@ -99,7 +97,7 @@ spec:
           gethomepage.dev/name: OpenCloud
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/opencloud.png
           gethomepage.dev/description: File Sync and Share
-        hostnames: ["drive.cloudjur.com"]
+        hostnames: [drive.cloudjur.com]
         parentRefs:
           - name: envoy-external
             namespace: network
@@ -111,22 +109,23 @@ spec:
             matches:
               - path:
                   type: PathPrefix
-                  value: /
-          # browser UA - unneeded?
-          # - backendRefs:
-          #     - identifier: app
-          #       port: 9201
-          #   matches:
-          #     - path:
-          #         type: Exact
-          #         value: /.well-known/webfinger
-          #   filters:
-          #     - type: RequestHeaderModifier
-          #       requestHeaderModifier:
-          #         add:
-          #           - name: X-Issuer-Suffix
-          #             value: opencloud
-          # desktop UA
+                  value:
+                    /
+                    # browser UA - unneeded?
+                    # - backendRefs:
+                    #     - identifier: app
+                    #       port: 9201
+                    #   matches:
+                    #     - path:
+                    #         type: Exact
+                    #         value: /.well-known/webfinger
+                    #   filters:
+                    #     - type: RequestHeaderModifier
+                    #       requestHeaderModifier:
+                    #         add:
+                    #           - name: X-Issuer-Suffix
+                    #             value: opencloud
+                    # desktop UA
           - backendRefs:
               - identifier: app
                 port: 9201
@@ -137,14 +136,14 @@ spec:
                 headers:
                   - type: RegularExpression
                     name: User-Agent
-                    value: ".*mirall.*OpenCloud.*"
+                    value: .*mirall.*OpenCloud.*
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
                   add:
                     - name: X-Issuer-Suffix
                       value: openclouddesktop
-          # Android UA
+                      # Android UA
           - backendRefs:
               - identifier: app
                 port: 9201
@@ -155,14 +154,14 @@ spec:
                 headers:
                   - type: RegularExpression
                     name: User-Agent
-                    value: ".*OpenCloud-android.*"
+                    value: .*OpenCloud-android.*
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
                   add:
                     - name: X-Issuer-Suffix
                       value: opencloudandroid
-          # iOS UA
+                      # iOS UA
           - backendRefs:
               - identifier: app
                 port: 9201
@@ -173,7 +172,7 @@ spec:
                 headers:
                   - type: RegularExpression
                     name: User-Agent
-                    value: ".*OpenCloudApp"
+                    value: .*OpenCloudApp
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:

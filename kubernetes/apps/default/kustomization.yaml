@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -16,12 +15,12 @@ resources:
   - ./homepage/ks.yaml
   - ./it-tools/ks.yaml
   - ./karakeep/ks.yaml
-  # - ./mcp-servers/ks.yaml
-  # - ./mcpo/ks.yaml
+    # - ./mcp-servers/ks.yaml
+    # - ./mcpo/ks.yaml
   - ./n8n/ks.yaml
-  # - ./ollama/ks.yaml
-  # - ./open-webui/ks.yaml
-  # - ./pdf-tool/ks.yaml
+    # - ./ollama/ks.yaml
+    # - ./open-webui/ks.yaml
+    # - ./pdf-tool/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./thelounge/ks.yaml

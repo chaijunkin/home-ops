@@ -35,7 +35,7 @@ spec:
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"
-            args: ["tunnel", "run"]
+            args: [tunnel, run]
             probes:
               liveness: &probes
                 enabled: true
@@ -52,7 +52,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
             resources:
               requests:
                 cpu: 10m

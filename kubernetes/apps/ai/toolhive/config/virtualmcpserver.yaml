@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://kube-schemas.pages.dev/toolhive.stacklok.dev/virtualmcpserver_1beta1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/virtualmcpserver_v1beta1.json
 apiVersion: toolhive.stacklok.dev/v1beta1
 kind: VirtualMCPServer
 metadata:
@@ -67,7 +66,7 @@ spec:
             - name: INSECURE_DISABLE_URL_VALIDATION
               value: "true"
 ---
-# yaml-language-server: $schema=https://crd.movishell.pl/toolhive.stacklok.dev/virtualmcpserver_v1alpha1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/virtualmcpserver_v1alpha1.json
 apiVersion: toolhive.stacklok.dev/v1alpha1
 kind: VirtualMCPServer
 metadata:

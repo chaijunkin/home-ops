@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -42,18 +41,18 @@ spec:
             image:
               repository: docker.io/prodrigestivill/postgres-backup-local
               tag: 18@sha256:f70742ebe42b2277689b028d1fd15aa80f77cffa01da163cc9f85a6ff1866e7f
-            command: ["/backup.sh"]
+            command: [/backup.sh]
             env:
-              BACKUP_DIR: "/backups"
+              BACKUP_DIR: /backups
               BACKUP_KEEP_DAYS: "7"
               BACKUP_KEEP_MINS: "7200"
               BACKUP_KEEP_MONTHS: "6"
               BACKUP_KEEP_WEEKS: "4"
-              BACKUP_LATEST_TYPE: "symlink"
-              POSTGRES_EXTRA_OPTS: "-b -C -c -Z6"
-              POSTGRES_HOST: "postgres-rw.database.svc.cluster.local"
+              BACKUP_LATEST_TYPE: symlink
+              POSTGRES_EXTRA_OPTS: -b -C -c -Z6
+              POSTGRES_HOST: postgres-rw.database.svc.cluster.local
               SCHEDULE: "@daily"
-              TZ: "Asia/Kuala_Lumpur"
+              TZ: Asia/Kuala_Lumpur
             envFrom:
               - secretRef:
                   name: &secret cloudnative-pg-backup-secret

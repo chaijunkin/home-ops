@@ -66,8 +66,8 @@ spec:
               RAG_WEB_SEARCH_ENGINE: searxng
               SEARXNG_QUERY_URL: http://searxng.default:8080/search?q=<query>
               ENABLE_WEBSOCKET_SUPPORT: "true"
-              WEBSOCKET_MANAGER: "redis"
-              WEBSOCKET_REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379"
+              WEBSOCKET_MANAGER: redis
+              WEBSOCKET_REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"

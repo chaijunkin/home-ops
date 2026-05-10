@@ -1,10 +1,100 @@
 #!/usr/bin/env python3
 
 import argparse
-import yaml
+import json
+import urllib.request
+import urllib.error
+from ruamel.yaml import YAML
 from pathlib import Path
 
+SCHEMA_REPO_TREE_URL = 'https://api.github.com/repos/yannh/kubernetes-json-schema/git/trees/master?recursive=1'
+SCHEMA_RAW_BASE_URL = 'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master'
+_schema_index_cache = None
+
+
+def fetch_upstream_schema_index(timeout=10):
+    global _schema_index_cache
+    if _schema_index_cache is not None:
+        return _schema_index_cache
+
+    schema_index = {
+        'groupless': {},
+        'grouped': {},
+    }
+
+    try:
+        request = urllib.request.Request(SCHEMA_REPO_TREE_URL, headers={'User-Agent': 'python-urllib/3'})
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            payload = json.load(response)
+
+        for entry in payload.get('tree', []):
+            path = entry.get('path', '')
+            if not path.endswith('.json'):
+                continue
+            if not (path.startswith('master/') or path.startswith('master-standalone/')):
+                continue
+
+            basename = path.rsplit('/', 1)[-1]
+            name = basename[:-5]
+            parts = name.split('-')
+
+            if len(parts) == 1:
+                schema_index['groupless'][name] = path
+                continue
+
+            version = parts[-1]
+            if not version.startswith('v'):
+                schema_index['groupless'][name] = path
+                continue
+
+            if len(parts) >= 3:
+                group_prefix = parts[-2]
+                kind_name = '-'.join(parts[:-2])
+                schema_index['grouped'][(kind_name, group_prefix, version)] = path
+            else:
+                schema_index['groupless'][name] = path
+
+    except Exception as e:
+        print(f'Warning: failed to fetch upstream schema index: {e}')
+        schema_index = {'groupless': {}, 'grouped': {}}
+
+    _schema_index_cache = schema_index
+    return schema_index
+
+
+def get_yannh_schema_url(api_version, kind):
+    if not api_version or not kind:
+        return None
+
+    if '/' in api_version:
+        group, version = api_version.split('/', 1)
+    else:
+        group = ''
+        version = api_version
+
+    version_raw = version.lstrip('v')
+    version_token = version if version.startswith('v') else f'v{version_raw}'
+    kind_lower = kind.lower()
+    schema_index = fetch_upstream_schema_index()
+
+    if group == '':
+        path = schema_index['groupless'].get(kind_lower)
+        if path:
+            return f'{SCHEMA_RAW_BASE_URL}/{path}'
+        return None
+
+    group_prefix = group.split('.', 1)[0]
+    path = schema_index['grouped'].get((kind_lower, group_prefix, version_token))
+    if path:
+        return f'{SCHEMA_RAW_BASE_URL}/{path}'
+
+    return None
+
+
 def get_schema_url(api_version, kind, doc=None):
+    schema_url = get_yannh_schema_url(api_version, kind)
+    if schema_url:
+        return schema_url
     if '/' in api_version:
         group, version = api_version.split('/', 1)
     else:
@@ -27,34 +117,6 @@ def get_schema_url(api_version, kind, doc=None):
             chart_ref = doc.get('spec', {}).get('chartRef')
             if isinstance(chart_ref, dict) and chart_ref.get('name') == 'app-template':
                 return 'https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json'
-        return f'https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_{version_raw}.json'
-
-    if group == 'source.toolkit.fluxcd.io' and kind == 'OCIRepository':
-        return f'https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v{version_raw}.json'
-
-    if group == 'notification.toolkit.fluxcd.io':
-        if kind_lower == 'alert':
-            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/alert_v{version_raw}.json'
-        if kind_lower == 'provider':
-            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/provider_v{version_raw}.json'
-        if kind_lower == 'receiver':
-            return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/receiver_v{version_raw}.json'
-        return f'https://crd.cloudjur.com/notification.toolkit.fluxcd.io/{kind_lower}_v{version_raw}.json'
-
-    if group == 'gateway.envoyproxy.io':
-        return f'https://crd.cloudjur.com/gateway.envoyproxy.io/{kind_lower}_v{version_raw}.json'
-
-    if group == 'monitoring.coreos.com':
-        return f'https://crd.cloudjur.com/monitoring.coreos.com/{kind_lower}_v{version_raw}.json'
-
-    if group == 'external-secrets.io':
-        return f'https://crd.cloudjur.com/external-secrets.io/externalsecret_v{version_raw}.json'
-
-    if group == 'toolhive.stacklok.dev':
-        return f'https://kube-schemas.pages.dev/toolhive.stacklok.dev/{kind_lower}_{version_raw}.json'
-
-    if group == 'volsync.backube' or group == 'tuppr.home-operations.com' or group == 'grafana.integreatly.org' or group.startswith('cilium.io') or group == 'cert-manager.io' or group == 'dragonflydb.io' or group == 'k8s.cni.cncf.io' or group == 'externaldns.k8s.io':
-        return f'https://crd.cloudjur.com/{group}/{kind_lower}_v{version_raw}.json'
 
     if group == '':
         return f'https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/{kind_lower}.json'
@@ -63,60 +125,50 @@ def get_schema_url(api_version, kind, doc=None):
 
 def add_schema_to_file(file_path, override=False):
     try:
+        yaml = YAML()
         with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
+            docs = list(yaml.load_all(f))
 
-        lines = content.splitlines()
-        existing_schema_index = next(
-            (idx for idx, line in enumerate(lines) if line.strip().startswith('# yaml-language-server: $schema=')),
-            None,
-        )
+        if not docs:
+            return
 
-        # Parse YAML to get apiVersion and kind
-        try:
-            docs = list(yaml.safe_load_all(content))
-            if not docs:
-                return
-            doc = docs[0]  # First document
+        updated = False
+        for index, doc in enumerate(docs):
             if not isinstance(doc, dict):
-                return
+                continue
+
             api_version = doc.get('apiVersion')
             kind = doc.get('kind')
             if not api_version or not kind:
-                return
-        except yaml.YAMLError:
-            return
+                continue
 
-        schema_url = get_schema_url(api_version, kind, doc)
+            schema_url = get_schema_url(api_version, kind, doc)
 
-        if existing_schema_index is not None:
-            if override:
-                lines[existing_schema_index] = f'# yaml-language-server: $schema={schema_url}'
-                new_content = '\n'.join(lines) + '\n'
-                with open(file_path, 'w', encoding='utf-8') as f:
-                    f.write(new_content)
-                print(f"Overrode schema in {file_path}")
+            # Check if schema comment exists for this document
+            comment_lines = []
+            if getattr(doc, 'ca', None) and getattr(doc.ca, 'comment', None) and len(doc.ca.comment) > 0 and doc.ca.comment[0] is not None:
+                comment_lines = doc.ca.comment[0]
+            schema_comment = next(
+                (line for line in comment_lines if line.value.strip().startswith('# yaml-language-server: $schema=')),
+                None,
+            )
+
+            if schema_comment:
+                if override:
+                    schema_comment.value = f'# yaml-language-server: $schema={schema_url}'
+                    updated = True
+                # if not override, keep existing schema comment
             else:
-                print(f"Schema already present in {file_path}")
-            return
+                doc.yaml_set_start_comment(f'yaml-language-server: $schema={schema_url}')
+                updated = True
 
-        # Add the schema comment
-        lines = content.splitlines()
-        if lines and lines[0].strip() == '---':
-            # Insert after ---
-            lines.insert(1, f'# yaml-language-server: $schema={schema_url}')
-        else:
-            # Insert at beginning
-            lines.insert(0, f'# yaml-language-server: $schema={schema_url}')
-            if lines and lines[1].strip() != '---':
-                lines.insert(1, '---')
+        if updated:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                yaml.dump_all(docs, f)
+            print(f"Updated schema comments in {file_path}")
 
-        new_content = '\n'.join(lines) + '\n'
-
-        with open(file_path, 'w', encoding='utf-8') as f:
-            f.write(new_content)
-
-        print(f"Added schema to {file_path}")
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
 
     except Exception as e:
         print(f"Error processing {file_path}: {e}")

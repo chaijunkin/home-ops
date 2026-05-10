@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -10,7 +9,9 @@ spec:
       rules:
         - alert: SpeedtestExporterAbsent
           annotations:
-            description: Speedtest Exporter has disappeared from Prometheus target discovery.
+            description:
+              Speedtest Exporter has disappeared from Prometheus target
+              discovery.
             summary: Speedtest Exporter is down.
           expr: |
             absent(up{job=~".*speedtest-exporter.*"} == 1)
@@ -19,9 +20,12 @@ spec:
             severity: critical
         - alert: SpeedtestSlowInternetDownload
           annotations:
-            description: Internet download speed is averaging {{ humanize $value }} Mbps.
-            summary: SpeedTest slow internet download.
-          # home is 300mbps
+            description:
+              Internet download speed is averaging {{ humanize $value }}
+              Mbps.
+            summary:
+              SpeedTest slow internet download.
+              # home is 300mbps
           expr: |
             avg_over_time(speedtest_download_bits_per_second{job=~".*speedtest-exporter.*"}[4h])
               < 200
@@ -30,9 +34,12 @@ spec:
             severity: warning
         - alert: SpeedtestSlowInternetUpload
           annotations:
-            description: Internet upload speed is averaging {{ humanize $value }} Mbps.
-            summary: SpeedTest slow internet upload.
-          # home is 50mbps
+            description:
+              Internet upload speed is averaging {{ humanize $value }}
+              Mbps.
+            summary:
+              SpeedTest slow internet upload.
+              # home is 50mbps
           expr: |
             avg_over_time(speedtest_upload_bits_per_second{job=~".*speedtest-exporter.*"}[4h])
               < 30
@@ -41,7 +48,9 @@ spec:
             severity: warning
         - alert: SpeedtestHighPingLatency
           annotations:
-            description: Internet ping latency is averaging {{ humanize $value }} ms.
+            description:
+              Internet ping latency is averaging {{ humanize $value }}
+              ms.
             summary: SpeedTest high ping latency.
           expr: |
             avg_over_time(speedtest_ping_latency_milliseconds{job=~".*speedtest-exporter.*"}[4h])
@@ -51,7 +60,9 @@ spec:
             severity: warning
         - alert: SpeedtestHighJitterLatency
           annotations:
-            description: Internet jitter latency is averaging {{ humanize $value }} ms.
+            description:
+              Internet jitter latency is averaging {{ humanize $value }}
+              ms.
             summary: SpeedTest high jitter latency.
           expr: |
             avg_over_time(speedtest_jitter_latency_milliseconds{job=~".*speedtest-exporter.*"}[4h])

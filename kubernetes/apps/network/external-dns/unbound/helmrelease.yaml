@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_2.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -46,10 +45,10 @@ spec:
               secretKeyRef:
                 name: external-dns-opnsense-secret
                 key: OPNSENSE_HOST
-          # - name: OPNSENSE_SKIP_TLS_VERIFY
-          #   value: "true"
-          # - name: LOG_LEVEL
-          #   value: "debug"
+                # - name: OPNSENSE_SKIP_TLS_VERIFY
+                #   value: "true"
+                # - name: LOG_LEVEL
+                #   value: "debug"
         securityContext:
           readOnlyRootFilesystem: true
         livenessProbe:

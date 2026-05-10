@@ -30,7 +30,7 @@ spec:
         cronjob:
           # schedule: "0 0 5 31 2" # Disable cronjob by giving it a schedule that will never run
           concurrencyPolicy: Forbid
-          schedule: "0 0 * * 0" #  Run every Sunday at midnight
+          schedule: 0 0 * * 0 #  Run every Sunday at midnight
           ttlSecondsAfterFinished: 86400
           startingDeadlineSeconds: 30
           successfulJobsHistory: 1
@@ -46,7 +46,7 @@ spec:
           *app :
             image:
               repository: ghcr.io/jmbannon/ytdl-sub
-              tag: "2026.03.19"
+              tag: 2026.03.19
             command:
               - bash
               - -c

@@ -32,18 +32,20 @@ spec:
               repository: ghcr.io/alexta69/metube
               tag: "2025-07-01"
             env:
-              DOWNLOAD_DIR: "/media/Downloads/metube"
-              AUDIO_DOWNLOAD_DIR: "/media/Downloads/metube/music"
+              DOWNLOAD_DIR: /media/Downloads/metube
+              AUDIO_DOWNLOAD_DIR: /media/Downloads/metube/music
               DOWNLOAD_DIRS_INDEXABLE: "true"
               CUSTOM_DIRS: "true"
               CREATE_CUSTOM_DIRS: "true"
-              CUSTOM_DIRS_EXCLUDE_REGEX: "(^|/)[.@].*$"
-              STATE_DIR: "/media/Downloads/.metube"
-              TEMP_DIR: "/media/Downloads/tmp"
+              CUSTOM_DIRS_EXCLUDE_REGEX: (^|/)[.@].*$
+              STATE_DIR: /media/Downloads/.metube
+              TEMP_DIR: /media/Downloads/tmp
               # DOWNLOAD_MODE: concurrent # defaults to limited
               DOWNLOAD_MODE: limited
               MAX_CONCURRENT_DOWNLOADS: 5 #only used with limited, default to 3
-              YTDL_OPTIONS: '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"},"cookiefile":"/config/cookies.txt"}'
+              YTDL_OPTIONS:
+                '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows
+                NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"},"cookiefile":"/config/cookies.txt"}'
     defaultPodOptions:
       annotations:
         k8s.v1.cni.cncf.io/networks: |-

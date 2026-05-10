@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -10,18 +9,16 @@ spec:
       rules:
         - alert: SmartDeviceHighTemperature
           annotations:
-            summary:
-              Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
-              has a temperature higher than 65°C.
+            summary: Mounted drive {{ $labels.device }} on device {{
+              $labels.instance }} has a temperature higher than 65°C.
           expr: smartctl_device_temperature > 65
           for: 15m
           labels:
             severity: critical
         - alert: SmartDeviceTestFailed
           annotations:
-            summary:
-              Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
-              did not pass its SMART test.
+            summary: Mounted drive {{ $labels.device }} on device {{
+              $labels.instance }} did not pass its SMART test.
           expr: |
             (
               smartctl_device_smart_status != 1
@@ -33,21 +30,20 @@ spec:
             severity: critical
         - alert: SmartDeviceCriticalWarning
           annotations:
-            summary:
-              Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
-              is in a critical state.
+            summary: Mounted drive {{ $labels.device }} on device {{
+              $labels.instance }} is in a critical state.
           expr: smartctl_device_critical_warning != 0
           for: 15m
           labels:
-            severity: critical
-        #
-        # https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-smartctl-exporter/rules/rules.txt
-        #
+            severity:
+              critical
+              #
+              # https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-smartctl-exporter/rules/rules.txt
+              #
         - alert: SmartDeviceMediaErrors
           annotations:
-            summary:
-              Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
-              has media errors.
+            summary: Mounted drive {{ $labels.device }} on device {{
+              $labels.instance }} has media errors.
           expr: smartctl_device_media_errors != 0
           for: 15m
           labels:
@@ -57,7 +53,8 @@ spec:
             summary:
               Device {{ $labels.device }} on instance {{ $labels.instance }}
               is under available spare threashold.
-          expr: smartctl_device_available_spare_threshold > smartctl_device_available_spare
+          expr: smartctl_device_available_spare_threshold >
+            smartctl_device_available_spare
           for: 15m
           labels:
             severity: critical

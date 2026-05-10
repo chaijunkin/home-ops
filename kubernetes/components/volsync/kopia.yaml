@@ -1,12 +1,12 @@
----
+# yaml-language-server: $schema=https://crd.cloudjur.com/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: "${APP}-volsync"
+  name: ${APP}-volsync
   # name: "${APP}-volsync"
 spec:
   target:
-    name: "${APP}-volsync-secret"
+    name: ${APP}-volsync-secret
     template:
       type: Opaque
       data:
@@ -23,11 +23,11 @@ spec:
         key: e93b40f5-5416-4fa9-9c04-97390bfcfd39
         property: kopia_password
 ---
-# yaml-language-server: $schema=https://crd.cloudjur.com/external-secrets.io/externalsecret_v1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/volsync.backube/replicationdestination_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${APP}-bootstrap"
+  name: ${APP}-bootstrap
   labels:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
@@ -61,13 +61,13 @@ spec:
     storageClassName: ${VOLSYNC_STORAGECLASS:=local-hostpath}
     volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=local-hostpath}
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: ${APP}
 spec:
-  sourcePVC: "${VOLSYNC_CLAIM:-${APP}}"
+  sourcePVC: ${VOLSYNC_CLAIM:-${APP}}
   trigger:
     schedule: 0 */16 * * *
   kopia:

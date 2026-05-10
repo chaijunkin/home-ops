@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
@@ -14,6 +13,7 @@ spec:
           for: 15m
           annotations:
             summary: >-
-              ExternalDNS ({{ $labels.job }}) has not synced successfully in the last fifteen minutes
+              ExternalDNS ({{ $labels.job }}) has not synced successfully in the last
+              fifteen minutes
           labels:
             severity: critical

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -12,8 +11,8 @@ components:
 resources:
   # - ./addons/ks.yaml
   - ./headlamp/ks.yaml
-  # - ./weave-gitops/ks.yaml
+    # - ./weave-gitops/ks.yaml
   - ./flux-instance/ks.yaml
   - ./flux-operator/ks.yaml
   - ./kubernetes-schemas/ks.yaml
-  # - ./tofu-controller/ks.yaml
+    # - ./tofu-controller/ks.yaml

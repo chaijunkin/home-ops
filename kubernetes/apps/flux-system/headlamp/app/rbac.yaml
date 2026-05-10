@@ -1,6 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/serviceaccount.json
-### Token Auth
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/serviceaccount.json
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -8,6 +6,7 @@ metadata:
   namespace: flux-system
 automountServiceAccountToken: true
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/secret.json
 apiVersion: v1
 kind: Secret
 metadata:
@@ -17,6 +16,7 @@ metadata:
     kubernetes.io/service-account.name: *name
 type: kubernetes.io/service-account-token
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/clusterrolebinding-rbac-v1.json
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -30,11 +30,11 @@ subjects:
     name: *name
     namespace: flux-system
   - kind: Group
-    name: "authentik:authentik Admins"
+    name: authentik:authentik Admins
     apiGroup: rbac.authorization.k8s.io
   - kind: Group
-    name: "authentik:superuser"
+    name: authentik:superuser
     apiGroup: rbac.authorization.k8s.io
   - kind: Group
-    name: "authentik:private"
+    name: authentik:private
     apiGroup: rbac.authorization.k8s.io

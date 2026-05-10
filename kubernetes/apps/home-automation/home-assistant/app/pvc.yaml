@@ -1,11 +1,10 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/persistentvolumeclaim.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/persistentvolumeclaim.json
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: home-assistant-cache
 spec:
-  accessModes: ["ReadWriteOnce"]
+  accessModes: [ReadWriteOnce]
   resources:
     requests:
       storage: 1Gi

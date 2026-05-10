@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -97,7 +96,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
             resources:
               requests:
                 cpu: 100m
@@ -121,7 +120,7 @@ spec:
           gethomepage.dev/description: Status Page & Monitoring
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/gatus.png
           gethomepage.dev/widget.type: gatus
-          gethomepage.dev/widget.url: "http://gatus.observability:80"
+          gethomepage.dev/widget.url: http://gatus.observability:80
         hostnames:
           - "{{ .Release.Name }}.cloudjur.com"
         parentRefs:
@@ -134,8 +133,8 @@ spec:
           type: ClusterRole
           rules:
             - apiGroups: [""]
-              resources: ["configmaps", "secrets"]
-              verbs: ["get", "watch", "list"]
+              resources: [configmaps, secrets]
+              verbs: [get, watch, list]
             - apiGroups:
                 - ""
               resources:

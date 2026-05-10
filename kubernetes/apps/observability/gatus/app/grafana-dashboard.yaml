@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master-standalone/configmap.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/configmap.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,7 +6,7 @@ metadata:
   labels:
     grafana_dashboard: "true"
   annotations:
-    grafana_folder: "System"
+    grafana_folder: System
 data:
   gatus.json: |-
     {

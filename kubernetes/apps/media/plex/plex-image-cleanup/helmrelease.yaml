@@ -22,7 +22,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         cronjob:
-          schedule: "0 8 * * *"
+          schedule: 0 8 * * *
           successfulJobsHistory: 0
         containers:
           app:
@@ -31,7 +31,8 @@ spec:
               tag: v1.0.2
             env:
               PLEX_URL: http://plex.media.svc.cluster.local:32400
-              PLEX_PATH: /media/plex_config/Library/Application Support/Plex Media Server
+              PLEX_PATH: /media/plex_config/Library/Application Support/Plex
+                Media Server
               MODE: remove
               PHOTO_TRANSCODER: true
             envFrom:

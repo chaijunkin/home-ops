@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -12,9 +11,10 @@ spec:
       app.kubernetes.io/name: frigate
   dependsOn:
     - name: external-secrets-stores
-      namespace: kube-system
-    # - name: intel-device-plugin-gpu
-    #   namespace: kube-system
+      namespace:
+        kube-system
+        # - name: intel-device-plugin-gpu
+        #   namespace: kube-system
     - name: volsync
       namespace: volsync-system
   path: ./kubernetes/apps/home-automation/frigate/app

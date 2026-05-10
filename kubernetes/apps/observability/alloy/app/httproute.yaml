@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/gateway.networking.k8s.io/httproute_v1.json
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -8,10 +7,11 @@ metadata:
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Observability Service
     gethomepage.dev/name: Alloy
-    gethomepage.dev/description: Observability aggregator and OpenTelemetry collector
+    gethomepage.dev/description: Observability aggregator and OpenTelemetry
+      collector
     gethomepage.dev/icon: alloy.png
 spec:
-  hostnames: ["alloy.cloudjur.com"]
+  hostnames: [alloy.cloudjur.com]
   parentRefs:
     - name: envoy-internal
       namespace: network

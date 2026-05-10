@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -15,7 +14,7 @@ spec:
       name: toolhive-operator-crds
       namespace: ai
   interval: 1h
-  path: "./kubernetes/apps/ai/toolhive/crds"
+  path: ./kubernetes/apps/ai/toolhive/crds
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,7 +23,7 @@ spec:
   targetNamespace: ai
   timeout: 5m
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -43,7 +42,7 @@ spec:
       name: toolhive-operator
       namespace: ai
   interval: 1h
-  path: "./kubernetes/apps/ai/toolhive/app"
+  path: ./kubernetes/apps/ai/toolhive/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -52,7 +51,7 @@ spec:
   targetNamespace: ai
   timeout: 5m
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -66,7 +65,7 @@ spec:
     - name: toolhive-operator-crds
       namespace: ai
   interval: 1h
-  path: "./kubernetes/apps/ai/toolhive/config"
+  path: ./kubernetes/apps/ai/toolhive/config
   postBuild:
     substitute:
       APP: toolhive

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
@@ -39,7 +38,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://postgresql/
-      endpointURL: "http://garage.storage.svc.cluster.local:3900"
+      endpointURL: http://garage.storage.svc.cluster.local:3900
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
       serverName: &currentCluster postgres-v11

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -84,7 +83,7 @@ spec:
           gethomepage.dev/group: Application Service
           gethomepage.dev/icon: sh-romm.png
           gethomepage.dev/name: Romm
-        hostnames: ["romm.cloudjur.com"]
+        hostnames: [romm.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -103,11 +102,12 @@ spec:
           romm:
             app:
               - path: /romm/config
-                subPath: config
-              # - path: /romm/assets
-              #   subPath: assets
-              # - path: /romm/resources
-              #   subPath: resources
+                subPath:
+                  config
+                  # - path: /romm/assets
+                  #   subPath: assets
+                  # - path: /romm/resources
+                  #   subPath: resources
       tmp:
         type: emptyDir
         globalMounts:

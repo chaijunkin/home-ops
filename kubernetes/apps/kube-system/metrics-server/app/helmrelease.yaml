@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v1.json
----
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
@@ -13,6 +12,7 @@ spec:
     tag: 3.13.0
   url: oci://ghcr.io/home-operations/charts-mirror/metrics-server
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:

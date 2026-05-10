@@ -1,45 +1,3 @@
-# apiVersion: source.toolkit.fluxcd.io/v1
-# kind: OCIRepository
-# metadata:
-#   name: volsync
-# spec:
-#   interval: 5m
-#   layerSelector:
-#     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-#     operation: copy
-#   url: oci://ghcr.io/home-operations/charts-mirror/volsync
-#   ref:
-#     tag: 0.13.0
-# ---
-# # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
-# apiVersion: helm.toolkit.fluxcd.io/v2
-# kind: HelmRelease
-# metadata:
-#   name: volsync
-# spec:
-#   interval: 24h
-#   maxHistory: 2
-#   install:
-#     remediation:
-#       retries: 3
-#   upgrade:
-#     cleanupOnFail: true
-#     remediation:
-#       retries: 3
-#   uninstall:
-#     keepHistory: false
-#   dependsOn:
-#     - name: snapshot-controller
-#       namespace: volsync-system
-#   values:
-#     manageCRDs: true
-#     replicaCount: 2 # 1 replica caused many leader election issues
-#     metrics:
-#       disableAuth: true
-#   chartRef:
-#     kind: OCIRepository
-#     name: volsync
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
@@ -53,9 +11,8 @@ spec:
   ref:
     tag: 0.18.5
   url: oci://ghcr.io/home-operations/charts-mirror/volsync-perfectra1n
-
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:

@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://kube-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -45,9 +44,10 @@ spec:
                 name: external-dns-adguard-home-secret
                 key: *name
           - name: SERVER_HOST
-            value: 0.0.0.0
-          # - name: DRY_RUN
-          #   value: "true"
+            value:
+              0.0.0.0
+              # - name: DRY_RUN
+              #   value: "true"
         securityContext:
           readOnlyRootFilesystem: true
         livenessProbe:

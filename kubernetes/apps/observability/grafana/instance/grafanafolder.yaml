@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
----
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -8,9 +7,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "External"
-  uid: "external-folder"
+  title: External
+  uid: external-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -19,9 +19,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Default"
-  uid: "default-folder"
+  title: Default
+  uid: default-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -30,9 +31,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Cilium"
-  uid: "cilium-folder"
+  title: Cilium
+  uid: cilium-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -41,9 +43,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Data"
-  uid: "data-folder"
+  title: Data
+  uid: data-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -52,9 +55,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Games"
-  uid: "games-folder"
+  title: Games
+  uid: games-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -63,9 +67,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Flux"
-  uid: "flux-folder"
+  title: Flux
+  uid: flux-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -74,9 +79,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Kubernetes"
-  uid: "kubernetes-folder"
+  title: Kubernetes
+  uid: kubernetes-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -85,9 +91,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Network"
-  uid: "network-folder"
+  title: Network
+  uid: network-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -96,9 +103,10 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "Storage"
-  uid: "storage-folder"
+  title: Storage
+  uid: storage-folder
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaFolder
 metadata:
@@ -107,5 +115,5 @@ spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
-  title: "System"
-  uid: "system-folder"
+  title: System
+  uid: system-folder

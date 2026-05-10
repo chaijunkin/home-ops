@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -17,7 +16,7 @@ spec:
         runAsGroup: 2000
         runAsNonRoot: true
         fsGroup: 2000
-        fsGroupChangePolicy: "OnRootMismatch"
+        fsGroupChangePolicy: OnRootMismatch
 
     controllers:
       karakeep:

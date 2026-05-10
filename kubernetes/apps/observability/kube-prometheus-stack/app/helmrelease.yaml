@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
@@ -13,7 +12,7 @@ spec:
     tag: 84.5.0
   url: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -39,7 +38,7 @@ spec:
       route:
         main:
           enabled: true
-          hostnames: ["alertmanager.cloudjur.com"]
+          hostnames: [alertmanager.cloudjur.com]
           parentRefs:
             - name: envoy-internal
               namespace: network
@@ -76,7 +75,7 @@ spec:
       route:
         main:
           enabled: true
-          hostnames: ["prometheus.cloudjur.com"]
+          hostnames: [prometheus.cloudjur.com]
           parentRefs:
             - name: envoy-internal
               namespace: network
@@ -88,7 +87,7 @@ spec:
             gethomepage.dev/description: Monitoring & Alerting
             gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/prometheus.png
             gethomepage.dev/widget.type: prometheus
-            gethomepage.dev/widget.url: "http://prometheus-operated.observability.svc.cluster.local:9090"
+            gethomepage.dev/widget.url: http://prometheus-operated.observability.svc.cluster.local:9090
       prometheusSpec:
         externalUrl: https://prometheus.cloudjur.com
         # enableFeatures:
@@ -134,7 +133,7 @@ spec:
             - action: replace
               regex: (.*)
               replacement: $1
-              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              sourceLabels: [__meta_kubernetes_pod_node_name]
               targetLabel: kubernetes_node
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
@@ -149,7 +148,7 @@ spec:
             - action: replace
               regex: (.*)
               replacement: $1
-              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              sourceLabels: [__meta_kubernetes_pod_node_name]
               targetLabel: kubernetes_node
     grafana:
       enabled: false
@@ -162,7 +161,9 @@ spec:
               - alert: DockerhubRateLimitRisk
                 annotations:
                   summary: Kubernetes cluster Dockerhub rate limit risk
-                expr: count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 100
+                expr: count(time() -
+                  container_last_seen{image=~"(docker.io).*",container!=""} < 30) >
+                  100
                 labels:
                   severity: critical
       oom-rules:
@@ -171,8 +172,14 @@ spec:
             rules:
               - alert: OomKilled
                 annotations:
-                  summary: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes.
-                expr: (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m]) == 1
+                  summary: Container {{ $labels.container }} in pod {{
+                    $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{
+                    $value }} times in the last 10 minutes.
+                expr: (kube_pod_container_status_restarts_total -
+                  kube_pod_container_status_restarts_total offset 10m >= 1) and
+                  ignoring (reason)
+                  min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m])
+                  == 1
                 labels:
                   severity: critical
       zfs-rules:
@@ -181,7 +188,9 @@ spec:
             rules:
               - alert: ZfsUnexpectedPoolState
                 annotations:
-                  summary: ZFS pool {{$labels.zpool}} on {{$labels.instance}} is in a unexpected state {{$labels.state}}
+                  summary:
+                    ZFS pool {{$labels.zpool}} on {{$labels.instance}} is in
+                    a unexpected state {{$labels.state}}
                 expr: node_zfs_zpool_state{state!="online"} > 0
                 labels:
                   severity: critical

@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
----
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
@@ -16,9 +15,12 @@ spec:
       rules:
         - alert: SyncthingEventsDropped
           annotations:
-            dashboard_url: "https://grafana.com/d/syncthing-overview-jkwq/syncthing-overview?var-job={{ $labels.job }}"
-            description: "The job {{ $labels.job }} has dropped events of type {{ $labels.event }} in the last minute."
-            summary: "Syncthing events dropped."
+            dashboard_url:
+              https://grafana.com/d/syncthing-overview-jkwq/syncthing-overview?var-job={{
+              $labels.job }}
+            description: The job {{ $labels.job }} has dropped events of type {{
+              $labels.event }} in the last minute.
+            summary: Syncthing events dropped.
           expr: |
             sum(
               increase(
@@ -28,14 +30,18 @@ spec:
               )
             ) by (cluster, job, event)
             > 0
-          for: "1m"
+          for: 1m
           labels:
             severity: warning
         - alert: SyncthingFolderOutOfSync
           annotations:
-            dashboard_url: "https://grafana.com/d/syncthing-overview-jkwq/syncthing-overview?var-job={{ $labels.job }}&var-folder={{ $labels.folder }}"
-            description: "The folder {{ $labels.folder }} in job {{ $labels.job }} is out of sync for more than 1h."
-            summary: "Syncthing folder out of sync."
+            dashboard_url:
+              https://grafana.com/d/syncthing-overview-jkwq/syncthing-overview?var-job={{
+              $labels.job }}&var-folder={{ $labels.folder }}
+            description:
+              The folder {{ $labels.folder }} in job {{ $labels.job }} is
+              out of sync for more than 1h.
+            summary: Syncthing folder out of sync.
           expr: |
             sum(
               syncthing_model_folder_summary{
@@ -44,6 +50,6 @@ spec:
               }
             ) by (cluster, job, folder)
             > 0
-          for: "1h"
+          for: 1h
           labels:
             severity: info

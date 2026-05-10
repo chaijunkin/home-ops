@@ -66,7 +66,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
               runAsNonRoot: true
               runAsUser: 2000
               runAsGroup: 2000
@@ -83,22 +83,23 @@ spec:
             env:
               # 1. Direct Key-Value Pairs
               - name: PROTON_GATEWAY
-                value: "10.2.0.1"
+                value: 10.2.0.1
               - name: QBIT_ADDR
-                value: "http://localhost:8080"
+                value: http://localhost:8080
               - name: OPN_INTERFACE_ADDR
-                value: "https://gateway.cloudjur.com"
+                value: https://gateway.cloudjur.com
               - name: OPN_PROTON_ALIAS_NAME
-                value: "torrent_port"
+                value:
+                  torrent_port
 
-              # 2. Specific Secret Mapping (OPN_API_KEY)
+                  # 2. Specific Secret Mapping (OPN_API_KEY)
               - name: OPN_API_KEY
                 valueFrom:
                   secretKeyRef:
                     name: qbittorrent-secret
                     key: OPN_API_KEY # Replace with the actual key name inside your secret
 
-              # 3. Specific Secret Mapping (OPN_API_SECRET)
+                    # 3. Specific Secret Mapping (OPN_API_SECRET)
               - name: OPN_API_SECRET
                 valueFrom:
                   secretKeyRef:
@@ -114,7 +115,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
             resources:
               requests:
                 cpu: 10m

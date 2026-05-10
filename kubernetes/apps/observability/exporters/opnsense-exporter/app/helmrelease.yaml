@@ -31,12 +31,12 @@ spec:
               # - --log.format=json
               - --exporter.instance-label=firewall
               - --web.listen-address=:8080
-              # - --exporter.disable-firmware
-              # - --exporter.disable-gateway
+                # - --exporter.disable-firmware
+                # - --exporter.disable-gateway
             env:
               OPNSENSE_EXPORTER_OPS_PROTOCOL: https
               OPNSENSE_EXPORTER_OPS_INSECURE: true
-              OPNSENSE_EXPORTER_INSTANCE_LABEL: "home-firewall"
+              OPNSENSE_EXPORTER_INSTANCE_LABEL: home-firewall
             envFrom:
               - secretRef:
                   name: opnsense-exporter-secret

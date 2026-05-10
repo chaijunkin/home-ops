@@ -34,7 +34,7 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
-                drop: ["ALL"]
+                drop: [ALL]
         containers:
           app:
             image:
@@ -46,7 +46,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
             resources:
               requests:
                 cpu: 10m
@@ -98,13 +98,13 @@ spec:
           type: ClusterRole
           forceRename: *app
           rules:
-            - apiGroups: ["batch"]
-              resources: ["jobs"]
-              verbs: ["create"]
-            - apiGroups: ["batch"]
-              resources: ["cronjobs"]
-              verbs: ["get"]
-              resourceNames: ["remediation"]
+            - apiGroups: [batch]
+              resources: [jobs]
+              verbs: [create]
+            - apiGroups: [batch]
+              resources: [cronjobs]
+              verbs: [get]
+              resourceNames: [remediation]
       bindings:
         list:
           type: ClusterRoleBinding

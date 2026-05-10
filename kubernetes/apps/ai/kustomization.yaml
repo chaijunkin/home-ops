@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -10,7 +9,7 @@ resources:
   - ./grafana-mcp/ks.yaml
   - ./ha-mcp/ks.yaml
   - ./kubectl-mcp/ks.yaml
-  # - ./memory-mcp/ks.yaml
+    # - ./memory-mcp/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./toolhive/ks.yaml
