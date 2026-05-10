@@ -14,3 +14,18 @@ spec:
         - matchLabels:
             app.kubernetes.io/instance: external-secrets
             app.kubernetes.io/name: external-secrets
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: ANY
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toFQDNs:
+        - matchName: vw.cloudjur.com
+        - matchName: api.bitwarden.com
