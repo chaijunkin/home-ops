@@ -15,6 +15,11 @@ spec:
             app.kubernetes.io/instance: external-secrets
             app.kubernetes.io/name: external-secrets
   egress:
+    - toCIDRSet:
+        - cidr: 10.10.30.0/24
+      toPorts:
+        - ports:
+            - port: "443"
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
