@@ -43,7 +43,9 @@ l2announcements:
 loadBalancer:
   algorithm: maglev
   mode: dsr
-localRedirectPolicy: true
+localRedirectPolicies:
+  enabled: true
+# localRedirectPolicy: true
 operator:
   replicas: 1
   rollOutPods: true
@@ -86,3 +88,8 @@ securityContext:
       - NET_ADMIN
       - SYS_ADMIN
       - SYS_RESOURCE
+socketLB:
+  enabled: true
+  hostNamespaceOnly: true
+pmtuDiscovery:
+  enabled: true
