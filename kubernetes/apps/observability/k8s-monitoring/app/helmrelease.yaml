@@ -74,7 +74,7 @@ spec:
 
     autoInstrumentation:
       enabled: true
-      destinations: [localTraces]
+      destinations: [localMertics, localLogs, localTraces]
       collector: alloy-receiver
 
     # Node logs via Loki (DaemonSet file tailing of /var/log/pods/*, equivalent to
