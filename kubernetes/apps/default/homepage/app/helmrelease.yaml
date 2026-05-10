@@ -21,10 +21,10 @@ spec:
   values:
     defaultPodOptions:
       automountServiceAccountToken: true
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+      # securityContext:
+      #   runAsNonRoot: true
+      #   runAsUser: 1000
+      #   runAsGroup: 1000
       dnsConfig:
         searches:
           - svc.cluster.local
@@ -38,13 +38,13 @@ spec:
           identifier: homepage
         containers:
           app:
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities: {drop: ["ALL"]}
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: false
+            #   capabilities: {drop: ["ALL"]}
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v1.12.3
+              tag: v1.13.0
             env:
               TZ: Asia/Kuala_Lumpur
               HOMEPAGE_ALLOWED_HOSTS: h.cloudjur.com,homepage.cloudjur.com
