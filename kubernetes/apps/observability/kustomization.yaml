@@ -5,7 +5,7 @@ namespace: observability
 components:
   - ../../components/common
 resources:
-  - ./alloy/ks.yaml
+  - ./k8s-monitoring/ks.yaml
   - ./exporters
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml

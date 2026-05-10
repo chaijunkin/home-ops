@@ -1,0 +1,198 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: k8s-monitoring
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 4.1.1
+  url: oci://ghcr.io/grafana/helm-charts/k8s-monitoring
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: k8s-monitoring
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: k8s-monitoring
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    # ---------------------------------------------------------------------------
+    # Cluster identity — used as a label on all telemetry
+    # ---------------------------------------------------------------------------
+    cluster:
+      name: main
+
+    # ---------------------------------------------------------------------------
+    # Destinations — self-hosted stack already running in-cluster
+    # ---------------------------------------------------------------------------
+    destinations:
+      localMertics:
+        type: prometheus
+        url: http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090/api/v1/write
+
+      localLogs:
+        type: loki
+        url: http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push
+
+      # Tempo only receives traces via OTLP gRPC (matches the current otelcol.exporter.otlp "tempo")
+      localTraces:
+        type: otlp
+        url: http://tempo.observability.svc.cluster.local:4317
+        protocol: grpc
+        metrics:
+          enabled: false
+        logs:
+          enabled: false
+        traces:
+          enabled: true
+
+      localProfiling:
+        type: pyroscope
+        url: http://pyroscope.observability.svc.cluster.local:4040
+
+    # ---------------------------------------------------------------------------
+    # Features
+    # ---------------------------------------------------------------------------
+
+    # Pod logs via Loki (DaemonSet file tailing of /var/log/pods/*, equivalent to
+    # the current loki.source.kubernetes pipeline with cluster=main and
+    # namespace/pod/container relabelling).
+    podLogsViaLoki:
+      enabled: true
+      collector: alloy-logs
+      destinations: [localLogs]
+
+    # Cluster events (replaces loki.source.kubernetes_events "cluster_events")
+    clusterEvents:
+      enabled: true
+      collector: alloy-singleton
+      destinations: [localLogs]
+
+    # Application Observability — replaces the entire otelcol pipeline:
+    #   otelcol.receiver.otlp → resourcedetection → k8sattributes → transform
+    #   → batch → exporter.prometheus / exporter.loki / exporter.otlp(tempo)
+    #
+    # The chart's built-in pipeline includes:
+    #   - OTLP gRPC :4317 and HTTP :4318 receivers
+    #   - k8s attributes enrichment (namespace, pod, deployment, node, uid…)
+    #   - Batch processor
+    #   - Routing to each destination by telemetry type
+    applicationObservability:
+      enabled: true
+      collector: alloy-receiver
+      destinations: [localMertics, localLogs, localTraces]
+      receivers:
+        otlp:
+          grpc:
+            enabled: true
+          http:
+            enabled: true
+          jaeger:
+            # -- Configuration for the Jaeger receiver using the gRPC protocol.
+            # @section -- Receivers: Jaeger
+            grpc:
+              enabled: true
+              port: 14250
+
+            # -- Configuration for the Jaeger receiver using the Thrift binary protocol.
+            # @section -- Receivers: Jaeger
+            thriftBinary:
+              enabled: true
+              port: 6832
+
+            # -- Configuration for the Jaeger receiver using the Thrift compact protocol.
+            # @section -- Receivers: Jaeger
+            thriftCompact:
+              enabled: true
+              port: 6831
+
+            # -- Configuration for the Jaeger receiver using the Thrift HTTP protocol.
+            # @section -- Receivers: Jaeger
+            thriftHttp:
+              enabled: true
+              port: 14268
+
+          # -- The Zipkin receiver configuration.
+          # @section -- Receivers: Zipkin
+          zipkin:
+            enabled: true
+            port: 9411
+
+    # Continuous profiling — scrapes pprof endpoints and forwards to Pyroscope
+    profiling:
+      enabled: true
+      destinations: [localProfiling]
+      collector: alloy-profiles
+
+    # -- The Continuous Profiling receiver configuration
+    profilesReceiver:
+      enabled: true
+      collector: alloy-profiles
+      destinations: [localProfiling]
+
+    kubernetesManifests:
+      enabled: true
+      collector: alloy-logs
+      destinations: [localLogs]
+
+    # ---------------------------------------------------------------------------
+    # Disabled features — kube-prometheus-stack already owns these
+    # ---------------------------------------------------------------------------
+
+    # clusterMetrics would duplicate kubelet/cAdvisor/kube-state-metrics scraping
+    clusterMetrics:
+      enabled: false
+
+    # prometheusOperatorObjects would duplicate ServiceMonitor/PodMonitor scraping;
+    # kube-prometheus-stack already discovers all monitors
+    # (serviceMonitorSelectorNilUsesHelmValues: false)
+    prometheusOperatorObjects:
+      enabled: false
+
+    # ---------------------------------------------------------------------------
+    # Telemetry services — do NOT deploy bundled exporters; kube-prometheus-stack
+    # already deploys node-exporter and kube-state-metrics as part of its release
+    # ---------------------------------------------------------------------------
+    telemetryServices:
+      kube-state-metrics:
+        deploy: false
+      node-exporter:
+        deploy: false
+
+    # ---------------------------------------------------------------------------
+    # Collectors — define the two Alloy instances
+    # ---------------------------------------------------------------------------
+    collectors:
+      # alloy-logs: DaemonSet that tails pod logs and forwards cluster events
+      alloy-logs:
+        presets: [filesystem-log-reader, daemonset]
+      alloy-singleton:
+        presets: [singleton]
+
+      # alloy-receiver: Deployment that accepts inbound OTLP telemetry from apps
+      alloy-receiver:
+        presets: [deployment]
+
+      # alloy-profiles: DaemonSet that scrapes pprof endpoints and sends to Pyroscope
+      alloy-profiles:
+        presets: [privileged, daemonset]
+
+    # ---------------------------------------------------------------------------
+    # Alloy Operator — manages the Alloy CRDs
+    # ---------------------------------------------------------------------------
+    alloy-operator:
+      deploy: true
