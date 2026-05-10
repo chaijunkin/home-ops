@@ -79,6 +79,13 @@ spec:
       enabled: true
       destinations: [localMertics, localLogs, localTraces]
       collector: alloy-receiver
+      beyla:
+        config:
+          data:
+        discovery:
+          services:
+            - k8s_namespace: self-hosted
+          create: true
 
     # Node logs via Loki (DaemonSet file tailing of /var/log/pods/*, equivalent to
     # the current loki.source.kubernetes pipeline with cluster=main and
@@ -159,6 +166,15 @@ spec:
       enabled: true
       destinations: [localProfiling]
       collector: alloy-profiles
+      ebpf:
+        enabled: true
+        namespaces: [ai]
+      java:
+        enabled: true
+        namespaces: [ai]
+      pprof:
+        enabled: true
+        namespaces: [ai]
 
     # -- The Continuous Profiling receiver configuration
     profilesReceiver:
