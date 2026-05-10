@@ -53,7 +53,7 @@ There is a template over at [onedr0p/flux-cluster-template](https://github.com/o
 
 ### Installation
 
-My cluster is [k3s](https://k3s.io/) provisioned overtop bare-metal Debian using the [Ansible](https://www.ansible.com/) galaxy role [ansible-role-k3s](https://github.com/PyratLabs/ansible-role-k3s). This is a semi-hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes while I have a separate NAS server with ZFS for NFS/SMB shares, bulk file storage and backups.
+My cluster is provisioned using [Talos Linux](https://www.talos.dev/) running as Virtual Machines on a Proxmox host. The Proxmox host natively manages the ZFS pools for the NAS, with NFS/SMB shares and other services installed and configured directly on the host using Ansible playbooks.
 
 ### Configuration
 
