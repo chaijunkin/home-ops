@@ -67,10 +67,10 @@ spec:
     # ---------------------------------------------------------------------------
     # Features
     # ---------------------------------------------------------------------------
-    # annotationAutodiscovery:
-    #   enabled: true
-    #   destinations: [localMertics]
-    #   collector: alloy-receiver
+    annotationAutodiscovery:
+      enabled: true
+      destinations: [localMertics]
+      collector: alloy-receiver
 
     autoInstrumentation:
       enabled: true
@@ -92,6 +92,8 @@ spec:
       enabled: true
       collector: alloy-logs
       destinations: [localLogs]
+      labels:
+        app: app.kubernetes.io/name
 
     # Cluster events (replaces loki.source.kubernetes_events "cluster_events")
     clusterEvents:
@@ -228,3 +230,12 @@ spec:
     # ---------------------------------------------------------------------------
     alloy-operator:
       deploy: true
+
+    collectorCommon:
+      alloy:
+        stabilityLevel: experimental
+        # liveDebugging:
+        #   enabled: true
+    # extraObjects:
+    #   -
+    #     kind: httproute
