@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: alloy-logs
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Observability Service
+    gethomepage.dev/name: Alloy Logs
+    gethomepage.dev/description: Logs Collector
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
+spec:
+  hostnames: [alloy-logs.cloudjur.com]
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: k8s-monitoring-alloy-logs
+          namespace: observability
+          port: 12345
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: alloy-singleton
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Observability Service
+    gethomepage.dev/name: Alloy Singleton
+    gethomepage.dev/description: Singleton Collector
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
+spec:
+  hostnames: [alloy-singleton.cloudjur.com]
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: k8s-monitoring-alloy-singleton
+          namespace: observability
+          port: 12345
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: alloy-receiver
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Observability Service
+    gethomepage.dev/name: Alloy Receiver
+    gethomepage.dev/description: OTLP Receiver
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
+spec:
+  hostnames: [alloy-receiver.cloudjur.com]
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: k8s-monitoring-alloy-receiver
+          namespace: observability
+          port: 12345
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: alloy-profiles
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Observability Service
+    gethomepage.dev/name: Alloy Profiles
+    gethomepage.dev/description: Profiles Collector
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
+spec:
+  hostnames: [alloy-profiles.cloudjur.com]
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: k8s-monitoring-alloy-profiles
+          namespace: observability
+          port: 12345
