@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  test:
+    desc: Run flux-local test
+    cmd: flux-local test --all-namespaces --path {{.KUBERNETES_DIR}} --enable-images
+    preconditions:
+      - which flux-local
+
+  diff:
+    desc: Run flux-local diff
+    cmd: flux-local diff --path {{.KUBERNETES_DIR}} --output-file {{.KUBERNETES_DIR}}/flux-local-diff.txt
+    preconditions:
+      - which flux-local
+
+  hr:
+    desc: Get HelmReleases
+    cmd: flux-local get hr --all-namespaces --path {{.KUBERNETES_DIR}}
+    preconditions:
+      - which flux-local
+
+  ks:
+    desc: Get Kustomizations
+    cmd: flux-local get ks --all-namespaces --path {{.KUBERNETES_DIR}}
+    preconditions:
+      - which flux-local
