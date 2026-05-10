@@ -89,7 +89,7 @@ spec:
                   ttlSecondsAfterFinished: 3600
                   template:
                     spec:
-                      automountServiceAccountToken: false
+                      automountServiceAccountToken: true
                       restartPolicy: OnFailure
                       containers:
                         - name: unlock-r2
