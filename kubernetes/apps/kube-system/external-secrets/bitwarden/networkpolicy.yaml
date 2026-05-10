@@ -43,7 +43,8 @@ spec:
     # 3. Allow HTTPS traffic to Bitwarden API (Fixes FetchError)
     - toFQDNs:
         - matchName: vw.cloudjur.com
-        - matchName: api.bitwarden.com
+        # - matchName: api.bitwarden.com
+        # - matchName: vault.bitwarden.com
       toPorts:
         - ports:
             - port: "443"
