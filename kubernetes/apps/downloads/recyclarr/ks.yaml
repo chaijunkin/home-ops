@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/volsync
+    - ../../../../components/volsync-no-r2
   interval: 1h # interval: 1h
   path: ./kubernetes/apps/downloads/recyclarr/app
   postBuild:

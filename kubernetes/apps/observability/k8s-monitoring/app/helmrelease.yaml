@@ -70,22 +70,22 @@ spec:
     # ---------------------------------------------------------------------------
     # Features
     # ---------------------------------------------------------------------------
-    annotationAutodiscovery:
-      enabled: true
-      destinations: [localMertics]
-      collector: alloy-receiver
+    # annotationAutodiscovery:
+    #   enabled: true
+    #   destinations: [localMertics]
+    #   collector: alloy-receiver
 
-    autoInstrumentation:
-      enabled: true
-      destinations: [localMertics, localLogs, localTraces]
-      collector: alloy-receiver
-      beyla:
-        config:
-          create: true
-          data:
-            discovery:
-              services:
-                - k8s_namespace: self-hosted
+    # autoInstrumentation:
+    #   enabled: true
+    #   destinations: [localMertics, localLogs, localTraces]
+    #   collector: alloy-receiver
+    #   beyla:
+    #     config:
+    #       create: true
+    #       data:
+    #         discovery:
+    #           services:
+    #             - k8s_namespace: self-hosted
 
     # Node logs via Loki (DaemonSet file tailing of /var/log/pods/*, equivalent to
     # the current loki.source.kubernetes pipeline with cluster=main and
