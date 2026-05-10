@@ -73,7 +73,7 @@ spec:
     annotationAutodiscovery:
       enabled: true
       destinations: [localMertics]
-      collector: alloy-metrics
+      collector: alloy-receiver
 
     autoInstrumentation:
       enabled: true
@@ -209,6 +209,9 @@ spec:
     # Collectors — define the two Alloy instances
     # ---------------------------------------------------------------------------
     collectors:
+      # alloy-metrics:
+      #   presets: [statefulset]
+
       # alloy-logs: DaemonSet that tails pod logs and forwards cluster events
       alloy-logs:
         presets: [filesystem-log-reader, daemonset]
