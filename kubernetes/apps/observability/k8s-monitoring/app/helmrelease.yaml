@@ -67,13 +67,10 @@ spec:
     # ---------------------------------------------------------------------------
     # Features
     # ---------------------------------------------------------------------------
-
-
-
-    annotationAutodiscovery:
-      enabled: true
-      destinations: [localMertics]
-      collector: alloy-receiver
+    # annotationAutodiscovery:
+    #   enabled: true
+    #   destinations: [localMertics]
+    #   collector: alloy-receiver
 
     autoInstrumentation:
       enabled: true
