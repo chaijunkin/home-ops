@@ -20,6 +20,11 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
+      automountServiceAccountToken: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       dnsConfig:
         searches:
           - svc.cluster.local
@@ -33,6 +38,10 @@ spec:
           identifier: homepage
         containers:
           app:
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: {drop: ["ALL"]}
             image:
               repository: ghcr.io/gethomepage/homepage
               tag: v1.12.3
