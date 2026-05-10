@@ -123,36 +123,36 @@ spec:
             enabled: true
           http:
             enabled: true
-          jaeger:
-            # -- Configuration for the Jaeger receiver using the gRPC protocol.
-            # @section -- Receivers: Jaeger
-            grpc:
-              enabled: true
-              port: 14250
-
-            # -- Configuration for the Jaeger receiver using the Thrift binary protocol.
-            # @section -- Receivers: Jaeger
-            thriftBinary:
-              enabled: true
-              port: 6832
-
-            # -- Configuration for the Jaeger receiver using the Thrift compact protocol.
-            # @section -- Receivers: Jaeger
-            thriftCompact:
-              enabled: true
-              port: 6831
-
-            # -- Configuration for the Jaeger receiver using the Thrift HTTP protocol.
-            # @section -- Receivers: Jaeger
-            thriftHttp:
-              enabled: true
-              port: 14268
-
-          # -- The Zipkin receiver configuration.
-          # @section -- Receivers: Zipkin
-          zipkin:
+        jaeger:
+          # -- Configuration for the Jaeger receiver using the gRPC protocol.
+          # @section -- Receivers: Jaeger
+          grpc:
             enabled: true
-            port: 9411
+            port: 14250
+
+          # -- Configuration for the Jaeger receiver using the Thrift binary protocol.
+          # @section -- Receivers: Jaeger
+          thriftBinary:
+            enabled: true
+            port: 6832
+
+          # -- Configuration for the Jaeger receiver using the Thrift compact protocol.
+          # @section -- Receivers: Jaeger
+          thriftCompact:
+            enabled: true
+            port: 6831
+
+          # -- Configuration for the Jaeger receiver using the Thrift HTTP protocol.
+          # @section -- Receivers: Jaeger
+          thriftHttp:
+            enabled: true
+            port: 14268
+
+        # -- The Zipkin receiver configuration.
+        # @section -- Receivers: Zipkin
+        zipkin:
+          enabled: true
+          port: 9411
 
     # Continuous profiling — scrapes pprof endpoints and forwards to Pyroscope
     profiling:
