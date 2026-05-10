@@ -15,39 +15,39 @@ spec:
         - matchLabels:
             app.kubernetes.io/instance: external-secrets
             app.kubernetes.io/name: external-secrets
-      toPorts:
-        - ports:
-            - port: "8087"
-              protocol: TCP
-  egress:
-    - toEntities:
-        - cluster
-    # - toCIDRSet:
-    #     - cidr: 10.10.30.0/24
-    #     - cidr: 10.96.0.0/16
-    #     - cidr: 192.168.1.0/24
-    #   toPorts:
-    #     - ports:
-    #         - port: "443"
-    # 2. Allow DNS lookups (Fixes EAI_AGAIN)
-    # This targets the CoreDNS pods in kube-system
-    - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: ANY
-          rules:
-            dns:
-              - matchPattern: "*"
-    # 3. Allow HTTPS traffic to Bitwarden API (Fixes FetchError)
-    - toFQDNs:
-        - matchName: vw.cloudjur.com
-        # - matchName: api.bitwarden.com
-        # - matchName: vault.bitwarden.com
-      toPorts:
-        - ports:
-            - port: "443"
-              protocol: TCP
+  #     toPorts:
+  #       - ports:
+  #           - port: "8087"
+  #             protocol: TCP
+  # egress:
+  #   - toEntities:
+  #       - cluster
+  #   # - toCIDRSet:
+  #   #     - cidr: 10.10.30.0/24
+  #   #     - cidr: 10.96.0.0/16
+  #   #     - cidr: 192.168.1.0/24
+  #   #   toPorts:
+  #   #     - ports:
+  #   #         - port: "443"
+  #   # 2. Allow DNS lookups (Fixes EAI_AGAIN)
+  #   # This targets the CoreDNS pods in kube-system
+  #   - toEndpoints:
+  #       - matchLabels:
+  #           io.kubernetes.pod.namespace: kube-system
+  #           k8s-app: kube-dns
+  #     toPorts:
+  #       - ports:
+  #           - port: "53"
+  #             protocol: ANY
+  #         rules:
+  #           dns:
+  #             - matchPattern: "*"
+  #   # 3. Allow HTTPS traffic to Bitwarden API (Fixes FetchError)
+  #   - toFQDNs:
+  #       - matchName: vw.cloudjur.com
+  #       - matchName: api.bitwarden.com
+  #       - matchName: vault.bitwarden.com
+  #     toPorts:
+  #       - ports:
+  #           - port: "443"
+  #             protocol: TCP
