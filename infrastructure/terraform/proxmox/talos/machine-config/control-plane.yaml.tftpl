@@ -7,6 +7,7 @@ machine:
 %{ if idx == 0 ~}
       - deviceSelector:
           hardwareAddr: ${lower(device.mac_address)}
+        mtu: 9000
         addresses:
           - ${device.ip_address != null ? device.ip_address : ip}/${subnet_mask}
         routes:
