@@ -92,7 +92,7 @@ securityContext:
 # NOTE: This is needed to prevent MTU issues with some hosts. If you have hosts that support 1500 MTU, you can set this to true and it will auto-detect the MTU for each host.
 socketLB:
   enabled: true
-  hostNamespaceOnly: true
+  hostNamespaceOnly: false
 # NOTE: This is needed to prevent MTU issues with some hosts. If you have hosts that support 1500 MTU, you can set this to true and it will auto-detect the MTU for each host.
 pmtuDiscovery: # mtu 1500 causes issues with some hosts, so disabling for now
   enabled: true
