@@ -20,24 +20,11 @@ spec:
       #       - port: "8087"
       #         protocol: TCP
   egress:
+    # 1. Allow DNS lookups (Fixes EAI_AGAIN)
     - toEntities:
         - cluster
         - host
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: ANY
-          rules:
-            dns:
-              - matchPattern: "*"
-    - toCIDRSet:
-        - cidr: 10.10.30.0/24
-        - cidr: 10.96.0.0/16
-        - cidr: 192.168.1.0/24
-        - cidr: 169.254.0.0/16
-    # 2. Allow DNS lookups (Fixes EAI_AGAIN)
-    # This targets the CoreDNS pods in kube-system
-    - toEndpoints:
+      toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
@@ -48,7 +35,18 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
+    # 2. Allow internal traffic to specific CIDRs
+    - toCIDRSet:
+        - cidr: 10.10.30.0/24
+        - cidr: 10.96.0.0/16
+        - cidr: 192.168.1.0/24
+        - cidr: 169.254.0.0/16
     # 3. Allow HTTPS traffic to Bitwarden API (Fixes FetchError)
     - toFQDNs:
         - matchName: vw.cloudjur.com
+        - matchName: api.bitwarden.com
         - matchPattern: "*.bitwarden.com"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
