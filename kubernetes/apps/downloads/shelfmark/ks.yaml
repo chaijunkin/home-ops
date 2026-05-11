@@ -25,7 +25,7 @@ spec:
   timeout: 5m
   components:
     - ../../../../components/volsync
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler
   dependsOn:
     - name: openebs
       namespace: storage

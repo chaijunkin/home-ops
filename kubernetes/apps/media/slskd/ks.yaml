@@ -24,7 +24,7 @@ spec:
       APP: slskd
       CONTROLLER: StatefulSet
   components:
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler
   dependsOn:
     - name: local-hostpath
       namespace: storage

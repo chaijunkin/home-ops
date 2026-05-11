@@ -24,7 +24,7 @@ spec:
   interval: 24h
   timeout: 5m
   components:
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler
     - ../../../../components/volsync-no-r2
   dependsOn:
     - name: openebs

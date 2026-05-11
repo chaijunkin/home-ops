@@ -23,7 +23,7 @@ spec:
     substitute:
       APP: qui
   components:
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler
     - ../../../../components/volsync
   dependsOn:
     - name: openebs

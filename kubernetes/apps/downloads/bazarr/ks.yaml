@@ -30,5 +30,5 @@ spec:
       APP: bazarr
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler
     - ../../../../components/volsync

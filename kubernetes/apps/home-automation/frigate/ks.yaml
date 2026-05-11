@@ -10,14 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: frigate
   dependsOn:
-    - name: external-secrets-stores
-      namespace: kube-system
-        # - name: intel-device-plugin-gpu
-        #   namespace: kube-system
     - name: openebs
       namespace: storage
-    - name: volsync
-      namespace: volsync-system
   path: ./kubernetes/apps/home-automation/frigate/app
   prune: true
   sourceRef:
@@ -34,4 +28,4 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
   components:
     - ../../../../components/volsync
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler

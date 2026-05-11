@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler
     - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/apps/media/komga/app

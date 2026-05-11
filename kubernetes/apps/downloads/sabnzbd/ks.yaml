@@ -31,4 +31,4 @@ spec:
       SUBDOMAIN: sab
   components:
     - ../../../../components/volsync-no-r2
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/zeroscaler
