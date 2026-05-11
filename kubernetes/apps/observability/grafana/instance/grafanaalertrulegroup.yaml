@@ -91,11 +91,12 @@ spec:
                   params: [E]
                 reducer:
                   type: last
-                type: query
+                type:
+                  query
 
-                # ============================================
-                # SLO: Response Time P99 < 1s (99% under 1s)
-                # ============================================
+                  # ============================================
+                  # SLO: Response Time P99 < 1s (99% under 1s)
+                  # ============================================
     - uid: fly-http-response-time-15s
       title: Response Time Exceeds 15s Incident Threshold
       condition: C
@@ -149,11 +150,12 @@ spec:
                   params: [C]
                 reducer:
                   type: last
-                type: query
+                type:
+                  query
 
-                # ============================================
-                # SLO: Client 4xx Error Rate < 10%
-                # ============================================
+                  # ============================================
+                  # SLO: Client 4xx Error Rate < 10%
+                  # ============================================
     - uid: fly-app-4xx-rate
       title: Client 4xx Error Rate Exceeds 10% SLO
       condition: E
@@ -227,11 +229,12 @@ spec:
                   params: [E]
                 reducer:
                   type: last
-                type: query
+                type:
+                  query
 
-                # ============================================
-                # Capacity Alerts
-                # ============================================
+                  # ============================================
+                  # Capacity Alerts
+                  # ============================================
     - uid: fly-app-high-concurrency
       title: High App Concurrency
       condition: C
@@ -998,11 +1001,12 @@ spec:
                   params: [E]
                 reducer:
                   type: last
-                type: query
+                type:
+                  query
 
-                # ============================================
-                # SLO: Connection Churn < 20%
-                # ============================================
+                  # ============================================
+                  # SLO: Connection Churn < 20%
+                  # ============================================
     - uid: fly-edge-connection-churn
       title: High Connection Churn Exceeds 20% SLO
       condition: E
@@ -1075,11 +1079,12 @@ spec:
                   params: [E]
                 reducer:
                   type: last
-                type: query
+                type:
+                  query
 
-                # ============================================
-                # TLS & Security Alerts
-                # ============================================
+                  # ============================================
+                  # TLS & Security Alerts
+                  # ============================================
     - uid: fly-tls-sni-limit
       title: TLS SNI Limit Reached
       condition: C
@@ -1226,11 +1231,12 @@ spec:
                   params: [C]
                 reducer:
                   type: last
-                type: query
+                type:
+                  query
 
-                # ============================================
-                # Rate Limiting & Traffic Alerts
-                # ============================================
+                  # ============================================
+                  # Rate Limiting & Traffic Alerts
+                  # ============================================
     - uid: fly-edge-rate-limited
       title: Edge Rate Limited
       condition: C
@@ -1329,11 +1335,12 @@ spec:
                   params: [C]
                 reducer:
                   type: last
-                type: query
+                type:
+                  query
 
-                # ============================================
-                # Network Health Alerts
-                # ============================================
+                  # ============================================
+                  # Network Health Alerts
+                  # ============================================
     - uid: fly-network-errors
       title: Network Packet Drops/Errors
       condition: C

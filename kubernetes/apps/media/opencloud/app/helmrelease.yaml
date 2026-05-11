@@ -142,8 +142,9 @@ spec:
                 requestHeaderModifier:
                   add:
                     - name: X-Issuer-Suffix
-                      value: openclouddesktop
-                      # Android UA
+                      value:
+                        openclouddesktop
+                        # Android UA
           - backendRefs:
               - identifier: app
                 port: 9201
@@ -160,8 +161,9 @@ spec:
                 requestHeaderModifier:
                   add:
                     - name: X-Issuer-Suffix
-                      value: opencloudandroid
-                      # iOS UA
+                      value:
+                        opencloudandroid
+                        # iOS UA
           - backendRefs:
               - identifier: app
                 port: 9201

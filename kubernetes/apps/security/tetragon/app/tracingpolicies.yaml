@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/cilium.io/tracingpolicy_v1alpha1.json
 apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:
@@ -19,6 +20,7 @@ spec:
                 - /etc/shadow
                 - /etc/passwd
 ---
+# yaml-language-server: $schema=https://crd.cloudjur.com/cilium.io/tracingpolicy_v1alpha1.json
 apiVersion: cilium.io/v1alpha1
 kind: TracingPolicy
 metadata:

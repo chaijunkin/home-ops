@@ -97,9 +97,11 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: qbittorrent-secret
-                    key: OPN_API_KEY # Replace with the actual key name inside your secret
+                    key:
+                      OPN_API_KEY # Replace with the actual key name inside your secret
 
-                    # 3. Specific Secret Mapping (OPN_API_SECRET)
+
+                      # 3. Specific Secret Mapping (OPN_API_SECRET)
               - name: OPN_API_SECRET
                 valueFrom:
                   secretKeyRef:

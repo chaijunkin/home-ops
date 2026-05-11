@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -14,7 +13,7 @@ spec:
       name: renovate-operator
       namespace: renovate
   interval: 1h
-  path: "./kubernetes/apps/renovate/renovate-operator/app"
+  path: ./kubernetes/apps/renovate/renovate-operator/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,7 +22,7 @@ spec:
   targetNamespace: renovate
   timeout: 5m
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -35,7 +34,7 @@ spec:
   dependsOn:
     - name: renovate-operator
   interval: 1h
-  path: "./kubernetes/apps/renovate/renovate-operator/jobs"
+  path: ./kubernetes/apps/renovate/renovate-operator/jobs
   prune: true
   sourceRef:
     kind: GitRepository

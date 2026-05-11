@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://crd.movishell.pl/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
 apiVersion: renovate-operator.mogenius.com/v1alpha1
 kind: RenovateJob
 metadata:
