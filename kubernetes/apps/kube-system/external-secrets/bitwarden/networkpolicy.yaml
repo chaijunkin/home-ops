@@ -30,13 +30,11 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
-    # - toCIDRSet:
-    #     - cidr: 10.10.30.0/24
-    #     - cidr: 10.96.0.0/16
-    #     - cidr: 192.168.1.0/24
-    #   toPorts:
-    #     - ports:
-    #         - port: "443"
+    - toCIDRSet:
+        - cidr: 10.10.30.0/24
+        - cidr: 10.96.0.0/16
+        - cidr: 192.168.1.0/24
+        - cidr: 169.254.0.0/16
     # 2. Allow DNS lookups (Fixes EAI_AGAIN)
     # This targets the CoreDNS pods in kube-system
     - toEndpoints:
