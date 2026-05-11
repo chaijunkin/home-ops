@@ -10,9 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: bazarr
   dependsOn:
-    - name: external-secrets-stores
-      namespace: kube-system
-
     - name: openebs
       namespace: storage
   path: ./kubernetes/apps/downloads/bazarr/app

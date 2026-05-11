@@ -11,11 +11,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: searxng
-  dependsOn:
-    - name: external-secrets-bitwarden
-      namespace: kube-system
-    - name: external-secrets-stores
-      namespace: kube-system
   sourceRef:
     kind: GitRepository
     name: flux-system

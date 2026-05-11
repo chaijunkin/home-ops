@@ -12,8 +12,6 @@ spec:
   components:
     - ../../../../components/volsync-no-r2
   dependsOn:
-    - name: external-secrets-stores
-      namespace: kube-system
     - name: openebs
       namespace: storage
   interval: 30m
