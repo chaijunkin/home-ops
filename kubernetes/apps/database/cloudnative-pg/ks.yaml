@@ -41,6 +41,9 @@ spec:
   interval: 24h
   retryInterval: 1m
   timeout: 5m
+  dependsOn:
+    - name: local-hostpath
+      namespace: storage
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1

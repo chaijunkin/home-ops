@@ -44,3 +44,6 @@ spec:
   targetNamespace: games
   timeout: 5m
   wait: false
+  dependsOn:
+    - name: openebs
+      namespace: storage

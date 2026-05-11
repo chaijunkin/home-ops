@@ -19,3 +19,6 @@ spec:
   targetNamespace: *namespace
   timeout: 10m
   wait: true
+  dependsOn:
+    - name: openebs
+      namespace: storage

@@ -12,6 +12,8 @@ spec:
   dependsOn:
     - name: external-secrets-bitwarden
       namespace: kube-system
+    - name: openebs
+      namespace: storage
   path: ./kubernetes/apps/media/plex/app
   prune: true
   sourceRef:
@@ -99,14 +101,16 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
+    - name: external-secrets-bitwarden
+      namespace: kube-system
+    - name: openebs
+      namespace: storage
     - name: plex
-    - name: tautulli
     - name: radarr
       namespace: downloads
     - name: sonarr
       namespace: downloads
-    - name: external-secrets-bitwarden
-      namespace: kube-system
+    - name: tautulli
   path: ./kubernetes/apps/media/plex/kometa
   prune: true
   sourceRef:

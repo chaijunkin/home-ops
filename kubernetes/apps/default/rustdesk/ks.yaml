@@ -23,3 +23,6 @@ spec:
       VOLSYNC_CAPACITY: 20Gi
   components:
     - ../../../../components/volsync-no-r2
+  dependsOn:
+    - name: openebs
+      namespace: storage

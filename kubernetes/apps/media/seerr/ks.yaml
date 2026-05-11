@@ -26,3 +26,6 @@ spec:
       SUBDOMAIN: requests
   components:
     - ../../../../components/volsync
+  dependsOn:
+    - name: openebs
+      namespace: storage

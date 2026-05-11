@@ -12,6 +12,8 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: kube-system
+    - name: openebs
+      namespace: storage
     - name: volsync
       namespace: volsync-system
   healthChecks:

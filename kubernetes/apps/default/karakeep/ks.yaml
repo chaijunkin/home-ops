@@ -19,6 +19,8 @@ spec:
     namespace: flux-system
   wait: false
   dependsOn:
+    - name: openebs
+      namespace: storage
     - name: volsync
       namespace: volsync-system
   components:

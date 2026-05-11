@@ -26,3 +26,8 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/volsync
+  dependsOn:
+    - name: local-hostpath
+      namespace: storage
+    - name: openebs
+      namespace: storage

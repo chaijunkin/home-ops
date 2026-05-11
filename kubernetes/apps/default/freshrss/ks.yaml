@@ -24,3 +24,6 @@ spec:
     substitute:
       APP: *appname
       VOLSYNC_CAPACITY: 2Gi
+  dependsOn:
+    - name: openebs
+      namespace: storage

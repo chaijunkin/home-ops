@@ -14,6 +14,8 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: kube-system
+    - name: openebs
+      namespace: storage
   interval: 30m
   path: ./kubernetes/apps/media/opencloud/app
   postBuild:

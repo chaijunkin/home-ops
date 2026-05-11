@@ -12,6 +12,8 @@ spec:
   dependsOn:
     - name: external-secrets-bitwarden
       namespace: kube-system
+    - name: openebs
+      namespace: storage
   path: ./kubernetes/apps/downloads/sonarr/app
   prune: true
   sourceRef:

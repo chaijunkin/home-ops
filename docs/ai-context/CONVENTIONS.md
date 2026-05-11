@@ -68,6 +68,36 @@ kubernetes/apps/ai/toolhive/
 
 ---
 
+### Capsule: FluxDependsOn
+
+**Invariant**
+Flux `Kustomization` and `HelmRelease` resources MUST explicitly define their dependencies via `dependsOn` to ensure correct reconciliation order.
+
+**Rules**
+- **Storage**: Apps using OpenEBS or Local Hostpath MUST depend on their respective storage provider in `storage`.
+- **Volsync**: Apps using the `volsync` component MUST depend on `openebs` in `storage`.
+- **Secrets**: Apps using `ExternalSecret` SHOULD depend on `external-secrets-stores` in `kube-system` (Optional).
+- **Databases**: Apps using Postgres SHOULD depend on `cloudnative-pg-cluster` in `database` (Optional).
+- **Caching**: Apps using Redis/Dragonfly SHOULD depend on `dragonfly-cluster` in `database` (Optional).
+- **Authentication**: Apps using SSO (Authentik) SHOULD depend on `authentik` in `security` (Optional).
+- **Backups**: Apps using `volsync` SHOULD depend on `volsync` in `volsync-system` (Optional).
+- **Sub-Apps**: Sidecar or utility Kustomizations SHOULD depend on the main application Kustomization.
+
+
+
+**Example**
+```yaml
+spec:
+  dependsOn:
+    - name: external-secrets-stores
+      namespace: kube-system
+    - name: cloudnative-pg-cluster
+      namespace: database
+```
+
+
+---
+
 ### Capsule: MultusNetworkAttachment
 
 **Invariant**

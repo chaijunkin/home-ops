@@ -26,3 +26,6 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/keda/nfs-scaler
+  dependsOn:
+    - name: openebs
+      namespace: storage

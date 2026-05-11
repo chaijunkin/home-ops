@@ -22,3 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: ollama
+  dependsOn:
+    - name: local-hostpath
+      namespace: storage

@@ -25,3 +25,6 @@ spec:
       CONTROLLER: StatefulSet
   components:
     - ../../../../components/keda/nfs-scaler
+  dependsOn:
+    - name: local-hostpath
+      namespace: storage

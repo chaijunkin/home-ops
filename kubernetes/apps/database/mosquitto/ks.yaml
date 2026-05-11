@@ -22,3 +22,6 @@ spec:
   postBuild:
     substitute:
       APP: mosquitto
+  dependsOn:
+    - name: openebs
+      namespace: storage

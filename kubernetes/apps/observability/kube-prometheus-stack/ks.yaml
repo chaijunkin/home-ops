@@ -12,6 +12,10 @@ spec:
   dependsOn:
     - name: external-secrets-bitwarden
       namespace: kube-system
+    - name: local-hostpath
+      namespace: storage
+    - name: openebs
+      namespace: storage
   path: ./kubernetes/apps/observability/kube-prometheus-stack/app
   prune: true
   sourceRef:
