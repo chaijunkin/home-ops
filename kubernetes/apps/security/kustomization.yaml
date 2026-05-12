@@ -7,9 +7,9 @@ components:
 resources:
   # []
   - ./authentik/ks.yaml
-    # - ./kyverno/ks.yaml
-    # - ./kyverno-policies/ks.yaml
-    # - ./policy-reporter/ks.yaml
-    # - ./tetragon/ks.yaml
-    # - ./trivy-operator/ks.yaml
-    # - ./trivy-operator-polr-adapter/ks.yaml
+  - ./kyverno/ks.yaml
+  # - ./kyverno-policies/ks.yaml
+  - ./policy-reporter/ks.yaml
+  - ./tetragon/ks.yaml
+  - ./trivy-operator/ks.yaml
+  - ./trivy-operator-polr-adapter/ks.yaml
