@@ -39,7 +39,7 @@ spec:
         enabled: true
       metrics:
         dashboards:
-          enabled: true
+          enabled: false
           namespace: monitoring
           annotations:
             grafana_folder: Cilium
