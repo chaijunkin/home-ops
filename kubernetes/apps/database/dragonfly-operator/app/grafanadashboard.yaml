@@ -10,7 +10,6 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-
   instanceSelector:
     matchLabels:
       dashboards: grafana
