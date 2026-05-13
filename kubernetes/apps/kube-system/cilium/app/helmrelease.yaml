@@ -32,45 +32,45 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: cilium-values
-  values:
-    hubble:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-      metrics:
-        dashboards:
-          enabled: true
-          namespace: monitoring
-          annotations:
-            grafana_folder: Cilium
-        enabled:
-          - dns:query;ignoreAAAA
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-      relay:
-        enabled: true
-        rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-      ui:
-        enabled: true
-        service:
-          type: LoadBalancer
-          annotations:
-            lbipam.cilium.io/ips: 10.10.30.133
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/group: Platform Infrastructure
-            gethomepage.dev/name: Hubble
-            gethomepage.dev/description: Cilium's observability platform
-            gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cilium.png
-        rollOutPods: true
-      dashboards:
-        enabled: true
-        namespace: monitoring
-        annotations:
-          grafana_folder: Cilium
+  # values:
+  #   hubble:
+  #     enabled: true
+  #     serviceMonitor:
+  #       enabled: true
+  #     metrics:
+  #       dashboards:
+  #         enabled: true
+  #         namespace: monitoring
+  #         annotations:
+  #           grafana_folder: Cilium
+  #       enabled:
+  #         - dns:query;ignoreAAAA
+  #         - drop
+  #         - tcp
+  #         - flow
+  #         - port-distribution
+  #         - icmp
+  #         - http
+  #     relay:
+  #       enabled: true
+  #       rollOutPods: true
+  #       prometheus:
+  #         serviceMonitor:
+  #           enabled: true
+  #     ui:
+  #       enabled: true
+  #       service:
+  #         type: LoadBalancer
+  #         annotations:
+  #           lbipam.cilium.io/ips: 10.10.30.133
+  #           gethomepage.dev/enabled: "true"
+  #           gethomepage.dev/group: Platform Infrastructure
+  #           gethomepage.dev/name: Hubble
+  #           gethomepage.dev/description: Cilium's observability platform
+  #           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cilium.png
+  #       rollOutPods: true
+  #     dashboards:
+  #       enabled: true
+  #       namespace: monitoring
+  #       annotations:
+  #         grafana_folder: Cilium
