@@ -28,38 +28,6 @@ envoy:
   enabled: false
 # gatewayAPI:
 #   enabled: true
-hubble:
-  enabled: true
-  serviceMonitor:
-    enabled: true
-  metrics:
-    dashboards:
-      enabled: true
-      namespace: monitoring
-      annotations:
-        grafana_folder: Cilium
-    enabled:
-      - dns:query;ignoreAAAA
-      - drop
-      - tcp
-      - flow
-      - port-distribution
-      - icmp
-      - http
-  relay:
-    enabled: true
-    rollOutPods: true
-    prometheus:
-      serviceMonitor:
-        enabled: true
-  ui:
-    enabled: true
-    rollOutPods: true
-  dashboards:
-    enabled: true
-    namespace: monitoring
-    annotations:
-      grafana_folder: Cilium
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: "10.69.0.0/16" # ${CLUSTER_CIDR}
