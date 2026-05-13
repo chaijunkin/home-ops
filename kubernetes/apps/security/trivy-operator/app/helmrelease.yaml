@@ -31,7 +31,20 @@ spec:
   values:
     operator:
       replicas: 1
+      scanJobTimeout: 10m
+      builtInTrivyServer: true
+      scanJobsConcurrentLimit: 3
     serviceMonitor:
       enabled: true
     trivy:
       ignoreUnfixed: true
+
+
+    # # Only for production env
+    # trivyOperator:
+    #   scanJobNodeSelector:
+    #     application: trivy
+
+    trivy:
+      mode: ClientServer
+      severity: HIGH,CRITICAL

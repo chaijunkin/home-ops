@@ -31,6 +31,8 @@ spec:
   values:
     ui:
       enabled: true
+      crds:
+        customBoard: true
     plugin:
       kyverno:
         enabled: true
@@ -40,3 +42,7 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+    target:
+      crd: true
+      loki:
+        host: http://loki-headless.observability.svc.cluster.local:3100
