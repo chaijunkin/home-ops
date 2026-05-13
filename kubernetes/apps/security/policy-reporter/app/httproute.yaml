@@ -11,7 +11,7 @@ metadata:
 spec:
   hostnames: [policy-reporter.cloudjur.com]
   parentRefs:
-    - name: envoy-external
+    - name: envoy-internal
       namespace: network
       sectionName: https
   rules:
