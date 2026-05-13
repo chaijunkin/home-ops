@@ -50,7 +50,7 @@ spec:
     route:
       app:
         annotations:
-          gatus.home-operations.com/enabled: "false"
+          gatus.home-operations.com/enabled: "true"
         hostnames:
           - garage-ui.cloudjur.com
         parentRefs:
