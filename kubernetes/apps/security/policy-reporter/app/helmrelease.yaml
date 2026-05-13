@@ -53,14 +53,14 @@ spec:
         activeDeadlineSeconds: 300
         backoffLimit: 1
         ttlSecondsAfterFinished: 60
-        to: ["apphub@cloudjur.com"]
+        # to: []
       violations:
         enabled: true
         schedule: "*/5 * * * *"
         activeDeadlineSeconds: 300
         backoffLimit: 1
         ttlSecondsAfterFinished: 60
-        to: ["apphub@cloudjur.com"]
+        # to: []
     target:
       crd: true
       loki:
