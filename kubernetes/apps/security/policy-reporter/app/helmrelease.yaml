@@ -42,6 +42,25 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+    emailReports:
+      clusterName: main
+      titlePrefix: Policy Report
+      smtp:
+        secret: policy-reporter-smtp
+      summary:
+        enabled: true
+        schedule: "0 8 * * *"
+        activeDeadlineSeconds: 300
+        backoffLimit: 1
+        ttlSecondsAfterFinished: 60
+        to: ["apphub@cloudjur.com"]
+      violations:
+        enabled: true
+        schedule: "0 8 * * *"
+        activeDeadlineSeconds: 300
+        backoffLimit: 1
+        ttlSecondsAfterFinished: 60
+        to: ["apphub@cloudjur.com"]
     target:
       crd: true
       loki:
