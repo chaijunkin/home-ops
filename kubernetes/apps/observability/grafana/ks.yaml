@@ -9,9 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: grafana
-  dependsOn:
-    - name: external-secrets-bitwarden
-      namespace: kube-system
+  dependsOn: []
   path: ./kubernetes/apps/observability/grafana/app
   prune: true
   sourceRef:

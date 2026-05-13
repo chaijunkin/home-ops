@@ -15,8 +15,6 @@ spec:
   targetNamespace: observability
   wait: true
   dependsOn:
-    - name: external-secrets-bitwarden
-      namespace: kube-system
     - name: kube-prometheus-stack
       namespace: observability
     - name: openebs

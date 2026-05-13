@@ -10,8 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: sonarr
   dependsOn:
-    - name: external-secrets-bitwarden
-      namespace: kube-system
     - name: openebs
       namespace: storage
   path: ./kubernetes/apps/downloads/sonarr/app

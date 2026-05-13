@@ -9,9 +9,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: dragonfly-operator
-  dependsOn:
-    - name: external-secrets-bitwarden
-      namespace: kube-system
+  dependsOn: []
   path: ./kubernetes/apps/database/dragonfly-operator/app
   prune: true
   sourceRef:

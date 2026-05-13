@@ -10,8 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: plex
   dependsOn:
-    - name: external-secrets-bitwarden
-      namespace: kube-system
     - name: openebs
       namespace: storage
   path: ./kubernetes/apps/media/plex/app
@@ -72,8 +70,6 @@ spec:
   dependsOn:
     - name: plex
       namespace: media
-    - name: external-secrets-bitwarden
-      namespace: kube-system
   path: ./kubernetes/apps/media/plex/plex-image-cleanup
   prune: true
   sourceRef:
@@ -101,8 +97,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-bitwarden
-      namespace: kube-system
     - name: openebs
       namespace: storage
     - name: plex
