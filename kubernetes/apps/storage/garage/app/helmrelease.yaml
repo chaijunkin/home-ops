@@ -50,9 +50,9 @@ spec:
             port: 3903
     route:
       s3:
-        annotations:
-          gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 403"]
+        # annotations:
+        #   gatus.home-operations.com/endpoint: |-
+        #     conditions: ["[STATUS] == 403"]
         hostnames:
           - s3.cloudjur.com
         parentRefs:
@@ -63,9 +63,9 @@ spec:
               - identifier: app
                 port: s3
       api:
-        annotations:
-          gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 400"]
+        # annotations:
+        #   gatus.home-operations.com/endpoint: |-
+        #     conditions: ["[STATUS] == 400"]
         hostnames:
           - garage.cloudjur.com
         parentRefs:
