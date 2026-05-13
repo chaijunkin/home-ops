@@ -8,7 +8,7 @@ spec:
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
-  url: oci://quay.io/cilium/charts/tetragon
+  url: oci://ghcr.io/home-operations/charts-mirror/tetragon
   ref:
     tag: 1.7.0
 ---
