@@ -58,3 +58,33 @@ spec:
     - inputName: DS_PROMETHEUS
       datasourceName: prometheus
   folderRef: cilium-folder
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cilium-agent
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  url: https://raw.githubusercontent.com/cilium/cilium/refs/heads/main/install/kubernetes/cilium/files/cilium-agent/dashboards/cilium-dashboard.json
+  datasources:
+    - inputName: DS_PROMETHEUS
+      datasourceName: prometheus
+  folderRef: cilium-folder
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cilium-operator
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  url: https://raw.githubusercontent.com/cilium/cilium/refs/heads/main/install/kubernetes/cilium/files/cilium-operator/dashboards/cilium-operator-dashboard.json
+  datasources:
+    - inputName: DS_PROMETHEUS
+      datasourceName: prometheus
+  folderRef: cilium-folder
