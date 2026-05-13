@@ -10,7 +10,7 @@ spec:
     operation: copy
   url: oci://ghcr.io/chaijunkin/charts-mirror/trivy-operator-polr-adapter
   ref:
-    tag: 0.11.2
+    tag: 0.11.1
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
