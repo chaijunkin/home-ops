@@ -77,7 +77,7 @@ spec:
     policy: sync
     extraArgs:
       - --ignore-ingress-tls-spec
-      #   - --webhook-provider-url=http://0.0.0.0:8080
+      - --webhook-provider-url=http://localhost:8080
       - --gateway-name=envoy-internal
       - --managed-record-types=A
       - --managed-record-types=AAAA
