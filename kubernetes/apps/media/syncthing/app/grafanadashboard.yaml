@@ -10,7 +10,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: data-folder
+
   grafanaCom:
     id: 24238
     revision: 3

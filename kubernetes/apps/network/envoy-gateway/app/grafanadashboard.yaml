@@ -10,7 +10,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_AFRANET_PROMETHEUS
-  folderRef: network-folder
+
   grafanaCom:
     id: 23239
     revision: 1
@@ -30,7 +30,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: network-folder
+
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -48,7 +48,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: network-folder
+
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -66,7 +66,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: network-folder
+
   instanceSelector:
     matchLabels:
       dashboards: grafana

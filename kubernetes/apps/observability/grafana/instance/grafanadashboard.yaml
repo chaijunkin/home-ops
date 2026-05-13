@@ -10,7 +10,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 15761
     revision: 21
@@ -30,7 +30,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 15762
     revision: 22
@@ -50,7 +50,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 15757
     revision: 43
@@ -70,7 +70,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 15758
     revision: 46
@@ -90,7 +90,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 15759
     revision: 40
@@ -110,7 +110,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 19105
     revision: 9
@@ -130,7 +130,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 11454
     revision: 14
@@ -150,7 +150,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: kubernetes-folder
+
   grafanaCom:
     id: 15760
     revision: 39
@@ -170,7 +170,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: network-folder
+
   grafanaCom:
     id: 12340
     revision: 1
@@ -190,7 +190,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: system-folder
+
   grafanaCom:
     id: 1860
     revision: 45
@@ -210,7 +210,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: system-folder
+
   grafanaCom:
     id: 4260
     revision: 19
@@ -230,7 +230,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: system-folder
+
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -248,7 +248,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: system-folder
+
   grafanaCom:
     id: 18089
     revision: 1
@@ -268,7 +268,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: storage-folder
+
   grafanaCom:
     id: 18089
     revision: 1
@@ -288,7 +288,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_VICTORIAMETRICS
-  folderRef: storage-folder
+
   grafanaCom:
     id: 22236
     revision: 4
@@ -308,7 +308,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: storage-folder
+
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -326,7 +326,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: storage-folder
+
   grafanaCom:
     id: 23233
     revision: 6
@@ -346,7 +346,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folderRef: storage-folder
+
   grafanaCom:
     id: 7845
     revision: 4
@@ -366,7 +366,7 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: grafana
-  folderRef: external-folder
+
   json: |-
     {
       "annotations": {
@@ -2055,7 +2055,7 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: grafana
-  folderRef: external-folder
+
   json: |-
     {
       "annotations": {
@@ -4357,7 +4357,7 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: grafana
-  folderRef: external-folder
+
   json: |-
     {
       "annotations": {
@@ -8779,7 +8779,7 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: grafana
-  folderRef: external-folder
+
   json: |-
     {
       "annotations": {
