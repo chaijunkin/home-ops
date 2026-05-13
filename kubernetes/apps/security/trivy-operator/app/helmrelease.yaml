@@ -46,6 +46,8 @@ spec:
     trivy:
       slow: true
       ignoreUnfixed: true
+      mode: ClientServer
+      severity: HIGH,CRITICAL
       server:
         # krr: controller=trivy-server container=trivy-server
         resources:
