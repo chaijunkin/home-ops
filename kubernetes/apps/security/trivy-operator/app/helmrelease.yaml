@@ -34,7 +34,7 @@ spec:
 
     operator:
       replicas: 1
-      scanJobsConcurrentLimit: 3
+      scanJobsConcurrentLimit: 1
       scanJobTTL: 300s
       scanJobTimeout: 20m
       builtInTrivyServer: true
