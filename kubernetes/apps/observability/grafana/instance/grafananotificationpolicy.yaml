@@ -6,7 +6,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 
   route:
     receiver: alertmanager

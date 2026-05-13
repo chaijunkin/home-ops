@@ -3,7 +3,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-smartctl-exporter
 spec:
   allowCrossNamespaceImport: true
@@ -16,14 +16,14 @@ spec:
     revision: 2
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: system-smartctl-exporter
 spec:
   allowCrossNamespaceImport: true
@@ -36,4 +36,4 @@ spec:
     revision: 2
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana

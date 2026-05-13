@@ -20,4 +20,4 @@ spec:
         grafanaOperator:
           enabled: true
           matchLabels:
-            grafana.internal/instance: grafana
+            dashboards: grafana

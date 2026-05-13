@@ -6,7 +6,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 
   name: alertmanager
   type: prometheus-alertmanager

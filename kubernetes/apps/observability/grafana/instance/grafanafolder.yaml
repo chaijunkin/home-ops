@@ -6,7 +6,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: External
   uid: external-folder
 ---
@@ -18,7 +18,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Default
   uid: default-folder
 ---
@@ -30,7 +30,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Cilium
   uid: cilium-folder
 ---
@@ -42,7 +42,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Data
   uid: data-folder
 ---
@@ -54,7 +54,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Games
   uid: games-folder
 ---
@@ -66,7 +66,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Flux
   uid: flux-folder
 ---
@@ -78,7 +78,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Kubernetes
   uid: kubernetes-folder
 ---
@@ -90,7 +90,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Network
   uid: network-folder
 ---
@@ -102,7 +102,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: Storage
   uid: storage-folder
 ---
@@ -114,6 +114,6 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   title: System
   uid: system-folder

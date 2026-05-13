@@ -3,7 +3,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: network-frigate
 spec:
   allowCrossNamespaceImport: true
@@ -16,4 +16,4 @@ spec:
     revision: 9
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana

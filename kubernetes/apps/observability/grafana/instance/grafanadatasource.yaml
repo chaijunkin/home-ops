@@ -6,7 +6,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   datasource:
     type: prometheus
     name: prometheus
@@ -25,7 +25,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   datasource:
     type: loki
     name: loki
@@ -43,7 +43,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   datasource:
     type: alertmanager
     name: alertmanager
@@ -62,7 +62,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   datasource:
     type: tempo
     name: tempo
@@ -112,7 +112,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   datasource:
     type: grafana-pyroscope-datasource
     name: pyroscope
@@ -132,7 +132,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   datasource:
     type: prometheus
     name: prometheus_on_fly
@@ -163,7 +163,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   datasource:
     type: yesoreyeram-infinity-datasource
     name: infinity-cloudflare

@@ -8,7 +8,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   folderRef: external-folder
   interval: 1m
   name: Fly App - HTTP & Application
@@ -393,7 +393,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   folderRef: external-folder
   interval: 1m
   name: Fly Infrastructure - Resources
@@ -918,7 +918,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   folderRef: external-folder
   interval: 1m
   name: Fly Network & Edge

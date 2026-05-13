@@ -3,7 +3,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-api-server
 spec:
   allowCrossNamespaceImport: true
@@ -16,14 +16,14 @@ spec:
     revision: 21
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-coredns
 spec:
   allowCrossNamespaceImport: true
@@ -36,14 +36,14 @@ spec:
     revision: 22
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-global
 spec:
   allowCrossNamespaceImport: true
@@ -56,14 +56,14 @@ spec:
     revision: 43
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-namespaces
 spec:
   allowCrossNamespaceImport: true
@@ -76,14 +76,14 @@ spec:
     revision: 46
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-nodes
 spec:
   allowCrossNamespaceImport: true
@@ -96,14 +96,14 @@ spec:
     revision: 40
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-prometheus
 spec:
   allowCrossNamespaceImport: true
@@ -116,14 +116,14 @@ spec:
     revision: 9
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-volumes
 spec:
   allowCrossNamespaceImport: true
@@ -136,14 +136,14 @@ spec:
     revision: 14
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: kubernetes-kubernetes-pods
 spec:
   allowCrossNamespaceImport: true
@@ -156,14 +156,14 @@ spec:
     revision: 39
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: network-apc-ups
 spec:
   allowCrossNamespaceImport: true
@@ -176,14 +176,14 @@ spec:
     revision: 1
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: system-node-exporter-full
 spec:
   allowCrossNamespaceImport: true
@@ -196,14 +196,14 @@ spec:
     revision: 45
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: system-node-exporter-bsd
 spec:
   allowCrossNamespaceImport: true
@@ -216,14 +216,14 @@ spec:
     revision: 19
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: system-node-feature-discovery
 spec:
   allowCrossNamespaceImport: true
@@ -233,7 +233,7 @@ spec:
   folderRef: system-folder
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -241,7 +241,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: system-spegel
 spec:
   allowCrossNamespaceImport: true
@@ -254,14 +254,14 @@ spec:
     revision: 1
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: storage-spegel
 spec:
   allowCrossNamespaceImport: true
@@ -274,14 +274,14 @@ spec:
     revision: 1
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: storage-etcd-storage
 spec:
   allowCrossNamespaceImport: true
@@ -294,14 +294,14 @@ spec:
     revision: 4
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: storage-host-overview
 spec:
   allowCrossNamespaceImport: true
@@ -311,7 +311,7 @@ spec:
   folderRef: storage-folder
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   url: https://raw.githubusercontent.com/ceph/ceph/main/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
@@ -319,7 +319,7 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: storage-kubernetes-pvc
 spec:
   allowCrossNamespaceImport: true
@@ -332,14 +332,14 @@ spec:
     revision: 6
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: storage-zfs
 spec:
   allowCrossNamespaceImport: true
@@ -352,20 +352,20 @@ spec:
     revision: 4
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
   labels:
-    grafana.internal/instance: grafana
+    dashboards: grafana
   name: cloudflare-r2-dashboard
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   folderRef: external-folder
   json: |-
     {
@@ -2054,7 +2054,7 @@ spec:
   allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   folderRef: external-folder
   json: |-
     {
@@ -4356,7 +4356,7 @@ spec:
   allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   folderRef: external-folder
   json: |-
     {
@@ -8778,7 +8778,7 @@ spec:
   allowCrossNamespaceImport: true
   instanceSelector:
     matchLabels:
-      grafana.internal/instance: grafana
+      dashboards: grafana
   folderRef: external-folder
   json: |-
     {
