@@ -35,7 +35,7 @@ spec:
         customBoard: true
     plugin:
       kyverno:
-        enabled: true
+        enabled: false
       trivy:
         enabled: true
     monitoring:
