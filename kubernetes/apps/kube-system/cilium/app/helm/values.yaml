@@ -53,7 +53,7 @@ operator:
     serviceMonitor:
       enabled: true
   dashboards:
-    enabled: false
+    enabled: true
     annotations:
       grafana_folder: Cilium
 prometheus:
