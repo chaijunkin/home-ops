@@ -8,7 +8,7 @@ spec:
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
-  url: oci://ghcr.io/home-operations/charts-mirror/trivy-operator-polr-adapter
+  url: oci://ghcr.io/chaijunkin/charts-mirror/trivy-operator-polr-adapter
   ref:
     tag: 0.11.2
 ---
@@ -32,3 +32,5 @@ spec:
     replicas: 1
     serviceMonitor:
       enabled: true
+    crds:
+      install: true
