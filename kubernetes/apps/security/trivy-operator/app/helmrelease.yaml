@@ -29,14 +29,42 @@ spec:
     remediation:
       retries: 3
   values:
-    operator:
-      replicas: 1
-      scanJobTimeout: 10m
-      builtInTrivyServer: true
-      scanJobsConcurrentLimit: 3
     serviceMonitor:
       enabled: true
+
+    operator:
+      replicas: 1
+      scanJobsConcurrentLimit: 3
+      scanJobTTL: 300s
+      scanJobTimeout: 20m
+      builtInTrivyServer: true
+      vulnerabilityScannerScanOnlyCurrentRevisions: true
+      configAuditScannerScanOnlyCurrentRevisions: true
+      annotations:
+        reloader.stakater.com/auto: "true"
+
     trivy:
+      slow: true
       ignoreUnfixed: true
-      mode: ClientServer
-      severity: HIGH,CRITICAL
+      server:
+        # krr: controller=trivy-server container=trivy-server
+        resources:
+          requests:
+            cpu: 17m
+            memory: 432Mi
+            # ephemeral-storage: "2Gi"
+          limits:
+            cpu: 1
+            memory: 432Mi
+            # ephemeral-storage: "2Gi"
+
+    trivyOperator:
+      skipResourceByLabels: "app.kubernetes.io/created-by=volsync"
+
+    # krr: controller=trivy-operator container=trivy-operator
+    resources:
+      requests:
+        cpu: 32m
+        memory: 1520Mi
+      limits:
+        memory: 1520Mi
