@@ -13,5 +13,10 @@
       matchPackageNames: ["/factory\\.talos\\.dev/"],
       overridePackageName: "ghcr.io/siderolabs/installer",
     },
+    {
+      description: "Ignore Spegel Updates",
+      matchPackageNames: ["/spegel/"],
+      enabled: false,
+    },
   ],
 }
