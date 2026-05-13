@@ -38,13 +38,5 @@ spec:
       enabled: true
     trivy:
       ignoreUnfixed: true
-
-
-    # # Only for production env
-    # trivyOperator:
-    #   scanJobNodeSelector:
-    #     application: trivy
-
-    trivy:
       mode: ClientServer
       severity: HIGH,CRITICAL
