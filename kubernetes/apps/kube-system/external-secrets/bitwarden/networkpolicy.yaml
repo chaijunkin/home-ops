@@ -15,10 +15,10 @@ spec:
         - matchLabels:
             app.kubernetes.io/instance: external-secrets
             app.kubernetes.io/name: external-secrets
-      # toPorts:
-      #   - ports:
-      #       - port: "8087"
-      #         protocol: TCP
+          # toPorts:
+          #   - ports:
+          #       - port: "8087"
+          #         protocol: TCP
   # egress:
   #   - toEntities:
   #       - cluster
