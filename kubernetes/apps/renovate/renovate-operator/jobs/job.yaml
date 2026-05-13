@@ -8,6 +8,7 @@ spec:
   discoveryFilters:
     - chaijunkin/home-ops
     - chaijunkin/containers
+    - chaijunkin/charts-mirror
   provider:
     name: github
   extraEnv:
