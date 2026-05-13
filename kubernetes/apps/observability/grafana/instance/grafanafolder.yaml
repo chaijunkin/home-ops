@@ -9,111 +9,111 @@ spec:
       dashboards: grafana
   title: External
   uid: external-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: default-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Default
-  uid: default-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: cilium-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Cilium
-  uid: cilium-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: data-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Data
-  uid: data-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: games-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Games
-  uid: games-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: flux-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Flux
-  uid: flux-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: kubernetes-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Kubernetes
-  uid: kubernetes-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: network-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Network
-  uid: network-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: storage-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: Storage
-  uid: storage-folder
----
-# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaFolder
-metadata:
-  name: system-folder
-spec:
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  title: System
-  uid: system-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: default-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Default
+#   uid: default-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: cilium-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Cilium
+#   uid: cilium-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: data-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Data
+#   uid: data-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: games-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Games
+#   uid: games-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: flux-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Flux
+#   uid: flux-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: kubernetes-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Kubernetes
+#   uid: kubernetes-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: network-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Network
+#   uid: network-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: storage-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: Storage
+#   uid: storage-folder
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+# apiVersion: grafana.integreatly.org/v1beta1
+# kind: GrafanaFolder
+# metadata:
+#   name: system-folder
+# spec:
+#   instanceSelector:
+#     matchLabels:
+#       dashboards: grafana
+#   title: System
+#   uid: system-folder

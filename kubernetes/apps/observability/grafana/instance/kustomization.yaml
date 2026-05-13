@@ -6,7 +6,7 @@ resources:
   - ./grafana.yaml
   - ./grafanacontactpoint.yaml
   - ./grafanadatasource.yaml
-  # - ./grafanafolder.yaml
+  - ./grafanafolder.yaml
   - ./grafanadashboard.yaml
   - ./grafanaalertrulegroup.yaml
   - ./grafananotificationpolicy.yaml
