@@ -49,14 +49,14 @@ spec:
         secret: policy-reporter-smtp
       summary:
         enabled: true
-        schedule: "0 8 * * *"
+        schedule: "20 15 * * *"
         activeDeadlineSeconds: 300
         backoffLimit: 1
         ttlSecondsAfterFinished: 60
         to: ["apphub@cloudjur.com"]
       violations:
         enabled: true
-        schedule: "0 8 * * *"
+        schedule: "20 15 * * *"
         activeDeadlineSeconds: 300
         backoffLimit: 1
         ttlSecondsAfterFinished: 60
