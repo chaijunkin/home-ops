@@ -24,12 +24,14 @@ spec:
       webhook:
         image:
           repository: ghcr.io/crutonjohn/external-dns-opnsense-webhook
-          tag: v1.0.0
+          tag: v0.1.0@sha256:72d4f5c79e515b8a70bb2e48f6472c746671a3ae3d8ad224aa686dd7192e1609
         env:
           # - name: SERVER_HOST
           #   value: 0.0.0.0
           # - name: SERVER_PORT
           #   value: "8080"
+          - name: OPNSENSE_SKIP_TLS_VERIFY
+            value: "true"
           - name: OPNSENSE_API_SECRET
             valueFrom:
               secretKeyRef:
@@ -50,8 +52,8 @@ spec:
                   #   value: "true"
                   # - name: LOG_LEVEL
                   #   value: "debug"
-        securityContext:
-          readOnlyRootFilesystem: true
+        # securityContext:
+        #   readOnlyRootFilesystem: true
         livenessProbe:
           httpGet:
             path: /healthz
@@ -64,10 +66,17 @@ spec:
             port: http-webhook
           initialDelaySeconds: 10
           timeoutSeconds: 5
+        resources:
+          requests:
+            memory: 20Mi
+            cpu: 10m
+          limits:
+            memory: 100Mi
     triggerLoopOnEvent: true
     # logLevel: debug
     policy: sync
     extraArgs:
+      - --ignore-ingress-tls-spec
       #   - --webhook-provider-url=http://0.0.0.0:8080
       - --gateway-name=envoy-internal
     registry: txt
