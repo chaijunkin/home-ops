@@ -8,17 +8,23 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 1h
+  dependsOn:
+    - name: openebs
+      namespace: storage
   path: ./kubernetes/apps/observability/tempo/app
   prune: true
-  retryInterval: 2m
+  # postBuild:
+  #   substitute:
+  #     APP: *app
+  #     EXT_AUTH_TARGET: tempo-ext
+  # components:
+  #   - ../../../../components/ext-auth
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 10m
   wait: true
-  dependsOn:
-    - name: openebs
-      namespace: storage
+  interval: 1h
+  retryInterval: 2m
+  timeout: 10m

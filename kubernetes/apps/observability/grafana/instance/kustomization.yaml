@@ -4,8 +4,10 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./grafana.yaml
+  # - ./grafana-cloud.yaml
   - ./grafanacontactpoint.yaml
   - ./grafanadatasource.yaml
+  # - ./grafanadatasource-cloud.yaml
   - ./grafanafolder.yaml
   - ./grafanadashboard.yaml
   - ./grafanaalertrulegroup.yaml
