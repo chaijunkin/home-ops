@@ -29,3 +29,21 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: true
+{
+log_level: warning
+authentik_host: https://auth.cloudjur.com
+kubernetes_replicas: 1
+kubernetes_namespace: observability
+object_naming_template: ak-outpost-%(name)s
+kubernetes_service_type: ClusterIP
+kubernetes_disabled_components:
+  - ingress
+kubernetes_httproute_annotations:
+  gatus.home-operations.com/enabled: "false"
+kubernetes_httproute_parent_refs:
+  - kind: Gateway
+    name: envoy-external
+    group: gateway.networking.k8s.io
+    namespace: network
+    sectionName: https
+}
