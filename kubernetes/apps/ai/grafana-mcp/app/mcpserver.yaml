@@ -14,6 +14,8 @@ spec:
   env:
     - name: GRAFANA_URL
       value: http://grafana-service.observability.svc.cluster.local:3000
+    - name: GRAFANA_ORG_ID
+      value: "1"
     - name: GRAFANA_USERNAME
       value: admin
   secrets: # multiple secrets are bugged
