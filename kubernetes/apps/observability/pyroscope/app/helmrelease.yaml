@@ -36,3 +36,11 @@ spec:
       enabled: false
     alloy:
       enabled: false
+    httpRoute:
+      enabled: true
+      hostnames:
+        - pyroscope.cloudjur.com
+      gateway:
+        name: envoy-internal
+        namespace: network
+        sectionName: https
