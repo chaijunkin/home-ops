@@ -76,14 +76,14 @@ spec:
     # logLevel: debug
     policy: sync
     extraArgs:
-      - --ignore-ingress-tls-spec
-      - --webhook-provider-url=http://localhost:8080
-      - --webhook-provider-read-timeout=1m
-      - --webhook-provider-write-timeout=1m
+      # - --ignore-ingress-tls-spec
+      # - --webhook-provider-url=http://localhost:8080
+      # - --webhook-provider-read-timeout=1m
+      # - --webhook-provider-write-timeout=1m
       - --gateway-name=envoy-internal
-      - --managed-record-types=A
-      - --managed-record-types=AAAA
-      - --managed-record-types=TXT
+      # - --managed-record-types=A
+      # - --managed-record-types=AAAA
+      # - --managed-record-types=TXT
     registry: txt
     sources:
       # - crd
