@@ -14,7 +14,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      EXT_AUTH_TARGET: echo-server-int-auth
+      EXT_AUTH_TARGET: echo-server-ext-auth
       EXT_AUTH_TARGET_2: echo-server-ext-auth
       EXT_AUTH_BACKEND_REF: authentik-server
   components:
