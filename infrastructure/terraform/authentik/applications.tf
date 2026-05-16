@@ -68,6 +68,15 @@ locals {
   default_property_mappings = data.authentik_property_mapping_provider_scope.oauth2.ids
 
   applications = {
+    grafana_cloud = {
+      client_id         = var.grafana_cloud_id
+      client_secret     = var.grafana_cloud_secret
+      group             = "internal"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/grafana.png"
+      redirect_uri      = var.grafana_cloud_redirect_uri
+      launch_url        = var.grafana_cloud_launch_url
+      property_mappings = local.default_property_mappings
+    },
     grafana = {
       client_id         = var.grafana_id
       client_secret     = var.grafana_secret

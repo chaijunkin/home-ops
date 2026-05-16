@@ -17,6 +17,30 @@ variable "public_domain" {
 #   sensitive   = true
 # }
 
+variable "grafana_cloud_id" {
+  type        = string
+  description = "Grafana Cloud Client ID"
+  sensitive   = true
+}
+
+variable "grafana_cloud_secret" {
+  type        = string
+  description = "Grafana Cloud Client Secret"
+  sensitive   = true
+}
+
+variable "grafana_cloud_launch_url" {
+  type        = string
+  description = "Grafana Cloud Launch URL"
+  sensitive = true
+}
+
+variable "grafana_cloud_redirect_uri" {
+  type        = string
+  description = "Grafana Cloud Redirect URI"
+  sensitive = true
+}
+
 variable "grafana_id" {
   type        = string
   description = "Grafana Client ID"

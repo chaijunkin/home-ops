@@ -2,7 +2,7 @@ terraform {
   required_providers {
     authentik = {
       source  = "goauthentik/authentik"
-      version = "2026.2.0"
+      version = "2025.12.1" # 2026.2.0 has bugged for system_setting enterprise_audit_include_expanded_diff
     }
   }
 
