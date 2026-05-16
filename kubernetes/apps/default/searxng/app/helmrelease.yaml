@@ -31,7 +31,7 @@ spec:
             env:
               SEARXNG_BASE_URL: https://search.cloudjur.com
               SEARXNG_PORT: &port 8080
-              SEARXNG_REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379
+              SEARXNG_REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/2
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"

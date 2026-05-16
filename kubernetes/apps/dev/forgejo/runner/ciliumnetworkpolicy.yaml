@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: forgejo-runner
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/component: forgejo-runner
+  enableDefaultDeny:
+    ingress: true
+  egress:
+    - # Forgejo server (internal service in dev namespace)
+      toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: forgejo
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: "3000"
+    - # Forgejo (external URL for cloning, webhooks)
+      toFQDNs:
+        - matchName: git.cloudjur.com
+    - # Internet egress (for action steps pulling images/packages)
+      toCIDRSet:
+        - cidrGroupRef: internet
+      toPorts:
+        - ports:
+            - protocol: TCP
+              port: "80"
+            - protocol: TCP
+              port: "443"
+    - # DNS resolution
+      toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - protocol: UDP
+              port: "53"
+            - protocol: TCP
+              port: "53"

@@ -1,0 +1,169 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo-runner
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 30m
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    configMaps:
+      config:
+        suffix: config
+        data:
+          runner.yaml: |-
+            cache:
+              enabled: true
+              dir: /data/cache
+            container:
+              docker_host: "-"
+              workdir_parent: shared/workdir
+            host:
+              workdir_parent: /data/act
+            kubernetes:
+              namespace: dev
+              poll_timeout: 10m
+            log:
+              level: info
+            plugins:
+              k8s:
+                address: unix:///plugin/forgejo-runner-k8s.sock
+                options:
+                  namespace: dev
+                  poll_timeout: 10m
+                  labels: "app.kubernetes.io/name=forgejo-runner-instance,app.kubernetes.io/instance=env-${ENV_ID}"
+            runner:
+              capacity: 2
+              file: /persistent/.runner
+              labels:
+                - ubuntu-latest:k8s:/config/podspec-default.yaml
+                - ubuntu-24.04:k8s:/config/podspec-default.yaml
+                - default:k8s:/config/podspec-default.yaml
+              timeout: 3h
+          podspec-default.yaml: |-
+            containers:
+              - env:
+                  - name: DEBIAN_FRONTEND
+                    value: noninteractive
+                image: node:20-slim
+                imagePullPolicy: IfNotPresent
+                name: main
+                resources:
+                  limits:
+                    memory: 2Gi
+                  requests:
+                    cpu: 100m
+                    memory: 256Mi
+            restartPolicy: Never
+    controllers:
+      forgejo-runner:
+        type: deployment
+        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          automountServiceAccountToken: true
+          labels:
+            app.kubernetes.io/component: forgejo-runner
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+        containers:
+          runner:
+            image:
+              repository: code.forgejo.org/forgejo/runner
+              tag: 6.3.1
+            command:
+              - sh
+              - -ec
+              - |
+                exec /bin/forgejo-runner daemon \
+                  --config /config/runner.yaml \
+                  --url "http://forgejo-http.dev.svc.cluster.local:3000" \
+                  --uuid "$(cat /etc/forgejo-runner-secret/uuid)" \
+                  --token-url file:///etc/forgejo-runner-secret/token
+            resources:
+              requests:
+                cpu: 5m
+                memory: 32Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+    persistence:
+      config:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /config
+      plugin:
+        type: emptyDir
+        globalMounts:
+          - path: /plugin
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /data
+            subPath: data
+          - path: /tmp
+            subPath: tmp
+      runner-secret:
+        type: secret
+        name: forgejo-runner-secret
+        globalMounts:
+          - path: /etc/forgejo-runner-secret
+            readOnly: true
+    rbac:
+      bindings:
+        forgejo-runner:
+          type: RoleBinding
+          roleRef:
+            identifier: forgejo-runner
+          subjects:
+            - identifier: forgejo-runner
+      roles:
+        forgejo-runner:
+          type: Role
+          rules:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - list
+                - watch
+                - create
+                - get
+                - delete
+            - apiGroups:
+                - ""
+              resources:
+                - pods/exec
+              verbs:
+                - create
+                - get
+            - apiGroups:
+                - ""
+              resources:
+                - pods/log
+              verbs:
+                - list
+                - watch
+                - get
+    serviceAccount:
+      forgejo-runner: {}

@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app forgejo
+  namespace: &namespace dev
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/volsync
+    # Add ../../../../components/anubis when switching to envoy-external
+  dependsOn:
+    - name: openebs
+      namespace: storage
+    - name: dragonfly-cluster
+      namespace: database
+  interval: 1h
+  path: ./kubernetes/apps/dev/forgejo/app
+  postBuild:
+    substitute:
+      APP: *app
+      APP_UID: "1000"
+      APP_GID: "1000"
+      VOLSYNC_CAPACITY: 10Gi
+      # Uncomment when adding anubis (external mode):
+      # ANUBIS_TARGET: http://forgejo-http.dev.svc.cluster.local:3000
+      # ANUBIS_MEM_LIMIT: 384Mi
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# Uncomment when Forgejo is running and a runner token has been generated
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: forgejo-runner
+#   namespace: dev
+# spec:
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: forgejo
+#   dependsOn:
+#     - name: forgejo
+#       namespace: dev
+#   interval: 1h
+#   path: ./kubernetes/apps/dev/forgejo/runner
+#   prune: true
+#   retryInterval: 2m
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   targetNamespace: dev
+#   timeout: 5m
+#   wait: false
