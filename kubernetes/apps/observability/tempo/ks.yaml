@@ -17,6 +17,7 @@ spec:
   #   substitute:
   #     APP: *app
   #     EXT_AUTH_TARGET: tempo-ext
+  #     EXT_AUTH_BACKEND_REF: authentik-server
   # components:
   #   - ../../../../components/ext-auth
   sourceRef:
