@@ -13,7 +13,7 @@ spec:
       backendRefs:
         - name: ${EXT_AUTH_BACKEND_REF:-ak-outpost-proxy-outpost-external}
           namespace: security
-          port: 9000
+          port: 80
       path: /outpost.goauthentik.io/auth/envoy
       headersToBackend:
         - Set-Cookie
