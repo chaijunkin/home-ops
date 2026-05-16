@@ -55,7 +55,7 @@ spec:
               - env:
                   - name: DEBIAN_FRONTEND
                     value: noninteractive
-                image: node:20-slim
+                image: node:24-slim
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
