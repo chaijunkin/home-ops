@@ -18,10 +18,7 @@ spec:
   values:
     gitea:
       admin:
-        username: ""
         existingSecret: forgejo-secret
-        passwordKey: ADMIN_PASSWORD
-        userKey: ADMIN_USER
       config:
         cache:
           ENABLED: true
