@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: dev
 components:
   - ../../components/common
-resources: []
-  # - ./forgejo/ks.yaml
+resources:
+  - ./forgejo/ks.yaml
