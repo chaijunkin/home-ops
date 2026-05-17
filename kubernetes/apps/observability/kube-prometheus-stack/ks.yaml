@@ -16,15 +16,16 @@ spec:
       namespace: storage
   path: ./kubernetes/apps/observability/kube-prometheus-stack/app
   prune: true
-  # postBuild:
-  #   substitute:
-  #     APP: *app
-  #     EXT_AUTH_TARGET: prometheus-ext
-  #     EXT_AUTH_TARGET_2: alertmanager-ext
-  #     EXT_AUTH_BACKEND_REF: authentik-server
-  # components:
-  #   - ../../../../components/ext-auth
-  #   - ../../../../components/ext-auth/two
+  postBuild:
+    substitute:
+      APP: *app
+      EXT_AUTH_TARGET: prometheus-ext
+      EXT_AUTH_TARGET_2: alertmanager-ext
+      EXT_AUTH_BACKEND_REF: authentik-server
+      EXT_AUTH_BACKEND_REF_2: authentik-server
+  components:
+    - ../../../../components/ext-auth
+    - ../../../../components/ext-auth/two
   sourceRef:
     kind: GitRepository
     name: flux-system

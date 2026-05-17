@@ -16,13 +16,13 @@ spec:
       namespace: storage
   path: ./kubernetes/apps/observability/loki/app
   prune: true
-  # postBuild:
-  #   substitute:
-  #     APP: *app
-  #     EXT_AUTH_TARGET: loki-ext
-  #     EXT_AUTH_BACKEND_REF: authentik-server
-  # components:
-  #   - ../../../../components/ext-auth
+  postBuild:
+    substitute:
+      APP: *app
+      EXT_AUTH_TARGET: loki-ext
+      EXT_AUTH_BACKEND_REF: authentik-server
+  components:
+    - ../../../../components/ext-auth
   sourceRef:
     kind: GitRepository
     name: flux-system
