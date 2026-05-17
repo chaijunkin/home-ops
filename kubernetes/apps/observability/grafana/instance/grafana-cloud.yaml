@@ -10,4 +10,4 @@ spec:
     apiKey:
       key: GF_GRAFANA_CLOUD_TOKEN_API_KEY
       name: grafana-secret
-    url: https://chaijunkin.grafana.net # Placeholder URL
+    url: https://chaijunkin.grafana.net/
