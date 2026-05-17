@@ -69,7 +69,7 @@ metadata:
 spec:
   sourcePVC: ${VOLSYNC_CLAIM:-${APP}}
   trigger:
-    schedule: 0 */16 * * *
+    schedule: 0 4,16 * * * # [BACKUP_SCHEDULE]
   kopia:
     accessModes:
       - ${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}

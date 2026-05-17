@@ -24,7 +24,7 @@ spec:
       cloudnative-pg-backup:
         type: cronjob
         cronjob:
-          schedule: "@daily"
+          schedule: "@daily" # [BACKUP_SCHEDULE]
           ttlSecondsAfterFinished: 43200
         annotations:
           reloader.stakater.com/auto: "true"

@@ -57,10 +57,7 @@ metadata:
 spec:
   sourcePVC: ${VOLSYNC_CLAIM:-${APP}}
   trigger:
-    # previous configuration (daily at midnight):
-    # schedule: "0 0 * * *"
-    # keep daily schedule for R2 (no change)
-    schedule: 0 */16 * * *
+    schedule: 0 4,16 * * * # [BACKUP_SCHEDULE]
   restic:
     copyMethod: ${VOLSYNC_COPYMETHOD:-Snapshot}
     pruneIntervalDays: 7
@@ -90,4 +87,5 @@ spec:
     # retain:
     #   daily: 7
     retain:
+      hourly: 24
       daily: 7
