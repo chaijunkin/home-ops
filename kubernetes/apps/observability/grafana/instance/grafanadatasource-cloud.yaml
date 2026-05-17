@@ -9,13 +9,14 @@ spec:
       dashboards: grafana-cloud
   datasource:
     type: prometheus
-    name: prometheus
-    uid: prometheus
+    name: home-ops-prometheus
+    uid: home-ops-prometheus
     access: proxy
     isDefault: true
     url: https://prometheus-ext.cloudjur.com
     jsonData:
       timeInterval: 1m
+      oauthPassThru: true
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -28,12 +29,13 @@ spec:
       dashboards: grafana-cloud
   datasource:
     type: loki
-    name: loki
-    uid: loki
+    name: home-ops-loki
+    uid: home-ops-loki
     access: proxy
     url: https://loki-ext.cloudjur.com
     jsonData:
       maxLines: 250
+      oauthPassThru: true
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -46,13 +48,14 @@ spec:
       dashboards: grafana-cloud
   datasource:
     type: alertmanager
-    name: alertmanager
-    uid: alertmanager
+    name: home-ops-alertmanager
+    uid: home-ops-alertmanager
     access: proxy
     url: https://alertmanager-ext.cloudjur.com
     jsonData:
       implementation: prometheus
       handleGrafanaManagedAlerts: true
+      oauthPassThru: true
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -65,11 +68,12 @@ spec:
       dashboards: grafana-cloud
   datasource:
     type: tempo
-    name: tempo
-    uid: tempo
+    name: home-ops-tempo
+    uid: home-ops-tempo
     access: proxy
     url: https://tempo-ext.cloudjur.com
     jsonData:
+      oauthPassThru: true
       nodeGraph:
         enabled: true
       spanBar:
@@ -79,7 +83,7 @@ spec:
         enabled: true
       tracesToLogsV2:
         customQuery: false
-        datasourceUid: loki
+        datasourceUid: home-ops-loki
         spanStartTimeShift: 1h
         spanEndTimeShift: -1h
         tags: [job, instance, pod, namespace]
@@ -87,9 +91,9 @@ spec:
         filterBySpanID: false
         query: method="${__span.tags.method}"
       lokiSearch:
-        datasourceUid: loki
+        datasourceUid: home-ops-loki
       tracesToMetrics:
-        datasourceUid: prometheus
+        datasourceUid: home-ops-prometheus
         spanStartTimeShift: 1h
         spanEndTimeShift: -1h
         tags: [{key: service.name, value: service}, key: job]
@@ -97,7 +101,7 @@ spec:
           - name: Sample query
             query: sum(rate(traces_spanmetrics_latency_bucket{${__tags}[5m]))
       tracesToProfiles:
-        datasourceUid: pyroscope
+        datasourceUid: home-ops-pyroscope
         tags: [service.name, service.namespace]
       traceQuery:
         timeShiftEnabled: true
@@ -115,11 +119,12 @@ spec:
       dashboards: grafana-cloud
   datasource:
     type: grafana-pyroscope-datasource
-    name: pyroscope
-    uid: pyroscope
+    name: home-ops-pyroscope
+    uid: home-ops-pyroscope
     access: proxy
     url: https://pyroscope-ext.cloudjur.com
     jsonData:
+      oauthPassThru: true
       tracesToProfiles:
-        datasourceUid: tempo
+        datasourceUid: home-ops-tempo
         tags: [service.name, service.namespace]
