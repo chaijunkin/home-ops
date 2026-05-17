@@ -16,7 +16,15 @@ spec:
     url: https://prometheus-ext.cloudjur.com
     jsonData:
       timeInterval: 1m
-      oauthPassThru: true
+      httpHeaderName1: Authorization
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -35,7 +43,15 @@ spec:
     url: https://loki-ext.cloudjur.com
     jsonData:
       maxLines: 250
-      oauthPassThru: true
+      httpHeaderName1: Authorization
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -55,7 +71,15 @@ spec:
     jsonData:
       implementation: prometheus
       handleGrafanaManagedAlerts: true
-      oauthPassThru: true
+      httpHeaderName1: Authorization
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -73,7 +97,7 @@ spec:
     access: proxy
     url: https://tempo-ext.cloudjur.com
     jsonData:
-      oauthPassThru: true
+      httpHeaderName1: Authorization
       nodeGraph:
         enabled: true
       spanBar:
@@ -107,6 +131,14 @@ spec:
         timeShiftEnabled: true
         spanStartTimeShift: 1h
         spanEndTimeShift: -1h
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
@@ -124,7 +156,15 @@ spec:
     access: proxy
     url: https://pyroscope-ext.cloudjur.com
     jsonData:
-      oauthPassThru: true
+      httpHeaderName1: Authorization
       tracesToProfiles:
         datasourceUid: home-ops-tempo
         tags: [service.name, service.namespace]
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
