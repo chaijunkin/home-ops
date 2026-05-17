@@ -8,6 +8,6 @@ metadata:
 spec:
   external:
     apiKey:
-      key: GF_GRAFANA_CLOUD_TOKEN_API_KEY
+      key: GF_GRAFANA_CLOUD_SERVICE_ACCOUNT_TOKEN
       name: grafana-secret
     url: https://chaijunkin.grafana.net/
