@@ -13,4 +13,4 @@ spec:
     adminUser:
       key: GF_SECURITY_ADMIN_USER
       name: grafana-secret
-    url: https://grafana.com # Placeholder URL
+    url: https://chaijunkin.grafana.net # Placeholder URL
