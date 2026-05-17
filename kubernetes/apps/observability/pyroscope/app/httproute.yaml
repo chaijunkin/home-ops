@@ -12,5 +12,54 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - name: pyroscope
+        - group: ""
+          kind: Service
+          name: pyroscope
           port: 4040
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+        - path:
+            type: PathPrefix
+            value: /querier.v1.QuerierService/
+        - path:
+            type: PathPrefix
+            value: /render
+        - path:
+            type: PathPrefix
+            value: /render-diff
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: pyroscope
+          port: 4040
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /push.v1.PusherService/
+        - path:
+            type: PathPrefix
+            value: /ingest
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: pyroscope
+          port: 4040
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /settings.v1.SettingsService/
+    - backendRefs:
+        - group: ""
+          kind: Service
+          name: pyroscope
+          port: 4040
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /adhocprofiles.v1.AdHocProfileService/
