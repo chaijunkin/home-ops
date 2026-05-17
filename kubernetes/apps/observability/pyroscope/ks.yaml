@@ -10,13 +10,13 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/observability/pyroscope/app
   prune: true
-  postBuild:
-    substitute:
-      APP: *app
-      EXT_AUTH_TARGET: pyroscope-ext
-      EXT_AUTH_BACKEND_REF: authentik-server
-  components:
-    - ../../../../components/ext-auth
+  # postBuild:
+  #   substitute:
+  #     APP: *app
+  #     EXT_AUTH_TARGET: pyroscope-ext
+  #     EXT_AUTH_BACKEND_REF: authentik-server
+  # components:
+  #   - ../../../../components/ext-auth
   sourceRef:
     kind: GitRepository
     name: flux-system

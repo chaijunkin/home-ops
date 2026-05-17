@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafana_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: Grafana
+metadata:
+  name: grafana-cloud
+  labels:
+    dashboards: grafana-cloud
+spec:
+  external:
+    apiKey:
+      key: GF_GRAFANA_CLOUD_SERVICE_ACCOUNT_TOKEN
+      name: grafana-secret
+    url: https://chaijunkin.grafana.net/

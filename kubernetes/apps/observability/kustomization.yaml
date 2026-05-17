@@ -9,6 +9,7 @@ resources:
   - ./exporters
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
+  - ./external-access/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml

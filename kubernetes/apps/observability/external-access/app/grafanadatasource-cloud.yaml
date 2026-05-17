@@ -1,0 +1,170 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: prometheus-cloud
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana-cloud
+  datasource:
+    type: prometheus
+    name: home-ops-prometheus
+    uid: home-ops-prometheus
+    access: proxy
+    isDefault: true
+    url: https://prometheus-ext.cloudjur.com
+    jsonData:
+      timeInterval: 1m
+      httpHeaderName1: Authorization
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: loki-cloud
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana-cloud
+  datasource:
+    type: loki
+    name: home-ops-loki
+    uid: home-ops-loki
+    access: proxy
+    url: https://loki-ext.cloudjur.com
+    jsonData:
+      maxLines: 250
+      httpHeaderName1: Authorization
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: alertmanager-cloud
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana-cloud
+  datasource:
+    type: alertmanager
+    name: home-ops-alertmanager
+    uid: home-ops-alertmanager
+    access: proxy
+    url: https://alertmanager-ext.cloudjur.com
+    jsonData:
+      implementation: prometheus
+      handleGrafanaManagedAlerts: true
+      httpHeaderName1: Authorization
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: tempo-cloud
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana-cloud
+  datasource:
+    type: tempo
+    name: home-ops-tempo
+    uid: home-ops-tempo
+    access: proxy
+    url: https://tempo-ext.cloudjur.com
+    jsonData:
+      httpHeaderName1: Authorization
+      nodeGraph:
+        enabled: true
+      spanBar:
+        type: None
+      timeout: 15
+      traceIdTimeParams:
+        enabled: true
+      tracesToLogsV2:
+        customQuery: false
+        datasourceUid: home-ops-loki
+        spanStartTimeShift: 1h
+        spanEndTimeShift: -1h
+        tags: [job, instance, pod, namespace]
+        filterByTraceID: false
+        filterBySpanID: false
+        query: method="${__span.tags.method}"
+      lokiSearch:
+        datasourceUid: home-ops-loki
+      tracesToMetrics:
+        datasourceUid: home-ops-prometheus
+        spanStartTimeShift: 1h
+        spanEndTimeShift: -1h
+        tags: [{key: service.name, value: service}, key: job]
+        queries:
+          - name: Sample query
+            query: sum(rate(traces_spanmetrics_latency_bucket{${__tags}[5m]))
+      tracesToProfiles:
+        datasourceUid: home-ops-pyroscope
+        tags: [service.name, service.namespace]
+      traceQuery:
+        timeShiftEnabled: true
+        spanStartTimeShift: 1h
+        spanEndTimeShift: -1h
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: pyroscope-cloud
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana-cloud
+  datasource:
+    type: grafana-pyroscope-datasource
+    name: home-ops-pyroscope
+    uid: home-ops-pyroscope
+    access: proxy
+    url: https://pyroscope-ext.cloudjur.com
+    jsonData:
+      httpHeaderName1: Authorization
+      tracesToProfiles:
+        datasourceUid: home-ops-tempo
+        tags: [service.name, service.namespace]
+    secureJsonData:
+      httpHeaderValue1: Bearer ${grafana_cloud_datasource_token}
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          name: grafana-datasources
+          key: grafana_cloud_datasource_token

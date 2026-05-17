@@ -2,30 +2,30 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app loki
+  name: observability-external-access
   namespace: observability
 spec:
   targetNamespace: observability
   commonMetadata:
     labels:
-      app.kubernetes.io/name: *app
+      app.kubernetes.io/name: observability-external-access
   dependsOn:
     - name: kube-prometheus-stack
       namespace: observability
-    - name: openebs
-      namespace: storage
-  path: ./kubernetes/apps/observability/loki/app
+    - name: loki
+      namespace: observability
+    - name: tempo
+      namespace: observability
+    - name: pyroscope
+      namespace: observability
+    - name: grafana
+      namespace: observability
+  path: ./kubernetes/apps/observability/external-access/app
   prune: true
-  # postBuild:
-  #   substitute:
-  #     APP: *app
-  #     EXT_AUTH_TARGET: loki-ext
-  #     EXT_AUTH_BACKEND_REF: authentik-server
-  # components:
-  #   - ../../../../components/ext-auth
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   wait: true
   interval: 10m
+  suspend: true # Toggle this to false to enable external access
