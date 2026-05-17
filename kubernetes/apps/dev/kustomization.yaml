@@ -5,4 +5,5 @@ namespace: dev
 components:
   - ../../components/common
 resources:
-  - ./forgejo/ks.yaml
+  []
+  # - ./forgejo/ks.yaml
