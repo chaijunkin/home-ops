@@ -15,9 +15,9 @@ spec:
       profilarr:
         pod:
           securityContext:
-            runAsGroup: 2000
+            runAsGroup: 1000
             runAsNonRoot: true
-            runAsUser: 2000
+            runAsUser: 1000
         annotations:
           reloader.stakater.com/auto: "true"
         replicas: 1
@@ -28,8 +28,8 @@ spec:
               repository: ghcr.io/dictionarry-hub/profilarr
               tag: 2.0.0
             env:
-              PUID: 2000
-              PGID: 2000
+              PUID: 1000
+              PGID: 1000
               ORIGIN: https://profilarr.cloudjur.com
               AUTH: off
             probes:
