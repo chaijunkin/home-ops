@@ -21,6 +21,7 @@ spec:
     controllers:
       web:
         containers:
+          dependsOn: worker
           app:
             image:
               repository: ghcr.io/we-promise/sure
@@ -90,8 +91,6 @@ spec:
               - secretRef:
                   name: sure-secret
         containers:
-          dependsOn:
-            - web
           app:
             image:
               repository: ghcr.io/we-promise/sure
