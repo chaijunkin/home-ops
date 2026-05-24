@@ -21,7 +21,6 @@ spec:
     controllers:
       web:
         containers:
-          dependsOn: worker
           app:
             image:
               repository: ghcr.io/we-promise/sure
