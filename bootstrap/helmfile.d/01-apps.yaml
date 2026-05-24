@@ -65,13 +65,11 @@ releases:
 
   # Deploy bitwarden secrets before external-secrets needs them
   - name: bitwarden
-    namespace: kube-system
+    namespace: external-secrets
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
     version: 5.0.1
     values:
-      [
-        "../../kubernetes/apps/kube-system/external-secrets/bitwarden/helm/values.yaml",
-      ]
+      ["../../kubernetes/apps/external-secrets/bitwarden/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
     hooks:
       - events: ["presync"]
@@ -82,17 +80,17 @@ releases:
             set -x
             echo "KUBECONFIG: $KUBECONFIG"
             kubectl config current-context
-            sops -d ../../kubernetes/apps/kube-system/external-secrets/bitwarden/secret.sops.yaml | kubectl apply -f -
+            sops -d ../../bootstrap/kustomize/apps/external-secrets/secret.sops.yaml | kubectl apply -f -
             echo "Bitwarden secret applied successfully"
         showlogs: true
 
   - name: external-secrets
-    namespace: kube-system
+    namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
     version: 2.4.1
     values:
       [
-        "../../kubernetes/apps/kube-system/external-secrets/app/helm/values.yaml",
+        "../../kubernetes/apps/external-secrets/external-secrets/app/helm/values.yaml",
       ]
     # hooks:
     #   - # Apply cluster secret store after external-secrets is ready
@@ -107,7 +105,7 @@ releases:
     #       - ../../kubernetes/apps/kube-system/external-secrets/stores/clustersecretstore.yaml
     #       - --wait=true
     #     showlogs: true
-    needs: ["kube-system/bitwarden"]
+    needs: ["external-secrets/bitwarden"]
 
   - name: flux-operator
     namespace: flux-system
@@ -115,7 +113,7 @@ releases:
     version: 0.49.0
     values:
       ["../../kubernetes/apps/flux-system/flux-operator/app/helm/values.yaml"]
-    needs: ["kube-system/external-secrets"]
+    needs: ["external-secrets/external-secrets"]
 
   - name: flux-instance
     namespace: flux-system

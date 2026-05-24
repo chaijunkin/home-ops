@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bitwarden
+spec:
+  interval: 5m
+  chartRef:
+    kind: OCIRepository
+    apiVersion: source.toolkit.fluxcd.io/v1
+    name: app-template
+    namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 769
+        runAsGroup: 769
+        runAsNonRoot: true
+    controllers:
+      bitwarden:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/chaijunkin/bw
+              tag: 2026.4.1@sha256:fffa446b8f7d5b1f66348f85d50ad2260e699a0d53859aeb3bc40c4ae903a14d
+            envFrom:
+              - secretRef:
+                  name: bitwarden-cli
+            securityContext:
+              readOnlyRootFilesystem: true
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  periodSeconds: 120
+                  exec:
+                    command:
+                      - sh
+                      - -c
+                      - /healthcheck.sh
+                  timeoutSeconds: 5
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                memory: 256Mi
+                cpu: 100m
+              limits:
+                memory: 512Mi
+    service:
+      app:
+        controller: bitwarden
+        ports:
+          http:
+            port: 8087
+    persistence:
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

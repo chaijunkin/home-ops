@@ -8,7 +8,7 @@ yaml.preserve_quotes = True
 yaml.indent(mapping=2, sequence=4, offset=2)
 
 APPS_DIR = "kubernetes/apps"
-ES_STORE_DEP = {"name": "external-secrets-stores", "namespace": "kube-system"}
+ES_STORE_DEP = {"name": "external-secrets-stores", "namespace": "external-secrets"}
 VOLSYNC_DEP = {"name": "volsync", "namespace": "volsync-system"}
 PG_CLUSTER_DEP = {"name": "cloudnative-pg-cluster", "namespace": "database"}
 DRAGONFLY_DEP = {"name": "dragonfly-cluster", "namespace": "database"}

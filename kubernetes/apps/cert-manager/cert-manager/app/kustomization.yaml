@@ -5,6 +5,7 @@ resources:
   - ./externalsecret.yaml
   - ./clusterissuer.yaml
   - ./grafanadashboard.yaml
+  - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
 configMapGenerator:

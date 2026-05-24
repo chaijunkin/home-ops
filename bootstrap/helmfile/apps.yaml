@@ -1,0 +1,138 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+
+bases:
+  - defaults.yaml
+
+helmDefaults:
+  cleanupOnFail: true
+  # forceConflicts: true
+  wait: true
+  waitForJobs: true
+
+releases:
+  - name: cilium
+    namespace: kube-system
+    inherit:
+      - template: default
+    hooks:
+      - # Wait for CRDs to be available
+        command: kubectl
+        args:
+          - wait
+          - --for=create
+          - crd/ciliumbgpadvertisements.cilium.io
+          - crd/ciliumbgpclusterconfigs.cilium.io
+          - crd/ciliumbgppeerconfigs.cilium.io
+          - crd/ciliumloadbalancerippools.cilium.io
+          - --timeout=2m
+        events:
+          - postsync
+        showlogs: true
+      - # Apply Resources
+        command: kubectl
+        args:
+          - apply
+          - --namespace={{ .Release.Namespace }}
+          - --server-side
+          - --force-conflicts
+          - --filename=../../kubernetes/apps/{{ .Release.Namespace }}/{{ .Release.Name }}/app/networking.yaml
+        events:
+          - postsync
+        showlogs: true
+
+  - name: coredns
+    namespace: kube-system
+    inherit:
+      - template: default
+    needs:
+      - kube-system/cilium
+
+  - name: spegel
+    namespace: kube-system
+    forceConflicts: true
+    inherit:
+      - template: default
+    needs:
+      - kube-system/coredns
+
+  - name: cert-manager
+    namespace: cert-manager
+    inherit:
+      - template: default
+    needs:
+      - kube-system/spegel
+
+  - name: external-secrets
+    namespace: external-secrets
+    inherit:
+      - template: default
+
+  - name: bitwarden
+    namespace: external-secrets
+    inherit:
+      - template: default
+    needs:
+      - external-secrets/external-secrets
+    hooks:
+      - # Wait for CRDs to be available
+        command: kubectl
+        args:
+          - wait
+          - --for=create
+          - crd/clustersecretstores.external-secrets.io
+          - --timeout=2m
+        events:
+          - postsync
+        showlogs: true
+      - # Apply Resources
+        command: kubectl
+        args:
+          - apply
+          - --server-side
+          - --force-conflicts
+          - --filename=../../kubernetes/apps/{{ .Release.Namespace }}/{{ .Release.Name }}/stores/clustersecretstore.yaml
+        events:
+          - postsync
+        showlogs: true
+      - events: ["presync"]
+        command: sh
+        args:
+          - -c
+          - |
+            set -x
+            echo "KUBECONFIG: $KUBECONFIG"
+            kubectl config current-context
+            sops -d ../../bootstrap/kustomize/apps/external-secrets/secret.sops.yaml | kubectl apply --force-conflicts=true --server-side=true -f -
+            echo "Bitwarden secret applied successfully"
+        showlogs: true
+
+  - name: flux-operator
+    namespace: flux-system
+    inherit:
+      - template: default
+    needs:
+      - external-secrets/bitwarden
+
+  - name: flux-instance
+    namespace: flux-system
+    forceConflicts: true
+    inherit:
+      - template: default
+    needs:
+      - flux-system/flux-operator
+    hooks:
+      - events: ["postsync"]
+        command: sh
+        args:
+          - -c
+          - |
+            set -x
+            echo "KUBECONFIG: $KUBECONFIG"
+            echo "Decrypting and applying flux bootstrap..."
+            sops -d ../../bootstrap/kustomize/apps/network/secret.sops.yaml | kubectl apply --force-conflicts=true --server-side=true -f -
+            sops -d ../../kubernetes/components/common/sops/secret.sops.yaml | kubectl apply --force-conflicts=true --server-side=true -f - -n flux-system
+            echo "Flux bootstrap applied successfully"
+
+# NOT FULLY TESTED FOR FORCE CONFLICTS, USE WITH CAUTION
+# (stuck at spegel and flux-operator, not continue troubleshooting until next bootstrap needed)

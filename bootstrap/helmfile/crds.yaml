@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+
+bases:
+  - defaults.yaml
+
+helmDefaults:
+  args:
+    - --include-crds
+    - --no-hooks
+
+releases:
+  - name: external-dns
+    namespace: network
+    inherit:
+      - template: default
+
+  - name: envoy-gateway
+    namespace: network
+    inherit:
+      - template: default
+
+  - name: grafana-operator
+    namespace: observability
+    inherit:
+      - template: default
+
+  - name: kube-prometheus-stack
+    namespace: observability
+    inherit:
+      - template: default

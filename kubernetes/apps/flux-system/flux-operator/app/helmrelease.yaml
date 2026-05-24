@@ -1,17 +1,3 @@
-# yaml-language-server: $schema=https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: flux-operator
-spec:
-  interval: 5m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: 0.49.0
-  url: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -29,6 +15,28 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  valuesFrom:
-    - kind: ConfigMap
-      name: flux-operator-values
+  values:
+    serviceMonitor:
+      create: true
+    web:
+      config:
+        authentication:
+          type: Anonymous
+          anonymous:
+            username: flux
+            groups:
+              - flux-admin
+      httpRoute:
+        enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Platform Infrastructure
+          gethomepage.dev/name: Flux Operator
+          gethomepage.dev/icon: flux.png
+        hostnames:
+          - flux-operator.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+      networkPolicy:
+        create: false
