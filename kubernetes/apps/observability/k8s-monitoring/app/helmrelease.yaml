@@ -161,26 +161,26 @@ spec:
           enabled: true
           port: 9411
 
-    # Continuous profiling — scrapes pprof endpoints and forwards to Pyroscope
-    profiling:
-      enabled: true
-      destinations: [localProfiling]
-      collector: alloy-profiles
-      ebpf:
-        enabled: true
-        namespaces: [ai]
-      java:
-        enabled: false
-        namespaces: [ai]
-      pprof:
-        enabled: true
-        namespaces: [ai]
+    # # Continuous profiling — scrapes pprof endpoints and forwards to Pyroscope
+    # profiling:
+    #   enabled: true
+    #   destinations: [localProfiling]
+    #   collector: alloy-profiles
+    #   ebpf:
+    #     enabled: true
+    #     namespaces: [ai]
+    #   java:
+    #     enabled: false
+    #     namespaces: [ai]
+    #   pprof:
+    #     enabled: true
+    #     namespaces: [ai]
 
-    # -- The Continuous Profiling receiver configuration
-    profilesReceiver:
-      enabled: true
-      collector: alloy-profiles
-      destinations: [localProfiling]
+    # # -- The Continuous Profiling receiver configuration
+    # profilesReceiver:
+    #   enabled: true
+    #   collector: alloy-profiles
+    #   destinations: [localProfiling]
 
     # kubernetesManifests:
     #   enabled: true
@@ -240,9 +240,9 @@ spec:
       alloy-receiver:
         presets: [deployment]
 
-      # alloy-profiles: DaemonSet that scrapes pprof endpoints and sends to Pyroscope
-      alloy-profiles:
-        presets: [privileged, daemonset]
+      # # alloy-profiles: DaemonSet that scrapes pprof endpoints and sends to Pyroscope
+      # alloy-profiles:
+      #   presets: [privileged, daemonset]
 
     # ---------------------------------------------------------------------------
     # Alloy Operator — manages the Alloy CRDs
