@@ -252,23 +252,12 @@ module "oauth2-opencloud" {
   # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
   redirect_uris = [
-    "https://drive.cloudjur.com",
-    "https://drive.cloudjur.com/oidc-callback.html",
-    "https://drive.cloudjur.com/oidc-silent-redirect.html"
+    { matching_mode = "strict", url = "https://drive.${var.public_domain}"},
+    { matching_mode = "strict", url = "https://drive.${var.public_domain}/oidc-callback.html"},
+    { matching_mode = "strict", url = "https://drive.${var.public_domain}/oidc-silent-redirect.html"},
+    { matching_mode = "strict", url = "oc://android.opencloud.eu"},
+    { matching_mode = "strict", url = "oc://ios.opencloud.eu"}
   ]
-}
-
-module "oauth2-opencloud-android" {
-  source             = "./oauth2_application"
-  name               = "OpenCloudAndroid"
-  launch_url         = "blank://blank"
-  auth_groups        = [authentik_group.default["users"].id]
-  authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
-  client_type        = "public"
-  client_id          = "OpenCloudAndroid"
-  # client_secret      = "dInFYGV33xKzhbRmpqQltYNdfLdJIfJ9L5ISoKhNoT9qZftpdWSP71VrpGR9pmoD"
-  redirect_uris = ["oc://android.opencloud.eu"]
 }
 
 module "oauth2-opencloud-desktop" {
@@ -285,16 +274,4 @@ module "oauth2-opencloud-desktop" {
     { matching_mode = "regex", url = "http://127.0.0.1(:.*)?" },
     { matching_mode = "regex", url = "http://localhost(:.*)?" }
   ]
-}
-
-module "oauth2-opencloud-ios" {
-  source             = "./oauth2_application"
-  name               = "OpenCloudIOS"
-  launch_url         = "blank://blank"
-  auth_groups        = [authentik_group.default["users"].id]
-  client_type        = "public"
-  authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
-  invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
-  client_id          = "OpenCloudIOS"
-  redirect_uris      = ["oc://ios.opencloud.eu"]
 }
