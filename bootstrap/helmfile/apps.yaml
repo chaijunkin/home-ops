@@ -48,13 +48,13 @@ releases:
     needs:
       - kube-system/cilium
 
-  - name: spegel
-    namespace: kube-system
-    forceConflicts: true
-    inherit:
-      - template: default
-    needs:
-      - kube-system/coredns
+  # - name: spegel
+  #   namespace: kube-system
+  #   forceConflicts: true
+  #   inherit:
+  #     - template: default
+  #   needs:
+  #     - kube-system/coredns
 
   - name: cert-manager
     namespace: cert-manager
