@@ -1,0 +1,140 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sure
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  driftDetection:
+    mode: enabled
+    ignore:
+      - paths: ["/spec/replicas"]
+        target:
+          kind: Deployment
+  values:
+    defaultPodOptions:
+      enableServiceLinks: false
+
+    controllers:
+      web:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/we-promise/sure
+              tag: stable@sha256:55c4da94f60a6a0e1da107dd6d61bdef06661bebaed26c1cd2a5c4d3d10af4ef
+            envFrom:
+              - secretRef:
+                  name: sure-secret
+            env:
+              TZ: Asia/Kuala_Lumpur
+              PORT: &port 3000
+              SELF_HOSTED: "true"
+              ONBOARDING_STATE: "open"
+              APP_DOMAIN: "https://sure.cloudjur.com"
+              RAILS_ASSUME_SSL: "true"
+              RAILS_FORCE_SSL: "false"
+              DB_HOST: "sure"
+              DB_PORT: "5432"
+              REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
+              RAILS_MAX_THREADS: "2"
+              WEB_CONCURRENCY: "1"
+              MALLOC_ARENA_MAX: "2"
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: *port
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 6
+            resources:
+              requests:
+                cpu: 50m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+
+      worker:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/we-promise/sure
+              tag: stable
+            command:
+              - bundle
+              - exec
+              - sidekiq
+            envFrom:
+              - secretRef:
+                  name: sure-secret
+            env:
+              SELF_HOSTED: "true"
+              ONBOARDING_STATE: "open"
+              APP_DOMAIN: "https://sure.cloudjur.com"
+              RAILS_ASSUME_SSL: "true"
+              RAILS_FORCE_SSL: "false"
+              DB_HOST: "sure"
+              DB_PORT: "5432"
+              REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
+              RAILS_MAX_THREADS: "2"
+              MALLOC_ARENA_MAX: "2"
+            resources:
+              requests:
+                cpu: 25m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+
+    service:
+      web:
+        controller: web
+        ports:
+          http:
+            port: *port
+
+    route:
+      web:
+        hostnames: ["sure.cloudjur.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: web
+                port: *port
+
+    persistence:
+      storage:
+        existingClaim: sure
+        advancedMounts:
+          web:
+            app:
+              - path: /rails/storage
+          worker:
+            app:
+              - path: /rails/storage

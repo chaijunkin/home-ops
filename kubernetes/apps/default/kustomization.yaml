@@ -19,5 +19,6 @@ resources:
     # - ./pdf-tool/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
+  - ./sure/ks.yaml
   - ./thelounge/ks.yaml
   - ./tika/ks.yaml
