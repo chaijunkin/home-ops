@@ -20,15 +20,6 @@ spec:
 
     controllers:
       web:
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: sure-secret
         containers:
           app:
             image:
@@ -52,43 +43,52 @@ spec:
               RAILS_MAX_THREADS: "2"
               WEB_CONCURRENCY: "1"
               MALLOC_ARENA_MAX: "2"
-            probes:
-              startup:
-                enabled: true
-                custom: true
-                spec:
-                  tcpSocket:
-                    port: *port
-                  initialDelaySeconds: 10
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 30
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  tcpSocket:
-                    port: *port
-                  periodSeconds: 30
-                  timeoutSeconds: 5
-                  failureThreshold: 5
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  tcpSocket:
-                    port: *port
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 6
+            # probes:
+            #   startup:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       tcpSocket:
+            #         port: *port
+            #       initialDelaySeconds: 10
+            #       periodSeconds: 10
+            #       timeoutSeconds: 5
+            #       failureThreshold: 30
+            #   liveness:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       tcpSocket:
+            #         port: *port
+            #       periodSeconds: 30
+            #       timeoutSeconds: 5
+            #       failureThreshold: 5
+            #   readiness:
+            #     enabled: true
+            #     custom: true
+            #     spec:
+            #       tcpSocket:
+            #         port: *port
+            #       periodSeconds: 10
+            #       timeoutSeconds: 5
+            #       failureThreshold: 6
             resources:
               requests:
                 cpu: 50m
-                memory: 512Mi
+                memory: 64Mi
               limits:
-                memory: 2Gi
+                memory: 512Mi
 
       worker:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: sure-secret
         containers:
           dependsOn:
             - web
@@ -117,7 +117,7 @@ spec:
             resources:
               requests:
                 cpu: 25m
-                memory: 256Mi
+                memory: 64Mi
               limits:
                 memory: 1Gi
 
