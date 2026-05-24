@@ -20,6 +20,15 @@ spec:
 
     controllers:
       web:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: sure-secret
         containers:
           app:
             image:
@@ -28,6 +37,7 @@ spec:
             envFrom:
               - secretRef:
                   name: sure-secret
+
             env:
               TZ: Asia/Kuala_Lumpur
               PORT: &port 3000
