@@ -27,7 +27,7 @@ metadata:
   name: external-secrets-stores
   namespace: external-secrets
 spec:
-  path: ./kubernetes/apps/external-secrets/external-secrets/stores
+  path: ./kubernetes/apps/bitwarden/external-secrets/stores
   prune: true
   sourceRef:
     kind: GitRepository
