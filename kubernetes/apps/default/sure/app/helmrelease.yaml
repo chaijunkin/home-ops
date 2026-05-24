@@ -20,6 +20,15 @@ spec:
 
     controllers:
       web:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: sure-secret
         containers:
           app:
             image:
@@ -37,8 +46,6 @@ spec:
               APP_DOMAIN: "https://sure.cloudjur.com"
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
-              DB_HOST: "sure"
-              DB_PORT: "5432"
               REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
               RAILS_MAX_THREADS: "2"
               WEB_CONCURRENCY: "1"
@@ -107,8 +114,6 @@ spec:
               APP_DOMAIN: "https://sure.cloudjur.com"
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
-              DB_HOST: "sure"
-              DB_PORT: "5432"
               REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
               RAILS_MAX_THREADS: "2"
               MALLOC_ARENA_MAX: "2"
