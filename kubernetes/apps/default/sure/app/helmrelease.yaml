@@ -46,10 +46,11 @@ spec:
               APP_DOMAIN: "https://sure.cloudjur.com"
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
+              RAILS_ENV: production
               REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
-              RAILS_MAX_THREADS: "2"
+              RAILS_MAX_THREADS: "1"
               WEB_CONCURRENCY: "1"
-              MALLOC_ARENA_MAX: "2"
+              MALLOC_ARENA_MAX: "1"
             # probes:
             #   startup:
             #     enabled: true
@@ -114,9 +115,10 @@ spec:
               APP_DOMAIN: "https://sure.cloudjur.com"
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
+              RAILS_ENV: production
               REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
-              RAILS_MAX_THREADS: "2"
-              MALLOC_ARENA_MAX: "2"
+              RAILS_MAX_THREADS: "1"
+              MALLOC_ARENA_MAX: "1"
             resources:
               requests:
                 cpu: 25m
