@@ -19,6 +19,6 @@ resources:
     # - ./pdf-tool/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
-  # - ./sure/ks.yaml # 800mib??
+  - ./sure/ks.yaml # 800mib??
   - ./thelounge/ks.yaml
   - ./tika/ks.yaml
