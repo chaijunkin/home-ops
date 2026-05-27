@@ -10,19 +10,19 @@ spec:
   enableDefaultDeny:
     ingress: true
   egress:
-    - # Forgejo server (internal service in dev namespace)
-      toEndpoints:
+    # Forgejo server (internal service in dev namespace)
+    - toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: forgejo
       toPorts:
         - ports:
             - protocol: TCP
               port: "3000"
-    - # Forgejo (external URL for cloning, webhooks)
-      toFQDNs:
+          # Forgejo (external URL for cloning, webhooks)
+    - toFQDNs:
         - matchName: git.cloudjur.com
-    - # Internet egress (for action steps pulling images/packages)
-      toCIDRSet:
+          # Internet egress (for action steps pulling images/packages)
+    - toCIDRSet:
         - cidrGroupRef: internet
       toPorts:
         - ports:
@@ -30,8 +30,8 @@ spec:
               port: "80"
             - protocol: TCP
               port: "443"
-    - # DNS resolution
-      toEndpoints:
+          # DNS resolution
+    - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns

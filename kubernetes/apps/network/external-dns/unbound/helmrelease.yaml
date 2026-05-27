@@ -81,9 +81,9 @@ spec:
       # - --webhook-provider-read-timeout=1m
       # - --webhook-provider-write-timeout=1m
       - --gateway-name=envoy-internal
-      # - --managed-record-types=A
-      # - --managed-record-types=AAAA
-      # - --managed-record-types=TXT
+        # - --managed-record-types=A
+        # - --managed-record-types=AAAA
+        # - --managed-record-types=TXT
     registry: txt
     sources:
       # - crd

@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -28,7 +27,7 @@ spec:
       name: kube-dns
       clusterIP: 10.96.0.10
       annotations:
-        fix.coredns.template: "fnord"
+        fix.coredns.template: fnord
     prometheus:
       service:
         enabled: true
@@ -54,11 +53,12 @@ spec:
           - name: autopath
             parameters: "@kubernetes"
           - name: forward
-            parameters: . /etc/resolv.conf
-          # - name: cache
-          #   configBlock: |-
-          #     prefetch 20
-          #     serve_stale
+            parameters:
+              . /etc/resolv.conf
+              # - name: cache
+              #   configBlock: |-
+              #     prefetch 20
+              #     serve_stale
           - name: loop
           - name: reload
           - name: loadbalance

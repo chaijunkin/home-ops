@@ -1,4 +1,4 @@
----
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -11,7 +11,7 @@ spec:
   driftDetection:
     mode: enabled
     ignore:
-      - paths: ["/spec/replicas"]
+      - paths: [/spec/replicas]
         target:
           kind: Deployment
   values:
@@ -42,12 +42,12 @@ spec:
               TZ: Asia/Kuala_Lumpur
               PORT: &port 3000
               SELF_HOSTED: "true"
-              ONBOARDING_STATE: "open"
-              APP_DOMAIN: "https://sure.cloudjur.com"
+              ONBOARDING_STATE: open
+              APP_DOMAIN: https://sure.cloudjur.com
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
               RAILS_ENV: production
-              REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
+              REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/10
               RAILS_MAX_THREADS: "1"
               MALLOC_ARENA_MAX: "1"
             # probes:
@@ -110,12 +110,12 @@ spec:
                   name: sure-secret
             env:
               SELF_HOSTED: "true"
-              ONBOARDING_STATE: "open"
-              APP_DOMAIN: "https://sure.cloudjur.com"
+              ONBOARDING_STATE: open
+              APP_DOMAIN: https://sure.cloudjur.com
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
               RAILS_ENV: production
-              REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/10"
+              REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/10
               RAILS_MAX_THREADS: "1"
               MALLOC_ARENA_MAX: "1"
             resources:
@@ -134,7 +134,7 @@ spec:
 
     route:
       web:
-        hostnames: ["sure.cloudjur.com"]
+        hostnames: [sure.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network

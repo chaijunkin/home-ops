@@ -12,16 +12,16 @@ spec:
         resourceFieldRef:
           resource: limits.memory
           divisor: 1Mi
-        # - name: AWS_ACCESS_KEY_ID
-        #   valueFrom:
-        #     secretKeyRef:
-        #       key: AWS_ACCESS_KEY_ID
-        #       name: dragonfly-secret
-        # - name: AWS_SECRET_ACCESS_KEY
-        #   valueFrom:
-        #     secretKeyRef:
-        #       key: AWS_SECRET_ACCESS_KEY
-        #       name: dragonfly-secret
+          # - name: AWS_ACCESS_KEY_ID
+          #   valueFrom:
+          #     secretKeyRef:
+          #       key: AWS_ACCESS_KEY_ID
+          #       name: dragonfly-secret
+          # - name: AWS_SECRET_ACCESS_KEY
+          #   valueFrom:
+          #     secretKeyRef:
+          #       key: AWS_SECRET_ACCESS_KEY
+          #       name: dragonfly-secret
   # snapshot:
   #   dir: "s3://dragonfly"
   args:

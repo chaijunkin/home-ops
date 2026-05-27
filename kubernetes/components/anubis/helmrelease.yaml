@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -32,19 +32,19 @@ spec:
               repository: ghcr.io/techarohq/anubis
               tag: v1.25.0
             env:
-              BIND: ":8080"
-              DIFFICULTY: "${ANUBIS_DIFFICULTY:=\"4\"}"
+              BIND: :8080
+              DIFFICULTY: ${ANUBIS_DIFFICULTY:="4"}
               ED25519_PRIVATE_KEY_HEX:
                 valueFrom:
                   secretKeyRef:
                     name: ${APP}-anubis-key-secret
                     key: ED25519_PRIVATE_KEY_HEX
-              METRICS_BIND: ":9090"
-              OG_EXPIRY_TIME: "24h"
+              METRICS_BIND: :9090
+              OG_EXPIRY_TIME: 24h
               OG_PASSTHROUGH: "true"
-              POLICY_FNAME: "/etc/anubis/policy.yaml"
+              POLICY_FNAME: /etc/anubis/policy.yaml
               SERVE_ROBOTS_TXT: "true"
-              TARGET: "${ANUBIS_TARGET}"
+              TARGET: ${ANUBIS_TARGET}
             probes:
               liveness:
                 enabled: true
@@ -52,8 +52,8 @@ spec:
                 spec:
                   exec:
                     command:
-                      - "anubis"
-                      - "--healthcheck"
+                      - anubis
+                      - --healthcheck
                   initialDelaySeconds: 1
                   periodSeconds: 10
               readiness:
@@ -62,15 +62,15 @@ spec:
                 spec:
                   exec:
                     command:
-                      - "anubis"
-                      - "--healthcheck"
+                      - anubis
+                      - --healthcheck
                   initialDelaySeconds: 1
                   periodSeconds: 5
             resources:
               requests:
                 memory: 64Mi
               limits:
-                memory: "${ANUBIS_MEM_LIMIT:=\"256Mi\"}"
+                memory: ${ANUBIS_MEM_LIMIT:="256Mi"}
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:

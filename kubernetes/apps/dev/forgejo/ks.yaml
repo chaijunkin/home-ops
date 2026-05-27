@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
-    # Add ../../../../components/anubis when switching to envoy-external
+      # Add ../../../../components/anubis when switching to envoy-external
   dependsOn:
     - name: openebs
       namespace: storage

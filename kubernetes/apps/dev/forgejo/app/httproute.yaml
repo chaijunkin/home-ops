@@ -32,28 +32,4 @@ spec:
       timeouts:
         request: 300s
 ---
-# Public endpoint — uncomment to expose Forgejo via envoy-external (internet-facing)
-# To switch: uncomment block below and comment out the envoy-internal parentRef above
-# apiVersion: gateway.networking.k8s.io/v1
-# kind: HTTPRoute
-# metadata:
-#   name: forgejo-external
-# spec:
-#   hostnames:
-#     - git.cloudjur.com
-#   parentRefs:
-#     - name: envoy-external
-#       namespace: network
-#       sectionName: https
-#   rules:
-#     - backendRefs:
-#         - name: forgejo-anubis
-#           port: 8080
-#       filters:
-#         - type: RequestHeaderModifier
-#           requestHeaderModifier:
-#             set:
-#               - name: X-Real-Ip
-#                 value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
-#       timeouts:
-#         request: 300s
+null

@@ -110,8 +110,8 @@ spec:
               - path:
                   type: PathPrefix
                   value: /
-          # desktop UA
-          # Waiting for https://github.com/opencloud-eu/desktop/pull/766
+            # desktop UA
+            # Waiting for https://github.com/opencloud-eu/desktop/pull/766
           - backendRefs:
               - identifier: app
                 port: 9201
@@ -122,7 +122,7 @@ spec:
                 headers:
                   - type: RegularExpression
                     name: User-Agent
-                    value: ".*mirall.*OpenCloud.*"
+                    value: .*mirall.*OpenCloud.*
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
