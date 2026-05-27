@@ -31,5 +31,3 @@ spec:
                 value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
       timeouts:
         request: 300s
----
-null
