@@ -36,16 +36,9 @@ spec:
           PATH: /data/git/lfs
         mailer:
           ENABLED: false
-        # ============================================================
-        # TOGGLE: Uncomment the block below (and the oauth section)
-        # to enable Authentik OIDC SSO. Also update the service block.
-        # ============================================================
-        # openid:
-        #   ENABLE_OPENID_SIGNIN: true
-        #   ENABLE_OPENID_SIGNUP: true
         openid:
-          ENABLE_OPENID_SIGNIN: false
-          ENABLE_OPENID_SIGNUP: false
+          ENABLE_OPENID_SIGNIN: true
+          ENABLE_OPENID_SIGNUP: true
         queue:
           TYPE: redis
           CONN_STR: redis://dragonfly.database.svc.cluster.local:6379?pool_size=100&idle_timeout=180s
@@ -96,13 +89,13 @@ spec:
       # TOGGLE: Uncomment the oauth block below to enable OIDC.
       # Also update the `openid` and `service` blocks above.
       # ============================================================
-      # oauth:
-      #   - name: authentik
-      #     provider: openidConnect
-      #     autoDiscoverUrl: https://auth.cloudjur.com/application/o/forgejo/.well-known/openid-configuration
-      #     existingSecret: forgejo-authentik-oidc
-      #     scopes: openid profile email
-      #     groupClaimName: groups
+      oauth:
+        - name: authentik
+          provider: openidConnect
+          autoDiscoverUrl: https://auth.cloudjur.com/application/o/forgejo/.well-known/openid-configuration
+          existingSecret: forgejo-authentik-oidc
+          scopes: openid profile email
+          groupClaimName: groups
     extraContainerVolumeMounts:
       - name: signing-key
         mountPath: /data/signing

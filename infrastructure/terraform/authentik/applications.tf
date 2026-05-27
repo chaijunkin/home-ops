@@ -158,6 +158,15 @@ locals {
       launch_url        = "https://chat.${var.public_domain}/auth"
       property_mappings = local.default_property_mappings
     },
+    forgejo = {
+      client_id         = var.forgejo_id
+      client_secret     = var.forgejo_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/forgejo/forgejo/refs/heads/main/public/img/forgejo.png"
+      redirect_uri      = "https://git.${var.public_domain}/user/oauth2/authentik/callback"
+      launch_url        = "https://git.${var.public_domain}/auth"
+      property_mappings = local.default_property_mappings
+    },
     calibre-web-automated = {
       client_id         = var.calibre_web_automated_id
       client_secret     = var.calibre_web_automated_secret
@@ -247,7 +256,7 @@ module "oauth2-opencloud" {
   client_type        = "public"
   authorization_flow = resource.authentik_flow.provider-authorization-implicit-consent.uuid
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
-  client_id          = "web"
+  client_id          = "opencloud"
   # client_id          = var.ocis_id
   # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)

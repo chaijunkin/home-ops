@@ -65,6 +65,18 @@ variable "open_webui_secret" {
   sensitive   = true
 }
 
+variable "forgejo_id" {
+  type        = string
+  description = "Forgejo Client ID"
+  sensitive   = true
+}
+
+variable "forgejo_secret" {
+  type        = string
+  description = "Forgejo Client Secret"
+  sensitive   = true
+}
+
 
 variable "headlamp_id" {
   type        = string
