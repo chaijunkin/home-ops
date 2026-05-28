@@ -1,0 +1,182 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: custom-ark-server-charts
+spec:
+  interval: 24h
+  ignore: |
+    # exclude all
+    /*
+    # include chart dir
+    !/charts/
+  url: https://github.com/crutonjohn/ark-server-charts
+  ref:
+    branch: fix/kubernetes-custom
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ark
+spec:
+  interval: 5m
+  chartRef:
+    kind: GitRepository
+    name: custom-ark-server-charts
+  # Wait wait, crutonjohn chart expects chart.spec.chart: charts/ark-cluster for GitRepo
+  chart:
+    spec:
+      chart: charts/ark-cluster
+      sourceRef:
+        kind: GitRepository
+        name: custom-ark-server-charts
+        namespace: games
+  values:
+    nameOverride: ""
+    fullnameOverride: ""
+    commonAnnotations:
+      lbipam.cilium.io/ips: 10.10.30.51
+      io.cilium/lb-ipam-sharing-key: ark-cluster
+    securityContext:
+      runAsUser: 1001
+      fsGroup: 1001
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    image:
+      registry: ghcr.io
+      repository: crutonjohn/arkserver
+      tag: master@sha256:ed326ca2162106806870404a4d68f66eae01b89fc09012dea20ad4ee338c5133
+      pullPolicy: Always
+
+    updateStrategy:
+      type: Recreate
+    restartPolicy: Always
+    terminationGracePeriodSeconds: 60
+    replicaCount: 1
+    hostNetwork: false
+    hostPort: false
+    clusterName: ragnarok-cluster
+
+    mods:
+      - "731604991"
+      - "1364327869"
+      - "1404697612"
+      - "1645346094"
+
+    extraEnvVars:
+      - name: am_arkwarnminutes
+        value: "15"
+      - name: am_arkBackupPreUpdate
+        value: "true"
+      - name: am_ark_PvEAllowStructuresAtSupplyDrops
+        value: "true"
+      - name: am_arkflag_NoTransferFromFiltering
+        value: ""
+
+    rcon:
+      password: "${ARK_SERVER_RCON_PASSWORD}"
+
+    servers:
+      ragnarok:
+        updateOnStart: true
+        sessionName: "Ragnarok Survival"
+        message: "Welcome to Ragnarok"
+        map: Ragnarok
+        password: "${ARK_SERVER_PASSWORD}"
+        maxPlayers: 10
+        extraEnvVars:
+          - name: am_arkwarnminutes
+            value: "15"
+          - name: am_arkbackupdir
+            value: "/ark/backup/ragnarok"
+          - name: RESTORE_ONSTART
+            value: "true"
+        ports:
+          queryudp: 27010
+          gameudp: 7770
+          rcon: 32330
+        rcon:
+          password: "${ARK_SERVER_RCON_PASSWORD}"
+        resources:
+          requests:
+            cpu: 3
+            memory: 8Gi
+          limits:
+            memory: 16Gi
+        customConfigMap:
+          crontab: |
+            10 */1 * * * arkmanager saveworld && sleep 3 && arkmanager backup
+            3 */1 * * * find /ark/backup/ragnarok -maxdepth 2 -mtime +7 -type f -delete
+            5 5 * * * arkmanager broadcast "taking a backup and shutting down in 5 minutes" && sleep 300 && arkmanager broadcast "backing up and restarting in 10 seconds" && sleep 10 && arkmanager saveworld && sleep 3 && arkmanager backup && arkmanager restart
+          GameIni: |
+            [/Script/ShooterGame.ShooterGameMode]
+            MaxTribeLogs=400
+            bDisableFriendlyFire=False
+            bPvEDisableFriendlyFire=True
+            bDisableLootCrates=False
+          GameUserSettingsIni: |
+            [/Script/ShooterGame.ShooterGameUserSettings]
+            Version=5
+            [ServerSettings]
+            ServerAdminPassword=${ARK_SERVER_ADMIN_PASSWORD}
+            RCONServerGameLogBuffer=600
+            AdminLogging=False
+            ActiveMods=731604991,1364327869,1404697612,1645346094
+            AutoSavePeriodMinutes=15.000000
+            ServerPVE=True
+            AllowThirdPersonPlayer=True
+            ShowMapPlayerLocation=True
+          EngineIni: |
+            [/script/onlinesubsystemutils.ipnetdriver]
+            NetServerMaxTickRate=60
+
+    resources:
+      requests:
+        cpu: 3
+        memory: 8Gi
+      limits:
+        memory: 16Gi
+
+    service:
+      enabled: true
+      type: LoadBalancer
+      metallb_shared_ip: false
+
+    persistence:
+      enabled: true
+      existingVolumes: true
+      game:
+        existingClaim: ark-game
+        mountPath: /arkserver
+      cluster:
+        existingClaim: ark-cluster
+        mountPath: /arkserver/ShooterGame/Saved/clusters
+      save:
+        existingClaim: ark-save-ragnarok
+        mountPath: /arkserver/ShooterGame/Saved
+
+    startupProbe:
+      initialDelaySeconds: 120
+      failureThreshold: 60
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+    livenessProbe:
+      initialDelaySeconds: 10
+      failureThreshold: 3
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 1
+
+    serviceAccount:
+      create: true
+      name: ""
+
+    extraVolumeMounts:
+      - mountPath: /ark/backup
+        name: ark-backup
+    extraVolumes:
+      - name: ark-backup
+        persistentVolumeClaim:
+          claimName: ark-backup
