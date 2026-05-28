@@ -3,7 +3,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: security
+  labels:
+    terraform-shared-credentials: "true"
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
-    volsync.backube/privileged-movers: 'true'
-    terraform-shared-credentials: 'true'
+    volsync.backube/privileged-movers: "true"
