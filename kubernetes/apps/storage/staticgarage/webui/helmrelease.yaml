@@ -52,7 +52,7 @@ spec:
         annotations:
           gatus.home-operations.com/enabled: "true"
         hostnames:
-          - garage-ui-static.cloudjur.com
+          - static-garage-ui.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network

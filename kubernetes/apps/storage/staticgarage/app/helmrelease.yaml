@@ -53,7 +53,7 @@ spec:
     route:
       s3:
         hostnames:
-          - s3-static.cloudjur.com
+          - static-s3.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -63,8 +63,8 @@ spec:
                 port: s3
       s3-web:
         hostnames:
-          - "*.web-static.cloudjur.com"
-          - "web-static.cloudjur.com"
+          - "*.cloudjur.com"
+          - "cloudjur.com"
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -74,7 +74,7 @@ spec:
                 port: s3-web
       api:
         hostnames:
-          - garage-static.cloudjur.com
+          - static-s3.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
