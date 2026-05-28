@@ -31,3 +31,6 @@ spec:
   backendConfigsFrom:
     - kind: Secret
       name: terraform-backend-secret
+  varsFrom:
+    - kind: Secret
+      name: staticgarage-terraform-secret
