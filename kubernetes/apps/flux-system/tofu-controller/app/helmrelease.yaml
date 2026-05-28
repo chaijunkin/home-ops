@@ -31,6 +31,7 @@ spec:
     remediation:
       retries: 3
   values:
+    allowCrossNamespaceRefs: true
     image:
       repository: ghcr.io/flux-iac/tofu-controller
       pullPolicy: IfNotPresent
