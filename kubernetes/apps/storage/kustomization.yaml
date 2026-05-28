@@ -8,3 +8,4 @@ resources:
   - ./democratic-csi/ks.yaml
   - ./openebs/ks.yaml
   - ./garage/ks.yaml
+  - ./staticgarage/ks.yaml

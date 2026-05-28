@@ -1,0 +1,25 @@
+metadata_dir = "/meta"
+data_dir = "/data"
+db_engine = "lmdb"
+metadata_auto_snapshot_interval = "6h"
+
+replication_factor = 1
+compression_level = 0
+
+rpc_bind_addr = "[::]:3901"
+rpc_public_addr = "127.0.0.1:3901"
+rpc_secret = "{{ .STATICGARAGE_RPC_SECRET }}"
+
+[s3_api]
+s3_region = "us-east-1"
+api_bind_addr = "[::]:3900"
+root_domain = ".s3-static.cloudjur.com"
+
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "{{ .STATICGARAGE_ADMIN_TOKEN }}"
+metrics_token = "{{ .STATICGARAGE_METRICS_TOKEN }}"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".web-static.cloudjur.com"

@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: staticgarage
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      staticgarage:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/dxflrs/garage
+              tag: v2.3.0@sha256:866bd13ed2038ba7e7190e840482bc27234c4afaf77be8cfa439ae088c1e4690
+              # kubectl exec -n storage <POD_NAME> -- /garage layout assign -z dc1 -c <NODEID>
+            env:
+              TZ: Asia/Kuala_Lumpur
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: [ALL]}
+            resources:
+              requests:
+                cpu: 5m
+                memory: 100Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.10.30.60
+        ports:
+          s3:
+            port: 3900
+          s3-web:
+            port: 3902
+          api:
+            port: 3903
+    route:
+      s3:
+        hostnames:
+          - s3-static.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3
+      s3-web:
+        hostnames:
+          - "*.web-static.cloudjur.com"
+          - "web-static.cloudjur.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3-web
+      api:
+        hostnames:
+          - garage-static.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: api
+    persistence:
+      config:
+        type: secret
+        name: staticgarage-secret
+        globalMounts:
+          - path: /etc/garage.toml
+            subPath: garage.toml
+            readOnly: true
+      data:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps
+        globalMounts:
+          - path: /data
+            subPath: StaticGarage/data
+      meta:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps
+        globalMounts:
+          - path: /meta
+            subPath: StaticGarage/meta
