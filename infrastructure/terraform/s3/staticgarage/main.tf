@@ -11,6 +11,7 @@ module "buckets" {
   source      = "../garage/modules/garage"
   bucket_name = each.key
   admin_user  = garage_key.admin_key.id
+  create_alias = true
 
   providers = {
     garage = garage
