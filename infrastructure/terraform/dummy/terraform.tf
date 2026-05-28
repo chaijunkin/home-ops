@@ -21,6 +21,11 @@ resource "null_resource" "no_code" {
 
 }
 
+resource "null_resource" "no_code_2" {
+
+}
+
+
 output "dummy_output" {
   value = "This is a dummy output"
 }
