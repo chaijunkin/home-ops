@@ -62,6 +62,9 @@ spec:
               - identifier: app
                 port: s3
       s3-web:
+        annotations:
+          external-dns.kubernetes.io/gateway-hostname-source: "annotation-only"
+          external-dns.kubernetes.io/hostname: "schema.cloudjur.com, wiki.cloudjur.com"
         hostnames:
           - "*.cloudjur.com"
           - "cloudjur.com"
