@@ -8,6 +8,10 @@ spec:
   approvePlan: auto
   interval: 12h
   path: ./infrastructure/terraform/dummy
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
   backendConfig:
     customConfiguration: |
       backend "s3" {
