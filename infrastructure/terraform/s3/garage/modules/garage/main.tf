@@ -17,7 +17,7 @@ resource "garage_key" "access_key" {
 
 resource "garage_bucket_alias" "bucket_alias" {
   count = var.create_alias ? 1 : 0
-  bucket_id    = garage_bucket.data.id
+  bucket_id    = garage_bucket.bucket.id
   global_alias = var.bucket_name + ".cloudjur.com"
 }
 # I wish the op provider would allow me to write
