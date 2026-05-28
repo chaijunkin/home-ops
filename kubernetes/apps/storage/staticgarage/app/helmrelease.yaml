@@ -67,7 +67,6 @@ spec:
           external-dns.kubernetes.io/hostname: "schema.cloudjur.com, wiki.cloudjur.com"
         hostnames:
           - "*.cloudjur.com"
-          - "cloudjur.com"
         parentRefs:
           - name: envoy-internal
             namespace: network
