@@ -8,7 +8,7 @@ terraform {
 }
 
 resource "garage_bucket" "bucket" {
-  global_alias = var.bucket_name
+  global_alias = var.create_alias ? format("%s.cloudjur.com", var.bucket_name) : var.bucket_name
   website_access_enabled = var.website_access_enabled
   website_config_index_document = var.website_access_enabled ? "index.html" : var.website_config_index_document
   website_config_error_document = var.website_access_enabled ? "error.html" : var.website_config_error_document
@@ -22,7 +22,7 @@ resource "garage_key" "access_key" {
 resource "garage_bucket_alias" "bucket_alias" {
   count = var.create_alias ? 1 : 0
   bucket_id    = garage_bucket.bucket.id
-  global_alias = format("%s.cloudjur.com", var.bucket_name)
+  global_alias = var.bucket_name
 }
 # I wish the op provider would allow me to write
 # those fields in to an existing secret...
