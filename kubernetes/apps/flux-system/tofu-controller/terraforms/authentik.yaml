@@ -7,10 +7,10 @@ metadata:
 spec:
   approvePlan: auto
   interval: 12h
-  path: ./authentik
+  path: ./infrastructure/terraform/authentik
   sourceRef:
-    kind: OCIRepository
-    name: terraform
+    kind: GitRepository
+    name: flux-system
     namespace: flux-system
   backendConfig:
     customConfiguration: |

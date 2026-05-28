@@ -2,21 +2,21 @@
 apiVersion: infra.contrib.fluxcd.io/v1alpha2
 kind: Terraform
 metadata:
-  name: minio
+  name: garage
   namespace: flux-system
 spec:
   approvePlan: auto
   interval: 12h
-  path: ./s3/minio
+  path: ./infrastructure/terraform/s3/garage
   sourceRef:
-    kind: OCIRepository
-    name: terraform
+    kind: GitRepository
+    name: flux-system
     namespace: flux-system
   backendConfig:
     customConfiguration: |
       backend "s3" {
         bucket       = "tf-state-bucket-cloudjur-com"
-        key          = "minio.terraform.tfstate"
+        key          = "garage.terraform.tfstate"
         region       = "auto"
         endpoints = {
           s3 = "https://8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com"
