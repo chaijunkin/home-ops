@@ -1,6 +1,7 @@
 locals {
   buckets = [
-    "example-static"
+    "wiki",
+    "schema"
   ]
 }
 
