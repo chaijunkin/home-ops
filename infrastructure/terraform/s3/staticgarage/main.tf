@@ -12,6 +12,9 @@ module "buckets" {
   bucket_name = each.key
   admin_user  = garage_key.admin_key.id
   create_alias = true
+  website_access_enabled = true
+  # website_config_index_document = "index.html"
+  # website_config_error_document = "error.html"
 
   providers = {
     garage = garage
