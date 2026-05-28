@@ -5,6 +5,7 @@ namespace: observability
 components:
   - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./k8s-monitoring/ks.yaml
   - ./exporters
   - ./gatus/ks.yaml

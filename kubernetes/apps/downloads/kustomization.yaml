@@ -5,6 +5,7 @@ namespace: downloads
 components:
   - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./autobrr/ks.yaml
   - ./autobangumi/ks.yaml
   - ./bazarr/ks.yaml

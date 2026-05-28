@@ -17,11 +17,13 @@ spec:
       toPorts:
         - ports:
             - protocol: TCP
-              port: "3000"
-          # Forgejo (external URL for cloning, webhooks)
+              port:
+                "3000"
+                # Forgejo (external URL for cloning, webhooks)
     - toFQDNs:
-        - matchName: git.cloudjur.com
-          # Internet egress (for action steps pulling images/packages)
+        - matchName:
+            git.cloudjur.com
+            # Internet egress (for action steps pulling images/packages)
     - toCIDRSet:
         - cidrGroupRef: internet
       toPorts:
@@ -29,8 +31,9 @@ spec:
             - protocol: TCP
               port: "80"
             - protocol: TCP
-              port: "443"
-          # DNS resolution
+              port:
+                "443"
+                # DNS resolution
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

@@ -5,7 +5,8 @@ namespace: security
 components:
   - ../../components/common
 resources:
-  # []
+  - ./namespace.yaml
+    # []
   - ./authentik/ks.yaml
     # - ./kyverno/ks.yaml # OH my apiserver bomb
     # - ./kyverno-policies/ks.yaml

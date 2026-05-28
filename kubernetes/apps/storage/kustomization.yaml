@@ -5,6 +5,7 @@ namespace: storage
 components:
   - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./democratic-csi/ks.yaml
   - ./openebs/ks.yaml
   - ./garage/ks.yaml

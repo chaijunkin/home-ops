@@ -5,4 +5,5 @@ namespace: renovate
 components:
   - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./renovate-operator/ks.yaml

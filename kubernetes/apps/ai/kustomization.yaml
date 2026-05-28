@@ -5,6 +5,7 @@ namespace: ai
 components:
   - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./context7-mcp/ks.yaml
     # - ./flux-operator-mcp/ks.yaml
   - ./github-mcp/ks.yaml

@@ -41,7 +41,7 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
-          # 3. Allow HTTPS traffic to Bitwarden API (Fixes FetchError)
+                # 3. Allow HTTPS traffic to Bitwarden API (Fixes FetchError)
     - toFQDNs:
         - matchName: vw.cloudjur.com
         - matchPattern: "*.bitwarden.com"

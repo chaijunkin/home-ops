@@ -2,7 +2,8 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: not-used
+  name: flux-system
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
-    volsync.backube/privileged-movers: "true"
+    volsync.backube/privileged-movers: 'true'
+    terraform-shared-credentials: 'true'

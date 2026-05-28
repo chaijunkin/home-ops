@@ -63,11 +63,12 @@ spec:
                 port: s3
       s3-web:
         annotations:
-          external-dns.kubernetes.io/gateway-hostname-source: "annotation-only"
-          external-dns.kubernetes.io/hostname: "schema.cloudjur.com, wiki.cloudjur.com"
+          external-dns.kubernetes.io/gateway-hostname-source: annotation-only
+          external-dns.kubernetes.io/hostname: schema.cloudjur.com,
+            wiki.cloudjur.com
         hostnames:
-          - "schema.cloudjur.com"
-          - "wiki.cloudjur.com"
+          - schema.cloudjur.com
+          - wiki.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network

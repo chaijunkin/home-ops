@@ -50,8 +50,9 @@ spec:
                 value: --requeue-dependency=5s
             target:
               kind: Deployment
-              name: (kustomize-controller|helm-controller|source-controller)
-              # Increase the memory limits
+              name:
+                (kustomize-controller|helm-controller|source-controller)
+                # Increase the memory limits
           - patch: |
               apiVersion: apps/v1
               kind: Deployment
@@ -67,8 +68,9 @@ spec:
                             memory: 6Gi
             target:
               kind: Deployment
-              name: (kustomize-controller|helm-controller|source-controller)
-              # Enable in-memory kustomize builds
+              name:
+                (kustomize-controller|helm-controller|source-controller)
+                # Enable in-memory kustomize builds
           - patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
@@ -81,8 +83,9 @@ spec:
                     medium: Memory
             target:
               kind: Deployment
-              name: kustomize-controller
-              # Enable Helm repositories caching
+              name:
+                kustomize-controller
+                # Enable Helm repositories caching
           - patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
@@ -95,8 +98,9 @@ spec:
                 value: --helm-cache-purge-interval=5m
             target:
               kind: Deployment
-              name: source-controller
-              # Flux near OOM detection for Helm
+              name:
+                source-controller
+                # Flux near OOM detection for Helm
           - patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
@@ -109,8 +113,9 @@ spec:
                 value: --oom-watch-interval=500ms
             target:
               kind: Deployment
-              name: helm-controller
-              # Disable chart digest tracking
+              name:
+                helm-controller
+                # Disable chart digest tracking
           - patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-

@@ -5,6 +5,7 @@ namespace: default
 components:
   - ../../components/common
 resources:
+  - ./namespace.yaml
   - ./atuin/ks.yaml
   - ./convertx/ks.yaml
   - ./cyberchef/ks.yaml

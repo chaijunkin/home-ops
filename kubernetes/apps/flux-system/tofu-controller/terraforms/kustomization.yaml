@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   # - ./authentik.yaml
   - ./dummy.yaml
-  # - ./minio.yaml
+    # - ./minio.yaml

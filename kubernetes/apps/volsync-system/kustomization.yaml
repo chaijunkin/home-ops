@@ -5,7 +5,8 @@ namespace: volsync-system
 components:
   - ../../components/common
 resources:
-  # Flux-Kustomizations
+  - ./namespace.yaml
+    # Flux-Kustomizations
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
     # next time enable it, need to fix the kopia limitation where we need to backup a repository first
