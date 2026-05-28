@@ -22,7 +22,7 @@ resource "garage_key" "access_key" {
 resource "garage_bucket_alias" "bucket_alias" {
   count = var.create_alias ? 1 : 0
   bucket_id    = garage_bucket.bucket.id
-  global_alias = var.bucket_name + ".cloudjur.com"
+  global_alias = format("%s.cloudjur.com", var.bucket_name)
 }
 # I wish the op provider would allow me to write
 # those fields in to an existing secret...
