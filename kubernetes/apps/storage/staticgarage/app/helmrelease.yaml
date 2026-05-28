@@ -78,7 +78,7 @@ spec:
                 port: s3-web
       api:
         hostnames:
-          - static-s3.cloudjur.com
+          - static-garage.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
