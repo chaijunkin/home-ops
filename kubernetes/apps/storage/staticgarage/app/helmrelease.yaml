@@ -71,10 +71,10 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3-web
-          - filters:
-            - type: URLRewrite
-              urlRewrite:
-                hostname: "schema"
+          # - filters:
+          #   - type: URLRewrite
+          #     urlRewrite:
+          #       hostname: "schema"
       wiki-web:
         hostnames:
           - "wiki.cloudjur.com"
@@ -85,10 +85,10 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3-web
-          - filters:
-            - type: URLRewrite
-              urlRewrite:
-                hostname: "wiki.cloudjur.com"
+          # - filters:
+          #   - type: URLRewrite
+          #     urlRewrite:
+          #       hostname: "wiki"
       api:
         hostnames:
           - static-garage.cloudjur.com
