@@ -16,7 +16,14 @@ spec:
         # - hallway-tablet.cloudjur.com
         # - livingroom-vacuum.cloudjur.com
         - smb.cloudjur.com
+        - pikvm.cloudjur.com
+        - plv.cloudjur.com # piano led visualizer
+        - gateway.cloudjur.com
           # - pikvm.cloudjur.com
+  metricRelabelings:
+    - targetLabel: service
+      replacement: blackbox-exporter
+      action: replace
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
@@ -31,3 +38,7 @@ spec:
     staticConfig:
       static:
         - smb.cloudjur.com:2049
+  metricRelabelings:
+    - targetLabel: service
+      replacement: blackbox-exporter
+      action: replace
