@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  # - ./terraform.yaml # poor build terraform modules
+  - ./terraform.yaml # poor build terraform modules

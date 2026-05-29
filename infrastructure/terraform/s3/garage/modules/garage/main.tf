@@ -8,7 +8,7 @@ terraform {
 }
 
 resource "garage_bucket" "bucket" {
-  global_alias = var.create_alias ? format("%s.%s", var.bucket_name, var.public_domain) : var.bucket_name
+  global_alias = var.bucket_name
   website_access_enabled = var.website_access_enabled
   website_config_index_document = var.website_access_enabled ? "index.html" : var.website_config_index_document
   website_config_error_document = var.website_access_enabled ? "error.html" : var.website_config_error_document
