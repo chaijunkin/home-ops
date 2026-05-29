@@ -79,7 +79,7 @@ spec:
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
-                  add:
+                  set:
                     - name: Host
                       value: schema
       wiki-s3-web:
@@ -100,7 +100,7 @@ spec:
             filters:
               - type: RequestHeaderModifier
                 requestHeaderModifier:
-                  add:
+                  set:
                     - name: Host
                       value: wiki
       api:
