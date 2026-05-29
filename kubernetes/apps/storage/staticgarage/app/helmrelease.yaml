@@ -63,7 +63,8 @@ spec:
                 port: s3
       web:
         hostnames:
-          - "web.cloudjur.com"
+          - "wiki.cloudjur.com"
+          - "schema.cloudjur.com"
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -71,37 +72,10 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3-web
-      schema-s3-web:
-        # annotations:
-        #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
-        #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
-        #     wiki.cloudjur.com
-        hostnames:
-          - schema.cloudjur.com
-          - schema.web.cloudjur.com
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: s3-web
-      wiki-s3-web:
-        # annotations:
-        #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
-        #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
-        #     wiki.cloudjur.com
-        hostnames:
-          - wiki.cloudjur.com
-          - wiki.web.cloudjur.com
-          # - wiki.cloudjur.com
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: s3-web
+          - filters:
+            - type: URLRewrite
+              urlRewrite:
+                hostname: "cloudjur.com"
       api:
         hostnames:
           - static-garage.cloudjur.com
