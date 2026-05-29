@@ -78,6 +78,8 @@ spec:
           gethomepage.dev/group: Other Services
           gethomepage.dev/name: atuin
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/atuin.png
+          gethomepage.dev/description: Magical Shell History
+          gethomepage.dev/href: "#"
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"

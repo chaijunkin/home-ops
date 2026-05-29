@@ -82,6 +82,7 @@ spec:
           gethomepage.dev/group: Observability Service
           gethomepage.dev/name: kromgo
           gethomepage.dev/icon: mdi-api
+          gethomepage.dev/description: Kromgo Metrics
         rules:
           - backendRefs:
               - identifier: app

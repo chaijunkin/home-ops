@@ -55,6 +55,7 @@ spec:
           gethomepage.dev/group: Platform Infrastructure
           gethomepage.dev/name: Static Garage
           gethomepage.dev/icon: mdi-database
+          gethomepage.dev/description: S3 Object Storage
         hostnames:
           - static-garage-ui.cloudjur.com
         parentRefs:

@@ -33,6 +33,7 @@ spec:
           gethomepage.dev/group: Platform Infrastructure
           gethomepage.dev/name: Flux Operator
           gethomepage.dev/icon: flux.png
+          gethomepage.dev/description: Operator for Flux
         hostnames:
           - flux-operator.cloudjur.com
         parentRefs:

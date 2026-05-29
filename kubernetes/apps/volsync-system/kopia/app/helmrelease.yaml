@@ -84,6 +84,7 @@ spec:
           gethomepage.dev/group: Platform Infrastructure
           gethomepage.dev/name: kopia
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kopia.png
+          gethomepage.dev/description: Fast and Secure Backup
     configMaps:
       config:
         data:

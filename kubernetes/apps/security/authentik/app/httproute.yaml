@@ -8,6 +8,7 @@ metadata:
     gethomepage.dev/group: Platform Infrastructure
     gethomepage.dev/name: Authentik
     gethomepage.dev/icon: authentik.png
+    gethomepage.dev/description: SSO Identity Provider
     gethomepage.dev/widget.type: authentik
     gethomepage.dev/widget.url: http://authentik-server.security.svc.cluster.local:80
     gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"

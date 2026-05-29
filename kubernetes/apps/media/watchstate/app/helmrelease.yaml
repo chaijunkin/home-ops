@@ -70,6 +70,7 @@ spec:
           gethomepage.dev/group: Media Service
           gethomepage.dev/name: Watchstate
           gethomepage.dev/icon: mdi-play-circle
+          gethomepage.dev/description: Media Watch State Sync
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"

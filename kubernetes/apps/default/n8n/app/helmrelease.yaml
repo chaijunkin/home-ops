@@ -68,6 +68,7 @@ spec:
           gethomepage.dev/name: n8n Webhooks
           gethomepage.dev/description: Workflow Automation Tool
           gethomepage.dev/icon: mdi-api
+          gethomepage.dev/href: "#"
         hostnames:
           - *hostName
         parentRefs:

@@ -8,6 +8,7 @@ metadata:
     gethomepage.dev/group: Platform Infrastructure
     gethomepage.dev/name: Policy Reporter
     gethomepage.dev/icon: kyverno.png
+    gethomepage.dev/description: Kyverno Policy Reporter
 spec:
   hostnames: [policy-reporter.cloudjur.com]
   parentRefs:

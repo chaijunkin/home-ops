@@ -78,6 +78,7 @@ spec:
           gethomepage.dev/group: Downloads Service
           gethomepage.dev/name: profilarr
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/profilarr.png
+          gethomepage.dev/description: Radarr/Sonarr Profile Sync
     persistence:
       config:
         type: persistentVolumeClaim
