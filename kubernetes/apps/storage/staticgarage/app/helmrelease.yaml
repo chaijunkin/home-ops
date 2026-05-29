@@ -68,7 +68,7 @@ spec:
         #     wiki.cloudjur.com
         hostnames:
           - schema.cloudjur.com
-          # - wiki.cloudjur.com
+          - schema.web.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -83,6 +83,7 @@ spec:
         #     wiki.cloudjur.com
         hostnames:
           - wiki.cloudjur.com
+          - wiki.web.cloudjur.com
           # - wiki.cloudjur.com
         parentRefs:
           - name: envoy-internal

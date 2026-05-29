@@ -22,5 +22,5 @@ metrics_token = "{{ .GARAGE_METRICS_TOKEN }}"
 
 [s3_web]
 bind_addr = "[::]:3902"
-root_domain = ".cloudjur.com"
+root_domain = ".web.cloudjur.com"
 index = "index.html"
