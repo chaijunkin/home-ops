@@ -6,6 +6,10 @@ metadata:
   annotations:
     gatus.home-operations.com/endpoint: |-
       conditions: ["[STATUS] == 404"]
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Other Services
+    gethomepage.dev/name: Flux Webhook
+    gethomepage.dev/icon: mdi-api
 spec:
   hostnames: [flux-webhook.cloudjur.com]
   parentRefs:

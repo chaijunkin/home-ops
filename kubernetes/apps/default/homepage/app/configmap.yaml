@@ -51,6 +51,10 @@ data:
             description: Backup Password manager
             href: https://vault.bitwarden.com/#/login
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/bitwarden.png
+        - Piano LED Visualizer
+            description: Backup Password manager
+            href: https://plv.cloudjur.com
+            icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/lidarr.png
 
     # - Home Service:
     #     - Home Assistant:

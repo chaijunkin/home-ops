@@ -14,14 +14,12 @@ spec:
       n8n:
         annotations:
           reloader.stakater.com/auto: "true"
-
         pod:
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
-
         containers:
           app:
             image:
@@ -50,13 +48,11 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 2Gi
-
     service:
       app:
         ports:
           http:
             port: *port
-
     persistence:
       data:
         existingClaim: n8n
@@ -64,22 +60,20 @@ spec:
           n8n:
             app:
               - path: /home/node/.n8n
-
     route:
       app:
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Utility Service
-          gethomepage.dev/name: n8n
+          gethomepage.dev/group: Other Services
+          gethomepage.dev/name: n8n Webhooks
           gethomepage.dev/description: Workflow Automation Tool
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/n8n.png
+          gethomepage.dev/icon: mdi-api
         hostnames:
           - *hostName
         parentRefs:
           - name: envoy-internal
             namespace: network
             sectionName: https
-
       webhooks:
         hostnames:
           - n8n-webhook.cloudjur.com

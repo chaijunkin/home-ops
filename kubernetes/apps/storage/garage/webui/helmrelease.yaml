@@ -51,6 +51,10 @@ spec:
       app:
         annotations:
           gatus.home-operations.com/enabled: "true"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Platform Infrastructure
+          gethomepage.dev/name: Garage API
+          gethomepage.dev/icon: mdi-database
         hostnames:
           - garage-ui.cloudjur.com
         parentRefs:

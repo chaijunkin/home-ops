@@ -67,9 +67,9 @@ spec:
             sectionName: https
         annotations:
           gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Media Services
-          gethomepage.dev/name: watchstate
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/watchstate.png
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: Watchstate
+          gethomepage.dev/icon: mdi-play-circle
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"

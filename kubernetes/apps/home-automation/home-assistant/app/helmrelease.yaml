@@ -183,6 +183,11 @@ spec:
             conditions: ["[STATUS] == 200"]
       codeserver:
         hostnames: ["${SUBDOMAIN:=${APP}}-code.cloudjur.com"]
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Development
+          gethomepage.dev/name: Hass Code
+          gethomepage.dev/icon: mdi-code-braces
         parentRefs:
           - name: envoy-internal
             namespace: network
