@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Generate CSV of HTTPRoute hostnames, their backend service and LB IP/port,
+# Generate CSV of HTTPRoute hostnames and LoadBalancer services, their backend service and LB IP/port,
 # update docs/cilium-ipam.md with lists, and generate docs/services-list.md.
 # CSV format: title,subtitle,args
 # where args is a compact JSON string with details.
@@ -10,8 +10,10 @@ set -euo pipefail
 OUT_CSV="docs/httproutes.csv"
 SVC_MD="docs/services-list.md"
 TMP_JSON=$(mktemp)
+SVC_JSON=$(mktemp)
 RESV_TMP=$(mktemp)
 MISSING_TMP=$(mktemp)
+HTTPROUTE_BACKENDS=$(mktemp)
 
 if ! command -v kubectl >/dev/null 2>&1; then
   echo "kubectl not found in PATH" >&2
@@ -22,14 +24,25 @@ if ! command -v jq >/dev/null 2>&1; then
   exit 1
 fi
 
-echo "Fetching HTTPRoute resources..."
-kubectl get httproute -A -o json > "$TMP_JSON"
+echo "Fetching HTTPRoute and Service resources..."
+kubectl get httproute -A -o json > "$TMP_JSON" 2>/dev/null || echo '{"items":[]}' > "$TMP_JSON"
+kubectl get svc -A -o json > "$SVC_JSON" 2>/dev/null || echo '{"items":[]}' > "$SVC_JSON"
 
 echo "title,subtitle,args" > "$OUT_CSV"
 
 echo "# Services List" > "$SVC_MD"
 echo "| Namespace | App | URL | Homepage Group |" >> "$SVC_MD"
 echo "| --- | --- | --- | --- |" >> "$SVC_MD"
+
+# Extract all backends used by HTTPRoutes (format: namespace/name)
+jq -r '
+  .items[] |
+  (.metadata.namespace // "default") as $ns |
+  (.spec.rules // [])[]?.backendRefs[]? |
+  select(. != null) |
+  ( .name // .backendRef?.name ) as $bname |
+  "\($ns)/\($bname)"
+' "$TMP_JSON" | sort -u > "$HTTPROUTE_BACKENDS"
 
 # Produce lines with host,namespace,httproute,parent,backendName,backendPort,homepageEnabled,homepageGroup
 jq -r '
@@ -54,22 +67,18 @@ jq -r '
   lb_ip=""
   svc_port=""
   if [[ -n "$backend" ]]; then
-    # try to read service in same namespace
-    svc_json=$(kubectl get svc -n "$ns" "$backend" -o json 2>/dev/null || true)
+    # try to read service in same namespace from our dumped json
+    svc_json=$(jq -c --arg ns "$ns" --arg n "$backend" '.items[] | select(.metadata.namespace == $ns and .metadata.name == $n)' "$SVC_JSON" || true)
     if [[ -n "$svc_json" ]]; then
       # check annotations for lbipam
       lb_ann=$(echo "$svc_json" | jq -r '.metadata.annotations["lbipam.cilium.io/ips"] // .metadata.annotations["io.cilium/lb-ipam-ips"] // empty')
       if [[ -n "$lb_ann" ]]; then
-        # take first IP from comma-separated list
         lb_ip=$(echo "$lb_ann" | awk -F"," '{print $1}' | tr -d ' "')
       else
-        # fallback to status.loadBalancer.ingress[].ip
         lb_ip=$(echo "$svc_json" | jq -r '.status.loadBalancer.ingress[0].ip // .status.loadBalancer.ingress[0].hostname // empty')
       fi
 
-      # determine service port
       if [[ -n "$backendPort" && "$backendPort" != "null" ]]; then
-        # find matching port entry
         svc_port=$(echo "$svc_json" | jq -r --arg bp "$backendPort" '.spec.ports[] | select((.port|tostring)==$bp or (.name==$bp)) | .port' 2>/dev/null | head -n1 || true)
       fi
       if [[ -z "$svc_port" ]]; then
@@ -78,15 +87,12 @@ jq -r '
     fi
   fi
 
-  # Build fields per requested format
-  # title: App name (use backend service name if available, else httproute name)
   if [[ -n "$backend" ]]; then
     title="$backend"
   else
     title="$name"
   fi
 
-  # class detection from parent
   class="unknown"
   if [[ "$parent" == *external* ]]; then
     class="external"
@@ -94,7 +100,6 @@ jq -r '
     class="internal"
   fi
 
-  # Build subtitle, avoid duplicating the class if parent already mentions it
   if [[ -n "$parent" ]]; then
     if [[ "$class" != "unknown" && "$parent" == *"$class"* ]]; then
       subtitle="$ns | $parent"
@@ -105,24 +110,75 @@ jq -r '
     subtitle="$ns | $class"
   fi
 
-  # args should be just the hostname
   args_field="$host"
 
-  # CSV-quote fields
   printf '"%s","%s","%s"\n' "$title" "$subtitle" "$args_field" >> "$OUT_CSV"
-
-  # Update services list markdown
   printf '| %s | %s | %s | %s |\n' "$ns" "$name" "$host" "$hp_group" >> "$SVC_MD"
 
-  # Track missing homepage annotations
   if [[ "$hp_enabled" != "true" ]]; then
     printf -- '- %s/%s (%s)\n' "$ns" "$name" "$host" >> "$MISSING_TMP"
   fi
 
-  # If we found a LB ip, mark service as reserved (append to temp)
   if [[ -n "$lb_ip" ]]; then
-    # store plain IP (no backticks/escaping) for later safe insertion
     printf -- '- %s - %s/%s (port: %s)\n' "$lb_ip" "$ns" "$backend" "${svc_port:-unknown}" >> "$RESV_TMP"
+  fi
+done
+
+# Now process LoadBalancer services that are not referenced by an HTTPRoute
+jq -r '
+  .items[] |
+  select(.spec.type == "LoadBalancer") |
+  (.metadata.namespace // "default") as $ns |
+  (.metadata.name) as $name |
+  (.metadata.annotations["gethomepage.dev/enabled"] // "false") as $hp_enabled |
+  (.metadata.annotations["gethomepage.dev/group"] // "None") as $hp_group |
+  (.metadata.annotations["external-dns.alpha.kubernetes.io/hostname"] // "") as $hostname |
+  (.spec.ports[0].port // "") as $port |
+  "\($ns)\t\($name)\t\($hp_enabled)\t\($hp_group)\t\($hostname)\t\($port)"
+' "$SVC_JSON" | while IFS=$'\t' read -r ns name hp_enabled hp_group hostname port; do
+  # Check if this service is in HTTPROUTE_BACKENDS
+  if grep -q "^${ns}/${name}$" "$HTTPROUTE_BACKENDS"; then
+    continue
+  fi
+
+  host="$hostname"
+  if [[ -z "$host" ]]; then
+    # find lb ip
+    svc_json=$(jq -c --arg ns "$ns" --arg n "$name" '.items[] | select(.metadata.namespace == $ns and .metadata.name == $n)' "$SVC_JSON")
+    lb_ann=$(echo "$svc_json" | jq -r '.metadata.annotations["lbipam.cilium.io/ips"] // .metadata.annotations["io.cilium/lb-ipam-ips"] // empty')
+    if [[ -n "$lb_ann" ]]; then
+      lb_ip=$(echo "$lb_ann" | awk -F"," '{print $1}' | tr -d ' "')
+    else
+      lb_ip=$(echo "$svc_json" | jq -r '.status.loadBalancer.ingress[0].ip // .status.loadBalancer.ingress[0].hostname // empty')
+    fi
+    if [[ -n "$lb_ip" ]]; then
+      host="$lb_ip:$port"
+    else
+      host="<unknown>"
+    fi
+  else
+    # if lb ip is found, still write to RESV_TMP
+    svc_json=$(jq -c --arg ns "$ns" --arg n "$name" '.items[] | select(.metadata.namespace == $ns and .metadata.name == $n)' "$SVC_JSON")
+    lb_ann=$(echo "$svc_json" | jq -r '.metadata.annotations["lbipam.cilium.io/ips"] // .metadata.annotations["io.cilium/lb-ipam-ips"] // empty')
+    if [[ -n "$lb_ann" ]]; then
+      lb_ip=$(echo "$lb_ann" | awk -F"," '{print $1}' | tr -d ' "')
+    else
+      lb_ip=$(echo "$svc_json" | jq -r '.status.loadBalancer.ingress[0].ip // .status.loadBalancer.ingress[0].hostname // empty')
+    fi
+    if [[ -n "$lb_ip" ]]; then
+      printf -- '- %s - %s/%s (port: %s)\n' "$lb_ip" "$ns" "$name" "${port:-unknown}" >> "$RESV_TMP"
+    fi
+  fi
+
+  title="$name"
+  subtitle="$ns | LoadBalancer"
+  args_field="$host"
+
+  printf '"%s","%s","%s"\n' "$title" "$subtitle" "$args_field" >> "$OUT_CSV"
+  printf '| %s | %s | %s | %s |\n' "$ns" "$name" "$host" "$hp_group" >> "$SVC_MD"
+
+  if [[ "$hp_enabled" != "true" ]]; then
+    printf -- '- %s/%s (%s)\n' "$ns" "$name" "$host" >> "$MISSING_TMP"
   fi
 done
 
@@ -202,6 +258,6 @@ cat >> docs/cilium-ipam.md <<'DOCS'
 ```
 DOCS
 
-rm -f "$TMP_JSON" "$EXT_MD" "$INT_MD" "$RESV_TMP" "$MISSING_TMP"
+rm -f "$TMP_JSON" "$SVC_JSON" "$EXT_MD" "$INT_MD" "$RESV_TMP" "$MISSING_TMP" "$HTTPROUTE_BACKENDS"
 
 echo "Updated docs/cilium-ipam.md"
