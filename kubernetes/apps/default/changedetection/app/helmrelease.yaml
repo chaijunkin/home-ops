@@ -20,6 +20,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "vpn",
+            "namespace": "network",
+            "ips": ["10.10.31.17/24"]
+          }]
     controllers:
       changedetection:
         containers:
