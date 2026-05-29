@@ -61,9 +61,8 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3
-      web:
+      schema-web:
         hostnames:
-          - "wiki.cloudjur.com"
           - "schema.cloudjur.com"
         parentRefs:
           - name: envoy-internal
@@ -75,7 +74,21 @@ spec:
           - filters:
             - type: URLRewrite
               urlRewrite:
-                hostname: "cloudjur.com"
+                hostname: "schema.cloudjur.com"
+      wiki-web:
+        hostnames:
+          - "wiki.cloudjur.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3-web
+          - filters:
+            - type: URLRewrite
+              urlRewrite:
+                hostname: "wiki.cloudjur.com"
       api:
         hostnames:
           - static-garage.cloudjur.com
