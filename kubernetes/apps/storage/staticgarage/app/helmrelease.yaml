@@ -61,14 +61,14 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3
-      s3-web:
-        annotations:
-          external-dns.kubernetes.io/gateway-hostname-source: annotation-only
-          external-dns.kubernetes.io/hostname: schema.cloudjur.com,
-            wiki.cloudjur.com
+      schema-s3-web:
+        # annotations:
+        #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
+        #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
+        #     wiki.cloudjur.com
         hostnames:
           - schema.cloudjur.com
-          - wiki.cloudjur.com
+          # - wiki.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -76,6 +76,33 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3-web
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  add:
+                    - name: Host
+                      value: schema
+      wiki-s3-web:
+        # annotations:
+        #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
+        #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
+        #     wiki.cloudjur.com
+        hostnames:
+          - wiki.cloudjur.com
+          # - wiki.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3-web
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  add:
+                    - name: Host
+                      value: wiki
       api:
         hostnames:
           - static-garage.cloudjur.com
