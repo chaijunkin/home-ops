@@ -15,12 +15,12 @@ s3_region = "us-east-1"
 api_bind_addr = "[::]:3900"
 root_domain = ".static-s3.cloudjur.com"
 
-[admin]
-api_bind_addr = "[::]:3903"
-admin_token = "{{ .GARAGE_ADMIN_TOKEN }}"
-metrics_token = "{{ .GARAGE_METRICS_TOKEN }}"
-
 [s3_web]
 bind_addr = "[::]:3902"
 root_domain = ".cloudjur.com"
 index = "index.html"
+
+[admin]
+api_bind_addr = "[::]:3903"
+admin_token = "{{ .GARAGE_ADMIN_TOKEN }}"
+metrics_token = "{{ .GARAGE_METRICS_TOKEN }}"
