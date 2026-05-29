@@ -88,3 +88,13 @@
 | storage | staticgarage-webui | static-garage-ui.cloudjur.com | Platform Infrastructure |
 | storage | staticgarage-wiki-web | wiki.cloudjur.com | None |
 | volsync-system | kopia | kopia.cloudjur.com | Platform Infrastructure |
+| database | mosquitto | mosquitto.cloudjur.com | None |
+| database | postgres-lb | postgres.cloudjur.com | None |
+| default | rustdesk-relay | rustdesk-relay.cloudjur.com | None |
+| default | rustdesk-server | rustdesk.cloudjur.com | None |
+| downloads | qbittorrent-bittorrent | 50413 | None |
+| kube-system | kube-api | k8s.cloudjur.com | None |
+| media | slskd-soulseek | 50429 | None |
+| media | syncthing-listen | 21027 | None |
+| network | envoy-external | external.cloudjur.com | None |
+| network | envoy-internal | internal.cloudjur.com | None |

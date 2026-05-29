@@ -102,12 +102,21 @@
 ```
 
 
+- 10.10.30.9 - media/syncthing-listen (port: unknown)
+- 10.10.30.11 - database/postgres-lb (port: 5432)
+- 10.10.30.12 - database/mosquitto (port: 1883)
+- 10.10.30.13 - downloads/qbittorrent-bittorrent (port: unknown)
 - 10.10.30.14 - media/plex (port: 32400)
 - 10.10.30.15 - media/filebrowser (port: 80)
 - 10.10.30.16 - home-automation/frigate (port: 5000)
 - 10.10.30.17 - media/jellyfin (port: 8096)
 - 10.10.30.18 - media/seerr (port: 80)
 - 10.10.30.19 - media/calibre-web-automated (port: 8083)
+- 10.10.30.20 - default/rustdesk-server (port: 21114)
+- 10.10.30.21 - default/rustdesk-relay (port: 21117)
+- 10.10.30.25 - network/envoy-internal (port: 80)
+- 10.10.30.26 - network/envoy-external (port: 80)
+- 10.10.30.30 - kube-system/kube-api (port: 6443)
 - 10.10.30.38 - ai/ollama (port: 11434)
 - 10.10.30.39 - default/it-tools (port: 80)
 - 10.10.30.43 - downloads/lidarr (port: 80)
@@ -129,4 +138,5 @@
 - 10.10.30.60 - storage/staticgarage (port: 3903)
 - 10.10.30.61 - storage/staticgarage-webui (port: 3909)
 - 10.10.30.69 - flux-system/headlamp (port: 80)
+- 10.10.30.77 - media/slskd-soulseek (port: unknown)
 ```
