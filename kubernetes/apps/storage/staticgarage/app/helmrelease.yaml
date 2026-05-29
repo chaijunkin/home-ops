@@ -74,7 +74,7 @@ spec:
           - filters:
             - type: URLRewrite
               urlRewrite:
-                hostname: "schema.cloudjur.com"
+                hostname: "schema"
       wiki-web:
         hostnames:
           - "wiki.cloudjur.com"
