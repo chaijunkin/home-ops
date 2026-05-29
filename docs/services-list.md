@@ -18,7 +18,7 @@
 | default | homepage | h.cloudjur.com | Utility Service |
 | default | it-tools | it-tools.cloudjur.com | Utility Service |
 | default | karakeep | karakeep.cloudjur.com | Utility Service |
-| default | n8n-app | n8n.cloudjur.com | Utility Service |
+| default | n8n-app | n8n.cloudjur.com | Other Services |
 | default | n8n-webhooks | n8n-webhook.cloudjur.com | None |
 | default | searxng | search.cloudjur.com | Application Service |
 | default | sure | sure.cloudjur.com | None |
@@ -42,12 +42,12 @@
 | downloads | sonarr | sonarr.cloudjur.com | Downloads Service |
 | downloads | webhook | webhook.cloudjur.com | Other Services |
 | flux-system | flux-operator | flux-operator.cloudjur.com | Platform Infrastructure |
-| flux-system | github-webhook | flux-webhook.cloudjur.com | None |
+| flux-system | github-webhook | flux-webhook.cloudjur.com | Other Services |
 | flux-system | headlamp | headlamp.cloudjur.com | Platform Infrastructure |
 | home-automation | frigate | frigate.cloudjur.com | Media Service |
 | home-automation | home-assistant-app | hass.cloudjur.com | Application Service |
 | home-automation | home-assistant-app | home-assistant.cloudjur.com | Application Service |
-| home-automation | home-assistant-codeserver | hass-code.cloudjur.com | None |
+| home-automation | home-assistant-codeserver | hass-code.cloudjur.com | Management tools |
 | media | calibre-web-automated | books.cloudjur.com | Media Service |
 | media | filebrowser | filebrowser.cloudjur.com | Platform Infrastructure |
 | media | jellyfin | jellyfin.cloudjur.com | Media Service |
@@ -62,7 +62,7 @@
 | media | slskd | slskd.cloudjur.com | Downloads Service |
 | media | syncthing | syncthing.cloudjur.com | Application Service |
 | media | tautulli | tautulli.cloudjur.com | Media Service |
-| media | watchstate | watchstate.cloudjur.com | Media Services |
+| media | watchstate | watchstate.cloudjur.com | Media Service |
 | network | adguard | adguard.cloudjur.com | Network Infrastructure |
 | network | echo-server-ext | echo-server-ext.cloudjur.com | Management Tools |
 | network | echo-server-ext-auth | echo-server-ext-auth.cloudjur.com | Management Tools |
@@ -81,10 +81,10 @@
 | security | authentik | auth.cloudjur.com | Platform Infrastructure |
 | storage | garage-api | garage.cloudjur.com | None |
 | storage | garage-s3 | s3.cloudjur.com | None |
-| storage | garage-webui | garage-ui.cloudjur.com | None |
+| storage | garage-webui | garage-ui.cloudjur.com | Platform Infrastructure |
 | storage | staticgarage-api | static-garage.cloudjur.com | None |
 | storage | staticgarage-s3 | static-s3.cloudjur.com | None |
 | storage | staticgarage-schema-web | schema.cloudjur.com | None |
-| storage | staticgarage-webui | static-garage-ui.cloudjur.com | None |
+| storage | staticgarage-webui | static-garage-ui.cloudjur.com | Platform Infrastructure |
 | storage | staticgarage-wiki-web | wiki.cloudjur.com | None |
 | volsync-system | kopia | kopia.cloudjur.com | Platform Infrastructure |
