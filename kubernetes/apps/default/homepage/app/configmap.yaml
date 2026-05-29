@@ -51,7 +51,7 @@ data:
             description: Backup Password manager
             href: https://vault.bitwarden.com/#/login
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/bitwarden.png
-        - Piano LED Visualizer
+        - Piano LED Visualizer:
             description: Piano Led Visualizer
             href: https://plv.cloudjur.com
             icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/lidarr.png
