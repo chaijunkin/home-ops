@@ -112,3 +112,8 @@ gitleaks-run:
     gitleaks git --report-path gitleaks-report.json .
 
 # default gitleaks will run on git, will run on `dir` on demand
+[group: 'Repository']
+[doc('Manage and generate IPAM lists and Homepage services')]
+[script]
+ipam:
+    bash scripts/httproute-csv.sh

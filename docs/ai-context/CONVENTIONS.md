@@ -257,3 +257,45 @@ For HelmReleases utilizing the `app-template` chart:
 4. [Alphabetical keys...]
 5. `globalMounts` (last)
 6. `advancedMounts` (last)
+
+### Capsule: HomepageIntegration
+
+**Invariant**
+All services with a web endpoint MUST be integrated into Homepage using the `gethomepage.dev` annotations.
+
+**Annotations Requirements**
+Based on existing usage across the cluster, the following annotations govern the Homepage standard:
+
+1. **Compulsory Annotations**:
+   - `gethomepage.dev/enabled: "true"`
+   - `gethomepage.dev/name: "..."` (The display name of the service)
+   - `gethomepage.dev/group: "..."` (The layout group on the dashboard)
+   - `gethomepage.dev/icon: "..."` (An `mdi-*` icon or custom dashboard-icons path)
+
+2. **Highly Recommended Annotations**:
+   - `gethomepage.dev/description: "..."` (Used by 84% of services, provide a concise 2-5 word descriptor)
+
+**Approved Groups (Categories)**
+You must assign the service to one of the following established layout groups:
+- `Downloads Service` (e.g., Radarr, Sonarr)
+- `Application Service` (e.g., Cyberchef, IT-Tools)
+- `Utility Service` (e.g., Filebrowser, ConvertX)
+- `Other Services` - For API, Query-only, and Webhook endpoints without standard GUIs (e.g., flux-webhook, echo-server)
+- `Observability Service` (e.g., Grafana, Gatus)
+- `Media Service` (e.g., Jellyfin, Plex)
+- `Platform Infrastructure` (e.g., Minio, PostgreSQL)
+- `Management Tools` (e.g., PGAdmin)
+- `Network Infrastructure` (e.g., Unifi, AdGuard)
+
+**Placement**
+Place the annotations on the `route.app.annotations` section of the `app-template` chart values, or directly on `HTTPRoute` metadata for vendor charts.
+
+**Example**
+```yaml
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: "Other Services"
+          gethomepage.dev/name: "Flux Webhook"
+          gethomepage.dev/icon: "mdi-api"
+          gethomepage.dev/description: "Webhook receiver for FluxCD"
+```

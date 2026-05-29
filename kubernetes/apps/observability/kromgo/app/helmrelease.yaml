@@ -78,6 +78,10 @@ spec:
         annotations:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 200"]
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Observability Service
+          gethomepage.dev/name: kromgo
+          gethomepage.dev/icon: mdi-api
         rules:
           - backendRefs:
               - identifier: app

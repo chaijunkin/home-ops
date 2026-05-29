@@ -39,3 +39,9 @@ tasks:
       - git reset --hard HEAD
       - git clean -f -d
       - git pull origin main
+
+  ipam:
+    desc: Manage and generate IPAM lists and Homepage services
+    cmd: bash {{.SCRIPTS_DIR}}/httproute-csv.sh
+    preconditions:
+      - test -f {{.SCRIPTS_DIR}}/httproute-csv.sh

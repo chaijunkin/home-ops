@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Generate CSV of HTTPRoute hostnames, their backend service and LB IP/port, and
-# update docs/cilium-ipam.md with lists. CSV format: title,subtitle,args
+# Generate CSV of HTTPRoute hostnames, their backend service and LB IP/port,
+# update docs/cilium-ipam.md with lists, and generate docs/services-list.md.
+# CSV format: title,subtitle,args
 # where args is a compact JSON string with details.
 # Requires: kubectl, jq
 
 OUT_CSV="docs/httproutes.csv"
+SVC_MD="docs/services-list.md"
 TMP_JSON=$(mktemp)
 RESV_TMP=$(mktemp)
+MISSING_TMP=$(mktemp)
 
 if ! command -v kubectl >/dev/null 2>&1; then
   echo "kubectl not found in PATH" >&2
@@ -24,20 +27,26 @@ kubectl get httproute -A -o json > "$TMP_JSON"
 
 echo "title,subtitle,args" > "$OUT_CSV"
 
-# Produce lines with host,namespace,httproute,parent,backendName,backendPort
+echo "# Services List" > "$SVC_MD"
+echo "| Namespace | App | URL | Homepage Group |" >> "$SVC_MD"
+echo "| --- | --- | --- | --- |" >> "$SVC_MD"
+
+# Produce lines with host,namespace,httproute,parent,backendName,backendPort,homepageEnabled,homepageGroup
 jq -r '
   .items[] as $r |
   ($r.spec.hostnames // [])[] as $h |
   ($r.metadata.namespace // "default") as $ns |
   ($r.metadata.name) as $name |
   (($r.spec.parentRefs // [])[]?.name // "") as $parent |
+  ($r.metadata.annotations["gethomepage.dev/enabled"] // "false") as $hp_enabled |
+  ($r.metadata.annotations["gethomepage.dev/group"] // "None") as $hp_group |
   (
     ($r.spec.rules // [])[]?.backendRefs[]? // [] |
     select(. != null) |
     ( .name // .backendRef?.name // "" ) as $bname |
     ( .port // .backendRef?.port?.number // .backendRef?.port // null ) as $bport |
-    "\($h)\t\($ns)\t\($name)\t\($parent)\t\($bname)\t\($bport)"
-  )' "$TMP_JSON" | while IFS=$'\t' read -r host ns name parent backend backendPort; do
+    "\($h)\t\($ns)\t\($name)\t\($parent)\t\($bname)\t\($bport)\t\($hp_enabled)\t\($hp_group)"
+  )' "$TMP_JSON" | while IFS=$'\t' read -r host ns name parent backend backendPort hp_enabled hp_group; do
   # Normalize empty backend
   backend=${backend:-}
   backendPort=${backendPort:-}
@@ -102,14 +111,29 @@ jq -r '
   # CSV-quote fields
   printf '"%s","%s","%s"\n' "$title" "$subtitle" "$args_field" >> "$OUT_CSV"
 
+  # Update services list markdown
+  printf '| %s | %s | %s | %s |\n' "$ns" "$name" "$host" "$hp_group" >> "$SVC_MD"
+
+  # Track missing homepage annotations
+  if [[ "$hp_enabled" != "true" ]]; then
+    printf -- '- %s/%s (%s)\n' "$ns" "$name" "$host" >> "$MISSING_TMP"
+  fi
+
   # If we found a LB ip, mark service as reserved (append to temp)
   if [[ -n "$lb_ip" ]]; then
     # store plain IP (no backticks/escaping) for later safe insertion
-  printf -- '- %s - %s/%s (port: %s)\n' "$lb_ip" "$ns" "$backend" "${svc_port:-unknown}" >> "$RESV_TMP"
+    printf -- '- %s - %s/%s (port: %s)\n' "$lb_ip" "$ns" "$backend" "${svc_port:-unknown}" >> "$RESV_TMP"
   fi
 done
 
 echo "Wrote $OUT_CSV"
+echo "Wrote $SVC_MD"
+
+if [[ -s "$MISSING_TMP" ]]; then
+  echo -e "\nWARNING: The following services are missing homepage annotations (gethomepage.dev/enabled: \"true\"):"
+  cat "$MISSING_TMP" | sort | uniq
+  echo -e "\nPlease update their HTTPRoute or HelmRelease values to include the required annotations."
+fi
 
 # Also append lists to docs/cilium-ipam.md (external/internal) based on parent refs
 EXT_MD=$(mktemp)
@@ -118,9 +142,9 @@ INT_MD=$(mktemp)
 jq -r '.items[] as $r | ($r.spec.hostnames // [])[] as $h | ($r.metadata.namespace // "default") as $ns | ($r.metadata.name) as $name | (($r.spec.parentRefs // [])[]?.name // "") as $parent | "\($h)\t\($ns)\t\($name)\t\($parent)"' "$TMP_JSON" | \
 while IFS=$'\t' read -r host ns name parent; do
   if [[ "$parent" == *external* ]]; then
-  printf -- '- `%s` - %s/%s (parent: %s)\n' "$host" "$ns" "$name" "$parent" >> "$EXT_MD"
+    printf -- '- `%s` - %s/%s (parent: %s)\n' "$host" "$ns" "$name" "$parent" >> "$EXT_MD"
   elif [[ "$parent" == *internal* ]]; then
-  printf -- '- `%s` - %s/%s (parent: %s)\n' "$host" "$ns" "$name" "$parent" >> "$INT_MD"
+    printf -- '- `%s` - %s/%s (parent: %s)\n' "$host" "$ns" "$name" "$parent" >> "$INT_MD"
   fi
 done
 
@@ -143,7 +167,7 @@ cat > docs/cilium-ipam.md <<'DOCS'
 DOCS
 
 if [[ -s "$EXT_MD" ]]; then
-  cat "$EXT_MD" >> docs/cilium-ipam.md
+  sort "$EXT_MD" | uniq >> docs/cilium-ipam.md
 else
   echo "_None found_" >> docs/cilium-ipam.md
 fi
@@ -154,7 +178,7 @@ cat >> docs/cilium-ipam.md <<'DOCS'
 DOCS
 
 if [[ -s "$INT_MD" ]]; then
-  cat "$INT_MD" >> docs/cilium-ipam.md
+  sort "$INT_MD" | uniq >> docs/cilium-ipam.md
 else
   echo "_None found_" >> docs/cilium-ipam.md
 fi
@@ -166,21 +190,18 @@ cat >> docs/cilium-ipam.md <<'DOCS'
 DOCS
 
 for rl in "${_reserved_lines[@]:-}"; do
-  printf '%s
-' "$rl" >> docs/cilium-ipam.md
+  printf '%s\n' "$rl" >> docs/cilium-ipam.md
 done
 
 if [[ -s "$RESV_TMP" ]]; then
-  printf '%s
-' "" >> docs/cilium-ipam.md
-  sort -V -t' ' -k2 "$RESV_TMP" >> docs/cilium-ipam.md
+  printf '\n' >> docs/cilium-ipam.md
+  sort -V -t' ' -k2 "$RESV_TMP" | uniq >> docs/cilium-ipam.md
 fi
 
 cat >> docs/cilium-ipam.md <<'DOCS'
 ```
 DOCS
 
-rm -f "$TMP_JSON" "$EXT_MD" "$INT_MD"
-rm -f "$RESV_TMP"
+rm -f "$TMP_JSON" "$EXT_MD" "$INT_MD" "$RESV_TMP" "$MISSING_TMP"
 
 echo "Updated docs/cilium-ipam.md"

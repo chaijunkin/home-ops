@@ -242,3 +242,7 @@ data:
         tab: Platform
         style: column
         icon: mdi-toolbox
+      Other Services:
+        tab: Platform
+        style: column
+        icon: mdi-api

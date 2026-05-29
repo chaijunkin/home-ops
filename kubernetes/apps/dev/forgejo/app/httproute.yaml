@@ -5,10 +5,10 @@ metadata:
   name: forgejo
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Development
+    gethomepage.dev/group: Platform Infrastructure
     gethomepage.dev/name: Forgejo
     gethomepage.dev/description: Self-hosted Git service
-    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/gitea.png
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/forgejo.png
 spec:
   hostnames:
     - git.cloudjur.com

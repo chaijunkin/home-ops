@@ -76,6 +76,11 @@ spec:
           - backendRefs:
               - port: 3000
                 name: *app
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: homepage
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/homepage.png
     persistence:
       config:
         enabled: true

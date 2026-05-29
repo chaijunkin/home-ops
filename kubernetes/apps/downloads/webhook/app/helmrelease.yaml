@@ -76,3 +76,8 @@ spec:
           - backendRefs:
               - port: *port
                 name: webhook
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Other Services
+          gethomepage.dev/name: webhook
+          gethomepage.dev/icon: mdi-api

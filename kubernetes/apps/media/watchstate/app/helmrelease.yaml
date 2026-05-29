@@ -65,6 +65,11 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Services
+          gethomepage.dev/name: watchstate
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/watchstate.png
     persistence:
       config:
         existingClaim: "{{ .Release.Name }}"

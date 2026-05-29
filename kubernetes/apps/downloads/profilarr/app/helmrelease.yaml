@@ -73,6 +73,11 @@ spec:
             namespace: network
         hostnames:
           - profilarr.cloudjur.com
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Downloads Service
+          gethomepage.dev/name: profilarr
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/profilarr.png
     persistence:
       config:
         type: persistentVolumeClaim

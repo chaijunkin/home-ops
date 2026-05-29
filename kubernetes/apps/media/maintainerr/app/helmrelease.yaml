@@ -20,7 +20,6 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
-
         containers:
           app:
             image:
@@ -42,19 +41,16 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 512Mi
-
     service:
       app:
         ports:
           http:
             port: &port 6246
-
     persistence:
       data:
         existingClaim: maintainerr-data
         globalMounts:
           - path: /opt/data
-
     route:
       app:
         hostnames:
@@ -63,3 +59,8 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media Service
+          gethomepage.dev/name: maintainerr
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/mmaintainerr.png
