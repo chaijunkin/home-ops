@@ -94,11 +94,8 @@
 - `static-garage.cloudjur.com` - storage/staticgarage-api (parent: envoy-internal)
 - `static-s3.cloudjur.com` - storage/staticgarage-s3 (parent: envoy-internal)
 - `schema.cloudjur.com` - storage/staticgarage-schema-s3-web (parent: envoy-internal)
-- `schema.web.cloudjur.com` - storage/staticgarage-schema-s3-web (parent: envoy-internal)
-- `web.cloudjur.com` - storage/staticgarage-web (parent: envoy-internal)
 - `static-garage-ui.cloudjur.com` - storage/staticgarage-webui (parent: envoy-internal)
 - `wiki.cloudjur.com` - storage/staticgarage-wiki-s3-web (parent: envoy-internal)
-- `wiki.web.cloudjur.com` - storage/staticgarage-wiki-s3-web (parent: envoy-internal)
 - `kopia.cloudjur.com` - volsync-system/kopia (parent: envoy-internal)
 
 #### Reserved IPs (excerpt)
