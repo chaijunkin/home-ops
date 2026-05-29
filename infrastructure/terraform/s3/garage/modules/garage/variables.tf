@@ -25,3 +25,9 @@ variable "website_config_error_document" {
   type    = string
   default = "error.html"
 }
+
+variable "public_domain" {
+  type        = string
+  description = "Public domain for the bucket alias, e.g. cloudjur.com"
+  default     = "cloudjur.com"
+}
