@@ -71,37 +71,37 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3-web
-      # schema-s3-web:
-      #   # annotations:
-      #   #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
-      #   #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
-      #   #     wiki.cloudjur.com
-      #   hostnames:
-      #     - schema.cloudjur.com
-      #     - schema.web.cloudjur.com
-      #   parentRefs:
-      #     - name: envoy-internal
-      #       namespace: network
-      #   rules:
-      #     - backendRefs:
-      #         - identifier: app
-      #           port: s3-web
-      # wiki-s3-web:
-      #   # annotations:
-      #   #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
-      #   #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
-      #   #     wiki.cloudjur.com
-      #   hostnames:
-      #     - wiki.cloudjur.com
-      #     - wiki.web.cloudjur.com
-      #     # - wiki.cloudjur.com
-      #   parentRefs:
-      #     - name: envoy-internal
-      #       namespace: network
-      #   rules:
-      #     - backendRefs:
-      #         - identifier: app
-      #           port: s3-web
+      schema-s3-web:
+        # annotations:
+        #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
+        #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
+        #     wiki.cloudjur.com
+        hostnames:
+          - schema.cloudjur.com
+          - schema.web.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3-web
+      wiki-s3-web:
+        # annotations:
+        #   external-dns.kubernetes.io/gateway-hostname-source: annotation-only
+        #   external-dns.kubernetes.io/hostname: schema.cloudjur.com,
+        #     wiki.cloudjur.com
+        hostnames:
+          - wiki.cloudjur.com
+          - wiki.web.cloudjur.com
+          # - wiki.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3-web
       api:
         hostnames:
           - static-garage.cloudjur.com
