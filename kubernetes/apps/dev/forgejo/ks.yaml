@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
-      # Add ../../../../components/anubis when switching to envoy-external
+    - ../../../../components/anubis
   dependsOn:
     - name: openebs
       namespace: storage
@@ -24,9 +24,9 @@ spec:
       APP_UID: "1000"
       APP_GID: "1000"
       VOLSYNC_CAPACITY: 10Gi
-      # Uncomment when adding anubis (external mode):
-      # ANUBIS_TARGET: http://forgejo-http.dev.svc.cluster.local:3000
-      # ANUBIS_MEM_LIMIT: 384Mi
+      ANUBIS_TARGET: http://forgejo-http.dev.svc.cluster.local:3000
+      ANUBIS_MEM_LIMIT: 384Mi
+      APP_KEY_ID: "6371b847-50bf-4ac2-90ae-6cf2f41e5e68"
   prune: true
   retryInterval: 2m
   sourceRef:
