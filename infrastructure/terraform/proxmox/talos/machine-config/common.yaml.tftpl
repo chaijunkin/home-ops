@@ -104,7 +104,7 @@ cluster:
         cpu: "500m"
         memory: "2Gi"
       limits:
-        memory: "2Gi"
+        memory: "10Gi"
     image: registry.k8s.io/kube-apiserver:${kubernetes_version}
     auditPolicy:
       apiVersion: audit.k8s.io/v1
