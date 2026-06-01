@@ -75,6 +75,34 @@ spec:
           - backendRefs:
               - identifier: app
                 port: api
+      schema-web:
+        hostnames:
+          - "schema.cloudjur.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3-web
+          # - filters:
+          #   - type: URLRewrite
+          #     urlRewrite:
+          #       hostname: "schema"
+      wiki-web:
+        hostnames:
+          - "wiki.cloudjur.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: s3-web
+          # - filters:
+          #   - type: URLRewrite
+          #     urlRewrite:
+          #       hostname: "wiki"
     persistence:
       config:
         type: secret
