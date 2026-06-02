@@ -19,6 +19,7 @@ spec:
     defaultPodOptions:
       labels:
         setGateway: "true"
+      # 172.16.0.0/12 - remove local auth
       annotations:
         setGateway: "true"
         # TODO: convert from glueten to router-based routing
