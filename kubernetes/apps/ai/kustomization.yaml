@@ -15,4 +15,5 @@ resources:
     # - ./memory-mcp/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
+  - ./searxng-mcp/ks.yaml
   - ./toolhive/ks.yaml
