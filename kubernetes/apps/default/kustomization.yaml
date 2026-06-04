@@ -10,7 +10,7 @@ resources:
   - ./convertx/ks.yaml
   - ./cyberchef/ks.yaml
   - ./changedetection/ks.yaml
-  - ./firefly/ks.yaml
+  # - ./firefly/ks.yaml
   - ./freshrss/ks.yaml
   - ./glance/ks.yaml
   - ./homepage/ks.yaml

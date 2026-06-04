@@ -43,13 +43,16 @@ spec:
               PORT: &port 3000
               SELF_HOSTED: "true"
               ONBOARDING_STATE: open
-              APP_DOMAIN: https://sure.cloudjur.com
+              APP_DOMAIN: https://money.cloudjur.com
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
               RAILS_ENV: production
               REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/10
               RAILS_MAX_THREADS: "1"
               MALLOC_ARENA_MAX: "1"
+              AI_DEBUG_MODE: "false"
+              OIDC_ISSUER: https://money.cloudjur.com/application/o/sure/
+              OIDC_REDIRECT_URI: https://money.cloudjur.com/auth/openid_connect/callback
             # probes:
             #   startup:
             #     enabled: true
@@ -111,7 +114,7 @@ spec:
             env:
               SELF_HOSTED: "true"
               ONBOARDING_STATE: open
-              APP_DOMAIN: https://sure.cloudjur.com
+              APP_DOMAIN: https://money.cloudjur.com
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
               RAILS_ENV: production
@@ -134,7 +137,7 @@ spec:
 
     route:
       web:
-        hostnames: [sure.cloudjur.com]
+        hostnames: [money.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -143,6 +146,12 @@ spec:
           - backendRefs:
               - identifier: web
                 port: *port
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Application Service
+          gethomepage.dev/name: sure
+          gethomepage.dev/description: Personal finance service
+          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/sure.png
 
     persistence:
       storage:

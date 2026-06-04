@@ -135,7 +135,7 @@ locals {
       client_id         = var.romm_id
       client_secret     = var.romm_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/romm.svg"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/romm.svg"
       redirect_uri      = "https://romm.${var.public_domain}/api/oauth/openid"
       launch_url        = "https://romm.${var.public_domain}/"
       property_mappings = local.default_property_mappings
@@ -144,7 +144,7 @@ locals {
       client_id         = var.jellyfin_id
       client_secret     = var.jellyfin_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/jellyfin.svg"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/jellyfin.svg"
       redirect_uri      = "https://jellyfin.${var.public_domain}/sso/OID/redirect/authentik"
       launch_url        = "https://jellyfin.${var.public_domain}/sso/OID/start/authentik"
       property_mappings = local.default_property_mappings
@@ -189,9 +189,18 @@ locals {
       client_id         = var.vaultwarden_id
       client_secret     = var.vaultwarden_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/vaultwarden.svg"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/vaultwarden.svg"
       redirect_uri  = "https://vw.${var.public_domain}/identity/connect/oidc-signin"
       launch_url    = "https://vw.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
+    sure = {
+      client_id         = var.sure_id
+      client_secret     = var.sure_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/sure.svg"
+      redirect_uri  = "https://money.${var.public_domain}/auth/openid_connect/callback"
+      launch_url    = "https://money.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
   }

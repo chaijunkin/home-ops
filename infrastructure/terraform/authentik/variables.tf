@@ -5,17 +5,17 @@ variable "public_domain" {
   sensitive   = true
 }
 
-# variable "gitops_id" {
-#   type        = string
-#   description = "Weave-Gitops Client ID"
-#   sensitive   = true
-# }
+variable "sure_id" {
+  type        = string
+  description = "Sure Client ID"
+  sensitive   = true
+}
 
-# variable "gitops_secret" {
-#   type        = string
-#   description = "Weave-Gitops Client Secret"
-#   sensitive   = true
-# }
+variable "sure_secret" {
+  type        = string
+  description = "Sure Client Secret"
+  sensitive   = true
+}
 
 variable "grafana_cloud_id" {
   type        = string
