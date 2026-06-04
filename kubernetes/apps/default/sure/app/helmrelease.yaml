@@ -26,6 +26,8 @@ spec:
 
     controllers:
       web:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image: &img
@@ -113,6 +115,8 @@ spec:
               - secretRef:
                   name: sure-secret
       worker:
+        annotations:
+          reloader.stakater.com/auto: "true"
         initContainers:
           init-db:
             image:
