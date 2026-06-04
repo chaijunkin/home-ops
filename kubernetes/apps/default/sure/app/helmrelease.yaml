@@ -17,28 +17,25 @@ spec:
   values:
     defaultPodOptions:
       enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
 
     controllers:
       web:
-        initContainers:
-          init-db:
-            image:
-              repository: ghcr.io/onedr0p/postgres-init
-              tag: 16
-              pullPolicy: IfNotPresent
-            envFrom:
-              - secretRef:
-                  name: sure-secret
         containers:
           app:
-            image:
+            image: &img
               repository: ghcr.io/we-promise/sure
               tag: stable@sha256:67089f799ac99ca65266d7d218d2207aa19fef1fda562fc2797ef04ee858b71a
             envFrom:
               - secretRef:
                   name: sure-secret
 
-            env:
+            env: &env
               TZ: Asia/Kuala_Lumpur
               PORT: &port 3000
               SELF_HOSTED: "true"
@@ -53,42 +50,68 @@ spec:
               AI_DEBUG_MODE: "false"
               OIDC_ISSUER: https://money.cloudjur.com/application/o/sure/
               OIDC_REDIRECT_URI: https://money.cloudjur.com/auth/openid_connect/callback
-            # probes:
-            #   startup:
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       tcpSocket:
-            #         port: *port
-            #       initialDelaySeconds: 10
-            #       periodSeconds: 10
-            #       timeoutSeconds: 5
-            #       failureThreshold: 30
-            #   liveness:
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       tcpSocket:
-            #         port: *port
-            #       periodSeconds: 30
-            #       timeoutSeconds: 5
-            #       failureThreshold: 5
-            #   readiness:
-            #     enabled: true
-            #     custom: true
-            #     spec:
-            #       tcpSocket:
-            #         port: *port
-            #       periodSeconds: 10
-            #       timeoutSeconds: 5
-            #       failureThreshold: 6
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /up
+                    port: &port 3000
+                  initialDelaySeconds: 20
+                  periodSeconds: 10
+                  timeoutSeconds: 2
+                  failureThreshold: 6
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /up
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 5
+                  timeoutSeconds: 2
+                  failureThreshold: 6
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /up
+                    port: *port
+                  failureThreshold: 10
+                  periodSeconds: 5
             resources:
               requests:
-                cpu: 50m
-                memory: 64Mi
+                cpu: 100m
+                memory: 256Mi
               limits:
                 memory: 2Gi
-
+            securityContext: &sec
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: {drop: ["ALL"]}
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+              pullPolicy: IfNotPresent
+            envFrom:
+              - secretRef:
+                  name: sure-secret
+          migration:
+            image: *img
+            command:
+              - "bash"
+              - "-lc"
+            args: |
+              DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:prepare
+            env: *env
+            envFrom:
+              - secretRef:
+                  name: sure-secret
       worker:
         initContainers:
           init-db:
@@ -101,9 +124,7 @@ spec:
                   name: sure-secret
         containers:
           app:
-            image:
-              repository: ghcr.io/we-promise/sure
-              tag: stable
+            image: *img
             command:
               - bundle
               - exec
@@ -111,22 +132,14 @@ spec:
             envFrom:
               - secretRef:
                   name: sure-secret
-            env:
-              SELF_HOSTED: "true"
-              ONBOARDING_STATE: open
-              APP_DOMAIN: https://money.cloudjur.com
-              RAILS_ASSUME_SSL: "true"
-              RAILS_FORCE_SSL: "false"
-              RAILS_ENV: production
-              REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/10
-              RAILS_MAX_THREADS: "1"
-              MALLOC_ARENA_MAX: "1"
+            env: *env
             resources:
               requests:
                 cpu: 25m
                 memory: 64Mi
               limits:
                 memory: 1Gi
+            securityContext: *sec
 
     service:
       web:
