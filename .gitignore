@@ -90,3 +90,4 @@ httproutes.csv
 .terraform.lock.hcl
 .reference
 gitleaks-report.json
+.bw-provider-state

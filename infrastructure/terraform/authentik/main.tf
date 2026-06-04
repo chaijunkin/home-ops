@@ -4,6 +4,9 @@ terraform {
       source  = "goauthentik/authentik"
       version = "2025.12.1" # 2026.2.0 has bugged for system_setting enterprise_audit_include_expanded_diff
     }
+    # bitwarden-secrets = {
+    #   source = "registry.terraform.io/bitwarden/bitwarden-secrets"
+    # }
   }
 
   backend "s3" {
@@ -28,3 +31,10 @@ provider "authentik" {
   url   = "https://auth.${var.public_domain}"
   token = var.authentik_token
 }
+
+# provider "bitwarden-secrets" {
+#   api_url         = "https://api.bitwarden.com"
+#   identity_url    = "https://identity.bitwarden.com"
+#   # access_token    = "< secret machine account access token >" # BW_ACCESS_TOKEN
+#   # organization_id = "< your organization uuid >" # BW_ORGANIZATION_ID
+# }
