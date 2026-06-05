@@ -50,7 +50,7 @@ spec:
               RAILS_MAX_THREADS: "1"
               MALLOC_ARENA_MAX: "1"
               AI_DEBUG_MODE: "false"
-              OIDC_ISSUER: Authentik
+              OIDC_ISSUER: https://auth.cloudjur.com/application/o/sure/
               OIDC_REDIRECT_URI: https://money.cloudjur.com/auth/openid_connect/callback
             probes:
               liveness:
