@@ -217,7 +217,7 @@ locals {
       client_secret     = var.workadventure_secret
       group             = "users"
       icon_url          = "https://workadventu.re/img/logo.png"
-      redirect_uri  = "https://gather.${var.public_domain}/login-callback"
+      redirect_uri  = "https://gather.${var.public_domain}/openid-callback"
       launch_url    = "https://gather.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
