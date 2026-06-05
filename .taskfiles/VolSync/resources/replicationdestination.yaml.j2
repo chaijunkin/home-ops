@@ -11,7 +11,12 @@ spec:
     accessModes:
       - {{ ENV.ACCESS_MODES }}
     copyMethod: Direct
+    enableFileDeletion: true
+    cleanupTempPVC: true
+    cleanupCachePVC: true
     destinationPVC: {{ ENV.CLAIM }}
+    sourceIdentity:
+      sourceName: {{ ENV.APP }}
     moverSecurityContext:
       runAsUser: {{ ENV.PUID }}
       runAsGroup: {{ ENV.PGID }}

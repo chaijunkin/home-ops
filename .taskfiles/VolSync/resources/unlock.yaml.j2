@@ -1,4 +1,5 @@
 ---
+# THIS IS NOT NEEDED SINCE SWITCHED TO KOPIA
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -25,4 +26,4 @@ spec:
         - name: repository
           nfs:
             server: smb.cloudjur.com
-            path: /tank/Apps/Minio/volsync
+            path: /tank/Apps/
