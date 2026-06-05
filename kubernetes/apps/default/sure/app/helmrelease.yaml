@@ -45,7 +45,7 @@ spec:
               APP_DOMAIN: https://money.cloudjur.com
               RAILS_ASSUME_SSL: "true"
               RAILS_FORCE_SSL: "false"
-              RAILS_ENV: development
+              RAILS_ENV: production
               REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/10
               RAILS_MAX_THREADS: "1"
               MALLOC_ARENA_MAX: "1"
