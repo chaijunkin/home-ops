@@ -18,7 +18,9 @@ _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/reno
 <div align="center">
 
 <!-- [![Home-Internet](https://img.shields.io/endpoint?url=https%3A%2F%2Fhealthchecks.io%2Fbadge%2Ff0288b6a-305e-4084-b492-bb0a54%2FKkxSOeO1-2.shields&style=for-the-badge&logo=ubiquiti&logoColor=white&label=Home%20Internet)](https://status.cloudjur.com)&nbsp;&nbsp; -->
-[[![Status-Page](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.cloudjur.com%2Fapi%2Fv1%2Fendpoints%2Fexternal_gatus%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=statuspage&logoColor=white&label=Status%20Page)](https://status.cloudjur.com)&nbsp;&nbsp;](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.cloudjur.com%2Fapi%2Fv1%2Fendpoints%2Fpublic_gatu%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=statuspage&logoColor=white&label=Status%20Page)](https://status.cloudjur.com/endpoints/public_gatus)
+[![Status-Page](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.cloudjur.com%2Fapi%2Fv1%2Fendpoints%2Fpublic_gatu%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=statuspage&logoColor=white&label=Status%20Page)](https://status.cloudjur.com/endpoints/public_gatus)&nbsp;&nbsp;
+
+
 <!-- [![Plex](https://img.shields.io/endpoint?url=https%3A%2F%2Fstatus.cloudjur.com%2Fapi%2Fv1%2Fendpoints%2Fexternal_plex%2Fhealth%2Fbadge.shields&style=for-the-badge&logo=plex&logoColor=white&label=Plex)](https://status.cloudjur.com/endpoints/external_plex) -->
 
 </div>
