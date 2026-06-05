@@ -46,6 +46,8 @@ spec:
         ports:
           s3:
             port: 3900
+          s3-web:
+            port: 3902
           api:
             port: 3903
     route:
