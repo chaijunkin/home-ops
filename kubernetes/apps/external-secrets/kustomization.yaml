@@ -7,4 +7,5 @@ components:
 resources:
   - ./namespace.yaml
   - ./bitwarden/ks.yaml
+  - ./bitwarden-sdk-server/ks.yaml
   - ./external-secrets/ks.yaml

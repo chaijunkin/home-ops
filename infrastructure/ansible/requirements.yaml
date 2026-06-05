@@ -8,6 +8,8 @@ collections:
     version: 12.6.0
   - name: community.sops
     version: 2.3.0
+  # - name: bitwarden.secrets
+  #   version: 1.0.1
   # - name: kubernetes.core
   #   version: 6.0.0
 # roles:
