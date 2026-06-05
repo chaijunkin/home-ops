@@ -1,0 +1,365 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: workadventure
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 15m
+  dependsOn: []
+  values:
+    defaultPodOptions:
+      securityContext:
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      play:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/thecodingmachine/workadventure-play
+              tag: v1.31.4
+            env:
+              WA_PROTO: https
+              WA_HOST: gather.cloudjur.com
+              REDIS_HOST: dragonfly.database.svc.cluster.local
+              ENABLE_MAP_EDITOR: "true"
+              JITSI_URL: https://meet.jit.si
+              MAX_PER_GROUP: "1000"
+              ENABLE_CHAT: "true"
+              ENABLE_CHAT_UPLOAD: "true"
+              ENABLE_TUTORIAL: "true"
+              UPLOAD_MAX_FILESIZE: "10485760"
+              API_URL: "{{ .Release.Name }}-back:50051"
+              ICON_URL: /icon
+              UPLOADER_URL: https://gather.cloudjur.com/uploader
+              PUSHER_URL: https://gather.cloudjur.com
+              FRONT_URL: https://gather.cloudjur.com
+              PUBLIC_MAP_STORAGE_URL: https://gather.cloudjur.com/map-storage
+              INTERNAL_MAP_STORAGE_URL: "http://{{ .Release.Name }}-mapstorage:3000"
+              ENABLE_OPENAPI_ENDPOINT: "true"
+              ROOM_API_PORT: "50051"
+              MAP_STORAGE_PATH_PREFIX: /map-storage
+              ALLOWED_CORS_ORIGIN: https://gather.cloudjur.com
+              DISABLE_ANONYMOUS: "true"
+              START_ROOM_URL: /_/global/workadventure.github.io/map-starter-kit/office.tmj
+              MATRIX_API_URI: http://synapse.workadventure.svc.cluster.local:8008/
+              MATRIX_PUBLIC_URI: https://matrix.cloudjur.com/
+              MATRIX_DOMAIN: matrix.cloudjur.com
+              MATRIX_ADMIN_USER: workadventure
+              STUN_SERVER: stun:turn.cloudjur.com:3478
+              TURN_SERVER: turn:turn.cloudjur.com:3478
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}"
+            ports:
+              - name: http
+                containerPort: 3000
+              - name: ws
+                containerPort: 3001
+              - name: grpc
+                containerPort: 50051
+            probes:
+              liveness: &httpPing3000
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: http
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+              readiness: *httpPing3000
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+      back:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          podManagementPolicy: Parallel
+        containers:
+          app:
+            image:
+              repository: docker.io/thecodingmachine/workadventure-back
+              tag: v1.31.5
+            env:
+              WA_PROTO: https
+              WA_HOST: gather.cloudjur.com
+              REDIS_HOST: dragonfly.database.svc.cluster.local
+              ENABLE_MAP_EDITOR: "true"
+              JITSI_URL: https://meet.jit.si
+              MAX_PER_GROUP: "1000"
+              ENABLE_CHAT: "true"
+              ENABLE_CHAT_UPLOAD: "true"
+              ENABLE_TUTORIAL: "true"
+              UPLOAD_MAX_FILESIZE: "10485760"
+              PLAY_URL: https://gather.cloudjur.com
+              MAP_STORAGE_URL: "{{ .Release.Name }}-mapstorage:50053"
+              INTERNAL_MAP_STORAGE_URL: "http://{{ .Release.Name }}-mapstorage:3000"
+              PUBLIC_MAP_STORAGE_URL: https://gather.cloudjur.com/map-storage
+              STORE_VARIABLES_FOR_LOCAL_MAPS: "true"
+              PLAYER_VARIABLES_MAX_TTL: "-1"
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: grpc
+                containerPort: 50051
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+      mapstorage:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init:
+            image:
+              repository: docker.io/library/alpine
+              tag: "3.23"
+            command: ["/bin/sh", "-c", "chown -R 1000:1000 /maps"]
+            securityContext:
+              runAsUser: 0
+        containers:
+          app:
+            image:
+              repository: docker.io/thecodingmachine/workadventure-map-storage
+              tag: v1.31.5
+            env:
+              WA_PROTO: https
+              WA_HOST: gather.cloudjur.com
+              REDIS_HOST: dragonfly.database.svc.cluster.local
+              ENABLE_MAP_EDITOR: "true"
+              JITSI_URL: https://meet.jit.si
+              MAX_PER_GROUP: "1000"
+              ENABLE_CHAT: "true"
+              ENABLE_CHAT_UPLOAD: "true"
+              ENABLE_TUTORIAL: "true"
+              UPLOAD_MAX_FILESIZE: "10485760"
+              API_URL: "{{ .Release.Name }}-back:50051"
+              PATH_PREFIX: /map-storage
+              ENTITY_COLLECTION_URLS: "https://gather.cloudjur.com/collections/FurnitureCollection.json,https://gather.cloudjur.com/collections/OfficeCollection.json"
+              PUSHER_URL: /
+              ENABLE_BASIC_AUTHENTICATION: "true"
+              AUTHENTICATION_USER: admin
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}"
+            ports:
+              - name: http
+                containerPort: 3000
+              - name: grpc
+                containerPort: 50053
+            probes:
+              liveness: &mapstoragePing
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: http
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+              readiness: *mapstoragePing
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+      uploader:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: docker.io/thecodingmachine/workadventure-uploader
+              tag: v1.31.5
+            env:
+              WA_PROTO: https
+              WA_HOST: gather.cloudjur.com
+              REDIS_HOST: dragonfly.database.svc.cluster.local
+              ENABLE_MAP_EDITOR: "true"
+              JITSI_URL: https://meet.jit.si
+              MAX_PER_GROUP: "1000"
+              ENABLE_CHAT: "true"
+              ENABLE_CHAT_UPLOAD: "true"
+              ENABLE_TUTORIAL: "true"
+              UPLOAD_MAX_FILESIZE: "10485760"
+              UPLOADER_URL: https://gather.cloudjur.com/uploader
+              REDIS_PORT: "6379"
+              REDIS_DB_NUMBER: "5"
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}"
+            ports:
+              - name: http
+                containerPort: 8080
+            resources:
+              requests:
+                cpu: 20m
+                memory: 128Mi
+              limits:
+                memory: 512Mi
+      icon:
+        containers:
+          app:
+            image:
+              repository: docker.io/matthiasluedtke/iconserver
+              tag: v3.22.0
+            ports:
+              - name: http
+                containerPort: 8080
+            probes:
+              liveness: &iconProbe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: http
+                  periodSeconds: 30
+              readiness: *iconProbe
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+    persistence:
+      mapstorage-maps:
+        type: emptyDir
+        advancedMounts:
+          mapstorage:
+            init:
+              - path: /maps
+            app:
+              - path: /maps
+    route:
+      main:
+        hostnames: ["gather.cloudjur.com"]
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /ws
+            backendRefs:
+              - identifier: play
+                port: ws
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /api
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /
+            backendRefs:
+              - identifier: back
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /uploader
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /
+            backendRefs:
+              - identifier: uploader
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /icon
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /
+            backendRefs:
+              - identifier: icon
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /map-storage
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /
+            backendRefs:
+              - identifier: mapstorage
+                port: http
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /room-api
+            backendRefs:
+              - identifier: play
+                port: grpc
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: play
+                port: http
+    service:
+      play:
+        controller: play
+        ports:
+          http:
+            port: 3000
+          ws:
+            port: 3001
+          grpc:
+            port: 50051
+      back:
+        controller: back
+        ports:
+          http:
+            port: 8080
+          grpc:
+            port: 50051
+      mapstorage:
+        controller: mapstorage
+        ports:
+          http:
+            port: 3000
+          grpc:
+            port: 50053
+      uploader:
+        controller: uploader
+        ports:
+          http:
+            port: 8080
+      icon:
+        controller: icon
+        ports:
+          http:
+            port: 8080

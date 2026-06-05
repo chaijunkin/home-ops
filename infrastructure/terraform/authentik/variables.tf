@@ -232,3 +232,31 @@ variable "paperless_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "workadventure_id" {
+  type        = string
+  description = "WorkAdventure Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "workadventure_secret" {
+  type        = string
+  description = "WorkAdventure Client Secret"
+  sensitive   = true
+  default     = null
+}
+
+variable "matrix_id" {
+  type        = string
+  description = "Matrix Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "matrix_secret" {
+  type        = string
+  description = "Matrix Client Secret"
+  sensitive   = true
+  default     = null
+}

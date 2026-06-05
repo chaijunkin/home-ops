@@ -212,6 +212,24 @@ locals {
       launch_url    = "https://paperless.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
+    workadventure = {
+      client_id         = var.workadventure_id
+      client_secret     = var.workadventure_secret
+      group             = "users"
+      icon_url          = "https://workadventu.re/img/logo.png"
+      redirect_uri  = "https://gather.${var.public_domain}/login-callback"
+      launch_url    = "https://gather.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
+    matrix = {
+      client_id         = var.matrix_id
+      client_secret     = var.matrix_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/matrix.png"
+      redirect_uri  = "https://matrix.${var.public_domain}/_synapse/client/oidc/callback"
+      launch_url    = "https://matrix.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
   }
 }
 
