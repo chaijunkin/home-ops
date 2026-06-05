@@ -203,6 +203,15 @@ locals {
       launch_url    = "https://money.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
+    paperless = {
+      client_id         = var.paperless_id
+      client_secret     = var.paperless_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/paperless.svg"
+      redirect_uri  = "https://paperless.${var.public_domain}/accounts/oidc/authentik/login/callback/"
+      launch_url    = "https://paperless.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
   }
 }
 

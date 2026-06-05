@@ -218,3 +218,17 @@ variable "vaultwarden_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "paperless_id" {
+  type        = string
+  description = "Paperless Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "paperless_secret" {
+  type        = string
+  description = "Paperless Client Secret"
+  sensitive   = true
+  default     = null
+}

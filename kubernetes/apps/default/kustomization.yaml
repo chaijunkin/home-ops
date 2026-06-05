@@ -10,7 +10,6 @@ resources:
   - ./convertx/ks.yaml
   - ./cyberchef/ks.yaml
   - ./changedetection/ks.yaml
-  # - ./firefly/ks.yaml
   - ./freshrss/ks.yaml
   - ./glance/ks.yaml
   - ./homepage/ks.yaml
@@ -18,8 +17,9 @@ resources:
   - ./karakeep/ks.yaml
   - ./n8n/ks.yaml
     # - ./pdf-tool/ks.yaml
+  - ./paperless/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
-  - ./sure/ks.yaml # 800mib??
+  - ./sure/ks.yaml
   - ./thelounge/ks.yaml
   - ./tika/ks.yaml

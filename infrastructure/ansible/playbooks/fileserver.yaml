@@ -137,6 +137,7 @@
       loop:
         - /tank/Apps/Frigate
         - /tank/Apps/Minio
+        - /tank/Apps/Paperless
         - /tank/Apps/Garage
         - /tank/Apps/Garage/data
         - /tank/Apps/Garage/meta
