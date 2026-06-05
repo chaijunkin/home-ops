@@ -44,7 +44,7 @@ spec:
               PLAYMATCH_API_ENABLED: true
               TZ: Asia/Kuala_Lumpur
               ROMM_DB_DRIVER: postgresql
-              REDIS_HOST: dragonfly.database.svc.cluster.local
+              REDIS_HOST: dragonfly.database.svc.cluster.local/11
               REDIS_PORT: 6379
               REDIS_DB: 5
               OIDC_ENABLED: true

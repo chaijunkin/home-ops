@@ -41,7 +41,7 @@ spec:
           ENABLE_OPENID_SIGNUP: true
         queue:
           TYPE: redis
-          CONN_STR: redis://dragonfly.database.svc.cluster.local:6379?pool_size=100&idle_timeout=180s
+          CONN_STR: redis://dragonfly.database.svc.cluster.local:6379/3?pool_size=100&idle_timeout=180s
         repository:
           DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.actions
           DISABLED_REPO_UNITS: repo.ext_wiki,repo.ext_issues
@@ -81,7 +81,7 @@ spec:
           REQUIRE_SIGNIN_VIEW: false
         session:
           PROVIDER: redis
-          PROVIDER_CONFIG: redis://dragonfly.database.svc.cluster.local:6379?pool_size=100&idle_timeout=180s
+          PROVIDER_CONFIG: redis://dragonfly.database.svc.cluster.local:6379/3?pool_size=100&idle_timeout=180s
           SESSION_LIFE_TIME: "1209600"
         webhook:
           ALLOWED_HOST_LIST: "*"
