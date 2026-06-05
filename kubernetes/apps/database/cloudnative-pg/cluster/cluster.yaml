@@ -34,7 +34,7 @@ spec:
         action: labeldrop
   bootstrap:
     recovery:
-      source: &previousCluster postgres-v10
+      source: &previousCluster postgres-v11
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
@@ -47,7 +47,7 @@ spec:
       endpointURL: http://garage.storage.svc.cluster.local:3900
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster postgres-v11
+      serverName: &currentCluster postgres-v12
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret

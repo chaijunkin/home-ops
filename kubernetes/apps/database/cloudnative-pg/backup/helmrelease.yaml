@@ -51,6 +51,7 @@ spec:
               BACKUP_LATEST_TYPE: symlink
               POSTGRES_EXTRA_OPTS: -b -C -c -Z6
               POSTGRES_HOST: postgres-rw.database.svc.cluster.local
+              POSTGRES_DB: sure authentik
               SCHEDULE: "@daily"
               TZ: Asia/Kuala_Lumpur
             envFrom:
@@ -61,3 +62,8 @@ spec:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Backup/Database
+
+  # docker run --rm --tty --interactive \
+  # -v "$(pwd)/postgres-20260605.sql.gz:/tmp/backupfile.sql.gz" \
+  # postgres:16.2 \
+  # /bin/sh -c "zcat /tmp/backupfile.sql.gz | psql --host=10.10.30.11 --port=5432 --username=postgres --dbname=sure -W"
