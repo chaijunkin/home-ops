@@ -6,7 +6,9 @@ locals {
     # "volsync",
     "dragonfly",
     "postgresql",
-    "opencloud"
+    "opencloud",
+    "wiki",
+    "schema",
     # "tempo"
   ]
 }
@@ -16,6 +18,7 @@ module "buckets" {
   source      = "./modules/garage"
   bucket_name = each.key
   admin_user  = garage_key.admin_key.id
+  website_access_enabled = (each.key == "wiki" || each.key == "schema") ? true : false
 
   providers = {
     garage = garage
