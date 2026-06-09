@@ -103,7 +103,7 @@ spec:
                 port: s3-web
           - matches:
               - path:
-                  type: PathPrefix
+                  type: Exact
                   value: /assets/ # 🛑 Catches anyone trying to look at the directory itself
             filters:
               - type: RequestRedirect
@@ -112,6 +112,13 @@ spec:
                   path:
                     type: ReplaceFullPath
                     replaceFullPath: /index.html # Redirects them to Quartz's standard 404 page
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /assets/
+            backendRefs:
+              - identifier: app
+                port: s3-web
           - matches:
               # 1. The Nginx 'location' & 'if' statement translated to a single Regex
               - path:
