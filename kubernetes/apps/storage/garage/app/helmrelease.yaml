@@ -134,6 +134,13 @@ spec:
             backendRefs:
               - identifier: app
                 port: s3-web
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: / # 🌐 Now safely catches standard root page traffic last
+            backendRefs:
+              - identifier: app
+                port: s3-web
     persistence:
       config:
         type: secret
