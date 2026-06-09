@@ -103,7 +103,7 @@ spec:
                 port: s3-web
           - matches:
               - path:
-                  type: Exact
+                  type: PathPrefix
                   value: /assets/ # 🛑 Catches anyone trying to look at the directory itself
             filters:
               - type: RequestRedirect
