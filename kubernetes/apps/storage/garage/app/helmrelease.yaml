@@ -98,34 +98,45 @@ spec:
           - name: envoy-external
             namespace: network
         rules:
-          - backendRefs:
-              - identifier: app
-                port: s3-web
+          # -------------------------------------------------------------------
+          # 1. PRIVACY LAYER: Block all asset discovery unless requested by your site
+          # -------------------------------------------------------------------
           - matches:
               - path:
-                  type: Exact
-                  value: /assets/ # 🛑 Catches anyone trying to look at the directory itself
+                  type: PathPrefix
+                  value: /assets/
+                headers:
+                  - name: Referer
+                    type: RegularExpression
+                    value: '^https://wiki\.cloudjur \.com/.*'
+            backendRefs:
+              - identifier: app
+                port: s3-web
+
+          # -------------------------------------------------------------------
+          # 2. PRIVACY LAYER: Bounce automated scanners back to home
+          # -------------------------------------------------------------------
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /assets/
             filters:
               - type: RequestRedirect
                 requestRedirect:
                   statusCode: 302
                   path:
                     type: ReplaceFullPath
-                    replaceFullPath: /index.html # Redirects them to Quartz's standard 404 page
+                    replaceFullPath: /index.html
+
+          # -------------------------------------------------------------------
+          # 3. PERFORMANCE LAYER: Aggressive caching for hashed Quartz engine files
+          # -------------------------------------------------------------------
           - matches:
-              - path:
-                  type: PathPrefix
-                  value: /assets/
-            backendRefs:
-              - identifier: app
-                port: s3-web
-          - matches:
-              # 1. The Nginx 'location' & 'if' statement translated to a single Regex
               - path:
                   type: RegularExpression
-                  value: '^/.*-[0-9a-f]{8}\.(css|js)$'
+                  # 🚀 Fix: Match any path string that ends with a 8-character hex hash + .css or .js
+                  value: '.*-[0-9a-f]{8}\.(css|js)$'
             filters:
-              # 2. The Nginx 'add_header' translated to a Response Header Modifier
               - type: ResponseHeaderModifier
                 responseHeaderModifier:
                   set:
@@ -134,10 +145,14 @@ spec:
             backendRefs:
               - identifier: app
                 port: s3-web
+
+          # -------------------------------------------------------------------
+          # 4. ROUTING LAYER: Standard Catch-All for standard web traffic
+          # -------------------------------------------------------------------
           - matches:
               - path:
                   type: PathPrefix
-                  value: / # 🌐 Now safely catches standard root page traffic last
+                  value: /
             backendRefs:
               - identifier: app
                 port: s3-web
