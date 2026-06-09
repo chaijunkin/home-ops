@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/infra.contrib.fluxcd.io/terraform_v1alpha2.json
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: authentik
+spec:
+  approvePlan: auto
+  interval: 12h
+  path: ./infrastructure/terraform/authentik
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  backendConfig:
+    customConfiguration: |
+      backend "s3" {
+        bucket   = "tf-state-bucket-cloudjur-com"
+        key      = "authentik.terraform.tfstate"
+        region   = "auto"
+        endpoints = {
+          s3 = "https://8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com"
+        }
+        skip_credentials_validation = true
+        skip_metadata_api_check     = true
+        skip_region_validation      = true
+        skip_requesting_account_id  = true
+        skip_s3_checksum            = true
+        use_path_style              = true
+      }
+  backendConfigsFrom:
+    - kind: Secret
+      name: terraform-backend-secret
+  vars:
+    - name: public_domain
+      value: cloudjur.com # Hardcoded based on repo analysis
+  varsFrom:
+    - kind: Secret
+      name: authentik-terraform-secret

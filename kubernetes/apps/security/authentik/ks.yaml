@@ -1,3 +1,24 @@
+# # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: authentik-terraforms
+#   namespace: flux-system
+# spec:
+#   targetNamespace: flux-system
+#   path: ./kubernetes/apps/security/authentik/terraforms
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   interval: 24h
+#   retryInterval: 1m
+#   timeout: 5m
+#   dependsOn:
+#     - name: authentik
+#       namespace: security
+---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
