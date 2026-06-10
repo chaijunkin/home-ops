@@ -122,7 +122,7 @@ spec:
               RCLONE_TIMEOUT: 1h
               ARG:
                 | # TODO: so much jank over k8s doing auto shell escaping on args and me wanting to not repeat the command line
-                sync/copy srcFs='r2:tf-state-bucket-cloudjur-com' dstFs='/data/S3/B2/' _config='{"Progress": true}'
+                sync/copy srcFs='r2:tf-state-bucket-cloudjur-com' dstFs='/data/S3/R2/tf-state-bucket-cloudjur-com' _config='{"Progress": true}'
             envFrom: *envFrom
             securityContext: *sc
         pod:
