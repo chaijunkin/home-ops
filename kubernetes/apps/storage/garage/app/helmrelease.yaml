@@ -92,6 +92,10 @@ spec:
           #     urlRewrite:
           #       hostname: "schema"
       wiki-web:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions:
+              - "[CONNECTED] == true"
         hostnames:
           - "wiki.cloudjur.com"
         parentRefs:
