@@ -105,6 +105,31 @@ spec:
             reloader.stakater.com/auto: "false"
           resources: *res
         annotations: *cran
+      r2-tf-to-local: &cron1
+        type: cronjob
+        cronjob: &cj
+          schedule: "@daily"
+          concurrencyPolicy: Replace
+          ttlSecondsAfterFinished: 86400
+          failedJobsHistory: 1
+          backoffLimit: 2
+        containers:
+          app: &rclct
+            image: *img
+            command: ["/bin/sh", "-c", "rclone rc $(ARG)"]
+            env: &envcr
+              <<: *env
+              RCLONE_TIMEOUT: 1h
+              ARG:
+                | # TODO: so much jank over k8s doing auto shell escaping on args and me wanting to not repeat the command line
+                sync/copy srcFs='r2:tf-state-bucket-cloudjur-com' dstFs='/data/S3/B2/' _config='{"Progress": true}'
+            envFrom: *envFrom
+            securityContext: *sc
+        pod:
+          annotations: &cran
+            reloader.stakater.com/auto: "false"
+          resources: *res
+        annotations: *cran
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true

@@ -41,7 +41,7 @@ provider "proxmox" {
   ssh {
     agent = false
     # username = var.proxmox.username
-    private_key = file("~/.ssh/jk_inventory") # Ensure this file exists and has the correct permissions
+    # private_key = file("~/.ssh/jk_inventory") # Ensure this file exists and has the correct permissions
   }
 }
 
