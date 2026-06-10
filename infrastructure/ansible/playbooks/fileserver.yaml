@@ -148,6 +148,9 @@
         - /tank/Backup/Volsync
         - /tank/Backup/Personal
         - /tank/Backup/Workstation
+        - /tank/Backup/S3
+        - /tank/Backup/S3/B2
+        - /tank/Backup/S3/R2
         - /tank/Storage/Desktop
         - /tank/Storage/Documents
         - /tank/Storage/Downloads
