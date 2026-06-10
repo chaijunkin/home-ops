@@ -55,7 +55,7 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
-      k8s-b2: &cron1
+      b2-to-local: &cron1
         type: cronjob
         cronjob: &cj
           schedule: "@daily"
