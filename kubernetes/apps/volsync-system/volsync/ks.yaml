@@ -11,8 +11,6 @@ spec:
   components:
     - ../../../../components/zeroscaler
   dependsOn:
-    - name: local-hostpath
-      namespace: storage
     - name: snapshot-controller
       namespace: volsync-system
   healthChecks:
