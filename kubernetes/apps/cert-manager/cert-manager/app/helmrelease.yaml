@@ -14,10 +14,10 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  valuesFrom:
-    - kind: ConfigMap
-      name: cert-manager-values
-      valuesKey: values.yaml
+  # valuesFrom:
+  #   - kind: ConfigMap
+  #     name: cert-manager-values
+  #     valuesKey: values.yaml
   chartRef:
     kind: OCIRepository
     name: cert-manager
