@@ -49,7 +49,7 @@ spec:
       endpointURL: http://garage.storage.svc.cluster.local:3900
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster postgres-v15
+      serverName: &currentCluster postgres-v16
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
