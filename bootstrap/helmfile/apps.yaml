@@ -124,7 +124,7 @@ releases:
     needs:
       - flux-system/flux-operator
     hooks:
-      - events: ["postsync"]
+      - events: ["presync"]
         command: sh
         args:
           - -c
