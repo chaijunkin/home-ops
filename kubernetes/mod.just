@@ -63,6 +63,11 @@ sync-all-hr:
 
 [doc('Sync all Flux Kustomizations')]
 [script]
+sync-root:
+    flux reconcile --namespace flux-system kustomization cluster-apps --with-source
+
+[doc('Sync all Flux Kustomizations')]
+[script]
 sync-all-ks:
     kubectl get ks --no-headers -A | while read -r ns name _; do
       just k8s sync-ks "$ns" "$name"
