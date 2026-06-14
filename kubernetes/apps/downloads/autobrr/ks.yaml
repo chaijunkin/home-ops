@@ -21,7 +21,7 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: autobrr

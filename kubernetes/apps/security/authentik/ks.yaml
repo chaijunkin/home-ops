@@ -14,7 +14,7 @@ spec:
     namespace: flux-system
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   dependsOn:
     - name: authentik
       namespace: security
@@ -44,7 +44,7 @@ spec:
       namespace: database
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: authentik

@@ -21,7 +21,7 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: media
-  timeout: 5m
+
   wait: false
   components:
     - ../../../../components/volsync

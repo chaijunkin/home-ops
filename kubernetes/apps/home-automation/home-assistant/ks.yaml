@@ -8,7 +8,7 @@ spec:
   targetNamespace: home-automation
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   path: ./kubernetes/apps/home-automation/home-assistant/app
   prune: true
   sourceRef:

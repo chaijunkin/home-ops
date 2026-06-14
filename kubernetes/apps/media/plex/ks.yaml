@@ -21,7 +21,7 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: *app
@@ -54,7 +54,7 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -79,7 +79,7 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: plex-image-cleanup
@@ -114,7 +114,7 @@ spec:
   wait: false # no flux ks dependents
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: *app

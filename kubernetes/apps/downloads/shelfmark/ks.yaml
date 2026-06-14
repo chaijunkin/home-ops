@@ -22,7 +22,7 @@ spec:
   prune: true
   wait: false
   interval: 24h
-  timeout: 5m
+
   components:
     - ../../../../components/volsync
     - ../../../../components/zeroscaler
