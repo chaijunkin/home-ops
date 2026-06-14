@@ -44,7 +44,7 @@ spec:
             #   capabilities: {drop: ["ALL"]}
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v1.13.1
+              tag: v1.13.2
             env:
               TZ: Asia/Kuala_Lumpur
               HOMEPAGE_ALLOWED_HOSTS: h.cloudjur.com,homepage.cloudjur.com
