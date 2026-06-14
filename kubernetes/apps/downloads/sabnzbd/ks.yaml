@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: sabnzbd
-      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_CAPACITY: 15Gi
       SUBDOMAIN: sab
   components:
     - ../../../../components/volsync-no-r2
