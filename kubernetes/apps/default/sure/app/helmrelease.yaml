@@ -32,7 +32,7 @@ spec:
           app:
             image: &img
               repository: ghcr.io/we-promise/sure
-              tag: stable@sha256:67089f799ac99ca65266d7d218d2207aa19fef1fda562fc2797ef04ee858b71a
+              tag: stable@sha256:64fa5951bcd426863759f5f06cf0316522bc5ecb3552bb6894f4101ca8708f6f
             envFrom:
               - secretRef:
                   name: sure-secret
