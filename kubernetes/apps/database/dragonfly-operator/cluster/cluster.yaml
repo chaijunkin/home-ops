@@ -45,9 +45,9 @@ spec:
     limits:
       memory: 512Mi
   serviceSpec:
-    # type: LoadBalancer
+    type: LoadBalancer
     annotations:
-      # lbipam.cilium.io/ips: 10.10.30.8
+      lbipam.cilium.io/ips: 10.10.30.8
       gatus.home-operations.com/enabled: "true"
       gatus.home-operations.com/endpoint: |
         conditions:
