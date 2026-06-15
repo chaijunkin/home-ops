@@ -17,3 +17,9 @@
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*
+- Bootstrap
+  - Change email for primary user
+    - After changing, make this email as primary
+  - Add ssh key
+  - Create a new runner named "default"
+  - Add the secret inside secret management provider

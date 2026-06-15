@@ -216,6 +216,18 @@ spec:
         forgejo-runner:
           type: Role
           rules:
+            # Jobs - the plugin creates jobs to run pipeline steps
+            - apiGroups:
+                - "batch"
+              resources:
+                - jobs
+              verbs:
+                - create
+                - get
+                - list
+                - watch
+                - delete
+            # Pods - only needed when the plugin needs to interact with them (logs, exec)
             - apiGroups:
                 - ""
               resources:
@@ -223,9 +235,7 @@ spec:
               verbs:
                 - list
                 - watch
-                - create
                 - get
-                - delete
             - apiGroups:
                 - ""
               resources:
