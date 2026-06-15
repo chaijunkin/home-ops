@@ -26,10 +26,12 @@ spec:
   # snapshot:
   #   dir: "s3://dragonfly"
   args:
+    - "--admin_bind=0.0.0.0"
     - --maxmemory=$(MAX_MEMORY)Mi
-    - --proactor_threads=2
+    - --proactor_threads=1
     - --cluster_mode=emulated
     - --lock_on_hashtags
+    - --default_lua_flags=allow-undeclared-keys
       # - --s3_endpoint=s3.cloudjur.com
   # topologySpreadConstraints:
   #   - maxSkew: 1
