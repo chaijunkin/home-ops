@@ -15,6 +15,7 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
     # - ./pyroscope/ks.yaml
+  - ./prometheus-adapter/ks.yaml
   - ./silence-operator/ks.yaml
   - ./tempo/ks.yaml
   - ./webhook/ks.yaml
