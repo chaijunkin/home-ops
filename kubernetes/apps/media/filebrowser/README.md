@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Filebrowser)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/filebrowser)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

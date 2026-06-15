@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/cloud-native/Cert-Manager)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/cloud-native/cert-manager)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Calibre-Web-Automated)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/calibre-web-automated)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

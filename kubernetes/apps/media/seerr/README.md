@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Seerr)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/seerr)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

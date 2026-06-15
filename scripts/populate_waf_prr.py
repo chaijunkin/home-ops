@@ -161,7 +161,7 @@ for ns in os.listdir(repo_apps_dir):
         app_path = os.path.join(ns_path, app)
         if not os.path.isdir(app_path): continue
         
-        filename = f"{app.title()}.md"
+        filename = f"{app.lower()}.md"
         target_dir = vault_cn_dir if ns in cloud_native_ns else vault_app_dir
         target_file = os.path.join(target_dir, filename)
         

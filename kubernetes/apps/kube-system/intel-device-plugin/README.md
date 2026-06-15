@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/cloud-native/Intel-Device-Plugin)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/cloud-native/intel-device-plugin)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Webhook)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/webhook)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

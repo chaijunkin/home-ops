@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Cloudnative-Pg)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/cloudnative-pg)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

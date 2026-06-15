@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Paperless)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/paperless)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

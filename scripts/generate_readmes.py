@@ -68,7 +68,7 @@ def generate_readme(app_name, namespace, app_path):
     manifest_source = analyze_app(app_path)
     
     category_folder = "cloud-native" if namespace in cloud_native_ns else "application"
-    prr_url = f"https://wiki.cloudjur.com/pages/tech/cloudjur/{category_folder}/{app_name.title()}"
+    prr_url = f"https://wiki.cloudjur.com/pages/tech/cloudjur/{category_folder}/{app_name.lower()}"
     
     return f"""# {app_name.title()}
 

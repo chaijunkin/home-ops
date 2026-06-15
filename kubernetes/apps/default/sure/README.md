@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Sure)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/sure)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*

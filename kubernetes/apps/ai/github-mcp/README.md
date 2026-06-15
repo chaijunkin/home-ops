@@ -13,7 +13,7 @@
 
 ## Related Links
 - [Documentation]() <!-- Add link to upstream docs -->
-- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/Github-Mcp)
+- [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/github-mcp)
 
 ## Notes
 - *Add operational notes, gotchas, or specific configurations here.*
