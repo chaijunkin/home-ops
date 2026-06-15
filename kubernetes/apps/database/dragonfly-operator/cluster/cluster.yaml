@@ -40,6 +40,10 @@ spec:
   #     labelSelector:
   #       matchLabels:
   #         app.kubernetes.io/part-of: dragonfly
+  labels:
+    role: master
+
+  networkPolicyEnabled: false
   resources:
     requests:
       memory: 128Mi
