@@ -27,7 +27,7 @@ spec:
   monitoring:
     enablePodMonitor: true
     podMonitorMetricRelabelings:
-      - sourceLabels: ["cluster"]
+      - sourceLabels: [cluster]
         targetLabel: cnpg_cluster
         action: replace
       - regex: cluster

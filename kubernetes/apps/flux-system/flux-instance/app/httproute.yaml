@@ -10,7 +10,8 @@ metadata:
     gethomepage.dev/group: Other Services
     gethomepage.dev/name: Flux Webhook
     gethomepage.dev/icon: mdi-api
-    gethomepage.dev/description: "FluxCD Webhook Receiver (flux-webhook.cloudjur.com)"
+    gethomepage.dev/description: FluxCD Webhook Receiver
+      (flux-webhook.cloudjur.com)
     gethomepage.dev/href: "#"
 spec:
   hostnames: [flux-webhook.cloudjur.com]

@@ -26,7 +26,7 @@ spec:
   # snapshot:
   #   dir: "s3://dragonfly"
   args:
-    - "--admin_bind=0.0.0.0"
+    - --admin_bind=0.0.0.0
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=1
     - --cluster_mode=emulated

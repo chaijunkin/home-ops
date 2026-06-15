@@ -93,7 +93,7 @@ spec:
             securityContext: &sec
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
         initContainers:
           init-db:
             image:
@@ -106,8 +106,8 @@ spec:
           migration:
             image: *img
             command:
-              - "bash"
-              - "-lc"
+              - bash
+              - -lc
             args: |
               DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:prepare
             env: *env

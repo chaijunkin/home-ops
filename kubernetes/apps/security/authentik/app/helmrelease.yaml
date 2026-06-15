@@ -62,7 +62,7 @@ spec:
             # gethomepage.dev/widget.version: "2"
             # gethomepage.dev/widget.url: http://authentik-server.security
             # gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
-          hostnames: ["auth.cloudjur.com"]
+          hostnames: [auth.cloudjur.com]
           parentRefs:
             - group: gateway.networking.k8s.io
               kind: Gateway

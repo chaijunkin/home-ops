@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -21,16 +20,16 @@ spec:
               repository: ghcr.io/rclone/rclone
               tag: 1.74.3@sha256:623378ad0ff3ebd5cebf77720843c0e02edfe46e2d5b5ac6bed54c6371780dfb
             args:
-              - "rcd"
-              - "--rc-web-gui"
-              - "--rc-web-gui-update"
-              - "--rc-web-gui-force-update"
-              - "--rc-web-gui-no-open-browser"
-              - "--rc-addr=:$(HTTP_PORT)"
-              - "--rc-enable-metrics"
-              - "--metrics-addr=:$(METRICS_PORT)"
-              - "--log-level=INFO"
-              - "--exclude=locks/**"
+              - rcd
+              - --rc-web-gui
+              - --rc-web-gui-update
+              - --rc-web-gui-force-update
+              - --rc-web-gui-no-open-browser
+              - --rc-addr=:$(HTTP_PORT)
+              - --rc-enable-metrics
+              - --metrics-addr=:$(METRICS_PORT)
+              - --log-level=INFO
+              - --exclude=locks/**
             env: &env
               HTTP_PORT: &port 8080
               METRICS_PORT: &metrics 9090
@@ -54,20 +53,20 @@ spec:
             securityContext: &sc
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
-      b2-vw-to-local: &cron1
+              capabilities: {drop: [ALL]}
+      b2-vw-to-local:
         type: cronjob
-        cronjob: &cj
+        cronjob:
           schedule: "@daily"
           concurrencyPolicy: Replace
           ttlSecondsAfterFinished: 86400
           failedJobsHistory: 1
           backoffLimit: 2
         containers:
-          app: &rclct
+          app:
             image: *img
-            command: ["/bin/sh", "-c", "rclone rc $(ARG)"]
-            env: &envcr
+            command: [/bin/sh, -c, rclone rc $(ARG)]
+            env:
               <<: *env
               RCLONE_TIMEOUT: 1h
               ARG:
@@ -105,19 +104,19 @@ spec:
       #       reloader.stakater.com/auto: "false"
       #     resources: *res
       #   annotations: *cran
-      r2-tf-to-local: &cron1
+      r2-tf-to-local:
         type: cronjob
-        cronjob: &cj
+        cronjob:
           schedule: "@daily"
           concurrencyPolicy: Replace
           ttlSecondsAfterFinished: 86400
           failedJobsHistory: 1
           backoffLimit: 2
         containers:
-          app: &rclct
+          app:
             image: *img
-            command: ["/bin/sh", "-c", "rclone rc $(ARG)"]
-            env: &envcr
+            command: [/bin/sh, -c, rclone rc $(ARG)]
+            env:
               <<: *env
               RCLONE_TIMEOUT: 1h
               ARG:
@@ -161,8 +160,8 @@ spec:
         advancedMounts:
           *app :
             app:
-              - path: "/.rclone.conf"
-                subPath: "rclone.conf"
+              - path: /.rclone.conf
+                subPath: rclone.conf
       data:
         type: nfs
         server: smb.cloudjur.com

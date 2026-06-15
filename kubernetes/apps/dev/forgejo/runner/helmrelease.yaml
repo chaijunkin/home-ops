@@ -218,7 +218,7 @@ spec:
           rules:
             # Jobs - the plugin creates jobs to run pipeline steps
             - apiGroups:
-                - "batch"
+                - batch
               resources:
                 - jobs
               verbs:
@@ -227,7 +227,7 @@ spec:
                 - list
                 - watch
                 - delete
-            # Pods - only needed when the plugin needs to interact with them (logs, exec)
+              # Pods - only needed when the plugin needs to interact with them (logs, exec)
             - apiGroups:
                 - ""
               resources:

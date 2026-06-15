@@ -26,7 +26,7 @@ spec:
       VOLSYNC_CAPACITY: 10Gi
       ANUBIS_TARGET: http://forgejo-http.dev.svc.cluster.local:3000
       ANUBIS_MEM_LIMIT: 384Mi
-      APP_KEY_ID: "6371b847-50bf-4ac2-90ae-6cf2f41e5e68"
+      APP_KEY_ID: 6371b847-50bf-4ac2-90ae-6cf2f41e5e68
   prune: true
   retryInterval: 2m
   sourceRef:

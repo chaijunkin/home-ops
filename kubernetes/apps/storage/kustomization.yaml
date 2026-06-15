@@ -10,4 +10,4 @@ resources:
   - ./openebs/ks.yaml
   - ./garage/ks.yaml
   - ./rclone/ks.yaml
-  # - ./staticgarage/ks.yaml
+    # - ./staticgarage/ks.yaml

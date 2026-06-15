@@ -79,7 +79,7 @@ spec:
                 port: api
       schema-web:
         hostnames:
-          - "schema.cloudjur.com"
+          - schema.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -87,17 +87,17 @@ spec:
           - backendRefs:
               - identifier: app
                 port: s3-web
-          # - filters:
-          #   - type: URLRewrite
-          #     urlRewrite:
-          #       hostname: "schema"
+            # - filters:
+            #   - type: URLRewrite
+            #     urlRewrite:
+            #       hostname: "schema"
       wiki-web:
         annotations:
           gatus.home-operations.com/endpoint: |-
             conditions:
               - "[CONNECTED] == true"
         hostnames:
-          - "wiki.cloudjur.com"
+          - wiki.cloudjur.com
         parentRefs:
           - name: envoy-external
             namespace: network
@@ -112,14 +112,14 @@ spec:
                 headers:
                   - name: Referer
                     type: RegularExpression
-                    value: '^https://wiki\.cloudjur\.com/.*'
+                    value: ^https://wiki\.cloudjur\.com/.*
             backendRefs:
               - identifier: app
                 port: s3-web
 
-          # -------------------------------------------------------------------
-          # 2. PRIVACY LAYER: Bounce automated scanners back to home
-          # -------------------------------------------------------------------
+            # -------------------------------------------------------------------
+            # 2. PRIVACY LAYER: Bounce automated scanners back to home
+            # -------------------------------------------------------------------
           - matches:
               - path:
                   type: PathPrefix
@@ -132,27 +132,28 @@ spec:
                     type: ReplaceFullPath
                     replaceFullPath: /index.html
 
-          # -------------------------------------------------------------------
-          # 3. PERFORMANCE LAYER: Aggressive caching for hashed Quartz engine files
-          # -------------------------------------------------------------------
+            # -------------------------------------------------------------------
+            # 3. PERFORMANCE LAYER: Aggressive caching for hashed Quartz engine files
+            # -------------------------------------------------------------------
           - matches:
               - path:
-                  type: RegularExpression
-                  # 🚀 Fix: Match any path string that ends with a 8-character hex hash + .css or .js
-                  value: '.*-[0-9a-f]{8}\.(css|js)$'
+                  type:
+                    RegularExpression
+                    # 🚀 Fix: Match any path string that ends with a 8-character hex hash + .css or .js
+                  value: .*-[0-9a-f]{8}\.(css|js)$
             filters:
               - type: ResponseHeaderModifier
                 responseHeaderModifier:
                   set:
                     - name: Cache-Control
-                      value: "public, max-age=31536000, immutable"
+                      value: public, max-age=31536000, immutable
             backendRefs:
               - identifier: app
                 port: s3-web
 
-          # -------------------------------------------------------------------
-          # 4. ROUTING LAYER: Standard Catch-All for standard web traffic
-          # -------------------------------------------------------------------
+            # -------------------------------------------------------------------
+            # 4. ROUTING LAYER: Standard Catch-All for standard web traffic
+            # -------------------------------------------------------------------
           - matches:
               - path:
                   type: PathPrefix

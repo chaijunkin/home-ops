@@ -109,9 +109,10 @@ spec:
             matches:
               - path:
                   type: PathPrefix
-                  value: /
-                # desktop UA
-                # Waiting for https://github.com/opencloud-eu/desktop/pull/766
+                  value:
+                    /
+                    # desktop UA
+                    # Waiting for https://github.com/opencloud-eu/desktop/pull/766
           - backendRefs:
               - identifier: app
                 port: 9201

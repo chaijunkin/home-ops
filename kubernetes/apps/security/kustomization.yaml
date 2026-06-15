@@ -7,9 +7,9 @@ components:
 resources:
   - ./namespace.yaml
   - ./authentik/ks.yaml
-  # - ./kyverno/ks.yaml # OH my apiserver bomb
-  # - ./kyverno-policies/ks.yaml
-  # - ./policy-reporter/ks.yaml
-  # - ./tetragon/ks.yaml
-  # - ./trivy-operator/ks.yaml
-  # - ./trivy-operator-polr-adapter/ks.yaml
+    # - ./kyverno/ks.yaml # OH my apiserver bomb
+    # - ./kyverno-policies/ks.yaml
+    # - ./policy-reporter/ks.yaml
+    # - ./tetragon/ks.yaml
+    # - ./trivy-operator/ks.yaml
+    # - ./trivy-operator-polr-adapter/ks.yaml
