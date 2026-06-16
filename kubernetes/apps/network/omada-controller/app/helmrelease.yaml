@@ -123,23 +123,7 @@ spec:
             port: 27217
             protocol: TCP
             targetPort: 27217
-    route:
-      app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Network
-          gethomepage.dev/name: Omada Controller
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/omada.png
-        hostnames:
-          - omada.cloudjur.com
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
+
     persistence:
       data:
         existingClaim: omada-controller

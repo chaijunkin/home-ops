@@ -6,6 +6,11 @@ metadata:
     app.kubernetes.io/instance: omada-controller
     app.kubernetes.io/name: omada-controller
   name: omada-controller
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Network
+    gethomepage.dev/name: Omada Controller
+    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/omada.png
 spec:
   hostnames:
     - omada.cloudjur.com
@@ -38,7 +43,7 @@ metadata:
 spec:
   endpoints:
     - fqdn:
-        hostname: omada.cloudjur.com
+        hostname: omada-controller.network.svc.cluster.local
         port: 8043
   tls:
     insecureSkipVerify: true
