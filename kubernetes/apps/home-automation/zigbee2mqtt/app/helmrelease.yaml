@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -47,7 +46,7 @@ spec:
               ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_BAUDRATE: 115200
               ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
-              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: &usbdevice "/dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231007180846-if00"
+              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: &usbdevice /dev/serial/by-id/usb-ITEAD_SONOFF_Zigbee_3.0_USB_Dongle_Plus_V2_20231007180846-if00
               ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ember
               # DEBUG: "zigbee-herdsman*"
             envFrom:
@@ -94,7 +93,7 @@ spec:
           gethomepage.dev/name: Zigbee2MQTT
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/zigbee2mqtt.png
         hostnames:
-          - "zigbee.cloudjur.com"
+          - zigbee.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network

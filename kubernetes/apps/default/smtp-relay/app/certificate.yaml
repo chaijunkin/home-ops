@@ -1,4 +1,4 @@
----
+# yaml-language-server: $schema=https://crd.cloudjur.com/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:

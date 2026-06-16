@@ -227,7 +227,7 @@ spec:
                 - list
                 - watch
                 - delete
-              # Pods - only needed when the plugin needs to interact with them (logs, exec)
+                  # Pods - only needed when the plugin needs to interact with them (logs, exec)
             - apiGroups:
                 - ""
               resources:

@@ -260,10 +260,11 @@ spec:
       sectionName: http
     - name: envoy-internal
       namespace: network
-      sectionName: http
-      # - name: envoy-public
-      #   namespace: network
-      #   sectionName: http
+      sectionName:
+        http
+        # - name: envoy-public
+        #   namespace: network
+        #   sectionName: http
   rules:
     - filters:
         - type: RequestRedirect

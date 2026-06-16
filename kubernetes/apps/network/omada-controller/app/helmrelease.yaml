@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -55,10 +54,10 @@ spec:
         type: LoadBalancer
         externalTrafficPolicy: Local
         annotations:
-          lbipam.cilium.io/ips: "10.10.30.5"
+          lbipam.cilium.io/ips: 10.10.30.5
         ipFamilies:
           - IPv4
-          # - IPv6
+            # - IPv6
         # ipFamilyPolicy: PreferDualStack
         ports:
           # # Docs: https://www.tp-link.com/us/support/faq/3281/
@@ -132,7 +131,7 @@ spec:
           gethomepage.dev/name: Omada Controller
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/omada.png
         hostnames:
-          - "omada.cloudjur.com"
+          - omada.cloudjur.com
         rules:
           - backendRefs:
               - name: *app
