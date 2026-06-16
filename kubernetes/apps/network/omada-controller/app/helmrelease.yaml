@@ -53,10 +53,12 @@ spec:
       controller:
         type: LoadBalancer
         externalTrafficPolicy: Local
+        annotations:
+          lbipam.cilium.io/ips: "10.10.30.5"
         ipFamilies:
           - IPv4
-          - IPv6
-        ipFamilyPolicy: PreferDualStack
+          # - IPv6
+        # ipFamilyPolicy: PreferDualStack
         ports:
           # # Docs: https://www.tp-link.com/us/support/faq/3281/
           # Management Ports
