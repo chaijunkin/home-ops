@@ -43,7 +43,7 @@ spec:
       data:
         type: nfs
         server: smb.cloudjur.com
-        path: /tank/Backup/Config/Opnsense
+        path: /tank/Backup/Apps/Opnsense
       script:
         type: configMap
         name: *app

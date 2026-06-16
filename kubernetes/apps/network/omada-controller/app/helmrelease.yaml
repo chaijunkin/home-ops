@@ -141,6 +141,6 @@ spec:
       backup:
         type: nfs
         server: smb.cloudjur.com
-        path: /tank/Apps/omada
+        path: /tank/Apps/Backup/Omada
         globalMounts:
           - path: /opt/tplink/EAPController/data/autobackup
