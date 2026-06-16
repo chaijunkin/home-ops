@@ -10,6 +10,13 @@ spec:
     labels:
       app.kubernetes.io/name: omada-controller
   path: ./kubernetes/apps/network/omada-controller/app
+  postBuild:
+    substitute:
+      APP: omada-controller
+      VOLSYNC_CAPACITY: 2Gi
+  components:
+    - ../../../../components/zeroscaler
+    - ../../../../components/volsync
   prune: true
   sourceRef:
     kind: GitRepository
