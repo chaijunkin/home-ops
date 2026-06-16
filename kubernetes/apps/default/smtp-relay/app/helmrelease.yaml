@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app smtp-relay
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: smtp-relay
+  interval: 1h
+  values:
+    controllers:
+      smtp-relay:
+        # FIXME: convert to two replicas and statefulset
+        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/foxcpp/maddy
+              tag: 0.9.5@sha256:de42151adff6388edb5e4ee88f60334fa1ab85e309485193ecb1c2db20203315
+            # Docker ENTRYPOINT is missing a dash
+            command:
+              - "/bin/maddy"
+              - "--config"
+              - "/data/maddy.conf"
+            args:
+              - "run"
+            env:
+              SMTP_RELAY_SMTP_PORT: &port 25
+              SMTP_RELAY_METRICS_PORT: &metricsPort 8080
+              SMTP_RELAY_HOSTNAME: cloudjur.com
+              SMTP_RELAY_SERVER: "smtp.mailgun.org"
+              SMTP_RELAY_SERVER_PORT: "587"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1022
+        runAsGroup: 1022
+        fsGroup: 1022
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
+    service:
+      app:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: smtp.cloudjur.com
+        ports:
+          metrics:
+            port: *metricsPort
+            primary: true
+          smtp:
+            port: *port
+    serviceMonitor:
+      app:
+        endpoints:
+          - port: metrics
+    persistence:
+      config:
+        type: configMap
+        name: smtp-relay
+        globalMounts:
+          - path: /data/maddy.conf
+            subPath: maddy.conf
+            readOnly: true
+      data:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 512Mi
+        storageClass: longhorn
+        globalMounts:
+          - path: /var/lib/maddy
+      temp:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 256Mi
+        globalMounts:
+          - path: /run/maddy
+      tls:
+        type: secret
+        name: tls.smtp-relay
+        globalMounts:
+          - path: /tls
+            readOnly: true

@@ -151,6 +151,8 @@
         - /tank/Backup/S3
         - /tank/Backup/S3/B2
         - /tank/Backup/S3/R2
+        - /tank/Backup/Config/
+        - /tank/Backup/Config/Opnsense
         - /tank/Storage/Desktop
         - /tank/Storage/Documents
         - /tank/Storage/Downloads

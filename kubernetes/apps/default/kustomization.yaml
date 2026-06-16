@@ -23,3 +23,5 @@ resources:
   - ./sure/ks.yaml
     # - ./thelounge/ks.yaml
   - ./tika/ks.yaml
+  - ./picoshare/ks.yaml
+    # - ./smtp-relay/ks.yaml
