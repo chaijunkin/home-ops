@@ -58,4 +58,4 @@ spec:
             sectionName: https
     persistence:
       data:
-        existingClaim: picoshare-data-v1
+        existingClaim: "{{ .Release.Name }}"
