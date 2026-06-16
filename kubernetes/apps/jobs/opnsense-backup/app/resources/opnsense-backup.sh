@@ -10,7 +10,7 @@ echo "Download Opnsense config file ..."
 curl -fsSL \
     --user "${OPNSENSE_KEY}:${OPNSENSE_SECRET}" \
     --output "/tmp/${config_filename}" \
-    "${OPNSENSE_URL}/api/backup/backup/download"
+    "${OPNSENSE_URL}/api/core/backup/download/this"
 
 /bin/ls -l "/tmp/${config_filename}"
 
