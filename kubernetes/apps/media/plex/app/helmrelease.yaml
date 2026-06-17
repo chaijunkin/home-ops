@@ -139,5 +139,6 @@ spec:
           gethomepage.dev/widget.type: plex
           gethomepage.dev/widget.url: http://plex.media:32400
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_PLEX_TOKEN}}` }}"
-          # gatus.home-operations.com/endpoint: |-
+          gatus.home-operations.com/endpoint: |-
+            url: https://plex.cloudjur.com/web/index.html
           #   conditions: ["[STATUS] == 401"]
