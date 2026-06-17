@@ -6,7 +6,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: smtp-relay
+    name: app-template
   interval: 1h
   values:
     controllers:

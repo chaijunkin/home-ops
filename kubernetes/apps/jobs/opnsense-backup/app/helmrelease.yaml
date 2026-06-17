@@ -6,7 +6,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: opnsense-backup
+    name: app-template
   interval: 1h
   values:
     controllers:
