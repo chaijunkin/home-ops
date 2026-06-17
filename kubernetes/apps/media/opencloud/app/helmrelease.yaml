@@ -97,6 +97,8 @@ spec:
           gethomepage.dev/name: OpenCloud
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/opencloud.png
           gethomepage.dev/description: File Sync and Share
+          gatus.home-operations.com/endpoint: |-
+            url: https://drive.cloudjur.com/status
         hostnames: [drive.cloudjur.com]
         parentRefs:
           - name: envoy-external
