@@ -38,7 +38,7 @@ record:
   enabled: true
   # 1. Continuous Baseline (Replaces: retain -> days: 4 -> mode: all)
   continuous:
-    days: 4
+    days: 3
   # 2. Motion Guard (Keeps segments with basic motion a bit longer)
   motion:
     days: 7
