@@ -36,9 +36,12 @@ snapshots:
 
 record:
   enabled: true
+  sync_recordings: True
   # 1. Continuous Baseline (Replaces: retain -> days: 4 -> mode: all)
   continuous:
     days: 2
+  retain:
+    days: 1
   # 2. Motion Guard (Keeps segments with basic motion a bit longer)
   # motion:
   #   days: 7
