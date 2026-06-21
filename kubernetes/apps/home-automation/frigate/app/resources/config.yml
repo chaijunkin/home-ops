@@ -38,19 +38,19 @@ record:
   enabled: true
   # 1. Continuous Baseline (Replaces: retain -> days: 4 -> mode: all)
   continuous:
-    days: 3
+    days: 2
   # 2. Motion Guard (Keeps segments with basic motion a bit longer)
-  motion:
-    days: 7
-  # 3. AI Object Security Layer (Saves high-value events for a month)
-  alerts:
-    retain:
-      days: 30
-      mode: active_objects
-  detections:
-    retain:
-      days: 30
-      mode: active_objects
+  # motion:
+  #   days: 7
+  # # 3. AI Object Security Layer (Saves high-value events for a month)
+  # alerts:
+  #   retain:
+  #     days: 30
+  #     mode: active_objects
+  # detections:
+  #   retain:
+  #     days: 30
+  #     mode: active_objects
 
 objects:
   track: ["person", "animal"]
