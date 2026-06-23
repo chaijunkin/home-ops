@@ -7,3 +7,4 @@ resources:
     # - ./smartctl-exporter/ks.yaml
   - ./speedtest-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
+  - ./omada-exporter/ks.yaml

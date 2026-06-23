@@ -21,6 +21,12 @@ spec:
       runAsUser: {{ ENV.PUID }}
       runAsGroup: {{ ENV.PGID }}
       fsGroup: {{ ENV.PGID }}
+    moverVolumes:
+      - mountPath: repository
+        volumeSource:
+          nfs:
+            path: /tank/Backup/Volsync
+            server: smb.cloudjur.com
 {% if ENV.PREVIOUS %}
     previous: {{ ENV.PREVIOUS }}
 {% endif %}

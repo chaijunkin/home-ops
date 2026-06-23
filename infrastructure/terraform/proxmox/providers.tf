@@ -18,11 +18,11 @@ terraform {
   required_providers {
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "3.1.0"
+      version = "3.2.0"
     }
     proxmox = {
       source  = "bpg/proxmox"
-      version = "0.106.0"
+      version = "0.109.0"
     }
     talos = {
       source  = "siderolabs/talos"
@@ -41,7 +41,7 @@ provider "proxmox" {
   ssh {
     agent = false
     # username = var.proxmox.username
-    private_key = file("~/.ssh/jk_inventory") # Ensure this file exists and has the correct permissions
+    # private_key = file("~/.ssh/jk_inventory") # Ensure this file exists and has the correct permissions
   }
 }
 

@@ -171,11 +171,6 @@ resource "cloudflare_dns_record" "records" {
   ttl      = try(each.value.ttl, 1)
 }
 
-moved {
-  from = cloudflare_record.records
-  to   = cloudflare_dns_record.records
-}
-
 resource "cloudflare_dns_record" "github_A_record" {
   for_each = toset(local.github_A_record)
   zone_id  = cloudflare_zone.cloudflare_zone.id
@@ -186,11 +181,6 @@ resource "cloudflare_dns_record" "github_A_record" {
   ttl      = 1
 }
 
-moved {
-  from = cloudflare_record.github_A_record
-  to   = cloudflare_dns_record.github_A_record
-}
-
 resource "cloudflare_dns_record" "github_AAAA_record" {
   for_each = toset(local.github_AAAA_record)
   zone_id  = cloudflare_zone.cloudflare_zone.id
@@ -199,9 +189,4 @@ resource "cloudflare_dns_record" "github_AAAA_record" {
   type     = "AAAA"
   proxied  = true
   ttl      = 1
-}
-
-moved {
-  from = cloudflare_record.github_AAAA_record
-  to   = cloudflare_dns_record.github_AAAA_record
 }

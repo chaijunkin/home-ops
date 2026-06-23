@@ -6,9 +6,12 @@ bases:
 
 helmDefaults:
   cleanupOnFail: true
-  # forceConflicts: true
+  forceConflicts: true
   wait: true
   waitForJobs: true
+  # Add this to fix the error globally:
+  args:
+    - "--server-side=true"
 
 releases:
   - name: cilium
@@ -55,13 +58,12 @@ releases:
   #     - template: default
   #   needs:
   #     - kube-system/coredns
-
   - name: cert-manager
     namespace: cert-manager
     inherit:
       - template: default
-    needs:
-      - kube-system/spegel
+    # needs:
+    #   - kube-system/spegel
 
   - name: external-secrets
     namespace: external-secrets
@@ -122,7 +124,7 @@ releases:
     needs:
       - flux-system/flux-operator
     hooks:
-      - events: ["postsync"]
+      - events: ["presync"]
         command: sh
         args:
           - -c

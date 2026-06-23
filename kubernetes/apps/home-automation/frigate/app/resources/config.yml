@@ -36,12 +36,23 @@ snapshots:
 
 record:
   enabled: true
-  retain:
-    days: 4
-    mode: all
-  # events:
+  sync_recordings: True
+  # 1. Continuous Baseline (Replaces: retain -> days: 4 -> mode: all)
+  continuous:
+    days: 2
+  # retain:
+  #   days: 1
+  # 2. Motion Guard (Keeps segments with basic motion a bit longer)
+  # motion:
+  #   days: 7
+  # # 3. AI Object Security Layer (Saves high-value events for a month)
+  # alerts:
   #   retain:
-  #     default: 1
+  #     days: 30
+  #     mode: active_objects
+  # detections:
+  #   retain:
+  #     days: 30
   #     mode: active_objects
 
 objects:

@@ -10,7 +10,7 @@ spec:
     operation: copy
   url: oci://ghcr.io/goauthentik/helm-charts/authentik
   ref:
-    tag: 2026.2.3
+    tag: 2026.5.3
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -33,12 +33,42 @@ spec:
         - name: init-db
           image: ghcr.io/home-operations/postgres-init:18
           envFrom: *envFrom
+      resources:
+        requests:
+          cpu: 100m
+          memory: 50Mi
+        limits:
+          memory: 1500Mi
       metrics:
         # -- deploy metrics service
         enabled: true
         serviceMonitor:
           # -- enable a prometheus ServiceMonitor
           enabled: true
+      route:
+        main:
+          enabled: true
+          annotations:
+            gatus.home-operations.com/endpoint: |-
+              name: authentik
+              url: https://auth.cloudjur.com/-/health/live/
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/group: Platform Infrastructure
+            gethomepage.dev/name: Authentik
+            gethomepage.dev/icon: authentik.png
+            gethomepage.dev/description: SSO Identity Provider
+            gethomepage.dev/pod-selector: app.kubernetes.io/name=authentik
+            # gethomepage.dev/widget.type: authentik
+            # gethomepage.dev/widget.version: "2"
+            # gethomepage.dev/widget.url: http://authentik-server.security
+            # gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_AUTHENTIK_TOKEN}}"
+          hostnames: [auth.cloudjur.com]
+          parentRefs:
+            - group: gateway.networking.k8s.io
+              kind: Gateway
+              name: envoy-external
+              namespace: network
+              sectionName: https
     worker:
       resources:
         requests:
@@ -61,7 +91,6 @@ spec:
         enabled: true
     postgresql:
       enabled: false
-
     redis:
       enabled: false
   chartRef:

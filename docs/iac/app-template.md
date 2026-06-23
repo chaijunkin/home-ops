@@ -1,0 +1,1 @@
+https://bjw-s-labs.github.io/helm-charts/docs/app-template/reference/explorer/

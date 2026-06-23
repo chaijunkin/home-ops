@@ -9,7 +9,7 @@ metadata:
     kyverno.io/ignore: "true"
 spec:
   instances: 1
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.2-6
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.5-6
   inheritedMetadata:
     labels:
       kube-image-keeper.enix.io/image-caching-policy: ignore
@@ -27,16 +27,16 @@ spec:
   monitoring:
     enablePodMonitor: true
     podMonitorMetricRelabelings:
-      - sourceLabels: ["cluster"]
+      - sourceLabels: [cluster]
         targetLabel: cnpg_cluster
         action: replace
       - regex: cluster
         action: labeldrop
   bootstrap:
     recovery:
-      source: &previousCluster postgres-v11
-      recoveryTarget:
-        targetTime: "2026-06-05 00:01:24.043084+00:00"
+      source: &previousCluster postgres-v14
+      # recoveryTarget:
+      #   targetTime: "2026-06-05 00:01:24.043084+00:00"
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
@@ -49,7 +49,7 @@ spec:
       endpointURL: http://garage.storage.svc.cluster.local:3900
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster postgres-v14
+      serverName: &currentCluster postgres-v16
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret

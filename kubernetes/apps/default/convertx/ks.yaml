@@ -15,7 +15,7 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   components:
     - ../../../../components/volsync-no-r2
   postBuild:

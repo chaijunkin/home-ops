@@ -18,7 +18,6 @@ spec:
   wait: true
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -40,7 +39,7 @@ spec:
   wait: true
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   dependsOn:
     - name: local-hostpath
       namespace: storage
@@ -67,5 +66,5 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m
+
   wait: false

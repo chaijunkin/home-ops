@@ -13,7 +13,7 @@ spec:
       envoyDeployment:
         replicas: 1
         container:
-          image: mirror.gcr.io/envoyproxy/envoy:v1.38.0
+          image: mirror.gcr.io/envoyproxy/envoy:v1.38.2
           resources:
             requests:
               cpu: 100m
@@ -163,7 +163,7 @@ spec:
         namespaces:
           from: All
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/gateway.envoyproxy.io/envoyextensionpolicy_v1alpha1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/gateway.envoyproxy.io/envoyextensionpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyExtensionPolicy
 metadata:
@@ -180,7 +180,7 @@ spec:
         kind: ConfigMap
         group: v1
 ---
-# yaml-language-server: $schema=https://k8s-schemas.bjw-s.dev/gateway.envoyproxy.io/envoyextensionpolicy_v1alpha1.json
+# yaml-language-server: $schema=https://crd.cloudjur.com/gateway.envoyproxy.io/envoyextensionpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: EnvoyExtensionPolicy
 metadata:
@@ -260,10 +260,11 @@ spec:
       sectionName: http
     - name: envoy-internal
       namespace: network
-      sectionName: http
-    # - name: envoy-public
-    #   namespace: network
-    #   sectionName: http
+      sectionName:
+        http
+        # - name: envoy-public
+        #   namespace: network
+        #   sectionName: http
   rules:
     - filters:
         - type: RequestRedirect

@@ -7,4 +7,5 @@ components:
 resources:
   - ./namespace.yaml
     # []
-  - remediation/ks.yaml
+  - ./remediation/ks.yaml
+  - ./opnsense-backup/ks.yaml

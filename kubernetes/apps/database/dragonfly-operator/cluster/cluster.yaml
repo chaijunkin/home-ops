@@ -4,7 +4,7 @@ kind: Dragonfly
 metadata:
   name: dragonfly
 spec:
-  image: ghcr.io/dragonflydb/dragonfly:v1.38.1
+  image: ghcr.io/dragonflydb/dragonfly:v1.39.0
   replicas: 1
   env:
     - name: MAX_MEMORY
@@ -26,10 +26,12 @@ spec:
   # snapshot:
   #   dir: "s3://dragonfly"
   args:
+    - --admin_bind=0.0.0.0
     - --maxmemory=$(MAX_MEMORY)Mi
-    - --proactor_threads=2
+    - --proactor_threads=1
     - --cluster_mode=emulated
     - --lock_on_hashtags
+    - --default_lua_flags=allow-undeclared-keys
       # - --s3_endpoint=s3.cloudjur.com
   # topologySpreadConstraints:
   #   - maxSkew: 1
@@ -38,6 +40,10 @@ spec:
   #     labelSelector:
   #       matchLabels:
   #         app.kubernetes.io/part-of: dragonfly
+  labels:
+    role: master
+
+  networkPolicyEnabled: false
   resources:
     requests:
       memory: 128Mi
@@ -45,9 +51,9 @@ spec:
     limits:
       memory: 512Mi
   serviceSpec:
-    # type: LoadBalancer
+    type: LoadBalancer
     annotations:
-      # lbipam.cilium.io/ips: 10.10.30.8
+      lbipam.cilium.io/ips: 10.10.30.8
       gatus.home-operations.com/enabled: "true"
       gatus.home-operations.com/endpoint: |
         conditions:

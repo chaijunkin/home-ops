@@ -21,7 +21,6 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: ai
-  timeout: 5m
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -49,7 +48,6 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: ai
-  timeout: 5m
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -75,4 +73,3 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: ai
-  timeout: 5m

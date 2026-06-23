@@ -6,7 +6,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: opencloud
+    name: app-template
   interval: 30m
   values:
     controllers:
@@ -15,10 +15,10 @@ spec:
           secret.reloader.stakater.com/reload: &secret opencloud-secret
         pod:
           securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
+            runAsUser: 1000
+            runAsGroup: 1000
             runAsNonRoot: true
-            fsGroup: 2000
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
         containers:
           webfinger-proxy:
@@ -97,6 +97,8 @@ spec:
           gethomepage.dev/name: OpenCloud
           gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/opencloud.png
           gethomepage.dev/description: File Sync and Share
+          gatus.home-operations.com/endpoint: |-
+            url: https://drive.cloudjur.com/status
         hostnames: [drive.cloudjur.com]
         parentRefs:
           - name: envoy-external
@@ -109,9 +111,10 @@ spec:
             matches:
               - path:
                   type: PathPrefix
-                  value: /
-                # desktop UA
-                # Waiting for https://github.com/opencloud-eu/desktop/pull/766
+                  value:
+                    /
+                    # desktop UA
+                    # Waiting for https://github.com/opencloud-eu/desktop/pull/766
           - backendRefs:
               - identifier: app
                 port: 9201

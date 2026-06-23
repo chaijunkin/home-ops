@@ -29,4 +29,3 @@ spec:
     namespace: flux-system
   wait: false
   retryInterval: 1m
-  timeout: 5m

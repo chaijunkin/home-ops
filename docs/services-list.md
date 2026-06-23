@@ -6,23 +6,18 @@
 | ai | ollama | ollama.cloudjur.com | Application Service |
 | ai | open-webui | chat.cloudjur.com | Application Service |
 | default | atuin | atuin.cloudjur.com | Other Services |
-| default | changedetection | changedetection.cloudjur.com | Utility Service |
 | default | convertx | convertx.cloudjur.com | Utility Service |
 | default | cyberchef | cyberchef.cloudjur.com | Utility Service |
-| default | firefly | money.cloudjur.com | Application Service |
-| default | firefly-data-importer | import-money.cloudjur.com | Application Service |
-| default | freshrss | freshrss.cloudjur.com | Utility Service |
 | default | glance | glance.cloudjur.com | Application Service |
 | default | glance | g.cloudjur.com | Application Service |
 | default | homepage | homepage.cloudjur.com | Utility Service |
 | default | homepage | h.cloudjur.com | Utility Service |
 | default | it-tools | it-tools.cloudjur.com | Utility Service |
-| default | karakeep | karakeep.cloudjur.com | Utility Service |
 | default | n8n-app | n8n.cloudjur.com | Other Services |
 | default | n8n-webhooks | n8n-webhook.cloudjur.com | None |
+| default | picoshare | share.cloudjur.com | Storage |
 | default | searxng | search.cloudjur.com | Application Service |
-| default | sure | sure.cloudjur.com | None |
-| default | thelounge | thelounge.cloudjur.com | Application Service |
+| default | sure | money.cloudjur.com | Application Service |
 | dev | forgejo | git.cloudjur.com | Platform Infrastructure |
 | downloads | autobangumi | autobangumi.cloudjur.com | Downloads Service |
 | downloads | autobrr | autobrr.cloudjur.com | Downloads Service |
@@ -67,6 +62,7 @@
 | network | echo-server-ext | echo-server-ext.cloudjur.com | Management Tools |
 | network | echo-server-ext-auth | echo-server-ext-auth.cloudjur.com | Management Tools |
 | network | echo-server-int | echo-server-int.cloudjur.com | Management Tools |
+| network | omada-controller | omada.cloudjur.com | None |
 | network | switch | switch.cloudjur.com | None |
 | observability | alloy-logs | alloy-logs.cloudjur.com | Observability Service |
 | observability | alloy-profiles | alloy-profiles.cloudjur.com | Observability Service |
@@ -78,16 +74,17 @@
 | observability | kube-prometheus-stack-alertmanager | alertmanager.cloudjur.com | Observability Service |
 | observability | kube-prometheus-stack-prometheus | prometheus.cloudjur.com | Observability Service |
 | renovate | renovate-operator | renovate.cloudjur.com | None |
-| security | authentik | auth.cloudjur.com | Platform Infrastructure |
+| security | authentik-server | auth.cloudjur.com | Platform Infrastructure |
 | storage | garage-api | garage.cloudjur.com | None |
 | storage | garage-s3 | s3.cloudjur.com | None |
+| storage | garage-schema-web | schema.cloudjur.com | None |
 | storage | garage-webui | garage-ui.cloudjur.com | Platform Infrastructure |
-| storage | staticgarage-api | static-garage.cloudjur.com | None |
-| storage | staticgarage-s3 | static-s3.cloudjur.com | None |
-| storage | staticgarage-schema-web | schema.cloudjur.com | None |
-| storage | staticgarage-webui | static-garage-ui.cloudjur.com | Platform Infrastructure |
-| storage | staticgarage-wiki-web | wiki.cloudjur.com | None |
+| storage | garage-wiki-web | wiki.cloudjur.com | None |
+| storage | garage-wiki-web | wiki.cloudjur.com | None |
+| storage | garage-wiki-web | wiki.cloudjur.com | None |
+| storage | rclone | rclone.cloudjur.com | None |
 | volsync-system | kopia | kopia.cloudjur.com | Platform Infrastructure |
+| database | dragonfly | 6379 | None |
 | database | mosquitto | mosquitto.cloudjur.com | None |
 | database | postgres-lb | postgres.cloudjur.com | None |
 | default | rustdesk-relay | rustdesk-relay.cloudjur.com | None |

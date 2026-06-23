@@ -15,5 +15,5 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: workadventure
-  timeout: 5m
+
   wait: false

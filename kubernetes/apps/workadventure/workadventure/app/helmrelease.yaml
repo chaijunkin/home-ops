@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -22,7 +21,7 @@ spec:
           app:
             image:
               repository: docker.io/thecodingmachine/workadventure-play
-              tag: v1.31.4
+              tag: v1.31.7
             env:
               WA_PROTO: https
               WA_HOST: gather.cloudjur.com
@@ -40,7 +39,8 @@ spec:
               PUSHER_URL: https://gather.cloudjur.com
               FRONT_URL: https://gather.cloudjur.com
               PUBLIC_MAP_STORAGE_URL: https://gather.cloudjur.com/map-storage
-              INTERNAL_MAP_STORAGE_URL: "http://{{ .Release.Name }}-mapstorage:3000"
+              INTERNAL_MAP_STORAGE_URL: http://{{ .Release.Name
+                }}-mapstorage:3000
               ENABLE_OPENAPI_ENDPOINT: "true"
               ROOM_API_PORT: "50051"
               MAP_STORAGE_PATH_PREFIX: /map-storage
@@ -90,7 +90,7 @@ spec:
           app:
             image:
               repository: docker.io/thecodingmachine/workadventure-back
-              tag: v1.31.5
+              tag: v1.31.7
             env:
               WA_PROTO: https
               WA_HOST: gather.cloudjur.com
@@ -104,7 +104,8 @@ spec:
               UPLOAD_MAX_FILESIZE: "10485760"
               PLAY_URL: https://gather.cloudjur.com
               MAP_STORAGE_URL: "{{ .Release.Name }}-mapstorage:50053"
-              INTERNAL_MAP_STORAGE_URL: "http://{{ .Release.Name }}-mapstorage:3000"
+              INTERNAL_MAP_STORAGE_URL: http://{{ .Release.Name
+                }}-mapstorage:3000
               PUBLIC_MAP_STORAGE_URL: https://gather.cloudjur.com/map-storage
               STORE_VARIABLES_FOR_LOCAL_MAPS: "true"
               PLAYER_VARIABLES_MAX_TTL: "-1"
@@ -129,15 +130,15 @@ spec:
           init:
             image:
               repository: docker.io/library/alpine
-              tag: "3.23"
-            command: ["/bin/sh", "-c", "chown -R 1000:1000 /maps"]
+              tag: "3.24"
+            command: [/bin/sh, -c, chown -R 1000:1000 /maps]
             securityContext:
               runAsUser: 0
         containers:
           app:
             image:
               repository: docker.io/thecodingmachine/workadventure-map-storage
-              tag: v1.31.5
+              tag: v1.31.7
             env:
               WA_PROTO: https
               WA_HOST: gather.cloudjur.com
@@ -151,7 +152,7 @@ spec:
               UPLOAD_MAX_FILESIZE: "10485760"
               API_URL: "{{ .Release.Name }}-back:50051"
               PATH_PREFIX: /map-storage
-              ENTITY_COLLECTION_URLS: "https://gather.cloudjur.com/collections/FurnitureCollection.json,https://gather.cloudjur.com/collections/OfficeCollection.json"
+              ENTITY_COLLECTION_URLS: https://gather.cloudjur.com/collections/FurnitureCollection.json,https://gather.cloudjur.com/collections/OfficeCollection.json
               PUSHER_URL: /
               ENABLE_BASIC_AUTHENTICATION: "true"
               AUTHENTICATION_USER: admin
@@ -187,7 +188,7 @@ spec:
           app:
             image:
               repository: docker.io/thecodingmachine/workadventure-uploader
-              tag: v1.31.5
+              tag: v1.31.7
             env:
               WA_PROTO: https
               WA_HOST: gather.cloudjur.com
@@ -250,7 +251,7 @@ spec:
               - path: /maps
     route:
       main:
-        hostnames: ["gather.cloudjur.com"]
+        hostnames: [gather.cloudjur.com]
         parentRefs:
           - name: envoy-external
             namespace: network

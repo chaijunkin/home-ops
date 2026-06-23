@@ -22,7 +22,7 @@ mod github ".just/github.just"
 
 # Kube Recipes
 [group: 'Kube']
-mod kube "kubernetes"
+mod k8s "kubernetes"
 
 # Sops Recipes
 [group: 'Sops']

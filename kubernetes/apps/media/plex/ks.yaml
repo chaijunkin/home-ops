@@ -21,7 +21,7 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: *app
@@ -54,7 +54,6 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -79,7 +78,7 @@ spec:
   wait: false
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: plex-image-cleanup
@@ -114,7 +113,7 @@ spec:
   wait: false # no flux ks dependents
   interval: 24h
   retryInterval: 1m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: *app
@@ -122,3 +121,27 @@ spec:
   components:
     - ../../../../components/volsync
       # - ../../../../components/zeroscaler
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: plex-jbops
+#   namespace: media
+# spec:
+#   targetNamespace: media
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: plex-jbops
+#   dependsOn:
+#     - name: plex
+#       namespace: media
+#   path: ./kubernetes/apps/media/plex/jbops
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#     namespace: flux-system
+#   wait: false
+#   interval: 24h
+#   retryInterval: 1m

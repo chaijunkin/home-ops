@@ -6,6 +6,7 @@ Thumbs.db
 talosconfig
 kubernetes/talos/**
 !/kubernetes/talos/.gitkeep
+!/kubernetes/talos/mod.just
 .decrypted~*.yaml
 .config.env
 *.agekey
@@ -91,3 +92,5 @@ httproutes.csv
 .reference
 gitleaks-report.json
 .bw-provider-state
+
+.cf-terraforming.yaml

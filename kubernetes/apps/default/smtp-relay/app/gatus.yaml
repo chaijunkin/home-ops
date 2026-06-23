@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/configmap.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smtp-relay-gatus-ep
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |-
+    endpoints:
+      - name: smtp-relay
+        group: infrastructure
+        url: starttls://smtp.cloudjur.com:25
+        interval: 1m
+        ui:
+          hide-url: true
+          hide-hostname: true
+        conditions:
+          - "[CONNECTED] == true"
+        alerts:
+          - type: pushover

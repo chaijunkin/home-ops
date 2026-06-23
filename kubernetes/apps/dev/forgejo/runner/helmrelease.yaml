@@ -56,7 +56,7 @@ spec:
               - env:
                   - name: DEBIAN_FRONTEND
                     value: noninteractive
-                image: ghcr.io/chaijunkin/forgejo-runner:2026.05.30@sha256:333dfb02046f9d6b7fb9e14a1d540af320ff27bc487d04ad1552e2e2df6f3ee9
+                image: ghcr.io/chaijunkin/forgejo-runner:2026.06.14@sha256:8ed0945a42453834482823f8e12401e3d02fd1073f994297175ca5fcfc624b68
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
@@ -105,7 +105,7 @@ spec:
                     value: "1"
                   - name: DOCKER_CERT_PATH
                     value: /certs/client
-                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:4288050ddd71ac2e5f42465c474aec8b838792dec85bb284405db7c180138580
+                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:4bdd96ec45abea8ab75a107ac36064ea65ec6f91aafec76bf561b7dc9b27bb37
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
@@ -144,7 +144,7 @@ spec:
           runner:
             image:
               repository: git.erwanleboucher.dev/eleboucher/runner
-              tag: 12.10.1@sha256:0a8ef9dd41a4c29903db8f9f125b20e58e2ccb5c3c539beb1e02db139d7cf7a2
+              tag: 12.10.2@sha256:d5eeafda573012c229b730f5a18437b464d946473478e1f6bd56fd537b881609
             command:
               - sh
               - -ec
@@ -167,7 +167,7 @@ spec:
           k8s-plugin:
             image:
               repository: git.erwanleboucher.dev/eleboucher/runner-k8s-plugin
-              tag: 12.10.0@sha256:c1b8145843d9e2f48ad6c7053e3aab184bea189cc868ba7f0ac6b34a905464d5
+              tag: 12.10.6@sha256:b0ffe279448c70fb3327485163da8da2ce12fa9cc39a29231edd676c9025c036
             args:
               - --listen
               - unix:///plugin/forgejo-runner-k8s.sock
@@ -216,6 +216,18 @@ spec:
         forgejo-runner:
           type: Role
           rules:
+            # Jobs - the plugin creates jobs to run pipeline steps
+            - apiGroups:
+                - batch
+              resources:
+                - jobs
+              verbs:
+                - create
+                - get
+                - list
+                - watch
+                - delete
+                  # Pods - only needed when the plugin needs to interact with them (logs, exec)
             - apiGroups:
                 - ""
               resources:
@@ -223,9 +235,7 @@ spec:
               verbs:
                 - list
                 - watch
-                - create
                 - get
-                - delete
             - apiGroups:
                 - ""
               resources:

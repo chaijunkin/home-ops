@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://crd.cloudjur.com/externaldns.k8s.io/dnsendpoint_v1alpha1.json
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
@@ -6,9 +5,9 @@ metadata:
   name: coturn
 spec:
   endpoints:
-    - dnsName: "turn.cloudjur.com"
+    - dnsName: turn.cloudjur.com
       recordType: CNAME
-      targets: ["external.cloudjur.com"]
+      targets: [external.cloudjur.com]
       providerSpecific:
         - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
           value: "false"

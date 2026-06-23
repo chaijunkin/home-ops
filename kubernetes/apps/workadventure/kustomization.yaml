@@ -6,6 +6,6 @@ components:
   - ../../components/common
 resources:
   - ./namespace.yaml
-  # - ./workadventure/ks.yaml
-  # - ./coturn/ks.yaml
-  # - ./synapse/ks.yaml
+    # - ./workadventure/ks.yaml
+    # - ./coturn/ks.yaml
+    # - ./synapse/ks.yaml

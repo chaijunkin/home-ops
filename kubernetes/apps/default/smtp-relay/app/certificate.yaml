@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: smtp-relay
+spec:
+  secretName: tls.smtp-relay
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: smtp.cloudjur.com
+  dnsNames:
+    - smtp.cloudjur.com
+  privateKey:
+    rotationPolicy: Always

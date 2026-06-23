@@ -80,7 +80,7 @@ spec:
           qbop:
             image:
               repository: ghcr.io/clajiness/qbop
-              tag: v2.6.0@sha256:0ece4eac87b85da22933e6929377dbebc4ca5ba70573cebfe7f3e266b79eb1d5
+              tag: v2.8.3@sha256:7b555899cc935ae7d7fbab4d9bfa7f41ccd85dceab5770b6ac97d644d98affd7
             env:
               # 1. Direct Key-Value Pairs
               - name: PROTON_GATEWAY
@@ -90,14 +90,16 @@ spec:
               - name: OPN_INTERFACE_ADDR
                 value: https://gateway.cloudjur.com
               - name: OPN_PROTON_ALIAS_NAME
-                value: torrent_port
-                # 2. Specific Secret Mapping (OPN_API_KEY)
+                value:
+                  torrent_port
+                  # 2. Specific Secret Mapping (OPN_API_KEY)
               - name: OPN_API_KEY
                 valueFrom:
                   secretKeyRef:
                     name: qbittorrent-secret
-                    key: OPN_API_KEY # Replace with the actual key name inside your secret
-                    # 3. Specific Secret Mapping (OPN_API_SECRET)
+                    key:
+                      OPN_API_KEY # Replace with the actual key name inside your secret
+                      # 3. Specific Secret Mapping (OPN_API_SECRET)
               - name: OPN_API_SECRET
                 valueFrom:
                   secretKeyRef:
@@ -283,8 +285,12 @@ spec:
           gethomepage.dev/description: Torrent Client
           gethomepage.dev/widget.type: qbittorrent
           gethomepage.dev/widget.url: http://qbittorrent.downloads:8080
-          gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}` }}"
-          gethomepage.dev/widget.password: "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}` }}"
+          gethomepage.dev/widget.username:
+            "{{ `{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}`
+            }}"
+          gethomepage.dev/widget.password:
+            "{{ `{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}`
+            }}"
       qbop:
         hostnames:
           - qbop.cloudjur.com

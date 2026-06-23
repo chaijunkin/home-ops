@@ -2,7 +2,7 @@ terraform {
   required_providers {
     authentik = {
       source  = "goauthentik/authentik"
-      version = "2025.12.1" # 2026.2.0 has bugged for system_setting enterprise_audit_include_expanded_diff
+      version = "2026.5.0" # 2026.2.0 has bugged for system_setting enterprise_audit_include_expanded_diff
     }
     # bitwarden-secrets = {
     #   source = "registry.terraform.io/bitwarden/bitwarden-secrets"

@@ -44,7 +44,7 @@ releases:
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
-    version: 1.45.2
+    version: 1.46.0
     values: ["../../kubernetes/apps/kube-system/coredns/app/helm/values.yaml"]
     needs: ["kube-system/cilium"]
 
@@ -87,7 +87,7 @@ releases:
   - name: external-secrets
     namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: 2.5.0
+    version: 2.6.0
     values:
       [
         "../../kubernetes/apps/external-secrets/external-secrets/app/helm/values.yaml",
@@ -110,7 +110,7 @@ releases:
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.49.0
+    version: 0.52.0
     values:
       ["../../kubernetes/apps/flux-system/flux-operator/app/helm/values.yaml"]
     needs: ["external-secrets/external-secrets"]
@@ -118,7 +118,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.49.0
+    version: 0.52.0
     values:
       ["../../kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml"]
     needs: ["flux-system/flux-operator"]

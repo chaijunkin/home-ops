@@ -32,7 +32,7 @@ spec:
   wait: false
   interval: 1h
   retryInterval: 2m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: *app
@@ -63,7 +63,7 @@ spec:
   wait: false
   interval: 1h
   retryInterval: 2m
-  timeout: 5m
+
   postBuild:
     substitute:
       APP: *app

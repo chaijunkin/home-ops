@@ -9,4 +9,5 @@ resources:
   - ./democratic-csi/ks.yaml
   - ./openebs/ks.yaml
   - ./garage/ks.yaml
-  # - ./staticgarage/ks.yaml
+  - ./rclone/ks.yaml
+    # - ./staticgarage/ks.yaml

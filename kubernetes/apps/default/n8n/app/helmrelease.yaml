@@ -24,7 +24,7 @@ spec:
           app:
             image:
               repository: ghcr.io/n8n-io/n8n
-              tag: 2.21.0
+              tag: 2.26.3
             env:
               DB_SQLITE_VACUUM_ON_STARTUP: true
               EXECUTIONS_DATA_PRUNE: true
@@ -66,7 +66,8 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Other Services
           gethomepage.dev/name: n8n Webhooks
-          gethomepage.dev/description: "Workflow Automation Tool (n8n-webhook.cloudjur.com)"
+          gethomepage.dev/description: Workflow Automation Tool
+            (n8n-webhook.cloudjur.com)
           gethomepage.dev/icon: mdi-api
           gethomepage.dev/href: "#"
         hostnames:

@@ -148,6 +148,12 @@
         - /tank/Backup/Volsync
         - /tank/Backup/Personal
         - /tank/Backup/Workstation
+        - /tank/Backup/S3
+        - /tank/Backup/S3/B2
+        - /tank/Backup/S3/R2
+        - /tank/Backup/Apps
+        - /tank/Backup/Apps/Opnsense
+        - /tank/Backup/Apps/Omada
         - /tank/Storage/Desktop
         - /tank/Storage/Documents
         - /tank/Storage/Downloads

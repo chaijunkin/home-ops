@@ -11,8 +11,6 @@ spec:
   components:
     - ../../../../components/zeroscaler
   dependsOn:
-    - name: local-hostpath
-      namespace: storage
     - name: snapshot-controller
       namespace: volsync-system
   healthChecks:
@@ -32,7 +30,7 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m
+
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
