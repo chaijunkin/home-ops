@@ -260,3 +260,17 @@ variable "matrix_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "trex_id" {
+  type        = string
+  description = "Trex Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "trex_secret" {
+  type        = string
+  description = "Trex Client Secret"
+  sensitive   = true
+  default     = null
+}
