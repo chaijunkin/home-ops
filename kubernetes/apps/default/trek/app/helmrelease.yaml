@@ -34,8 +34,8 @@ spec:
               tag: 3.0.21@sha256:79f88110b76980b261b81d1313ec82ee393149d97ae672e87a83e0b158e361a0
             args: ["node", "--import", "tsx", "src/index.ts"]
             env:
-              APP_URL: https://{{ .Release.Name }}.cloudjur.com
-              ALLOWED_ORIGINS: https://{{ .Release.Name }}.cloudjur.com
+              APP_URL: https://trips.cloudjur.com
+              ALLOWED_ORIGINS: https://trips.cloudjur.com
               ALLOW_INTERNAL_NETWORK: true
               TRUST_PROXY: true
               FORCE_HTTPS: true
@@ -49,7 +49,8 @@ spec:
               OIDC_ADMIN_VALUE: admins
               OIDC_SCOPE: openid email profile groups
               OIDC_DISPLAY_NAME: Authentik
-              OIDC_ISSUER: "https://auth.cloudjur.com/application/o/trek/"
+              OIDC_ISSUER: "https://auth.cloudjur.com/application/o/trips/"
+              OIDC_DISCOVERY_URL: "https://auth.cloudjur.com/application/o/trips/.well-known/openid-configuration"
               OIDC_CLIENT_ID:
                 valueFrom:
                   secretKeyRef:
@@ -93,7 +94,7 @@ spec:
 
     route:
       main:
-        hostnames: ["{{ .Release.Name }}.cloudjur.com"]
+        hostnames: ["trips.cloudjur.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -101,7 +102,7 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
-          gethomepage.dev/name: trek
+          gethomepage.dev/name: trek trips
           gethomepage.dev/icon: mdi-application
           gethomepage.dev/description: Travel Collaboration
           gatus.home-operations.com/endpoint: |-
