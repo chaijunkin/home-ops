@@ -230,9 +230,9 @@ locals {
       launch_url    = "https://matrix.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
-    trex = {
-      client_id         = var.trex_id
-      client_secret     = var.trex_secret
+    trek = {
+      client_id         = var.trek_id
+      client_secret     = var.trek_secret
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/trex.png"
       redirect_uri      = "https://trex.${var.public_domain}/oauth2/callback"

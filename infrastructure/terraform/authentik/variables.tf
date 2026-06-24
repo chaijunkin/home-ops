@@ -261,14 +261,14 @@ variable "matrix_secret" {
   default     = null
 }
 
-variable "trex_id" {
+variable "trek_id" {
   type        = string
   description = "Trex Client ID"
   sensitive   = true
   default     = null
 }
 
-variable "trex_secret" {
+variable "trek_secret" {
   type        = string
   description = "Trex Client Secret"
   sensitive   = true
