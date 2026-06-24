@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: fli
+spec:
+  image: ghcr.io/punitarani/fli:latest
+  transport: streamable-http
+  mcpPort: 8000
+  proxyPort: 8080
+  args:
+    - fli-mcp-http
+  groupRef:
+    name: mcp-tools

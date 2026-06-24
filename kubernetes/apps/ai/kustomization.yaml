@@ -17,3 +17,4 @@ resources:
   - ./open-webui/ks.yaml
   - ./searxng-mcp/ks.yaml
   - ./toolhive/ks.yaml
+  - ./fli-mcp/ks.yaml
