@@ -54,8 +54,8 @@ spec:
                   key: ENCRYPTION_KEY
               OIDC_ONLY: false
               OIDC_ADMIN_CLAIM: groups
-              OIDC_ADMIN_VALUE: admins
-              OIDC_SCOPE: openid email profile
+              OIDC_ADMIN_VALUE: superusers
+              OIDC_SCOPE: openid email profile groups
               OIDC_DISPLAY_NAME: Authentik
               OIDC_ISSUER: "https://auth.cloudjur.com/application/o/trek/"
               OIDC_DISCOVERY_URL: "https://auth.cloudjur.com/application/o/trek/.well-known/openid-configuration"
