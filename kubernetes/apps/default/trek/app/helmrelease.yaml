@@ -44,7 +44,7 @@ spec:
                 secretKeyRef:
                   name: trek-secret
                   key: ENCRYPTION_KEY
-              OIDC_ONLY: true
+              OIDC_ONLY: false
               OIDC_ADMIN_CLAIM: groups
               OIDC_ADMIN_VALUE: admins
               OIDC_SCOPE: openid email profile groups
