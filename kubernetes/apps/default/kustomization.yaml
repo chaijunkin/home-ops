@@ -25,4 +25,4 @@ resources:
   - ./tika/ks.yaml
   - ./picoshare/ks.yaml
     # - ./smtp-relay/ks.yaml
-  # - ./trek/ks.yaml
+  - ./trek/ks.yaml
