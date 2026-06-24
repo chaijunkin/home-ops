@@ -43,6 +43,7 @@ spec:
               # Remote User Auth
               PAPERLESS_ACCOUNT_ALLOW_SIGNUPS: "false"
               PAPERLESS_SOCIALACCOUNT_ALLOW_SIGNUPS: "false"
+              PAPERLESS_DISABLE_REGULAR_LOGIN: "true"
               # Folders
               PAPERLESS_CONSUMPTION_DIR: /data/nas/consume
               PAPERLESS_DATA_DIR: /data/local/data
