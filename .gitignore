@@ -78,7 +78,9 @@ override.tf.json
 # !example_override.tf
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
-# example: *tfplan*
+# example:
+*tfplan*
+*tfstate*
 
 # Ignore CLI configuration files
 .terraformrc
@@ -94,3 +96,5 @@ gitleaks-report.json
 .bw-provider-state
 
 .cf-terraforming.yaml
+infrastructure/terraform/authentik/tmp/**
+*.sql.qz

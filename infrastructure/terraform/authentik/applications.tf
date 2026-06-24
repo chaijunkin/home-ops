@@ -29,46 +29,46 @@ locals {
       slug        = "echo-server-int-auth"
       auth_groups = [authentik_group.default["public"].id]
     },
-    {
-      name        = "prometheus-ext"
-      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/prometheus.png"
-      description = "Prometheus External Access"
-      group       = "public"
-      slug        = "prometheus-ext"
-      auth_groups = [authentik_group.default["public"].id]
-    },
-    {
-      name        = "alertmanager-ext"
-      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/alertmanager.png"
-      description = "Alertmanager External Access"
-      group       = "public"
-      slug        = "alertmanager-ext"
-      auth_groups = [authentik_group.default["public"].id]
-    },
-    {
-      name        = "loki-ext"
-      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/loki.png"
-      description = "Loki External Access"
-      group       = "public"
-      slug        = "loki-ext"
-      auth_groups = [authentik_group.default["public"].id]
-    },
-    {
-      name        = "tempo-ext"
-      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/tempo.png"
-      description = "Tempo External Access"
-      group       = "public"
-      slug        = "tempo-ext"
-      auth_groups = [authentik_group.default["public"].id]
-    },
-    {
-      name        = "pyroscope-ext"
-      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/pyroscope.png"
-      description = "Pyroscope External Access"
-      group       = "public"
-      slug        = "pyroscope-ext"
-      auth_groups = [authentik_group.default["public"].id]
-    }
+    # {
+    #   name        = "prometheus-ext"
+    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/prometheus.png"
+    #   description = "Prometheus External Access"
+    #   group       = "public"
+    #   slug        = "prometheus-ext"
+    #   auth_groups = [authentik_group.default["public"].id]
+    # },
+    # {
+    #   name        = "alertmanager-ext"
+    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/alertmanager.png"
+    #   description = "Alertmanager External Access"
+    #   group       = "public"
+    #   slug        = "alertmanager-ext"
+    #   auth_groups = [authentik_group.default["public"].id]
+    # },
+    # {
+    #   name        = "loki-ext"
+    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/loki.png"
+    #   description = "Loki External Access"
+    #   group       = "public"
+    #   slug        = "loki-ext"
+    #   auth_groups = [authentik_group.default["public"].id]
+    # },
+    # {
+    #   name        = "tempo-ext"
+    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/tempo.png"
+    #   description = "Tempo External Access"
+    #   group       = "public"
+    #   slug        = "tempo-ext"
+    #   auth_groups = [authentik_group.default["public"].id]
+    # },
+    # {
+    #   name        = "pyroscope-ext"
+    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/pyroscope.png"
+    #   description = "Pyroscope External Access"
+    #   group       = "public"
+    #   slug        = "pyroscope-ext"
+    #   auth_groups = [authentik_group.default["public"].id]
+    # }
   ]
 }
 

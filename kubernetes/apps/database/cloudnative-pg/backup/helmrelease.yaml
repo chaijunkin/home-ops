@@ -64,6 +64,6 @@ spec:
         path: /tank/Backup/Database
 
   # docker run --rm --tty --interactive \
-  # -v "$(pwd)/postgres-20260605.sql.gz:/tmp/backupfile.sql.gz" \
+  # -v "$(pwd)/authentik-20260623.sql.gz:/tmp/backupfile.sql.gz" \
   # postgres:16.2 \
-  # /bin/sh -c "zcat /tmp/backupfile.sql.gz | psql --host=10.10.30.11 --port=5432 --username=postgres --dbname=sure -W"
+  # /bin/sh -c "zcat /tmp/backupfile.sql.gz | psql --host=10.10.30.11 --port=5432 --username=postgres --dbname=authentik -W"
