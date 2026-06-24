@@ -40,6 +40,14 @@ spec:
               TRUST_PROXY: true
               FORCE_HTTPS: true
               TZ: "Asia/Kuala_Lumpur"
+              ADMIN_EMAIL:
+                secretKeyRef:
+                  name: trek-secret
+                  key: ADMIN_EMAIL
+              ADMIN_PASSWORD:
+                secretKeyRef:
+                  name: trek-secret
+                  key: ADMIN_PASSWORD
               ENCRYPTION_KEY:
                 secretKeyRef:
                   name: trek-secret
