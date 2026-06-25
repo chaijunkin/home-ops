@@ -17,7 +17,7 @@ resources:
     # - ./karakeep/ks.yaml
   - ./n8n/ks.yaml
     # - ./pdf-tool/ks.yaml
-  - ./paperless/ks.yaml
+    # - ./paperless/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./sure/ks.yaml
