@@ -91,7 +91,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Home Automation
           gethomepage.dev/name: Zigbee2MQTT
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/zigbee2mqtt.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/zigbee2mqtt.png
         hostnames:
           - zigbee.cloudjur.com
         parentRefs:

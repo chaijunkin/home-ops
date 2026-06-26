@@ -48,7 +48,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Storage
           gethomepage.dev/name: Picoshare
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/picoshare.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/picoshare.png
         hostnames:
           - share.cloudjur.com
         parentRefs:

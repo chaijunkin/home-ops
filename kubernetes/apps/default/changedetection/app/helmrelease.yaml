@@ -69,7 +69,7 @@ spec:
           gethomepage.dev/group: Utility Service
           gethomepage.dev/name: Changedetection
           gethomepage.dev/description: Changedetection tools
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/changedetection.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/changedetection.png
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
         parentRefs:
           - name: envoy-internal

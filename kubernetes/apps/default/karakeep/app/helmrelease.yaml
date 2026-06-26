@@ -172,7 +172,7 @@ spec:
           gethomepage.dev/group: Utility Service
           gethomepage.dev/name: KaraKeep
           gethomepage.dev/description: Webpage archiving tools
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/karakeep.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/karakeep.png
         hostnames:
           - karakeep.cloudjur.com
         parentRefs:

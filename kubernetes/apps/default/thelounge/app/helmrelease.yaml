@@ -60,7 +60,7 @@ spec:
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: The Lounge
           gethomepage.dev/description: Self-hosted web IRC client
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/thelounge.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/thelounge.png
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
         parentRefs:
           - name: envoy-internal

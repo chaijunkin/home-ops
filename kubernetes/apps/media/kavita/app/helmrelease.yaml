@@ -46,7 +46,7 @@ spec:
           gethomepage.dev/group: Media Service
           gethomepage.dev/name: Kavita
           gethomepage.dev/description: Manga Reader
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/kavita.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/kavita.png
           # gethomepage.dev/widget.type: kavita
           # gethomepage.dev/widget.url: "http://kavita.media.svc.cluster.local:5000"
           # gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_CALIBREWEB_USERNAME}}` }}"

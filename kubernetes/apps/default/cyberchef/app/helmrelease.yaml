@@ -60,7 +60,7 @@ spec:
           gethomepage.dev/group: Utility Service
           gethomepage.dev/name: CyberChef
           gethomepage.dev/description: Cyber operation tools
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/cyberchef.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/cyberchef.png
     persistence:
       cache:
         type: emptyDir

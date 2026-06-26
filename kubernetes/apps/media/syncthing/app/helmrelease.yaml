@@ -93,7 +93,7 @@ spec:
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Syncthing
           gethomepage.dev/description: File Synchronization Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/syncthing.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/syncthing.png
         hostnames:
           - ${APP}.cloudjur.com
         parentRefs:

@@ -88,7 +88,7 @@ spec:
           gethomepage.dev/group: Platform Infrastructure
           gethomepage.dev/name: FileBrowser
           gethomepage.dev/description: File Management Service
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/filebrowser.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/filebrowser.png
         hostnames:
           - filebrowser.cloudjur.com
         parentRefs:

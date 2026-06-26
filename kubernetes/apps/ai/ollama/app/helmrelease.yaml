@@ -103,4 +103,4 @@ spec:
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Ollama
           gethomepage.dev/description: LLM services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/ollama.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/ollama.png

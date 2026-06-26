@@ -7,7 +7,7 @@
 
 ## Resources
 - **Project Repository:** [Neko Source Code](https://github.com/search?q=neko)
-- **Helm/Manifest Source:** `https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/neko.png`
+- **Helm/Manifest Source:** `https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/neko.png`
 
 ---
 

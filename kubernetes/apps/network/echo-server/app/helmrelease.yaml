@@ -85,7 +85,7 @@ spec:
           gethomepage.dev/group: Management Tools
           gethomepage.dev/name: Echo Server Internal
           gethomepage.dev/description: HTTP & HTTPS Echo Server Internal
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/web-check.png
       # int-auth:
       #   hostnames:
       #     - echo-server-int-auth.cloudjur.com
@@ -102,7 +102,7 @@ spec:
       #     gethomepage.dev/group: Management Tools
       #     gethomepage.dev/name: Echo Server Internal Auth
       #     gethomepage.dev/description: HTTP & HTTPS Echo Server Internal Auth
-      #     gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+      #     gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/web-check.png
       ext:
         hostnames:
           - echo-server-ext.cloudjur.com
@@ -119,7 +119,7 @@ spec:
           gethomepage.dev/group: Management Tools
           gethomepage.dev/name: Echo Server External
           gethomepage.dev/description: HTTP & HTTPS Echo Server External
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/web-check.png
       ext-auth:
         hostnames:
           - echo-server-ext-auth.cloudjur.com
@@ -136,4 +136,4 @@ spec:
           gethomepage.dev/group: Management Tools
           gethomepage.dev/name: Echo Server External Auth
           gethomepage.dev/description: HTTP & HTTPS Echo Server External Auth
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/web-check.png

@@ -93,7 +93,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Neko
-          gethomepage.dev/icon-url: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/neko.png
+          gethomepage.dev/icon-url: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/neko.png
           gethomepage.dev/description: Virtual browser
         hostnames:
           - movienight.cloudjur.com

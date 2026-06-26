@@ -47,7 +47,7 @@ spec:
           gethomepage.dev/group: Media Service
           gethomepage.dev/name: Komga
           gethomepage.dev/description: Comics/Manga Server
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/komga.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/komga.png
           # gethomepage.dev/widget.type: komga
           # gethomepage.dev/widget.url: "http://komga.media.svc.cluster.local:80"
           # gethomepage.dev/widget.username: "{{ `{{HOMEPAGE_VAR_KOMGA_USERNAME`}} }}"

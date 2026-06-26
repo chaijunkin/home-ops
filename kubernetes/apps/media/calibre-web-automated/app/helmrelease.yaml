@@ -115,7 +115,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media Service
           gethomepage.dev/name: Calibre Web
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/calibre-web.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/calibre-web.png
           gethomepage.dev/description: eBook Library
           gethomepage.dev/widget.type: calibreweb
           gethomepage.dev/widget.username:

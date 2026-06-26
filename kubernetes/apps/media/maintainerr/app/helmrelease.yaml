@@ -63,5 +63,5 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media Service
           gethomepage.dev/name: maintainerr
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/mmaintainerr.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/mmaintainerr.png
           gethomepage.dev/description: Media Retention Manager

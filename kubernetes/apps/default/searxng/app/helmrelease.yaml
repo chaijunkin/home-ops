@@ -106,4 +106,4 @@ spec:
           gethomepage.dev/group: Application Service
           gethomepage.dev/name: Searxng
           gethomepage.dev/description: Search services
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/searxng.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/searxng.png

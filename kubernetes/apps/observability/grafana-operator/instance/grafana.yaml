@@ -108,7 +108,7 @@ spec:
         gethomepage.dev/group: Observability Service
         gethomepage.dev/name: Grafana
         gethomepage.dev/description: Analytics & Monitoring
-        gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/grafana.png
+        gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/grafana.png
     spec:
       hostnames: [grafana.cloudjur.com]
       parentRefs:

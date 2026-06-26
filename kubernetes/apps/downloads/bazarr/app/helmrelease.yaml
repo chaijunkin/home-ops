@@ -93,7 +93,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Downloads Service
           gethomepage.dev/name: Bazarr
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/bazarr.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/bazarr.png
           gethomepage.dev/description: Subtitle Downloads
           gethomepage.dev/widget.type: bazarr
           gethomepage.dev/widget.url: http://bazarr.downloads:6767

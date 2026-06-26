@@ -134,7 +134,7 @@ spec:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media Service
           gethomepage.dev/name: Plex
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/plex.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/plex.png
           gethomepage.dev/description: Media Player
           gethomepage.dev/widget.type: plex
           gethomepage.dev/widget.url: http://plex.media:32400

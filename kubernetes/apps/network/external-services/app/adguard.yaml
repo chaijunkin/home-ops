@@ -45,7 +45,7 @@ metadata:
     app.kubernetes.io/instance: adguard
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/adguard-home.png
+    gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/adguard-home.png
     gethomepage.dev/name: Adguard
     gethomepage.dev/group: Network Infrastructure
     gethomepage.dev/description: DNS Adblocker

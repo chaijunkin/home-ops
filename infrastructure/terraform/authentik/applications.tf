@@ -3,7 +3,7 @@ locals {
   proxy = [
     # {
     #   name     = "n8n"
-    #   icon_url = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/n8n.svg"
+    #   icon_url = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/n8n.svg"
     #   description = "Workflow automation tool"
     #   group = "automation"
     #   slug = "n8n"
@@ -11,7 +11,7 @@ locals {
     # }
     {
       name        = "echo-server-ext-auth"
-      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png"
+      icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/web-check.png"
       description = ""
       group       = "public"
       slug        = "echo-server-ext-auth"
@@ -23,7 +23,7 @@ locals {
     },
     {
       name        = "echo-server-int-auth"
-      icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/web-check.png"
+      icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/web-check.png"
       description = ""
       group       = "public"
       slug        = "echo-server-int-auth"
@@ -31,7 +31,7 @@ locals {
     },
     # {
     #   name        = "prometheus-ext"
-    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/prometheus.png"
+    #   icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/prometheus.png"
     #   description = "Prometheus External Access"
     #   group       = "public"
     #   slug        = "prometheus-ext"
@@ -39,7 +39,7 @@ locals {
     # },
     # {
     #   name        = "alertmanager-ext"
-    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/alertmanager.png"
+    #   icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/alertmanager.png"
     #   description = "Alertmanager External Access"
     #   group       = "public"
     #   slug        = "alertmanager-ext"
@@ -47,7 +47,7 @@ locals {
     # },
     # {
     #   name        = "loki-ext"
-    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/loki.png"
+    #   icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/loki.png"
     #   description = "Loki External Access"
     #   group       = "public"
     #   slug        = "loki-ext"
@@ -55,7 +55,7 @@ locals {
     # },
     # {
     #   name        = "tempo-ext"
-    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/tempo.png"
+    #   icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/tempo.png"
     #   description = "Tempo External Access"
     #   group       = "public"
     #   slug        = "tempo-ext"
@@ -63,7 +63,7 @@ locals {
     # },
     # {
     #   name        = "pyroscope-ext"
-    #   icon_url    = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/pyroscope.png"
+    #   icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/pyroscope.png"
     #   description = "Pyroscope External Access"
     #   group       = "public"
     #   slug        = "pyroscope-ext"
@@ -135,7 +135,7 @@ locals {
       client_id         = var.romm_id
       client_secret     = var.romm_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/romm.svg"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/romm.svg"
       redirect_uri      = "https://romm.${var.public_domain}/api/oauth/openid"
       launch_url        = "https://romm.${var.public_domain}/"
       property_mappings = local.default_property_mappings
@@ -144,7 +144,7 @@ locals {
       client_id         = var.jellyfin_id
       client_secret     = var.jellyfin_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/jellyfin.svg"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/jellyfin.svg"
       redirect_uri      = "https://jellyfin.${var.public_domain}/sso/OID/redirect/authentik"
       launch_url        = "https://jellyfin.${var.public_domain}/sso/OID/start/authentik"
       property_mappings = local.default_property_mappings
@@ -171,7 +171,7 @@ locals {
       client_id         = var.calibre_web_automated_id
       client_secret     = var.calibre_web_automated_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/calibre-web.png"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/calibre-web.png"
       redirect_uri  = "https://books.${var.public_domain}/login/generic/authorized"
       launch_url    = "https://books.${var.public_domain}/"
       property_mappings = local.default_property_mappings
@@ -180,7 +180,7 @@ locals {
       client_id         = var.karakeep_id
       client_secret     = var.karakeep_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/refs/heads/main/png/karakeep.png"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/karakeep.png"
       redirect_uri  = "https://karakeep.${var.public_domain}/api/auth/callback/custom"
       launch_url    = "https://karakeep.${var.public_domain}/auth"
       property_mappings = local.default_property_mappings
@@ -189,7 +189,7 @@ locals {
       client_id         = var.vaultwarden_id
       client_secret     = var.vaultwarden_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/vaultwarden.svg"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/vaultwarden.svg"
       redirect_uri  = "https://vw.${var.public_domain}/identity/connect/oidc-signin"
       launch_url    = "https://vw.${var.public_domain}/"
       property_mappings = local.default_property_mappings
@@ -198,7 +198,7 @@ locals {
       client_id         = var.sure_id
       client_secret     = var.sure_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/sure.svg"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/sure.svg"
       redirect_uri  = "https://money.${var.public_domain}/auth/openid_connect/callback"
       launch_url    = "https://money.${var.public_domain}/"
       property_mappings = local.default_property_mappings
@@ -207,7 +207,7 @@ locals {
       client_id         = var.paperless_id
       client_secret     = var.paperless_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/svg/paperless.svg"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/paperless.svg"
       redirect_uri  = "https://paperless.${var.public_domain}/accounts/oidc/authentik/login/callback/"
       launch_url    = "https://paperless.${var.public_domain}/"
       property_mappings = local.default_property_mappings
@@ -292,7 +292,7 @@ module "oauth2-toolhive" {
 module "oauth2-opencloud" {
   source             = "./oauth2_application"
   name               = "OpenCloud"
-  icon_url           = "https://raw.githubusercontent.com/chaijunkin/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/opencloud.svg"
+  icon_url           = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/b76499ba5f7a70614758cfe5bd9bb7cb514d8ff9/svg/opencloud.svg"
   launch_url         = "https://drive.cloudjur.com"
   description        = "OpenCloud"
   newtab             = true

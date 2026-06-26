@@ -73,7 +73,7 @@ spec:
           gethomepage.dev/group: Utility Service
           gethomepage.dev/name: ConvertX
           gethomepage.dev/description: Format Convert tools
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/convertx.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/convertx.png
         hostnames: ["{{ .Release.Name }}.cloudjur.com"]
         parentRefs:
           - name: envoy-internal

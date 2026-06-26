@@ -65,7 +65,7 @@ spec:
           gethomepage.dev/group: Utility Service
           gethomepage.dev/name: FreshRSS
           gethomepage.dev/description: Self-hosted RSS feed aggregator
-          gethomepage.dev/icon: https://raw.githubusercontent.com/chaijunkin/dashboard-icons/main/png/freshrss.png
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/freshrss.png
         hostnames:
           - freshrss.cloudjur.com
         parentRefs:
