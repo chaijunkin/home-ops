@@ -10,9 +10,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: omada-controller
-    key: omada-controller.json
+  url: https://grafana.com/api/dashboards/16343/revisions/2/download
   instanceSelector:
     matchLabels:
       dashboards: grafana
