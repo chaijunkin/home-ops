@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/mauriceboe/trek
-              tag: 3.0.21@sha256:79f88110b76980b261b81d1313ec82ee393149d97ae672e87a83e0b158e361a0
+              tag: 3.1.3@sha256:ae2198bf2133a9363fa8774f4666ba464c0c01ec4e30844f077d1c6116e3b6cb
             args: ["node", "--import", "tsx", "src/index.ts"]
             env:
               APP_URL: https://trips.cloudjur.com
