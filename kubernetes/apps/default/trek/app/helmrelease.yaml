@@ -42,7 +42,7 @@ spec:
               APP_URL: https://trips.cloudjur.com
               ALLOWED_ORIGINS: https://trips.cloudjur.com
               ALLOW_INTERNAL_NETWORK: true
-              TRUST_PROXY: true
+              TRUST_PROXY: 1
               FORCE_HTTPS: true
               DEFAULT_LANGUAGE: en
               TZ: "Asia/Kuala_Lumpur"
