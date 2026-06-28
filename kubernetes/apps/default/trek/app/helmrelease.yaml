@@ -45,6 +45,7 @@ spec:
               TRUST_PROXY: 1
               FORCE_HTTPS: true
               DEFAULT_LANGUAGE: en
+              LOG_LEVEL: debug
               TZ: "Asia/Kuala_Lumpur"
               ADMIN_EMAIL:
                 secretKeyRef:
