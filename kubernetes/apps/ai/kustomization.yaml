@@ -9,7 +9,7 @@ resources:
     # - ./context7-mcp/ks.yaml
     # - ./flux-operator-mcp/ks.yaml
     # - ./github-mcp/ks.yaml
-    # - ./grafana-mcp/ks.yaml # why you keep delete grafana datasource?...
+  - ./grafana-mcp/ks.yaml
   - ./ha-mcp/ks.yaml
     # - ./kubectl-mcp/ks.yaml
     # - ./memory-mcp/ks.yaml
