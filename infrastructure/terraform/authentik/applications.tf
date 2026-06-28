@@ -230,16 +230,16 @@ locals {
       launch_url    = "https://matrix.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
-    trek = {
-      client_id         = "trek"
-      # var.trek_id
-      client_secret     = var.trek_secret
-      group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/trex.png"
-      redirect_uri      = "https://trips.${var.public_domain}/api/auth/oidc/callback"
-      launch_url        = "https://trips.${var.public_domain}/"
-      property_mappings = local.default_property_mappings
-    },
+    # trek = {
+    #   client_id         = "trek"
+    #   # var.trek_id
+    #   client_secret     = var.trek_secret
+    #   group             = "users"
+    #   icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/trex.png"
+    #   redirect_uri      = "https://trips.${var.public_domain}/api/auth/oidc/callback"
+    #   launch_url        = "https://trips.${var.public_domain}/"
+    #   property_mappings = local.default_property_mappings
+    # },
   }
 }
 
