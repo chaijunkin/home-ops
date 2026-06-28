@@ -62,8 +62,8 @@ spec:
               OIDC_ADMIN_VALUE: superusers
               OIDC_SCOPE: openid email profile groups
               OIDC_DISPLAY_NAME: Authentik
-              OIDC_ISSUER: "https://auth.cloudjur.com"
-              OIDC_DISCOVERY_URL: "https://auth.cloudjur.com/application/o/trek/.well-known/openid-configuration"
+              OIDC_ISSUER: "https://auth.cloudjur.com/application/o/trek/"
+              # OIDC_DISCOVERY_URL: "https://auth.cloudjur.com/application/o/trek/.well-known/openid-configuration"
               OIDC_CLIENT_ID:
                 valueFrom:
                   secretKeyRef:
