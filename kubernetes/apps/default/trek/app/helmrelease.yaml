@@ -32,7 +32,10 @@ spec:
             image:
               repository: mirror.gcr.io/mauriceboe/trek
               tag: 3.1.3@sha256:ae2198bf2133a9363fa8774f4666ba464c0c01ec4e30844f077d1c6116e3b6cb
-            args: ["node", "--import", "tsx", "src/index.ts"]
+            args:
+              - sh
+              - -c
+              - cd /app/server && exec node --require tsconfig-paths/register dist/index.js
             env:
               APP_URL: https://trips.cloudjur.com
               ALLOWED_ORIGINS: https://trips.cloudjur.com
