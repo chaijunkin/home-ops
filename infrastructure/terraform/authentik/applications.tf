@@ -231,7 +231,8 @@ locals {
       property_mappings = local.default_property_mappings
     },
     trek = {
-      client_id         = var.trek_id
+      client_id         = "trek"
+      # var.trek_id
       client_secret     = var.trek_secret
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/trex.png"
