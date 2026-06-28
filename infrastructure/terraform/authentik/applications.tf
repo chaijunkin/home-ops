@@ -238,7 +238,7 @@ locals {
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/trex.png"
       redirect_uri      = "https://trips.${var.public_domain}/api/auth/oidc/callback"
       launch_url        = "https://trips.${var.public_domain}/"
-      property_mappings = local.default_property_mappings
+      property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.email_verified.id])
     },
   }
 }
