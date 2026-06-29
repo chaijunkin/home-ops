@@ -60,7 +60,7 @@ spec:
               # AUTOMATIC1111_SAMPLER: DPM++ SDE
               # AUTOMATIC1111_SCHEDULER: Karras
               # Open-webui settings
-              OLLAMA_BASE_URL: http://ollama.ai:11434
+              # OLLAMA_BASE_URL: http://ollama.ai:11434
               ENABLE_RAG_WEB_SEARCH: true
               ENABLE_SEARCH_QUERY: true
               WEB_SEARCH_ENGINE: searxng

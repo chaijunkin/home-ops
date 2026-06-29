@@ -1,0 +1,552 @@
+---
+# JSON5-friendly OpenClaw gateway config. Flux postBuild leaves OpenClaw ${VAR} placeholders;
+# use $${VAR} here so Flux emits a literal ${VAR} for runtime env substitution.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openclaw-config
+data:
+  openclaw.json: |
+    {
+      agents: {
+        defaults: {
+          contextInjection: "always",
+          bootstrapMaxChars: 50000,
+          bootstrapTotalMaxChars: 100000,
+          thinkingDefault: "high",
+          timeoutSeconds: 600,
+          model: {
+            primary: "litellm-anthropic/MiniMax",
+            fallbacks: [
+              "litellm/dsv4f",
+              "litellm/ornith",
+              "litellm/self-hosted",
+              "litellm/nvidia",
+              "litellm/go-minimax-m3",
+              "litellm/kimi-k2.6",
+            ]
+          },
+          imageModel: {
+            primary: "litellm/vision",
+            fallbacks: [
+              "litellm-anthropic/MiniMax",
+              "litellm/chatgpt/gpt-5.4-mini",
+            ]
+          },
+          imageGenerationModel: {
+            primary: "comfy/workflow",
+          },
+          models: {
+            "litellm/kimi-k2.6": { alias: "kimi-2.6", params: { cache_prompt: true } },
+            "litellm-anthropic/MiniMax": { alias: "minimax", params: { cacheRetention: "short" } },
+            "litellm-anthropic/MiniMax-M2.7": { alias: "minimax-old", params: { cacheRetention: "short" } },
+            "litellm/self-hosted": { alias: "skirk", params: { cache_prompt: true } },
+            "litellm/ornith": { alias: "ornith", params: { cache_prompt: true } },
+            "litellm/nvidia": { alias: "nvidia", params: { cache_prompt: true } },
+            "litellm/dsv4f": { alias: "dsv4f", params: { cache_prompt: true } },
+            "litellm/dsv4p": { alias: "dsv4p", params: { cache_prompt: true } },
+            "litellm/glm-5.1": { alias: "glm-5.1", params: { cache_prompt: true } },
+            "litellm/glm-5.2": { alias: "glm-5.2", params: { cache_prompt: true } },
+            "litellm/go-minimax-m3": { alias: "go-minimax-m3", params: { cache_prompt: true } },
+            "litellm/go-minimax-m2.7": { alias: "go-minimax-m2.7", params: { cache_prompt: true } },
+            "litellm/mimo-v2.5-pro": { alias: "mimo-agent", params: { cache_prompt: true } },
+            "litellm/mimo-v2.5": { alias: "mimo-v2.5", params: { cache_prompt: true } },
+            "litellm/qwen3.7-plus": { alias: "qwen-plus", params: { cache_prompt: true } },
+            "openai/gpt-5.5": { alias: "gpt" },
+            "openai/gpt-5.4": { alias: "gpt-cheap" },
+            "openai/gpt-5.4-mini": { alias: "gpt-mini" },
+            "litellm/chatgpt/gpt-5.5": { alias: "chatgpt-5.5" },
+            "litellm/chatgpt/gpt-5.4": { alias: "chatgpt-5.4" },
+            "litellm/chatgpt/gpt-5.4-mini": { alias: "chatgpt-5.4-mini" },
+          },
+          memorySearch: {
+            provider: "openai",
+            model: "sentence-transformers/all-MiniLM-L6-v2",
+            remote: {
+              baseUrl: "http://llama-embed.llm:8080/v1",
+              apiKey: "llama-embed"
+            }
+          },
+          contextPruning: { mode: "off" },
+          compaction: { mode: "default", reserveTokensFloor: 30000, memoryFlush: { enabled: true, softThresholdTokens: 80000, prompt: "Extract key decisions, state changes, lessons, blockers to memory/YYYY-MM-DD.md. Format: ## [HH:MM] Topic. Skip routine work. NO_FLUSH if nothing important.", systemPrompt: "Compacting session context. Extract only what's worth remembering. No fluff." },
+          },
+          maxConcurrent: 4,
+          subagents: {
+            model: {
+              primary: "litellm/dsv4f",
+            },
+            archiveAfterMinutes: 120,
+            maxConcurrent: 3,
+            thinking: "high",
+          },
+          heartbeat: {
+            every: "60m",
+            model: "litellm/nvidia",
+            directPolicy: "allow",
+            lightContext: false,
+            isolatedSession: false,
+            includeReasoning: false,
+          },
+        },
+        list: [
+          {
+            id: "main",
+            default: true,
+            name: "Miso",
+            workspace: "/home/node/.openclaw/workspace",
+            agentDir: "/home/node/.openclaw/agents/main/agent",
+            thinkingDefault: "low",
+            tools: { alsoAllow: ["memory_recall", "memory_list", "memory_remember"] },
+            identity: {
+              name: "Miso",
+              avatar: "avatars/miso_avatar.png",
+            }
+          },
+          {
+            id: "matcha",
+            name: "Matcha",
+            workspace: "/home/node/.openclaw/workspace-matcha",
+            agentDir: "/home/node/.openclaw/agents/matcha/agent",
+            tools: { allow: ["exec", "message", "read", "web_fetch", "image", "memory_search", "memory_get", "memory_recall", "memory_list", "memory_remember"] },
+            thinkingDefault: "low",
+            model: {
+              primary: "litellm/dsv4f",
+              fallbacks: [
+                "litellm-anthropic/MiniMax-M2.7",
+                "litellm/self-hosted",
+                "litellm/nvidia",
+              ]
+            },
+            identity: {
+              name: "Matcha",
+              avatar: "avatars/matcha_avatar.png",
+            }
+          },
+          {
+            id: "saffron",
+            name: "Saffron",
+            workspace: "/home/node/.openclaw/workspace-saffron",
+            agentDir: "/home/node/.openclaw/agents/saffron/agent",
+            tools: { allow: ["exec", "read", "write", "message", "web_fetch", "browser", "sessions_spawn", "memory_search", "memory_get", "memory_recall", "memory_list", "memory_remember", "toolhive__find_tool","toolhive__call_tool"] },
+            thinkingDefault: "high",
+            model: {
+              primary: "litellm/glm-5.2",
+              fallbacks: [
+                "litellm/glm-5.1",
+                "litellm-anthropic/MiniMax",
+                "litellm/go-minimax-m3",
+                "litellm/dsv4f",
+                "litellm/self-hosted",
+                "litellm/nvidia",
+                "litellm/chatgpt/gpt-5.5",
+                "litellm/kimi-k2.6",
+              ]
+            },
+            identity: {
+              name: "Saffron",
+              avatar: "avatars/saffron_avatar.png",
+            }
+          },
+        ],
+      },
+      tools: {
+        media: { image: { timeoutSeconds: 180 } },
+        sessions: { visibility: "all" },
+        agentToAgent: { enabled: true },
+        exec: { security: "full", ask: "off", strictInlineEval: false },
+        elevated: { enabled: true, allowFrom: { discord: ["$${DISCORD_ADMIN_USER_ID}"] } },
+        web: { search: { enabled: true, openaiCodex: { enabled: true, mode: "cached" } }, fetch: { enabled: true } },
+      },
+      commands: {
+        native: "auto",
+        nativeSkills: "auto",
+        restart: false,
+      },
+      models: {
+        providers: {
+          "litellm": {
+            baseUrl: "http://litellm.ai:4000/v1",
+            apiKey: "$${LITELLM_API_KEY}",
+            api: "openai-completions",
+            timeoutSeconds: 600,
+            models: [
+              { id: "kimi-k2.6", name: "Kimi K2.6 (OpenCode→Moonshot)", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
+              { id: "self-hosted", name: "Qwen3.6-35B-A3B UD Q8_K_XL (ROCm)", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
+              { id: "vision", name: "Qwen3.5-4B Q8_0 (ROCm)", reasoning: true, input: ["text", "image"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
+              { id: "nvidia", name: "Qwen3.6-27B UD Q4_K_XL (CUDA)", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 131072, maxTokens: 16384 },
+              { id: "dsv4f", name: "OpenCode Go DeepSeek V4 Flash", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
+              { id: "dsv4p", name: "OpenCode Go DeepSeek V4 Pro", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
+              { id: "glm-5.1", name: "Z.Ai GLM 5.1", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 203000, maxTokens: 16384 },
+              { id: "glm-5.2", name: "Z.Ai GLM 5.2", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
+              { id: "go-minimax-m3", name: "OpenCode Go MiniMax M3", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 32768 },
+              { id: "go-minimax-m2.7", name: "OpenCode Go MiniMax M2.7", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 204800, maxTokens: 16384 },
+              { id: "mimo-v2.5-pro", name: "OpenCode Go MiMo V2.5 Pro", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
+              { id: "mimo-v2.5", name: "OpenCode Go MiMo V2.5", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
+              { id: "qwen3.7-plus", name: "OpenCode Go Qwen 3.7 Plus", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
+              { id: "chatgpt/gpt-5.5", name: "ChatGPT GPT-5.5", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 272000, maxTokens: 128000 },
+              { id: "chatgpt/gpt-5.4", name: "ChatGPT GPT-5.4", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 272000, maxTokens: 128000 },
+              { id: "chatgpt/gpt-5.4-mini", name: "ChatGPT GPT-5.4 Mini", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 272000, maxTokens: 128000 },
+            ]
+          },
+          "litellm-anthropic": {
+            baseUrl: "http://litellm.ai:4000",
+            apiKey: "$${LITELLM_API_KEY}",
+            api: "anthropic-messages",
+            timeoutSeconds: 600,
+            models: [
+              { id: "MiniMax", name: "MiniMax M3", reasoning: true, input: ["text","image"], cost: { input: 15, output: 60, cacheRead: 2, cacheWrite: 10 }, contextWindow: 1000000, maxTokens: 32768, },
+              { id: "MiniMax-M2.7", name: "MiniMax M2.7", reasoning: true, input: ["text"], cost: { input: 15, output: 60, cacheRead: 2, cacheWrite: 10 }, contextWindow: 204800, maxTokens: 32768, },
+            ],
+          },
+        }
+      },
+      auth: {
+        profiles: {
+          "openai-codex:$${OPENAI_CODEX_USERNAME}": { provider: "openai-codex", mode: "oauth" },
+        },
+      },
+      bindings: [
+        { agentId: "main",    match: { channel: "discord", accountId: "default" } },
+        { agentId: "saffron", match: { channel: "discord", accountId: "saffron" } },
+        { agentId: "matcha",  match: { channel: "discord", accountId: "matcha" } },
+        { agentId: "matcha",  match: { channel: "discord", accountId: "matcha", peer: { kind: "channel", id: "$${MATCHA_CHANNEL_ID}" } } },
+      ],
+      channels: {
+        discord: {
+          enabled: true,
+          defaultAccount: "default",
+          actions: {
+            messages: true,
+            channels: true,
+            search: true,
+            reactions: false,
+            stickers: false,
+            polls: false,
+            permissions: false,
+            threads: false,
+            pins: false,
+            memberInfo: false,
+            roleInfo: false,
+            roles: false,
+            channelInfo: false,
+            voiceStatus: false,
+            events: false,
+            moderation: false,
+            emojiUploads: false,
+            stickerUploads: false,
+          },
+          streaming: { block: { enabled: false } },
+          groupPolicy: "allowlist",
+          dmPolicy: "pairing",
+          accounts: {
+            default: {
+              token: "$${DISCORD_BOT_TOKEN}",
+            },
+            saffron: {
+              token: "$${SAFFRON_BOT_TOKEN}",
+            },
+            matcha: {
+              token: "$${MATCHA_BOT_TOKEN}",
+              guilds: {
+                "$${DISCORD_SERVER_ID}": {
+                  channels: {
+                    "$${MATCHA_CHANNEL_ID}": { enabled: true, requireMention: false },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      plugins: {
+        entries: {
+          discord: { enabled: true },
+          comfy: {
+            enabled: true,
+            config: {
+              mode: "local",
+              allowPrivateNetwork: true,
+              baseUrl: "http://10.69.10.44:8188",
+              image: {
+                workflowPath: "/home/node/.openclaw/workflows/openclaw-generate.json",
+                promptNodeId: "2",
+                outputNodeId: "7",
+              },
+            },
+          },
+          "openclaw-better-gateway": {
+            enabled: true,
+            config: {
+              reconnectIntervalMs: 3000,
+              maxReconnectAttempts: 10,
+              maxFileSize: 10485760,
+              autoReconnectOnGap: true,
+              autoReconnectOnVisibility: true,
+              visibilityReconnectThresholdMs: 30000,
+            },
+          },
+          "admin-http-rpc": { enabled: true },
+          "lossless-claw": {
+            enabled: true,
+            llm: { allowModelOverride: true, allowedModels: [ "litellm/summary" ], },
+            subagent: { allowModelOverride: true, allowedModels: [ "litellm/summary" ], },
+            config: {
+              contextThreshold: 0.75,
+              delegationTimeoutMs: 1000000,
+              expansionModel: "litellm/summary",
+              freshTailCount: 64,
+              freshTailMaxTokens: 24000,
+              ignoreSessionPatterns: [
+                "agent:*:cron:**",
+                "agent:*:heartbeat:**",
+                "heartbeat:**",
+                "**:heartbeat:**"
+              ],
+              incrementalMaxDepth: 1,
+              leafChunkTokens: 20000,
+              newSessionRetainDepth: 2,
+              proactiveThresholdCompactionMode: "deferred",
+              pruneHeartbeatOk: true,
+              skipStatelessSessions: true,
+              statelessSessionPatterns: [ "agent:*:subagent:**" ],
+              summaryModel: "litellm/summary",
+              summaryTimeoutMs: 1000000,
+              transcriptGcEnabled: false,
+            },
+          },
+          searxng: {
+            enabled: true,
+            config: {
+              webSearch: {
+                baseUrl: "http://searxng.llm:8080",
+                language: "en"
+              }
+            }
+          },
+          "memory-wiki": {
+            enabled: true,
+            config: {
+              vaultMode: "bridge",
+              vault: {
+                path: "/home/node/.openclaw/wiki/main",
+                renderMode: "native",
+              },
+              bridge: {
+                enabled: true,
+                readMemoryArtifacts: true,
+                indexDreamReports: true,
+                indexDailyNotes: true,
+                indexMemoryRoot: true,
+                followMemoryEvents: true,
+              },
+              search: {
+                backend: "shared",
+                corpus: "all",
+              },
+              render: {
+                preserveHumanBlocks: true,
+                createBacklinks: true,
+                createDashboards: true,
+              },
+            },
+          },
+          openai: {
+            enabled: true,
+          },
+          browser: {
+            enabled: true,
+          },
+          "memory-core": {
+            enabled: true,
+          },
+          memini: {
+            enabled: true,
+            hooks: {
+              allowConversationAccess: true,
+            },
+            config: {
+              base_url: "http://memini.llm:8080",
+              namespace: "openclaw",
+              namespace_per_agent: true,
+              skip_without_agent: true,
+              skip_system_turns: true,
+              fallback_on_error: true,
+              timeout_ms: 15000,
+              recall_limit: 3,
+              expose_tools: true,
+            },
+          },
+        },
+        slots: {
+          memory: "memini",
+          contextEngine: "lossless-claw"
+        },
+      },
+      session: {
+        dmScope: "main",
+        reset: {
+          mode: "idle",
+          idleMinutes: 1440,
+        },
+        maintenance: {
+          mode: "enforce",
+          pruneAfter: "7d",
+          maxEntries: 1000,
+          resetArchiveRetention: "7d",
+        },
+      },
+      gateway: {
+        auth: { mode: "token", token: "$${OPENCLAW_GATEWAY_TOKEN}" },
+        tools: { allow: ["sessions_send"] },
+        controlUi: { allowedOrigins: ["https://miso.cloudjur.com", "https://miso-chat.cloudjur.com"],},
+        mode: "local",
+        port: 18789,
+        trustedProxies: ["10.42.0.0/16", "192.168.0.0/16"]
+      },
+      messages: {
+        ackReactionScope: "group-mentions",
+        responsePrefix: "[{model}]"
+      },
+      mcp: {
+        servers: {
+          toolhive: {
+            url: "http://vmcp-mcp-gateway-internal.llm:4483/mcp",
+            transport: "streamable-http"
+          },
+          context7: {
+            url: "https://mcp.context7.com/mcp",
+            transport: "streamable-http",
+            headers: {
+              CONTEXT7_API_KEY: "$${CONTEXT7_API_KEY}",
+            },
+          },
+        },
+      },
+      skills: {
+        entries: {
+          "1password": {
+            enabled: false
+          },
+          "apple-notes": {
+            enabled: false
+          },
+          "apple-reminders": {
+            enabled: false
+          },
+          "bear-notes": {
+            enabled: false
+          },
+          blogwatcher: {
+            enabled: false
+          },
+          blucli: {
+            enabled: false
+          },
+          camsnap: {
+            enabled: false
+          },
+          clawhub: {
+            enabled: false
+          },
+          "coding-agent": {
+            enabled: false
+          },
+          discord: {
+            enabled: false
+          },
+          eightctl: {
+            enabled: false
+          },
+          gemini: {
+            enabled: false
+          },
+          gifgrep: {
+            enabled: false
+          },
+          gog: {
+            enabled: false
+          },
+          goplaces: {
+            enabled: false
+          },
+          himalaya: {
+            enabled: false
+          },
+          imsg: {
+            enabled: false
+          },
+          mcporter: {
+            enabled: false
+          },
+          "model-usage": {
+            enabled: false
+          },
+          "nano-pdf": {
+            enabled: false
+          },
+          obsidian: {
+            enabled: false
+          },
+          "openai-whisper": {
+            enabled: false
+          },
+          "openai-whisper-api": {
+            enabled: false
+          },
+          openhue: {
+            enabled: false
+          },
+          oracle: {
+            enabled: false
+          },
+          ordercli: {
+            enabled: false
+          },
+          peekaboo: {
+            enabled: false
+          },
+          sag: {
+            enabled: false
+          },
+          "sherpa-onnx-tts": {
+            enabled: false
+          },
+          slack: {
+            enabled: false
+          },
+          songsee: {
+            enabled: false
+          },
+          sonoscli: {
+            enabled: false
+          },
+          "spotify-player": {
+            enabled: false
+          },
+          summarize: {
+            enabled: false
+          },
+          "things-mac": {
+            enabled: false
+          },
+          tmux: {
+            enabled: false
+          },
+          trello: {
+            enabled: false
+          },
+          "video-frames": {
+            enabled: false
+          },
+          "voice-call": {
+            enabled: false
+          },
+          wacli: {
+            enabled: false
+          },
+          xurl: {
+            enabled: false
+          },
+        },
+      },
+    }

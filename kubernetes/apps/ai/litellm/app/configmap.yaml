@@ -1,0 +1,619 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-configmap
+data:
+  config.yaml: |
+    model_list:
+      - model_name: self-hosted
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000001250
+          cache_creation_input_token_cost: 0.0000001250
+          cache_read_input_token_cost: 0.0000000125
+          output_cost_per_token: 0.0000004999
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_vision: false
+        litellm_params:
+          model: openai/self-hosted
+          api_base: http://llama-strix.llm:8080/v1
+          api_key: llama-strix
+          max_parallel_requests: 3
+          order: 1
+
+      - model_name: self-hosted
+        model_info:
+          mode: chat
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_vision: true
+        litellm_params:
+          model: openai/qwen3.6-35b-a3b@q5_k_xl
+          api_base: http://mac.internal:1234/v1
+          api_key: lm-studio
+          max_parallel_requests: 2
+          order: 2
+
+      - model_name: ryzen
+        model_info:
+          mode: chat
+          max_input_tokens: 8192
+          max_output_tokens: 2048
+          supports_function_calling: true
+          supports_vision: true
+        litellm_params:
+          model: openai/ryzen
+          api_base: http://10.69.10.120:8080/v1
+          api_key: llama-ryzen
+          max_parallel_requests: 1
+
+      - model_name: vision
+        model_info:
+          mode: chat
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_vision: true
+        litellm_params:
+          model: openai/vision
+          api_base: http://llama-vision:8080/v1
+          api_key: llama-vision
+          max_parallel_requests: 2
+
+      - model_name: nvidia
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000002162
+          cache_creation_input_token_cost: 0.0000002162
+          cache_read_input_token_cost: 0.0000000216
+          output_cost_per_token: 0.0000008649
+          max_input_tokens: 131072
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_vision: false
+        litellm_params:
+          model: openai/nvidia
+          api_base: http://llama-nvidia.llm:8080/v1
+          api_key: llama-nvidia
+          max_parallel_requests: 1
+
+      - model_name: qwen3-embedding-0-6b
+        model_info:
+          mode: embedding
+        litellm_params:
+          model: openai/qwen3-embedding-0-6b
+          api_base: http://llama-embed.llm:8080/v1
+          api_key: qwen3-embedding-0-6b
+
+      # Qwen3.5-4B (reasoning disabled) on the Intel iGPU — non-reasoning grunt
+      # model for lossless-claw summaries/expansion (replaces self-hosted, whose
+      # reasoning returned empty content). Single slot, 32k ctx.
+      - model_name: summary
+        model_info:
+          mode: chat
+          max_input_tokens: 32768
+          max_output_tokens: 8192
+          supports_function_calling: false
+          supports_vision: false
+        litellm_params:
+          model: openai/qwen3.5-4b
+          api_base: http://llama-summary.llm:8080/v1
+          api_key: qwen3.5-4b
+          max_parallel_requests: 1
+
+      # ChatGPT subscription (OAuth device flow, no API key — token cached in CHATGPT_TOKEN_DIR).
+      # reasoning_effort is left to the caller (none|low|medium|high|xhigh per request).
+      # Only models the Codex/ChatGPT backend serves work here: 5.5, 5.4 and 5.4-mini.
+      # nano and codex-spark are rejected by the backend (API-only SKUs).
+      - model_name: chatgpt/gpt-5.5
+        model_info:
+          mode: responses
+          input_cost_per_token: 0.0000050000
+          cache_creation_input_token_cost: 0.0000050000
+          cache_read_input_token_cost: 0.0000005000
+          output_cost_per_token: 0.0000300000
+        litellm_params:
+          model: chatgpt/gpt-5.5
+
+      - model_name: chatgpt/gpt-5.4
+        model_info:
+          mode: responses
+          input_cost_per_token: 0.0000025000
+          cache_creation_input_token_cost: 0.0000025000
+          cache_read_input_token_cost: 0.0000002500
+          output_cost_per_token: 0.0000150000
+        litellm_params:
+          model: chatgpt/gpt-5.4
+
+      - model_name: chatgpt/gpt-5.4-mini
+        model_info:
+          mode: responses
+          input_cost_per_token: 0.0000007500
+          cache_creation_input_token_cost: 0.0000007500
+          cache_read_input_token_cost: 0.0000000750
+          output_cost_per_token: 0.0000045000
+        litellm_params:
+          model: chatgpt/gpt-5.4-mini
+
+      - model_name: MiniMax
+        model_info:
+          mode: messages
+          input_cost_per_token: 0.0000003000
+          cache_creation_input_token_cost: 0.0000003000
+          cache_read_input_token_cost: 0.0000000600
+          output_cost_per_token: 0.0000012000
+          max_input_tokens: 1000000
+          max_output_tokens: 131072
+          supports_function_calling: true
+          supports_prompt_caching: true
+          supports_vision: true
+        litellm_params:
+          model: minimax/MiniMax-M3
+          api_base: https://api.minimax.io/anthropic/v1/messages
+          api_key: os.environ/MINIMAX_API_KEY
+          cache_control_injection_points:
+            - location: message
+              role: system
+            - location: message
+              index: -1
+
+      - model_name: MiniMax-M2.7
+        model_info:
+          mode: messages
+          input_cost_per_token: 0.0000003000
+          cache_creation_input_token_cost: 0.0000003750
+          cache_read_input_token_cost: 0.0000000600
+          output_cost_per_token: 0.0000012000
+          max_input_tokens: 204800
+          max_output_tokens: 131072
+          supports_function_calling: true
+          supports_prompt_caching: true
+          supports_vision: false
+        litellm_params:
+          model: minimax/MiniMax-M2.7
+          api_base: https://api.minimax.io/anthropic/v1/messages
+          api_key: os.environ/MINIMAX_API_KEY
+          cache_control_injection_points:
+            - location: message
+              role: system
+            - location: message
+              index: -1
+
+      - model_name: glm-5.1
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000014000
+          cache_creation_input_token_cost: 0.0000014000
+          cache_read_input_token_cost: 0.0000002600
+          output_cost_per_token: 0.0000044000
+          max_input_tokens: 203000
+          max_output_tokens: 131072
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/glm-5.1
+          api_base: https://api.z.ai/api/coding/paas/v4
+          api_key: os.environ/ZAI_API_KEY
+          order: 1
+
+      - model_name: glm-5.1
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000014000
+          cache_creation_input_token_cost: 0.0000014000
+          cache_read_input_token_cost: 0.0000002600
+          output_cost_per_token: 0.0000044000
+          max_input_tokens: 203000
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/glm-5.1
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+          order: 2
+
+      - model_name: glm-5.2
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000014000
+          cache_creation_input_token_cost: 0.0000014000
+          cache_read_input_token_cost: 0.0000002600
+          output_cost_per_token: 0.0000044000
+          max_input_tokens: 1000000
+          max_output_tokens: 131072
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/glm-5.2
+          api_base: https://api.z.ai/api/coding/paas/v4
+          api_key: os.environ/ZAI_API_KEY
+          order: 1
+
+      - model_name: glm-5.2
+        model_info:
+          mode: chat
+          max_input_tokens: 1048560
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/glm-5.2
+          api_base: https://api.neuralwatt.com/v1
+          api_key: os.environ/NEURALWATT_API_KEY
+          order: 2
+
+      - model_name: glm-5.2
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000014000
+          cache_creation_input_token_cost: 0.0000014000
+          cache_read_input_token_cost: 0.0000002600
+          output_cost_per_token: 0.0000044000
+          max_input_tokens: 1000000
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/glm-5.2
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+          order: 3
+
+      - model_name: kimi-k2.6
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000009500
+          cache_creation_input_token_cost: 0.0000009500
+          cache_read_input_token_cost: 0.0000001600
+          output_cost_per_token: 0.0000040000
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/kimi-k2.6
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+          order: 1
+
+      - model_name: kimi-k2.6
+        model_info:
+          mode: chat
+          max_input_tokens: 262128
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+          supports_vision: true
+        litellm_params:
+          model: openai/kimi-k2.6
+          api_base: https://api.neuralwatt.com/v1
+          api_key: os.environ/NEURALWATT_API_KEY
+          order: 2
+
+      - model_name: kimi-k2.6
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000009500
+          cache_creation_input_token_cost: 0.0000009500
+          cache_read_input_token_cost: 0.0000001600
+          output_cost_per_token: 0.0000040000
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: moonshot/kimi-k2.6
+          api_base: https://api.moonshot.ai/v1
+          api_key: os.environ/MOONSHOT_API_KEY
+          order: 3
+
+      # Direct Neuralwatt aliases for opt-in PAYG use and cost comparison.
+      # Billing is energy-based, so static per-token costs would misstate spend.
+      # Stable alias: Neuralwatt is currently the only configured Kimi K2.7 provider.
+      - model_name: kimi-k2.7
+        model_info:
+          mode: chat
+          max_input_tokens: 262128
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+          supports_vision: true
+        litellm_params:
+          model: openai/kimi-k2.7-code
+          api_base: https://api.neuralwatt.com/v1
+          api_key: os.environ/NEURALWATT_API_KEY
+
+      - model_name: neuralwatt/glm-5.2
+        model_info:
+          mode: chat
+          max_input_tokens: 1048560
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/glm-5.2
+          api_base: https://api.neuralwatt.com/v1
+          api_key: os.environ/NEURALWATT_API_KEY
+
+      - model_name: dsv4f
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000001400
+          cache_creation_input_token_cost: 0.0000001400
+          cache_read_input_token_cost: 0.0000000280
+          output_cost_per_token: 0.0000002800
+          max_input_tokens: 1000000
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/deepseek-v4-flash
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+          extra_body: # https://github.com/BerriAI/litellm/issues/26395
+            thinking:
+              type: disabled
+          merge_reasoning_content_in_choices: true
+
+      - model_name: dsv4p
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000017400
+          cache_creation_input_token_cost: 0.0000017400
+          cache_read_input_token_cost: 0.0000001450
+          output_cost_per_token: 0.0000034800
+          max_input_tokens: 1000000
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/deepseek-v4-pro
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+          extra_body: # https://github.com/BerriAI/litellm/issues/26395
+            thinking:
+              type: disabled
+          merge_reasoning_content_in_choices: true
+
+      - model_name: go-minimax-m3
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000003000
+          cache_creation_input_token_cost: 0.0000003000
+          cache_read_input_token_cost: 0.0000000600
+          output_cost_per_token: 0.0000012000
+          max_input_tokens: 1000000
+          max_output_tokens: 32768
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/minimax-m3
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+
+      - model_name: go-minimax-m2.7
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000003000
+          cache_creation_input_token_cost: 0.0000003000
+          cache_read_input_token_cost: 0.0000000600
+          output_cost_per_token: 0.0000012000
+          max_input_tokens: 204800
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/minimax-m2.7
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+
+      - model_name: mimo-v2.5-pro
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000004350
+          cache_creation_input_token_cost: 0.0000004350
+          cache_read_input_token_cost: 0.0000004350
+          output_cost_per_token: 0.0000008700
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/mimo-v2.5-pro
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+
+      - model_name: mimo-v2.5
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000001400
+          cache_creation_input_token_cost: 0.0000001400
+          cache_read_input_token_cost: 0.0000001400
+          output_cost_per_token: 0.0000002800
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/mimo-v2.5
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+
+      - model_name: qwen3.7-plus
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000004000
+          cache_creation_input_token_cost: 0.0000004000
+          cache_read_input_token_cost: 0.0000000400
+          output_cost_per_token: 0.0000016000
+          max_input_tokens: 1000000
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/qwen3.7-plus
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+
+      # Load-balanced REASONING tier for the `auto` router (least-busy across plans).
+      - model_name: reasoning-pool
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000014000
+          cache_creation_input_token_cost: 0.0000014000
+          cache_read_input_token_cost: 0.0000002600
+          output_cost_per_token: 0.0000044000
+          max_input_tokens: 1000000
+          max_output_tokens: 131072
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/glm-5.2
+          api_base: https://api.z.ai/api/coding/paas/v4
+          api_key: os.environ/ZAI_API_KEY
+
+      - model_name: reasoning-pool
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000003000
+          cache_creation_input_token_cost: 0.0000003000
+          cache_read_input_token_cost: 0.0000000600
+          output_cost_per_token: 0.0000012000
+          max_input_tokens: 1000000
+          max_output_tokens: 32768
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/minimax-m3
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+
+      - model_name: reasoning-pool
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000009500
+          cache_creation_input_token_cost: 0.0000009500
+          cache_read_input_token_cost: 0.0000001600
+          output_cost_per_token: 0.0000040000
+          max_input_tokens: 262144
+          max_output_tokens: 16384
+          supports_function_calling: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/kimi-k2.6
+          api_base: https://opencode.ai/zen/go/v1
+          api_key: os.environ/OPENCODE_API_KEY
+
+      - model_name: reasoning-pool
+        model_info:
+          mode: messages
+          input_cost_per_token: 0.0000003000
+          cache_creation_input_token_cost: 0.0000003000
+          cache_read_input_token_cost: 0.0000000600
+          output_cost_per_token: 0.0000012000
+          max_input_tokens: 1000000
+          max_output_tokens: 131072
+          supports_function_calling: true
+          supports_prompt_caching: true
+          supports_vision: true
+        litellm_params:
+          model: minimax/MiniMax-M3
+          api_base: https://api.minimax.io/anthropic/v1/messages
+          api_key: os.environ/MINIMAX_API_KEY
+          cache_control_injection_points:
+            - location: message
+              role: system
+            - location: message
+              index: -1
+
+      # Opt-in smart-routing alias for opencode + zed. Rule-based complexity router
+      # (no embedding call); pinned consumers keep addressing their model directly.
+      - model_name: auto
+        litellm_params:
+          model: auto_router/complexity_router
+          complexity_router_default_model: nvidia
+          complexity_router_config:
+            tiers:
+              SIMPLE: self-hosted
+              MEDIUM: nvidia
+              COMPLEX: dsv4p
+              REASONING: reasoning-pool
+            tier_boundaries:
+              simple_medium: 0.45
+              medium_complex: 0.65
+              complex_reasoning: 0.85
+
+      # Semantic intent router — SCAFFOLD, not live. Chaining into the complexity
+      # router is unsupported (auto_router_default_model must be a concrete model),
+      # and auto_router_config_path makes SemanticRouter.from_json build the encoder
+      # at startup. Before enabling: verify on a throwaway litellm, mount the
+      # router.json key (below) at /config/router.json, then point a client here.
+      # - model_name: auto-semantic
+      #   litellm_params:
+      #     model: auto_router/auto_semantic
+      #     auto_router_config_path: /config/router.json
+      #     auto_router_default_model: self-hosted
+      #     auto_router_embedding_model: qwen3-embedding-0-6b
+
+    general_settings:
+      health_check_endpoint: /v1/health
+      store_model_in_db: false
+
+    router_settings:
+      redis_url: os.environ/REDIS_URL
+      routing_strategy: simple-shuffle
+      cooldown_time: 30
+      enable_pre_call_checks: true
+      fallbacks:
+        - self-hosted: ["nvidia"]
+        - nvidia: ["self-hosted"]
+        - dsv4f: ["nvidia"]
+      context_window_fallbacks:
+        - nvidia: ["self-hosted"]
+        - self-hosted: ["dsv4f"]
+
+    litellm_settings:
+      success_callback: ["prometheus"]
+      failure_callback: ["prometheus"]
+      prometheus_adapter: true
+      # v1.88.x enforces auth on /metrics; the ServiceMonitor scrapes tokenless,
+      # so keep the endpoint open for in-cluster Prometheus scraping.
+      require_auth_for_metrics_endpoint: false
+      cache: true
+      cache_params:
+        type: redis
+        url: os.environ/REDIS_URL
+        ttl: 300
+      drop_params: true
+      request_timeout: 1200
+      num_retries: 2
+      retry_after: 5
+      set_verbose: false
+
+    environment:
+      - MINIMAX_API_KEY
+      - MOONSHOT_API_KEY
+      - NEURALWATT_API_KEY
+      - OPENCODE_API_KEY
+      - ZAI_API_KEY
+      - REDIS_HOST
+      - REDIS_PORT
+
+  router.json: |
+    {
+      "encoder_type": "litellm",
+      "encoder_name": "qwen3-embedding-0-6b",
+      "routes": [
+        {
+          "name": "self-hosted",
+          "description": "placeholder — never matches; replace with real intent routes",
+          "utterances": ["zzzz scaffold placeholder never match zzzz"],
+          "score_threshold": 0.99
+        }
+      ]
+    }

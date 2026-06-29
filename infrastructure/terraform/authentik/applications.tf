@@ -240,6 +240,42 @@ locals {
       launch_url        = "https://trips.${var.public_domain}/"
       property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.email_verified.id])
     },
+    litellm = {
+      client_id         = var.litellm_id
+      client_secret     = var.litellm_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/BerriAI/litellm/main/docs/my-website/static/img/litellm_logo.png"
+      redirect_uri      = "https://litellm.${var.public_domain}/sso/callback"
+      launch_url        = "https://litellm.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
+    # miso-gallery = {
+    #   client_id         = var.miso_gallery_id
+    #   client_secret     = var.miso_gallery_secret
+    #   group             = "users"
+    #   icon_url          = "https://raw.githubusercontent.com/comfyanonymous/ComfyUI/master/comfyui_logo.png"
+    #   redirect_uri      = "https://miso-gallery.${var.public_domain}/auth/oidc/callback"
+    #   launch_url        = "https://miso-gallery.${var.public_domain}/"
+    #   property_mappings = local.default_property_mappings
+    # },
+    # miso-chat = {
+    #   client_id         = var.miso_chat_id
+    #   client_secret     = var.miso_chat_secret
+    #   group             = "users"
+    #   icon_url          = "https://avatars.githubusercontent.com/u/158300262?s=200&v=4"
+    #   redirect_uri      = "https://miso-chat.${var.public_domain}/auth/oidc/callback"
+    #   launch_url        = "https://miso-chat.${var.public_domain}/"
+    #   property_mappings = local.default_property_mappings
+    # },
+    # dispatch = {
+    #   client_id         = var.dispatch_id
+    #   client_secret     = var.dispatch_secret
+    #   group             = "users"
+    #   icon_url          = "https://avatars.githubusercontent.com/u/158300262?s=200&v=4"
+    #   redirect_uri      = "https://dispatch.${var.public_domain}/api/auth/callback/authentik"
+    #   launch_url        = "https://dispatch.${var.public_domain}/"
+    #   property_mappings = local.default_property_mappings
+    # },
   }
 }
 

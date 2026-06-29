@@ -6,15 +6,24 @@ components:
   - ../../components/common
 resources:
   - ./namespace.yaml
-    # - ./context7-mcp/ks.yaml
-    # - ./flux-operator-mcp/ks.yaml
-    # - ./github-mcp/ks.yaml
-  - ./grafana-mcp/ks.yaml
-  - ./ha-mcp/ks.yaml
-    # - ./kubectl-mcp/ks.yaml
-    # - ./memory-mcp/ks.yaml
-  - ./ollama/ks.yaml
+  - ./toolhive/mcp-servers/context7-mcp/ks.yaml
+  - ./toolhive/mcp-servers/github-mcp/ks.yaml
+  - ./toolhive/mcp-servers/grafana-mcp/ks.yaml
+  - ./toolhive/mcp-servers/ha-mcp/ks.yaml
+  - ./toolhive/mcp-servers/kubectl-mcp/ks.yaml
+  - ./toolhive/mcp-servers/flux-mcp/ks.yaml
+  # - ./toolhive/mcp-servers/comfyui-mcp/ks.yaml
+  # - ./toolhive/mcp-servers/memory-mcp/ks.yaml
+  # - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
-  - ./searxng-mcp/ks.yaml
+  - ./toolhive/mcp-servers/searxng-mcp/ks.yaml
   - ./toolhive/ks.yaml
-  - ./fli-mcp/ks.yaml
+  - ./toolhive/mcp-servers/fli-mcp/ks.yaml
+  - ./toolhive/mcp-servers/deepwiki-mcp/ks.yaml
+  # - ./comfyui/ks.yaml
+  # - ./hermes/ks.yaml
+  # - ./openclaw/ks.yaml
+  # - ./litellm/ks.yaml
+  # - ./memini/ks.yaml
+  # - ./llmkube/ks.yaml
+  

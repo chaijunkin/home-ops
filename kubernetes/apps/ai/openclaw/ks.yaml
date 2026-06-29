@@ -1,0 +1,105 @@
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: openclaw
+  namespace: flux-system
+spec:
+  targetNamespace: ai
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: openclaw
+  path: ./kubernetes/apps/ai/openclaw/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: openclaw-dispatch
+#   namespace: flux-system
+# spec:
+#   targetNamespace: ai
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: openclaw-dispatch
+#   path: ./kubernetes/apps/ai/openclaw/dispatch
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   wait: false
+#   interval: 30m
+#   retryInterval: 1m
+#   timeout: 5m
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: openclaw-extended-memory
+#   namespace: flux-system
+# spec:
+#   targetNamespace: ai
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: openclaw-extended-memory
+#   path: ./kubernetes/apps/ai/openclaw/extended-memory
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   wait: false
+#   interval: 30m
+#   retryInterval: 1m
+#   timeout: 5m
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: openclaw-idle-watcher
+#   namespace: flux-system
+# spec:
+#   targetNamespace: ai
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: openclaw-idle-watcher
+#   path: ./kubernetes/apps/ai/openclaw/idle-watcher
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   wait: false
+#   interval: 30m
+#   retryInterval: 1m
+#   timeout: 5m
+# ---
+# # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: openclaw-miso-chat
+#   namespace: flux-system
+# spec:
+#   targetNamespace: ai
+#   commonMetadata:
+#     labels:
+#       app.kubernetes.io/name: openclaw-miso-chat
+#   path: ./kubernetes/apps/ai/openclaw/miso-chat
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: flux-system
+#   wait: false
+#   interval: 30m
+#   retryInterval: 1m
+#   timeout: 5m

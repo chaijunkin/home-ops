@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: litellm
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  interval: 15m
+  dependsOn: []
+  values:
+    controllers:
+      litellm:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        replicas: 3
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/berriai/litellm-database
+              tag: v1.90.0@sha256:b4b2eb22cfe218d2c46c0cfe442db0dd4262fdf4025f96b0c74abda3d379ef65
+            args:
+              - --config=/app/config.yaml
+            env:
+              AUTO_REDIRECT_UI_LOGIN_TO_SSO: "true"
+              CHATGPT_TOKEN_DIR: /app/chatgpt_tokens
+              GENERIC_AUTHORIZATION_ENDPOINT: https://auth.cloudjur.com/application/o/authorize/
+              GENERIC_SCOPE: openid email profile litellm_role
+              GENERIC_TOKEN_ENDPOINT: https://auth.cloudjur.com/application/o/token/
+              GENERIC_USERINFO_ENDPOINT: https://auth.cloudjur.com/application/o/userinfo/
+              GENERIC_USER_ROLE_ATTRIBUTE: litellm_role
+              LITELLM_LOG: INFO
+              LITELLM_MODE: PRODUCTION
+              PROXY_BASE_URL: https://litellm.cloudjur.com
+              PROXY_LOGOUT_URL: https://auth.cloudjur.com/application/o/litellm/end-session/
+              REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/5"
+            envFrom:
+              - secretRef:
+                  name: litellm
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 2Gi
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 4000
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 4000
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 3
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 4000
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
+                  failureThreshold: 30
+    persistence:
+      config:
+        type: configMap
+        name: litellm-configmap
+        globalMounts:
+          - path: /app/config.yaml
+            subPath: config.yaml
+            readOnly: true
+      cache:
+        type: emptyDir
+        advancedMounts:
+          litellm:
+            app:
+              - path: /app/cache
+      ui:
+        existingClaim: litellm
+        globalMounts:
+          - path: /app/chatgpt_tokens
+    route:
+      app:
+        hostnames: ["litellm.cloudjur.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    service:
+      app:
+        ports:
+          http:
+            port: 4000

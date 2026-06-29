@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+configMapGenerator:
+  - name: litellm
+    files:
+      - litellm.json
+  - name: litellm-economics
+    files:
+      - litellm-economics.json
+  - name: llm-nvidia-node
+    files:
+      - llm-nvidia-node.json
+  - name: llm-rocm-node
+    files:
+      - llm-rocm-node.json
+  - name: llama-server
+    files:
+      - llama-server.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

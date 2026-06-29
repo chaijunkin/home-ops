@@ -144,6 +144,10 @@
         - /tank/Apps/StaticGarage
         - /tank/Apps/StaticGarage/data
         - /tank/Apps/StaticGarage/meta
+        - /tank/Apps/comfyui
+        - /tank/Apps/comfyui/input
+        - /tank/Apps/comfyui/output
+        - /tank/Apps/openclaw
         - /tank/Backup/Database
         - /tank/Backup/Volsync
         - /tank/Backup/Personal

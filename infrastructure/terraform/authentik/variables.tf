@@ -274,3 +274,59 @@ variable "trek_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "litellm_id" {
+  type        = string
+  description = "LiteLLM Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "litellm_secret" {
+  type        = string
+  description = "LiteLLM Client Secret"
+  sensitive   = true
+  default     = null
+}
+
+# variable "miso_gallery_id" {
+#   type        = string
+#   description = "Miso Gallery Client ID"
+#   sensitive   = true
+#   default     = null
+# }
+# 
+# variable "miso_gallery_secret" {
+#   type        = string
+#   description = "Miso Gallery Client Secret"
+#   sensitive   = true
+#   default     = null
+# }
+# 
+# variable "miso_chat_id" {
+#   type        = string
+#   description = "Miso Chat Client ID"
+#   sensitive   = true
+#   default     = null
+# }
+# 
+# variable "miso_chat_secret" {
+#   type        = string
+#   description = "Miso Chat Client Secret"
+#   sensitive   = true
+#   default     = null
+# }
+# 
+# variable "dispatch_id" {
+#   type        = string
+#   description = "Dispatch Client ID"
+#   sensitive   = true
+#   default     = null
+# }
+# 
+# variable "dispatch_secret" {
+#   type        = string
+#   description = "Dispatch Client Secret"
+#   sensitive   = true
+#   default     = null
+# }

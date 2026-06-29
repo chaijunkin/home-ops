@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hermes-config
+data:
+  config.yaml: |
+    model:
+      default: MiniMax
+      provider: litellm-anthropic
+    fallback_providers:
+      - provider: litellm
+        model: dsv4f
+      - provider: litellm
+        model: mimo-v2.5
+      - provider: litellm
+        model: nvidia
+      - provider: litellm
+        model: self-hosted
+      - provider: litellm
+        model: kimi-k2.6
+      - provider: litellm
+        model: glm-5.2
+      - provider: litellm
+        model: go-minimax-m3
+      - provider: litellm
+        model: dsv4p
+    providers:
+      litellm:
+        base_url: http://litellm.ai:4000/v1
+        api_key: $${LITELLM_API_KEY}
+      litellm-anthropic:
+        base_url: http://litellm.ai:4000/
+        api_mode: anthropic_messages
+        api_key: $${LITELLM_API_KEY}
+    toolsets:
+      - hermes-cli
+    terminal:
+      backend: local
+      cwd: /opt/data/workspace
+      timeout: 180
+      persistent_shell: true
+    memory:
+      provider: memini
+      auto_migrate: true
+    compression:
+      enabled: true
+      threshold: 0.50
+      target_ratio: 0.20
+      protect_last_n: 20
+    agent:
+      max_turns: 90
+      gateway_timeout: 1800
+      restart_drain_timeout: 60
+      api_max_retries: 2
+      reasoning_effort: medium
+    streaming:
+      enabled: false
+    security:
+      redact_secrets: true
+    privacy:
+      redact_pii: true
+    platform_toolsets:
+      cli:
+        - hermes-cli
+      telegram:
+        - hermes-telegram
+    mcp_servers:
+      toolhive:
+        url: http://vmcp-mcp-gateway-internal.llm:4483/mcp
+    auxiliary:
+      vision:
+        provider: litellm
+        model: vision
+      compression:
+        provider: litellm
+        model: vision
+        timeout: 180
+      web_extract:
+        provider: litellm
+        model: vision
+        timeout: 120
+      approval:
+        provider: litellm
+        model: vision
+        timeout: 60
+      session_search:
+        provider: litellm
+        model: self-hosted
+        timeout: 120
