@@ -1,0 +1,18 @@
+apiVersion: toolhive.stacklok.dev/v1alpha1
+kind: MCPServerEntry
+metadata:
+  name: sure-mcp
+spec:
+  remoteUrl: https://sure.cloudjur.com/mcp
+  transport: sse
+  groupRef:
+    name: mcp-tools
+  # NOTE: The exact syntax for header injection might vary based on your Toolhive version.
+  # Usually it is configured using headerInjection or referencing a secret directly:
+  headerInjection:
+    - name: Authorization
+      value: "Bearer $(MCP_API_TOKEN)"
+      valueFrom:
+        secretKeyRef:
+          name: sure-mcp-secret
+          key: MCP_API_TOKEN
