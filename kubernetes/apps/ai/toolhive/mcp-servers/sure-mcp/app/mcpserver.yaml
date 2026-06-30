@@ -27,7 +27,7 @@ spec:
             - mcp-remote
             - http://sure.default:3000/mcp
             - --allow-http
-            # - --transport
-            # - http-only
+            - --transport
+            - http-only
             - --header
             - Authorization=Bearer $(MCP_API_TOKEN)
