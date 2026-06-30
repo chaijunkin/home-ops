@@ -62,7 +62,7 @@ spec:
                   key: ENCRYPTION_KEY
               OIDC_ONLY: false
               OIDC_ADMIN_CLAIM: groups
-              OIDC_ADMIN_VALUE: admin
+              OIDC_ADMIN_VALUE: superusers
               OIDC_SCOPE: openid email profile
               OIDC_DISPLAY_NAME: Authentik
               OIDC_ISSUER: "https://auth.cloudjur.com/application/o/trek/"
