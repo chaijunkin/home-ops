@@ -1,0 +1,9 @@
+title,subtitle,args
+"open-webui","ai | Redis DB","DB 1"
+"searxng","default | Redis DB","DB 2"
+"forgejo","dev | Redis DB","DB 3"
+"openclaw","ai | Redis DB","DB 4"
+"litellm","ai | Redis DB","DB 5"
+"renovate-operator","renovate | Redis DB","DB 8"
+"sure","default | Redis DB","DB 10"
+"paperless","default | Redis DB","DB 15"
