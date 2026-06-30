@@ -66,7 +66,7 @@ spec:
               OIDC_SCOPE: openid email profile
               OIDC_DISPLAY_NAME: Authentik
               OIDC_ISSUER: "https://auth.cloudjur.com/application/o/trek/"
-              OIDC_DISCOVERY_URL: "https://auth.cloudjur.com/application/o/trek/.well-known/openid-configuration"
+              # OIDC_DISCOVERY_URL: "https://auth.cloudjur.com/application/o/trek/.well-known/openid-configuration"
               OIDC_CLIENT_ID:
                 valueFrom:
                   secretKeyRef:
