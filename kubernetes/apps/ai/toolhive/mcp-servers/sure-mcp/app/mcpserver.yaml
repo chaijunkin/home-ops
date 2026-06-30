@@ -28,5 +28,6 @@ spec:
             - http://sure.default:3000/mcp
             - --transport
             - http-only
+            - --allow-http
             - --header
             - Authorization=Bearer $(MCP_API_TOKEN)
