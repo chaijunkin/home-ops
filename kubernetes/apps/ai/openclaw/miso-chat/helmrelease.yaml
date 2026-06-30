@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -21,10 +20,10 @@ spec:
               repository: ghcr.io/misospace/miso-chat
               tag: 0.4.19@sha256:032b07df5fe56b2132db02312f191a35ba5acf6d8b694cbf0d70f99002c89a89
             env:
-              REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/4"
+              REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/4
               GATEWAY_DEVICE_IDENTITY_PATH: &path /secrets/device.json
-              CORS_ORIGIN: "https://miso-chat.cloudjur.com"
-              SESSION_COOKIE_SAMESITE: "none"
+              CORS_ORIGIN: https://miso-chat.cloudjur.com
+              SESSION_COOKIE_SAMESITE: none
               SESSION_COOKIE_SECURE: "true"
             envFrom:
               - secretRef:
@@ -44,7 +43,7 @@ spec:
             subPath: device.json
     route:
       app:
-        hostnames: ["miso-chat.cloudjur.com"]
+        hostnames: [miso-chat.cloudjur.com]
         parentRefs:
           - name: envoy-external
             namespace: network

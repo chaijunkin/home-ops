@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/mcpserverentry_v1alpha1.json
 apiVersion: toolhive.stacklok.dev/v1alpha1
 kind: MCPServerEntry
 metadata:
@@ -11,7 +12,7 @@ spec:
   # Usually it is configured using headerInjection or referencing a secret directly:
   headerInjection:
     - name: Authorization
-      value: "Bearer $(MCP_API_TOKEN)"
+      value: Bearer $(MCP_API_TOKEN)
       valueFrom:
         secretKeyRef:
           name: sure-mcp-secret

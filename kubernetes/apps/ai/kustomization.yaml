@@ -12,9 +12,9 @@ resources:
   - ./toolhive/mcp-servers/ha-mcp/ks.yaml
   - ./toolhive/mcp-servers/kubectl-mcp/ks.yaml
   - ./toolhive/mcp-servers/flux-mcp/ks.yaml
-  # - ./toolhive/mcp-servers/comfyui-mcp/ks.yaml
-  # - ./toolhive/mcp-servers/memory-mcp/ks.yaml
-  # - ./ollama/ks.yaml
+    # - ./toolhive/mcp-servers/comfyui-mcp/ks.yaml
+    # - ./toolhive/mcp-servers/memory-mcp/ks.yaml
+    # - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./toolhive/mcp-servers/searxng-mcp/ks.yaml
   - ./toolhive/ks.yaml
@@ -22,9 +22,9 @@ resources:
   - ./toolhive/mcp-servers/deepwiki-mcp/ks.yaml
   - ./toolhive/mcp-servers/sure-mcp/ks.yaml
   - ./toolhive/mcp-servers/trek-mcp/ks.yaml
-  # - ./comfyui/ks.yaml
-  # - ./hermes/ks.yaml
-  # - ./openclaw/ks.yaml
-  # - ./litellm/ks.yaml
-  # - ./memini/ks.yaml
-  # - ./llmkube/ks.yaml
+    # - ./comfyui/ks.yaml
+    # - ./hermes/ks.yaml
+    # - ./openclaw/ks.yaml
+    # - ./litellm/ks.yaml
+    # - ./memini/ks.yaml
+    # - ./llmkube/ks.yaml

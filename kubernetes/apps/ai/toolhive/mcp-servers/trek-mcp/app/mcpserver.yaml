@@ -20,8 +20,8 @@ spec:
           command:
             - npx
           args:
-            - "-y"
-            - "mcp-remote"
-            - "https://trips.cloudjur.com/mcp"
-            - "--static-oauth-client-info"
+            - -y
+            - mcp-remote
+            - https://trips.cloudjur.com/mcp
+            - --static-oauth-client-info
             - '{"client_id": "$(OAUTH_CLIENT_ID)", "client_secret": "$(OAUTH_CLIENT_SECRET)"}'

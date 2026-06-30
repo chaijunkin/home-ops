@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -37,7 +36,8 @@ spec:
             args:
               - sh
               - -c
-              - cd /app/server && exec node --require tsconfig-paths/register dist/index.js
+              - cd /app/server && exec node --require tsconfig-paths/register
+                dist/index.js
             env:
               NODE_ENV: production
               APP_URL: https://trips.cloudjur.com
@@ -47,7 +47,7 @@ spec:
               FORCE_HTTPS: true
               DEFAULT_LANGUAGE: en
               # LOG_LEVEL: debug
-              TZ: "Asia/Kuala_Lumpur"
+              TZ: Asia/Kuala_Lumpur
               ADMIN_EMAIL:
                 secretKeyRef:
                   name: trek-secret
@@ -65,7 +65,7 @@ spec:
               OIDC_ADMIN_VALUE: superusers
               OIDC_SCOPE: openid email profile
               OIDC_DISPLAY_NAME: Authentik
-              OIDC_ISSUER: "https://auth.cloudjur.com/application/o/trek/"
+              OIDC_ISSUER: https://auth.cloudjur.com/application/o/trek/
               # OIDC_DISCOVERY_URL: "https://auth.cloudjur.com/application/o/trek/.well-known/openid-configuration"
               OIDC_CLIENT_ID:
                 valueFrom:
@@ -100,7 +100,7 @@ spec:
               runAsNonRoot: true
               allowPrivilegeEscalation: false
               seccompProfile: {type: RuntimeDefault}
-              capabilities: {drop: ["ALL"]}
+              capabilities: {drop: [ALL]}
 
     service:
       main:
@@ -110,7 +110,7 @@ spec:
 
     route:
       main:
-        hostnames: ["trips.cloudjur.com"]
+        hostnames: [trips.cloudjur.com]
         parentRefs:
           - name: envoy-external
             namespace: network

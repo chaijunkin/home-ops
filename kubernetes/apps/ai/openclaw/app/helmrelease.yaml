@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -62,7 +61,7 @@ spec:
                 exec node dist/index.js gateway --bind lan
             env:
               OPENCLAW_LOG_LEVEL: debug
-              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
+              BROWSER_WS_ENDPOINT: ws://localhost:9222
               GOPATH: /home/node/go
               HOME: &homepath /home/node
               HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
@@ -91,15 +90,15 @@ spec:
               TZ: Asia/Kuala_Lumpur
             args:
               [
-                "--auth",
-                "none",
-                "--user-data-dir",
-                "/home/node/.vscode",
-                "--extensions-dir",
-                "/home/node/.vscode",
-                "--port",
+                --auth,
+                none,
+                --user-data-dir,
+                /home/node/.vscode,
+                --extensions-dir,
+                /home/node/.vscode,
+                --port,
                 "12321",
-                "/config",
+                /config,
               ]
             resources:
               requests:
@@ -146,18 +145,18 @@ spec:
           type: ClusterRole
           rules:
             - apiGroups: [""]
-              resources: ["pods"]
-              verbs: ["delete"]
+              resources: [pods]
+              verbs: [delete]
         # Namespace-scoped exec + deploy patch — llm namespace only
         openclaw-exec-deploy-llm:
           type: Role
           rules:
             - apiGroups: [""]
-              resources: ["pods/exec"]
-              verbs: ["create"]
-            - apiGroups: ["apps"]
-              resources: ["deployments"]
-              verbs: ["patch", "update"]
+              resources: [pods/exec]
+              verbs: [create]
+            - apiGroups: [apps]
+              resources: [deployments]
+              verbs: [patch, update]
       bindings:
         # Cluster-wide binding for pod delete
         openclaw-pod-delete-cluster-wide:
@@ -178,7 +177,7 @@ spec:
               namespace: llm
     route:
       app:
-        hostnames: ["miso.cloudjur.com"]
+        hostnames: [miso.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -187,7 +186,7 @@ spec:
               - name: "{{ .Release.Name }}"
                 port: *port
       codeserver:
-        hostnames: ["miso-code.cloudjur.com"]
+        hostnames: [miso-code.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network

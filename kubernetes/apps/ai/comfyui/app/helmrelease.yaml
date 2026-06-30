@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -23,12 +22,13 @@ spec:
             securityContext:
               privileged: true
             env:
-              HSA_OVERRIDE_GFX_VERSION: "11.5.1"
+              HSA_OVERRIDE_GFX_VERSION: 11.5.1
               HSA_ENABLE_SDMA: "0"
               HIP_VISIBLE_DEVICES: "0"
               ROCR_VISIBLE_DEVICES: "0"
-              PYTORCH_HIP_ALLOC_CONF: "max_split_size_mb:256,garbage_collection_threshold:0.6"
-              CLI_ARGS: "--listen 0.0.0.0 --port 8188 --use-pytorch-cross-attention --disable-mmap"
+              PYTORCH_HIP_ALLOC_CONF: max_split_size_mb:256,garbage_collection_threshold:0.6
+              CLI_ARGS: --listen 0.0.0.0 --port 8188
+                --use-pytorch-cross-attention --disable-mmap
             # No resources block on purpose: BestEffort QoS makes comfyui the
             # first pod the Talos OOM manager kills (ranking weight 1.0) and the
             # first kubelet evicts under node MemoryPressure on the shared UMA node.
@@ -57,7 +57,7 @@ spec:
             namespace: network
     persistence:
       comfyui:
-        existingClaim: "comfyui"
+        existingClaim: comfyui
         globalMounts:
           - path: /root/ComfyUI/
       data:
