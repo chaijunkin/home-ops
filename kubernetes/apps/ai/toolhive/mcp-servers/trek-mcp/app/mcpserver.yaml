@@ -15,18 +15,21 @@ spec:
           securityContext:
             readOnlyRootFilesystem: false
           env:
-            - name: MCP_API_TOKEN
+            - name: OAUTH_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: trek-mcp-secret
-                  key: MCP_API_TOKEN
+                  key: OAUTH_CLIENT_ID
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: trek-mcp-secret
+                  key: OAUTH_CLIENT_SECRET
           command:
             - npx
           args:
             - -y
             - mcp-remote
             - https://trips.cloudjur.com/mcp
-            - --transport
-            - http-only
-            - --header
-            - Authorization=Bearer $(MCP_API_TOKEN)
+            # - --static-oauth-client-info
+            # - '{"client_id": "$(OAUTH_CLIENT_ID)", "client_secret": "$(OAUTH_CLIENT_SECRET)"}'
