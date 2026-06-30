@@ -27,4 +27,4 @@ spec:
             - mcp-remote
             - https://money.cloudjur.com/mcp
             - --header
-            - Authorization=$(MCP_API_TOKEN)
+            - "Authorization: Bearer $(MCP_API_TOKEN)"
