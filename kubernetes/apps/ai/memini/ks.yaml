@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: memini
+  components:
+    - ../../../../components/volsync-no-r2
   path: ./kubernetes/apps/ai/memini/app
   prune: true
   sourceRef:
