@@ -25,7 +25,7 @@ spec:
           args:
             - -y
             - mcp-remote
-            - http://sure.default:3000/mcp
+            - https://sure.cloudjur.com/mcp
             - --allow-http
             - --transport
             - http-only
