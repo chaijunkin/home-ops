@@ -21,7 +21,7 @@ resources:
   - ./toolhive/mcp-servers/fli-mcp/ks.yaml
   - ./toolhive/mcp-servers/deepwiki-mcp/ks.yaml
   # - ./toolhive/mcp-servers/sure-mcp/ks.yaml
-  - ./toolhive/mcp-servers/trek-mcp/ks.yaml
+  # - ./toolhive/mcp-servers/trek-mcp/ks.yaml
     # - ./comfyui/ks.yaml
     # - ./hermes/ks.yaml
     # - ./openclaw/ks.yaml
