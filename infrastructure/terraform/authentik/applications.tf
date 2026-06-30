@@ -195,7 +195,8 @@ locals {
       property_mappings = local.default_property_mappings
     },
     sure = {
-      client_id         = var.sure_id
+      # client_id         = var.sure_id
+      client_id         = "sure"
       client_secret     = var.sure_secret
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/sure.svg"
