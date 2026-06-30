@@ -61,7 +61,7 @@ spec:
                   key: ENCRYPTION_KEY
               OIDC_ONLY: false
               OIDC_ADMIN_CLAIM: groups
-              OIDC_ADMIN_VALUE: superusers
+              OIDC_ADMIN_VALUE: admin
               OIDC_SCOPE: openid email profile groups
               OIDC_DISPLAY_NAME: Authentik
               OIDC_ISSUER: "https://auth.cloudjur.com"
