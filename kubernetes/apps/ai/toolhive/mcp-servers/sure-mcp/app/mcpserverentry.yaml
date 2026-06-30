@@ -8,12 +8,9 @@ spec:
   transport: sse
   groupRef:
     name: mcp-tools
-  # NOTE: The exact syntax for header injection might vary based on your Toolhive version.
-  # Usually it is configured using headerInjection or referencing a secret directly:
-  headerInjection:
-    - name: Authorization
-      value: Bearer $(MCP_API_TOKEN)
-      valueFrom:
-        secretKeyRef:
+  headerForward:
+    addHeadersFromSecret:
+      - headerName: Authorization
+        valueSecretRef:
           name: sure-mcp-secret
           key: MCP_API_TOKEN

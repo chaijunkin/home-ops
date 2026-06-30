@@ -8,15 +8,21 @@ spec:
   transport: stdio
   groupRef:
     name: mcp-tools
-  secrets:
-    - name: trek-mcp-secret
-      key: OAUTH_CLIENT_ID
-    - name: trek-mcp-secret
-      key: OAUTH_CLIENT_SECRET
   podTemplateSpec:
     spec:
       containers:
         - name: mcp
+          env:
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: trek-mcp-secret
+                  key: OAUTH_CLIENT_ID
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: trek-mcp-secret
+                  key: OAUTH_CLIENT_SECRET
           command:
             - npx
           args:
