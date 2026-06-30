@@ -10,8 +10,14 @@ spec:
     name: mcp-tools
   podTemplateSpec:
     spec:
+      volumes:
+        - name: npm-cache
+          emptyDir: {}
       containers:
         - name: mcp
+          volumeMounts:
+            - name: npm-cache
+              mountPath: /tmp/.npm
           env:
             - name: npm_config_cache
               value: /tmp/.npm
