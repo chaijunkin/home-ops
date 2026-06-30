@@ -25,6 +25,6 @@ spec:
           args:
             - -y
             - mcp-remote
-            - https://sure.cloudjur.com/mcp
+            - https://money.cloudjur.com/mcp
             - --header
             - Authorization=$(MCP_API_TOKEN)
