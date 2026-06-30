@@ -31,6 +31,5 @@ spec:
             - -y
             - mcp-remote
             - https://trips.cloudjur.com/mcp
-            # - "8080"
-            # - --static-oauth-client-info
-            # - '{"client_id": "$(OAUTH_CLIENT_ID)", "client_secret": "$(OAUTH_CLIENT_SECRET)"}'
+            - --static-oauth-client-info
+            - '{"client_id": "$(OAUTH_CLIENT_ID)", "client_secret": "$(OAUTH_CLIENT_SECRET)"}'
