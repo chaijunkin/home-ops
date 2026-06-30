@@ -48,7 +48,7 @@ spec:
     modelCache:
       enabled: true
       size: 100Gi
-      storageClass: openebs
+      storageClass: openebs-hostpath
       accessMode: ReadWriteOnce
       mountPath: /models
       annotations: {}
