@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: deepwiki
+spec:
+  image: node:22-alpine
+  transport: stdio
+  groupRef:
+    name: mcp-tools
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          env:
+            - name: npm_config_cache
+              value: /tmp/.npm
+          command:
+            - npx
+          args:
+            - -y
+            - mcp-remote
+            - https://mcp.deepwiki.com/mcp

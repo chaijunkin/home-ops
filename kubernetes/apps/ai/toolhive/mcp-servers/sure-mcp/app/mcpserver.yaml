@@ -2,7 +2,7 @@
 apiVersion: toolhive.stacklok.dev/v1beta1
 kind: MCPServer
 metadata:
-  name: trek-mcp
+  name: sure-mcp
 spec:
   image: node:22-alpine
   transport: stdio
@@ -15,21 +15,16 @@ spec:
           env:
             - name: npm_config_cache
               value: /tmp/.npm
-            - name: OAUTH_CLIENT_ID
+            - name: MCP_API_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: trek-mcp-secret
-                  key: OAUTH_CLIENT_ID
-            - name: OAUTH_CLIENT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: trek-mcp-secret
-                  key: OAUTH_CLIENT_SECRET
+                  name: sure-mcp-secret
+                  key: MCP_API_TOKEN
           command:
             - npx
           args:
             - -y
             - mcp-remote
-            - https://trips.cloudjur.com/mcp
-            - --static-oauth-client-info
-            - '{"client_id": "$(OAUTH_CLIENT_ID)", "client_secret": "$(OAUTH_CLIENT_SECRET)"}'
+            - https://sure.cloudjur.com/mcp
+            - --header
+            - Authorization=$(MCP_API_TOKEN)
