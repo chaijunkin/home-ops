@@ -1,0 +1,64 @@
+---
+- name: Configure Proxmox for Intel iGPU Passthrough
+  hosts: proxmox
+  become: true
+  gather_facts: true
+  
+  tasks:
+    - name: Load required VFIO kernel modules
+      ansible.builtin.lineinfile:
+        path: /etc/modules
+        line: "{{ item }}"
+        state: present
+        create: true
+      loop:
+        - vfio
+        - vfio_iommu_type1
+        - vfio_pci
+        - vfio_virqfd
+      notify: Update initramfs
+
+    - name: Check if system uses systemd-boot (UEFI)
+      ansible.builtin.stat:
+        path: /etc/kernel/cmdline
+      register: systemd_boot
+
+    - name: Configure kernel parameters for systemd-boot
+      ansible.builtin.lineinfile:
+        path: /etc/kernel/cmdline
+        backrefs: true
+        regexp: '^(root=.*(?!intel_iommu=on)(?!iommu=pt)(?!i915\.enable_display=0).*)$'
+        line: '\1 intel_iommu=on iommu=pt i915.enable_display=0'
+      when: systemd_boot.stat.exists
+      notify: Refresh Proxmox Boot Tool
+
+    - name: Configure GRUB for Legacy BIOS
+      ansible.builtin.lineinfile:
+        path: /etc/default/grub
+        backrefs: true
+        regexp: '^GRUB_CMDLINE_LINUX_DEFAULT="(?!.*intel_iommu=on)(?!.*iommu=pt)(?!.*i915\.enable_display=0)(.*)"$'
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="\1 intel_iommu=on iommu=pt i915.enable_display=0"'
+      when: not systemd_boot.stat.exists
+      notify: Update GRUB
+
+    - name: Blacklist unused GPU drivers (optional safety measure)
+      ansible.builtin.lineinfile:
+        path: /etc/modprobe.d/blacklist.conf
+        line: "blacklist {{ item }}"
+        state: present
+        create: true
+      loop:
+        - radeon
+        - nouveau
+        - nvidia
+      notify: Update initramfs
+
+  handlers:
+    - name: Update initramfs
+      ansible.builtin.command: update-initramfs -u -k all
+
+    - name: Refresh Proxmox Boot Tool
+      ansible.builtin.command: proxmox-boot-tool refresh
+
+    - name: Update GRUB
+      ansible.builtin.command: update-grub
