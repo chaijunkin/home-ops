@@ -27,4 +27,4 @@ resources:
   # - ./openclaw/ks.yaml
   # - ./litellm/ks.yaml
   # - ./memini/ks.yaml
-  - ./llmkube/ks.yaml
+  # - ./llmkube/ks.yaml
