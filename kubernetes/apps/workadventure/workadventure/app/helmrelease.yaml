@@ -21,7 +21,7 @@ spec:
           app:
             image:
               repository: docker.io/thecodingmachine/workadventure-play
-              tag: v1.32.1
+              tag: v1.32.6
             env:
               WA_PROTO: https
               WA_HOST: gather.cloudjur.com
