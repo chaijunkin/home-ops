@@ -1,0 +1,10 @@
+apiVersion: toolhive.stacklok.dev/v1alpha1
+kind: MCPServer
+metadata:
+  name: deepwiki-mcp
+spec:
+  image: supercorp/supergateway:latest
+  args: ["--sse", "https://mcp.deepwiki.com/sse"]
+  transport: stdio
+  groupRef:
+    name: mcp-tools

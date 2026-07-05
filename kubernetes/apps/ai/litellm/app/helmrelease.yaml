@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -37,7 +36,7 @@ spec:
               LITELLM_MODE: PRODUCTION
               PROXY_BASE_URL: https://litellm.cloudjur.com
               PROXY_LOGOUT_URL: https://auth.cloudjur.com/application/o/litellm/end-session/
-              REDIS_URL: "redis://dragonfly.database.svc.cluster.local:6379/5"
+              REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/5
             envFrom:
               - secretRef:
                   name: litellm
@@ -98,7 +97,7 @@ spec:
           - path: /app/chatgpt_tokens
     route:
       app:
-        hostnames: ["litellm.cloudjur.com"]
+        hostnames: [litellm.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network

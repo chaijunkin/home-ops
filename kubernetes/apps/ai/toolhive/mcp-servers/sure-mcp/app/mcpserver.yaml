@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: sure-mcp
+spec:
+  image: node:22-alpine
+  transport: stdio
+  groupRef:
+    name: mcp-tools
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          securityContext:
+            readOnlyRootFilesystem: false
+          env:
+            - name: MCP_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: sure-mcp-secret
+                  key: MCP_API_TOKEN
+          command:
+            - npx
+          args:
+            - -y
+            - mcp-remote
+            - https://sure.cloudjur.com/mcp
+            - --allow-http
+            - --transport
+            - http-only
+            - "--header"
+            - "Authorization: Bearer $(MCP_API_TOKEN)"

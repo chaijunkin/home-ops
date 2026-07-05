@@ -86,11 +86,12 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: s3-web
-                # - filters:
-                #   - type: URLRewrite
-                #     urlRewrite:
-                #       hostname: "schema"
+                port:
+                  s3-web
+                  # - filters:
+                  #   - type: URLRewrite
+                  #     urlRewrite:
+                  #       hostname: "schema"
       wiki-web:
         annotations:
           gatus.home-operations.com/endpoint: |-
@@ -115,11 +116,12 @@ spec:
                     value: ^https://wiki\.cloudjur\.com/.*
             backendRefs:
               - identifier: app
-                port: s3-web
+                port:
+                  s3-web
 
-                # -------------------------------------------------------------------
-                # 2. PRIVACY LAYER: Bounce automated scanners back to home
-                # -------------------------------------------------------------------
+                  # -------------------------------------------------------------------
+                  # 2. PRIVACY LAYER: Bounce automated scanners back to home
+                  # -------------------------------------------------------------------
           - matches:
               - path:
                   type: PathPrefix
@@ -132,9 +134,9 @@ spec:
                     type: ReplaceFullPath
                     replaceFullPath: /index.html
 
-                # -------------------------------------------------------------------
-                # 3. PERFORMANCE LAYER: Aggressive caching for hashed Quartz engine files
-                # -------------------------------------------------------------------
+                    # -------------------------------------------------------------------
+                    # 3. PERFORMANCE LAYER: Aggressive caching for hashed Quartz engine files
+                    # -------------------------------------------------------------------
           - matches:
               - path:
                   type:
@@ -149,11 +151,12 @@ spec:
                       value: public, max-age=31536000, immutable
             backendRefs:
               - identifier: app
-                port: s3-web
+                port:
+                  s3-web
 
-                # -------------------------------------------------------------------
-                # 4. ROUTING LAYER: Standard Catch-All for standard web traffic
-                # -------------------------------------------------------------------
+                  # -------------------------------------------------------------------
+                  # 4. ROUTING LAYER: Standard Catch-All for standard web traffic
+                  # -------------------------------------------------------------------
           - matches:
               - path:
                   type: PathPrefix

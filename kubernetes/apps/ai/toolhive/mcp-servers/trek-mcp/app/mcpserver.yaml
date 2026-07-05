@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: trek-mcp
+spec:
+  image: node:22-alpine
+  transport: stdio
+  groupRef:
+    name: mcp-tools
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          securityContext:
+            readOnlyRootFilesystem: false
+          env:
+            - name: OAUTH_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: trek-mcp-secret
+                  key: OAUTH_CLIENT_ID
+            - name: OAUTH_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: trek-mcp-secret
+                  key: OAUTH_CLIENT_SECRET
+          command:
+            - npx
+          args:
+            - -y
+            - mcp-remote
+            - https://trips.cloudjur.com/mcp
+            # - --static-oauth-client-info
+            # - '{"client_id": "$(OAUTH_CLIENT_ID)", "client_secret": "$(OAUTH_CLIENT_SECRET)"}'

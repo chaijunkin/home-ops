@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -15,7 +15,7 @@ spec:
           app:
             image:
               repository: mbentley/omada-controller
-              tag: 6.2.10.17@sha256:b2f3735f5a4e6e59c5f6fc2feea3999c4cd0d0ec5db58f82f20e3d33d8c43f55
+              tag: 6.2.10.17@sha256:672f6f523c012b654ca322d082ae68a5d20f2bcc3bde4a9cb7901daa40891f99
             env:
               TZ: Asia/Kuala_Lumpur
               MANAGE_HTTP_PORT: "8088"

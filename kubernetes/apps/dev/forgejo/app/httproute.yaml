@@ -27,17 +27,18 @@ spec:
               - name: X-Real-Ip
                 value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
       timeouts:
-        request: 300s
-        # - backendRefs:
-        #     # Internal: direct to forgejo
-        #     # When going external: switch to forgejo-anubis port 8080
-        #     - name: forgejo-http
-        #       port: 3000
-        #   filters:
-        #     - type: RequestHeaderModifier
-        #       requestHeaderModifier:
-        #         set:
-        #           - name: X-Real-Ip
-        #             value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
-        #   timeouts:
-        #     request: 300s
+        request:
+          300s
+          # - backendRefs:
+          #     # Internal: direct to forgejo
+          #     # When going external: switch to forgejo-anubis port 8080
+          #     - name: forgejo-http
+          #       port: 3000
+          #   filters:
+          #     - type: RequestHeaderModifier
+          #       requestHeaderModifier:
+          #         set:
+          #           - name: X-Real-Ip
+          #             value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
+          #   timeouts:
+          #     request: 300s

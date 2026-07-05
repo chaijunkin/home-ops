@@ -1,9 +1,0 @@
-apiVersion: toolhive.stacklok.dev/v1alpha1
-kind: MCPServerEntry
-metadata:
-  name: deepwiki
-spec:
-  remoteUrl: https://mcp.deepwiki.com/mcp
-  transport: sse
-  groupRef:
-    name: mcp-tools

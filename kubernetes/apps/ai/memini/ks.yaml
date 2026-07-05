@@ -10,12 +10,18 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: memini
+  components:
+    - ../../../../components/volsync-no-r2
   path: ./kubernetes/apps/ai/memini/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 2Gi
   wait: false
   interval: 30m
   retryInterval: 1m

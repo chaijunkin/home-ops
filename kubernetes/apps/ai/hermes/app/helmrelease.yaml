@@ -1,5 +1,4 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -15,7 +14,7 @@ spec:
       securityContext:
         fsGroup: 10000
         fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
     controllers:
       hermes:
         annotations:
@@ -61,7 +60,7 @@ spec:
             image: &image
               repository: nousresearch/hermes-agent
               tag: v2026.6.19@sha256:9f367c7756ef087661a361536a89f438d57a122b958dc23d82d456b1433e6e9e
-            args: ["gateway", "run"]
+            args: [gateway, run]
             env:
               MEMINI_URL: http://memini.llm:8080
               MEMINI_NAMESPACE: sake
@@ -88,7 +87,7 @@ spec:
             args:
               - dashboard
               - --host
-              - "0.0.0.0"
+              - 0.0.0.0
               - --insecure
             resources:
               requests:
@@ -107,15 +106,15 @@ spec:
               TZ: Asia/Kuala_Lumpur
             args:
               [
-                "--auth",
-                "none",
-                "--user-data-dir",
-                "/home/node/.vscode",
-                "--extensions-dir",
-                "/home/node/.vscode",
-                "--port",
+                --auth,
+                none,
+                --user-data-dir,
+                /home/node/.vscode,
+                --extensions-dir,
+                /home/node/.vscode,
+                --port,
                 "12321",
-                "/opt/data",
+                /opt/data,
               ]
             ports:
               - containerPort: &codeserverPort 12321
@@ -141,7 +140,7 @@ spec:
             port: *dashboard_port
     route:
       app:
-        hostnames: ["hermes.cloudjur.com"]
+        hostnames: [hermes.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -150,7 +149,7 @@ spec:
               - identifier: dashboard
                 port: http
       codeserver:
-        hostnames: ["hermes-code.cloudjur.com"]
+        hostnames: [hermes-code.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network

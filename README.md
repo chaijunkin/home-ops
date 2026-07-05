@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/chaijunkin/home-ops/main/docs/src/assets/logo.png" align="center" width="144px" height="144px"/>
 
-### My Homelab Repository :snowflake: 
+### My Homelab Repository :snowflake:
 
 [![Renovate](https://img.shields.io/badge/powered_by-Renovate-blue?style=for-the-badge&logo=renovate)](https://www.mend.io/renovate/)
 
@@ -393,7 +393,7 @@ The rest of the homelab and network devices include:
 | HORACO 2.5GbE switch | Primary LAN switch (2.5G uplinks) |
 | TP-Link TL-SG108E | Small managed L2 switch for office/VLANs |
 | D-Link DES-F1010P-E | PoE switch for cameras / APs (93W power budget) |
-| UPS | (TBD — planned) |
+| UPS | CyberPower_UM_CP1500PFCLCD |
 
 ## Estimated power consumption ⚡
 

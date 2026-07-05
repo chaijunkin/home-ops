@@ -1,15 +1,10 @@
----
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/serviceaccount.json
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kubectl-mcp-readonly
 ---
-# Broad read-only access for kubectl MCP. Kubernetes Secrets (core v1) are excluded.
-#
-# - aggregationRule: same selector as built-in "view" — expands with operators that ship
-#   rbac.authorization.k8s.io/aggregate-to-view ClusterRoles (CRDs, etc.).
-# - Non-core apiGroups: resources "*" is safe for Secret *objects* (they only exist in group "").
-# - Core group "": explicit resource list — secrets omitted; exec/proxy-style subresources omitted.
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/clusterrole-rbac-v1.json
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -33,7 +28,7 @@ rules:
       - /version/
     verbs:
       - get
-  # Core v1 — everything except secrets (and without exec/proxy attach paths).
+    # Core v1 — everything except secrets (and without exec/proxy attach paths).
   - apiGroups:
       - ""
     resources:
@@ -67,9 +62,9 @@ rules:
       - get
       - list
       - watch
-  # All non-core API groups: full resource read (Secret objects are not in these groups).
-  # Includes built-in API groups plus every CRD group reported from the cluster (minus "").
-  # CRDs whose operators ship aggregate-to-view ClusterRoles are also covered by aggregationRule above.
+    # All non-core API groups: full resource read (Secret objects are not in these groups).
+    # Includes built-in API groups plus every CRD group reported from the cluster (minus "").
+    # CRDs whose operators ship aggregate-to-view ClusterRoles are also covered by aggregationRule above.
   - apiGroups:
       - acme.cert-manager.io
       - actions.github.com
@@ -136,6 +131,7 @@ rules:
       - list
       - watch
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/clusterrolebinding-rbac-v1.json
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:

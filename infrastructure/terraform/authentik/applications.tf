@@ -195,7 +195,8 @@ locals {
       property_mappings = local.default_property_mappings
     },
     sure = {
-      client_id         = var.sure_id
+      # client_id         = var.sure_id
+      client_id         = "sure"
       client_secret     = var.sure_secret
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/sure.svg"
@@ -238,7 +239,8 @@ locals {
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/trex.png"
       redirect_uri      = "https://trips.${var.public_domain}/api/auth/oidc/callback"
       launch_url        = "https://trips.${var.public_domain}/"
-      property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.email_verified.id])
+      # property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.email_verified.id])
+      property_mappings = local.default_property_mappings
     },
     litellm = {
       client_id         = var.litellm_id

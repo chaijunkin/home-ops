@@ -128,6 +128,7 @@ resource "proxmox_virtual_environment_vm" "this" {
       # mapping = "iGPU"
       pcie   = true
       rombar = true
+      # rombar = false # DRAFT
       xvga   = false
 
       id   = "0000:00:02.0"

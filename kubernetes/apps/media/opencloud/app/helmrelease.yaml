@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -34,7 +34,7 @@ spec:
           opencloud:
             image:
               repository: docker.io/opencloudeu/opencloud-rolling
-              tag: 6.2.0@sha256:77bd4ebc5c5d27bd6da8a5b077e3b3b18f07dc538a25597b6ed0bcc76198ecbe
+              tag: 7.2.0@sha256:324c2e6d5e97f0d8bd2e4f716c491cc32f1054b3f527dbc4290ce4de113333ab
             command: [/bin/sh, -c, opencloud init || true; opencloud server]
             envFrom:
               - secretRef:

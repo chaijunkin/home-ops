@@ -1,6 +1,4 @@
----
-# JSON5-friendly OpenClaw gateway config. Flux postBuild leaves OpenClaw ${VAR} placeholders;
-# use $${VAR} here so Flux emits a literal ${VAR} for runtime env substitution.
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/configmap.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
