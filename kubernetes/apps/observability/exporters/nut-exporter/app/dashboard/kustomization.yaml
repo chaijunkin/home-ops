@@ -2,9 +2,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 configMapGenerator:
-  - name: nut-exporter
+  - name: ups-exporter
     files:
-      - nut-status.json
+      - ups-status.json
   - name: ups-aggregate
     files:
       - ups-aggregate.json
