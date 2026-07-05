@@ -108,6 +108,11 @@
       },
       minimumGroupSize: 2,
     },
+    {
+      description: "Hold Rook-Ceph at v1.19.x",
+      matchPackageNames: ["/rook-ceph/", "/rook-ceph-cluster/"],
+      allowedVersions: "<1.20.0",
+    },
     // Labeling rules
     {
       matchUpdateTypes: ["major"],
@@ -140,12 +145,6 @@
     {
       matchDatasources: ["github-releases"],
       addLabels: ["renovate/github-release"],
-    },
-    // Custom ignores
-    {
-      description: "Ignore Spegel Updates",
-      matchPackageNames: ["/spegel/"],
-      enabled: false,
-    },
+    }
   ],
 }

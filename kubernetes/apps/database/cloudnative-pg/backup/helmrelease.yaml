@@ -51,7 +51,7 @@ spec:
               BACKUP_LATEST_TYPE: symlink
               POSTGRES_EXTRA_OPTS: -b -C -c -Z6
               POSTGRES_HOST: postgres-rw.database.svc.cluster.local
-              POSTGRES_DB: sure authentik
+              POSTGRES_DB: sure authentik synapse
               SCHEDULE: "@daily"
               TZ: Asia/Kuala_Lumpur
             envFrom:
