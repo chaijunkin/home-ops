@@ -27,7 +27,7 @@ metadata:
 spec:
   modelRef: qwen3-reranker-0.6b
   runtime: llamacpp
-  image: ghcr.io/ggml-org/llama.cpp:server-vulkan@sha256:dba48720a7fead3ae2a2a678e82a8db88bf5120db286cdf48c8461ad2c2d855b
+  image: ghcr.io/ggml-org/llama.cpp:server-vulkan@sha256:c463658769e2d4a0f166dbaaf1cd71bf9f4c76e85004212334028deba1ea2543
   replicas: 1
   priority: normal
   contextSize: 16384
