@@ -105,7 +105,7 @@ spec:
                     value: "1"
                   - name: DOCKER_CERT_PATH
                     value: /certs/client
-                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:a734c9ce7102d891f33cd9b64497255626df1a976179e73befe9851d5659cf6b
+                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:f20cdb5dfa0a964e14df2530f7c5a395ad54f951658001e15f575de751c367a6
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
