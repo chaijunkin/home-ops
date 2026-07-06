@@ -44,7 +44,7 @@ spec:
               AB_DOWNLOADER_HOST: qbittorrent.downloads:8080
               AB_METHOD: pn
               AB_NOT_CONTAIN: 720
-              AB_RSS: ${RSS}
+              AB_RSS: ${RSS:=}
               AB_SEASON_ONE: true
             # probes:
             #   liveness: &probes
