@@ -32,6 +32,13 @@ spec:
           # This targets the CoreDNS pods in kube-system
     - toEndpoints:
         - matchLabels:
+            app.kubernetes.io/name: bitwarden
+      toPorts:
+        - ports:
+            - port: "8087"
+              protocol: TCP
+    - toEndpoints:
+        - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
       toPorts:
