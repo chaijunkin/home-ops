@@ -14,7 +14,7 @@ spec:
     - git.cloudjur.com
   parentRefs:
     # Private endpoint — internal gateway only
-    - name: envoy-internal
+    - name: envoy-external
       namespace: network
   rules:
     - backendRefs:

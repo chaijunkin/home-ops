@@ -123,9 +123,9 @@ spec:
       ssh:
         port: *sshPort
     # Uncomment to expose SSH via envoy-external (requires a TCP/SSH listener on the gateway)
-    tcpRoute:
-      enabled: true
-      parentRefs:
-        - name: envoy-internal
-          namespace: network
-          sectionName: ssh
+    # tcpRoute:
+    #   enabled: true
+    #   parentRefs:
+    #     - name: envoy-internal
+    #       namespace: network
+    #       sectionName: ssh
