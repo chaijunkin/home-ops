@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/element-hq/synapse
-              tag: v1.155.0@sha256:a87d002fba8efba807af19a876f488f4a9d298d6b62f5bab66d14e311a355e99
+              tag: v1.157.1@sha256:d1fce43d7501428c461f2758dc10342555b946dc9f1d03c1b1b8aec1a4e8d130
             env:
               SYNAPSE_CONFIG_PATH: /data/homeserver.yaml
               PGPASSWORD:
