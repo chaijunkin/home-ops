@@ -70,9 +70,9 @@ spec:
           SHOW_REGISTRATION_BUTTON: false
           # ============================================================
           # TOGGLE: Uncomment the 3 lines below when enabling OIDC.
-          # ALLOW_ONLY_EXTERNAL_REGISTRATION: true
-          # ENABLE_INTERNAL_SIGNIN: false
-          # ENABLE_PASSWORD_SIGNIN_FORM: false
+          ALLOW_ONLY_EXTERNAL_REGISTRATION: true
+          ENABLE_INTERNAL_SIGNIN: false
+          ENABLE_PASSWORD_SIGNIN_FORM: false
           # ============================================================
         service.explore:
           DISABLE_CODE_PAGE: false
@@ -115,7 +115,7 @@ spec:
       rootless: true
       registry: code.forgejo.org
       repository: forgejo/forgejo
-      tag: 15.0.3-rootless
+      tag: 16.0.1-rootless
     persistence:
       create: false
       claimName: forgejo
@@ -126,6 +126,6 @@ spec:
     tcpRoute:
       enabled: true
       parentRefs:
-        - name: envoy-internal
+        - name: envoy-external
           namespace: network
           sectionName: ssh
