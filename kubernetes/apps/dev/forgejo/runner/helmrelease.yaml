@@ -56,7 +56,7 @@ spec:
               - env:
                   - name: DEBIAN_FRONTEND
                     value: noninteractive
-                image: ghcr.io/chaijunkin/forgejo-runner:2026.07.05@sha256:a03e6973517e8bf5441165dda260d02a945ce9b453554d74cbb1bbab119232f0
+                image: ghcr.io/chaijunkin/forgejo-runner:2026.07.24@sha256:afac45fd36a9c1c625b62e7acb02aa75d8317a43da90d867ba598610971c9d6b
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
@@ -105,7 +105,7 @@ spec:
                     value: "1"
                   - name: DOCKER_CERT_PATH
                     value: /certs/client
-                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:f20cdb5dfa0a964e14df2530f7c5a395ad54f951658001e15f575de751c367a6
+                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:66d4ea40fc744ecd0e5b83535b5434ea6351e8d5b1fdab13b04f3bcfa8c32fca
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
@@ -144,7 +144,7 @@ spec:
           runner:
             image:
               repository: git.erwanleboucher.dev/eleboucher/runner
-              tag: 12.10.2@sha256:d5eeafda573012c229b730f5a18437b464d946473478e1f6bd56fd537b881609
+              tag: 12.13.0@sha256:b71959782cea9cbc86eaeb47e5ba32bf8179fbd117dd849e001c9a13807b1a07
             command:
               - sh
               - -ec
@@ -167,7 +167,7 @@ spec:
           k8s-plugin:
             image:
               repository: git.erwanleboucher.dev/eleboucher/runner-k8s-plugin
-              tag: 12.10.6@sha256:b0ffe279448c70fb3327485163da8da2ce12fa9cc39a29231edd676c9025c036
+              tag: 12.10.9@sha256:7fb94371ccc6ef3ff7e2110b2c04050a68bb8031d3224ed8aee2cd5e1d31c673
             args:
               - --listen
               - unix:///plugin/forgejo-runner-k8s.sock
