@@ -62,7 +62,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: 2026.7.1
+              tag: 2026.7.4
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
@@ -90,7 +90,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.127.0@sha256:4193b3a0c2661bce87b3cafede59e7d50e1e99e35f7c10bece7c2a7e0660c0a8
+              tag: 4.130.0@sha256:fa367e7eddd303a95c736f7aede351cdee9036a7383cecfd8786bb5bbe78c13b
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_SERVER: https://hass.cloudjur.com
