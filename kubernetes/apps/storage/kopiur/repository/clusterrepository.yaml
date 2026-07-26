@@ -19,8 +19,8 @@ spec:
   #   refreshInterval: 1h
   # create:
   #   enabled: false
-  # credentialProjection:
-  #   allowed: true
+  credentialProjection:
+    allowed: true
   encryption:
     passwordSecretRef:
       key: KOPIA_PASSWORD
