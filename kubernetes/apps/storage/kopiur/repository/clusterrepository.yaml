@@ -26,9 +26,11 @@ spec:
       key: KOPIA_PASSWORD
       name: kopiur-repository-secret
       namespace: storage
-  identityDefaults:
-    hostnameExpr: "'volsync.volsync-system.svc.cluster.local'"
-    usernameExpr: "policyName"
+  # identityDefaults:
+  #   hostnameExpr: "'volsync.volsync-system.svc.cluster.local'"
+  #   usernameExpr: "policyName"
+  scheduleDefaults:
+    timezone: Asia/Kuala_Lumpur
   # maintenance:
   #   enabled: true
   #   namespace: storage
