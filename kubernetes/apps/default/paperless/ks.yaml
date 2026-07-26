@@ -12,6 +12,7 @@ spec:
   components:
     - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/adhoc-snapshot
   path: ./kubernetes/apps/default/paperless/app
   postBuild:
     substitute:
