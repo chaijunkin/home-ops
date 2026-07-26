@@ -31,3 +31,4 @@ spec:
     substitute:
       APP: *appname
       VOLSYNC_CLAIM: karakeep-data
+      KOPIUR_CLAIM: karakeep-data
