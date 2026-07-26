@@ -47,7 +47,7 @@ spec:
               tag: 17.0-20251222
 
             env:
-              TZ: ${CLUSTER_TIMEZONE}
+              TZ: Asia/Kuala_Lumpur
               PROXY_MODE: "True"
 
             envFrom:
