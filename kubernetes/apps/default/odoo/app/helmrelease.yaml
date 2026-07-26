@@ -37,7 +37,7 @@ spec:
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
-                  name: odoo-init-db
+                  name: odoo-secret
 
         containers:
           app:
