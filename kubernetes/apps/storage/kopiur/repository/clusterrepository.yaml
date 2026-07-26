@@ -11,7 +11,7 @@ spec:
       path: /repository
       volume:
         nfs:
-          path: /tank/Backup/Volsync
+          path: /tank/Backup/Kopiur
           server: smb.cloudjur.com
   # catalog:
   #   fallbackNamespace: storage
