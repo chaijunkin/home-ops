@@ -47,6 +47,7 @@ includes:
   kubernetes:
     aliases: ["k8s"]
     taskfile: .taskfiles/kubernetes/Taskfile.yaml
+  kopiur: .taskfiles/kopiur/Taskfile.yaml
   flux: .taskfiles/Flux/Taskfile.yaml
   repository:
     aliases: ["repo"]

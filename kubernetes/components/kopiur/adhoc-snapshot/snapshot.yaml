@@ -1,0 +1,9 @@
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: Snapshot
+metadata:
+  generateName: ${APP}-manual-
+spec:
+  policyRef:
+    name: ${APP}
+  tags:
+    reason: manual
