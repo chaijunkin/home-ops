@@ -9,5 +9,6 @@ resources:
   - ./headlamp/ks.yaml
   - ./flux-instance/ks.yaml
   - ./flux-operator/ks.yaml
+  - ./konflate/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   - ./tofu-controller/ks.yaml
