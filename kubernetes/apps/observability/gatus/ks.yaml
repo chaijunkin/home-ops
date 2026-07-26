@@ -11,6 +11,7 @@ spec:
   interval: 1h
   components:
     - ../../../../components/kopiur/backup
+    - ../../../../components/volsync
   path: ./kubernetes/apps/observability/gatus/app
   postBuild:
     substitute:
