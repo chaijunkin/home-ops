@@ -17,7 +17,7 @@ resources:
   - ./opencloud/ks.yaml
   - ./plex/ks.yaml
   - ./seerr/ks.yaml
-  - ./romm/ks.yaml
+  # - ./romm/ks.yaml
   - ./slskd/ks.yaml
   - ./syncthing/ks.yaml
   - ./tautulli/ks.yaml
