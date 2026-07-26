@@ -28,3 +28,4 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/backup

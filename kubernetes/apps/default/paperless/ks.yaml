@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync-no-r2
+    - ../../../../components/kopiur/backup-no-r2
   path: ./kubernetes/apps/default/paperless/app
   postBuild:
     substitute:

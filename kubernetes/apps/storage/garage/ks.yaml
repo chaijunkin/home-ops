@@ -23,6 +23,7 @@ spec:
       namespace: *namespace
   # components:
   #   - ../../../../components/volsync
+  #   - ../../../../components/kopiur/backup
   path: ./kubernetes/apps/storage/garage/app
   prune: true
   sourceRef:

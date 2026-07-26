@@ -27,6 +27,7 @@ spec:
       SUBDOMAIN: movienight
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: openebs
       namespace: storage

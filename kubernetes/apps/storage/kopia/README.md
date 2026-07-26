@@ -1,7 +1,7 @@
 # Kopia
 
 **Description:** To be filled.
-**Category:** volsync-system
+**Category:** storage
 
 ---
 

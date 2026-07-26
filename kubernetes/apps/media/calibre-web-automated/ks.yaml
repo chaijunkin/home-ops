@@ -25,6 +25,7 @@ spec:
   components:
     - ../../../../components/zeroscaler
     - ../../../../components/volsync-no-r2
+    - ../../../../components/kopiur/backup-no-r2
   dependsOn:
     - name: openebs
       namespace: storage

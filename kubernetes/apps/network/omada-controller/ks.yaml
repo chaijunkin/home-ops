@@ -17,6 +17,7 @@ spec:
   components:
     - ../../../../components/zeroscaler
     - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
   prune: true
   sourceRef:
     kind: GitRepository

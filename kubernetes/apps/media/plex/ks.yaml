@@ -29,6 +29,7 @@ spec:
       VOLSYNC_CAPACITY: 20Gi
   components:
     - ../../../../components/volsync-no-r2
+    - ../../../../components/kopiur/backup-no-r2
     - ../../../../components/zeroscaler
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -120,6 +121,7 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
       # - ../../../../components/zeroscaler
 # ---
 # # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json

@@ -17,6 +17,7 @@ spec:
     namespace: flux-system
   components:
     - ../../../../components/volsync-no-r2
+    - ../../../../components/kopiur/backup-no-r2
   postBuild:
     substitute:
       APP: picoshare
