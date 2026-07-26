@@ -18,7 +18,7 @@ spec:
   #   periodicRefresh: true
   #   refreshInterval: 1h
   create:
-    enabled: true
+    enabled: true # Step 1, then disable this
   credentialProjection:
     allowed: true
   encryption:
