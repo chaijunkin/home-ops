@@ -10,4 +10,5 @@ resources:
   - ./openebs/ks.yaml
   - ./garage/ks.yaml
   - ./rclone/ks.yaml
+  - ./kopiur/ks.yaml
     # - ./staticgarage/ks.yaml

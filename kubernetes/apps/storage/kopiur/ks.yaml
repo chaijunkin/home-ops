@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app kopiur
+  namespace: &namespace storage
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: snapshot-controller
+      namespace: volsync-system
+  interval: 1h
+  path: ./kubernetes/apps/storage/kopiur/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  wait: true
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kopiur-repository
+  namespace: storage
+spec:
+  dependsOn:
+    - name: kopiur
+      namespace: storage
+  healthCheckExprs:
+    - apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: ClusterRepository
+      current: >-
+        has(status.observedGeneration)
+        && status.observedGeneration == metadata.generation
+        && has(status.phase)
+        && status.phase == 'Ready'
+      failed: >-
+        has(status.observedGeneration)
+        && status.observedGeneration == metadata.generation
+        && has(status.phase)
+        && status.phase in ['Degraded', 'Failed']
+      inProgress: >-
+        !has(status.observedGeneration)
+        || status.observedGeneration != metadata.generation
+        || !has(status.phase)
+        || status.phase in ['Pending', 'Initializing']
+  interval: 1h
+  path: ./kubernetes/apps/storage/kopiur/repository
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: storage
+  wait: true
