@@ -42,7 +42,6 @@ spec:
         containers:
           app:
             image:
-              image:
               repository: docker.io/odoo
               tag: 17.0-20251222
 
