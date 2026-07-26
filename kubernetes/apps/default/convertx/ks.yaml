@@ -18,7 +18,7 @@ spec:
 
   components:
     - ../../../../components/volsync-no-r2
-    - ../../../../components/kopiur-no-r2/backup
+    - ../../../../components/kopiur/backup
   postBuild:
     substitute:
       APP: *app
