@@ -17,9 +17,8 @@ spec:
     kind: ClusterRepository
     name: nas
   retention:
+    keepLatest: 14
     keepDaily: 7
-    keepHourly: 24
-    keepLatest: 3
     keepWeekly: 4
   sources:
     - pvc:
