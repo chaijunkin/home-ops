@@ -30,6 +30,10 @@ spec:
     remediation:
       retries: 3
   values:
+    features:
+      credentialProjection:
+        enabled: true
+    installScope: cluster
     monitoring:
       dashboards:
         enabled: true
