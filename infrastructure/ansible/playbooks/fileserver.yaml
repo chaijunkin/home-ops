@@ -150,6 +150,7 @@
         - /tank/Apps/openclaw
         - /tank/Backup/Database
         - /tank/Backup/Volsync
+        - /tank/Backup/Kopiur
         - /tank/Backup/Personal
         - /tank/Backup/Workstation
         - /tank/Backup/S3
