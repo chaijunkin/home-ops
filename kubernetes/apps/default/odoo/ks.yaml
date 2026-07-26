@@ -12,9 +12,6 @@ spec:
   path: ./kubernetes/apps/default/odoo/app
   components:
     - ../../../../components/volsync
-  dependsOn:
-    - name: volsync
-      namespace: volsync
   sourceRef:
     kind: GitRepository
     name: flux-system
