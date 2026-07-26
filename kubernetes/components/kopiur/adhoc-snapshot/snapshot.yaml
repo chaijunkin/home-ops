@@ -1,7 +1,7 @@
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: Snapshot
 metadata:
-  generateName: ${APP}-manual-
+  name: ${APP}-adhoc
 spec:
   policyRef:
     name: ${APP}

@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync-no-r2
-    - ../../../../components/kopiur/backup-no-r2
+    - ../../../../components/kopiur-no-r2/backup
   interval: 1h
   path: ./kubernetes/apps/default/sure/app
   postBuild:

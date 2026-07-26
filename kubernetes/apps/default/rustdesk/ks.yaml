@@ -23,7 +23,7 @@ spec:
       VOLSYNC_CAPACITY: 20Gi
   components:
     - ../../../../components/volsync-no-r2
-    - ../../../../components/kopiur/backup-no-r2
+    - ../../../../components/kopiur-no-r2/backup
   dependsOn:
     - name: openebs
       namespace: storage
