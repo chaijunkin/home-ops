@@ -32,6 +32,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    features:
+      credentialProjection:
+        enabled: true
     controller:
       args:
         enableDistributedSnapshotting: true
