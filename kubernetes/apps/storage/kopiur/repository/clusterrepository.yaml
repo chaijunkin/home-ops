@@ -17,8 +17,8 @@ spec:
   #   fallbackNamespace: storage
   #   periodicRefresh: true
   #   refreshInterval: 1h
-  # create:
-  #   enabled: false
+  create:
+    enabled: true
   credentialProjection:
     allowed: true
   encryption:
