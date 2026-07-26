@@ -7,8 +7,8 @@ spec:
   # discoverTopics: [renovate]
   discoveryFilters:
     - chaijunkin/home-ops
-    - chaijunkin/containers
-    - chaijunkin/charts-mirror
+    # - chaijunkin/containers
+    # - chaijunkin/charts-mirror
   provider:
     name: github
   extraEnv:
