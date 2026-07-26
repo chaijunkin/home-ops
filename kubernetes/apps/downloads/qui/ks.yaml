@@ -26,7 +26,7 @@ spec:
     - ../../../../components/zeroscaler
     - ../../../../components/volsync
     - ../../../../components/kopiur/backup
-    - ../../../../components/kopiur/adhoc-snapshot
+    # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
     - name: openebs
       namespace: storage

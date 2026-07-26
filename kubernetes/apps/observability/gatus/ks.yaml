@@ -12,7 +12,7 @@ spec:
   components:
     - ../../../../components/volsync
     - ../../../../components/kopiur/backup
-    - ../../../../components/kopiur/adhoc-snapshot
+    # - ../../../../components/kopiur/adhoc-snapshot
   path: ./kubernetes/apps/observability/gatus/app
   postBuild:
     substitute:

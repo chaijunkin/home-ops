@@ -30,5 +30,5 @@ spec:
   components:
     - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
-    - ../../../../components/kopiur/adhoc-snapshot
+    # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
