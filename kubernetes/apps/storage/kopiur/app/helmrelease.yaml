@@ -2,7 +2,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: &app kopiur
+  name: kopiur
 spec:
   interval: 1h
   layerSelector:
@@ -16,11 +16,11 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: *app
+  name: kopiur
 spec:
   chartRef:
     kind: OCIRepository
-    name: *app
+    name: kopiur
   interval: 1h
   install:
     remediation:
