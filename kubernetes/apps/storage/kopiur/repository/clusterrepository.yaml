@@ -27,7 +27,7 @@ spec:
       name: kopiur-repository-secret
       namespace: storage
   identityDefaults:
-    hostnameExpr: "namespace"
+    hostnameExpr: "'volsync.volsync-system.svc.cluster.local'"
     usernameExpr: "policyName"
   # maintenance:
   #   enabled: true
