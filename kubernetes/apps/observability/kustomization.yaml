@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: observability
 components:
   - ../../components/common
+  - ../../components/kopiur/secret
 resources:
   - ./namespace.yaml
   - ./k8s-monitoring/ks.yaml
