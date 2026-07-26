@@ -75,7 +75,7 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["kopiur.cloudjur.com"]
+        hostnames: ["kopia.cloudjur.com"]
         parentRefs:
           - name: envoy-internal
             namespace: network
