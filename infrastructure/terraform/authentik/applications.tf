@@ -278,6 +278,15 @@ locals {
     #   launch_url        = "https://dispatch.${var.public_domain}/"
     #   property_mappings = local.default_property_mappings
     # },
+    sparkyfitness = {
+      client_id         = "sparkyfitness"
+      client_secret     = var.sparkyfitness_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/sparkyfitness.png"
+      redirect_uri      = "https://fitness.${var.public_domain}/api/auth/callback/authentik"
+      launch_url        = "https://fitness.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
   }
 }
 

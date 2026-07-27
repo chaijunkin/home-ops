@@ -330,3 +330,17 @@ variable "litellm_secret" {
 #   sensitive   = true
 #   default     = null
 # }
+
+variable "sparkyfitness_id" {
+  type        = string
+  description = "SparkyFitness Client ID"
+  sensitive   = true
+  default     = null
+}
+
+variable "sparkyfitness_secret" {
+  type        = string
+  description = "SparkyFitness Client Secret"
+  sensitive   = true
+  default     = null
+}
