@@ -284,6 +284,12 @@ locals {
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/sparkyfitness.png"
       redirect_uri      = "https://fitness.${var.public_domain}/api/auth/sso/callback/authentik"
+      additional_redirect_uris = [
+        {
+          matching_mode = "strict"
+          url           = "sparkyfitnessmobile://oauth-callback"
+        }
+      ]
       launch_url        = "https://fitness.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
