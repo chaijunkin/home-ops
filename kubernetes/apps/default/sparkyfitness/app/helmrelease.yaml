@@ -80,12 +80,12 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: sparkyfitness-secret
-                    key: username
+                    key: INIT_POSTGRES_SUPER_USER
               SPARKY_FITNESS_DB_PASSWORD:
                 valueFrom:
                   secretKeyRef:
                     name: sparkyfitness-secret
-                    key: password
+                    key: INIT_POSTGRES_SUPER_PASS
               SPARKY_FITNESS_APP_DB_USER:
                 valueFrom:
                   secretKeyRef:
