@@ -295,35 +295,35 @@ variable "litellm_secret" {
 #   sensitive   = true
 #   default     = null
 # }
-# 
+#
 # variable "miso_gallery_secret" {
 #   type        = string
 #   description = "Miso Gallery Client Secret"
 #   sensitive   = true
 #   default     = null
 # }
-# 
+#
 # variable "miso_chat_id" {
 #   type        = string
 #   description = "Miso Chat Client ID"
 #   sensitive   = true
 #   default     = null
 # }
-# 
+#
 # variable "miso_chat_secret" {
 #   type        = string
 #   description = "Miso Chat Client Secret"
 #   sensitive   = true
 #   default     = null
 # }
-# 
+#
 # variable "dispatch_id" {
 #   type        = string
 #   description = "Dispatch Client ID"
 #   sensitive   = true
 #   default     = null
 # }
-# 
+#
 # variable "dispatch_secret" {
 #   type        = string
 #   description = "Dispatch Client Secret"
@@ -335,7 +335,7 @@ variable "sparkyfitness_id" {
   type        = string
   description = "SparkyFitness Client ID"
   sensitive   = true
-  default     = null
+  default     = "sparkyfitness"
 }
 
 variable "sparkyfitness_secret" {

@@ -283,7 +283,7 @@ locals {
       client_secret     = var.sparkyfitness_secret
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/sparkyfitness.png"
-      redirect_uri      = "https://fitness.${var.public_domain}/api/auth/callback/authentik"
+      redirect_uri      = "https://fitness.${var.public_domain}/api/auth/sso/callback/authentik"
       launch_url        = "https://fitness.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
@@ -301,12 +301,15 @@ resource "authentik_provider_oauth2" "oauth2" {
   property_mappings     = each.value.property_mappings
   access_token_validity = "hours=4"
   signing_key           = data.authentik_certificate_key_pair.generated.id
-  allowed_redirect_uris = [
-    {
-      matching_mode = "strict",
-      url           = each.value.redirect_uri,
-    }
-  ]
+  allowed_redirect_uris = concat(
+    [
+      {
+        matching_mode = "strict",
+        url           = each.value.redirect_uri,
+      }
+    ],
+    try(each.value.additional_redirect_uris, [])
+  )
 }
 
 resource "authentik_application" "application" {
