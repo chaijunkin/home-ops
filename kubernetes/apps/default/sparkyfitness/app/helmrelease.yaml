@@ -50,7 +50,8 @@ spec:
               SPARKY_FITNESS_FRONTEND_URL: https://fitness.cloudjur.com
               SPARKY_FITNESS_DISABLE_SIGNUP: "false"
               SPARKY_FITNESS_EXTRA_TRUSTED_ORIGINS: ""
-              ALLOW_PRIVATE_NETWORK_CORS: "false"
+              ALLOW_PRIVATE_NETWORK_CORS: "true"
+              SPARKY_FITNESS_OIDC_AUTO_REDIRECT: "true"
               SPARKY_FITNESS_LOG_LEVEL: info
 
               # SPARKY_FITNESS_ADMIN_EMAIL: ${SPARKY_FITNESS_ADMIN_EMAIL} #User with this email can access the admin panel
