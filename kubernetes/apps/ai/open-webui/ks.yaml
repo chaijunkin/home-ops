@@ -21,6 +21,8 @@ spec:
       APP: open-webui
       SUBDOMAIN: chat
       VOLSYNC_CAPACITY: 20Gi
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
   components:
     - ../../../../components/volsync
     - ../../../../components/kopiur/backup

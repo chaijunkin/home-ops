@@ -17,6 +17,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_PUID: "65532"
+      KOPIUR_PGID: "65532"
       NAMESPACE: *namespace
   prune: true
   retryInterval: 2m
