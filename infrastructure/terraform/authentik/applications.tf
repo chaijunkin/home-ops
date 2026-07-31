@@ -386,3 +386,11 @@ module "oauth2-opencloud-desktop" {
     { matching_mode = "regex", url = "http://localhost(:.*)?" }
   ]
 }
+
+resource "authentik_property_mapping_provider_scope" "litellm_role" {
+  name       = "LiteLLM Role"
+  scope_name = "litellm_role"
+  expression = <<-EOT
+    return {"litellm_role": "proxy_admin"}
+  EOT
+}

@@ -18,14 +18,6 @@ data "authentik_property_mapping_provider_scope" "default-scopes" {
   ]
 }
 
-resource "authentik_property_mapping_provider_scope" "litellm_role" {
-  name       = "LiteLLM Role"
-  scope_name = "litellm_role"
-  expression = <<-EOT
-    return {"litellm_role": "proxy_admin"}
-  EOT
-}
-
 data "authentik_property_mapping_provider_scope" "profile" {
   scope_name = "profile"
 }
