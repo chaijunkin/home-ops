@@ -35,7 +35,7 @@ spec:
               MEMINI_DEMOTE_AFTER: 1440h
               MEMINI_DISTILL_ON_WRITE: "true"
               MEMINI_EMBED_BASE_URL: http://litellm.ai:4000/v1
-              # MEMINI_EMBED_MODEL: summary
+              # MEMINI_EMBED_MODEL: memini-summary
               MEMINI_EMBED_MODEL: openai/qwen/qwen3-4b-thinking-2507
               MEMINI_EMBED_DIMS: "1024"
               MEMINI_EMBED_MAX_CONCURRENCY: "2"
@@ -47,7 +47,7 @@ spec:
               MEMINI_RECALL_MIN_SEMANTIC_SCORE: "0.46"
               MEMINI_RERANK: http://litellm.ai:4000/v1
               MEMINI_RERANK_MODEL: openai/qwen/qwen3-4b-thinking-2507
-              # MEMINI_RERANK_MODEL: qwen3-reranker
+              # MEMINI_RERANK_MODEL: memini-reranker
               MEMINI_RERANK_MAX_CONCURRENCY: "2"
               MEMINI_RERANK_MAX_DOC_CHARS: "4000"
               MEMINI_RERANK_TIMEOUT: 8s
