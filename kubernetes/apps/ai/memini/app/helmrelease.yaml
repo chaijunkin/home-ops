@@ -34,8 +34,8 @@ spec:
               MEMINI_SHORT_TERM_CAP: "300"
               MEMINI_DEMOTE_AFTER: 1440h
               MEMINI_DISTILL_ON_WRITE: "true"
-              MEMINI_EMBED_BASE_URL: http://qwen3-embedding-0-6b.ai.svc.cluster.local:8080/v1
-              MEMINI_EMBED_MODEL: qwen3-embedding
+              MEMINI_EMBED_BASE_URL: http://litellm.ai:4000/v1
+              MEMINI_EMBED_MODEL: summary
               MEMINI_EMBED_DIMS: "1024"
               MEMINI_EMBED_MAX_CONCURRENCY: "2"
               MEMINI_EMBED_MAX_ITEM_CHARS: "6000"
@@ -44,7 +44,7 @@ spec:
                 relevant past memories\nQuery: "
               MEMINI_LOG_FORMAT: json
               MEMINI_RECALL_MIN_SEMANTIC_SCORE: "0.46"
-              MEMINI_RERANK: http://qwen3-reranker-0-6b.ai.svc.cluster.local:8080/v1
+              MEMINI_RERANK: http://litellm.ai:4000/v1
               MEMINI_RERANK_MODEL: qwen3-reranker
               MEMINI_RERANK_MAX_CONCURRENCY: "2"
               MEMINI_RERANK_MAX_DOC_CHARS: "4000"
@@ -78,17 +78,13 @@ spec:
       data:
         existingClaim: memini
     route:
-      internal:
+      ui:
         enabled: true
         hostnames:
           - memini.cloudjur.com
         parentRefs:
           - name: envoy-internal
             namespace: network
-        rules:
-          - backendRefs:
-              - identifier: main
-                port: http
     serviceMonitor:
       main:
         enabled: true

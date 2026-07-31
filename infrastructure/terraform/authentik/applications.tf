@@ -246,10 +246,10 @@ locals {
       client_id         = var.litellm_id
       client_secret     = var.litellm_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/BerriAI/litellm/main/docs/my-website/static/img/litellm_logo.png"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/litellm.png"
       redirect_uri      = "https://litellm.${var.public_domain}/sso/callback"
-      launch_url        = "https://litellm.${var.public_domain}/"
-      property_mappings = local.default_property_mappings
+      launch_url        = "https://litellm.${var.public_domain}/ui"
+      property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.litellm_role.id])
     },
     # miso-gallery = {
     #   client_id         = var.miso_gallery_id
