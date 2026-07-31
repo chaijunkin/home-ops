@@ -43,7 +43,7 @@ spec:
           app:
             image:
               repository: docker.io/odoo
-              tag: 17.0-20251222
+              tag: 19.0-20251222
 
             env:
               TZ: Asia/Kuala_Lumpur
