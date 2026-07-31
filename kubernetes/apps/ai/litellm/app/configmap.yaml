@@ -34,7 +34,7 @@ data:
         litellm_params:
           model: qwen/qwen3-4b-thinking-2507
           api_base: http://jk-mac-mini.cloudjur.com:1234/v1
-          api_key:
+          api_key: lm-studio
           max_parallel_requests: 2
           order: 2
 
