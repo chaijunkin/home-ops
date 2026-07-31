@@ -32,7 +32,7 @@ data:
           supports_function_calling: true
           supports_vision: true
         litellm_params:
-          model: qwen/qwen3-4b-thinking-2507
+          model: openai/qwen/qwen3-4b-thinking-2507
           api_base: http://jk-mac-mini.cloudjur.com:1234/v1
           api_key: lm-studio
           max_parallel_requests: 2
