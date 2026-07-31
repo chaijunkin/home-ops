@@ -17,6 +17,14 @@ spec:
           reloader.stakater.com/auto: "true"
         replicas: 1
         strategy: RollingUpdate
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: litellm
         containers:
           app:
             image:
@@ -26,6 +34,11 @@ spec:
               - --config=/app/config.yaml
             env:
               AUTO_REDIRECT_UI_LOGIN_TO_SSO: "true"
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: "litellm"
+                    key: DATABASE_URL
               CHATGPT_TOKEN_DIR: /app/chatgpt_tokens
               GENERIC_AUTHORIZATION_ENDPOINT: https://auth.cloudjur.com/application/o/authorize/
               GENERIC_SCOPE: openid email profile litellm_role
