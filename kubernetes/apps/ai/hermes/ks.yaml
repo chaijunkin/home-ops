@@ -19,3 +19,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  components:
+    - ../../../../../components/kopiur/backup
+    - ../../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: hermes
