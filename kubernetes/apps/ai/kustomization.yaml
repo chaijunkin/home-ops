@@ -26,6 +26,6 @@ resources:
   # - ./comfyui/ks.yaml
   # - ./hermes/ks.yaml
   # - ./openclaw/ks.yaml
-  # - ./litellm/ks.yaml
+  - ./litellm/ks.yaml
   # - ./memini/ks.yaml
   # - ./llmkube/ks.yaml
