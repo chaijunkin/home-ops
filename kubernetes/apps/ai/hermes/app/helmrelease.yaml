@@ -82,7 +82,7 @@ spec:
           dashboard:
             image: *image
             env:
-              TZ: America/Toronto
+              TZ: Asia/Kuala_Lumpur
               GATEWAY_HEALTH_URL: http://localhost:8642
             args:
               - dashboard
