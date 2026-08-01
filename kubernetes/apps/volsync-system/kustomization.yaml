@@ -8,6 +8,6 @@ resources:
   - ./namespace.yaml
     # Flux-Kustomizations
   # - ./snapshot-controller/ks.yaml
-  # - ./volsync/ks.yaml
+  - ./volsync/ks.yaml
   # next time enable it, need to fix the kopia limitation where we need to backup a repository first
-  # - ./kopia/ks.yaml
+  - ./kopia/ks.yaml
