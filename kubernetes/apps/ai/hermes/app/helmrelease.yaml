@@ -68,7 +68,7 @@ spec:
               HOME: /opt/data
               TZ: Asia/Kuala_Lumpur
               HERMES_DASHBOARD: "1"
-              # HERMES_DASHBOARD_PUBLIC_URL: https://hermes.cloudjur.com
+              HERMES_DASHBOARD_PUBLIC_URL: https://hermes.cloudjur.com
             envFrom:
               - secretRef:
                   name: hermes
