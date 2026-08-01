@@ -3,3 +3,4 @@ kind: Component
 resources:
   - ./snapshot.yaml
   - ./snapshotpolicy.yaml
+  - ./snapshotschedule.yaml
