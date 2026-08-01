@@ -63,6 +63,7 @@ spec:
             args: [gateway, run]
             env:
               MEMINI_URL: http://memini.ai:8080
+              HERMES_DASHBOARD_INSECURE: 1
               MEMINI_NAMESPACE: hermes
               HERMES_HOME: /opt/data
               HOME: /opt/data
