@@ -322,7 +322,8 @@ data:
       },
       gateway: {
         auth: { mode: "token", token: "$${OPENCLAW_GATEWAY_TOKEN}" },
-        bind: "lan",
+        "bind": "custom",
+        "customBindHost": "::",
         controlUi: {
           allowInsecureAuth: true,
           allowedOrigins: [
@@ -349,8 +350,6 @@ data:
           ],
         },
         port: 18789,
-        reload: { debounceMs: 300, mode: "hybrid" },
-        tailscale: { mode: "off", resetOnExit: false },
         trustedProxies: ["10.69.0.0/16", "192.168.0.0/16", "10.0.0.0/8",  "fd42::/56"],
       },
       messages: {
