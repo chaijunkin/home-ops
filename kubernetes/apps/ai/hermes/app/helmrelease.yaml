@@ -67,9 +67,13 @@ spec:
               HERMES_HOME: /opt/data
               HOME: /opt/data
               TZ: Asia/Kuala_Lumpur
+              HERMES_DASHBOARD: "1"
+              HERMES_DASHBOARD_PUBLIC_URL: https://hermes.cloudjur.com
             envFrom:
               - secretRef:
                   name: hermes
+              - secretRef:
+                  name: hermes-dashboard
             resources:
               requests:
                 cpu: 500m
@@ -77,27 +81,6 @@ spec:
                 memory: 2Gi
             ports:
               - containerPort: &port 8642
-                name: http
-                protocol: TCP
-          dashboard:
-            image: *image
-            env:
-              TZ: Asia/Kuala_Lumpur
-              GATEWAY_HEALTH_URL: http://localhost:8642
-            envFrom:
-              - secretRef:
-                  name: hermes-dashboard
-            args:
-              - dashboard
-              - --host
-              - 0.0.0.0
-            resources:
-              requests:
-                cpu: 500m
-              limits:
-                memory: 1Gi
-            ports:
-              - containerPort: &dashboard_port 9119
                 name: http
                 protocol: TCP
           codeserver:
@@ -135,11 +118,8 @@ spec:
             port: *port
           codeserver:
             port: *codeserverPort
-      dashboard:
-        controller: hermes
-        ports:
-          http:
-            port: *dashboard_port
+          dashboard:
+            port: 9119
     route:
       app:
         hostnames: [hermes.cloudjur.com]
@@ -148,8 +128,8 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: dashboard
-                port: http
+              - identifier: app
+                port: dashboard
       codeserver:
         hostnames: [hermes-code.cloudjur.com]
         parentRefs:
