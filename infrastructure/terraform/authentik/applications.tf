@@ -287,6 +287,7 @@ locals {
       additional_redirect_uris = [
         {
           matching_mode = "strict"
+          redirect_uri_type = "authorization"
           url           = "sparkyfitnessmobile://oauth-callback"
         }
       ]
@@ -354,7 +355,9 @@ module "oauth2-toolhive" {
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
   client_id          = var.toolhive_mcp_gateway_id
   client_secret      = var.toolhive_mcp_gateway_secret
-  redirect_uris      = ["https://mcp.cloudjur.com/oauth/callback"]
+  redirect_uris      = [
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://mcp.cloudjur.com/oauth/callback"}
+  ]
 }
 
 module "oauth2-opencloud" {
@@ -374,11 +377,11 @@ module "oauth2-opencloud" {
   # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
   redirect_uris = [
-    { matching_mode = "strict", url = "https://drive.${var.public_domain}"},
-    { matching_mode = "strict", url = "https://drive.${var.public_domain}/oidc-callback.html"},
-    { matching_mode = "strict", url = "https://drive.${var.public_domain}/oidc-silent-redirect.html"},
-    { matching_mode = "strict", url = "oc://android.opencloud.eu"},
-    { matching_mode = "strict", url = "oc://ios.opencloud.eu"}
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://drive.${var.public_domain}"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://drive.${var.public_domain}/oidc-callback.html"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://drive.${var.public_domain}/oidc-silent-redirect.html"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "oc://android.opencloud.eu"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "oc://ios.opencloud.eu"}
   ]
 }
 
@@ -393,8 +396,8 @@ module "oauth2-opencloud-desktop" {
   client_id          = "OpenCloudDesktop"
   # client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
   redirect_uris = [
-    { matching_mode = "regex", url = "http://127.0.0.1(:.*)?" },
-    { matching_mode = "regex", url = "http://localhost(:.*)?" }
+    { matching_mode = "regex", redirect_uri_type = "authorization" , url = "http://127.0.0.1(:.*)?" },
+    { matching_mode = "regex", redirect_uri_type = "authorization" , url = "http://localhost(:.*)?" }
   ]
 }
 

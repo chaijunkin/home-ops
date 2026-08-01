@@ -113,9 +113,11 @@ locals {
     for uri in var.redirect_uris : (
       can(uri.url) ? {
         matching_mode = lookup(uri, "matching_mode", "strict")
+        redirect_uri_type = lookup(uri, "redirect_uri_type", "authorization")
         url           = uri.url
         } : {
         matching_mode = "strict"
+        redirect_uri_type = lookup(uri, "redirect_uri_type", "authorization")
         url           = trim(uri, " ")
       }
     )
