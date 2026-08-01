@@ -13,7 +13,7 @@ spec:
     defaultPodOptions:
       automountServiceAccountToken: true
       securityContext:
-        runAsUser: 2000
+        runAsUser: 1000
         runAsGroup: 100
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
