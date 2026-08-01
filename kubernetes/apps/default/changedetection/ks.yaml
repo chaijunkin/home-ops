@@ -17,8 +17,8 @@ spec:
   dependsOn:
     - name: openebs
       namespace: storage
-    - name: volsync
-      namespace: volsync-system
+    - name: kopiur
+      namespace: storage
   components:
     # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
