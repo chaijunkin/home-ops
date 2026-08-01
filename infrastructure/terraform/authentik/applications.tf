@@ -293,6 +293,15 @@ locals {
       launch_url        = "https://fitness.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
+    hermes = {
+      client_id         = var.hermes_id
+      client_secret     = var.hermes_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/hermes.png"
+      redirect_uri      = "https://hermes.${var.public_domain}/auth/callback"
+      launch_url        = "https://hermes.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
   }
 }
 
@@ -307,10 +316,12 @@ resource "authentik_provider_oauth2" "oauth2" {
   property_mappings     = each.value.property_mappings
   access_token_validity = "hours=4"
   signing_key           = data.authentik_certificate_key_pair.generated.id
+  grant_types = ["authorization_code"]
   allowed_redirect_uris = concat(
     [
       {
         matching_mode = "strict",
+        redirect_uri_type = "authorization",
         url           = each.value.redirect_uri,
       }
     ],
