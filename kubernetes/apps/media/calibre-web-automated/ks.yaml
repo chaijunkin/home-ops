@@ -24,7 +24,7 @@ spec:
   interval: 24h
   components:
     - ../../../../components/zeroscaler
-    - ../../../../components/volsync-no-r2
+    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:

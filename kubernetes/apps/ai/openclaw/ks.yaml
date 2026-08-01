@@ -21,7 +21,7 @@ spec:
   timeout: 5m
   components:
     - ../../../../components/kopiur/backup
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
   postBuild:
     substitute:
       APP: openclaw

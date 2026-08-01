@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: litellm
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
   path: ./kubernetes/apps/ai/litellm/app
   prune: true

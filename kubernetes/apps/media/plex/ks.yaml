@@ -28,7 +28,7 @@ spec:
       PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/volsync-no-r2
+    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
@@ -121,7 +121,7 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
       # - ../../../../components/zeroscaler

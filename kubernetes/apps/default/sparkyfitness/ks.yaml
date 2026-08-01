@@ -13,7 +13,7 @@ spec:
 
   path: ./kubernetes/apps/default/sparkyfitness/app
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
   sourceRef:
     kind: GitRepository

@@ -24,7 +24,7 @@ spec:
 
   wait: false
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler

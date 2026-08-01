@@ -20,7 +20,7 @@ spec:
     - name: volsync
       namespace: volsync-system
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   postBuild:

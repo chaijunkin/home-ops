@@ -24,7 +24,7 @@ spec:
       KOPIUR_PUID: "0"
       KOPIUR_PGID: "0"
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:

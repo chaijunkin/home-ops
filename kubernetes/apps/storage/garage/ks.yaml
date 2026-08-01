@@ -22,7 +22,7 @@ spec:
       name: *app
       namespace: *namespace
   # components:
-  #   - ../../../../components/volsync
+  #   # - ../../../../components/volsync
   #   - ../../../../components/kopiur/backup
   #   # - ../../../../components/kopiur/adhoc-snapshot
   path: ./kubernetes/apps/storage/garage/app

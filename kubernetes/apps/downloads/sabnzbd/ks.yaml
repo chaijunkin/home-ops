@@ -28,7 +28,7 @@ spec:
       VOLSYNC_CAPACITY: 15Gi
       SUBDOMAIN: sab
   components:
-    - ../../../../components/volsync-no-r2
+    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
