@@ -205,6 +205,15 @@ spec:
           - backendRefs:
               - name: "{{ .Release.Name }}"
                 port: &codeserverPort 12321
+      imageui:
+        hostnames: ["generate.cloudjur.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: &imageuiPort 8848
     service:
       app:
         type: LoadBalancer
@@ -216,5 +225,7 @@ spec:
             port: *port
           codeserver:
             port: *codeserverPort
+          imageui:
+            port: *imageuiPort
     serviceAccount:
       openclaw: {}
