@@ -88,7 +88,6 @@ spec:
               - dashboard
               - --host
               - 0.0.0.0
-              - --insecure
             resources:
               requests:
                 cpu: 500m
