@@ -34,12 +34,12 @@ spec:
             # first kubelet evicts under node MemoryPressure on the shared UMA node.
     defaultPodOptions:
       hostIPC: true
-      nodeSelector:
-        topology.kubernetes.io/gpus: amd
-      tolerations:
-        - key: llm-workload
-          operator: Exists
-          effect: NoSchedule
+      # nodeSelector:
+      #   topology.kubernetes.io/gpus: amd
+      # tolerations:
+      #   - key: llm-workload
+      #     operator: Exists
+      #     effect: NoSchedule
     service:
       app:
         type: LoadBalancer
