@@ -15,10 +15,9 @@ spec:
       APP: omada-controller
       VOLSYNC_CAPACITY: 2Gi
   components:
-    
     - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
-    # - ../../../../components/volsync
+    - ../../../../components/volsync
     # - ../../../../components/kopiur/adhoc-snapshot
   prune: true
   sourceRef:

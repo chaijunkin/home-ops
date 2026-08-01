@@ -27,7 +27,6 @@ spec:
       APP: prowlarr
       VOLSYNC_CAPACITY: 2Gi
   components:
-    
     - ../../../../components/kopiur/adhoc-snapshot
-    # - ../../../../components/volsync
+    - ../../../../components/volsync
     # - ../../../../components/kopiur/adhoc-snapshot

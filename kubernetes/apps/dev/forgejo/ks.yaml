@@ -9,9 +9,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    
     - ../../../../components/kopiur/adhoc-snapshot
-    # - ../../../../components/volsync
+    - ../../../../components/volsync
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/anubis
   dependsOn:
