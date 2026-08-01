@@ -320,11 +320,36 @@ data:
       },
       gateway: {
         auth: { mode: "token", token: "$${OPENCLAW_GATEWAY_TOKEN}" },
-        tools: { allow: ["sessions_send"] },
-        controlUi: { allowedOrigins: ["https://miso.cloudjur.com", "https://miso-chat.cloudjur.com"],},
+        bind: "lan",
+        controlUi: {
+          allowInsecureAuth: true,
+          allowedOrigins: [
+            "https://openclaw.cloudjur.com",
+            "https://chat.cloudjur.com",
+          ],
+        },
+        http: {
+          endpoints: {
+            chatCompletions: { enabled: true },
+          },
+        },
         mode: "local",
+        nodes: {
+          denyCommands: [
+            "camera.snap",
+            "camera.clip",
+            "screen.record",
+            "contacts.add",
+            "calendar.add",
+            "reminders.add",
+            "sms.send",
+            "sms.search",
+          ],
+        },
         port: 18789,
-        trustedProxies: ["10.42.0.0/16", "192.168.0.0/16"]
+        reload: { debounceMs: 300, mode: "hybrid" },
+        tailscale: { mode: "off", resetOnExit: false },
+        trustedProxies: ["10.69.0.0/16", "192.168.0.0/16", "10.0.0.0/8",  "fd42::/56"],
       },
       messages: {
         ackReactionScope: "group-mentions",
