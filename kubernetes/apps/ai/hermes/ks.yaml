@@ -25,3 +25,5 @@ spec:
   postBuild:
     substitute:
       APP: hermes
+      KOPIUR_PGID: "10000"
+      KOPIUR_PUID: "10000"
