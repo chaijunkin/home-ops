@@ -182,7 +182,7 @@ data:
         },
       },
       plugins: {
-        allow: ["discord", "lossless-claw", "memini", "searxng", "openclaw-better-gateway"],
+        allow: ["discord", "lossless-claw", "searxng", "openclaw-better-gateway"],
         entries: {
           discord: { enabled: true },
           comfy: {
