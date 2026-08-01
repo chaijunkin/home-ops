@@ -297,6 +297,7 @@ locals {
     hermes = {
       client_id         = var.hermes_id
       client_secret     = var.hermes_secret
+      client_type      = "public"
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/hermes.png"
       redirect_uri      = "https://hermes.${var.public_domain}/auth/callback"
@@ -309,6 +310,7 @@ locals {
 resource "authentik_provider_oauth2" "oauth2" {
   for_each              = local.applications
   name                  = each.key
+  client_type           = lookup(each.value, "client_type", "confidential")
   client_id             = each.value.client_id
   client_secret         = each.value.client_secret
   authorization_flow    = authentik_flow.provider-authorization-implicit-consent.uuid

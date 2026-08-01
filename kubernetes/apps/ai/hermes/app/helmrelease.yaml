@@ -84,6 +84,7 @@ spec:
             env:
               TZ: Asia/Kuala_Lumpur
               GATEWAY_HEALTH_URL: http://localhost:8642
+              HERMES_DASHBOARD_OIDC_SCOPES: "openid profile email offline_access"
             envFrom:
               - secretRef:
                   name: hermes-dashboard
