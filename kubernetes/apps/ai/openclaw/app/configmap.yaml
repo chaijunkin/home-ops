@@ -61,7 +61,7 @@ data:
             provider: "openai",
             model: "sentence-transformers/all-MiniLM-L6-v2",
             remote: {
-              baseUrl: "http://llama-embed.llm:8080/v1",
+              baseUrl: "http://litellm.ai:8080/v1",
               apiKey: "llama-embed"
             }
           },
@@ -86,66 +86,7 @@ data:
             includeReasoning: false,
           },
         },
-        list: [
-          {
-            id: "main",
-            default: true,
-            name: "Miso",
-            workspace: "/home/node/.openclaw/workspace",
-            agentDir: "/home/node/.openclaw/agents/main/agent",
-            thinkingDefault: "low",
-            tools: { alsoAllow: ["memory_recall", "memory_list", "memory_remember"] },
-            identity: {
-              name: "Miso",
-              avatar: "avatars/miso_avatar.png",
-            }
-          },
-          {
-            id: "matcha",
-            name: "Matcha",
-            workspace: "/home/node/.openclaw/workspace-matcha",
-            agentDir: "/home/node/.openclaw/agents/matcha/agent",
-            tools: { allow: ["exec", "message", "read", "web_fetch", "image", "memory_search", "memory_get", "memory_recall", "memory_list", "memory_remember"] },
-            thinkingDefault: "low",
-            model: {
-              primary: "litellm/dsv4f",
-              fallbacks: [
-                "litellm-anthropic/MiniMax-M2.7",
-                "litellm/self-hosted",
-                "litellm/nvidia",
-              ]
-            },
-            identity: {
-              name: "Matcha",
-              avatar: "avatars/matcha_avatar.png",
-            }
-          },
-          {
-            id: "saffron",
-            name: "Saffron",
-            workspace: "/home/node/.openclaw/workspace-saffron",
-            agentDir: "/home/node/.openclaw/agents/saffron/agent",
-            tools: { allow: ["exec", "read", "write", "message", "web_fetch", "browser", "sessions_spawn", "memory_search", "memory_get", "memory_recall", "memory_list", "memory_remember", "toolhive__find_tool","toolhive__call_tool"] },
-            thinkingDefault: "high",
-            model: {
-              primary: "litellm/glm-5.2",
-              fallbacks: [
-                "litellm/glm-5.1",
-                "litellm-anthropic/MiniMax",
-                "litellm/go-minimax-m3",
-                "litellm/dsv4f",
-                "litellm/self-hosted",
-                "litellm/nvidia",
-                "litellm/chatgpt/gpt-5.5",
-                "litellm/kimi-k2.6",
-              ]
-            },
-            identity: {
-              name: "Saffron",
-              avatar: "avatars/saffron_avatar.png",
-            }
-          },
-        ],
+        list: [],
       },
       tools: {
         media: { image: { timeoutSeconds: 180 } },
@@ -153,7 +94,7 @@ data:
         agentToAgent: { enabled: true },
         exec: { security: "full", ask: "off", strictInlineEval: false },
         elevated: { enabled: true, allowFrom: { discord: ["$${DISCORD_ADMIN_USER_ID}"] } },
-        web: { search: { enabled: true, openaiCodex: { enabled: true, mode: "cached" } }, fetch: { enabled: true } },
+        web: { search: { enabled: true, provider: "searxng", openaiCodex: { enabled: true, mode: "cached" } }, fetch: { enabled: true } },
       },
       commands: {
         native: "auto",
@@ -257,7 +198,7 @@ data:
         },
       },
       plugins: {
-        allow: ["discord", "lossless-claw", "memini", "searxng", "openclaw-better-gateway"],
+        allow: ["discord", "memini"],
         entries: {
           discord: { enabled: true },
           comfy: {
@@ -317,7 +258,7 @@ data:
             enabled: true,
             config: {
               webSearch: {
-                baseUrl: "http://searxng.llm:8080",
+                baseUrl: "http://searxng.ai:8080",
                 language: "en"
               }
             }
@@ -367,6 +308,7 @@ data:
               base_url: "http://memini.ai:8080",
               namespace: "openclaw",
               namespace_per_agent: true,
+              namespace_template: "{namespace}/{agent}",
               skip_without_agent: true,
               skip_system_turns: true,
               fallback_on_error: true,
@@ -409,8 +351,11 @@ data:
       mcp: {
         servers: {
           toolhive: {
-            url: "http://vmcp-mcp-gateway-internal.llm:4483/mcp",
-            transport: "streamable-http"
+            url: "http://vmcp-mcp-gateway-internal.ai:4483/mcp",
+            transport: "streamable-http",
+            headers: {
+              Accept: "application/json, text/event-stream",
+            },
           },
           context7: {
             url: "https://mcp.context7.com/mcp",
