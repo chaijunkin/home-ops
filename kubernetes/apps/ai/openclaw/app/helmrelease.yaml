@@ -34,7 +34,7 @@ spec:
                 chmod u+w /home/node/.openclaw || true
                 rm -f /home/node/.openclaw/openclaw.json
                 cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
-                chown 2000:2000 /home/node/.openclaw/openclaw.json
+                chown 1000:2000 /home/node/.openclaw/openclaw.json
                 chmod 400 /home/node/.openclaw/openclaw.json
         containers:
           app:
