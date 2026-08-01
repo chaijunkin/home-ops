@@ -140,7 +140,9 @@ data:
         }
       },
       auth: {
-        profiles: {},
+        profiles: {
+          "litellm:default": { provider: "litellm", mode: "api_key" },
+        },
       },
       bindings: [
         { agentId: "main",    match: { channel: "discord", accountId: "default" } },
@@ -180,7 +182,7 @@ data:
         },
       },
       plugins: {
-        allow: ["discord", "lossless-claw", "memini", "searxng", "openclaw-better-gateway"]
+        allow: ["discord", "lossless-claw", "memini", "searxng", "openclaw-better-gateway"],
         entries: {
           discord: { enabled: true },
           comfy: {
