@@ -62,8 +62,8 @@ spec:
               tag: v2026.7.20@sha256:f7b35053268f532f98955195c909f15a230470fbcbdacaa9fdecb95707dad04a
             args: [gateway, run]
             env:
-              MEMINI_URL: http://memini.llm:8080
-              MEMINI_NAMESPACE: sake
+              MEMINI_URL: http://memini.ai:8080
+              MEMINI_NAMESPACE: hermes
               HERMES_HOME: /opt/data
               HOME: /opt/data
               TZ: Asia/Kuala_Lumpur
