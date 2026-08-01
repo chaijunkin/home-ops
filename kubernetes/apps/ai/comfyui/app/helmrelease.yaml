@@ -32,14 +32,14 @@ spec:
             # No resources block on purpose: BestEffort QoS makes comfyui the
             # first pod the Talos OOM manager kills (ranking weight 1.0) and the
             # first kubelet evicts under node MemoryPressure on the shared UMA node.
-    defaultPodOptions:
-      hostIPC: true
-      # nodeSelector:
-      #   topology.kubernetes.io/gpus: amd
-      # tolerations:
-      #   - key: llm-workload
-      #     operator: Exists
-      #     effect: NoSchedule
+    # defaultPodOptions:
+    #   hostIPC: true
+    # nodeSelector:
+    #   topology.kubernetes.io/gpus: amd
+    # tolerations:
+    #   - key: llm-workload
+    #     operator: Exists
+    #     effect: NoSchedule
     service:
       app:
         type: LoadBalancer
