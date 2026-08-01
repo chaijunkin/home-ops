@@ -22,27 +22,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          fix-perms:
-            image:
-              repository: docker.io/library/alpine
-              tag: "3.24"
-            command:
-              - sh
-              - -c
-              - |
-                set -euo pipefail
-                chown 1000:100 /home/node/.openclaw
-                chmod 700 /home/node/.openclaw
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-                add:
-                  - CHOWN
-                  - FOWNER
-              runAsGroup: 0
-              runAsUser: 0
           init:
             image:
               repository: docker.io/library/alpine
@@ -52,8 +31,8 @@ spec:
               - -c
               - |
                 set -euo pipefail
-                mkdir -p /home/node/.openclaw
-                chmod 700 /home/node/.openclaw
+                chmod u+w /home/node/.openclaw || true
+                rm -f /home/node/.openclaw/openclaw.json
                 cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
                 chown 1000:100 /home/node/.openclaw/openclaw.json
                 chmod 400 /home/node/.openclaw/openclaw.json
@@ -77,19 +56,23 @@ spec:
                 # only fetches when the pinned version differs from what's on the
                 # persistent volume, so normal restarts stay offline.
                 # renovate: datasource=github-tags depName=eleboucher/memini
-                MEMINI_PLUGIN_VERSION=0.7.12
+                MEMINI_PLUGIN_VERSION=0.7.15
                 if [ "$(cat "$HOME/.openclaw/extensions/memini/.clawver" 2>/dev/null)" != "$MEMINI_PLUGIN_VERSION" ]; then
-                  if node dist/index.js plugins install "clawhub:@eleboucher/memini@$MEMINI_PLUGIN_VERSION" --pin --force; then
+                  if node dist/index.js plugins install "clawhub:@eleboucher/memini@$MEMINI_PLUGIN_VERSION" --pin --force --acknowledge-clawhub-risk; then
                     printf '%s' "$MEMINI_PLUGIN_VERSION" > "$HOME/.openclaw/extensions/memini/.clawver"
                   else
                     echo "WARN: memini plugin install failed; starting with whatever is present"
                   fi
                 fi
+                # Start image UI in background (lives in PVC, no redeploy needed)
+                if [ -f "$HOME/.openclaw/workspace/image-ui/app.py" ]; then
+                  cd "$HOME/.openclaw/workspace/image-ui" && python3 app.py &
+                fi
                 # Start gateway
                 exec node dist/index.js gateway --bind lan
             env:
               OPENCLAW_LOG_LEVEL: debug
-              BROWSER_WS_ENDPOINT: ws://localhost:9222
+              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
               GOPATH: /home/node/go
               HOME: &homepath /home/node
               HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
