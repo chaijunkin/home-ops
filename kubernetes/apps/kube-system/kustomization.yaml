@@ -15,4 +15,4 @@ resources:
     # - ./node-feature-discovery/ks.yaml
     # - ./spegel/ks.yaml
   - ./reloader/ks.yaml
-  # - ./snapshot-controller/ks.yaml
+  - ./snapshot-controller/ks.yaml
