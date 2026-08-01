@@ -89,6 +89,10 @@ data "authentik_property_mapping_provider_scope" "openid" {
   managed = "goauthentik.io/providers/oauth2/scope-openid"
 }
 
+data "authentik_property_mapping_provider_scope" "offline" {
+  managed = "goauthentik.io/providers/oauth2/scope-offline_access"
+}
+
 data "authentik_property_mapping_provider_saml" "upn" {
   managed = "goauthentik.io/providers/saml/upn"
 }
@@ -114,6 +118,7 @@ data "authentik_property_mapping_provider_scope" "oauth2" {
   managed_list = [
     "goauthentik.io/providers/oauth2/scope-openid",
     "goauthentik.io/providers/oauth2/scope-email",
-    "goauthentik.io/providers/oauth2/scope-profile"
+    "goauthentik.io/providers/oauth2/scope-profile",
+    "goauthentik.io/providers/oauth2/scope-offline_access"
   ]
 }
