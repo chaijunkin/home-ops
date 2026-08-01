@@ -10,8 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
+    - ../../../../components/volsync
     # - ../../../../components/volsync-no-r2
-    - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
     - name: openebs
