@@ -10,9 +10,9 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/zeroscaler
-  dependsOn:
-    - name: snapshot-controller
-      namespace: volsync-system
+  # dependsOn:
+  #   - name: snapshot-controller
+  #     namespace: volsync-system
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
