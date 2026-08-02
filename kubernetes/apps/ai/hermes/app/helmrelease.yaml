@@ -11,10 +11,10 @@ spec:
   dependsOn: []
   values:
     defaultPodOptions:
-      hostAliases:
-        - ip: 10.10.30.26
-          hostnames:
-            - auth.cloudjur.com
+      # hostAliases:
+      #   - ip: 10.10.30.26
+      #     hostnames:
+      #       - auth.cloudjur.com
       securityContext:
         fsGroup: 10000
         fsGroupChangePolicy: OnRootMismatch
