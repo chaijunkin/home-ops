@@ -59,6 +59,62 @@ spec:
               #   configBlock: |-
               #     prefetch 20
               #     serve_stale
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name exact auth.cloudjur.com. authentik-server.security.svc.cluster.local.
+
+          # - name: rewrite
+          #   parameters: name substring idm.cloudjur.com external.network.svc.cluster.local
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name regex ^auth\.cloudjur\.com\..*\.cluster\.local\.$ authentik-server.security.svc.cluster.local.
+              answer auto
+
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name exact git.cloudjur.com. envoy-internal.network.svc.cluster.local.
+
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name regex ^git\.cloudjur\.com\..*\.cluster\.local\.$ envoy-internal.network.svc.cluster.local.
+              answer auto
+
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name exact k8s.cloudjur.com. envoy-internal.network.svc.cluster.local.
+
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name regex ^k8s\.cloudjur\.com\..*\.cluster\.local\.$ envoy-internal.network.svc.cluster.local.
+              answer auto
+
+          # - name: rewrite
+          #   parameters: stop
+          #   configBlock: |-
+          #     name exact infisical.cloudjur.com. envoy-internal.network.svc.cluster.local.
+
+          # - name: rewrite
+          #   parameters: stop
+          #   configBlock: |-
+          #     name regex ^infisical\.cloudjur\.com\..*\.cluster\.local\.$ envoy-internal.network.svc.cluster.local.
+          #     answer auto
+
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name exact drive.cloudjur.com. envoy-internal.network.svc.cluster.local.
+
+          - name: rewrite
+            parameters: stop
+            configBlock: |-
+              name regex ^drive\.cloudjur\.com\..*\.cluster\.local\.$ envoy-internal.network.svc.cluster.local.
+              answer auto
           - name: loop
           - name: reload
           - name: loadbalance
