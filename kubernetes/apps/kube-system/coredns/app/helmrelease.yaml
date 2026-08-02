@@ -45,20 +45,6 @@ spec:
             configBlock: |-
               lameduck 5s
           - name: ready
-          - name: kubernetes
-            parameters: cluster.local in-addr.arpa ip6.arpa
-            configBlock: |-
-              pods verified
-              fallthrough in-addr.arpa ip6.arpa
-          - name: autopath
-            parameters: "@kubernetes"
-          - name: forward
-            parameters:
-              . /etc/resolv.conf
-              # - name: cache
-              #   configBlock: |-
-              #     prefetch 20
-              #     serve_stale
           - name: rewrite
             parameters: stop
             configBlock: |-
@@ -115,6 +101,21 @@ spec:
             configBlock: |-
               name regex ^drive\.cloudjur\.com\..*\.cluster\.local\.$ envoy-internal.network.svc.cluster.local.
               answer auto
+
+          - name: kubernetes
+            parameters: cluster.local in-addr.arpa ip6.arpa
+            configBlock: |-
+              pods verified
+              fallthrough in-addr.arpa ip6.arpa
+          - name: autopath
+            parameters: "@kubernetes"
+          - name: forward
+            parameters:
+              . /etc/resolv.conf
+              # - name: cache
+              #   configBlock: |-
+              #     prefetch 20
+              #     serve_stale
           - name: loop
           - name: reload
           - name: loadbalance
