@@ -24,9 +24,9 @@ spec:
       APP: jellyfin
       VOLSYNC_CAPACITY: 20Gi
   components:
-    # - ../../../../components/volsync
-    - ../../../../components/kopiur/backup
-    # - ../../../../components/kopiur/adhoc-snapshot
+    - ../../../../components/volsync
+    # - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
   dependsOn:
     - name: openebs
