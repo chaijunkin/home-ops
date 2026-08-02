@@ -48,25 +48,25 @@ spec:
           - name: rewrite
             parameters: stop
             configBlock: |-
-              name exact auth.cloudjur.com. authentik-server.security.svc.cluster.local.
+              name exact auth.cloudjur.com. envoy-external.network.svc.cluster.local.
 
           # - name: rewrite
           #   parameters: name substring idm.cloudjur.com external.network.svc.cluster.local
           - name: rewrite
             parameters: stop
             configBlock: |-
-              name regex ^auth\.cloudjur\.com\..*\.cluster\.local\.$ authentik-server.security.svc.cluster.local.
+              name regex ^auth\.cloudjur\.com\..*\.cluster\.local\.$ envoy-external.network.svc.cluster.local.
               answer auto
 
           - name: rewrite
             parameters: stop
             configBlock: |-
-              name exact git.cloudjur.com. envoy-internal.network.svc.cluster.local.
+              name exact git.cloudjur.com. envoy-external.network.svc.cluster.local.
 
           - name: rewrite
             parameters: stop
             configBlock: |-
-              name regex ^git\.cloudjur\.com\..*\.cluster\.local\.$ envoy-internal.network.svc.cluster.local.
+              name regex ^git\.cloudjur\.com\..*\.cluster\.local\.$ envoy-external.network.svc.cluster.local.
               answer auto
 
           - name: rewrite
