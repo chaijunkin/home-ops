@@ -94,12 +94,12 @@ spec:
           - name: rewrite
             parameters: stop
             configBlock: |-
-              name exact drive.cloudjur.com. envoy-internal.network.svc.cluster.local.
+              name exact drive.cloudjur.com. envoy-external.network.svc.cluster.local.
 
           - name: rewrite
             parameters: stop
             configBlock: |-
-              name regex ^drive\.cloudjur\.com\..*\.cluster\.local\.$ envoy-internal.network.svc.cluster.local.
+              name regex ^drive\.cloudjur\.com\..*\.cluster\.local\.$ envoy-external.network.svc.cluster.local.
               answer auto
 
           - name: kubernetes
