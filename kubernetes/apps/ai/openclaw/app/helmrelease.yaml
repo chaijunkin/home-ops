@@ -38,11 +38,11 @@ spec:
                 chmod 400 /home/node/.openclaw/openclaw.json
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-              runAsGroup: 2000
-              runAsUser: 2000
+              # capabilities:
+              #   drop:
+              #     - ALL
+              runAsGroup: 0
+              runAsUser: 0
         containers:
           app:
             image:
