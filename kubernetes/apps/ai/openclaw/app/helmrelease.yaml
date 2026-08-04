@@ -36,13 +36,6 @@ spec:
                 cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
                 chown 2000:2000 /home/node/.openclaw/openclaw.json
                 chmod 400 /home/node/.openclaw/openclaw.json
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - ALL
-              runAsGroup: 2000
-              runAsUser: 2000
         containers:
           app:
             image:
