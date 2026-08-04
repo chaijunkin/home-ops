@@ -25,6 +25,8 @@ spec:
   postBuild:
     substitute:
       APP: openclaw
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
 # ---
 # # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 # apiVersion: kustomize.toolkit.fluxcd.io/v1
