@@ -38,11 +38,11 @@ spec:
                 chmod 400 /home/node/.openclaw/openclaw.json
             securityContext:
               allowPrivilegeEscalation: false
-              # capabilities:
-              #   drop:
-              #     - ALL
-              runAsGroup: 0
-              runAsUser: 0
+              capabilities:
+                drop:
+                  - ALL
+              runAsGroup: 2000
+              runAsUser: 2000
         containers:
           app:
             image:
@@ -58,13 +58,11 @@ spec:
                 # renovate: datasource=github-tags depName=eleboucher/memini
                 MEMINI_PLUGIN_VERSION=0.7.15
                 if [ "$(cat "$HOME/.openclaw/extensions/memini/.clawver" 2>/dev/null)" != "$MEMINI_PLUGIN_VERSION" ]; then
-                  mv "$HOME/.openclaw/openclaw.json" "$HOME/.openclaw/openclaw.json.bak" || true
                   if node dist/index.js plugins install "clawhub:@eleboucher/memini@$MEMINI_PLUGIN_VERSION" --pin --force --acknowledge-clawhub-risk; then
                     printf '%s' "$MEMINI_PLUGIN_VERSION" > "$HOME/.openclaw/extensions/memini/.clawver"
                   else
                     echo "WARN: memini plugin install failed; starting with whatever is present"
                   fi
-                  mv "$HOME/.openclaw/openclaw.json.bak" "$HOME/.openclaw/openclaw.json" || true
                 fi
                 # Start image UI in background (lives in PVC, no redeploy needed)
                 if [ -f "$HOME/.openclaw/workspace/image-ui/app.py" ]; then
