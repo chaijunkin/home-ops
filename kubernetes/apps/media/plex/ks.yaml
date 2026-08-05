@@ -28,8 +28,8 @@ spec:
       PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/kopiur/adhoc-snapshot
-    - ../../../../components/volsync-no-r2
+    - ../../../../components/kopiur/backup
+    # - ../../../../components/volsync-no-r2
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
 ---

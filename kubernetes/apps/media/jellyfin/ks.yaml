@@ -26,9 +26,9 @@ spec:
       KOPIUR_PUID: "2000"
       KOPIUR_PGID: "2000"
   components:
-    - ../../../../components/volsync
-    # - ../../../../components/kopiur/backup
-    - ../../../../components/kopiur/adhoc-snapshot
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
+    # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
   dependsOn:
     - name: openebs
