@@ -5,6 +5,10 @@ metadata:
   labels:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
+  mover:
+    securityContext:
+      runAsUser: ${KOPIUR_PUID:=2000}
+      runAsGroup: ${KOPIUR_PGID:=2000}
   credentialProjection:
     enabled: true
   policy:
