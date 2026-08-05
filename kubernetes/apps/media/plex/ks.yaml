@@ -121,7 +121,7 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/kopiur/adhoc-snapshot
+    - ../../../../components/kopiur/backup
     # - ../../../../components/volsync
     # - ../../../../components/kopiur/adhoc-snapshot
     # - ../../../../components/zeroscaler
