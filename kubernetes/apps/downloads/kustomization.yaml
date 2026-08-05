@@ -13,10 +13,10 @@ resources:
   - ./flaresolverr/ks.yaml
   - ./lidarr/ks.yaml
   - ./metube/ks.yaml
-  # - ./profilarr/ks.yaml
-  # - ./prowlarr/ks.yaml
+  - ./profilarr/ks.yaml
+  - ./prowlarr/ks.yaml
   - ./qbittorrent/ks.yaml
-  # - ./qui/ks.yaml
+  - ./qui/ks.yaml
   - ./radarr/ks.yaml
     # - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
