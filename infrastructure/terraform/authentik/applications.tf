@@ -240,6 +240,13 @@ locals {
       redirect_uri      = "https://trips.${var.public_domain}/api/auth/oidc/callback"
       launch_url        = "https://trips.${var.public_domain}/"
       # property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.email_verified.id])
+      additional_redirect_uris = [
+        {
+          matching_mode = "strict"
+          redirect_uri_type = "authorization"
+          url           = "https://antigravity.google/oauth-callback"
+        }
+      ]
       property_mappings = local.default_property_mappings
     },
     litellm = {
