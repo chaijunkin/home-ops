@@ -25,7 +25,7 @@ spec:
           main:
             image:
               repository: ghcr.io/chaijunkin/linux-utility
-              tag: rolling@sha256:1eab9326f4e57c60ec184f6ba030b7fec983b9203486708297b48ed2ab329916
+              tag: rolling@sha256:3019f576fef6eb661c73675cc2c95be501d92c19847cc1fc7bca17478fec191e
             command:
               - /bin/bash
               - /app/opnsense-backup.sh
