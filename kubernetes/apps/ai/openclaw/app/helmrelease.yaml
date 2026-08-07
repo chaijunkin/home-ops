@@ -16,7 +16,7 @@ spec:
         runAsUser: 1000
         runAsGroup: 100
         fsGroup: 100
-        fsGroupChangePolicy: OnRootMismatch
+        fsGroupChangePolicy: Always
     controllers:
       openclaw:
         annotations:

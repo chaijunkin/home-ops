@@ -36,8 +36,8 @@ spec:
               PUID: 2000
               PGID: 2000
               NETWORK_SHARE_MODE: true
-              S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: 1
-              S6_READ_ONLY_ROOT: 1
+              # S6_YES_I_WANT_A_WORLD_WRITABLE_RUN_BECAUSE_KUBERNETES: 1
+              # S6_READ_ONLY_ROOT: 1
             # probes:
             #   liveness:
             #     enabled: true
@@ -50,8 +50,8 @@ spec:
               limits:
                 memory: 2048M
             securityContext:
-              allowPrivilegeEscalation: true # because S6 overlay
-              readOnlyRootFilesystem: false # because S6 overlay
+              allowPrivilegeEscalation: false # because S6 overlay
+              # readOnlyRootFilesystem: false # because S6 overlay
               capabilities:
                 drop:
                   - ALL
@@ -62,14 +62,15 @@ spec:
                   - SETGID
                   - FOWNER
                   - DAC_OVERRIDE
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: false # because S6 overlay
-        runAsUser: 0 # because S6 overlay
-        # runAsGroup: 0 # because S6 overlay
-        runAsGroup: 2000
-        fsGroup: 0
-        seccompProfile: {type: RuntimeDefault}
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: false # because S6 overlay
+    #     runAsUser: 0 # because S6 overlay
+    #     runAsGroup: 0 # because S6 overlay
+    #     # runAsGroup: 2000
+    #     fsGroup: 0
+    #     fsGroupChangePolicy: Always
+    #     seccompProfile: {type: RuntimeDefault}
     service:
       app:
         controller: calibre-web-automated

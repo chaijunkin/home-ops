@@ -17,7 +17,7 @@ spec:
             - auth.cloudjur.com
       securityContext:
         fsGroup: 10000
-        fsGroupChangePolicy: OnRootMismatch
+        fsGroupChangePolicy: Always
         seccompProfile: {type: RuntimeDefault}
     controllers:
       hermes:
