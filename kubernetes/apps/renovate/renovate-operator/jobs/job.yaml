@@ -18,7 +18,7 @@ spec:
       value: '["pnpm run bundle"]'
     - name: RENOVATE_REDIS_URL
       value: redis://dragonfly.database.svc.cluster.local:6379/8
-  image: ghcr.io/renovatebot/renovate:43.280.2
+  image: ghcr.io/renovatebot/renovate:44.14.4
   parallelism: 5
   resources:
     requests:
