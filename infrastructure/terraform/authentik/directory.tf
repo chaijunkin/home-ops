@@ -84,6 +84,7 @@ resource "authentik_source_oauth" "google" {
   slug                = "google"
   authentication_flow = data.authentik_flow.default-source-authentication.id
   enrollment_flow     = authentik_flow.enrollment-google.uuid
+# authentik_flow.enrollment-google.uuid
   user_matching_mode  = "email_link"
 
   provider_type   = "google"
