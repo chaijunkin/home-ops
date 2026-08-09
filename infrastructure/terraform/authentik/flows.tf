@@ -215,14 +215,14 @@ resource "authentik_flow" "enrollment-google" {
   compatibility_mode = true
 }
 
-resource "authentik_flow_stage_binding" "enrollment-google-flow-binding-10" {
-  target           = authentik_flow.enrollment-google.uuid
-  stage            = authentik_stage_prompt.source-enrollment-prompt.id
-  order            = 10
-}
+# resource "authentik_flow_stage_binding" "enrollment-google-flow-binding-10" {
+#   target           = authentik_flow.enrollment-google.uuid
+#   stage            = authentik_stage_prompt.source-enrollment-prompt.id
+#   order            = 10
+# }
 
 resource "authentik_policy_binding" "google_oauth_domain_restriction_binding" {
-  target = authentik_flow_stage_binding.enrollment-google-flow-binding-10.id
+  target = authentik_flow_stage_binding.enrollment-google-flow-binding-20.id
   policy = authentik_policy_expression.google_oauth_domain_restriction.id
   order  = 0
 }
@@ -230,11 +230,11 @@ resource "authentik_policy_binding" "google_oauth_domain_restriction_binding" {
 resource "authentik_flow_stage_binding" "enrollment-google-flow-binding-20" {
   target = authentik_flow.enrollment-google.uuid
   stage  = authentik_stage_user_write.enrollment-user-write.id
-  order  = 20
+  order  = 10
 }
 
 resource "authentik_flow_stage_binding" "enrollment-google-flow-binding-30" {
   target = authentik_flow.enrollment-google.uuid
   stage  = authentik_stage_user_login.source-enrollment-login.id
-  order  = 30
+  order  = 20
 }
