@@ -17,6 +17,13 @@ resource "authentik_policy_expression" "user-settings-authorization" {
   expression = file("./expressions/user-settings-authorization.py")
 }
 
+resource "authentik_policy_expression" "google_oauth_domain_restriction" {
+  name       = "google-oauth-domain-restriction"
+  expression = templatefile("./expressions/google-oauth-domain-restriction.py", {
+    domain = var.public_domain
+  })
+}
+
 resource "authentik_property_mapping_provider_scope" "profile" {
   name       = "OAuth Mapping: OpenID 'profile'"
   scope_name = "profile"
