@@ -264,7 +264,7 @@ locals {
       client_type       = "public"
       group             = "users"
       icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/homeassistant.svg"
-      redirect_uri      = "https://hass.${var.public_domain}/auth/openid/callback"
+      redirect_uri      = "https://hass.${var.public_domain}/auth/oidc/callback"
       launch_url        = "https://hass.${var.public_domain}"
       property_mappings = local.default_property_mappings
     },
