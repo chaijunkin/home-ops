@@ -10,14 +10,14 @@ email = oauth_userinfo.get("email", "")
 # Verify the domain
 if "@" in email:
     current_domain = email.split("@")[1]
-    
+
     # We allow the domain passed via terraform template
     if current_domain == "${domain}":
         # Auto-set the prompt data
         request.context["prompt_data"] = {
             "username": email,
             "email": email,
-            "name": oauth_userinfo.get("name", email.split("@")[0]),
+            "name": email,
         }
         # Skip the prompt stage
         return False
