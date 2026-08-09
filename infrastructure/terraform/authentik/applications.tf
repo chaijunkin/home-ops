@@ -258,6 +258,16 @@ locals {
       launch_url        = "https://litellm.${var.public_domain}/ui"
       property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.litellm_role.id])
     },
+    hass = {
+      client_id         = var.hass_id
+      client_secret     = var.hass_secret
+      client_type       = "public"
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/homeassistant.svg"
+      redirect_uri      = "https://hass.${var.public_domain}/auth/openid/callback"
+      launch_url        = "https://hass.${var.public_domain}"
+      property_mappings = local.default_property_mappings
+    },
     # miso-gallery = {
     #   client_id         = var.miso_gallery_id
     #   client_secret     = var.miso_gallery_secret

@@ -358,3 +358,17 @@ variable "hermes_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "hass_id" {
+  type        = string
+  description = "Hass Client ID"
+  sensitive   = true
+  default     = "hermes"
+}
+
+variable "hass_secret" {
+  type        = string
+  description = "Hass Client Secret"
+  sensitive   = true
+  default     = null
+}
