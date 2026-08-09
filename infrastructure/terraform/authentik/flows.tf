@@ -216,9 +216,10 @@ resource "authentik_flow" "enrollment-google" {
 }
 
 resource "authentik_flow_stage_binding" "enrollment-google-flow-binding-10" {
-  target = authentik_flow.enrollment-google.uuid
-  stage  = authentik_stage_prompt.source-enrollment-prompt.id
-  order  = 10
+  target           = authentik_flow.enrollment-google.uuid
+  stage            = authentik_stage_prompt.source-enrollment-prompt.id
+  order            = 10
+  evaluate_on_plan = false
 }
 
 resource "authentik_policy_binding" "google_oauth_domain_restriction_binding" {
