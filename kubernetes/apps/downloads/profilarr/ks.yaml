@@ -27,6 +27,7 @@ spec:
       KOPIUR_PGID: "1000"
   components:
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     # - ../../../../components/volsync
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler

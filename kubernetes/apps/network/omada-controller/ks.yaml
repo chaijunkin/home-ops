@@ -16,6 +16,7 @@ spec:
       VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     - ../../../../components/zeroscaler
     # - ../../../../components/volsync
     # - ../../../../components/kopiur/adhoc-snapshot

@@ -21,6 +21,7 @@ spec:
   timeout: 5m
   components:
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     # - ../../../../components/volsync
   postBuild:
     substitute:

@@ -1,0 +1,30 @@
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: r2
+spec:
+  allowedNamespaces:
+    all: true
+  backend:
+    s3:
+      auth:
+        secretRef:
+          name: kopiur-r2-secret
+          namespace: storage
+      endpoint: https://8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com
+      region: auto
+      bucket: kopia
+  encryption:
+    passwordSecretRef:
+      name: kopiur-r2-secret
+      namespace: storage
+      key: KOPIA_PASSWORD
+  create:
+    enabled: true # Step 1, then disable this
+  identityDefaults:
+    hostnameExpr: "namespace"
+    usernameExpr: "policyName"
+  catalog:
+    adoption: Ignore
+  scheduleDefaults:
+    timezone: Asia/Kuala_Lumpur

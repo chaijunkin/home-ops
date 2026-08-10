@@ -29,6 +29,7 @@ spec:
   components:
     # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
     - name: openebs
