@@ -1,7 +1,7 @@
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotPolicy
 metadata:
-  name: ${APP}-r2
+  name: ${APP}-remote
   annotations:
     kopiur.home-operations.com/allow-identity-change: "true"
 spec:
@@ -15,7 +15,7 @@ spec:
       runAsGroup: ${KOPIUR_PGID:=2000}
   repository:
     kind: ClusterRepository
-    name: r2
+    name: remote
   retention:
     keepDaily: 7
   sources:
