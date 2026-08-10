@@ -11,7 +11,7 @@ spec:
         secretRef:
           name: kopiur-r2-secret
           namespace: storage
-      endpoint: https://8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com
+      endpoint: 8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com
       region: auto
       bucket: kopia
   encryption:
