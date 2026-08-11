@@ -14,6 +14,8 @@ spec:
       endpoint: 8550295d25a8172e9fe4f9f7a7f327be.r2.cloudflarestorage.com
       region: auto
       bucket: kopia
+  credentialProjection:
+    allowed: true
   encryption:
     passwordSecretRef:
       name: kopiur-remote-secret
