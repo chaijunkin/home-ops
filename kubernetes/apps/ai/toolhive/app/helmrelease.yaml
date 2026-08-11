@@ -9,13 +9,6 @@ spec:
     name: toolhive-operator
   interval: 30m
   values:
-    resources:
-      limits:
-        cpu: null
-        memory: 3Gi
-      requests:
-        cpu: 100m
-        memory: 128Mi
     operator:
       replicaCount: 1
       resources:
