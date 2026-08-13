@@ -42,60 +42,6 @@ spec:
                     name: sparkyfitness-secret
                     key: uri
         containers:
-          mcp:
-            image:
-              # renovate: datasource=docker depName=docker.io/codewithcj/sparkyfitness_mcp
-              repository: docker.io/codewithcj/sparkyfitness_mcp
-              tag: v0.16.6.3
-            env:
-              MCP_TRANSPORT: http
-              SPARKY_FITNESS_MCP_PORT: "3001"
-              SPARKY_FITNESS_DB_HOST:
-                valueFrom:
-                  secretKeyRef:
-                    name: sparkyfitness-secret
-                    key: host
-              SPARKY_FITNESS_DB_PORT:
-                valueFrom:
-                  secretKeyRef:
-                    name: sparkyfitness-secret
-                    key: port
-              SPARKY_FITNESS_DB_NAME:
-                valueFrom:
-                  secretKeyRef:
-                    name: sparkyfitness-secret
-                    key: dbname
-              SPARKY_FITNESS_DB_USER:
-                valueFrom:
-                  secretKeyRef:
-                    name: sparkyfitness-secret
-                    key: INIT_POSTGRES_SUPER_USER
-              SPARKY_FITNESS_DB_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: sparkyfitness-secret
-                    key: INIT_POSTGRES_SUPER_PASS
-              SPARKY_FITNESS_APP_DB_USER:
-                valueFrom:
-                  secretKeyRef:
-                    name: sparkyfitness-secret
-                    key: username
-              SPARKY_FITNESS_APP_DB_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: sparkyfitness-secret
-                    key: password
-              SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server
-              SPARKY_FITNESS_SERVER_PORT: "3010"
-            envFrom:
-              - secretRef:
-                  name: sparkyfitness-secret
-            resources:
-              requests:
-                cpu: 50m
-                memory: 64Mi
-              limits:
-                memory: 1Gi
           app:
             image:
               repository: docker.io/codewithcj/sparkyfitness_server
@@ -187,6 +133,60 @@ spec:
                 memory: 256Mi
               limits:
                 memory: 1Gi
+          mcp:
+            image:
+              # renovate: datasource=docker depName=docker.io/codewithcj/sparkyfitness_mcp
+              repository: docker.io/codewithcj/sparkyfitness_mcp
+              tag: v0.16.6.3
+            env:
+              MCP_TRANSPORT: http
+              SPARKY_FITNESS_MCP_PORT: "3001"
+              SPARKY_FITNESS_DB_HOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: sparkyfitness-secret
+                    key: host
+              SPARKY_FITNESS_DB_PORT:
+                valueFrom:
+                  secretKeyRef:
+                    name: sparkyfitness-secret
+                    key: port
+              SPARKY_FITNESS_DB_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: sparkyfitness-secret
+                    key: dbname
+              SPARKY_FITNESS_DB_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: sparkyfitness-secret
+                    key: INIT_POSTGRES_SUPER_USER
+              SPARKY_FITNESS_DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: sparkyfitness-secret
+                    key: INIT_POSTGRES_SUPER_PASS
+              SPARKY_FITNESS_APP_DB_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: sparkyfitness-secret
+                    key: username
+              SPARKY_FITNESS_APP_DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: sparkyfitness-secret
+                    key: password
+              SPARKY_FITNESS_SERVER_HOST: sparkyfitness-server
+              SPARKY_FITNESS_SERVER_PORT: "3010"
+            envFrom:
+              - secretRef:
+                  name: sparkyfitness-secret
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                memory: 1Gi
 
       frontend:
         annotations:
@@ -250,13 +250,14 @@ spec:
     service:
       server:
         controller: server
-        ports: {http: {port: 3010}}
+        ports:
+          http:
+            port: 3010
+          mcp:
+            port: 3001
       frontend:
         controller: frontend
         ports: {http: {port: 80}}
-      mcp:
-        controller: mcp
-        ports: {http: {port: 3001}}
       # garminn:
       #   controller: garminn
       #   ports: {http: {port: 8000}}
@@ -280,8 +281,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - identifier: mcp
-                port: http
+              - identifier: server
+                port: 3001
 
     persistence:
       data:
