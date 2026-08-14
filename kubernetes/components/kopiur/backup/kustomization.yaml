@@ -4,8 +4,8 @@ kind: Component
 resources:
   - ./snapshotpolicy.yaml
   - ./snapshotschedule.yaml
-  # - ./restore.yaml
-  # - ./pvc.yaml
+  - ./restore.yaml
+  - ./pvc.yaml
 # patches:
 #   - target:
 #       group: helm.toolkit.fluxcd.io

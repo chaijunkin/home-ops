@@ -17,6 +17,13 @@ resource "authentik_policy_expression" "user-settings-authorization" {
   expression = file("./expressions/user-settings-authorization.py")
 }
 
+resource "authentik_policy_expression" "google_oauth_domain_restriction" {
+  name       = "google-oauth-domain-restriction"
+  expression = templatefile("./expressions/google-oauth-domain-restriction.py", {
+    domain = var.public_domain
+  })
+}
+
 resource "authentik_property_mapping_provider_scope" "profile" {
   name       = "OAuth Mapping: OpenID 'profile'"
   scope_name = "profile"
@@ -89,6 +96,10 @@ data "authentik_property_mapping_provider_scope" "openid" {
   managed = "goauthentik.io/providers/oauth2/scope-openid"
 }
 
+data "authentik_property_mapping_provider_scope" "offline" {
+  managed = "goauthentik.io/providers/oauth2/scope-offline_access"
+}
+
 data "authentik_property_mapping_provider_saml" "upn" {
   managed = "goauthentik.io/providers/saml/upn"
 }
@@ -114,6 +125,7 @@ data "authentik_property_mapping_provider_scope" "oauth2" {
   managed_list = [
     "goauthentik.io/providers/oauth2/scope-openid",
     "goauthentik.io/providers/oauth2/scope-email",
-    "goauthentik.io/providers/oauth2/scope-profile"
+    "goauthentik.io/providers/oauth2/scope-profile",
+    "goauthentik.io/providers/oauth2/scope-offline_access"
   ]
 }

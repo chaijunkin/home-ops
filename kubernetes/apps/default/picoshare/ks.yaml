@@ -16,7 +16,7 @@ spec:
     name: flux-system
     namespace: flux-system
   components:
-    - ../../../../components/volsync-no-r2
+    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   postBuild:

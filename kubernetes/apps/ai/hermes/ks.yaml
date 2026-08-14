@@ -19,3 +19,12 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  components:
+    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
+    # - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: hermes
+      KOPIUR_PGID: "10000"
+      KOPIUR_PUID: "10000"

@@ -24,8 +24,9 @@ spec:
       APP: autobangumi
       VOLSYNC_CAPACITY: 1Gi
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
   dependsOn:

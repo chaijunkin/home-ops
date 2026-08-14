@@ -28,8 +28,8 @@ spec:
       PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
+    # - ../../../../components/volsync-no-r2
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
 ---
@@ -121,10 +121,10 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 2Gi
   components:
-    - ../../../../components/volsync
     - ../../../../components/kopiur/backup
+    # - ../../../../components/volsync
     # - ../../../../components/kopiur/adhoc-snapshot
-      # - ../../../../components/zeroscaler
+    # - ../../../../components/zeroscaler
 # ---
 # # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 # apiVersion: kustomize.toolkit.fluxcd.io/v1

@@ -15,17 +15,30 @@ spec:
       litellm:
         annotations:
           reloader.stakater.com/auto: "true"
-        replicas: 3
+        replicas: 1
         strategy: RollingUpdate
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: litellm
         containers:
           app:
             image:
               repository: ghcr.io/berriai/litellm-database
-              tag: v1.93.0@sha256:72360d8bd5602faa49be5098a8ac3dd069d9fb74503d6bd014242d96dc753e43
+              tag: v1.95.0@sha256:af7ff0444278be40f7615764d1562ac557df6103cba052e886915a7e1e944c27
             args:
               - --config=/app/config.yaml
             env:
               AUTO_REDIRECT_UI_LOGIN_TO_SSO: "true"
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: "litellm"
+                    key: DATABASE_URL
               CHATGPT_TOKEN_DIR: /app/chatgpt_tokens
               GENERIC_AUTHORIZATION_ENDPOINT: https://auth.cloudjur.com/application/o/authorize/
               GENERIC_SCOPE: openid email profile litellm_role

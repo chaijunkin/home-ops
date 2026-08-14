@@ -65,6 +65,13 @@ spec:
           env:
             - name: INSECURE_DISABLE_URL_VALIDATION
               value: "true"
+          resources:
+            limits:
+              cpu: null
+              memory: 3Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/virtualmcpserver_v1alpha1.json
 apiVersion: toolhive.stacklok.dev/v1alpha1
@@ -86,3 +93,14 @@ spec:
     source: discovered
   telemetryConfigRef:
     name: prometheus
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: vmcp
+          resources:
+            limits:
+              cpu: null
+              memory: 3Gi
+            requests:
+              cpu: 100m
+              memory: 128Mi

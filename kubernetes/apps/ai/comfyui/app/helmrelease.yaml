@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: yanwk/comfyui-boot
-              tag: rocm7@sha256:6d5f1a6e277009a7f57786960b24ae8c320b4c91807c85831d1407bc2488652e
+              tag: rocm7@sha256:bf60a67bf716c88cc27daf8d024bf00570df6537953235e4d06ab14b76afc3a6
             securityContext:
               privileged: true
             env:
@@ -32,14 +32,14 @@ spec:
             # No resources block on purpose: BestEffort QoS makes comfyui the
             # first pod the Talos OOM manager kills (ranking weight 1.0) and the
             # first kubelet evicts under node MemoryPressure on the shared UMA node.
-    defaultPodOptions:
-      hostIPC: true
-      nodeSelector:
-        topology.kubernetes.io/gpus: amd
-      tolerations:
-        - key: llm-workload
-          operator: Exists
-          effect: NoSchedule
+    # defaultPodOptions:
+    #   hostIPC: true
+    # nodeSelector:
+    #   topology.kubernetes.io/gpus: amd
+    # tolerations:
+    #   - key: llm-workload
+    #     operator: Exists
+    #     effect: NoSchedule
     service:
       app:
         type: LoadBalancer

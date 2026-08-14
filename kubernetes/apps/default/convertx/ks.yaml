@@ -17,7 +17,7 @@ spec:
   retryInterval: 1m
 
   components:
-    - ../../../../components/volsync-no-r2
+    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   postBuild:

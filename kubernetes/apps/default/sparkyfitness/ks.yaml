@@ -13,7 +13,9 @@ spec:
 
   path: ./kubernetes/apps/default/sparkyfitness/app
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -23,4 +25,3 @@ spec:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
-

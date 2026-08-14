@@ -22,8 +22,9 @@ spec:
       SUBDOMAIN: hass
       VOLSYNC_CAPACITY: 5Gi
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
     - name: openebs

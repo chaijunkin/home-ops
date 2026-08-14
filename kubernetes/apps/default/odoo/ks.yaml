@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/default/odoo/app
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -24,4 +24,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
       VOLSYNC_CAPACITY: 5Gi

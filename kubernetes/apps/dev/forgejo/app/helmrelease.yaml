@@ -16,6 +16,20 @@ spec:
     remediation:
       retries: 3
   values:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+          - SYS_CHROOT
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    podSecurityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
     gitea:
       admin:
         existingSecret: forgejo-secret
@@ -115,7 +129,7 @@ spec:
       rootless: true
       registry: code.forgejo.org
       repository: forgejo/forgejo
-      tag: 16.0.1-rootless
+      tag: 16.0.2-rootless
     persistence:
       create: false
       claimName: forgejo

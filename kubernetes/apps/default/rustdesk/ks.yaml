@@ -23,7 +23,7 @@ spec:
       KOPIUR_CLAIM: rustdesk-data
       VOLSYNC_CAPACITY: 20Gi
   components:
-    - ../../../../components/volsync-no-r2
+    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:

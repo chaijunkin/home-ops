@@ -9,22 +9,22 @@ data:
       default: MiniMax
       provider: litellm-anthropic
     fallback_providers:
-      - provider: litellm
-        model: dsv4f
-      - provider: litellm
-        model: mimo-v2.5
-      - provider: litellm
-        model: nvidia
+      # - provider: litellm
+      #   model: dsv4f
+      # - provider: litellm
+      #   model: mimo-v2.5
+      # - provider: litellm
+      #   model: nvidia
       - provider: litellm
         model: self-hosted
-      - provider: litellm
-        model: kimi-k2.6
-      - provider: litellm
-        model: glm-5.2
-      - provider: litellm
-        model: go-minimax-m3
-      - provider: litellm
-        model: dsv4p
+      # - provider: litellm
+      #   model: kimi-k2.6
+      # - provider: litellm
+      #   model: glm-5.2
+      # - provider: litellm
+      #   model: go-minimax-m3
+      # - provider: litellm
+      #   model: dsv4p
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1
@@ -67,7 +67,7 @@ data:
         - hermes-telegram
     mcp_servers:
       toolhive:
-        url: http://vmcp-mcp-gateway-internal.llm:4483/mcp
+        url: http://vmcp-mcp-gateway-internal.ai:4483/mcp
     auxiliary:
       vision:
         provider: litellm

@@ -36,6 +36,13 @@ spec:
                 cp /tmp/openclaw.json /home/node/.openclaw/openclaw.json
                 chown 1000:100 /home/node/.openclaw/openclaw.json
                 chmod 400 /home/node/.openclaw/openclaw.json
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              runAsGroup: 100
+              runAsUser: 1000
         containers:
           app:
             image:
@@ -49,19 +56,25 @@ spec:
                 # only fetches when the pinned version differs from what's on the
                 # persistent volume, so normal restarts stay offline.
                 # renovate: datasource=github-tags depName=eleboucher/memini
-                MEMINI_PLUGIN_VERSION=0.7.12
+                MEMINI_PLUGIN_VERSION=0.7.18
                 if [ "$(cat "$HOME/.openclaw/extensions/memini/.clawver" 2>/dev/null)" != "$MEMINI_PLUGIN_VERSION" ]; then
-                  if node dist/index.js plugins install "clawhub:@eleboucher/memini@$MEMINI_PLUGIN_VERSION" --pin --force; then
+                  mv "$HOME/.openclaw/openclaw.json" "$HOME/.openclaw/openclaw.json.bak" || true
+                  if node dist/index.js plugins install "clawhub:@eleboucher/memini@$MEMINI_PLUGIN_VERSION" --pin --force --acknowledge-clawhub-risk; then
                     printf '%s' "$MEMINI_PLUGIN_VERSION" > "$HOME/.openclaw/extensions/memini/.clawver"
                   else
                     echo "WARN: memini plugin install failed; starting with whatever is present"
                   fi
+                  mv "$HOME/.openclaw/openclaw.json.bak" "$HOME/.openclaw/openclaw.json" || true
+                fi
+                # Start image UI in background (lives in PVC, no redeploy needed)
+                if [ -f "$HOME/.openclaw/workspace/image-ui/app.py" ]; then
+                  cd "$HOME/.openclaw/workspace/image-ui" && python3 app.py &
                 fi
                 # Start gateway
                 exec node dist/index.js gateway --bind lan
             env:
               OPENCLAW_LOG_LEVEL: debug
-              BROWSER_WS_ENDPOINT: ws://localhost:9222
+              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
               GOPATH: /home/node/go
               HOME: &homepath /home/node
               HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
@@ -85,7 +98,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.130.0@sha256:fa367e7eddd303a95c736f7aede351cdee9036a7383cecfd8786bb5bbe78c13b
+              tag: 4.131.0@sha256:3623e6362abdec6258472882b06fdeec9d6ce2ad3fda316b3c5d7ed092b89add
             env:
               TZ: Asia/Kuala_Lumpur
             args:
@@ -177,7 +190,7 @@ spec:
               namespace: llm
     route:
       app:
-        hostnames: [miso.cloudjur.com]
+        hostnames: [openclaw.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -186,7 +199,7 @@ spec:
               - name: "{{ .Release.Name }}"
                 port: *port
       codeserver:
-        hostnames: [miso-code.cloudjur.com]
+        hostnames: [openclaw-code.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -194,6 +207,15 @@ spec:
           - backendRefs:
               - name: "{{ .Release.Name }}"
                 port: &codeserverPort 12321
+      imageui:
+        hostnames: ["generate.cloudjur.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: &imageuiPort 8848
     service:
       app:
         type: LoadBalancer
@@ -205,5 +227,7 @@ spec:
             port: *port
           codeserver:
             port: *codeserverPort
+          imageui:
+            port: *imageuiPort
     serviceAccount:
       openclaw: {}

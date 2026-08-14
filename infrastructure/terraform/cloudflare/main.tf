@@ -4,6 +4,12 @@ resource "cloudflare_r2_bucket" "tf_state_bucket" {
   location   = "APAC"
 }
 
+resource "cloudflare_r2_bucket" "kopia_bucket" {
+  account_id = local.cloudflare_account_id
+  name       = "kopia"
+  location   = "APAC"
+}
+
 resource "cloudflare_zone" "cloudflare_zone" {
   name = local.cloudflare_zone_name
   account = {

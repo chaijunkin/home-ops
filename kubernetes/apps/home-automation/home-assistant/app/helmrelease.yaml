@@ -16,8 +16,8 @@ spec:
     remediation:
       retries: 3
   dependsOn:
-    - name: volsync
-      namespace: volsync-system
+    - name: kopiur
+      namespace: storage
   uninstall:
     keepHistory: false
   values:
@@ -62,7 +62,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/home-assistant
-              tag: 2026.7.4
+              tag: 2026.8.0
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.0.0/8
@@ -90,7 +90,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.130.0@sha256:fa367e7eddd303a95c736f7aede351cdee9036a7383cecfd8786bb5bbe78c13b
+              tag: 4.131.0@sha256:3623e6362abdec6258472882b06fdeec9d6ce2ad3fda316b3c5d7ed092b89add
             env:
               TZ: Asia/Kuala_Lumpur
               HASS_SERVER: https://hass.cloudjur.com

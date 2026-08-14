@@ -23,9 +23,12 @@ spec:
     substitute:
       APP: jellyfin
       VOLSYNC_CAPACITY: 20Gi
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
   dependsOn:

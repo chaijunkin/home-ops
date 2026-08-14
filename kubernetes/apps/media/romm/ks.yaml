@@ -9,14 +9,15 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/volsync
+    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
     # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
     - name: openebs
       namespace: storage
-    - name: volsync
-      namespace: volsync-system
+    - name: kopiur
+      namespace: storage
   interval: 30m
   path: ./kubernetes/apps/media/romm/app
   postBuild:

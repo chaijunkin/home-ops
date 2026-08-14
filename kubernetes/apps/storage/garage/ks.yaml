@@ -14,15 +14,15 @@ spec:
       namespace: external-secrets
     - name: openebs
       namespace: storage
-    - name: volsync
-      namespace: volsync-system
+    - name: kopiur
+      namespace: storage
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
       name: *app
       namespace: *namespace
   # components:
-  #   - ../../../../components/volsync
+  #   # - ../../../../components/volsync
   #   - ../../../../components/kopiur/backup
   #   # - ../../../../components/kopiur/adhoc-snapshot
   path: ./kubernetes/apps/storage/garage/app

@@ -17,8 +17,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: volsync
-      namespace: volsync-system
+    - name: kopiur
+      namespace: storage
   values:
     controllers:
       metube:

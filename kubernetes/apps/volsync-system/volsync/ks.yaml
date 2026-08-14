@@ -10,9 +10,9 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/zeroscaler
-  dependsOn:
-    - name: snapshot-controller
-      namespace: volsync-system
+  # dependsOn:
+  #   - name: snapshot-controller
+  #     namespace: volsync-system
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -40,8 +40,8 @@ metadata:
   namespace: volsync-system
 spec:
   dependsOn:
-    - name: volsync
-      namespace: volsync-system
+    - name: kopiur
+      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/volsync-system/volsync/maintenance
   prune: true

@@ -344,3 +344,31 @@ variable "sparkyfitness_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "hermes_id" {
+  type        = string
+  description = "Hermes Client ID"
+  sensitive   = true
+  default     = "hermes"
+}
+
+variable "hermes_secret" {
+  type        = string
+  description = "Hermes Client Secret"
+  sensitive   = true
+  default     = null
+}
+
+variable "hass_id" {
+  type        = string
+  description = "Hass Client ID"
+  sensitive   = true
+  default     = "hermes"
+}
+
+variable "hass_secret" {
+  type        = string
+  description = "Hass Client Secret"
+  sensitive   = true
+  default     = null
+}

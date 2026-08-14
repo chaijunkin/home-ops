@@ -240,15 +240,32 @@ locals {
       redirect_uri      = "https://trips.${var.public_domain}/api/auth/oidc/callback"
       launch_url        = "https://trips.${var.public_domain}/"
       # property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.email_verified.id])
+      additional_redirect_uris = [
+        {
+          matching_mode = "strict"
+          redirect_uri_type = "authorization"
+          url           = "https://antigravity.google/oauth-callback"
+        }
+      ]
       property_mappings = local.default_property_mappings
     },
     litellm = {
       client_id         = var.litellm_id
       client_secret     = var.litellm_secret
       group             = "users"
-      icon_url          = "https://raw.githubusercontent.com/BerriAI/litellm/main/docs/my-website/static/img/litellm_logo.png"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/litellm.png"
       redirect_uri      = "https://litellm.${var.public_domain}/sso/callback"
-      launch_url        = "https://litellm.${var.public_domain}/"
+      launch_url        = "https://litellm.${var.public_domain}/ui"
+      property_mappings = concat(local.default_property_mappings, [authentik_property_mapping_provider_scope.litellm_role.id])
+    },
+    hass = {
+      client_id         = var.hass_id
+      client_secret     = var.hass_secret
+      client_type       = "public"
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/svg/homeassistant.svg"
+      redirect_uri      = "https://hass.${var.public_domain}/auth/oidc/callback"
+      launch_url        = "https://hass.${var.public_domain}"
       property_mappings = local.default_property_mappings
     },
     # miso-gallery = {
@@ -287,10 +304,21 @@ locals {
       additional_redirect_uris = [
         {
           matching_mode = "strict"
+          redirect_uri_type = "authorization"
           url           = "sparkyfitnessmobile://oauth-callback"
         }
       ]
       launch_url        = "https://fitness.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
+    hermes = {
+      client_id         = var.hermes_id
+      client_secret     = var.hermes_secret
+      client_type      = "public"
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/hermes.png"
+      redirect_uri      = "https://hermes.${var.public_domain}/auth/callback"
+      launch_url        = "https://hermes.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
   }
@@ -299,6 +327,7 @@ locals {
 resource "authentik_provider_oauth2" "oauth2" {
   for_each              = local.applications
   name                  = each.key
+  client_type           = lookup(each.value, "client_type", "confidential")
   client_id             = each.value.client_id
   client_secret         = each.value.client_secret
   authorization_flow    = authentik_flow.provider-authorization-implicit-consent.uuid
@@ -307,10 +336,12 @@ resource "authentik_provider_oauth2" "oauth2" {
   property_mappings     = each.value.property_mappings
   access_token_validity = "hours=4"
   signing_key           = data.authentik_certificate_key_pair.generated.id
+  grant_types = ["authorization_code"]
   allowed_redirect_uris = concat(
     [
       {
         matching_mode = "strict",
+        redirect_uri_type = "authorization",
         url           = each.value.redirect_uri,
       }
     ],
@@ -323,7 +354,7 @@ resource "authentik_application" "application" {
   name               = title(each.key)
   slug               = each.key
   protocol_provider  = authentik_provider_oauth2.oauth2[each.key].id
-  group              = local.all_groups[each.value.group].id
+  group              = local.all_groups[each.value.group].name
   open_in_new_tab    = true
   meta_icon          = each.value.icon_url
   meta_launch_url    = each.value.launch_url
@@ -343,7 +374,9 @@ module "oauth2-toolhive" {
   invalidation_flow  = resource.authentik_flow.provider-invalidation.uuid
   client_id          = var.toolhive_mcp_gateway_id
   client_secret      = var.toolhive_mcp_gateway_secret
-  redirect_uris      = ["https://mcp.cloudjur.com/oauth/callback"]
+  redirect_uris      = [
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://mcp.cloudjur.com/oauth/callback"}
+  ]
 }
 
 module "oauth2-opencloud" {
@@ -363,11 +396,11 @@ module "oauth2-opencloud" {
   # client_secret = var.ocis_secret
   # additional_property_mappings = formatlist(authentik_scope_mapping.openid-nextcloud.id)
   redirect_uris = [
-    { matching_mode = "strict", url = "https://drive.${var.public_domain}"},
-    { matching_mode = "strict", url = "https://drive.${var.public_domain}/oidc-callback.html"},
-    { matching_mode = "strict", url = "https://drive.${var.public_domain}/oidc-silent-redirect.html"},
-    { matching_mode = "strict", url = "oc://android.opencloud.eu"},
-    { matching_mode = "strict", url = "oc://ios.opencloud.eu"}
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://drive.${var.public_domain}"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://drive.${var.public_domain}/oidc-callback.html"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "https://drive.${var.public_domain}/oidc-silent-redirect.html"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "oc://android.opencloud.eu"},
+    { matching_mode = "strict", redirect_uri_type = "authorization" , url = "oc://ios.opencloud.eu"}
   ]
 }
 
@@ -382,7 +415,15 @@ module "oauth2-opencloud-desktop" {
   client_id          = "OpenCloudDesktop"
   # client_secret      = "UBntmLjC2yYCeHwsyj73Uwo9TAaecAetRwMw0xYcvNL9yRdLSUi0hUAHfvCHFeFh"
   redirect_uris = [
-    { matching_mode = "regex", url = "http://127.0.0.1(:.*)?" },
-    { matching_mode = "regex", url = "http://localhost(:.*)?" }
+    { matching_mode = "regex", redirect_uri_type = "authorization" , url = "http://127.0.0.1(:.*)?" },
+    { matching_mode = "regex", redirect_uri_type = "authorization" , url = "http://localhost(:.*)?" }
   ]
+}
+
+resource "authentik_property_mapping_provider_scope" "litellm_role" {
+  name       = "LiteLLM Role"
+  scope_name = "litellm_role"
+  expression = <<-EOT
+    return {"litellm_role": "proxy_admin"}
+  EOT
 }

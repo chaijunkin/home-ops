@@ -1,0 +1,26 @@
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: ${APP}
+  annotations:
+    kopiur.home-operations.com/allow-identity-change: "true"
+spec:
+  compression:
+    compressor: zstd
+  credentialProjection:
+    enabled: true
+  mover:
+    securityContext:
+      runAsUser: ${KOPIUR_PUID:=2000}
+      runAsGroup: ${KOPIUR_PGID:=2000}
+  repository:
+    kind: ClusterRepository
+    name: nas
+  retention:
+    keepLatest: 14
+    keepDaily: 7
+    keepWeekly: 4
+  sources:
+    - pvc:
+        name: ${KOPIUR_CLAIM:-${APP}}
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=local-hostpath}
