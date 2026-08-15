@@ -19,6 +19,9 @@ spec:
       retries: 3
   values:
     fullnameOverride: *app
+    image:
+      # renovate: ignore
+      tag: 1.19.0
     provider:
       name: webhook
       webhook:
