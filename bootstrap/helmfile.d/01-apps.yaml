@@ -67,7 +67,7 @@ releases:
   - name: bitwarden
     namespace: external-secrets
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
-    version: 5.0.1
+    version: 5.1.0
     values:
       ["../../kubernetes/apps/external-secrets/bitwarden/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
