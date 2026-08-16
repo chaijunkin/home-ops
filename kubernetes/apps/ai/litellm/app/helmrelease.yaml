@@ -29,7 +29,7 @@ spec:
           app:
             image:
               repository: ghcr.io/berriai/litellm-database
-              tag: v1.95.0@sha256:af7ff0444278be40f7615764d1562ac557df6103cba052e886915a7e1e944c27
+              tag: v1.97.0@sha256:4b3226f4ccd7793d7dca6862d3681604d7ab640d8d6285be6061fd48514e6e71
             args:
               - --config=/app/config.yaml
             env:
