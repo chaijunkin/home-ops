@@ -97,9 +97,8 @@ spec:
         enabled: true
         type: nfs
         server: smb.cloudjur.com
-        path: /tank/Storage/Books/Audiobooks
-        globalMounts:
-          - path: /audiobooks
+        path: /tank/Storage
+        advancedMounts:
 
       media:
         enabled: true
@@ -107,10 +106,18 @@ spec:
         server: smb.cloudjur.com
         path: /tank/Storage
         advancedMounts:
+          audiobooks:
+            audiobooks:
+              - path: /audiobooks
+                subPath: Books/Audiobooks
           shelfmark:
             shelfmark:
               - path: /bookdrop
                 subPath: Downloads/Books
+          downloads:
+            downloads:
+              - path: /downloads
+                subPath: Downloads
     route:
       app:
         annotations:
