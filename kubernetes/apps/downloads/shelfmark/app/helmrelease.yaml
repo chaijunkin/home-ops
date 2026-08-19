@@ -100,15 +100,13 @@ spec:
         server: smb.cloudjur.com
         path: /tank/Storage
         advancedMounts:
-          audiobooks:
+          shelfmark:
             audiobooks:
               - path: /audiobooks
                 subPath: Books/Audiobooks
-          shelfmark:
             shelfmark:
               - path: /bookdrop
                 subPath: Downloads/Books
-          downloads:
             downloads:
               - path: /downloads
                 subPath: Downloads
