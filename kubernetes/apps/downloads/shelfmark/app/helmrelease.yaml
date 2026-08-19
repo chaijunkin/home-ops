@@ -101,13 +101,11 @@ spec:
         path: /tank/Storage
         advancedMounts:
           shelfmark:
-            audiobooks:
+            shelfmark:
               - path: /audiobooks
                 subPath: Books/Audiobooks
-            shelfmark:
               - path: /bookdrop
                 subPath: Downloads/Books
-            downloads:
               - path: /media
                 subPath: Downloads
     route:
