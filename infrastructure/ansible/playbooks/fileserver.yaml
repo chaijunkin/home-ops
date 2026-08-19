@@ -176,6 +176,9 @@
         - /tank/Storage/TV Shows
         - /tank/Storage/Videos
         - /tank/Storage/Books
+        - /tank/Storage/Books/Books
+        - /tank/Storage/Books/Comics
+        - /tank/Storage/Books/Audiobooks
         - /tank/Storage/Anime
         - /tank/Storage/Games
         - /tank/Storage/Games/assets
