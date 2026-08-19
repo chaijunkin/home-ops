@@ -107,7 +107,6 @@ spec:
               - path: /bookdrop
                 subPath: Downloads/Books
               - path: /media
-                subPath: Downloads
     route:
       app:
         annotations:
