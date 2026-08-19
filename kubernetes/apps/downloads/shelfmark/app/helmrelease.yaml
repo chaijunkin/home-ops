@@ -93,12 +93,6 @@ spec:
             subPath: tmp
           - path: /var/log
             subPath: var-log
-      audiobooks:
-        enabled: true
-        type: nfs
-        server: smb.cloudjur.com
-        path: /tank/Storage
-        advancedMounts:
 
       media:
         enabled: true
