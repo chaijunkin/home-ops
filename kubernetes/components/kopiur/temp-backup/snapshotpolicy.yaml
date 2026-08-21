@@ -13,6 +13,7 @@ spec:
     securityContext:
       runAsUser: ${KOPIUR_PUID:=2000}
       runAsGroup: ${KOPIUR_PGID:=2000}
+      runAsNonRoot: ${KOPIUR_NONROOT:=true}
   repository:
     kind: ClusterRepository
     name: nas

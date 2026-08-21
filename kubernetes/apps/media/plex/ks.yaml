@@ -27,6 +27,9 @@ spec:
       APP: *app
       PATH: /web/index.html
       VOLSYNC_CAPACITY: 20Gi
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
+      KOPIUR_NONROOT: "false"
   components:
     - ../../../../components/kopiur/backup
     # - ../../../../components/volsync-no-r2

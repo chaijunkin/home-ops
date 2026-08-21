@@ -22,8 +22,9 @@ spec:
   postBuild:
     substitute:
       APP: qui
-      KOPIUR_PUID: "1000"
-      KOPIUR_PGID: "1000"
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
+      KOPIUR_NONROOT: "false"
   components:
     - ../../../../components/zeroscaler
     # - ../../../../components/volsync
