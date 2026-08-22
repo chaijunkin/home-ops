@@ -27,9 +27,8 @@ spec:
       APP: *app
       PATH: /web/index.html
       KOPIUR_CAPACITY: 100Gi
-      # KOPIUR_PUID: "2000"
-      # KOPIUR_PGID: "2000"
-      # KOPIUR_NONROOT: "false"
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
   components:
     - ../../../../components/kopiur/backup
     # - ../../../../components/volsync-no-r2
