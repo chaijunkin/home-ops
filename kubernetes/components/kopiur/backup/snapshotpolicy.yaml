@@ -14,6 +14,9 @@ spec:
       runAsUser: ${KOPIUR_PUID:=2000}
       runAsGroup: ${KOPIUR_PGID:=2000}
       runAsNonRoot: ${KOPIUR_NONROOT:=true}
+    podSecurityContext:
+      fsGroup: ${KOPIUR_PGID:=2000}
+      fsGroupChangePolicy: OnRootMismatch
   repository:
     kind: ClusterRepository
     name: nas
