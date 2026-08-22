@@ -22,6 +22,7 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
+    - ../../../../components/kopiur/adhoc-snapshot
     # - ../../../../components/volsync
   postBuild:
     substitute:
