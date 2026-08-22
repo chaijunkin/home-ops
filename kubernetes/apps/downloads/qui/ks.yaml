@@ -22,9 +22,10 @@ spec:
   postBuild:
     substitute:
       APP: qui
+      KOPIUR_CAPACITY: 20Gi
       KOPIUR_PUID: "0"
       KOPIUR_PGID: "0"
-      KOPIUR_NONROOT: "false"
+      # KOPIUR_NONROOT: "false"
   components:
     - ../../../../components/zeroscaler
     # - ../../../../components/volsync
