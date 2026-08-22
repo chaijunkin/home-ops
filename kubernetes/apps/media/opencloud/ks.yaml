@@ -12,7 +12,7 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     # - ../../../../components/volsync-no-r2
-    - ../../../../components/kopiur/adhoc-snapshot
+    # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
     - name: openebs
       namespace: storage
