@@ -38,13 +38,6 @@ spec:
             envFrom:
               - secretRef:
                   name: odoo-secret
-          migrate-addons:
-            image:
-              repository: docker.io/odoo
-              tag: 19.0-20251222
-            command: ["/bin/sh", "-c"]
-            args:
-              - mkdir -p /var/lib/odoo/extra-addons && cp -a /legacy-addons/. /var/lib/odoo/extra-addons/
 
         containers:
           app:
@@ -131,8 +124,6 @@ spec:
         existingClaim: *app
         advancedMounts:
           odoo:
-            migrate-addons:
-              - path: /var/lib/odoo
             app:
               - path: /var/lib/odoo
               - path: /mnt/extra-addons
@@ -146,9 +137,3 @@ spec:
         globalMounts:
           - path: /etc/odoo/odoo.conf
             subPath: odoo.conf
-      legacy-addons:
-        existingClaim: odoo-addons-v1
-        advancedMounts:
-          odoo:
-            migrate-addons:
-              - path: /legacy-addons
