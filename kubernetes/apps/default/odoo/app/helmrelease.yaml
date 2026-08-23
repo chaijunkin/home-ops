@@ -38,6 +38,13 @@ spec:
             envFrom:
               - secretRef:
                   name: odoo-secret
+          migrate-addons:
+            image:
+              repository: docker.io/odoo
+              tag: 19.0-20251222
+            command: ["/bin/sh", "-c"]
+            args:
+              - mkdir -p /var/lib/odoo/extra-addons && cp -a /legacy-addons/. /var/lib/odoo/extra-addons/
 
         containers:
           app:
@@ -65,7 +72,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
           code:
             image:
               repository: ghcr.io/coder/code-server
@@ -89,7 +96,7 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [100, 101]
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
 
     service:
       app:
@@ -122,15 +129,26 @@ spec:
     persistence:
       data:
         existingClaim: *app
-        globalMounts:
-          - path: /var/lib/odoo
+        advancedMounts:
+          odoo:
+            migrate-addons:
+              - path: /var/lib/odoo
+            app:
+              - path: /var/lib/odoo
+              - path: /mnt/extra-addons
+                subPath: extra-addons
+            code:
+              - path: /mnt/extra-addons
+                subPath: extra-addons
       etc-config-file:
         type: configMap
         name: odoo-configmap
         globalMounts:
           - path: /etc/odoo/odoo.conf
             subPath: odoo.conf
-      extra-addons:
+      legacy-addons:
         existingClaim: odoo-addons-v1
-        globalMounts:
-          - path: /mnt/extra-addons
+        advancedMounts:
+          odoo:
+            migrate-addons:
+              - path: /legacy-addons
