@@ -20,3 +20,4 @@ spec:
               type: GatewayNamespace
         extensionApis:
           enableBackend: true
+          enableLua: true
