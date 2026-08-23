@@ -6,11 +6,11 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: gemini/gemini-2.5-pro
+      default: gemini-2.5-pro
       provider: litellm
     fallback_providers:
       - provider: litellm
-        model: gemini/gemini-2.5-flash
+        model: gemini-2.5-flash
       - provider: litellm
         model: self-hosted
     providers:
@@ -19,7 +19,7 @@ data:
         api_key: $${LITELLM_API_KEY}
       litellm-anthropic:
         base_url: http://litellm.ai:4000/
-        api_mode: anthropic_messages
+        api_mode: anthropic_message
         api_key: $${LITELLM_API_KEY}
     toolsets:
       - hermes-cli
