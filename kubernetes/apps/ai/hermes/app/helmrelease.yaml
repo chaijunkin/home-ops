@@ -63,7 +63,7 @@ spec:
           app:
             image: &image
               repository: nousresearch/hermes-agent
-              tag: v2026.8.3@sha256:16788311e2fa3035456bdc1bafb8ec2b1777db64ebf020af9bb7eb73c3712c9e
+              tag: v2026.8.19@sha256:3811ed13da874fba2ac99b6d492db9a203d34cb6dccf90d886948c00d0ccec09
             args: [gateway, run]
             env:
               MEMINI_URL: http://memini.ai:8080
@@ -109,7 +109,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.131.0@sha256:3623e6362abdec6258472882b06fdeec9d6ce2ad3fda316b3c5d7ed092b89add
+              tag: 4.133.0@sha256:e073a441c61c85821a7f16b64cf93b4e77b4092899bb1f3bed906fbd558afd62
             env:
               TZ: Asia/Kuala_Lumpur
             args:

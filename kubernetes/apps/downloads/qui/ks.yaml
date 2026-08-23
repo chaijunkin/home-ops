@@ -22,6 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: qui
+      KOPIUR_CAPACITY: 20Gi
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"
   components:

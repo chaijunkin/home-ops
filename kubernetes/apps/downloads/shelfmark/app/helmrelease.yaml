@@ -40,7 +40,7 @@ spec:
           shelfmark:
             image:
               repository: ghcr.io/calibrain/shelfmark
-              tag: v1.3.9
+              tag: v1.3.11
             command:
               - gunicorn
             args:
@@ -93,6 +93,7 @@ spec:
             subPath: tmp
           - path: /var/log
             subPath: var-log
+
       media:
         enabled: true
         type: nfs
@@ -101,8 +102,11 @@ spec:
         advancedMounts:
           shelfmark:
             shelfmark:
+              - path: /audiobooks
+                subPath: Books/Audiobooks
               - path: /bookdrop
                 subPath: Downloads/Books
+              - path: /media
     route:
       app:
         annotations:

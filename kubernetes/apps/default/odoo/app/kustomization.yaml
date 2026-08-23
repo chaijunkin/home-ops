@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  - ./pvc-addons.yaml
+  # - ./pvc-addons.yaml
 configMapGenerator:
   - name: odoo-configmap
     files:

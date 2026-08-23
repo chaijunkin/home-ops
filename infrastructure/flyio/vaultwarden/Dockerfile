@@ -1,5 +1,5 @@
 # renovate: datasource=github-releases depName=aptible/supercronic
-ARG SUPERCRONIC_VERSION=v0.2.48
+ARG SUPERCRONIC_VERSION=v0.2.49
 
 # renovate: datasource=github-releases depName=DarthSim/overmind
 ARG OVERMIND_VERSION=v2.5.1
@@ -8,7 +8,7 @@ ARG OVERMIND_VERSION=v2.5.1
 ARG SUPERCRONIC=supercronic-linux-amd64
 ARG OVERMIND=overmind-${OVERMIND_VERSION}-linux-amd64
 
-FROM vaultwarden/server:1.37.1-alpine as vaultwarden
+FROM vaultwarden/server:1.37.2-alpine as vaultwarden
 
 #
 # Supercronic

@@ -33,7 +33,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/home-operations/postgres-init
-              tag: "18.4"
+              tag: "18.6"
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
@@ -65,11 +65,11 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
           code:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.131.0
+              tag: 4.133.0
             env:
               TZ: "Asia/Kuala_Lumpur"
             args:
@@ -89,7 +89,7 @@ spec:
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [100, 101]
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
 
     service:
       app:
@@ -122,15 +122,18 @@ spec:
     persistence:
       data:
         existingClaim: *app
-        globalMounts:
-          - path: /var/lib/odoo
+        advancedMounts:
+          odoo:
+            app:
+              - path: /var/lib/odoo
+              - path: /mnt/extra-addons
+                subPath: extra-addons
+            code:
+              - path: /mnt/extra-addons
+                subPath: extra-addons
       etc-config-file:
         type: configMap
         name: odoo-configmap
         globalMounts:
           - path: /etc/odoo/odoo.conf
             subPath: odoo.conf
-      extra-addons:
-        existingClaim: odoo-addons-v1
-        globalMounts:
-          - path: /mnt/extra-addons

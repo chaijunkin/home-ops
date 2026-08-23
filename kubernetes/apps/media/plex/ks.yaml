@@ -26,7 +26,9 @@ spec:
     substitute:
       APP: *app
       PATH: /web/index.html
-      VOLSYNC_CAPACITY: 20Gi
+      KOPIUR_CAPACITY: 100Gi
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
   components:
     - ../../../../components/kopiur/backup
     # - ../../../../components/volsync-no-r2

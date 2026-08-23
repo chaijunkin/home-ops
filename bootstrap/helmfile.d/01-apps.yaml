@@ -67,7 +67,7 @@ releases:
   - name: bitwarden
     namespace: external-secrets
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
-    version: 5.0.1
+    version: 5.1.0
     values:
       ["../../kubernetes/apps/external-secrets/bitwarden/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
@@ -87,7 +87,7 @@ releases:
   - name: external-secrets
     namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: 2.8.0
+    version: 2.9.0
     values:
       [
         "../../kubernetes/apps/external-secrets/external-secrets/app/helm/values.yaml",
@@ -110,7 +110,7 @@ releases:
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.57.0
+    version: 0.58.1
     values:
       ["../../kubernetes/apps/flux-system/flux-operator/app/helm/values.yaml"]
     needs: ["external-secrets/external-secrets"]
@@ -118,7 +118,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.57.0
+    version: 0.58.1
     values:
       ["../../kubernetes/apps/flux-system/flux-instance/app/helm/values.yaml"]
     needs: ["flux-system/flux-operator"]

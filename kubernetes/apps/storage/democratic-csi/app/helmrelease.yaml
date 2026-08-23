@@ -41,7 +41,7 @@ spec:
         defaultClass: true
         reclaimPolicy: Delete
         volumeBindingMode: WaitForFirstConsumer
-        allowVolumeExpansion: false
+        allowVolumeExpansion: true
     volumeSnapshotClasses:
       - name: local-hostpath
         annotations:

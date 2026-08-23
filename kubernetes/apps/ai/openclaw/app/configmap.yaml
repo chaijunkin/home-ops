@@ -13,130 +13,88 @@ data:
           bootstrapTotalMaxChars: 100000,
           thinkingDefault: "high",
           timeoutSeconds: 600,
-          model: {
-            primary: "litellm-anthropic/MiniMax",
-            fallbacks: [
-              "litellm/dsv4f",
-              "litellm/ornith",
+          "model": {
+            "primary": "litellm/gemini-2.5-pro",
+            "fallbacks": [
+              "litellm/gemini-2.5-flash",
               "litellm/self-hosted",
-              "litellm/nvidia",
-              "litellm/go-minimax-m3",
-              "litellm/kimi-k2.6",
+              "litellm/openrouter/deepseek/deepseek-chat",
             ]
           },
-          imageModel: {
-            primary: "litellm/vision",
-            fallbacks: [
-              "litellm-anthropic/MiniMax",
-              "litellm/chatgpt/gpt-5.4-mini",
+          "imageModel": {
+            "primary": "litellm/self-hosted",
+            "fallbacks": [
+              "litellm/gemini-2.5-pro",
+              "litellm/gemini-2.5-flash",
             ]
           },
-          imageGenerationModel: {
-            primary: "comfy/workflow",
+          "imageGenerationModel": {
+            "primary": "comfy/workflow",
           },
-          models: {
-            "litellm/kimi-k2.6": { alias: "kimi-2.6", params: { cache_prompt: true } },
-            "litellm-anthropic/MiniMax": { alias: "minimax", params: { cacheRetention: "short" } },
-            "litellm-anthropic/MiniMax-M2.7": { alias: "minimax-old", params: { cacheRetention: "short" } },
-            "litellm/self-hosted": { alias: "skirk", params: { cache_prompt: true } },
-            "litellm/ornith": { alias: "ornith", params: { cache_prompt: true } },
-            "litellm/nvidia": { alias: "nvidia", params: { cache_prompt: true } },
-            "litellm/dsv4f": { alias: "dsv4f", params: { cache_prompt: true } },
-            "litellm/dsv4p": { alias: "dsv4p", params: { cache_prompt: true } },
-            "litellm/glm-5.1": { alias: "glm-5.1", params: { cache_prompt: true } },
-            "litellm/glm-5.2": { alias: "glm-5.2", params: { cache_prompt: true } },
-            "litellm/go-minimax-m3": { alias: "go-minimax-m3", params: { cache_prompt: true } },
-            "litellm/go-minimax-m2.7": { alias: "go-minimax-m2.7", params: { cache_prompt: true } },
-            "litellm/mimo-v2.5-pro": { alias: "mimo-agent", params: { cache_prompt: true } },
-            "litellm/mimo-v2.5": { alias: "mimo-v2.5", params: { cache_prompt: true } },
-            "litellm/qwen3.7-plus": { alias: "qwen-plus", params: { cache_prompt: true } },
-            "openai/gpt-5.5": { alias: "gpt" },
-            "openai/gpt-5.4": { alias: "gpt-cheap" },
-            "openai/gpt-5.4-mini": { alias: "gpt-mini" },
-            "litellm/chatgpt/gpt-5.5": { alias: "chatgpt-5.5" },
-            "litellm/chatgpt/gpt-5.4": { alias: "chatgpt-5.4" },
-            "litellm/chatgpt/gpt-5.4-mini": { alias: "chatgpt-5.4-mini" },
+          "models": {
+            "litellm/gemini-2.5-pro": { "alias": "gemini-pro" },
+            "litellm/gemini-2.5-flash": { "alias": "gemini-flash" },
+            "litellm/self-hosted": { "alias": "skirk", "params": { "cache_prompt": true } },
+            "litellm/openrouter/deepseek/deepseek-chat": { "alias": "deepseek-chat" },
           },
-          memorySearch: {
-            provider: "openai",
-            model: "sentence-transformers/all-MiniLM-L6-v2",
-            remote: {
-              baseUrl: "http://litellm.ai:8080/v1",
-              apiKey: "llama-embed"
+          "memorySearch": {
+            "provider": "openai",
+            "model": "sentence-transformers/all-MiniLM-L6-v2",
+            "remote": {
+              "baseUrl": "http://litellm.ai:8080/v1",
+              "apiKey": "llama-embed"
             }
           },
-          contextPruning: { mode: "off" },
-          compaction: { mode: "default", reserveTokensFloor: 30000, memoryFlush: { enabled: true, softThresholdTokens: 80000, prompt: "Extract key decisions, state changes, lessons, blockers to memory/YYYY-MM-DD.md. Format: ## [HH:MM] Topic. Skip routine work. NO_FLUSH if nothing important.", systemPrompt: "Compacting session context. Extract only what's worth remembering. No fluff." },
+          "contextPruning": { "mode": "off" },
+          "compaction": { "mode": "default", "reserveTokensFloor": 30000, "memoryFlush": { "enabled": true, "softThresholdTokens": 80000, "prompt": "Extract key decisions, state changes, lessons, blockers to memory/YYYY-MM-DD.md. Format: ## [HH:MM] Topic. Skip routine work. NO_FLUSH if nothing important.", "systemPrompt": "Compacting session context. Extract only what's worth remembering. No fluff." },
           },
-          maxConcurrent: 4,
-          subagents: {
-            model: {
-              primary: "litellm/dsv4f",
+          "maxConcurrent": 4,
+          "subagents": {
+            "model": {
+              "primary": "litellm/gemini-2.5-flash",
             },
-            archiveAfterMinutes: 120,
-            maxConcurrent: 3,
-            thinking: "high",
+            "archiveAfterMinutes": 120,
+            "maxConcurrent": 3,
+            "thinking": "high",
           },
-          heartbeat: {
-            every: "60m",
-            model: "litellm/nvidia",
-            directPolicy: "allow",
-            lightContext: false,
-            isolatedSession: false,
-            includeReasoning: false,
+          "heartbeat": {
+            "every": "60m",
+            "model": "litellm/self-hosted",
+            "directPolicy": "allow",
+            "lightContext": false,
+            "isolatedSession": false,
+            "includeReasoning": false,
           },
         },
-        list: [],
+        "list": [],
       },
-      tools: {
-        media: { image: { timeoutSeconds: 180 } },
-        sessions: { visibility: "all" },
-        agentToAgent: { enabled: true },
-        exec: { security: "full", ask: "off", strictInlineEval: false },
-        elevated: { enabled: true, allowFrom: { discord: ["$${DISCORD_ADMIN_USER_ID}"] } },
-        web: { search: { enabled: true, provider: "searxng", openaiCodex: { enabled: true, mode: "cached" } }, fetch: { enabled: true } },
+      "tools": {
+        "media": { "image": { "timeoutSeconds": 180 } },
+        "sessions": { "visibility": "all" },
+        "agentToAgent": { "enabled": true },
+        "exec": { "security": "full", "ask": "off", "strictInlineEval": false },
+        "elevated": { "enabled": true, "allowFrom": { "discord": ["$${DISCORD_ADMIN_USER_ID}"] } },
+        "web": { "search": { "enabled": true, "provider": "searxng", "openaiCodex": { "enabled": true, "mode": "cached" } }, "fetch": { "enabled": true } },
       },
-      commands: {
-        native: "auto",
-        nativeSkills: "auto",
-        restart: false,
+      "commands": {
+        "native": "auto",
+        "nativeSkills": "auto",
+        "restart": false,
       },
-      models: {
-        providers: {
+      "models": {
+        "providers": {
           "litellm": {
-            baseUrl: "http://litellm.ai:4000/v1",
-            apiKey: "$${LITELLM_API_KEY}",
-            api: "openai-completions",
-            timeoutSeconds: 600,
-            models: [
-              { id: "kimi-k2.6", name: "Kimi K2.6 (OpenCode→Moonshot)", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
-              { id: "self-hosted", name: "Qwen3.6-35B-A3B UD Q8_K_XL (ROCm)", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
-              { id: "vision", name: "Qwen3.5-4B Q8_0 (ROCm)", reasoning: true, input: ["text", "image"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
-              { id: "nvidia", name: "Qwen3.6-27B UD Q4_K_XL (CUDA)", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 131072, maxTokens: 16384 },
-              { id: "dsv4f", name: "OpenCode Go DeepSeek V4 Flash", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
-              { id: "dsv4p", name: "OpenCode Go DeepSeek V4 Pro", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
-              { id: "glm-5.1", name: "Z.Ai GLM 5.1", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 203000, maxTokens: 16384 },
-              { id: "glm-5.2", name: "Z.Ai GLM 5.2", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
-              { id: "go-minimax-m3", name: "OpenCode Go MiniMax M3", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 32768 },
-              { id: "go-minimax-m2.7", name: "OpenCode Go MiniMax M2.7", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 204800, maxTokens: 16384 },
-              { id: "mimo-v2.5-pro", name: "OpenCode Go MiMo V2.5 Pro", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
-              { id: "mimo-v2.5", name: "OpenCode Go MiMo V2.5", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 262144, maxTokens: 16384 },
-              { id: "qwen3.7-plus", name: "OpenCode Go Qwen 3.7 Plus", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 1000000, maxTokens: 16384 },
-              { id: "chatgpt/gpt-5.5", name: "ChatGPT GPT-5.5", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 272000, maxTokens: 128000 },
-              { id: "chatgpt/gpt-5.4", name: "ChatGPT GPT-5.4", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 272000, maxTokens: 128000 },
-              { id: "chatgpt/gpt-5.4-mini", name: "ChatGPT GPT-5.4 Mini", reasoning: true, input: ["text"], cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 }, contextWindow: 272000, maxTokens: 128000 },
+            "baseUrl": "http://litellm.ai:4000/v1",
+            "apiKey": "$${LITELLM_API_KEY}",
+            "api": "openai-completions",
+            "timeoutSeconds": 600,
+            "models": [
+              { "id": "gemini-2.5-pro", "name": "Gemini 2.5 Pro", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1048576, "maxTokens": 65536 },
+              { "id": "gemini-2.5-flash", "name": "Gemini 2.5 Flash", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1048576, "maxTokens": 65536 },
+              { "id": "self-hosted", "name": "Qwen3.6-35B-A3B UD Q8_K_XL (ROCm)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 16384 },
+              { "id": "openrouter/deepseek/deepseek-chat", "name": "DeepSeek Chat (OpenRouter)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 128000, "maxTokens": 8192 }
             ]
-          },
-          "litellm-anthropic": {
-            baseUrl: "http://litellm.ai:4000",
-            apiKey: "$${LITELLM_API_KEY}",
-            api: "anthropic-messages",
-            timeoutSeconds: 600,
-            models: [
-              { id: "MiniMax", name: "MiniMax M3", reasoning: true, input: ["text","image"], cost: { input: 15, output: 60, cacheRead: 2, cacheWrite: 10 }, contextWindow: 1000000, maxTokens: 32768, },
-              { id: "MiniMax-M2.7", name: "MiniMax M2.7", reasoning: true, input: ["text"], cost: { input: 15, output: 60, cacheRead: 2, cacheWrite: 10 }, contextWindow: 204800, maxTokens: 32768, },
-            ],
-          },
+          }
         }
       },
       auth: {

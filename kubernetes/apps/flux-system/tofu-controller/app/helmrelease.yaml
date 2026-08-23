@@ -39,7 +39,7 @@ spec:
     runner:
       image:
         repository: ghcr.io/home-operations/opentofu-runner
-        tag: 1.12.5@sha256:98fc72390e74c562586438ff5fb525bf4a3de4e01c2b2b3c3c63249e7aec2501
+        tag: 1.12.6@sha256:305e14b33a5bb95dfd36459df1d12800fe87e3fcf8cf39e9759f9212aef4079d
       serviceAccount:
         allowedNamespaces:
           - flux-system

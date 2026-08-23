@@ -19,8 +19,9 @@ spec:
       APP: calibre-web-automated
       SUBDOMAIN: books
       VOLSYNC_CAPACITY: 15Gi
-      KOPIUR_PUID: "2000"
-      KOPIUR_PGID: "2000"
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
+      KOPIUR_NONROOT: "false"
   prune: true
   wait: false
   interval: 24h

@@ -25,7 +25,7 @@ spec:
       KOPIUR_CLAIM: opencloud-data
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"
-      VOLSYNC_CAPACITY: 20Gi
+      VOLSYNC_CAPACITY: 100Gi
       SUBDOMAIN: drive
   prune: true
   sourceRef:

@@ -6,32 +6,20 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: MiniMax
-      provider: litellm-anthropic
+      default: gemini-2.5-pro
+      provider: litellm
     fallback_providers:
-      # - provider: litellm
-      #   model: dsv4f
-      # - provider: litellm
-      #   model: mimo-v2.5
-      # - provider: litellm
-      #   model: nvidia
+      - provider: litellm
+        model: gemini-2.5-flash
       - provider: litellm
         model: self-hosted
-      # - provider: litellm
-      #   model: kimi-k2.6
-      # - provider: litellm
-      #   model: glm-5.2
-      # - provider: litellm
-      #   model: go-minimax-m3
-      # - provider: litellm
-      #   model: dsv4p
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1
         api_key: $${LITELLM_API_KEY}
       litellm-anthropic:
         base_url: http://litellm.ai:4000/
-        api_mode: anthropic_messages
+        api_mode: anthropic_message
         api_key: $${LITELLM_API_KEY}
     toolsets:
       - hermes-cli
@@ -71,18 +59,18 @@ data:
     auxiliary:
       vision:
         provider: litellm
-        model: vision
+        model: gemini-2.5-flash
       compression:
         provider: litellm
-        model: vision
+        model: gemini-2.5-flash
         timeout: 180
       web_extract:
         provider: litellm
-        model: vision
+        model: gemini-2.5-flash
         timeout: 120
       approval:
         provider: litellm
-        model: vision
+        model: gemini-2.5-flash
         timeout: 60
       session_search:
         provider: litellm

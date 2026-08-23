@@ -9,7 +9,7 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.44.0
+    tag: 0.45.0
   url: oci://ghcr.io/home-operations/charts-mirror/headlamp
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
@@ -38,7 +38,7 @@ spec:
       # -- Image pull policy. One of Always, Never, IfNotPresent
       pullPolicy: IfNotPresent
       # -- Container image tag, If "" uses appVersion in Chart.yaml
-      tag: v0.44.0
+      tag: v0.45.0
     podAnnotations:
       reloader.stakater.com/auto: "true"
     fullnameOverride: headlamp

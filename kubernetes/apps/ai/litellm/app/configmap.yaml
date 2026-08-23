@@ -74,185 +74,90 @@ data:
           api_key: os.environ/GEMINI_API_KEY
 
       # 1. OpenRouter (aggregator — model name is passed through as-is)
-      - model_name: openrouter/auto
-        model_info:
-          mode: chat
-          max_input_tokens: 200000
-          max_output_tokens: 32768
-          supports_function_calling: true
-          supports_vision: true
+      - model_name: "openrouter/*"
         litellm_params:
-          model: openai/openrouter/auto
-          api_base: https://openrouter.ai/api/v1
+          model: "openrouter/*"
           api_key: os.environ/OPENROUTER_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
+
+      - model_name: "gemini/*"
+        litellm_params:
+          model: "gemini/*"
+          api_key: os.environ/GEMINI_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 2. Cerebras (ultra-low-latency inference)
-      - model_name: cerebras/llama-4-scout
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000001000
-          output_cost_per_token: 0.0000001000
-          max_input_tokens: 131072
-          max_output_tokens: 8192
-          supports_function_calling: true
-          supports_vision: false
+      - model_name: "cerebras/*"
         litellm_params:
-          model: openai/llama-4-scout-17b-16e-instruct
-          api_base: https://api.cerebras.ai/v1
+          model: "cerebras/*"
           api_key: os.environ/CEREBRAS_API_KEY
-
-      - model_name: cerebras/qwen3-32b
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000004000
-          output_cost_per_token: 0.0000004000
-          max_input_tokens: 131072
-          max_output_tokens: 8192
-          supports_function_calling: true
-          supports_vision: false
-        litellm_params:
-          model: openai/qwen-3-32b
-          api_base: https://api.cerebras.ai/v1
-          api_key: os.environ/CEREBRAS_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 3. HuggingFace Inference Router
-      - model_name: hf/qwen3-32b
-        model_info:
-          mode: chat
-          max_input_tokens: 40960
-          max_output_tokens: 8192
-          supports_function_calling: true
-          supports_vision: false
+      - model_name: "hf/*"
         litellm_params:
-          model: openai/Qwen/Qwen3-32B
+          model: "openai/*"
           api_base: https://router.huggingface.co/v1
           api_key: os.environ/HF_TOKEN
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 4. Groq (fast inference)
-      - model_name: groq/llama-4-scout
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000001100
-          output_cost_per_token: 0.0000003400
-          max_input_tokens: 131072
-          max_output_tokens: 8192
-          supports_function_calling: true
-          supports_vision: false
+      - model_name: "groq/*"
         litellm_params:
-          model: openai/meta-llama/llama-4-scout-17b-16e-instruct
-          api_base: https://api.groq.com/openai/v1
+          model: "groq/*"
           api_key: os.environ/GROQ_API_KEY
-
-      - model_name: groq/kimi-k2
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000010000
-          output_cost_per_token: 0.0000010000
-          max_input_tokens: 131072
-          max_output_tokens: 16384
-          supports_function_calling: true
-          supports_vision: false
-        litellm_params:
-          model: openai/moonshotai/kimi-k2-instruct
-          api_base: https://api.groq.com/openai/v1
-          api_key: os.environ/GROQ_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 5. Mistral AI
-      - model_name: mistral-large
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000020000
-          output_cost_per_token: 0.0000060000
-          max_input_tokens: 131072
-          max_output_tokens: 16384
-          supports_function_calling: true
-          supports_vision: false
+      - model_name: "mistral/*"
         litellm_params:
-          model: mistral/mistral-large-latest
+          model: "mistral/*"
           api_key: os.environ/MISTRAL_API_KEY
-
-      - model_name: codestral
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000003000
-          output_cost_per_token: 0.0000009000
-          max_input_tokens: 262144
-          max_output_tokens: 65536
-          supports_function_calling: true
-          supports_vision: false
-        litellm_params:
-          model: mistral/codestral-latest
-          api_key: os.environ/MISTRAL_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 6. Vercel AI Gateway (multi-provider aggregator)
-      - model_name: vercel/claude-sonnet
-        model_info:
-          mode: chat
-          max_input_tokens: 200000
-          max_output_tokens: 32000
-          supports_function_calling: true
-          supports_vision: true
+      - model_name: "vercel/*"
         litellm_params:
-          model: openai/anthropic/claude-sonnet-4-5
+          model: "openai/*"
           api_base: https://ai-gateway.vercel.sh/v1
           api_key: os.environ/VERCEL_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 7. Ilmu AI
-      - model_name: ilmu/default
-        model_info:
-          mode: chat
-          max_input_tokens: 131072
-          max_output_tokens: 16384
-          supports_function_calling: true
-          supports_vision: false
+      - model_name: "ilmu/*"
         litellm_params:
-          model: openai/default
+          model: "openai/*"
           api_base: https://api.ilmu.ai/v1
           api_key: os.environ/ILMU_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 8. Local LM Studio (jk-mac-mini) — already active as `self-hosted` above
 
       # 9. OVH AI Endpoints (Kepler)
-      - model_name: ovh/llama-4-scout
-        model_info:
-          mode: chat
-          max_input_tokens: 131072
-          max_output_tokens: 8192
-          supports_function_calling: true
-          supports_vision: false
+      - model_name: "ovh/*"
         litellm_params:
-          model: openai/meta-llama/Llama-4-Scout-17B-16E-Instruct
+          model: "openai/*"
           api_base: https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
           # api_key: os.environ/OVH_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 10. NVIDIA NIM
-      - model_name: nvidia/llama-4-scout
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000002162
-          output_cost_per_token: 0.0000008649
-          max_input_tokens: 131072
-          max_output_tokens: 16384
-          supports_function_calling: true
-          supports_vision: false
+      - model_name: "nvidia/*"
         litellm_params:
-          model: openai/meta/llama-4-scout-17b-16e-instruct
+          model: "nvidia_nim/*"
           api_base: https://integrate.api.nvidia.com/v1
           api_key: os.environ/NVIDIA_API_KEY
-
-      - model_name: nvidia/qwen3-235b
-        model_info:
-          mode: chat
-          input_cost_per_token: 0.0000010000
-          output_cost_per_token: 0.0000004000
-          max_input_tokens: 131072
-          max_output_tokens: 32768
-          supports_function_calling: true
-          supports_vision: false
-        litellm_params:
-          model: openai/qwen/qwen3-235b-a22b
-          api_base: https://integrate.api.nvidia.com/v1
-          api_key: os.environ/NVIDIA_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # ── Local / Self-Hosted (archived) ────────────────────────────────────
 
