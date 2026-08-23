@@ -76,22 +76,25 @@ data:
       # 1. OpenRouter (aggregator — model name is passed through as-is)
       - model_name: "openrouter/*"
         litellm_params:
-          model: "openai/*"
-          api_base: https://openrouter.ai/api/v1
+          model: "openrouter/*"
           api_key: os.environ/OPENROUTER_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       - model_name: "gemini/*"
         litellm_params:
-          model: "openai/*"
-          api_base: https://generativelanguage.googleapis.com/v1beta/openai
+          model: "gemini/*"
           api_key: os.environ/GEMINI_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 2. Cerebras (ultra-low-latency inference)
       - model_name: "cerebras/*"
         litellm_params:
-          model: "openai/*"
-          api_base: https://api.cerebras.ai/v1
+          model: "cerebras/*"
           api_key: os.environ/CEREBRAS_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 3. HuggingFace Inference Router
       - model_name: "hf/*"
@@ -99,20 +102,24 @@ data:
           model: "openai/*"
           api_base: https://router.huggingface.co/v1
           api_key: os.environ/HF_TOKEN
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 4. Groq (fast inference)
       - model_name: "groq/*"
         litellm_params:
-          model: "openai/*"
-          api_base: https://api.groq.com/openai/v1
+          model: "groq/*"
           api_key: os.environ/GROQ_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 5. Mistral AI
       - model_name: "mistral/*"
         litellm_params:
-          model: "openai/*"
-          api_base: https://api.mistral.ai/v1
+          model: "mistral/*"
           api_key: os.environ/MISTRAL_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 6. Vercel AI Gateway (multi-provider aggregator)
       - model_name: "vercel/*"
@@ -120,6 +127,8 @@ data:
           model: "openai/*"
           api_base: https://ai-gateway.vercel.sh/v1
           api_key: os.environ/VERCEL_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 7. Ilmu AI
       - model_name: "ilmu/*"
@@ -127,6 +136,8 @@ data:
           model: "openai/*"
           api_base: https://api.ilmu.ai/v1
           api_key: os.environ/ILMU_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 8. Local LM Studio (jk-mac-mini) — already active as `self-hosted` above
 
@@ -136,13 +147,17 @@ data:
           model: "openai/*"
           api_base: https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
           # api_key: os.environ/OVH_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # 10. NVIDIA NIM
       - model_name: "nvidia/*"
         litellm_params:
-          model: "openai/*"
+          model: "nvidia_nim/*"
           api_base: https://integrate.api.nvidia.com/v1
           api_key: os.environ/NVIDIA_API_KEY
+        litellm_settings:
+          check_provider_endpoint: true
 
       # ── Local / Self-Hosted (archived) ────────────────────────────────────
 
