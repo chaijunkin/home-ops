@@ -10,8 +10,6 @@ data:
       provider: litellm
     fallback_providers:
       - provider: litellm
-        model: gemini-2.5-flash
-      - provider: litellm
         model: self-hosted
     providers:
       litellm:
@@ -76,3 +74,4 @@ data:
         provider: litellm
         model: self-hosted
         timeout: 120
+    _config_version: 38
