@@ -15,8 +15,6 @@ data:
         model: qwen3.6-plus
       - provider: litellm
         model: glm-5.1
-      - provider: litellm
-        model: qwen-local
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1

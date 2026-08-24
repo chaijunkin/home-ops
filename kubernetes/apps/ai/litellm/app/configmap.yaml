@@ -38,18 +38,6 @@ data:
           max_parallel_requests: 2
           order: 2
 
-      - model_name: qwen-local
-        model_info:
-          max_input_tokens: 16384
-          max_output_tokens: 8192
-          supports_function_calling: true
-          supports_vision: true
-        litellm_params:
-          model: openai/qwen3.5-4b
-          api_base: https://llama.${SECRET_DOMAIN_INT}/v1
-          api_key: llama
-          drop_params: true
-
       - model_name: kimi-k2.6
         model_info:
           max_input_tokens: 262144
