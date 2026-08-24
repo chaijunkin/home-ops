@@ -63,11 +63,14 @@ spec:
                 fi
         containers:
           app:
-            image: &image
+            image:
               repository: nousresearch/hermes-agent
               tag: v2026.8.19@sha256:3811ed13da874fba2ac99b6d492db9a203d34cb6dccf90d886948c00d0ccec09
             args: [gateway, run]
             env:
+              HERMES_DASHBOARD: "1"
+              HERMES_DASHBOARD_PUBLIC_URL: https://hermes.cloudjur.com
+              HERMES_DASHBOARD_OIDC_SCOPES: "openid profile email offline_access"
               MEMINI_URL: http://memini.ai:8080
               MEMINI_NAMESPACE: hermes
               HERMES_HOME: /opt/data
@@ -76,6 +79,8 @@ spec:
             envFrom:
               - secretRef:
                   name: hermes
+              - secretRef:
+                  name: hermes-dashboard
             resources:
               requests:
                 cpu: 500m
@@ -85,28 +90,8 @@ spec:
               - containerPort: &port 8642
                 name: http
                 protocol: TCP
-          dashboard:
-            image: *image
-            env:
-              TZ: Asia/Kuala_Lumpur
-              GATEWAY_HEALTH_URL: http://localhost:8642
-              HERMES_DASHBOARD_PUBLIC_URL: https://hermes.cloudjur.com
-              HERMES_DASHBOARD_OIDC_SCOPES: "openid profile email offline_access"
-            envFrom:
-              - secretRef:
-                  name: hermes-dashboard
-            args:
-              - dashboard
-              - --host
-              - 0.0.0.0
-            resources:
-              requests:
-                cpu: 500m
-              limits:
-                memory: 1Gi
-            ports:
               - containerPort: &dashboard_port 9119
-                name: http
+                name: dashboard
                 protocol: TCP
           codeserver:
             image:
@@ -146,13 +131,10 @@ spec:
         ports:
           http:
             port: *port
+          dashboard:
+            port: *dashboard_port
           codeserver:
             port: *codeserverPort
-      dashboard:
-        controller: hermes
-        ports:
-          http:
-            port: *dashboard_port
     route:
       app:
         hostnames: [hermes.cloudjur.com]
@@ -161,8 +143,8 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - identifier: dashboard
-                port: http
+              - identifier: app
+                port: dashboard
       codeserver:
         hostnames: [hermes-code.cloudjur.com]
         parentRefs:
