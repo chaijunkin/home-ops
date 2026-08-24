@@ -186,7 +186,7 @@ spec:
             subPath: config.yaml
       env:
         type: secret
-        name: hermes-config
+        name: hermes-env
         defaultMode: 0o400
         advancedMounts:
           hermes:
