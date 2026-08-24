@@ -6,7 +6,7 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: gemini-2.5-pro
+      default: self-hosted
       provider: litellm
     fallback_providers:
       - provider: litellm
