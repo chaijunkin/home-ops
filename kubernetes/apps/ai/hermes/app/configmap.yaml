@@ -18,11 +18,11 @@ data:
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1
-        api_key: $${LITELLM_API_KEY}
+        key_env: LITELLM_API_KEY
       litellm-anthropic:
         base_url: http://litellm.ai:4000/
         api_mode: anthropic_message
-        api_key: $${LITELLM_API_KEY}
+        key_env: LITELLM_API_KEY
     toolsets:
       - hermes-cli
     terminal:
