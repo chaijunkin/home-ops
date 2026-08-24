@@ -13,7 +13,7 @@ data:
         model: self-hosted
     providers:
       litellm:
-        base_url: http://litellm.ai:4000/v1
+        base_url: http://litellm.ai:4000/v1/models
         api_key: $${LITELLM_API_KEY}
       litellm-anthropic:
         base_url: http://litellm.ai:4000/
@@ -74,4 +74,3 @@ data:
         provider: litellm
         model: self-hosted
         timeout: 120
-    _config_version: 38
