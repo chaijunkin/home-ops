@@ -13,7 +13,7 @@ data:
         model: self-hosted
     providers:
       litellm:
-        base_url: http://litellm.ai:4000/v1/models
+        base_url: http://litellm.ai:4000/v1
         api_key: $${LITELLM_API_KEY}
       litellm-anthropic:
         base_url: http://litellm.ai:4000/
