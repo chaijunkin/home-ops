@@ -34,6 +34,8 @@ spec:
               - |
                 set -euo pipefail
                 cp /tmp/config.yaml /opt/data/config.yaml
+                cp /tmp/env /opt/data/.env
+                chmod 10000:10000 /opt/data/.env
                 chown 10000:10000 /opt/data/config.yaml
                 # Install the memini memory-provider plugin from the upstream
                 # standalone mirror eleboucher/memini-hermes (a release-synced
@@ -182,6 +184,15 @@ spec:
         globalMounts:
           - path: /tmp/config.yaml
             subPath: config.yaml
+      env:
+        type: secret
+        name: hermes-config
+        defaultMode: 0o400
+        advancedMounts:
+          hermes:
+            init:
+              - path: /tmp/
+                subPath: env
       gallery:
         type: nfs
         server: smb.cloudjur.com
