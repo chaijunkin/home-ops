@@ -6,9 +6,15 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: self-hosted
+      default: kimi-k2.6
       provider: litellm
     fallback_providers:
+      - provider: litellm
+        model: qwen3.6-plus
+      - provider: litellm
+        model: glm-5.1
+      - provider: litellm
+        model: qwen-local
       - provider: litellm
         model: self-hosted
     providers:

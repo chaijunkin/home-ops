@@ -25,7 +25,7 @@ resources:
   # - ./toolhive/mcp-servers/trek-mcp/ks.yaml
   # - ./comfyui/ks.yaml  # no gpu no talk :<
   - ./hermes/ks.yaml
-  - ./openclaw/ks.yaml
+  # - ./openclaw/ks.yaml
   - ./litellm/ks.yaml
   - ./memini/ks.yaml
   # - ./llmkube/ks.yaml
