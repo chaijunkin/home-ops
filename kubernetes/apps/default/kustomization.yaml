@@ -23,7 +23,7 @@ resources:
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./sure/ks.yaml
-    # - ./thelounge/ks.yaml
+  - ./thelounge/ks.yaml
   - ./tika/ks.yaml
   - ./picoshare/ks.yaml
   - ./sparkyfitness/ks.yaml
