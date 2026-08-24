@@ -6,17 +6,17 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: kimi-k2.6
+      default: self-hosted
       provider: litellm
     fallback_providers:
+      - provider: litellm
+        model: self-hosted
       - provider: litellm
         model: qwen3.6-plus
       - provider: litellm
         model: glm-5.1
       - provider: litellm
         model: qwen-local
-      - provider: litellm
-        model: self-hosted
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1
