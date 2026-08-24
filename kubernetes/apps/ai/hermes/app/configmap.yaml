@@ -6,7 +6,7 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: self-hosted
+      default: kimi-k2.6
       provider: litellm
     fallback_providers:
       - provider: litellm
