@@ -194,6 +194,7 @@ spec:
           hermes:
             init:
               - path: /tmp/config/env
+                subPath: env
       gallery:
         type: nfs
         server: smb.cloudjur.com
