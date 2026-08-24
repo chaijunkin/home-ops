@@ -5,7 +5,7 @@
   gather_facts: true
   
   tasks:
-    - name: Load required VFIO kernel modules
+    - name: Load required VFIO and GVT-g kernel modules
       ansible.builtin.lineinfile:
         path: /etc/modules
         line: "{{ item }}"
@@ -16,6 +16,9 @@
         - vfio_iommu_type1
         - vfio_pci
         - vfio_virqfd
+        - kvmgt
+        - exgtt
+        - vfio-mdev
       notify: Update initramfs
 
     - name: Check if system uses systemd-boot (UEFI)
@@ -27,8 +30,8 @@
       ansible.builtin.lineinfile:
         path: /etc/kernel/cmdline
         backrefs: true
-        regexp: '^(root=.*(?!intel_iommu=on)(?!iommu=pt)(?!i915\.enable_display=0).*)$'
-        line: '\1 intel_iommu=on iommu=pt i915.enable_display=0'
+        regexp: '^(root=.*(?!intel_iommu=on)(?!iommu=pt)(?!kvm\.ignore_msrs=1).*)$'
+        line: '\1 intel_iommu=on iommu=pt kvm.ignore_msrs=1'
       when: systemd_boot.stat.exists
       notify: Refresh Proxmox Boot Tool
 
@@ -36,8 +39,8 @@
       ansible.builtin.lineinfile:
         path: /etc/default/grub
         backrefs: true
-        regexp: '^GRUB_CMDLINE_LINUX_DEFAULT="(?!.*intel_iommu=on)(?!.*iommu=pt)(?!.*i915\.enable_display=0)(.*)"$'
-        line: 'GRUB_CMDLINE_LINUX_DEFAULT="\1 intel_iommu=on iommu=pt i915.enable_display=0"'
+        regexp: '^GRUB_CMDLINE_LINUX_DEFAULT="(?!.*intel_iommu=on)(?!.*iommu=pt)(?!.*kvm\.ignore_msrs=1)(.*)"$'
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="\1 intel_iommu=on iommu=pt kvm.ignore_msrs=1"'
       when: not systemd_boot.stat.exists
       notify: Update GRUB
 
