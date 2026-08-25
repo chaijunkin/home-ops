@@ -43,6 +43,12 @@ metadata:
   labels:
     app.kubernetes.io/name: switch
     app.kubernetes.io/instance: switch
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Network Infrastructure
+    gethomepage.dev/name: Switch
+    gethomepage.dev/description: Managed switch
+    gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/tp-link.png
 spec:
   parentRefs:
     - name: envoy-internal
