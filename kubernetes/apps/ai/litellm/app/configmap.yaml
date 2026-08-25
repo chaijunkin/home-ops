@@ -86,7 +86,7 @@ data:
       # ── Cloud Providers ───────────────────────────────────────────────────
 
       # # 0. Google Gemini (OpenAI-compat endpoint)
-      - model_name: gemini-3-flash
+      - model_name: gemini-2.5-flash-lite
         model_info:
           mode: chat
           input_cost_per_token: 0.0000012500
@@ -98,7 +98,7 @@ data:
           supports_vision: true
           supports_prompt_caching: true
         litellm_params:
-          model: openai/gemini-3-flash
+          model: openai/gemini-2.5-flash-lite
           api_base: https://generativelanguage.googleapis.com/v1beta/openai
           api_key: os.environ/GEMINI_API_KEY
 
@@ -268,7 +268,7 @@ data:
           supports_function_calling: true
           supports_vision: true
         litellm_params:
-          model: openai/gemini-3-flash
+          model: openai/gemini-2.5-flash-lite
           api_base: https://generativelanguage.googleapis.com/v1beta/openai
           api_key: os.environ/GEMINI_API_KEY
           order: 1
@@ -306,7 +306,7 @@ data:
           supports_function_calling: true
           supports_vision: true
         litellm_params:
-          model: openai/gemini-3-flash
+          model: openai/gemini-2.5-flash-lite
           api_base: https://generativelanguage.googleapis.com/v1beta/openai
           api_key: os.environ/GEMINI_API_KEY
           order: 1
@@ -340,11 +340,11 @@ data:
       - model_name: auto
         litellm_params:
           model: auto_router/complexity_router
-          complexity_router_default_model: gemini-3-flash
+          complexity_router_default_model: gemini-2.5-flash-lite
           complexity_router_config:
             tiers:
               SIMPLE: self-hosted
-              MEDIUM: gemini-3-flash
+              MEDIUM: gemini-2.5-flash-lite
               COMPLEX: reasoning-pool
               REASONING: frontier-pool
             tier_boundaries:
@@ -362,10 +362,10 @@ data:
       cooldown_time: 30
       enable_pre_call_checks: true
       fallbacks:
-        - self-hosted: ["gemini-3-flash"]
-        - gemini-3-flash: ["self-hosted"]
+        - self-hosted: ["gemini-2.5-flash-lite"]
+        - gemini-2.5-flash-lite: ["self-hosted"]
       context_window_fallbacks:
-        - gemini-3-flash: ["self-hosted"]
+        - gemini-2.5-flash-lite: ["self-hosted"]
 
     litellm_settings:
       success_callback: ["prometheus"]

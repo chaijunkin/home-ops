@@ -61,18 +61,18 @@ data:
     auxiliary:
       vision:
         provider: litellm
-        model: gemini-3-flash
+        model: gemini-2.5-flash-lite
       compression:
         provider: litellm
-        model: gemini-3-flash
+        model: gemini-2.5-flash-lite
         timeout: 180
       web_extract:
         provider: litellm
-        model: gemini-3-flash
+        model: gemini-2.5-flash-lite
         timeout: 120
       approval:
         provider: litellm
-        model: gemini-3-flash
+        model: gemini-2.5-flash-lite
         timeout: 60
       session_search:
         provider: litellm
