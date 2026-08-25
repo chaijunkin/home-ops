@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: ilmu-wildcard
+spec:
+  modelName: ilmu/*
+  proxyRef: litellm
+  params:
+    model: openai/*
+    apiBase: https://api.ilmu.ai/v1
+    apiKey: os.environ/ILMU_API_KEY
+    additional:
+      check_provider_endpoint: true

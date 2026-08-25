@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: nvidia-wildcard
+spec:
+  modelName: nvidia/*
+  proxyRef: litellm
+  params:
+    model: nvidia_nim/*
+    apiBase: https://integrate.api.nvidia.com/v1
+    apiKey: os.environ/NVIDIA_API_KEY
+    additional:
+      check_provider_endpoint: true

@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: frontier-pool-2
+spec:
+  modelName: frontier-pool
+  proxyRef: litellm
+  params:
+    model: openai/openrouter/auto
+    apiBase: https://openrouter.ai/api/v1
+    apiKey: os.environ/OPENROUTER_API_KEY
+    additional:
+      order: 2
+  info:
+    mode: chat
+    maxInputTokens: 200000
+    maxOutputTokens: 32768
+    supportsFunctionCalling: true
+    supportsVision: true

@@ -26,6 +26,7 @@ resources:
   # - ./comfyui/ks.yaml  # no gpu no talk :<
   - ./hermes/ks.yaml
   - ./openclaw/ks.yaml
+  - ./litellm-operator/ks.yaml
   - ./litellm/ks.yaml
   - ./memini/ks.yaml
   - ./llmkube/ks.yaml

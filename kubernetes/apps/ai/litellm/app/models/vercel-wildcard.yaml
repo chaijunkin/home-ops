@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: vercel-wildcard
+spec:
+  modelName: vercel/*
+  proxyRef: litellm
+  params:
+    model: openai/*
+    apiBase: https://ai-gateway.vercel.sh/v1
+    apiKey: os.environ/VERCEL_API_KEY
+    additional:
+      check_provider_endpoint: true

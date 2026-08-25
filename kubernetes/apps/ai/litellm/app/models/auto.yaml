@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: auto
+spec:
+  modelName: auto
+  proxyRef: litellm
+  params:
+    model: auto_router/complexity_router
+    additional:
+      complexity_router_default_model: gemini-2.5-flash-lite
+      complexity_router_config:
+        tiers:
+          SIMPLE: self-hosted
+          MEDIUM: gemini-2.5-flash-lite
+          COMPLEX: reasoning-pool
+          REASONING: frontier-pool
+        tier_boundaries:
+          simple_medium: 0.45
+          medium_complex: 0.65
+          complex_reasoning: 0.85

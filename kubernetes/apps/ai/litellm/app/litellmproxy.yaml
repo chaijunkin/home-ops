@@ -1,0 +1,132 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmproxy_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMProxy
+metadata:
+  name: litellm
+spec:
+  apiAccess:
+    masterKeyRef:
+      name: litellm
+      key: LITELLM_MASTER_KEY
+  applyMode: file
+  env:
+    - name: AUTO_REDIRECT_UI_LOGIN_TO_SSO
+      value: "true"
+    - name: CHATGPT_TOKEN_DIR
+      value: /app/chatgpt_tokens
+    - name: DATABASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: litellm
+          key: DATABASE_URL
+    - name: GENERIC_AUTHORIZATION_ENDPOINT
+      value: https://auth.cloudjur.com/application/o/authorize/
+    - name: GENERIC_SCOPE
+      value: openid email profile litellm_role
+    - name: GENERIC_TOKEN_ENDPOINT
+      value: https://auth.cloudjur.com/application/o/token/
+    - name: GENERIC_USERINFO_ENDPOINT
+      value: https://auth.cloudjur.com/application/o/userinfo/
+    - name: GENERIC_USER_ROLE_ATTRIBUTE
+      value: litellm_role
+    - name: LITELLM_LOG
+      value: INFO
+    - name: LITELLM_MODE
+      value: PRODUCTION
+    - name: PROXY_BASE_URL
+      value: https://litellm.cloudjur.com
+    - name: PROXY_LOGOUT_URL
+      value: https://auth.cloudjur.com/application/o/litellm/end-session/
+    - name: REDIS_URL
+      value: redis://dragonfly.database.svc.cluster.local:6379/5
+  envFrom:
+    - secretRef:
+        name: litellm
+  extraConfig:
+    environment:
+      - CEREBRAS_API_KEY
+      - GEMINI_API_KEY
+      - GROQ_API_KEY
+      - HF_TOKEN
+      - ILMU_API_KEY
+      - MISTRAL_API_KEY
+      - NVIDIA_API_KEY
+      - OPENCODE_GO_API_KEY
+      - OPENROUTER_API_KEY
+      - REDIS_HOST
+      - REDIS_PORT
+      - VERCEL_API_KEY
+  generalSettings:
+    health_check_endpoint: /v1/health
+    store_model_in_db: false
+  image: ghcr.io/berriai/litellm-database:v1.98.0@sha256:5ead13edd4efd89f32dab349c1f19447d395affca53f3aeae00f5e6e01b8c08d
+  litellmSettings:
+    cache: true
+    cache_params:
+      type: redis
+      url: os.environ/REDIS_URL
+      ttl: 300
+    drop_params: true
+    failure_callback:
+      - prometheus
+    num_retries: 2
+    prometheus_adapter: true
+    request_timeout: 1200
+    require_auth_for_metrics_endpoint: false
+    retry_after: 5
+    set_verbose: false
+    success_callback:
+      - prometheus
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 4000
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    failureThreshold: 30
+  podAnnotations:
+    reloader.stakater.com/auto: "true"
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 4000
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    failureThreshold: 3
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 2Gi
+  route:
+    hostnames:
+      - litellm.cloudjur.com
+    parentRefs:
+      - name: envoy-internal
+        namespace: network
+  routerSettings:
+    redis_url: os.environ/REDIS_URL
+    routing_strategy: simple-shuffle
+    cooldown_time: 30
+    enable_pre_call_checks: true
+    fallbacks:
+      - self-hosted: ["gemini-2.5-flash-lite"]
+      - gemini-2.5-flash-lite: ["self-hosted"]
+    context_window_fallbacks:
+      - gemini-2.5-flash-lite: ["self-hosted"]
+  service:
+    port: 4000
+    type: ClusterIP
+  volumeMounts:
+    - name: cache
+      mountPath: /app/cache
+    - name: ui
+      mountPath: /app/chatgpt_tokens
+  volumes:
+    - name: cache
+      emptyDir: {}
+    - name: ui
+      persistentVolumeClaim:
+        claimName: litellm

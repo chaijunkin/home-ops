@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: opencode-embed
+spec:
+  modelName: opencode-embed
+  proxyRef: litellm
+  params:
+    model: openai/text-embedding-3-small
+    apiBase: https://opencode.ai/zen/go/v1
+    apiKey: os.environ/OPENCODE_GO_API_KEY
+  info:
+    mode: embedding
+    maxInputTokens: 8192

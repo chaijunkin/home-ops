@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: memini-summary
+spec:
+  modelName: memini-summary
+  proxyRef: litellm
+  params:
+    model: openai/gemini-2.5-flash-lite
+    apiBase: https://generativelanguage.googleapis.com/v1beta/openai
+    apiKey: os.environ/GEMINI_API_KEY
+  info:
+    mode: chat
+    maxInputTokens: 1048576
+    maxOutputTokens: 65536
+    supportsFunctionCalling: true
+    supportsVision: true

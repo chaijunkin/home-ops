@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./auto.yaml
+  - ./cerebras-wildcard.yaml
+  - ./frontier-pool-1.yaml
+  - ./frontier-pool-2.yaml
+  - ./frontier-pool-3.yaml
+  - ./gemini-2.5-flash-lite.yaml
+  - ./gemini-wildcard.yaml
+  - ./glm-5.1.yaml
+  - ./groq-wildcard.yaml
+  - ./hf-wildcard.yaml
+  - ./ilmu-wildcard.yaml
+  - ./kimi-k2.6.yaml
+  - ./lmstudio-embed.yaml
+  - ./memini-embed.yaml
+  - ./memini-rerank.yaml
+  - ./memini-summary.yaml
+  - ./mistral-wildcard.yaml
+  - ./nvidia-wildcard.yaml
+  - ./opencode-embed.yaml
+  - ./openrouter-wildcard.yaml
+  - ./ovh-wildcard.yaml
+  - ./qwen3.6-plus.yaml
+  - ./reasoning-pool-1.yaml
+  - ./reasoning-pool-2.yaml
+  - ./reasoning-pool-3.yaml
+  - ./self-hosted.yaml
+  - ./vercel-wildcard.yaml
