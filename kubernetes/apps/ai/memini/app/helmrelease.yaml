@@ -37,7 +37,7 @@ spec:
               MEMINI_REEMBED_ON_MODEL_CHANGE: "true"
               MEMINI_EMBED_BASE_URL: http://litellm.ai:4000/v1
               MEMINI_EMBED_MODEL: opencode-embed
-              MEMINI_EMBED_DIMS: "1536"
+              MEMINI_EMBED_DIMS: "1024"
               MEMINI_EMBED_MAX_CONCURRENCY: "2"
               MEMINI_EMBED_MAX_ITEM_CHARS: "6000"
               MEMINI_EMBED_QUERY_PREFIX:
