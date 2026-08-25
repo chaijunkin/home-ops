@@ -6,8 +6,6 @@ metadata:
   name: miroir
   namespace: storage
 spec:
-  dependsOn:
-    - name: openebs
   path: ./kubernetes/apps/storage/miroir/app
   prune: true
   sourceRef:
@@ -29,7 +27,7 @@ metadata:
 spec:
   dependsOn:
     - name: miroir
-      namespace: flux-system
+      namespace: storage
   path: ./kubernetes/apps/storage/miroir/config
   prune: true
   sourceRef:
