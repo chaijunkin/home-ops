@@ -10,14 +10,7 @@ spec:
   format: gguf
   quantization: Q8_0
   hardware:
-    accelerator: intel
-    gpu:
-      enabled: true
-      vendor: intel
-      layers: 99
-      resourceClaims:
-        - name: gpu
-          resourceClaimTemplateName: llmkube-models-gpu
+    accelerator: cpu
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/inference.llmkube.dev/inferenceservice_v1alpha1.json
 apiVersion: inference.llmkube.dev/v1alpha1
@@ -27,20 +20,16 @@ metadata:
 spec:
   modelRef: qwen3-reranker-0.6b
   runtime: llamacpp
-  image: ghcr.io/ggml-org/llama.cpp:server-vulkan@sha256:003fba3374b3452e5832524f82b29aa48767c1f598311aa8a0cf55075a4314a6
+  image: ghcr.io/ggml-org/llama.cpp:server@sha256:c005e79321f8e5731ec49a7f736aaeaac9465926c1e8f4c199c1d8a8996f26ef
+  rolloutPolicy:
+    waitForIdle: true
+    idleTimeoutSeconds: 3600
   replicas: 1
   priority: normal
   contextSize: 16384
   parallelSlots: 2
   batchSize: 4096
   uBatchSize: 4096
-  env:
-    - name: ZES_ENABLE_SYSMAN
-      value: "1"
-    - name: ONEAPI_DEVICE_SELECTOR
-      value: level_zero:gpu
-    - name: UR_L0_ENABLE_RELAXED_ALLOCATION_LIMITS
-      value: "1"
   extraArgs:
     - --alias
     - qwen3-reranker
@@ -48,16 +37,17 @@ spec:
     - --pooling
     - rank
     - --cont-batching
+    - --kv-unified
     - --threads
     - "6"
     - --threads-batch
-    - "12"
+    - "6"
     - --mmap
   endpoint:
     port: 8080
     type: ClusterIP
   resources:
-    cpu: 100m
+    cpu: "2"
     memory: 2Gi
   probeOverrides:
     startup:
