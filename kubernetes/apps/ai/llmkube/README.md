@@ -10,21 +10,26 @@ A model is two CRs — a **`Model`** (weights source + hardware target) and an
 endpoint). Following the upstream convention, model CRs live **in the folder of
 the app that consumes them**, not under `llmkube/`.
 
-## Naming convention (consumer-based)
+## Naming convention
 
-Every `Model`/`InferenceService` is named after its **consumer + role**, never
-after the underlying weights. Consumers only ever see these stable names, so
-the model behind a role can change without touching client config:
+LiteLLM fronts every role; consumers only ever see LiteLLM model names.
+Cluster-local llmkube services own the clean `memini-*` names and are the
+primary backends; LM Studio carries the `lmstudio-*` prefix as secondary:
 
-| Role name        | Consumer | Weights                    | Served by            |
-| ---------------- | -------- | -------------------------- | -------------------- |
-| `memini-embed`   | memini   | Qwen3-Embedding-0.6B Q8_0  | LiteLLM → LM Studio¹ |
-| `memini-rerank`  | memini   | Qwen3-Reranker-0.6B Q8_0   | llmkube (CPU)²       |
-| `memini-summary` | memini   | Gemini 2.5 Flash Lite      | LiteLLM → Google     |
+| LiteLLM route     | Backend                                   | Weights                   |
+| ----------------- | ----------------------------------------- | ------------------------- |
+| `memini-embed`    | llmkube `memini-embed` (CPU, primary)     | Qwen3-Embedding-0.6B Q8_0 |
+| `memini-rerank`   | llmkube `memini-rerank` (CPU)             | Qwen3-Reranker-0.6B Q8_0  |
+| `lmstudio-embed`  | LM Studio on jk-mac-mini (secondary)      | same embedding weights    |
+| `memini-summary`  | Gemini 2.5 Flash Lite (cloud)             | —                         |
 
-¹ LM Studio on `jk-mac-mini.cloudjur.com:1234` exposes `/v1/embeddings` but has
-**no `/rerank` endpoint** (verified), so reranking cannot ride the Mac mini.
-² CPU-only pod on `k8s-0`; idles to zero after 1h (`rolloutPolicy.waitForIdle`).
+Reranking rides LiteLLM's `infinity/` provider, which speaks the
+Cohere-compatible `/rerank` protocol that llama.cpp serves. LM Studio has no
+`/rerank` endpoint at all (verified), so ranking has no lmstudio route.
+
+Consumers reference only these stable names, so the model behind a role can
+change without touching client config. This layout is also what the future
+litellm-operator migration expects.
 
 ## Where things live
 

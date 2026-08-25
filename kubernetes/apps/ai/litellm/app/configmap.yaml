@@ -83,10 +83,34 @@ data:
           api_base: https://opencode.ai/zen/go/v1
           api_key: os.environ/OPENCODE_GO_API_KEY
 
-      # memini memory pipeline — role-named routes (consumer-based naming,
-      # see kubernetes/apps/ai/llmkube/README.md). Embedding runs on LM
-      # Studio (jk-mac-mini); summary rides the Gemini flash tier.
+      # memini memory pipeline — LiteLLM fronts the llmkube llama.cpp
+      # services (primary), with LM Studio as the embedding fallback.
+      # Pattern follows joryirving/home-ops litellm configmap.
       - model_name: memini-embed
+        model_info:
+          input_cost_per_token: 0.0000000000
+          output_cost_per_token: 0.0000000000
+          mode: embedding
+          max_input_tokens: 32768
+        litellm_params:
+          model: openai/memini-embed
+          api_base: http://memini-embed.ai:8080/v1
+          api_key: memini-embed
+
+      - model_name: memini-rerank
+        model_info:
+          input_cost_per_token: 0.0000000000
+          output_cost_per_token: 0.0000000000
+          mode: rerank
+        litellm_params:
+          model: infinity/memini-rerank
+          api_base: http://memini-rerank.ai:8080
+          api_key: memini-rerank
+
+      # Secondary embedding backend (LM Studio on jk-mac-mini). This build
+      # exposes /v1/embeddings only — no /rerank endpoint (verified), so
+      # ranking has no lmstudio route; memini-rerank above serves it.
+      - model_name: lmstudio-embed
         model_info:
           mode: embedding
           max_input_tokens: 32768
@@ -95,6 +119,7 @@ data:
           api_base: http://jk-mac-mini.cloudjur.com:1234/v1
           api_key: lm-studio
 
+      # memini summary — rides the Gemini flash tier.
       - model_name: memini-summary
         model_info:
           mode: chat

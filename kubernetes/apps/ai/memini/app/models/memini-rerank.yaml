@@ -36,9 +36,9 @@ spec:
     - --cont-batching
     - --kv-unified
     - --threads
-    - "6"
+    - "4"
     - --threads-batch
-    - "6"
+    - "4"
     - --mmap
   endpoint:
     port: 8080

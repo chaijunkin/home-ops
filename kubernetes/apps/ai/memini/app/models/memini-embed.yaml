@@ -1,16 +1,9 @@
-# Cluster-local fallback for memini embeddings (Qwen3-Embedding-0.6B on CPU).
+# Cluster-local embedding for memini — PRIMARY path (llmkube CPU, Qwen3-Embedding-
+# 0.6B, native 1024 dims matching MEMINI_EMBED_DIMS and the Instruct query prefix).
 #
-# NOT reconciled by default: `kubernetes/apps/ai/memini/app/kustomization.yaml`
-# only ships `memini-rerank.yaml`. Embeddings are currently served by LM Studio
-# on jk-mac-mini via LiteLLM (`model_name: memini-embed`), which keeps the
-# k8s-0 CPUs free and was verified at 1024 dims.
-#
-# To flip back to cluster-local embedding:
-#   1. add `- ./memini-embed.yaml` to ../kustomization.yaml resources
-#   2. point MEMINI_EMBED_BASE_URL at http://memini-embed.ai:8080/v1
-#   3. set MEMINI_EMBED_MODEL to memini-embed
-#   4. keep MEMINI_EMBED_DIMS=1024 (native Qwen3-Embedding-0.6B size) and the
-#      existing Instruct query prefix — both match this model.
+# Secondary: LiteLLM route `lmstudio-embed` → LM Studio on jk-mac-mini. To flip:
+#   MEMINI_EMBED_BASE_URL=http://litellm.ai:4000/v1
+#   MEMINI_EMBED_MODEL=lmstudio-embed
 # yaml-language-server: $schema=https://crd.cloudjur.com/inference.llmkube.dev/model_v1alpha1.json
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: Model
@@ -48,9 +41,9 @@ spec:
     - last
     - --cont-batching
     - --threads
-    - "6"
+    - "4"
     - --threads-batch
-    - "6"
+    - "4"
     - --mmap
   endpoint:
     port: 8080

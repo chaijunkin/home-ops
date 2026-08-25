@@ -5,6 +5,7 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-  # Cluster-local llama.cpp services (llmkube CRs). Embedding stays on LM
-  # Studio via LiteLLM; memini-embed.yaml is a documented fallback.
+  # Cluster-local llama.cpp services (llmkube CRs) — primary embed/rerank path.
+  # Secondary routes (`lmstudio-*`) live in the litellm configmap.
   - ./models/memini-rerank.yaml
+  - ./models/memini-embed.yaml

@@ -44,10 +44,10 @@ spec:
                 "Instruct: Given a user message, retrieve
                 relevant past memories\nQuery: "
               MEMINI_LLM_BASE_URL: http://litellm.ai:4000/v1
-              MEMINI_LLM_MODEL: gemini-2.5-flash-lite
+              MEMINI_LLM_MODEL: memini-summary
               MEMINI_LOG_FORMAT: json
               MEMINI_RECALL_MIN_SEMANTIC_SCORE: "0.46"
-              MEMINI_RERANK: http://memini-rerank.ai:8080/v1
+              MEMINI_RERANK: http://litellm.ai:4000/v1
               MEMINI_RERANK_MODEL: memini-rerank
               MEMINI_RERANK_POOL: "50"
               MEMINI_RERANK_MAX_BATCH_CHARS: "120000"
