@@ -6,6 +6,9 @@ metadata:
   name: miroir
 spec:
   interval: 2h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
   url: oci://ghcr.io/home-operations/charts/miroir
   ref:
     tag: 0.11.23
