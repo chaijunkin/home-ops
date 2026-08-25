@@ -36,7 +36,7 @@ spec:
               MEMINI_DISTILL_ON_WRITE: "true"
               MEMINI_REEMBED_ON_MODEL_CHANGE: "true"
               MEMINI_EMBED_BASE_URL: http://litellm.ai:4000/v1
-              MEMINI_EMBED_MODEL: gemini-3.0-flash
+              MEMINI_EMBED_MODEL: gemini-3-flash
               MEMINI_EMBED_DIMS: "1024"
               MEMINI_EMBED_MAX_CONCURRENCY: "2"
               MEMINI_EMBED_MAX_ITEM_CHARS: "6000"
@@ -48,7 +48,7 @@ spec:
               MEMINI_LOG_FORMAT: json
               MEMINI_RECALL_MIN_SEMANTIC_SCORE: "0.46"
               MEMINI_RERANK: llm
-              MEMINI_RERANK_MODEL: gemini-3.0-flash
+              MEMINI_RERANK_MODEL: gemini-3-flash
               MEMINI_RERANK_MAX_CONCURRENCY: "2"
               MEMINI_RERANK_MAX_DOC_CHARS: "4000"
               MEMINI_RERANK_TIMEOUT: 8s
