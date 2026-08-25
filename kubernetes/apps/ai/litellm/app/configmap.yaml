@@ -83,6 +83,30 @@ data:
           api_base: https://opencode.ai/zen/go/v1
           api_key: os.environ/OPENCODE_GO_API_KEY
 
+      # memini memory pipeline — role-named routes (consumer-based naming,
+      # see kubernetes/apps/ai/llmkube/README.md). Embedding runs on LM
+      # Studio (jk-mac-mini); summary rides the Gemini flash tier.
+      - model_name: memini-embed
+        model_info:
+          mode: embedding
+          max_input_tokens: 32768
+        litellm_params:
+          model: openai/text-embedding-qwen3-embedding-0.6b
+          api_base: http://jk-mac-mini.cloudjur.com:1234/v1
+          api_key: lm-studio
+
+      - model_name: memini-summary
+        model_info:
+          mode: chat
+          max_input_tokens: 1048576
+          max_output_tokens: 65536
+          supports_function_calling: true
+          supports_vision: true
+        litellm_params:
+          model: openai/gemini-2.5-flash-lite
+          api_base: https://generativelanguage.googleapis.com/v1beta/openai
+          api_key: os.environ/GEMINI_API_KEY
+
       # ── Cloud Providers ───────────────────────────────────────────────────
 
       # # 0. Google Gemini (OpenAI-compat endpoint)

@@ -35,8 +35,8 @@ spec:
               MEMINI_DEMOTE_AFTER: 1440h
               MEMINI_DISTILL_ON_WRITE: "true"
               MEMINI_REEMBED_ON_MODEL_CHANGE: "true"
-              MEMINI_EMBED_BASE_URL: http://qwen3-embedding-0.6b.ai:8080/v1
-              MEMINI_EMBED_MODEL: qwen3-embedding
+              MEMINI_EMBED_BASE_URL: http://litellm.ai:4000/v1
+              MEMINI_EMBED_MODEL: memini-embed
               MEMINI_EMBED_DIMS: "1024"
               MEMINI_EMBED_MAX_CONCURRENCY: "2"
               MEMINI_EMBED_MAX_ITEM_CHARS: "6000"
@@ -47,8 +47,8 @@ spec:
               MEMINI_LLM_MODEL: gemini-2.5-flash-lite
               MEMINI_LOG_FORMAT: json
               MEMINI_RECALL_MIN_SEMANTIC_SCORE: "0.46"
-              MEMINI_RERANK: http://qwen3-reranker-0.6b.ai:8080/v1
-              MEMINI_RERANK_MODEL: qwen3-reranker
+              MEMINI_RERANK: http://memini-rerank.ai:8080/v1
+              MEMINI_RERANK_MODEL: memini-rerank
               MEMINI_RERANK_POOL: "50"
               MEMINI_RERANK_MAX_BATCH_CHARS: "120000"
               MEMINI_RERANK_TIMEOUT: 15s
