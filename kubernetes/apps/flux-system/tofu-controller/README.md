@@ -1,12 +1,12 @@
 # Tofu-Controller
 
-**Description:** To be filled.
+**Description:** Weaves GitOps Toolkit controller running OpenTofu in-cluster.
 **Category:** flux-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Tofu-Controller Source Code](https://github.com/search?q=tofu-controller)
+- **Project Repository:** [Tofu-Controller Source Code](https://github.com/flux-iac/tofu-controller)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

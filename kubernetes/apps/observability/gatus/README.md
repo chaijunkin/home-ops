@@ -1,13 +1,13 @@
 # Gatus
 
-**Description:** To be filled.
+**Description:** Health monitoring and status page driven by annotations.
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [Gatus Source Code](https://github.com/search?q=gatus)
-- **Helm/Manifest Source:** `http://gatus.observability:80`
+- **Project Repository:** [Gatus Source Code](https://github.com/TwiN/gatus)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

@@ -1,13 +1,13 @@
 # Bazarr
 
-**Description:** To be filled.
+**Description:** Companion managing subtitles for Sonarr/Radarr.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Bazarr Source Code](https://github.com/search?q=bazarr)
-- **Helm/Manifest Source:** `http://bazarr.downloads:6767`
+- **Project Repository:** [Bazarr Source Code](https://github.com/morpheus65535/bazarr)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

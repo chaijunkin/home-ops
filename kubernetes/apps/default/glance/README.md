@@ -1,12 +1,12 @@
 # Glance
 
-**Description:** To be filled.
+**Description:** Self-hosted dashboard aggregating feeds and service widgets.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Glance Source Code](https://github.com/search?q=glance)
+- **Project Repository:** [Glance Source Code](https://github.com/glanceapp/glance)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

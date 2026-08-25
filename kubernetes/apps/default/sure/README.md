@@ -1,12 +1,12 @@
 # Sure
 
-**Description:** To be filled.
+**Description:** Self-hosted personal finance manager.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Sure Source Code](https://github.com/search?q=sure)
+- **Project Repository:** [Sure Source Code](https://github.com/we-promise/sure)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

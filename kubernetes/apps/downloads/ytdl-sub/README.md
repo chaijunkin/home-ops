@@ -1,12 +1,12 @@
 # Ytdl-Sub
 
-**Description:** To be filled.
+**Description:** Automates YouTube downloads into media-library layout.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Ytdl-Sub Source Code](https://github.com/search?q=ytdl-sub)
+- **Project Repository:** [Ytdl-Sub Source Code](https://github.com/jmbannon/ytdl-sub)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

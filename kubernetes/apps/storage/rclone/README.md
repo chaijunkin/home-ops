@@ -1,12 +1,12 @@
 # Rclone
 
-**Description:** To be filled.
+**Description:** Cloud-storage sync/copy jobs.
 **Category:** storage
 
 ---
 
 ## Resources
-- **Project Repository:** [Rclone Source Code](https://github.com/search?q=rclone)
+- **Project Repository:** [Rclone Source Code](https://github.com/rclone/rclone)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

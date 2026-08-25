@@ -1,12 +1,12 @@
 # Certificates
 
-**Description:** To be filled.
+**Description:** TLS certificate issuance/import-export via cert-manager.
 **Category:** network
 
 ---
 
 ## Resources
-- **Project Repository:** [Certificates Source Code](https://github.com/search?q=certificates)
+- **Project Repository:** [Certificates Source Code](https://github.com/cert-manager/cert-manager)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

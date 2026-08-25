@@ -1,12 +1,12 @@
 # Profilarr
 
-**Description:** To be filled.
+**Description:** Quality-profile and custom-format management for *arr apps.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Profilarr Source Code](https://github.com/search?q=profilarr)
+- **Project Repository:** [Profilarr Source Code](https://github.com/Dictionarry-Hub/profilarr)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

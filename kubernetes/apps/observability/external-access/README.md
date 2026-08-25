@@ -1,13 +1,13 @@
 # External-Access
 
-**Description:** To be filled.
+**Description:** External access path for observability tooling (disabled WIP).
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [External-Access Source Code](https://github.com/search?q=external-access)
-- **Helm/Manifest Source:** `https://chaijunkin.grafana.net/`
+- **Project Repository:** [External-Access Source Code]()
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

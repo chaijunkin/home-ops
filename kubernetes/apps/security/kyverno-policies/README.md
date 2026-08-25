@@ -1,12 +1,12 @@
 # Kyverno-Policies
 
-**Description:** To be filled.
+**Description:** Kyverno best-practice cluster policy bundle.
 **Category:** security
 
 ---
 
 ## Resources
-- **Project Repository:** [Kyverno-Policies Source Code](https://github.com/search?q=kyverno-policies)
+- **Project Repository:** [Kyverno-Policies Source Code](https://kyverno.io/policies)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

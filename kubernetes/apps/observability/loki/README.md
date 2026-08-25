@@ -1,13 +1,13 @@
 # Loki
 
-**Description:** To be filled.
+**Description:** Horizontally scalable log aggregation system.
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [Loki Source Code](https://github.com/search?q=loki)
-- **Helm/Manifest Source:** `http://alertmanager-operated.observability.svc.cluster.local:9093`
+- **Project Repository:** [Loki Source Code](https://github.com/grafana/loki)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

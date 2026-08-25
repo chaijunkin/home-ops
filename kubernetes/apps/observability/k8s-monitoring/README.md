@@ -1,13 +1,13 @@
 # K8S-Monitoring
 
-**Description:** To be filled.
+**Description:** Alloy-based telemetry pipeline shipping metrics/logs/traces.
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [K8S-Monitoring Source Code](https://github.com/search?q=k8s-monitoring)
-- **Helm/Manifest Source:** `http://kube-prometheus-stack-prometheus.observability.svc.cluster.local:9090/api/v1/write`
+- **Project Repository:** [K8S-Monitoring Source Code](https://github.com/grafana/k8s-monitoring-helm)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

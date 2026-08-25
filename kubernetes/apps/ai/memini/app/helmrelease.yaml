@@ -36,7 +36,7 @@ spec:
               MEMINI_DISTILL_ON_WRITE: "true"
               MEMINI_REEMBED_ON_MODEL_CHANGE: "true"
               MEMINI_EMBED_BASE_URL: http://litellm.ai:4000/v1
-              MEMINI_EMBED_MODEL: opencode-embed
+              MEMINI_EMBED_MODEL: qwen3.5-plus
               MEMINI_EMBED_DIMS: "1024"
               MEMINI_EMBED_MAX_CONCURRENCY: "2"
               MEMINI_EMBED_MAX_ITEM_CHARS: "6000"
@@ -44,11 +44,11 @@ spec:
                 "Instruct: Given a user message, retrieve
                 relevant past memories\nQuery: "
               MEMINI_LLM_BASE_URL: http://litellm.ai:4000/v1
-              MEMINI_LLM_MODEL: qwen3.6-plus
+              MEMINI_LLM_MODEL: qwen3.5-plus
               MEMINI_LOG_FORMAT: json
               MEMINI_RECALL_MIN_SEMANTIC_SCORE: "0.46"
               MEMINI_RERANK: llm
-              MEMINI_RERANK_MODEL: qwen3.6-plus
+              MEMINI_RERANK_MODEL: qwen3.5-plus
               MEMINI_RERANK_MAX_CONCURRENCY: "2"
               MEMINI_RERANK_MAX_DOC_CHARS: "4000"
               MEMINI_RERANK_TIMEOUT: 8s

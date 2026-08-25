@@ -1,12 +1,12 @@
 # Synapse
 
-**Description:** To be filled.
+**Description:** Matrix homeserver implementation.
 **Category:** workadventure
 
 ---
 
 ## Resources
-- **Project Repository:** [Synapse Source Code](https://github.com/search?q=synapse)
+- **Project Repository:** [Synapse Source Code](https://github.com/element-hq/synapse)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

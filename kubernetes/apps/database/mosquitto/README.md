@@ -1,18 +1,18 @@
 # Mosquitto
 
-**Description:** To be filled.
+**Description:** Eclipse Mosquitto MQTT broker for home automation messaging.
 **Category:** database
 
 ---
 
 ## Resources
-- **Project Repository:** [Mosquitto Source Code](https://github.com/search?q=mosquitto)
+- **Project Repository:** [Mosquitto Source Code](https://github.com/eclipse/mosquitto)
 - **Helm/Manifest Source:** `Unknown`
 
 ---
 
 ## Related Links
-- [Documentation]() <!-- Add link to upstream docs -->
+- [Documentation](https://mosquitto.org)
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/mosquitto)
 
 ## Notes

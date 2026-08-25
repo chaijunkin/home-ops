@@ -1,12 +1,12 @@
 # Workadventure
 
-**Description:** To be filled.
+**Description:** Virtual office/social space rendered as a game.
 **Category:** workadventure
 
 ---
 
 ## Resources
-- **Project Repository:** [Workadventure Source Code](https://github.com/search?q=workadventure)
+- **Project Repository:** [Workadventure Source Code](https://github.com/workadventure/workadventure)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

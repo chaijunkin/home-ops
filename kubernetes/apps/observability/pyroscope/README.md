@@ -1,12 +1,12 @@
 # Pyroscope
 
-**Description:** To be filled.
+**Description:** Continuous profiling backend (currently disabled).
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [Pyroscope Source Code](https://github.com/search?q=pyroscope)
+- **Project Repository:** [Pyroscope Source Code](https://github.com/grafana/pyroscope)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,18 +1,18 @@
 # Autobrr
 
-**Description:** To be filled.
+**Description:** IRC-announce download automation for trackers.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Autobrr Source Code](https://github.com/search?q=autobrr)
-- **Helm/Manifest Source:** `http://autobrr.downloads:80`
+- **Project Repository:** [Autobrr Source Code](https://github.com/autobrr/autobrr)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 
 ## Related Links
-- [Documentation]() <!-- Add link to upstream docs -->
+- [Documentation](https://autobrr.com)
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/autobrr)
 
 ## Notes

@@ -1,12 +1,12 @@
 # Filebrowser
 
-**Description:** To be filled.
+**Description:** Web-based file manager over storage paths.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Filebrowser Source Code](https://github.com/search?q=filebrowser)
+- **Project Repository:** [Filebrowser Source Code](https://github.com/filebrowser/filebrowser)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

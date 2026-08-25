@@ -1,12 +1,12 @@
 # Pdf-Tool
 
-**Description:** To be filled.
+**Description:** Self-hosted PDF toolbox (merge, split, OCR, convert).
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Pdf-Tool Source Code](https://github.com/search?q=pdf-tool)
+- **Project Repository:** [Pdf-Tool Source Code](https://github.com/Stirling-Tools/Stirling-PDF)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

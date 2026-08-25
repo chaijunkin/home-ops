@@ -1,12 +1,12 @@
 # Kopia
 
-**Description:** To be filled.
+**Description:** Fast incremental encrypted backup engine.
 **Category:** storage
 
 ---
 
 ## Resources
-- **Project Repository:** [Kopia Source Code](https://github.com/search?q=kopia)
+- **Project Repository:** [Kopia Source Code](https://github.com/kopia/kopia)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

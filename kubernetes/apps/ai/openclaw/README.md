@@ -1,12 +1,12 @@
 # Openclaw
 
-**Description:** Personal AI assistant gateway orchestrating agents, chat, and automation.
+**Description:** Personal AI assistant gateway with dispatch/chat/memory sidecars.
 **Category:** ai
 
 ---
 
 ## Resources
-- **Project Repository:** [Openclaw Source Code](https://github.com/search?q=openclaw)
+- **Project Repository:** [Openclaw Source Code]()
 - **Helm/Manifest Source:** `Unknown`
 
 ---
@@ -16,4 +16,4 @@
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/openclaw)
 
 ## Notes
-- Composed of multiple sidecars: `dispatch`, `extended-memory`, `idle-watcher`, and `miso-chat`, plus a `curl` health-check container.
+- *Add operational notes, gotchas, or specific configurations here.*

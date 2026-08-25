@@ -1,12 +1,12 @@
 # Tika
 
-**Description:** To be filled.
+**Description:** Apache Tika text extraction server (Paperless companion).
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Tika Source Code](https://github.com/search?q=tika)
+- **Project Repository:** [Tika Source Code](https://github.com/apache/tika)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,12 +1,12 @@
 # Maintainerr
 
-**Description:** To be filled.
+**Description:** Automated media cleanup rules for Plex/*arr.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Maintainerr Source Code](https://github.com/search?q=maintainerr)
+- **Project Repository:** [Maintainerr Source Code](https://github.com/jorenn92/Maintainerr)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

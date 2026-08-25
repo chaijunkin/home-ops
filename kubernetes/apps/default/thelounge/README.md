@@ -1,12 +1,12 @@
 # Thelounge
 
-**Description:** To be filled.
+**Description:** Modern self-hosted web IRC client (always connected).
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Thelounge Source Code](https://github.com/search?q=thelounge)
+- **Project Repository:** [Thelounge Source Code](https://github.com/thelounge/thelounge)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

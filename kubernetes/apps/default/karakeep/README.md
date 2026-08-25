@@ -1,12 +1,12 @@
 # Karakeep
 
-**Description:** To be filled.
+**Description:** Bookmark-everything app (links, notes, images) with search.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Karakeep Source Code](https://github.com/search?q=karakeep)
+- **Project Repository:** [Karakeep Source Code](https://github.com/karakeep-app/karakeep)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

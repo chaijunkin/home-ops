@@ -1,12 +1,12 @@
 # Qui
 
-**Description:** To be filled.
+**Description:** Modern multi-instance qBittorrent web interface.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Qui Source Code](https://github.com/search?q=qui)
+- **Project Repository:** [Qui Source Code](https://github.com/autobrr/qui)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,12 +1,12 @@
 # Csi-Driver-Nfs
 
-**Description:** To be filled.
+**Description:** CSI driver provisioning NFS-backed volumes.
 **Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Csi-Driver-Nfs Source Code](https://github.com/search?q=csi-driver-nfs)
+- **Project Repository:** [Csi-Driver-Nfs Source Code](https://github.com/kubernetes-csi/csi-driver-nfs)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

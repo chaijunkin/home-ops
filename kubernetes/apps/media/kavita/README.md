@@ -1,12 +1,12 @@
 # Kavita
 
-**Description:** To be filled.
+**Description:** Self-hosted library server for comics, books and manga.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Kavita Source Code](https://github.com/search?q=kavita)
+- **Project Repository:** [Kavita Source Code](https://github.com/Kareadita/Kavita)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

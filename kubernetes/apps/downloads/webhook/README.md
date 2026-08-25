@@ -1,12 +1,12 @@
 # Webhook
 
-**Description:** To be filled.
+**Description:** Alertmanager webhook receiver driving remediation jobs.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Webhook Source Code](https://github.com/search?q=webhook)
+- **Project Repository:** [Webhook Source Code]()
 - **Helm/Manifest Source:** `Unknown`
 
 ---

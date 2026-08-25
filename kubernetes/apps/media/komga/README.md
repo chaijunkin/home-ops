@@ -1,12 +1,12 @@
 # Komga
 
-**Description:** To be filled.
+**Description:** Media server for comics, manga and magazines.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Komga Source Code](https://github.com/search?q=komga)
+- **Project Repository:** [Komga Source Code](https://github.com/gotson/komga)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

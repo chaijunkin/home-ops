@@ -1,12 +1,12 @@
 # Echo-Server
 
-**Description:** To be filled.
+**Description:** Echo endpoints returning request details (connectivity tests).
 **Category:** network
 
 ---
 
 ## Resources
-- **Project Repository:** [Echo-Server Source Code](https://github.com/search?q=echo-server)
+- **Project Repository:** [Echo-Server Source Code](https://github.com/mendhak/http-https-echo)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

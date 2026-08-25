@@ -1,12 +1,12 @@
 # Reloader
 
-**Description:** To be filled.
+**Description:** Rolls pods when ConfigMaps/Secrets change.
 **Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Reloader Source Code](https://github.com/search?q=reloader)
+- **Project Repository:** [Reloader Source Code](https://github.com/stakater/Reloader)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

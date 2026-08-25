@@ -1,12 +1,12 @@
 # Kubernetes-Schemas
 
-**Description:** To be filled.
+**Description:** Publishes CRD JSON schemas for validation/editing.
 **Category:** flux-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Kubernetes-Schemas Source Code](https://github.com/search?q=kubernetes-schemas)
+- **Project Repository:** [Kubernetes-Schemas Source Code]()
 - **Helm/Manifest Source:** `Unknown`
 
 ---

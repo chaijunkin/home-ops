@@ -1,12 +1,12 @@
 # Exporters
 
-**Description:** To be filled.
+**Description:** Umbrella for metric exporters (blackbox, nut, speedtest, opnsense).
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [Exporters Source Code](https://github.com/search?q=exporters)
+- **Project Repository:** [Exporters Source Code]()
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,13 +1,13 @@
 # Seerr
 
-**Description:** To be filled.
+**Description:** Media request and discovery manager.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Seerr Source Code](https://github.com/search?q=seerr)
-- **Helm/Manifest Source:** `http://seerr.media:80`
+- **Project Repository:** [Seerr Source Code](https://github.com/seerr-team/seerr)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

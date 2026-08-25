@@ -1,12 +1,12 @@
 # Recyclarr
 
-**Description:** To be filled.
+**Description:** Syncs TRaSH Guides settings into Sonarr/Radarr.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Recyclarr Source Code](https://github.com/search?q=recyclarr)
+- **Project Repository:** [Recyclarr Source Code](https://github.com/recyclarr/recyclarr)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

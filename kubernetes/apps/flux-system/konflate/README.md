@@ -1,13 +1,13 @@
 # Konflate
 
-**Description:** Tool for assembling configuration from multiple sources into a single view.
+**Description:** Configuration assembly from multiple sources.
 **Category:** flux-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Konflate Source Code](https://github.com/search?q=konflate)
-- **Helm/Manifest Source:** `oci://ghcr.io/home-operations/charts/konflate`
+- **Project Repository:** [Konflate Source Code]()
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 
@@ -16,4 +16,4 @@
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/cloud-native/konflate)
 
 ## Notes
-- Deployed from the home-operations OCI chart (`0.6.1`).
+- *Add operational notes, gotchas, or specific configurations here.*

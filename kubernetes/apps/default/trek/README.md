@@ -1,12 +1,12 @@
 # Trek
 
-**Description:** Trip planning application for itineraries and travel collaboration.
+**Description:** Trip itinerary planning application.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Trek Source Code](https://github.com/search?q=trek)
+- **Project Repository:** [Trek Source Code]()
 - **Helm/Manifest Source:** `Unknown`
 
 ---
@@ -16,4 +16,4 @@
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/trek)
 
 ## Notes
-- Exposed via the external gateway at `trips.cloudjur.com`.
+- *Add operational notes, gotchas, or specific configurations here.*

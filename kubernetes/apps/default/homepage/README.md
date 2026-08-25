@@ -1,18 +1,18 @@
 # Homepage
 
-**Description:** To be filled.
+**Description:** Cluster landing dashboard with annotation-based service discovery.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Homepage Source Code](https://github.com/search?q=homepage)
-- **Helm/Manifest Source:** `https://gateway.cloudjur.com`
+- **Project Repository:** [Homepage Source Code](https://github.com/gethomepage/homepage)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 
 ## Related Links
-- [Documentation]() <!-- Add link to upstream docs -->
+- [Documentation](https://gethomepage.dev)
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/homepage)
 
 ## Notes

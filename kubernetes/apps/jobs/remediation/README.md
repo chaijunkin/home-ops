@@ -1,12 +1,12 @@
 # Remediation
 
-**Description:** To be filled.
+**Description:** Scheduled remediation jobs using a custom utility image.
 **Category:** jobs
 
 ---
 
 ## Resources
-- **Project Repository:** [Remediation Source Code](https://github.com/search?q=remediation)
+- **Project Repository:** [Remediation Source Code]()
 - **Helm/Manifest Source:** `Unknown`
 
 ---

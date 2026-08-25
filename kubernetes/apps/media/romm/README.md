@@ -1,12 +1,12 @@
 # Romm
 
-**Description:** To be filled.
+**Description:** Emulation ROM library manager with metadata.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Romm Source Code](https://github.com/search?q=romm)
+- **Project Repository:** [Romm Source Code](https://github.com/rommapp/romm)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

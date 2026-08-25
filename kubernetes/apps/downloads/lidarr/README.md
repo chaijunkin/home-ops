@@ -1,13 +1,13 @@
 # Lidarr
 
-**Description:** To be filled.
+**Description:** Music collection manager for Usenet/Bittorrent.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Lidarr Source Code](https://github.com/search?q=lidarr)
-- **Helm/Manifest Source:** `http://lidarr.downloads`
+- **Project Repository:** [Lidarr Source Code](https://github.com/Lidarr/Lidarr)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

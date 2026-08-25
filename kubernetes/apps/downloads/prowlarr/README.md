@@ -1,13 +1,13 @@
 # Prowlarr
 
-**Description:** To be filled.
+**Description:** Indexer manager/proxy feeding the *arr stack.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Prowlarr Source Code](https://github.com/search?q=prowlarr)
-- **Helm/Manifest Source:** `http://prowlarr.downloads`
+- **Project Repository:** [Prowlarr Source Code](https://github.com/Prowlarr/Prowlarr)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

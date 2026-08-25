@@ -1,12 +1,12 @@
 # It-Tools
 
-**Description:** To be filled.
+**Description:** Collection of handy developer web tools.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [It-Tools Source Code](https://github.com/search?q=it-tools)
+- **Project Repository:** [It-Tools Source Code](https://github.com/CorentinTh/it-tools)
 - **Helm/Manifest Source:** `Unknown`
 
 ---
