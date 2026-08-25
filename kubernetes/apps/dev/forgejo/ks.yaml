@@ -26,8 +26,9 @@ spec:
       APP: *app
       APP_UID: "1000"
       APP_GID: "1000"
-      KOPIUR_PUID: "1000"
-      KOPIUR_PGID: "1000"
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
+      KOPIUR_NONROOT: "false"
       VOLSYNC_CAPACITY: 10Gi
       ANUBIS_TARGET: http://forgejo-http.dev.svc.cluster.local:3000
       ANUBIS_MEM_LIMIT: 384Mi

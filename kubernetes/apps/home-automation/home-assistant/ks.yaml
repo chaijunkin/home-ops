@@ -20,6 +20,9 @@ spec:
     substitute:
       APP: home-assistant
       SUBDOMAIN: hass
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
+      KOPIUR_NONROOT: "false"
       VOLSYNC_CAPACITY: 5Gi
   components:
     # - ../../../../components/volsync
