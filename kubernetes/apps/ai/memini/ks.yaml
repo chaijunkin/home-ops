@@ -15,9 +15,9 @@ spec:
     - ../../../../components/kopiur/backup
     # - ../../../../components/kopiur/adhoc-snapshot
   path: ./kubernetes/apps/ai/memini/app
-  dependsOn:
-    - name: llmkube-models
-      namespace: ai
+  # dependsOn:
+  #   - name: llmkube
+  #     namespace: ai
   prune: true
   sourceRef:
     kind: GitRepository

@@ -1,12 +1,25 @@
+# Cluster-local fallback for memini embeddings (Qwen3-Embedding-0.6B on CPU).
+#
+# NOT reconciled by default: `kubernetes/apps/ai/memini/app/kustomization.yaml`
+# only ships `memini-rerank.yaml`. Embeddings are currently served by LM Studio
+# on jk-mac-mini via LiteLLM (`model_name: memini-embed`), which keeps the
+# k8s-0 CPUs free and was verified at 1024 dims.
+#
+# To flip back to cluster-local embedding:
+#   1. add `- ./memini-embed.yaml` to ../kustomization.yaml resources
+#   2. point MEMINI_EMBED_BASE_URL at http://memini-embed.ai:8080/v1
+#   3. set MEMINI_EMBED_MODEL to memini-embed
+#   4. keep MEMINI_EMBED_DIMS=1024 (native Qwen3-Embedding-0.6B size) and the
+#      existing Instruct query prefix — both match this model.
 # yaml-language-server: $schema=https://crd.cloudjur.com/inference.llmkube.dev/model_v1alpha1.json
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: Model
 metadata:
-  name: qwen3-reranker-0.6b
+  name: memini-embed
 spec:
-  source: hf://ggml-org/Qwen3-Reranker-0.6B-Q8_0-GGUF
+  source: hf://Qwen/Qwen3-Embedding-0.6B-GGUF
   files:
-    - qwen3-reranker-0.6b-q8_0.gguf
+    - Qwen3-Embedding-0.6B-Q8_0.gguf
   format: gguf
   quantization: Q8_0
   hardware:
@@ -16,28 +29,24 @@ spec:
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: InferenceService
 metadata:
-  name: qwen3-reranker-0.6b
+  name: memini-embed
 spec:
-  modelRef: qwen3-reranker-0.6b
+  modelRef: memini-embed
   runtime: llamacpp
   image: ghcr.io/ggml-org/llama.cpp:server@sha256:c005e79321f8e5731ec49a7f736aaeaac9465926c1e8f4c199c1d8a8996f26ef
-  rolloutPolicy:
-    waitForIdle: true
-    idleTimeoutSeconds: 3600
   replicas: 1
   priority: normal
-  contextSize: 16384
+  contextSize: 32768
   parallelSlots: 2
-  batchSize: 4096
-  uBatchSize: 4096
+  batchSize: 16384
+  uBatchSize: 16384
   extraArgs:
     - --alias
-    - qwen3-reranker
-    - --rerank
+    - memini-embed
+    - --embeddings
     - --pooling
-    - rank
+    - last
     - --cont-batching
-    - --kv-unified
     - --threads
     - "6"
     - --threads-batch

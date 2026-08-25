@@ -2,11 +2,11 @@
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: Model
 metadata:
-  name: qwen3-embedding-0.6b
+  name: memini-rerank
 spec:
-  source: hf://Qwen/Qwen3-Embedding-0.6B-GGUF
+  source: hf://ggml-org/Qwen3-Reranker-0.6B-Q8_0-GGUF
   files:
-    - Qwen3-Embedding-0.6B-Q8_0.gguf
+    - qwen3-reranker-0.6b-q8_0.gguf
   format: gguf
   quantization: Q8_0
   hardware:
@@ -16,27 +16,25 @@ spec:
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: InferenceService
 metadata:
-  name: qwen3-embedding-0.6b
+  name: memini-rerank
 spec:
-  modelRef: qwen3-embedding-0.6b
+  modelRef: memini-rerank
   runtime: llamacpp
   image: ghcr.io/ggml-org/llama.cpp:server@sha256:c005e79321f8e5731ec49a7f736aaeaac9465926c1e8f4c199c1d8a8996f26ef
-  rolloutPolicy:
-    waitForIdle: true
-    idleTimeoutSeconds: 3600
   replicas: 1
   priority: normal
-  contextSize: 32768
+  contextSize: 16384
   parallelSlots: 2
-  batchSize: 16384
-  uBatchSize: 16384
+  batchSize: 4096
+  uBatchSize: 4096
   extraArgs:
     - --alias
-    - qwen3-embedding
-    - --embeddings
+    - memini-rerank
+    - --rerank
     - --pooling
-    - last
+    - rank
     - --cont-batching
+    - --kv-unified
     - --threads
     - "6"
     - --threads-batch
