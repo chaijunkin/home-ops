@@ -86,21 +86,21 @@ data:
       # ── Cloud Providers ───────────────────────────────────────────────────
 
       # # 0. Google Gemini (OpenAI-compat endpoint)
-      # - model_name: gemini-3-flash
-      #   model_info:
-      #     mode: chat
-      #     input_cost_per_token: 0.0000012500
-      #     cache_read_input_token_cost: 0.0000003125
-      #     output_cost_per_token: 0.0000100000
-      #     max_input_tokens: 1048576
-      #     max_output_tokens: 65536
-      #     supports_function_calling: true
-      #     supports_vision: true
-      #     supports_prompt_caching: true
-      #   litellm_params:
-      #     model: openai/gemini-3-flash
-      #     api_base: https://generativelanguage.googleapis.com/v1beta/openai
-      #     api_key: os.environ/GEMINI_API_KEY
+      - model_name: gemini-3-flash
+        model_info:
+          mode: chat
+          input_cost_per_token: 0.0000012500
+          cache_read_input_token_cost: 0.0000003125
+          output_cost_per_token: 0.0000100000
+          max_input_tokens: 1048576
+          max_output_tokens: 65536
+          supports_function_calling: true
+          supports_vision: true
+          supports_prompt_caching: true
+        litellm_params:
+          model: openai/gemini-3-flash
+          api_base: https://generativelanguage.googleapis.com/v1beta/openai
+          api_key: os.environ/GEMINI_API_KEY
 
       # 1. OpenRouter (aggregator — model name is passed through as-is)
       - model_name: "openrouter/*"
