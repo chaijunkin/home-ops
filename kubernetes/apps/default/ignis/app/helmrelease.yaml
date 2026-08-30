@@ -37,12 +37,25 @@ spec:
                 cpu: 10m
               limits:
                 memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: true
+              capabilities:
+                add:
+                  - CHOWN
+                  - FOWNER
+                  - SETUID
+                  - SETGID
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: false
+              runAsUser: 0
     defaultPodOptions:
       securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: false
+        seccompProfile:
+          type: RuntimeDefault
     service:
       app:
         controller: ignis
@@ -76,6 +89,8 @@ spec:
         globalMounts:
           - path: /app/obsidian-app
       default-vault:
-        existingClaim: default-vault-smb-pvc
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps/Obsidian/DefaultVault
         globalMounts:
           - path: /vaults/defaultvault

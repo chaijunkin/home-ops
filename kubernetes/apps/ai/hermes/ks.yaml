@@ -31,6 +31,3 @@ spec:
       KOPIUR_PUID: "0"
       KOPIUR_PGID: "0"
       KOPIUR_NONROOT: "false"
-  dependsOn:
-    - name: default-vault-smb
-      namespace: ai

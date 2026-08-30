@@ -148,6 +148,8 @@
         - /tank/Apps/comfyui/input
         - /tank/Apps/comfyui/output
         - /tank/Apps/openclaw
+        - /tank/Apps/Obsidian
+        - /tank/Apps/Obsidian/DefaultVault
         - /tank/Backup/Database
         - /tank/Backup/Volsync
         - /tank/Backup/Kopiur

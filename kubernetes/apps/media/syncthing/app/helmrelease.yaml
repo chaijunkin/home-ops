@@ -137,6 +137,12 @@ spec:
         path: /tank/Storage
         globalMounts:
           - path: /media
+      default-vault:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps/Obsidian/DefaultVault
+        globalMounts:
+          - path: /defaultvault
     serviceMonitor:
       app:
         serviceName: syncthing

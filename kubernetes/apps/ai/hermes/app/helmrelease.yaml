@@ -186,6 +186,8 @@ spec:
         globalMounts:
           - path: /mnt/gallery
       default-vault:
-        existingClaim: default-vault-smb-pvc
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps/Obsidian/DefaultVault
         globalMounts:
           - path: /mnt/defaultvault

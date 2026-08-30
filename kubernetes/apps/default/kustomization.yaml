@@ -12,7 +12,6 @@ resources:
   - ./cyberchef/ks.yaml
     # - ./changedetection/ks.yaml
     # - ./freshrss/ks.yaml
-  - ./default-vault-smb/ks.yaml
   - ./glance/ks.yaml
   - ./homepage/ks.yaml
   - ./ignis/ks.yaml

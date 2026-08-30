@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/kopiur/backup
-    # - ../../../../components/kopiur/remote
+    - ../../../../components/kopiur/remote
   interval: 1h
   path: ./kubernetes/apps/default/ignis/app
   prune: true
@@ -32,5 +32,3 @@ spec:
   dependsOn:
     - name: openebs
       namespace: storage
-    - name: default-vault-smb
-      namespace: default
