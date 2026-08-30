@@ -109,3 +109,11 @@ data:
     DISCORD_HOME_CHANNEL={{ .DISCORD_HOME_CHANNEL }}
     DISCORD_FREE_RESPONSE_CHANNELS={{ .DISCORD_FREE_RESPONSE_CHANNELS }}
     MEMINI_API_KEY={{ .MEMINI_API_KEY }}
+  ssh_config: |
+    Host git.cloudjur.com
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+      ServerAliveInterval 60
+      ServerAliveCountMax 3
+      AddKeysToAgent yes

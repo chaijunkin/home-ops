@@ -46,6 +46,10 @@ spec:
                   cp /tmp/ssh/id_ed25519.pub /opt/data/.ssh/id_ed25519.pub
                   chmod 644 /opt/data/.ssh/id_ed25519.pub
                 fi
+                if [ -f /tmp/ssh_config ]; then
+                  cp /tmp/ssh_config /opt/data/.ssh/config
+                  chmod 600 /opt/data/.ssh/config
+                fi
                 chmod 700 /opt/data/.ssh
                 chown -R 10000:10000 /opt/data/.ssh
                 # Install the memini memory-provider plugin from the upstream
@@ -181,6 +185,8 @@ spec:
             init:
               - path: /tmp/config.yaml
                 subPath: config.yaml
+              - path: /tmp/ssh_config
+                subPath: ssh_config
       env:
         type: secret
         name: hermes
