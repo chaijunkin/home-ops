@@ -111,9 +111,22 @@ data:
     MEMINI_API_KEY={{ .MEMINI_API_KEY }}
   ssh_config: |
     Host git.cloudjur.com
+      HostName git.cloudjur.com
+      User git
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+
+    Host github.com
+      HostName github.com
+      User git
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+
+    Host *
       IdentityFile /opt/data/.ssh/id_ed25519
       StrictHostKeyChecking accept-new
       UserKnownHostsFile /opt/data/.ssh/known_hosts
       ServerAliveInterval 60
       ServerAliveCountMax 3
-      AddKeysToAgent yes

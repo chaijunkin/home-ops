@@ -90,6 +90,7 @@ spec:
               MEMINI_NAMESPACE: hermes
               HERMES_HOME: /opt/data
               HOME: /opt/data
+              GIT_SSH_COMMAND: "ssh -F /opt/data/.ssh/config"
               OBSIDIAN_VAULT_PATH: /mnt/defaultvault
               TZ: Asia/Kuala_Lumpur
             envFrom:
@@ -119,6 +120,7 @@ spec:
               runAsNonRoot: true
             env:
               HOME: /opt/data
+              GIT_SSH_COMMAND: "ssh -F /opt/data/.ssh/config"
               OBSIDIAN_VAULT_PATH: /mnt/defaultvault
               TZ: Asia/Kuala_Lumpur
             args:
@@ -187,6 +189,9 @@ spec:
                 subPath: config.yaml
               - path: /tmp/ssh_config
                 subPath: ssh_config
+            app:
+              - path: /root/.ssh/config
+                subPath: ssh_config
       env:
         type: secret
         name: hermes
@@ -204,6 +209,11 @@ spec:
           hermes:
             init:
               - path: /tmp/ssh
+            app:
+              - path: /root/.ssh/id_ed25519
+                subPath: id_ed25519
+              - path: /root/.ssh/id_ed25519.pub
+                subPath: id_ed25519.pub
       gallery:
         type: nfs
         server: smb.cloudjur.com
