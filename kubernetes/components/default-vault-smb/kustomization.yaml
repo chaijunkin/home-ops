@@ -5,3 +5,14 @@ resources:
   - ./externalsecret.yaml
   - ./pv.yaml
   - ./pvc.yaml
+replacements:
+  - source:
+      kind: PersistentVolumeClaim
+      name: default-vault-smb-pvc
+      fieldPath: metadata.namespace
+    targets:
+      - select:
+          kind: PersistentVolume
+          name: default-vault-smb-pv
+        fieldPaths:
+          - spec.csi.nodeStageSecretRef.namespace

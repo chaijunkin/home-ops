@@ -17,9 +17,9 @@ spec:
   csi:
     driver: smb.csi.k8s.io
     readOnly: false
-    volumeHandle: hass-default-vault-smb
+    volumeHandle: default-vault-smb
     volumeAttributes:
       source: "//jk-mac-mini.cloudjur.com/Macintosh HD/Users/jkchai/Documents/DefaultVault"
     nodeStageSecretRef:
       name: default-vault-smb-secret
-      namespace: home-automation
+      namespace: default # Replaced dynamically by Kustomize
