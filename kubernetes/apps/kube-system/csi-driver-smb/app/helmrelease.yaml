@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: csi-driver-smb
+  namespace: kube-system
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.15.0 # Update this tag if a newer version is mirrored
+  url: oci://ghcr.io/home-operations/charts-mirror/csi-driver-smb
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: csi-driver-smb
+  namespace: kube-system
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: csi-driver-smb
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    feature:
+      enableGetVolumeStats: true
+    controller:
+      name: csi-smb-controller
+      replicas: 1
+      dnsPolicy: ClusterFirstWithHostNet
+      metricsPort: 29644
+      livenessProbe:
+        healthPort: 29642
+      runOnMaster: false
+      runOnControlPlane: false
+      logLevel: 5
+      workingMountDir: "/tmp"
+    node:
+      maxUnavailable: 1
+      logLevel: 5
+      livenessProbe:
+        healthPort: 29643
+    linux:
+      enabled: true
+      kubelet: /var/lib/
