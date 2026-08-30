@@ -148,7 +148,7 @@ spec:
         globalMounts:
           - path: /config/.venv
       default-vault:
-        existingClaim: hass-default-vault-smb-pvc
+        existingClaim: default-vault-smb-pvc
         advancedMounts:
           home-assistant:
             app:

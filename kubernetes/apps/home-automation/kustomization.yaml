@@ -5,6 +5,7 @@ namespace: home-automation
 components:
   - ../../components/kopiur/secret
   - ../../components/common
+  - ../../components/default-vault-smb
 resources:
   - ./namespace.yaml
     # # - ./dsmr-reader/ks.yaml

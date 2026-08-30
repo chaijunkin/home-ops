@@ -12,14 +12,14 @@ spec:
   mountOptions:
     - dir_mode=0777
     - file_mode=0777
-    - uid=568
-    - gid=568
+    - uid=2000
+    - gid=2000
   csi:
     driver: smb.csi.k8s.io
     readOnly: false
-    volumeHandle: default-vault-smb
+    volumeHandle: hass-default-vault-smb
     volumeAttributes:
       source: "//jk-mac-mini.cloudjur.com/Macintosh HD/Users/jkchai/Documents/DefaultVault"
     nodeStageSecretRef:
       name: default-vault-smb-secret
-      namespace: default
+      namespace: home-automation
