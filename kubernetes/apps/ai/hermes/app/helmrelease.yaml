@@ -37,6 +37,17 @@ spec:
                 cp /tmp/env /opt/data/.env
                 chown 10000:10000 /opt/data/.env
                 chown 10000:10000 /opt/data/config.yaml
+                mkdir -p /opt/data/.ssh
+                if [ -f /tmp/ssh/id_ed25519 ]; then
+                  cp /tmp/ssh/id_ed25519 /opt/data/.ssh/id_ed25519
+                  chmod 600 /opt/data/.ssh/id_ed25519
+                fi
+                if [ -f /tmp/ssh/id_ed25519.pub ]; then
+                  cp /tmp/ssh/id_ed25519.pub /opt/data/.ssh/id_ed25519.pub
+                  chmod 644 /opt/data/.ssh/id_ed25519.pub
+                fi
+                chmod 700 /opt/data/.ssh
+                chown -R 10000:10000 /opt/data/.ssh
                 # Install the memini memory-provider plugin from the upstream
                 # standalone mirror eleboucher/memini-hermes (a release-synced
                 # copy of integrations/hermes/plugin/memini — the blessed
@@ -179,6 +190,14 @@ spec:
             init:
               - path: /tmp/env
                 subPath: env
+      ssh:
+        type: secret
+        name: hermes-ssh
+        defaultMode: 0o400
+        advancedMounts:
+          hermes:
+            init:
+              - path: /tmp/ssh
       gallery:
         type: nfs
         server: smb.cloudjur.com
