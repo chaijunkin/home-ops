@@ -7,7 +7,7 @@ spec:
   modelName: memini-summary
   proxyRef: litellm
   params:
-    model: zhipu/glm-5.3-flash
+    model: zhipuai/glm-5.3-flash
     apiBase: https://opencode.ai/zen/go/v1
     apiKey: os.environ/OPENCODE_GO_API_KEY
     dropParams: true
