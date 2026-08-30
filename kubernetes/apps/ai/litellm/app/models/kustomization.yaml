@@ -4,12 +4,14 @@ kind: Kustomization
 resources:
   - ./auto.yaml
   - ./cerebras-wildcard.yaml
+  - ./dsv4f.yaml
   - ./frontier-pool-1.yaml
   - ./frontier-pool-2.yaml
   - ./frontier-pool-3.yaml
   - ./gemini-2.5-flash-lite.yaml
   - ./gemini-wildcard.yaml
   - ./glm-5.1.yaml
+  - ./glm-5.3-flash.yaml
   - ./groq-wildcard.yaml
   - ./hf-wildcard.yaml
   - ./ilmu-wildcard.yaml

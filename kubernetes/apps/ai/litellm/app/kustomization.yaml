@@ -6,5 +6,6 @@ resources:
   - ./grafanadashboard.yaml
   - ./litellmproxy.yaml
   - ./models
+  - ./prometheusrule.yaml
   - ./servicemonitor.yaml
   - ./dashboard

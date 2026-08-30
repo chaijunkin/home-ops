@@ -2,9 +2,9 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: memini-summary
+  name: glm-5.3-flash
 spec:
-  modelName: memini-summary
+  modelName: glm-5.3-flash
   proxyRef: litellm
   params:
     model: zhipu/glm-5.3-flash

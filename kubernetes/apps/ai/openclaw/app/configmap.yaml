@@ -14,8 +14,10 @@ data:
           thinkingDefault: "high",
           timeoutSeconds: 600,
           "model": {
-            "primary": "litellm/gemini-2.5-flash-lite",
+            "primary": "litellm/glm-5.3-flash",
             "fallbacks": [
+              "litellm/dsv4f",
+              "litellm/gemini-2.5-flash-lite",
               "litellm/self-hosted",
               "litellm/openrouter/deepseek/deepseek-chat",
             ]
@@ -30,6 +32,8 @@ data:
             "primary": "comfy/workflow",
           },
           "models": {
+            "litellm/glm-5.3-flash": { "alias": "glm-5.3-flash" },
+            "litellm/dsv4f": { "alias": "dsv4f" },
             "litellm/gemini-2.5-flash-lite": { "alias": "gemini-flash" },
             "litellm/self-hosted": { "alias": "skirk", "params": { "cache_prompt": true } },
             "litellm/openrouter/deepseek/deepseek-chat": { "alias": "deepseek-chat" },
@@ -48,7 +52,7 @@ data:
           "maxConcurrent": 4,
           "subagents": {
             "model": {
-              "primary": "litellm/gemini-2.5-flash-lite",
+              "primary": "litellm/glm-5.3-flash",
             },
             "archiveAfterMinutes": 120,
             "maxConcurrent": 3,
@@ -86,6 +90,8 @@ data:
             "api": "openai-completions",
             "timeoutSeconds": 600,
             "models": [
+              { "id": "glm-5.3-flash", "name": "GLM 5.3 Flash", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0.15, "output": 0.50, "cacheRead": 0.03, "cacheWrite": 0.15 }, "contextWindow": 1000000, "maxTokens": 131072 },
+              { "id": "dsv4f", "name": "DeepSeek V4 Flash", "reasoning": true, "input": ["text"], "cost": { "input": 0.22, "output": 0.66, "cacheRead": 0.007, "cacheWrite": 0.22 }, "contextWindow": 1000000, "maxTokens": 16384 },
               { "id": "gemini-2.5-flash-lite", "name": "Gemini 3 Flash", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1048576, "maxTokens": 65536 },
               { "id": "self-hosted", "name": "Qwen3.6-35B-A3B UD Q8_K_XL (ROCm)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 16384 },
               { "id": "openrouter/deepseek/deepseek-chat", "name": "DeepSeek Chat (OpenRouter)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 128000, "maxTokens": 8192 },

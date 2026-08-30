@@ -6,9 +6,13 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: kimi-k2.6
+      default: glm-5.3-flash
       provider: litellm
     fallback_providers:
+      - provider: litellm
+        model: dsv4f
+      - provider: litellm
+        model: kimi-k2.6
       - provider: litellm
         model: self-hosted
       - provider: litellm

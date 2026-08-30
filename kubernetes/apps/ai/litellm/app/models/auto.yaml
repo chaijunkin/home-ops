@@ -9,11 +9,11 @@ spec:
   params:
     model: auto_router/complexity_router
     additional:
-      complexity_router_default_model: gemini-2.5-flash-lite
+      complexity_router_default_model: glm-5.3-flash
       complexity_router_config:
         tiers:
           SIMPLE: self-hosted
-          MEDIUM: gemini-2.5-flash-lite
+          MEDIUM: glm-5.3-flash
           COMPLEX: reasoning-pool
           REASONING: frontier-pool
         tier_boundaries:
