@@ -22,4 +22,4 @@ spec:
       source: "//jk-mac-mini.cloudjur.com/Macintosh HD/Users/jkchai/Documents/DefaultVault"
     nodeStageSecretRef:
       name: default-vault-smb-secret
-      namespace: default # Replaced dynamically by Kustomize
+      namespace: ${NAMESPACE}
