@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: default-vault-smb-pv
+  name: default-vault-smb-pv-${NAMESPACE}
 spec:
   accessModes:
     - ReadWriteMany
@@ -17,7 +17,7 @@ spec:
   csi:
     driver: smb.csi.k8s.io
     readOnly: false
-    volumeHandle: default-vault-smb
+    volumeHandle: default-vault-smb-${NAMESPACE}
     volumeAttributes:
       source: "//jk-mac-mini.cloudjur.com/Macintosh HD/Users/jkchai/Documents/DefaultVault"
     nodeStageSecretRef:

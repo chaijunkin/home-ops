@@ -9,4 +9,4 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: smb
-  volumeName: default-vault-smb-pv
+  volumeName: default-vault-smb-pv-${NAMESPACE}

@@ -12,8 +12,10 @@ resources:
   - ./cyberchef/ks.yaml
     # - ./changedetection/ks.yaml
     # - ./freshrss/ks.yaml
+  - ./default-vault-smb/ks.yaml
   - ./glance/ks.yaml
   - ./homepage/ks.yaml
+  - ./ignis/ks.yaml
   - ./it-tools/ks.yaml
     # - ./karakeep/ks.yaml
   - ./n8n/ks.yaml

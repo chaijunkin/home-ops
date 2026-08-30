@@ -147,12 +147,6 @@ spec:
         existingClaim: "{{ .Release.Name }}-cache"
         globalMounts:
           - path: /config/.venv
-      default-vault:
-        existingClaim: default-vault-smb-pvc
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /media/defaultvault
       tmpfs:
         type: emptyDir
         advancedMounts:

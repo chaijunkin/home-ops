@@ -75,6 +75,7 @@ spec:
               MEMINI_NAMESPACE: hermes
               HERMES_HOME: /opt/data
               HOME: /opt/data
+              OBSIDIAN_VAULT_PATH: /mnt/defaultvault
               TZ: Asia/Kuala_Lumpur
             envFrom:
               - secretRef:
@@ -103,6 +104,7 @@ spec:
               runAsNonRoot: true
             env:
               HOME: /opt/data
+              OBSIDIAN_VAULT_PATH: /mnt/defaultvault
               TZ: Asia/Kuala_Lumpur
             args:
               [
@@ -183,3 +185,7 @@ spec:
         path: /tank/Apps/comfyui/output
         globalMounts:
           - path: /mnt/gallery
+      default-vault:
+        existingClaim: default-vault-smb-pvc
+        globalMounts:
+          - path: /mnt/defaultvault
