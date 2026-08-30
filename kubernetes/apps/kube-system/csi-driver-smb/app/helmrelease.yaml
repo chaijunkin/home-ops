@@ -54,4 +54,4 @@ spec:
         healthPort: 29643
     linux:
       enabled: true
-      kubelet: /var/lib/
+      kubelet: /var/lib/kubelet
