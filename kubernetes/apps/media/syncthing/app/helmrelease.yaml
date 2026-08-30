@@ -142,7 +142,7 @@ spec:
         server: smb.cloudjur.com
         path: /tank/Apps/Obsidian/DefaultVault
         globalMounts:
-          - path: /defaultvault
+          - path: /mnt/DefaultVault
     serviceMonitor:
       app:
         serviceName: syncthing
