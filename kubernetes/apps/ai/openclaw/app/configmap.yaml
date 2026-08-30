@@ -16,7 +16,7 @@ data:
           "model": {
             "primary": "litellm/glm-5.3-flash",
             "fallbacks": [
-              "litellm/dsv4f",
+              "litellm/opencode-go/deepseek-v4-flash",
               "litellm/gemini-2.5-flash-lite",
               "litellm/self-hosted",
               "litellm/openrouter/deepseek/deepseek-chat",
@@ -33,7 +33,7 @@ data:
           },
           "models": {
             "litellm/glm-5.3-flash": { "alias": "glm-5.3-flash" },
-            "litellm/dsv4f": { "alias": "dsv4f" },
+            "litellm/opencode-go/deepseek-v4-flash": { "alias": "dsv4f" },
             "litellm/gemini-2.5-flash-lite": { "alias": "gemini-flash" },
             "litellm/self-hosted": { "alias": "skirk", "params": { "cache_prompt": true } },
             "litellm/openrouter/deepseek/deepseek-chat": { "alias": "deepseek-chat" },
@@ -91,13 +91,17 @@ data:
             "timeoutSeconds": 600,
             "models": [
               { "id": "glm-5.3-flash", "name": "GLM 5.3 Flash", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0.15, "output": 0.50, "cacheRead": 0.03, "cacheWrite": 0.15 }, "contextWindow": 1000000, "maxTokens": 131072 },
-              { "id": "dsv4f", "name": "DeepSeek V4 Flash", "reasoning": true, "input": ["text"], "cost": { "input": 0.22, "output": 0.66, "cacheRead": 0.007, "cacheWrite": 0.22 }, "contextWindow": 1000000, "maxTokens": 16384 },
+              { "id": "opencode-go/deepseek-v4-flash", "name": "DeepSeek V4 Flash (Opencode Go)", "reasoning": true, "input": ["text"], "cost": { "input": 0.22, "output": 0.66, "cacheRead": 0.007, "cacheWrite": 0.22 }, "contextWindow": 1000000, "maxTokens": 131072 },
+              { "id": "opencode-go/kimi-k2.7-code", "name": "Kimi K2.7 Code (Opencode Go)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262128, "maxTokens": 131072 },
+              { "id": "opencode-go/kimi-k2.6", "name": "Kimi K2.6 (Opencode Go)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262128, "maxTokens": 131072 },
+              { "id": "opencode-go/qwen3.7-max", "name": "Qwen 3.7 Max (Opencode Go)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 32768 },
+              { "id": "opencode-go/qwen3.6-plus", "name": "Qwen 3.6 Plus (Opencode Go)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 32768 },
+              { "id": "opencode-go/minimax-m3", "name": "MiniMax M3 (Opencode Go)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1000000, "maxTokens": 131072 },
+              { "id": "opencode-go/glm-5.2", "name": "GLM 5.2 (Opencode Go)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1048560, "maxTokens": 131072 },
+              { "id": "opencode-go/mimo-v2.5", "name": "MiMo V2.5 (Opencode Go)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 32768 },
               { "id": "gemini-2.5-flash-lite", "name": "Gemini 3 Flash", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1048576, "maxTokens": 65536 },
               { "id": "self-hosted", "name": "Qwen3.6-35B-A3B UD Q8_K_XL (ROCm)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 16384 },
-              { "id": "openrouter/deepseek/deepseek-chat", "name": "DeepSeek Chat (OpenRouter)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 128000, "maxTokens": 8192 },
-              { "id": "kimi-k2.6", "name": "Kimi K2.6", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 262144 },
-              { "id": "glm-5.1", "name": "GLM 5.1", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 204800, "maxTokens": 131072 },
-              { "id": "qwen3.6-plus", "name": "Qwen 3.6 Plus", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 991808, "maxTokens": 65536 }
+              { "id": "openrouter/deepseek/deepseek-chat", "name": "DeepSeek Chat (OpenRouter)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 128000, "maxTokens": 8192 }
             ]
           }
         }

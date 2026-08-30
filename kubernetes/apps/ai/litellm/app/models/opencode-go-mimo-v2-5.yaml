@@ -2,17 +2,20 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: glm-5.1
+  name: opencode-go-mimo-v2-5
 spec:
-  modelName: glm-5.1
-  proxyRef: litellm
+  modelName: opencode-go/mimo-v2.5
   params:
-    model: zai/glm-5.1
+    model: openai/mimo-v2.5
     apiBase: https://opencode.ai/zen/go/v1
-    apiKey: os.environ/OPENCODE_GO_API_KEY
+    apiKeyRef:
+      name: litellm
+      key: OPENCODE_GO_API_KEY
     dropParams: true
   info:
-    maxInputTokens: 204800
-    maxOutputTokens: 131072
+    maxInputTokens: 262144
+    maxOutputTokens: 32768
     supportsFunctionCalling: true
     supportsPromptCaching: true
+    extra:
+      supports_reasoning: true

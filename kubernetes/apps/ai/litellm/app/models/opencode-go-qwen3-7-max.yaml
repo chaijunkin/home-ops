@@ -2,26 +2,20 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: memini-summary
+  name: opencode-go-qwen3-7-max
 spec:
-  modelName: memini-summary
-  proxyRef: litellm
+  modelName: opencode-go/qwen3.7-max
   params:
-    model: openai/glm-5.3-flash
-    apiBase: https://opencode.ai/zen/go/v1
+    model: anthropic/qwen3.7-max
+    apiBase: https://opencode.ai/zen/go
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY
     dropParams: true
   info:
-    maxInputTokens: 1000000
-    maxOutputTokens: 131072
+    maxInputTokens: 262144
+    maxOutputTokens: 32768
     supportsFunctionCalling: true
     supportsPromptCaching: true
-    supportsVision: true
     extra:
       supports_reasoning: true
-      input_cost_per_token: 1.5e-07
-      cache_creation_input_token_cost: 1.5e-07
-      cache_read_input_token_cost: 3.0e-08
-      output_cost_per_token: 5.0e-07

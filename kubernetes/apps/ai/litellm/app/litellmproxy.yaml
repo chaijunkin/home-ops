@@ -67,6 +67,7 @@ spec:
       url: os.environ/REDIS_URL
       ttl: 300
     drop_params: true
+    merge_reasoning_content_in_choices: true
     failure_callback:
       - prometheus
     num_retries: 2

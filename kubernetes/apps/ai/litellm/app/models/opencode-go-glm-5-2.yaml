@@ -2,17 +2,20 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: qwen3.6-plus
+  name: opencode-go-glm-5-2
 spec:
-  modelName: qwen3.6-plus
-  proxyRef: litellm
+  modelName: opencode-go/glm-5.2
   params:
-    model: dashscope/qwen3.6-plus
+    model: openai/glm-5.2
     apiBase: https://opencode.ai/zen/go/v1
-    apiKey: os.environ/OPENCODE_GO_API_KEY
+    apiKeyRef:
+      name: litellm
+      key: OPENCODE_GO_API_KEY
     dropParams: true
   info:
-    maxInputTokens: 991808
-    maxOutputTokens: 65536
+    maxInputTokens: 1048560
+    maxOutputTokens: 131072
     supportsFunctionCalling: true
     supportsPromptCaching: true
+    extra:
+      supports_reasoning: true

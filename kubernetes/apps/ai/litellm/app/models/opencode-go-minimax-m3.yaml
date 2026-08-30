@@ -2,13 +2,12 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: memini-summary
+  name: opencode-go-minimax-m3
 spec:
-  modelName: memini-summary
-  proxyRef: litellm
+  modelName: opencode-go/minimax-m3
   params:
-    model: openai/glm-5.3-flash
-    apiBase: https://opencode.ai/zen/go/v1
+    model: anthropic/minimax-m3
+    apiBase: https://opencode.ai/zen/go
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY
@@ -21,7 +20,3 @@ spec:
     supportsVision: true
     extra:
       supports_reasoning: true
-      input_cost_per_token: 1.5e-07
-      cache_creation_input_token_cost: 1.5e-07
-      cache_read_input_token_cost: 3.0e-08
-      output_cost_per_token: 5.0e-07

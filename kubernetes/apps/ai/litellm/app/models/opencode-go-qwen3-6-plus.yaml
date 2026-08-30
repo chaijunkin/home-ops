@@ -2,17 +2,20 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: kimi-k2.6
+  name: opencode-go-qwen3-6-plus
 spec:
-  modelName: kimi-k2.6
-  proxyRef: litellm
+  modelName: opencode-go/qwen3.6-plus
   params:
-    model: moonshot/kimi-k2.6
-    apiBase: https://opencode.ai/zen/go/v1
-    apiKey: os.environ/OPENCODE_GO_API_KEY
+    model: anthropic/qwen3.6-plus
+    apiBase: https://opencode.ai/zen/go
+    apiKeyRef:
+      name: litellm
+      key: OPENCODE_GO_API_KEY
     dropParams: true
   info:
     maxInputTokens: 262144
-    maxOutputTokens: 262144
+    maxOutputTokens: 32768
     supportsFunctionCalling: true
     supportsPromptCaching: true
+    extra:
+      supports_reasoning: true

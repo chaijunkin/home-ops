@@ -10,15 +10,15 @@ data:
       provider: litellm
     fallback_providers:
       - provider: litellm
-        model: dsv4f
+        model: opencode-go/deepseek-v4-flash
       - provider: litellm
-        model: kimi-k2.6
+        model: opencode-go/kimi-k2.7-code
       - provider: litellm
         model: self-hosted
       - provider: litellm
-        model: qwen3.6-plus
+        model: opencode-go/qwen3.7-max
       - provider: litellm
-        model: glm-5.1
+        model: opencode-go/minimax-m3
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1
