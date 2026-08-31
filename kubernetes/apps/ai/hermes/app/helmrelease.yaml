@@ -92,6 +92,7 @@ spec:
               HOME: /opt/data
               GIT_SSH_COMMAND: "ssh -F /opt/data/.ssh/config"
               OBSIDIAN_VAULT_PATH: /mnt/defaultvault
+              HERMES_ENV: "prod"
               # FLIGHT_DISCORD_ENV: "dev"
               TZ: Asia/Kuala_Lumpur
             envFrom:

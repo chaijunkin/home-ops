@@ -3,7 +3,7 @@
   hosts: proxmox
   become: true
   gather_facts: true
-  
+
   tasks:
     - name: Load required VFIO and GVT-g kernel modules
       ansible.builtin.lineinfile:
