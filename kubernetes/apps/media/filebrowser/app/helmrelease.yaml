@@ -81,6 +81,12 @@ spec:
         path: /tank/Storage
         globalMounts:
           - path: /media
+      developer:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Developer
+        globalMounts:
+          - path: /developer
     route:
       app:
         annotations:

@@ -92,6 +92,7 @@ spec:
               HOME: /opt/data
               GIT_SSH_COMMAND: "ssh -F /opt/data/.ssh/config"
               OBSIDIAN_VAULT_PATH: /mnt/defaultvault
+              DEVELOPER_PATH: /mnt/developer
               HERMES_ENV: "prod"
               FLIGHT_DISCORD_ENV: "dev"
               TZ: Asia/Kuala_Lumpur
@@ -125,6 +126,7 @@ spec:
               HOME: /opt/data
               GIT_SSH_COMMAND: "ssh -F /opt/data/.ssh/config"
               OBSIDIAN_VAULT_PATH: /mnt/defaultvault
+              DEVELOPER_PATH: /mnt/developer
               TZ: Asia/Kuala_Lumpur
             args:
               [
@@ -229,3 +231,9 @@ spec:
         path: /tank/Apps/Obsidian/DefaultVault
         globalMounts:
           - path: /mnt/defaultvault
+      developer:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Developer
+        globalMounts:
+          - path: /mnt/developer
