@@ -113,10 +113,7 @@ spec:
     cooldown_time: 30
     enable_pre_call_checks: true
     fallbacks:
-      - self-hosted: ["gemini-2.5-flash-lite"]
-      - gemini-2.5-flash-lite: ["self-hosted"]
-    context_window_fallbacks:
-      - gemini-2.5-flash-lite: ["self-hosted"]
+      - self-hosted: ["glm-5.3-flash", "opencode-go/deepseek-v4-flash"]
   service:
     port: 4000
     type: ClusterIP
