@@ -16,6 +16,12 @@ spec:
           reloader.stakater.com/auto: "true"
         containers:
           app:
+            resources:
+              requests:
+                cpu: 1
+                memory: 16Mi
+              limits:
+                memory: 16Gi
             image:
               repository: yanwk/comfyui-boot
               tag: rocm7@sha256:47cc550cefec5a10fb8572cbc670af1ed4d547c8e865512902d57d3811ec41b8
@@ -28,7 +34,7 @@ spec:
               ROCR_VISIBLE_DEVICES: "0"
               PYTORCH_HIP_ALLOC_CONF: max_split_size_mb:256,garbage_collection_threshold:0.6
               CLI_ARGS: --listen 0.0.0.0 --port 8188
-                --use-pytorch-cross-attention --disable-mmap
+                --use-pytorch-cross-attention --disable-mmap --cpu
             # No resources block on purpose: BestEffort QoS makes comfyui the
             # first pod the Talos OOM manager kills (ranking weight 1.0) and the
             # first kubelet evicts under node MemoryPressure on the shared UMA node.
