@@ -28,7 +28,7 @@ rules:
       - /version/
     verbs:
       - get
-    # Core v1 — everything except secrets (and without exec/proxy attach paths).
+        # Core v1 — everything except secrets (and without exec/proxy attach paths).
   - apiGroups:
       - ""
     resources:
@@ -62,9 +62,9 @@ rules:
       - get
       - list
       - watch
-    # All non-core API groups: full resource read (Secret objects are not in these groups).
-    # Includes built-in API groups plus every CRD group reported from the cluster (minus "").
-    # CRDs whose operators ship aggregate-to-view ClusterRoles are also covered by aggregationRule above.
+        # All non-core API groups: full resource read (Secret objects are not in these groups).
+        # Includes built-in API groups plus every CRD group reported from the cluster (minus "").
+        # CRDs whose operators ship aggregate-to-view ClusterRoles are also covered by aggregationRule above.
   - apiGroups:
       - acme.cert-manager.io
       - actions.github.com

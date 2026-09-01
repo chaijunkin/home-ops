@@ -18,10 +18,10 @@ spec:
           app:
             resources:
               requests:
-                cpu: 1
+                cpu: 10m
                 memory: 16Mi
               limits:
-                memory: 16Gi
+                memory: 4Gi
             image:
               repository: yanwk/comfyui-boot
               tag: rocm7@sha256:47cc550cefec5a10fb8572cbc670af1ed4d547c8e865512902d57d3811ec41b8

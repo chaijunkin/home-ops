@@ -13,5 +13,5 @@ resources:
   - ./rclone/ks.yaml
   - ./kopiur/ks.yaml
   - ./kopia/ks.yaml
-  # - ./staticgarage/ks.yaml
-  # - ./miroir/ks.yaml
+    # - ./staticgarage/ks.yaml
+    # - ./miroir/ks.yaml

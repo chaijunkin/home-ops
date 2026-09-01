@@ -74,7 +74,7 @@ spec:
                 exec node dist/index.js gateway --bind lan
             env:
               OPENCLAW_LOG_LEVEL: debug
-              BROWSER_WS_ENDPOINT: "ws://localhost:9222"
+              BROWSER_WS_ENDPOINT: ws://localhost:9222
               GOPATH: /home/node/go
               HOME: &homepath /home/node
               HOMEBREW_CELLAR: /home/node/.local/homebrew/Cellar
@@ -214,7 +214,7 @@ spec:
               - name: "{{ .Release.Name }}"
                 port: &codeserverPort 12321
       imageui:
-        hostnames: ["generate.cloudjur.com"]
+        hostnames: [generate.cloudjur.com]
         parentRefs:
           - name: envoy-internal
             namespace: network

@@ -46,7 +46,7 @@ spec:
       runOnMaster: false
       runOnControlPlane: false
       logLevel: 5
-      workingMountDir: "/tmp"
+      workingMountDir: /tmp
     node:
       maxUnavailable: 1
       logLevel: 5

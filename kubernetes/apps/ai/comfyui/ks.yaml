@@ -2,33 +2,32 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: sonarr
-  namespace: downloads
+  name: comfyui
+  namespace: flux-system
 spec:
-  targetNamespace: downloads
+  targetNamespace: ai
   commonMetadata:
     labels:
-      app.kubernetes.io/name: sonarr
-  dependsOn:
-    - name: openebs
-      namespace: storage
-  path: ./kubernetes/apps/downloads/sonarr/app
+      app.kubernetes.io/name: comfyui
+  path: ./kubernetes/apps/ai/comfyui/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   wait: false
-  interval: 24h
+  interval: 30m
   retryInterval: 1m
-
+  timeout: 5m
+  components:
+    - ../../../../components/kopiur/backup
+      # - ../../../../components/kopiur/remote
+      # - ../../../../components/kopiur/adhoc-snapshot
+      # - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: sonarr
-      VOLSYNC_CAPACITY: 2Gi
-  components:
-    - ../../../../components/zeroscaler
-      # - ../../../../components/volsync
-    - ../../../../components/kopiur/backup
-    - ../../../../components/kopiur/remote
-      # - ../../../../components/kopiur/adhoc-snapshot
+      APP: comfyui
+      KOPIUR_CAPACITY: 20Gi
+      # KOPIUR_PUID: "0"
+      # KOPIUR_PGID: "0"
+      # KOPIUR_NONROOT: "false"

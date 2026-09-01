@@ -29,5 +29,5 @@ spec:
             - --allow-http
             - --transport
             - http-only
-            - "--header"
+            - --header
             - "Authorization: Bearer $(MCP_API_TOKEN)"

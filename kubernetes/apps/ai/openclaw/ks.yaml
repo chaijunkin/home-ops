@@ -22,7 +22,7 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
-    # - ../../../../components/volsync
+      # - ../../../../components/volsync
   postBuild:
     substitute:
       APP: openclaw

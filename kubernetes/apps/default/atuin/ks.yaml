@@ -12,7 +12,7 @@ spec:
     # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
-    # - ../../../../components/kopiur/adhoc-snapshot
+      # - ../../../../components/kopiur/adhoc-snapshot
   interval: 1h
   path: ./kubernetes/apps/default/atuin/app
   postBuild:

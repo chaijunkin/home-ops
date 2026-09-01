@@ -1,9 +1,3 @@
-# Cluster-local embedding for memini — PRIMARY path (llmkube CPU, Qwen3-Embedding-
-# 0.6B, native 1024 dims matching MEMINI_EMBED_DIMS and the Instruct query prefix).
-#
-# Secondary: LiteLLM route `lmstudio-embed` → LM Studio on jk-mac-mini. To flip:
-#   MEMINI_EMBED_BASE_URL=http://litellm.ai:4000/v1
-#   MEMINI_EMBED_MODEL=lmstudio-embed
 # yaml-language-server: $schema=https://crd.cloudjur.com/inference.llmkube.dev/model_v1alpha1.json
 apiVersion: inference.llmkube.dev/v1alpha1
 kind: Model

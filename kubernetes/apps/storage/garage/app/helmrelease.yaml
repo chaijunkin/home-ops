@@ -132,11 +132,12 @@ spec:
                   statusCode: 302
                   path:
                     type: ReplaceFullPath
-                    replaceFullPath: /index.html
+                    replaceFullPath:
+                      /index.html
 
-                    # -------------------------------------------------------------------
-                    # 3. PERFORMANCE LAYER: Aggressive caching for hashed Quartz engine files
-                    # -------------------------------------------------------------------
+                      # -------------------------------------------------------------------
+                      # 3. PERFORMANCE LAYER: Aggressive caching for hashed Quartz engine files
+                      # -------------------------------------------------------------------
           - matches:
               - path:
                   type:

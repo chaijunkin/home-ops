@@ -11,8 +11,8 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/kopiur/backup
-    # - ../../../../components/volsync-no-r2
-    # - ../../../../components/kopiur/adhoc-snapshot
+      # - ../../../../components/volsync-no-r2
+      # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
     - name: openebs
       namespace: storage

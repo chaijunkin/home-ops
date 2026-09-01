@@ -67,7 +67,7 @@ spec:
               value: "true"
           resources:
             limits:
-              cpu: null
+              cpu:
               memory: 3Gi
             requests:
               cpu: 100m
@@ -99,7 +99,7 @@ spec:
         - name: vmcp
           resources:
             limits:
-              cpu: null
+              cpu:
               memory: 3Gi
             requests:
               cpu: 100m

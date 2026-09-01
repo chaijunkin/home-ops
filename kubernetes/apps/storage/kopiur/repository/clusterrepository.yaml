@@ -27,8 +27,8 @@ spec:
       name: kopiur-repository-secret
       namespace: storage
   identityDefaults:
-    hostnameExpr: "namespace"
-    usernameExpr: "policyName"
+    hostnameExpr: namespace
+    usernameExpr: policyName
   scheduleDefaults:
     timezone: Asia/Kuala_Lumpur
   # maintenance:

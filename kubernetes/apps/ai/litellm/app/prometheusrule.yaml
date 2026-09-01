@@ -14,7 +14,8 @@ spec:
             ) > 0
           annotations:
             summary: >-
-              LiteLLM {{ $labels.requested_model }} fallback chain exhausted — no working deployment
+              LiteLLM {{ $labels.requested_model }} fallback chain exhausted — no working
+              deployment
               ({{ $labels.exception_status }} {{ $labels.exception_class }})
           labels:
             severity: critical
@@ -26,14 +27,16 @@ spec:
           for: 5m
           annotations:
             summary: >-
-              LiteLLM {{ $labels.requested_model }} failing over to {{ $labels.fallback_model }}
+              LiteLLM {{ $labels.requested_model }} failing over to {{ $labels.fallback_model
+              }}
               ({{ $labels.exception_status }} {{ $labels.exception_class }})
           labels:
             severity: warning
-        - alert: LiteLLMDeploymentOutage
-          # deployment_state latches at 2 via the cooldown callback's pool label and
-          # never resets (success callbacks label by requested model). Require
-          # ongoing failures so a recovered deployment doesn't alert forever.
+        - alert:
+            LiteLLMDeploymentOutage
+            # deployment_state latches at 2 via the cooldown callback's pool label and
+            # never resets (success callbacks label by requested model). Require
+            # ongoing failures so a recovered deployment doesn't alert forever.
           expr: |-
             max by (litellm_model_name) (litellm_deployment_state) >= 2
             and on (litellm_model_name)
@@ -53,19 +56,21 @@ spec:
           for: 5m
           annotations:
             summary: >-
-              LiteLLM {{ $labels.litellm_model_name }} returning {{ $labels.exception_status }}
+              LiteLLM {{ $labels.litellm_model_name }} returning {{ $labels.exception_status
+              }}
               (auth/quota — check the upstream key or plan cap)
           labels:
             severity: warning
     - name: llamacpp.rules
       rules:
-        - alert: LlamaCppRequestsDeferred
-          # A llama-server defers a request when every slot is busy. Sustained
-          # deferral means the loop is serialising on that model rather than on
-          # agent capacity — llama-nvidia runs --parallel 1, so the coder lane
-          # queues here long before it queues anywhere else. This is the signal
-          # that settles whether to raise --parallel or lower the bridge's
-          # CODER_AGENT_SLOTS, rather than guessing at either.
+        - alert:
+            LlamaCppRequestsDeferred
+            # A llama-server defers a request when every slot is busy. Sustained
+            # deferral means the loop is serialising on that model rather than on
+            # agent capacity — llama-nvidia runs --parallel 1, so the coder lane
+            # queues here long before it queues anywhere else. This is the signal
+            # that settles whether to raise --parallel or lower the bridge's
+            # CODER_AGENT_SLOTS, rather than guessing at either.
           expr: |-
             max by (service) (llamacpp:requests_deferred) > 0
           for: 10m
