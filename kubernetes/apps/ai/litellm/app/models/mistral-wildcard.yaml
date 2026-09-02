@@ -8,6 +8,7 @@ spec:
   proxyRef: litellm
   params:
     model: mistral/*
-    apiKey: os.environ/MISTRAL_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: MISTRAL_API_KEY
+    dropParams: true

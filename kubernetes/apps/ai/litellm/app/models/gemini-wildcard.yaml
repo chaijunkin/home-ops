@@ -8,6 +8,7 @@ spec:
   proxyRef: litellm
   params:
     model: gemini/*
-    apiKey: os.environ/GEMINI_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: GEMINI_API_KEY
+    dropParams: true

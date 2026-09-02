@@ -9,6 +9,7 @@ spec:
   params:
     model: openai/*
     apiBase: https://ai-gateway.vercel.sh/v1
-    apiKey: os.environ/VERCEL_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: VERCEL_API_KEY
+    dropParams: true

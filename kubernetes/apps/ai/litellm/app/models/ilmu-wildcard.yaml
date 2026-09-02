@@ -9,6 +9,7 @@ spec:
   params:
     model: openai/*
     apiBase: https://api.ilmu.ai/v1
-    apiKey: os.environ/ILMU_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: ILMU_API_KEY
+    dropParams: true

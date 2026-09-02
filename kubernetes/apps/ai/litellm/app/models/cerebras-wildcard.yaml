@@ -8,6 +8,7 @@ spec:
   proxyRef: litellm
   params:
     model: cerebras/*
-    apiKey: os.environ/CEREBRAS_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: CEREBRAS_API_KEY
+    dropParams: true

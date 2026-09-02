@@ -8,6 +8,7 @@ spec:
   proxyRef: litellm
   params:
     model: groq/*
-    apiKey: os.environ/GROQ_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: GROQ_API_KEY
+    dropParams: true

@@ -28,7 +28,6 @@ resources:
   - ./opencode-go-qwen3-6-plus.yaml
   - ./opencode-go-qwen3-7-max.yaml
   - ./openrouter-wildcard.yaml
-  - ./ovh-wildcard.yaml
   - ./reasoning-pool-1.yaml
   - ./reasoning-pool-2.yaml
   - ./reasoning-pool-3.yaml

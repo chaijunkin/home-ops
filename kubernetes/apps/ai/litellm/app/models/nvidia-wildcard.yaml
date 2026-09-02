@@ -7,8 +7,9 @@ spec:
   modelName: nvidia/*
   proxyRef: litellm
   params:
-    model: nvidia_nim/*
+    model: openai/*
     apiBase: https://integrate.api.nvidia.com/v1
-    apiKey: os.environ/NVIDIA_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: NVIDIA_API_KEY
+    dropParams: true

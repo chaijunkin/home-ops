@@ -8,6 +8,7 @@ spec:
   proxyRef: litellm
   params:
     model: openrouter/*
-    apiKey: os.environ/OPENROUTER_API_KEY
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: OPENROUTER_API_KEY
+    dropParams: true

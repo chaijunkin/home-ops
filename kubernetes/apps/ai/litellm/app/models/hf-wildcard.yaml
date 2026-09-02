@@ -9,6 +9,7 @@ spec:
   params:
     model: openai/*
     apiBase: https://router.huggingface.co/v1
-    apiKey: os.environ/HF_TOKEN
-    additional:
-      check_provider_endpoint: true
+    apiKeyRef:
+      name: litellm
+      key: HF_TOKEN
+    dropParams: true
