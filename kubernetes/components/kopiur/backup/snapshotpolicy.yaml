@@ -6,6 +6,7 @@ metadata:
   annotations:
     kopiur.home-operations.com/allow-identity-change: "true"
 spec:
+  copyMethod: Direct
   files:
     ignoreRules: ${KOPIUR_IGNORE_RULES:=[]}
   compression:
