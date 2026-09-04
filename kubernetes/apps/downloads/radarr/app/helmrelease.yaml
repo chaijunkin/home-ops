@@ -74,6 +74,10 @@ spec:
           http:
             port: *port
     persistence:
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
       config:
         enabled: true
         existingClaim: *app
