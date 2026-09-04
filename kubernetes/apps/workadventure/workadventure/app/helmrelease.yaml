@@ -138,7 +138,7 @@ spec:
           app:
             image:
               repository: docker.io/thecodingmachine/workadventure-map-storage
-              tag: v1.33.3
+              tag: v1.33.5
             env:
               WA_PROTO: https
               WA_HOST: gather.cloudjur.com
