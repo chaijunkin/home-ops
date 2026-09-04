@@ -80,7 +80,7 @@ spec:
           app:
             image:
               repository: nousresearch/hermes-agent
-              tag: v2026.8.19@sha256:3811ed13da874fba2ac99b6d492db9a203d34cb6dccf90d886948c00d0ccec09
+              tag: v2026.8.31@sha256:64923faeae267792bf9bf87fe3b4c4869e35004e360c7df01730ad801b74d524
             args: [gateway, run]
             env:
               HERMES_DASHBOARD: "1"
