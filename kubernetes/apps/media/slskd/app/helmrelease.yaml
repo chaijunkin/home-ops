@@ -77,7 +77,7 @@ spec:
         statefulset:
           volumeClaimTemplates:
             - name: config
-              storageClass: local-hostpath
+              storageClass: miroir-local
               accessMode: ReadWriteOnce
               size: 5Gi
     defaultPodOptions:

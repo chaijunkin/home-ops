@@ -26,5 +26,5 @@ spec:
   components:
     - ../../../../components/zeroscaler
   dependsOn:
-    - name: local-hostpath
+    - name: miroir
       namespace: storage

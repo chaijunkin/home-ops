@@ -16,7 +16,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 20Gi
-    storageClass: local-hostpath
+    storageClass: miroir-local
   enableSuperuserAccess: true
   superuserSecret:
     name: cloudnative-pg-secret

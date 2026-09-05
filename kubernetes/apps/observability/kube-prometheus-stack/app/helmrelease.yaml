@@ -47,7 +47,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-hostpath
+              storageClassName: miroir-local
               resources:
                 requests:
                   storage: 1Gi

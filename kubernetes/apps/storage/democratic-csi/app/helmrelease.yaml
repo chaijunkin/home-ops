@@ -38,14 +38,14 @@ spec:
       fsGroupPolicy: File
     storageClasses:
       - name: local-hostpath
-        defaultClass: true
+        defaultClass: false
         reclaimPolicy: Delete
         volumeBindingMode: WaitForFirstConsumer
         allowVolumeExpansion: true
     volumeSnapshotClasses:
       - name: local-hostpath
         annotations:
-          snapshot.storage.kubernetes.io/is-default-class: "true"
+          snapshot.storage.kubernetes.io/is-default-class: "false"
         deletionPolicy: Delete
         parameters:
           cluster: k8s

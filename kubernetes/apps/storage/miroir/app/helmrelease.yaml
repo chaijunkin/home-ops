@@ -20,3 +20,6 @@ spec:
   values:
     # Any custom values can be added here if needed
     fullnameOverride: miroir
+    agent:
+      loopfileBaseDirs:
+        - /var/lib/miroir

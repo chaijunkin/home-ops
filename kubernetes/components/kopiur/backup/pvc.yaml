@@ -12,4 +12,4 @@ spec:
   resources:
     requests:
       storage: ${KOPIUR_CAPACITY:=2Gi}
-  storageClassName: ${KOPIUR_STORAGECLASS:-local-hostpath}
+  storageClassName: ${KOPIUR_STORAGECLASS:-miroir-local}

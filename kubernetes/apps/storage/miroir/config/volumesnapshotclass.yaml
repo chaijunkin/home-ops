@@ -3,5 +3,7 @@ apiVersion: snapshot.storage.k8s.io/v1
 kind: VolumeSnapshotClass
 metadata:
   name: miroir-snap
+  annotations:
+    snapshot.storage.kubernetes.io/is-default-class: "true"
 driver: miroir.home-operations.com
 deletionPolicy: Delete
