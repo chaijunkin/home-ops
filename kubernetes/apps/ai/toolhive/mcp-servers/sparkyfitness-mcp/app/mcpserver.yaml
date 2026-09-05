@@ -25,7 +25,7 @@ spec:
           args:
             - -y
             - mcp-remote
-            - https://fitness.cloudjur.com/mcp
+            - http://sparkyfitness-server.default.svc.cluster.local:3010/mcp
             - --allow-http
             - --transport
             - http-only
