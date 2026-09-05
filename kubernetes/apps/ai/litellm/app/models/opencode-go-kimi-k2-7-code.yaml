@@ -17,6 +17,6 @@ spec:
     maxOutputTokens: 131072
     supportsFunctionCalling: true
     supportsPromptCaching: true
-    supportsVision: true
+    supportsVision: false
     extra:
       supports_reasoning: true
