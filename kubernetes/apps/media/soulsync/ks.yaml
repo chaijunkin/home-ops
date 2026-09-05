@@ -30,9 +30,9 @@ spec:
     - ../../../../components/zeroscaler
     - ../../../../components/kopiur/backup
   dependsOn:
-    - name: openebs
-      namespace: storage
+    # - name: openebs
+    #   namespace: storage
     - name: kopiur
       namespace: storage
-    - name: slskd
-      namespace: media
+    # - name: slskd
+    #   namespace: media
