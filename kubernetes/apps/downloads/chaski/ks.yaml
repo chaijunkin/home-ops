@@ -2,23 +2,22 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: webhook
+  name: &app chaski
   namespace: downloads
 spec:
+  targetNamespace: downloads
   commonMetadata:
     labels:
-      app.kubernetes.io/name: webhook
-  interval: 1h # interval: 1h
-  path: ./kubernetes/apps/downloads/webhook/app
-  postBuild:
-    substitute:
-      APP: webhook
+      app.kubernetes.io/name: chaski
+  path: ./kubernetes/apps/downloads/chaski/app
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: downloads
-
   wait: false
+  interval: 24h
+  retryInterval: 1m
+  postBuild:
+    substitute:
+      APP: *app
