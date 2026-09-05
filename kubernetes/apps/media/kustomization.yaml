@@ -19,6 +19,7 @@ resources:
   - ./seerr/ks.yaml
     # - ./romm/ks.yaml
   - ./slskd/ks.yaml
+  - ./soulsync/ks.yaml
   - ./syncthing/ks.yaml
   - ./tautulli/ks.yaml
   - ./watchstate/ks.yaml

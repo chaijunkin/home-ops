@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app soulsync
+  namespace: &namespace media
+spec:
+  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/apps/media/soulsync/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false
+  interval: 24h
+  retryInterval: 1m
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 5Gi
+      KOPIUR_CLAIM: soulsync
+      KOPIUR_CAPACITY: 5Gi
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
+  components:
+    - ../../../../components/zeroscaler
+    - ../../../../components/kopiur/backup
+  dependsOn:
+    - name: openebs
+      namespace: storage
+    - name: kopiur
+      namespace: storage
+    - name: slskd
+      namespace: media
