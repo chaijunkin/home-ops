@@ -18,7 +18,7 @@ spec:
     substitute:
       APP: calibre-web-automated
       SUBDOMAIN: books
-      VOLSYNC_CAPACITY: 15Gi
+      KOPIUR_CAPACITY: 20Gi
       KOPIUR_PUID: "0"
       KOPIUR_PGID: "0"
       KOPIUR_NONROOT: "false"
@@ -27,7 +27,6 @@ spec:
   interval: 24h
   components:
     - ../../../../components/zeroscaler
-      # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
       # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
