@@ -25,7 +25,7 @@ spec:
           args:
             - -y
             - mcp-remote
-            - http://sparkyfitness-server.default.svc.cluster.local:3010/mcp
+            - http://sparkyfitness-server.default.svc.cluster.local:3001/mcp
             - --allow-http
             - --transport
             - http-only
