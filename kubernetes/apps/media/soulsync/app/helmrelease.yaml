@@ -9,11 +9,6 @@ spec:
     kind: OCIRepository
     name: app-template
   interval: 24h
-  dependsOn:
-    - name: kopiur
-      namespace: storage
-    - name: slskd
-      namespace: media
   install:
     remediation:
       retries: 3
