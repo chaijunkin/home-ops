@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/misospace/dispatch
-              tag: 0.5.41@sha256:cc8d41a3260e83ac61e1c907dd57a89ec2195e7bb38cc68637a60c5371975a50
+              tag: 0.5.54@sha256:38c20d26bf35b57563cef6cc6613bcdd9115c7a37be07ae7b49876d483527e94
             env:
               DISPATCH_EXCLUDED_LABELS: renovate
               DISPATCH_GROOMER_DRY_RUN: false
