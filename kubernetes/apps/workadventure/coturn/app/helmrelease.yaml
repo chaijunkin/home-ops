@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: docker.io/coturn/coturn
-              tag: 4.17.2-r0@sha256:aa68aab64a3b929d57fc2924c98ea447bf996cf8dade2508e7b71eaf23f1f14e
+              tag: 4.18.0-r0@sha256:bbefd3e1fdfdc0d58770fe01b581fd8b00d9f3a5580d00acb77cf719a6bc78e3
             command:
               - /bin/sh
               - -c
