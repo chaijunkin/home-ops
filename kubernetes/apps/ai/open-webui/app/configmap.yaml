@@ -1,18 +1,19 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: open-webui-oikb-config
-data: # kb-id create manually on webui
-  .oikb.yaml: |
-    defaults:
-      interval: 1h
-      concurrency: 2
-    sources:
-      - name: DefaultVault
-        source: /mnt/defaultvault
-        kb-id: 332a5311-0e55-4b27-964f-174eb92c3ea0
-        filter:
-          exclude:
-            - ".obsidian/**"
-            - ".trash/**"
-            - ".git/**"
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: open-webui-oikb-config
+# data: # kb-id create manually on webui
+#   .oikb.yaml: |
+#     defaults:
+#       interval: 1h
+#       concurrency: 2
+#     sources:
+#       - name: DefaultVault
+#         source: /mnt/defaultvault
+#         kb-id: 332a5311-0e55-4b27-964f-174eb92c3ea0
+#         filter:
+#           exclude:
+#             - ".obsidian/**"
+#             - ".trash/**"
+#             - ".git/**"
+

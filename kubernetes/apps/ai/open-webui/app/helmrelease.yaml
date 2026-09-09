@@ -70,55 +70,55 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 2Gi
-          oikb:
-            image:
-              repository: ghcr.io/open-webui/oikb
-              tag: 0.4.0@sha256:e61c1beef9fe91d2f00ca8612e847eacc7d579e2e8e258f40fb1ef3e2891e8d4
-            command:
-              - sh
-              - -c
-              - |
-                echo "Waiting for Open WebUI on port 8080..."
-                until wget -q --spider http://127.0.0.1:8080/health 2>/dev/null || python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')" 2>/dev/null; do
-                  sleep 2
-                done
-                echo "Open WebUI is ready! Starting oikb daemon..."
-                exec oikb daemon --port 8081
-            env:
-              OPEN_WEBUI_URL: http://127.0.0.1:8080
-              LOG_FORMAT: json
-            envFrom:
-              - secretRef:
-                  name: "{{ .Release.Name }}-secret"
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: 8081
-                  initialDelaySeconds: 15
-                  periodSeconds: 30
-                  timeoutSeconds: 5
-                  failureThreshold: 3
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health/ready
-                    port: 8081
-                  initialDelaySeconds: 15
-                  periodSeconds: 10
-                  timeoutSeconds: 5
-                  failureThreshold: 3
-            resources:
-              requests:
-                cpu: 10m
-                memory: 50Mi
-              limits:
-                memory: 500Mi
+          # oikb:
+          #   image:
+          #     repository: ghcr.io/open-webui/oikb
+          #     tag: 0.4.0@sha256:e61c1beef9fe91d2f00ca8612e847eacc7d579e2e8e258f40fb1ef3e2891e8d4
+          #   command:
+          #     - sh
+          #     - -c
+          #     - |
+          #       echo "Waiting for Open WebUI on port 8080..."
+          #       until wget -q --spider http://127.0.0.1:8080/health 2>/dev/null || python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')" 2>/dev/null; do
+          #         sleep 2
+          #       done
+          #       echo "Open WebUI is ready! Starting oikb daemon..."
+          #       exec oikb daemon --port 8081
+          #   env:
+          #     OPEN_WEBUI_URL: http://127.0.0.1:8080
+          #     LOG_FORMAT: json
+          #   envFrom:
+          #     - secretRef:
+          #         name: "{{ .Release.Name }}-secret"
+          #   probes:
+          #     liveness:
+          #       enabled: true
+          #       custom: true
+          #       spec:
+          #         httpGet:
+          #           path: /health
+          #           port: 8081
+          #         initialDelaySeconds: 15
+          #         periodSeconds: 30
+          #         timeoutSeconds: 5
+          #         failureThreshold: 3
+          #     readiness:
+          #       enabled: true
+          #       custom: true
+          #       spec:
+          #         httpGet:
+          #           path: /health/ready
+          #           port: 8081
+          #         initialDelaySeconds: 15
+          #         periodSeconds: 10
+          #         timeoutSeconds: 5
+          #         failureThreshold: 3
+          #   resources:
+          #     requests:
+          #       cpu: 10m
+          #       memory: 50Mi
+          #     limits:
+          #       memory: 500Mi
     service:
       app:
         type: LoadBalancer
@@ -134,10 +134,8 @@ spec:
       config:
         enabled: true
         existingClaim: "{{ .Release.Name }}"
-        advancedMounts:
-          open-webui:
-            app:
-              - path: /app/backend/data
+        globalMounts:
+          - path: /app/backend/data
       default-vault:
         type: nfs
         server: smb.cloudjur.com
@@ -145,15 +143,15 @@ spec:
         globalMounts:
           - path: /mnt/defaultvault
             readOnly: true
-      oikb-config:
-        type: configMap
-        name: open-webui-oikb-config
-        advancedMounts:
-          open-webui:
-            oikb:
-              - path: /app/.oikb.yaml
-                subPath: .oikb.yaml
-                readOnly: true
+      # oikb-config:
+      #   type: configMap
+      #   name: open-webui-oikb-config
+      #   advancedMounts:
+      #     open-webui:
+      #       oikb:
+      #         - path: /app/.oikb.yaml
+      #           subPath: .oikb.yaml
+      #           readOnly: true
     route:
       app:
         hostnames:
