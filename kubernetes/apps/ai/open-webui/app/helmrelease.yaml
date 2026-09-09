@@ -75,49 +75,44 @@ spec:
               repository: ghcr.io/open-webui/oikb
               tag: 0.4.0@sha256:e61c1beef9fe91d2f00ca8612e847eacc7d579e2e8e258f40fb1ef3e2891e8d4
             command:
-              - oikb
-              - daemon
-            args:
-              - --port
-              - "8081"
+              - sh
+              - -c
+              - |
+                echo "Waiting for Open WebUI on port 8080..."
+                until wget -q --spider http://127.0.0.1:8080/health 2>/dev/null || python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')" 2>/dev/null; do
+                  sleep 2
+                done
+                echo "Open WebUI is ready! Starting oikb daemon..."
+                exec oikb daemon --port 8081
             env:
-              OPEN_WEBUI_URL: http://open-webui.ai:8080
+              OPEN_WEBUI_URL: http://127.0.0.1:8080
               LOG_FORMAT: json
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"
             probes:
-              startup:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 8081
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /health/ready
                     port: 8081
-                  initialDelaySeconds: 5
-                  periodSeconds: 5
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
                   timeoutSeconds: 5
-                  failureThreshold: 30
-              # liveness:
-              #   enabled: true
-              #   custom: true
-              #   spec:
-              #     httpGet:
-              #       path: /health
-              #       port: 8081
-              #     periodSeconds: 30
-              #     timeoutSeconds: 5
-              #     failureThreshold: 3
-              # readiness:
-              #   enabled: true
-              #   custom: true
-              #   spec:
-              #     httpGet:
-              #       path: /health/ready
-              #       port: 8081
-              #     periodSeconds: 10
-              #     timeoutSeconds: 5
-              #     failureThreshold: 3
+                  failureThreshold: 3
             resources:
               requests:
                 cpu: 10m
