@@ -20,21 +20,34 @@ spec:
       open-webui:
         annotations:
           reloader.stakater.com/auto: "true"
-        # initContainers:
-        #   init-db:
-        #     image:
-        #       repository: ghcr.io/home-operations/postgres-init
-        #       tag: 17
-        #       pullPolicy: IfNotPresent
-        #     envFrom:
-        #       - secretRef:
-        #           name: open-webui-secret
+        pod:
+          securityContext:
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+        initContainers:
+          init-permissions:
+            image:
+              repository: docker.io/library/alpine
+              tag: "3.24"
+            securityContext:
+              runAsUser: 0
+            command:
+              - sh
+              - -c
+              - |
+                chown -R 1000:1000 /app/backend/data
+                chmod -R u+rwX,go+rX /app/backend/data
         containers:
           app:
+            securityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
             image:
               repository: ghcr.io/open-webui/open-webui
               tag: v0.11.0@sha256:72c0ba641ba75e7aa52655cb242570906ececd09b1140fb736483038a22b3228
             env:
+              HOME: /app/backend/data
               # ENV: dev
               CORS_ALLOW_ORIGIN: https://chat.cloudjur.com
               WEBUI_URL: https://chat.cloudjur.com
