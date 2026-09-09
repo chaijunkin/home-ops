@@ -70,6 +70,24 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 2Gi
+          oikb:
+            image:
+              repository: ghcr.io/open-webui/oikb
+              tag: 0.4.0@sha256:e61c1beef9fe91d2f00ca8612e847eacc7d579e2e8e258f40fb1ef3e2891e8d4
+            command:
+              - oikb
+              - daemon
+            env:
+              OPEN_WEBUI_URL: http://localhost:8080
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
     service:
       app:
         type: LoadBalancer
@@ -85,8 +103,26 @@ spec:
       config:
         enabled: true
         existingClaim: "{{ .Release.Name }}"
+        advancedMounts:
+          open-webui:
+            app:
+              - path: /app/backend/data
+      default-vault:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps/Obsidian/DefaultVault
         globalMounts:
-          - path: /app/backend/data
+          - path: /mnt/defaultvault
+            readOnly: true
+      oikb-config:
+        type: configMap
+        name: open-webui-oikb-config
+        advancedMounts:
+          open-webui:
+            oikb:
+              - path: /app/.oikb.yaml
+                subPath: .oikb.yaml
+                readOnly: true
     route:
       app:
         hostnames:
