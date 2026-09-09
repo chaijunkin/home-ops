@@ -77,11 +77,47 @@ spec:
             command:
               - oikb
               - daemon
+            args:
+              - --port
+              - "8081"
             env:
-              OPEN_WEBUI_URL: http://localhost:8080
+              OPEN_WEBUI_URL: http://open-webui.ai:8080
+              LOG_FORMAT: json
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health/ready
+                    port: 8080
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+              # liveness:
+              #   enabled: true
+              #   custom: true
+              #   spec:
+              #     httpGet:
+              #       path: /health
+              #       port: 8081
+              #     periodSeconds: 30
+              #     timeoutSeconds: 5
+              #     failureThreshold: 3
+              # readiness:
+              #   enabled: true
+              #   custom: true
+              #   spec:
+              #     httpGet:
+              #       path: /health/ready
+              #       port: 8081
+              #     periodSeconds: 10
+              #     timeoutSeconds: 5
+              #     failureThreshold: 3
             resources:
               requests:
                 cpu: 10m
