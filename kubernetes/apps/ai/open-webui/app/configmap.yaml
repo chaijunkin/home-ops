@@ -10,7 +10,7 @@ data:
     sources:
       - name: DefaultVault
         source: /mnt/defaultvault
-        kb-id: cf96bbc8-5853-49be-8071-c2412302449c
+        kb-id: cjk-defaultvault
         filter:
           exclude:
             - ".obsidian/**"
