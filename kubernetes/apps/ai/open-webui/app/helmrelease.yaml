@@ -47,7 +47,7 @@ spec:
               repository: ghcr.io/open-webui/open-webui
               tag: v0.11.0@sha256:72c0ba641ba75e7aa52655cb242570906ececd09b1140fb736483038a22b3228
             env:
-              HOME: /app/backend/data
+              # HOME: /app/backend/data
               # ENV: dev
               CORS_ALLOW_ORIGIN: https://chat.cloudjur.com
               WEBUI_URL: https://chat.cloudjur.com
