@@ -24,7 +24,7 @@ spec:
                 memory: 4Gi
             image:
               repository: yanwk/comfyui-boot
-              tag: rocm7@sha256:47cc550cefec5a10fb8572cbc670af1ed4d547c8e865512902d57d3811ec41b8
+              tag: rocm7@sha256:c16f96a94c4760037d2d854acbe93ce594d4314b7bcb665da9f3cae225d7339c
             securityContext:
               privileged: true
             env:
