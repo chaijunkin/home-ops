@@ -35,12 +35,16 @@ spec:
               tag: latest
               pullPolicy: Always
             args:
+              - "run"
+              - "--rm"
+              - "-i"
+              - "-e"
+              - "GRAFANA_URL"
+              - "-e"
+              - "GRAFANA_AUTH"
+              - "mcp/grafana"
               - "-t"
               - "sse"
-              - "--address"
-              - "0.0.0.0:8000"
-              - "--allowed-hosts"
-              - "mcp-grafana,mcp-grafana.observability,localhost,127.0.0.1"
             env:
               GRAFANA_URL: "http://grafana-service.observability:3000"
             envFrom:
@@ -70,10 +74,10 @@ spec:
         ports:
           http:
             port: 8000
-    # route:
-    #   app:
-    #     hostnames:
-    #       - "grafana-mcp.cloudjur.com"
-    #     parentRefs:
-    #       - name: envoy-internal
-    #         namespace: network
+    route:
+      app:
+        hostnames:
+          - "grafana-mcp.cloudjur.com"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
