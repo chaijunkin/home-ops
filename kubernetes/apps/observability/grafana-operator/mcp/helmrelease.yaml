@@ -35,14 +35,14 @@ spec:
               tag: latest
               pullPolicy: Always
             args:
-              - "run"
-              - "--rm"
-              - "-i"
-              - "-e"
-              - "GRAFANA_URL"
-              - "-e"
-              - "GRAFANA_AUTH"
-              - "mcp/grafana"
+              # - "run"
+              # - "--rm"
+              # - "-i"
+              # - "-e"
+              # - "GRAFANA_URL"
+              # - "-e"
+              # - "GRAFANA_AUTH"
+              # - "mcp/grafana"
               - "-t"
               - "sse"
               - "--address"
