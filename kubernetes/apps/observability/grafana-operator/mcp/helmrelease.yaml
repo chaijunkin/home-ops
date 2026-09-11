@@ -45,6 +45,8 @@ spec:
               - "mcp/grafana"
               - "-t"
               - "sse"
+              - "--allowed-hosts"
+              - "mcp-grafana,mcp-grafana.observability,grafana-mcp.cloudjur.com,localhost,127.0.0.1"
             env:
               GRAFANA_URL: "http://grafana-service.observability:3000"
             envFrom:
