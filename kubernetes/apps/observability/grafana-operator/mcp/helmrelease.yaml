@@ -74,3 +74,10 @@ spec:
         ports:
           http:
             port: 8000
+    # route:
+    #   app:
+    #     hostnames:
+    #       - "grafana-mcp.cloudjur.com"
+    #     parentRefs:
+    #       - name: envoy-internal
+    #         namespace: network
