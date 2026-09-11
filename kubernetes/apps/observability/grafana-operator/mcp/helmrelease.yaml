@@ -45,8 +45,8 @@ spec:
               - "mcp/grafana"
               - "-t"
               - "sse"
-              # - "--address"
-              # - "0.0.0.0:8000"
+              - "--address"
+              - "0.0.0.0:8000"
               - "--allowed-hosts"
               - "*"
             env:
