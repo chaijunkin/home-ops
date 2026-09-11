@@ -51,6 +51,7 @@ spec:
               - "*"
             env:
               GRAFANA_URL: "http://grafana-service.observability:3000"
+              GRAFANA_ORG_ID: "1"
             envFrom:
               - secretRef:
                   name: mcp-grafana
