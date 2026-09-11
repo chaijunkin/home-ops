@@ -4,7 +4,7 @@ kind: MCPServer
 metadata:
   name: flux
 spec:
-  image: ghcr.io/controlplaneio-fluxcd/flux-operator-mcp:v0.58.1@sha256:7bbcff1fb43ff9452eca38b48c925e12c08cddf7d603c25e59be6e0758ba0ccc
+  image: ghcr.io/controlplaneio-fluxcd/flux-operator-mcp:v0.60.0@sha256:9940c2c46c1bff5af3827cb76f28a1ff347ea8141ed1af42e66ffbd79e8c4bdb
   transport: streamable-http
   proxyMode: streamable-http
   proxyPort: 8080
