@@ -9,7 +9,7 @@ resources:
   - ./namespace.yaml
   - ./toolhive/mcp-servers/context7-mcp/ks.yaml
     # - ./toolhive/mcp-servers/github-mcp/ks.yaml
-    # - ./toolhive/mcp-servers/grafana-mcp/ks.yaml
+  - ./toolhive/mcp-servers/grafana-mcp/ks.yaml
   - ./toolhive/mcp-servers/ha-mcp/ks.yaml
     # - ./toolhive/mcp-servers/kubectl-mcp/ks.yaml
     # - ./toolhive/mcp-servers/flux-mcp/ks.yaml
