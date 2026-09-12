@@ -29,3 +29,4 @@ resources:
   - ./sparkyfitness/ks.yaml
     # - ./smtp-relay/ks.yaml
   - ./trek/ks.yaml
+  - ./mealie/ks.yaml

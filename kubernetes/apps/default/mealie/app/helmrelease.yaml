@@ -1,0 +1,114 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/app-template-5.0.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mealie
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+    namespace: flux-system
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+
+    controllers:
+      mealie:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/mealie-recipes/mealie
+              tag: v2.7.1
+            env:
+              TZ: Asia/Kuala_Lumpur
+              HOST: "::"
+              API_HOST: "*"
+              BASE_URL: https://mealie.cloudjur.com
+
+              # Database
+              DB_ENGINE: sqlite
+
+              # OIDC Authentication
+              ALLOW_PASSWORD_LOGIN: "false"
+              OIDC_AUTH_ENABLED: "true"
+              OIDC_CONFIGURATION_URL: https://auth.cloudjur.com/application/o/mealie/.well-known/openid-configuration
+              OIDC_CLIENT_ID: mealie
+              OIDC_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: mealie-secret
+                    key: OIDC_CLIENT_SECRET
+              OIDC_USER_GROUP: "users"
+              OIDC_ADMIN_GROUP: "admins"
+              OIDC_AUTO_REDIRECT: "true"
+              OIDC_SCOPES_OVERRIDE: "openid profile email"
+
+              # AI Integration
+              OPENAI_BASE_URL: http://litellm.ai.svc.cluster.local
+              OPENAI_MODEL: self-hosted
+              OPENAI_ENABLE_IMAGE_SERVICES: false
+
+              # Logging
+              LOG_CONFIG_OVERRIDE: /config/logconf.json
+
+            envFrom:
+              - secretRef:
+                  name: mealie-secret
+            probes:
+              liveness: &probe
+                enabled: true
+                type: HTTP
+                spec:
+                  httpGet:
+                    port: &port 9000
+                    path: /api/app/about
+              readiness: *probe
+            resources:
+              requests:
+                cpu: 50m
+                memory: 250Mi
+              limits:
+                memory: 1Gi
+
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+
+    persistence:
+      config:
+        type: configMap
+        name: mealie-configmap
+        globalMounts:
+          - path: /config/logconf.json
+            subPath: logconf.json
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/data
+
+    route:
+      app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Utility Service
+          gethomepage.dev/name: Mealie
+          gethomepage.dev/description: Recipe Manager & Meal Planner
+          gethomepage.dev/icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/mealie.png
+        hostnames:
+          - mealie.cloudjur.com
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https

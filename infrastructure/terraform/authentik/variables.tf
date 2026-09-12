@@ -372,3 +372,17 @@ variable "hass_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "mealie_id" {
+  type        = string
+  description = "Mealie Client ID"
+  sensitive   = true
+  default     = "mealie"
+}
+
+variable "mealie_secret" {
+  type        = string
+  description = "Mealie Client Secret"
+  sensitive   = true
+  default     = null
+}
