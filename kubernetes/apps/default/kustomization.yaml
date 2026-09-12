@@ -11,14 +11,12 @@ resources:
   - ./convertx/ks.yaml
   - ./cyberchef/ks.yaml
     # - ./changedetection/ks.yaml
-    # - ./freshrss/ks.yaml
+  - ./freshrss/ks.yaml
   - ./glance/ks.yaml
   - ./homepage/ks.yaml
   - ./ignis/ks.yaml
   - ./it-tools/ks.yaml
     # - ./karakeep/ks.yaml
-  - ./n8n/ks.yaml
-    # - ./obsidian-livesync/ks.yaml
   - ./odoo/ks.yaml
     # - ./pdf-tool/ks.yaml
     # - ./paperless/ks.yaml

@@ -24,6 +24,8 @@ spec:
     requests:
       cpu: 100m
       memory: 128Mi
+    limits:
+      memory: 512Mi
   schedule: 0 * * * *
   secretRef: cjk-bot-token
   webhook:
