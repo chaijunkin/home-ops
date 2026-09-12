@@ -42,7 +42,11 @@ spec:
               ALLOW_PASSWORD_LOGIN: "false"
               OIDC_AUTH_ENABLED: "true"
               OIDC_CONFIGURATION_URL: https://auth.cloudjur.com/application/o/mealie/.well-known/openid-configuration
-              OIDC_CLIENT_ID: mealie
+              OIDC_CLIENT_ID:
+                valueFrom:
+                  secretKeyRef:
+                    name: mealie-secret
+                    key: OIDC_CLIENT_ID
               OIDC_CLIENT_SECRET:
                 valueFrom:
                   secretKeyRef:
