@@ -54,8 +54,9 @@ spec:
                     key: OIDC_CLIENT_SECRET
               OIDC_USER_GROUP: "users"
               OIDC_ADMIN_GROUP: "admins"
-              OIDC_AUTO_REDIRECT: "true"
-              OIDC_SCOPES_OVERRIDE: "openid profile email"
+              OIDC_GROUPS_CLAIM: entitlements
+              # OIDC_AUTO_REDIRECT: "true"
+              # OIDC_SCOPES_OVERRIDE: "openid profile email"
 
               # AI Integration
               OPENAI_BASE_URL: http://litellm.ai.svc.cluster.local
