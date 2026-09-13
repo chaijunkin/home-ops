@@ -39,7 +39,7 @@ spec:
               DB_ENGINE: sqlite
 
               # OIDC Authentication
-              ALLOW_PASSWORD_LOGIN: "false"
+              ALLOW_PASSWORD_LOGIN: "true"
               OIDC_AUTH_ENABLED: "true"
               OIDC_CONFIGURATION_URL: https://auth.cloudjur.com/application/o/mealie/.well-known/openid-configuration
               OIDC_CLIENT_ID:
