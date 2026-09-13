@@ -20,16 +20,6 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        initContainers:
-          init-permissions:
-            image:
-              repository: docker.io/library/alpine
-              tag: "3.24"
-            command: ["/bin/sh", "-c", "chown -R 1000:1000 /var/www/FreshRSS/data /var/www/FreshRSS/extensions && chmod -R 777 /var/www/FreshRSS/data /var/www/FreshRSS/extensions"]
-            securityContext:
-              runAsUser: 0
-              runAsNonRoot: false
-
         containers:
           app:
             image:
@@ -62,11 +52,6 @@ spec:
         existingClaim: freshrss
         advancedMounts:
           freshrss:
-            init-permissions:
-              - path: /var/www/FreshRSS/data
-                subPath: data
-              - path: /var/www/FreshRSS/extensions
-                subPath: extensions
             app:
               - path: /var/www/FreshRSS/data
                 subPath: data

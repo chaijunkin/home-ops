@@ -29,26 +29,17 @@ spec:
             "ips": ["10.10.31.17/24"]
           }]
       securityContext:
-        runAsNonRoot: true
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
     controllers:
       changedetection:
-        initContainers:
-          init-permissions:
-            image:
-              repository: docker.io/library/alpine
-              tag: "3.24"
-            command: ["/bin/sh", "-c", "chown -R 1000:1000 /datastore && chmod -R u=rwX,g=rwX /datastore"]
-            securityContext:
-              runAsUser: 0
-              runAsNonRoot: false
         containers:
           app:
             image:
               repository: ghcr.io/dgtlmoon/changedetection.io
               tag: 0.55.8@sha256:5438423d5e906eff4e8f7886823482ad23f472bf7b8530ccaca89fb48c337882
             securityContext:
+              runAsNonRoot: true
               runAsUser: 1000
               runAsGroup: 1000
             env:
@@ -97,7 +88,5 @@ spec:
         existingClaim: *app
         advancedMounts:
           changedetection:
-            init-permissions:
-              - path: /datastore
             app:
               - path: /datastore
