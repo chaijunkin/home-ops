@@ -26,7 +26,10 @@ spec:
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CAPACITY: 2Gi
+      KOPIUR_CAPACITY: 2Gi
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
+      KOPIUR_NONROOT: "true"
   dependsOn:
     - name: openebs
       namespace: storage

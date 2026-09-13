@@ -24,6 +24,16 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
+        initContainers:
+          init-permissions:
+            image:
+              repository: docker.io/library/alpine
+              tag: "3.24"
+            command: ["/bin/sh", "-c", "chown -R 1000:1000 /app/data && chmod -R u=rwX,g=rwX /app/data"]
+            securityContext:
+              runAsUser: 0
+              runAsNonRoot: false
+
         containers:
           app:
             image:
