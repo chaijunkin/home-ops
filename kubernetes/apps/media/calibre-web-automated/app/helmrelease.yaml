@@ -65,7 +65,7 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: false # because S6 overlay
-        runAsUser: 0 # because S6 overlay
+        runAsUser: 2000 # because S6 overlay
         # runAsGroup: 0 # because S6 overlay
         runAsGroup: 2000
         fsGroup: 2000
