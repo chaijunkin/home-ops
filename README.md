@@ -483,3 +483,7 @@ ARCHIVES FOLDER IS REMOVED ON Aug 10 14:20:50
 ## 🔏 License
 
 See [LICENSE](./LICENSE)
+
+---
+
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/chaijunkin/home-ops)
