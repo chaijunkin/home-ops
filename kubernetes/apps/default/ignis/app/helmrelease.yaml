@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: docker.io/nobbe/ignis
-              tag: 0.8.10@sha256:e2f62cc8ab8b9e526e93f6a263181cd0f00ff47399f9330c3193c959a077e149
+              tag: 0.8.12@sha256:24ba6e877c47f41d247686282e541381ab9b6acf36c6b9f9bdb8998de83b41d5
             env:
               PUID: "1000"
               PGID: "1000"
