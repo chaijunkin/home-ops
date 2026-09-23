@@ -37,6 +37,21 @@ spec:
                 cp /tmp/env /opt/data/.env
                 chown 10000:10000 /opt/data/.env
                 chown 10000:10000 /opt/data/config.yaml
+                mkdir -p /opt/data/.ssh
+                if [ -f /tmp/ssh/id_ed25519 ]; then
+                  cp /tmp/ssh/id_ed25519 /opt/data/.ssh/id_ed25519
+                  chmod 600 /opt/data/.ssh/id_ed25519
+                fi
+                if [ -f /tmp/ssh/id_ed25519.pub ]; then
+                  cp /tmp/ssh/id_ed25519.pub /opt/data/.ssh/id_ed25519.pub
+                  chmod 644 /opt/data/.ssh/id_ed25519.pub
+                fi
+                if [ -f /tmp/ssh_config ]; then
+                  cp /tmp/ssh_config /opt/data/.ssh/config
+                  chmod 600 /opt/data/.ssh/config
+                fi
+                chmod 700 /opt/data/.ssh
+                chown -R 10000:10000 /opt/data/.ssh
                 # Install the memini memory-provider plugin from the upstream
                 # standalone mirror eleboucher/memini-hermes (a release-synced
                 # copy of integrations/hermes/plugin/memini — the blessed
@@ -65,16 +80,21 @@ spec:
           app:
             image:
               repository: nousresearch/hermes-agent
-              tag: v2026.8.19@sha256:3811ed13da874fba2ac99b6d492db9a203d34cb6dccf90d886948c00d0ccec09
+              tag: v2026.9.21@sha256:6bece0644e29a347e5ae17db43c36938c86f171c6f5e0cef18aa2075d331f3a3
             args: [gateway, run]
             env:
               HERMES_DASHBOARD: "1"
               HERMES_DASHBOARD_PUBLIC_URL: https://hermes.cloudjur.com
-              HERMES_DASHBOARD_OIDC_SCOPES: "openid profile email offline_access"
+              HERMES_DASHBOARD_OIDC_SCOPES: openid profile email offline_access
               MEMINI_URL: http://memini.ai:8080
               MEMINI_NAMESPACE: hermes
               HERMES_HOME: /opt/data
               HOME: /opt/data
+              GIT_SSH_COMMAND: ssh -F /opt/data/.ssh/config
+              OBSIDIAN_VAULT_PATH: /mnt/defaultvault
+              DEVELOPER_PATH: /mnt/developer
+              HERMES_ENV: prod
+              FLIGHT_DISCORD_ENV: dev
               TZ: Asia/Kuala_Lumpur
             envFrom:
               - secretRef:
@@ -84,8 +104,9 @@ spec:
             resources:
               requests:
                 cpu: 500m
+                memory: 32Mi
               limits:
-                memory: 2Gi
+                memory: 4Gi
             ports:
               - containerPort: &port 8642
                 name: http
@@ -96,13 +117,16 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.133.0@sha256:e073a441c61c85821a7f16b64cf93b4e77b4092899bb1f3bed906fbd558afd62
+              tag: 4.138.0@sha256:81706b71ace316157850cbcfb574714d1067249c107a415b3a03dc6b613ebfbc
             securityContext:
               runAsUser: 10000
               runAsGroup: 10000
               runAsNonRoot: true
             env:
               HOME: /opt/data
+              GIT_SSH_COMMAND: ssh -F /opt/data/.ssh/config
+              OBSIDIAN_VAULT_PATH: /mnt/defaultvault
+              DEVELOPER_PATH: /mnt/developer
               TZ: Asia/Kuala_Lumpur
             args:
               [
@@ -168,6 +192,11 @@ spec:
             init:
               - path: /tmp/config.yaml
                 subPath: config.yaml
+              - path: /tmp/ssh_config
+                subPath: ssh_config
+            app:
+              - path: /root/.ssh/config
+                subPath: ssh_config
       env:
         type: secret
         name: hermes
@@ -177,9 +206,34 @@ spec:
             init:
               - path: /tmp/env
                 subPath: env
+      ssh:
+        type: secret
+        name: hermes-ssh
+        defaultMode: 0o400
+        advancedMounts:
+          hermes:
+            init:
+              - path: /tmp/ssh
+            app:
+              - path: /root/.ssh/id_ed25519
+                subPath: id_ed25519
+              - path: /root/.ssh/id_ed25519.pub
+                subPath: id_ed25519.pub
       gallery:
         type: nfs
         server: smb.cloudjur.com
         path: /tank/Apps/comfyui/output
         globalMounts:
           - path: /mnt/gallery
+      default-vault:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps/Obsidian/DefaultVault
+        globalMounts:
+          - path: /mnt/defaultvault
+      developer:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Developer
+        globalMounts:
+          - path: /mnt/developer

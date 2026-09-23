@@ -12,7 +12,7 @@ spec:
       <<: *labels
   namespaceSelector:
     matchNames:
-      - llm
+      - ai
   targetLabels:
     - app.kubernetes.io/instance
     - app.kubernetes.io/name

@@ -84,6 +84,8 @@ APP_KNOWLEDGE: dict[str, tuple[str, str, str]] = {
                  "Bookmark-everything app (links, notes, images) with search."),
     "n8n": ("https://github.com/n8n-io/n8n", "https://docs.n8n.io",
             "Workflow automation platform (webhooks, integrations, cron)."),
+    "obsidian-livesync": ("https://github.com/vrtmrz/obsidian-livesync", "https://github.com/vrtmrz/obsidian-livesync/blob/main/README.md",
+                          "Self-hosted Obsidian note sync server backed by CouchDB."),
     "pdf-tool": ("https://github.com/Stirling-Tools/Stirling-PDF", "",
                  "Self-hosted PDF toolbox (merge, split, OCR, convert)."),
     "rustdesk": ("https://github.com/rustdesk/rustdesk-server", "",

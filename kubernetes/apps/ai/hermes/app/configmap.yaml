@@ -6,15 +6,19 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: kimi-k2.6
+      default: glm-5.3-flash
       provider: litellm
     fallback_providers:
       - provider: litellm
+        model: opencode-go/deepseek-v4-flash
+      - provider: litellm
+        model: opencode-go/kimi-k2.7-code
+      - provider: litellm
         model: self-hosted
       - provider: litellm
-        model: qwen3.6-plus
+        model: opencode-go/qwen3.7-max
       - provider: litellm
-        model: glm-5.1
+        model: opencode-go/minimax-m3
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1
@@ -61,18 +65,18 @@ data:
     auxiliary:
       vision:
         provider: litellm
-        model: gemini-2.5-flash-lite
+        model: glm-5.3-flash
       compression:
         provider: litellm
-        model: gemini-2.5-flash-lite
+        model: glm-5.3-flash
         timeout: 180
       web_extract:
         provider: litellm
-        model: gemini-2.5-flash-lite
+        model: glm-5.3-flash
         timeout: 120
       approval:
         provider: litellm
-        model: gemini-2.5-flash-lite
+        model: glm-5.3-flash
         timeout: 60
       session_search:
         provider: litellm
@@ -105,3 +109,24 @@ data:
     DISCORD_HOME_CHANNEL={{ .DISCORD_HOME_CHANNEL }}
     DISCORD_FREE_RESPONSE_CHANNELS={{ .DISCORD_FREE_RESPONSE_CHANNELS }}
     MEMINI_API_KEY={{ .MEMINI_API_KEY }}
+  ssh_config: |
+    Host git.cloudjur.com
+      HostName git.cloudjur.com
+      User git
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+
+    Host github.com
+      HostName github.com
+      User git
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+
+    Host *
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+      ServerAliveInterval 60
+      ServerAliveCountMax 3

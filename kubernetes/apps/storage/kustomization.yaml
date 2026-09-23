@@ -7,10 +7,11 @@ components:
   - ../../components/kopiur/secret
 resources:
   - ./namespace.yaml
-  - ./democratic-csi/ks.yaml
+  # - ./democratic-csi/ks.yaml
   - ./openebs/ks.yaml
   - ./garage/ks.yaml
   - ./rclone/ks.yaml
   - ./kopiur/ks.yaml
   - ./kopia/ks.yaml
-  # - ./staticgarage/ks.yaml
+    # - ./staticgarage/ks.yaml
+  - ./miroir/ks.yaml

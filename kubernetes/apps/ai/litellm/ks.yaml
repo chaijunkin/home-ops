@@ -5,6 +5,9 @@ metadata:
   name: litellm
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: litellm-operator
+      namespace: ai
   targetNamespace: ai
   commonMetadata:
     labels:

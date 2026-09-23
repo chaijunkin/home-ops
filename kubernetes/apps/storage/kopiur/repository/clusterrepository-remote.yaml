@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/kopiur.home-operations.com/clusterrepository_v1alpha1.json
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: ClusterRepository
 metadata:
@@ -24,8 +25,8 @@ spec:
   create:
     enabled: true # Step 1, then disable this
   identityDefaults:
-    hostnameExpr: "namespace"
-    usernameExpr: "policyName"
+    hostnameExpr: namespace
+    usernameExpr: policyName
   catalog:
     adoption: Ignore
   scheduleDefaults:

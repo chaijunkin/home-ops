@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./auto.yaml
+  - ./cerebras-wildcard.yaml
+  - ./frontier-pool-1.yaml
+  - ./frontier-pool-2.yaml
+  - ./frontier-pool-3.yaml
+  - ./gemini-wildcard.yaml
+  - ./glm-5.3-flash.yaml
+  - ./groq-wildcard.yaml
+  - ./hf-wildcard.yaml
+  - ./ilmu-wildcard.yaml
+  - ./lmstudio-embed.yaml
+  - ./memini-embed.yaml
+  - ./memini-rerank.yaml
+  - ./memini-summary.yaml
+  - ./mistral-wildcard.yaml
+  - ./nvidia-wildcard.yaml
+  - ./opencode-embed.yaml
+  - ./opencode-go-deepseek-v4-flash.yaml
+  - ./opencode-go-glm-5-2.yaml
+  - ./opencode-go-kimi-k2-6.yaml
+  - ./opencode-go-kimi-k2-7-code.yaml
+  - ./opencode-go-mimo-v2-5.yaml
+  - ./opencode-go-minimax-m3.yaml
+  - ./opencode-go-qwen3-6-plus.yaml
+  - ./opencode-go-qwen3-7-max.yaml
+  - ./openrouter-wildcard.yaml
+  - ./reasoning-pool-1.yaml
+  - ./reasoning-pool-2.yaml
+  - ./reasoning-pool-3.yaml
+  - ./self-hosted.yaml
+  - ./vercel-wildcard.yaml

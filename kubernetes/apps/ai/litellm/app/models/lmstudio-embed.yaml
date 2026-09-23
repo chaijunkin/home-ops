@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: lmstudio-embed
+spec:
+  modelName: lmstudio-embed
+  proxyRef: litellm
+  params:
+    model: openai/text-embedding-qwen3-embedding-0.6b
+    apiBase: http://jk-mac-mini.cloudjur.com:1234/v1
+    apiKey: lm-studio
+  info:
+    mode: embedding
+    maxInputTokens: 32768

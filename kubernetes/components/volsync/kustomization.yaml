@@ -4,6 +4,6 @@ kind: Component
 resources:
   - ./kopia.yaml
     # - ./minio.yaml
-  # - ./r2.yaml
+    # - ./r2.yaml
   - ./pvc.yaml
     # - ./nas.yaml

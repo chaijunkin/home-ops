@@ -41,7 +41,7 @@ spec:
   retryInterval: 1m
 
   dependsOn:
-    - name: local-hostpath
+    - name: miroir
       namespace: storage
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
