@@ -7,8 +7,6 @@ resources:
   - ./helmrelease.yaml
     # - ./httproute.yaml
   - ./scrapeconfig.yaml
-  - ./scrapeconfig-strix-halo.yaml
-
 configMapGenerator:
   - name: alertmanager-config-tpl
     files:
