@@ -8,7 +8,8 @@ spec:
     - targets:
         - gateway.cloudjur.com:9100
         - 10.10.30.10:9100
-        - 192.168.1.149:9100
+        # strix-halo (192.168.1.149) removed: now pushed via Alloy remote-write
+        # through the prometheus-ingest gateway (k8s-monitoring prometheusMetricsReceiver)
   metricsPath: /metrics
   relabelings:
     - action: replace

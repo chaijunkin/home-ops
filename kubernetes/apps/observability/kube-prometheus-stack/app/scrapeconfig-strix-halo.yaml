@@ -9,10 +9,13 @@ spec:
     - action: replace
       targetLabel: job
       replacement: halogen
+  # Halogen (192.168.1.149:8731) removed from pull: now scraped by Alloy on the
+  # host and pushed via remote-write through the metrics-ingest gateway.
+  # Labels below are preserved so dashboards keep working; Alloy must emit
+  # identical labels (job=halogen, namespace=llm, node=strix-halo, service=halogen).
   staticConfigs:
     - labels:
         namespace: llm
         node: strix-halo
         service: halogen
-      targets:
-        - 192.168.1.149:8731
+      targets: []

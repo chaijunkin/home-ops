@@ -171,16 +171,34 @@ spec:
     #     namespaces: [ai]
     #   java:
     #     enabled: false
-    #     namespaces: [ai]
     #   pprof:
     #     enabled: true
     #     namespaces: [ai]
 
-    # # -- The Continuous Profiling receiver configuration
-    # profilesReceiver:
-    #   enabled: true
-    #   collector: alloy-profiles
-    #   destinations: [localProfiling]
+    # ---------------------------------------------------------------------------
+    # Native-protocol ingest receivers on alloy-receiver — the single gateway
+    # for external agents (e.g. the Strix Halo mini PC running Alloy/Beyla).
+    # Each accepts its ecosystem's native protocol and fans out to the
+    # destinations above by signal type.
+    # ---------------------------------------------------------------------------
+
+    # Loki push receiver (loki.source.api) — port 3500
+    lokiLogsReceiver:
+      enabled: true
+      collector: alloy-receiver
+      destinations: [localLogs]
+
+    # Pyroscope ingest receiver (pyroscope.receive_http) — port 4040
+    profilesReceiver:
+      enabled: true
+      collector: alloy-receiver
+      destinations: [localProfiling]
+
+    # Prometheus remote-write receiver (prometheus.receive_http) — port 9090
+    prometheusMetricsReceiver:
+      enabled: true
+      collector: alloy-receiver
+      destinations: [localMertics]
 
     # kubernetesManifests:
     #   enabled: true
@@ -236,9 +254,37 @@ spec:
       alloy-singleton:
         presets: [singleton]
 
-      # alloy-receiver: Deployment that accepts inbound OTLP telemetry from apps
+      # alloy-receiver: Deployment that accepts inbound telemetry from apps and
+      # external agents (OTLP, Loki push, Pyroscope, Prometheus remote-write)
       alloy-receiver:
         presets: [deployment]
+        alloy:
+          extraPorts:
+            - name: otlp-grpc
+              port: 4317
+              targetPort: 4317
+              protocol: TCP
+              appProtocol: grpc
+            - name: otlp-http
+              port: 4318
+              targetPort: 4318
+              protocol: TCP
+              appProtocol: http
+            - name: loki-push
+              port: 3500
+              targetPort: 3500
+              protocol: TCP
+              appProtocol: http
+            - name: pyroscope-ingest
+              port: 4040
+              targetPort: 4040
+              protocol: TCP
+              appProtocol: http
+            - name: prometheus-rw
+              port: 9090
+              targetPort: 9090
+              protocol: TCP
+              appProtocol: http
 
       # # alloy-profiles: DaemonSet that scrapes pprof endpoints and sends to Pyroscope
       # alloy-profiles:
