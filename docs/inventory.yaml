@@ -20,6 +20,11 @@ devices:
     typical_watt: 20
     peak_watt: 35
     notes: "Aliexpress soft-router / pfSense / ESXi-capable model"
+  - id: strix_halo_mini
+    name: "FAEX1 Strix Halo mini PC (temporary LLM host)"
+    typical_watt: 13
+    peak_watt: 13
+    notes: "AMD Ryzen AI Max+ 395 with integrated Radeon 8060S, 128GB RAM, 1.8TB NVMe, NixOS 24.05, 192.168.1.149. Runs peonist-ai/halogen-flash-server with qwen38-flash-next; 13W observed during audit, peak not measured; temporary LiteLLM self-hosted backend."
   - id: tp_link_eap670
     name: "TP-LINK EAP670 (AX5400)"
     typical_watt: 12
