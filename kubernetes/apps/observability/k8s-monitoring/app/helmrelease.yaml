@@ -275,7 +275,7 @@ spec:
               targetPort: 3500
               protocol: TCP
               appProtocol: http
-            - name: pyroscope-ingest
+            - name: pyroscope
               port: 4040
               targetPort: 4040
               protocol: TCP
