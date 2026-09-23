@@ -40,7 +40,7 @@ spec:
           shelfmark:
             image:
               repository: ghcr.io/calibrain/shelfmark
-              tag: v1.3.11
+              tag: v1.3.15
             command:
               - gunicorn
             args:
