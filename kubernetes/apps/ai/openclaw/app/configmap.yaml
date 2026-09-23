@@ -100,7 +100,7 @@ data:
               { "id": "opencode-go/minimax-m3", "name": "MiniMax M3 (Opencode Go)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1000000, "maxTokens": 131072 },
               { "id": "opencode-go/glm-5.2", "name": "GLM 5.2 (Opencode Go)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 1048560, "maxTokens": 131072 },
               { "id": "opencode-go/mimo-v2.5", "name": "MiMo V2.5 (Opencode Go)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 32768 },
-              { "id": "self-hosted", "name": "Qwen3.6-35B-A3B UD Q8_K_XL (ROCm)", "reasoning": true, "input": ["text", "image"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 16384 },
+              { "id": "self-hosted", "name": "Qwen3.8 Flash Next (Halogen / Strix Halo)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 262144, "maxTokens": 16384 },
               { "id": "openrouter/deepseek/deepseek-chat", "name": "DeepSeek Chat (OpenRouter)", "reasoning": true, "input": ["text"], "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }, "contextWindow": 128000, "maxTokens": 8192 }
             ]
           }

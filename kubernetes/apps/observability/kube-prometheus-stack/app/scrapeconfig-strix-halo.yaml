@@ -2,15 +2,17 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: &name node-exporter
+  name: strix-halo
 spec:
-  staticConfigs:
-    - targets:
-        - gateway.cloudjur.com:9100
-        - 10.10.30.10:9100
-        - 192.168.1.149:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
       targetLabel: job
-      replacement: *name
+      replacement: halogen
+  staticConfigs:
+    - labels:
+        namespace: llm
+        node: strix-halo
+        service: halogen
+      targets:
+        - 192.168.1.149:8731

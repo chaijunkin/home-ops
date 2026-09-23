@@ -33,3 +33,15 @@ Hardware: FAEX1, AMD Ryzen AI Max+ 395 with integrated Radeon 8060S, 128GB RAM,
 limit and a 262,144-position KV pool. This backend is temporary; restore the
 `jk-mac-mini` LM Studio endpoint in `app/models/self-hosted.yaml` when testing
 is complete.
+
+## Strix Halo telemetry
+
+The temporary Halogen host is monitored through two Prometheus endpoints:
+
+- `192.168.1.149:8731/metrics` — Halogen request, token, prefill/decode, and KV-pool metrics.
+- `192.168.1.149:9100/metrics` — NixOS node and AMDGPU sysfs metrics.
+
+The host uses the `strix-halo` node label and the Halogen endpoint uses
+`service=halogen`, `namespace=llm`, and `job=halogen`. The ROCm dashboard's
+service selector is label-based so it works for this native Podman service as
+well as Kubernetes-hosted llama.cpp services.

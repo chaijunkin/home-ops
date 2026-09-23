@@ -580,7 +580,7 @@
         "allValue": ".*",
         "current": { "selected": true, "text": "All", "value": "$__all" },
         "datasource": { "type": "prometheus", "uid": "${datasource}" },
-        "definition": "query_result(group by (service) (llamacpp:prompt_tokens_total{namespace=\"llm\", service!~\".*embed.*|.*rerank.*\"} * on(pod) group_left(node) kube_pod_info{node=~\"$node\"}))",
+        "definition": "label_values(llamacpp:prompt_tokens_total{namespace=\"llm\", service!~\".*embed.*|.*rerank.*\"}, service)",
         "refresh": 1,
         "hide": 0,
         "includeAll": true,
@@ -588,7 +588,7 @@
         "name": "service",
         "regex": "/service=\"([^\"]+)\"/",
         "query": {
-          "query": "query_result(group by (service) (llamacpp:prompt_tokens_total{namespace=\"llm\", service!~\".*embed.*|.*rerank.*\"} * on(pod) group_left(node) kube_pod_info{node=~\"$node\"}))",
+          "query": "label_values(llamacpp:prompt_tokens_total{namespace=\"llm\", service!~\".*embed.*|.*rerank.*\"}, service)",
           "refId": "StandardVariableQuery"
         },
         "sort": 1,
@@ -611,7 +611,7 @@
         "type": "query"
       },
       {
-        "current": { "selected": true, "text": "skirk", "value": "skirk" },
+        "current": { "selected": true, "text": "strix-halo", "value": "strix-halo" },
         "datasource": { "type": "prometheus", "uid": "${datasource}" },
         "definition": "label_values(node_uname_info{job=\"node-exporter\"}, nodename)",
         "hide": 0,
