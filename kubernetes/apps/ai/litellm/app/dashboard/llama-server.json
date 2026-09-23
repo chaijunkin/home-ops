@@ -912,7 +912,7 @@
     },
     {
       "datasource": {
-        "type": "victoriametrics-logs-datasource",
+        "type": "loki",
         "uid": "${logs_datasource}"
       },
       "description": "Realized prompt-cache size per pod, parsed from 'srv update: - cache state: N prompts, X MiB' log lines. Compare against the --cache-ram ceiling configured on each server.",
