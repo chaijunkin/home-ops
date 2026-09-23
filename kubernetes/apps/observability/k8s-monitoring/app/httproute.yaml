@@ -89,3 +89,60 @@ spec:
         - name: k8s-monitoring-alloy-profiles
           namespace: observability
           port: 12345
+# ---
+# # ---------------------------------------------------------------------------
+# # Machine ingest — external hosts (e.g. the Strix Halo mini PC, outside the
+# # cluster) push telemetry INTO the in-cluster stack via the LAN-only internal
+# # gateway. No extAuth: these are agent->backend ingest endpoints reachable only
+# # from the trusted internal network (envoy-internal @ 10.10.30.25).
+# # ---------------------------------------------------------------------------
+# # Loki push: Alloy on the mini PC -> https://loki-ingest.cloudjur.com/loki/api/v1/push
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: loki-ingest
+# spec:
+#   hostnames: [loki-ingest.cloudjur.com]
+#   parentRefs:
+#     - name: envoy-internal
+#       namespace: network
+#       sectionName: https
+#   rules:
+#     - backendRefs:
+#         - name: loki-headless
+#           namespace: observability
+#           port: 3100
+# ---
+# # Tempo OTLP/HTTP ingest: Beyla on the mini PC -> https://tempo-ingest.cloudjur.com/v1/traces
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: tempo-ingest
+# spec:
+#   hostnames: [tempo-ingest.cloudjur.com]
+#   parentRefs:
+#     - name: envoy-internal
+#       namespace: network
+#       sectionName: https
+#   rules:
+#     - backendRefs:
+#         - name: tempo
+#           namespace: observability
+#           port: 4318
+# ---
+# # Pyroscope ingest: pyroscope-agent (eBPF) on the mini PC -> https://pyroscope-ingest.cloudjur.com/ingest
+# apiVersion: gateway.networking.k8s.io/v1
+# kind: HTTPRoute
+# metadata:
+#   name: pyroscope-ingest
+# spec:
+#   hostnames: [pyroscope-ingest.cloudjur.com]
+#   parentRefs:
+#     - name: envoy-internal
+#       namespace: network
+#       sectionName: https
+#   rules:
+#     - backendRefs:
+#         - name: pyroscope
+#           namespace: observability
+#           port: 4040
