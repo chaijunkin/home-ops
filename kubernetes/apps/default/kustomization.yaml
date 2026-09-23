@@ -16,10 +16,8 @@ resources:
   - ./homepage/ks.yaml
   - ./ignis/ks.yaml
   - ./it-tools/ks.yaml
-    # - ./karakeep/ks.yaml
   - ./odoo/ks.yaml
     # - ./pdf-tool/ks.yaml
-    # - ./paperless/ks.yaml
   - ./rustdesk/ks.yaml
   - ./searxng/ks.yaml
   - ./sure/ks.yaml
@@ -27,6 +25,5 @@ resources:
   - ./tika/ks.yaml
   - ./picoshare/ks.yaml
   - ./sparkyfitness/ks.yaml
-    # - ./smtp-relay/ks.yaml
   - ./trek/ks.yaml
   - ./mealie/ks.yaml
