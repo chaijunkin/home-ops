@@ -56,7 +56,7 @@ spec:
               - env:
                   - name: DEBIAN_FRONTEND
                     value: noninteractive
-                image: ghcr.io/chaijunkin/forgejo-runner:2026.07.26@sha256:c92631f5efb2f5b0ad3ec3cf0af9c95081cf1f84f34211e35a4ef89076862d51
+                image: ghcr.io/chaijunkin/forgejo-runner:2026.09.22@sha256:c582459051809bfa73647995281b4e7f8a82bfb089053f000d9876b84341f545
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
@@ -105,7 +105,7 @@ spec:
                     value: "1"
                   - name: DOCKER_CERT_PATH
                     value: /certs/client
-                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:dbb94e8977d600a7dac84d22fb5a1b6abe2c53bbc2fa7bcab7e8ea25f1284c6b
+                image: ghcr.io/bjw-s-labs/forgejo-runner:ubuntu-24.04@sha256:fea688b875acdce4e7c786d117b30c1b0203271b23e77d80c306b373d9f5422f
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
@@ -167,7 +167,7 @@ spec:
           k8s-plugin:
             image:
               repository: git.erwanleboucher.dev/eleboucher/runner-k8s-plugin
-              tag: 12.10.9@sha256:7fb94371ccc6ef3ff7e2110b2c04050a68bb8031d3224ed8aee2cd5e1d31c673
+              tag: 13.2.0@sha256:1ee698a62fadae1fe0ff8ae24c1012c2fda0bb9c97bbd1e57606ce4445932bf9
             args:
               - --listen
               - unix:///plugin/forgejo-runner-k8s.sock

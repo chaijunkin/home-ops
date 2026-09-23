@@ -15,11 +15,13 @@ spec:
     dropParams: true
     additional:
       order: 1
+      extra_headers:
+        x-opencode-session: "litellm-proxy"
   info:
     mode: chat
     maxInputTokens: 1000000
     maxOutputTokens: 131072
     supportsFunctionCalling: true
-    supportsVision: true
+    supportsVision: false
     extra:
       supports_reasoning: true

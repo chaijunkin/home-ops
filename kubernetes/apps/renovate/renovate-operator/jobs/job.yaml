@@ -18,12 +18,14 @@ spec:
       value: '["pnpm run bundle"]'
     - name: RENOVATE_REDIS_URL
       value: redis://dragonfly.database.svc.cluster.local:6379/8
-  image: ghcr.io/renovatebot/renovate:44.39.2
+  image: ghcr.io/renovatebot/renovate:44.108.1
   parallelism: 5
   resources:
     requests:
       cpu: 100m
       memory: 128Mi
+    limits:
+      memory: 512Mi
   schedule: 0 * * * *
   secretRef: cjk-bot-token
   webhook:

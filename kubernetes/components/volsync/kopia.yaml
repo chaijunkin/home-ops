@@ -58,8 +58,8 @@ spec:
     repository: ${APP}-volsync-secret
     sourceIdentity:
       sourceName: ${APP}
-    storageClassName: ${VOLSYNC_STORAGECLASS:=local-hostpath}
-    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=local-hostpath}
+    storageClassName: ${VOLSYNC_STORAGECLASS:=miroir-local}
+    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=miroir-snap}
 # ---
 # # yaml-language-server: $schema=https://crd.cloudjur.com/volsync.backube/replicationsource_v1alpha1.json
 # apiVersion: volsync.backube/v1alpha1

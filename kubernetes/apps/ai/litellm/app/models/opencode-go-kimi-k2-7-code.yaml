@@ -12,11 +12,14 @@ spec:
       name: litellm
       key: OPENCODE_GO_API_KEY
     dropParams: true
+    additional:
+      extra_headers:
+        x-opencode-session: "litellm-proxy"
   info:
     maxInputTokens: 262128
     maxOutputTokens: 131072
     supportsFunctionCalling: true
     supportsPromptCaching: true
-    supportsVision: true
+    supportsVision: false
     extra:
       supports_reasoning: true

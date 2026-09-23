@@ -26,10 +26,64 @@ spec:
                   name: trek-mcp-secret
                   key: OAUTH_CLIENT_SECRET
           command:
-            - npx
-          args:
-            - -y
-            - mcp-remote
-            - https://trips.cloudjur.com/mcp
-              # - --static-oauth-client-info
-              # - '{"client_id": "$(OAUTH_CLIENT_ID)", "client_secret": "$(OAUTH_CLIENT_SECRET)"}'
+            - node
+            - -e
+            - |
+              const http = require('http');
+              const https = require('https');
+              const { spawn } = require('child_process');
+
+              let token = null;
+              let expiresAt = 0;
+
+              async function getAccessToken() {
+                if (token && Date.now() < expiresAt - 60000) return token;
+                const res = await fetch('https://trips.cloudjur.com/oauth/token', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                  body: new URLSearchParams({
+                    grant_type: 'client_credentials',
+                    client_id: process.env.OAUTH_CLIENT_ID,
+                    client_secret: process.env.OAUTH_CLIENT_SECRET
+                  })
+                });
+                if (!res.ok) throw new Error(`OAuth token fetch failed with HTTP ${res.status}`);
+                const data = await res.json();
+                if (!data.access_token) throw new Error('OAuth response missing access_token');
+                token = data.access_token;
+                expiresAt = Date.now() + ((data.expires_in || 3600) * 1000);
+                return token;
+              }
+
+              const server = http.createServer(async (req, res) => {
+                if (!req.url.startsWith('/mcp')) {
+                  res.writeHead(403);
+                  return res.end('Forbidden');
+                }
+                try {
+                  const bearer = await getAccessToken();
+                  const headers = { ...req.headers, host: 'trips.cloudjur.com', authorization: `Bearer ${bearer}` };
+                  const proxyReq = https.request('https://trips.cloudjur.com' + req.url, {
+                    method: req.method,
+                    headers
+                  }, (proxyRes) => {
+                    res.writeHead(proxyRes.statusCode, proxyRes.headers);
+                    proxyRes.pipe(res);
+                  });
+                  proxyReq.on('error', (e) => {
+                    res.writeHead(502);
+                    res.end(e.message);
+                  });
+                  req.pipe(proxyReq);
+                } catch (err) {
+                  res.writeHead(500);
+                  res.end(err.message);
+                }
+              });
+
+              server.listen(8080, '127.0.0.1', () => {
+                const mcp = spawn('npx', ['-y', 'mcp-remote', 'http://127.0.0.1:8080/mcp', '--allow-http', '--transport', 'http-only'], {
+                  stdio: 'inherit'
+                });
+                mcp.on('exit', (code) => process.exit(code || 0));
+              });

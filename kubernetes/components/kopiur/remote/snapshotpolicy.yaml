@@ -26,4 +26,4 @@ spec:
   sources:
     - pvc:
         name: ${KOPIUR_CLAIM:-${APP}}
-  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=local-hostpath}
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=miroir-snap}

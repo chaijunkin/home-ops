@@ -23,9 +23,9 @@ spec:
     substitute:
       APP: autobangumi
       VOLSYNC_CAPACITY: 1Gi
-      KOPIUR_PUID: "0"
-      KOPIUR_PGID: "0"
-      KOPIUR_NONROOT: "false"
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
+      KOPIUR_NONROOT: "true"
   components:
     # - ../../../../components/volsync
     - ../../../../components/kopiur/backup

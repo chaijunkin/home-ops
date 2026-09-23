@@ -321,6 +321,15 @@ locals {
       launch_url        = "https://hermes.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
+    mealie = {
+      client_id         = var.mealie_id
+      client_secret     = var.mealie_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/mealie.png"
+      redirect_uri      = "https://mealie.${var.public_domain}/login"
+      launch_url        = "https://mealie.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
   }
 }
 

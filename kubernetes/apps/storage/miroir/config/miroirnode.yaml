@@ -6,5 +6,5 @@ metadata:
 spec:
   pools:
     - name: default
-      lvmthin:
-        device: /dev/disk/by-partlabel/r-miroir
+      loopfile:
+        baseDir: /var/lib/miroir

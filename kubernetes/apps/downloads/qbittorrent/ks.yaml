@@ -30,7 +30,7 @@ spec:
     - ../../../../components/kopiur/remote
       # - ../../../../components/kopiur/adhoc-snapshot
   dependsOn:
-    - name: local-hostpath
+    - name: miroir
       namespace: storage
     - name: openebs
       namespace: storage
