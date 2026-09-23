@@ -40,5 +40,5 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.40
-          external-dns.alpha.kubernetes.io/hostname: mc.cloudjur.com,
+          external-dns.kubernetes.io/hostname: mc.cloudjur.com,
             minecraft.cloudjur.com #, create.cloudjur.com

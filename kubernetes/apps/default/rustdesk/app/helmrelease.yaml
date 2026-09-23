@@ -46,7 +46,7 @@ spec:
         controller: hbbr
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: rustdesk-relay.cloudjur.com
+          external-dns.kubernetes.io/hostname: rustdesk-relay.cloudjur.com
           lbipam.cilium.io/ips: 10.10.30.21
           gatus.home-operations.com/endpoint: |-
             group: services
@@ -64,7 +64,7 @@ spec:
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 10.10.30.20
-          external-dns.alpha.kubernetes.io/hostname: rustdesk.cloudjur.com
+          external-dns.kubernetes.io/hostname: rustdesk.cloudjur.com
           gatus.home-operations.com/enabled: "false"
           gatus.home-operations.com/endpoint: |-
             group: services
