@@ -36,7 +36,6 @@ snapshots:
 
 record:
   enabled: true
-  sync_recordings: True
   # 1. Continuous Baseline (Replaces: retain -> days: 4 -> mode: all)
   continuous:
     days: 2
