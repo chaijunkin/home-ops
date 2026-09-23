@@ -82,3 +82,43 @@ spec:
   configMapRef:
     name: llama-server
     key: llama-server.json
+---
+# Official LiteLLM dashboard — every litellm_* metric family (134 families / 95 panels).
+# Panels for features not enabled stay empty by design.
+# https://github.com/BerriAI/litellm/tree/main/cookbook/litellm_proxy_server/grafana_dashboard/dashboard_all_metrics
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: litellm-all-metrics
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: litellm-all-metrics
+    key: litellm-all-metrics.json
+---
+# Official LiteLLM compact dashboard — request rate, failures, latency, and
+# remaining-request / remaining-token gauges per model group.
+# https://github.com/BerriAI/litellm/tree/main/cookbook/litellm_proxy_server/grafana_dashboard/dashboard_v2
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: litellm-v2
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: litellm-v2
+    key: litellm-v2.json

@@ -17,6 +17,12 @@ configMapGenerator:
   - name: llama-server
     files:
       - llama-server.json
+  - name: litellm-all-metrics
+    files:
+      - litellm-all-metrics.json
+  - name: litellm-v2
+    files:
+      - litellm-v2.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
