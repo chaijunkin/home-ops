@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: openrouter-wildcard
+spec:
+  modelName: openrouter/*
+  proxyRef: litellm
+  params:
+    model: openrouter/*
+    apiKeyRef:
+      name: litellm
+      key: OPENROUTER_API_KEY
+    dropParams: true

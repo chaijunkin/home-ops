@@ -1,12 +1,12 @@
 # Metube
 
-**Description:** To be filled.
+**Description:** Web GUI for yt-dlp video downloads.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Metube Source Code](https://github.com/search?q=metube)
+- **Project Repository:** [Metube Source Code](https://github.com/alexta69/metube)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

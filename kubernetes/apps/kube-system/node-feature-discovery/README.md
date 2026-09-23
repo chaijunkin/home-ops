@@ -1,12 +1,12 @@
 # Node-Feature-Discovery
 
-**Description:** To be filled.
+**Description:** Detects hardware features and labels nodes.
 **Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Node-Feature-Discovery Source Code](https://github.com/search?q=node-feature-discovery)
+- **Project Repository:** [Node-Feature-Discovery Source Code](https://github.com/kubernetes-sigs/node-feature-discovery)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,12 +1,12 @@
 # Democratic-Csi
 
-**Description:** To be filled.
+**Description:** CSI driver bridging NAS storage (zfs-generic-nfs).
 **Category:** storage
 
 ---
 
 ## Resources
-- **Project Repository:** [Democratic-Csi Source Code](https://github.com/search?q=democratic-csi)
+- **Project Repository:** [Democratic-Csi Source Code](https://github.com/democratic-csi/democratic-csi)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

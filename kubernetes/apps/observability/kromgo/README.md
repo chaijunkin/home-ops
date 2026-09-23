@@ -1,12 +1,12 @@
 # Kromgo
 
-**Description:** To be filled.
+**Description:** Prometheus query-to-badge image service for dashboards.
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [Kromgo Source Code](https://github.com/search?q=kromgo)
+- **Project Repository:** [Kromgo Source Code](https://github.com/kashalls/kromgo)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

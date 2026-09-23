@@ -1,13 +1,13 @@
 # Tautulli
 
-**Description:** To be filled.
+**Description:** Plex usage monitoring and statistics.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Tautulli Source Code](https://github.com/search?q=tautulli)
-- **Helm/Manifest Source:** `http://tautulli.media`
+- **Project Repository:** [Tautulli Source Code](https://github.com/Tautulli/Tautulli)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

@@ -1,12 +1,12 @@
 # Spegel
 
-**Description:** To be filled.
+**Description:** Stateless peer-to-peer container registry mirror.
 **Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Spegel Source Code](https://github.com/search?q=spegel)
+- **Project Repository:** [Spegel Source Code](https://github.com/spegel-org/spegel)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

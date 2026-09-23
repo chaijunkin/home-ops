@@ -1,12 +1,12 @@
 # Trivy-Operator-Polr-Adapter
 
-**Description:** To be filled.
+**Description:** Converts Trivy scan reports into PolicyReport resources.
 **Category:** security
 
 ---
 
 ## Resources
-- **Project Repository:** [Trivy-Operator-Polr-Adapter Source Code](https://github.com/search?q=trivy-operator-polr-adapter)
+- **Project Repository:** [Trivy-Operator-Polr-Adapter Source Code](https://github.com/fjogeleit/trivy-operator-polr-adapter)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

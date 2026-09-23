@@ -1,12 +1,12 @@
 # Shelfmark
 
-**Description:** To be filled.
+**Description:** Automated ebook sourcing feeding Calibre-Web.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Shelfmark Source Code](https://github.com/search?q=shelfmark)
+- **Project Repository:** [Shelfmark Source Code](https://github.com/calibrain/shelfmark)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

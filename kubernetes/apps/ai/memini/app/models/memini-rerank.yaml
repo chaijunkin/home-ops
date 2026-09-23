@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/inference.llmkube.dev/model_v1alpha1.json
+apiVersion: inference.llmkube.dev/v1alpha1
+kind: Model
+metadata:
+  name: memini-rerank
+spec:
+  source: hf://ggml-org/Qwen3-Reranker-0.6B-Q8_0-GGUF
+  files:
+    - qwen3-reranker-0.6b-q8_0.gguf
+  format: gguf
+  quantization: Q8_0
+  hardware:
+    accelerator: cpu
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/inference.llmkube.dev/inferenceservice_v1alpha1.json
+apiVersion: inference.llmkube.dev/v1alpha1
+kind: InferenceService
+metadata:
+  name: memini-rerank
+spec:
+  modelRef: memini-rerank
+  runtime: llamacpp
+  image: ghcr.io/ggml-org/llama.cpp:server@sha256:82b5129742c04e12c4b710ae1908fd951f6b227339d45f0aa71f1165df353f70
+  replicas: 1
+  priority: normal
+  contextSize: 16384
+  parallelSlots: 2
+  batchSize: 4096
+  uBatchSize: 4096
+  extraArgs:
+    - --alias
+    - memini-rerank
+    - --rerank
+    - --pooling
+    - rank
+    - --cont-batching
+    - --kv-unified
+    - --threads
+    - "4"
+    - --threads-batch
+    - "4"
+    - --mmap
+  endpoint:
+    port: 8080
+    type: ClusterIP
+  # resources:
+  #   cpu: "2"
+  #   memory: 2Gi
+  probeOverrides:
+    startup:
+      httpGet:
+        path: /health
+        port: 8080
+      periodSeconds: 10
+      failureThreshold: 360
+    liveness:
+      httpGet:
+        path: /health
+        port: 8080
+      initialDelaySeconds: 30
+      periodSeconds: 30
+      failureThreshold: 6
+    readiness:
+      httpGet:
+        path: /health
+        port: 8080
+      initialDelaySeconds: 20
+      periodSeconds: 10
+      failureThreshold: 6

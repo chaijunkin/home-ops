@@ -23,13 +23,14 @@ spec:
     # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
-    # - ../../../../components/kopiur/adhoc-snapshot
+      # - ../../../../components/kopiur/adhoc-snapshot
   postBuild:
     substitute:
       APP: *app
-      APP_UID: "2000"
-      APP_GID: "2000"
-      VOLSYNC_CAPACITY: 1Gi
+      KOPIUR_CAPACITY: 1Gi
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
+      KOPIUR_NONROOT: "true"
   prune: true
   wait: false
   interval: 30m

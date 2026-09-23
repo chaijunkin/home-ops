@@ -1,12 +1,12 @@
 # Tetragon
 
-**Description:** To be filled.
+**Description:** eBPF-based security observability and runtime enforcement.
 **Category:** security
 
 ---
 
 ## Resources
-- **Project Repository:** [Tetragon Source Code](https://github.com/search?q=tetragon)
+- **Project Repository:** [Tetragon Source Code](https://github.com/cilium/tetragon)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,18 +1,18 @@
 # Freshrss
 
-**Description:** To be filled.
+**Description:** Self-hosted RSS feed aggregator.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Freshrss Source Code](https://github.com/search?q=freshrss)
+- **Project Repository:** [Freshrss Source Code](https://github.com/FreshRSS/FreshRSS)
 - **Helm/Manifest Source:** `Unknown`
 
 ---
 
 ## Related Links
-- [Documentation]() <!-- Add link to upstream docs -->
+- [Documentation](https://freshrss.org)
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/freshrss)
 
 ## Notes

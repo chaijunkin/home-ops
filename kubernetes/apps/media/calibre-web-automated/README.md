@@ -1,13 +1,13 @@
 # Calibre-Web-Automated
 
-**Description:** To be filled.
+**Description:** Calibre-Web fork with automated ingest and conversion.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Calibre-Web-Automated Source Code](https://github.com/search?q=calibre-web-automated)
-- **Helm/Manifest Source:** `http://calibre-web-automated.media.svc.cluster.local:8083`
+- **Project Repository:** [Calibre-Web-Automated Source Code](https://github.com/crocodilestick/Calibre-Web-Automated)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

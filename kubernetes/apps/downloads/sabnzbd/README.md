@@ -1,12 +1,12 @@
 # Sabnzbd
 
-**Description:** To be filled.
+**Description:** Usenet binary downloader (NZB).
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Sabnzbd Source Code](https://github.com/search?q=sabnzbd)
+- **Project Repository:** [Sabnzbd Source Code](https://github.com/sabnzbd/sabnzbd)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

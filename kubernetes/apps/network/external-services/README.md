@@ -1,13 +1,13 @@
 # External-Services
 
-**Description:** To be filled.
+**Description:** Proxy layer exposing physical appliances through Envoy Gateway.
 **Category:** network
 
 ---
 
 ## Resources
-- **Project Repository:** [External-Services Source Code](https://github.com/search?q=external-services)
-- **Helm/Manifest Source:** `https://adguard.cloudjur.com`
+- **Project Repository:** [External-Services Source Code]()
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

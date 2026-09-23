@@ -1,97 +1,165 @@
 # Services List
-| Namespace | App | URL | Homepage Group |
-| --- | --- | --- | --- |
-| ai | mcp-gateway | mcp.cloudjur.com | None |
-| ai | mcp-gateway-internal | mcp-direct.cloudjur.com | None |
-| ai | ollama | ollama.cloudjur.com | Application Service |
-| ai | open-webui | chat.cloudjur.com | Application Service |
-| default | atuin | atuin.cloudjur.com | Other Services |
-| default | convertx | convertx.cloudjur.com | Utility Service |
-| default | cyberchef | cyberchef.cloudjur.com | Utility Service |
-| default | glance | glance.cloudjur.com | Application Service |
-| default | glance | g.cloudjur.com | Application Service |
-| default | homepage | homepage.cloudjur.com | Utility Service |
-| default | homepage | h.cloudjur.com | Utility Service |
-| default | it-tools | it-tools.cloudjur.com | Utility Service |
-| default | n8n-app | n8n.cloudjur.com | Other Services |
-| default | n8n-webhooks | n8n-webhook.cloudjur.com | None |
-| default | picoshare | share.cloudjur.com | Storage |
-| default | searxng | search.cloudjur.com | Application Service |
-| default | sure | money.cloudjur.com | Application Service |
-| dev | forgejo | git.cloudjur.com | Platform Infrastructure |
-| downloads | autobangumi | autobangumi.cloudjur.com | Downloads Service |
-| downloads | autobrr | autobrr.cloudjur.com | Downloads Service |
-| downloads | bazarr | bazarr.cloudjur.com | Downloads Service |
-| downloads | lidarr | lidarr.cloudjur.com | Downloads Service |
-| downloads | metube | metube.cloudjur.com | Downloads Service |
-| downloads | profilarr | profilarr.cloudjur.com | Downloads Service |
-| downloads | prowlarr | prowlarr.cloudjur.com | Downloads Service |
-| downloads | qbittorrent-app | qbittorrent.cloudjur.com | Downloads Service |
-| downloads | qbittorrent-app | qb.cloudjur.com | Downloads Service |
-| downloads | qbittorrent-qbop | qbop.cloudjur.com | None |
-| downloads | qui | qui.cloudjur.com | Downloads Service |
-| downloads | radarr | radarr.cloudjur.com | Downloads Service |
-| downloads | sabnzbd | sabnzbd.cloudjur.com | Downloads Service |
-| downloads | sabnzbd | sab.cloudjur.com | Downloads Service |
-| downloads | shelfmark | dl-books.cloudjur.com | Downloads Service |
-| downloads | sonarr | sonarr.cloudjur.com | Downloads Service |
-| downloads | webhook | webhook.cloudjur.com | Other Services |
-| flux-system | flux-operator | flux-operator.cloudjur.com | Platform Infrastructure |
-| flux-system | github-webhook | flux-webhook.cloudjur.com | Other Services |
-| flux-system | headlamp | headlamp.cloudjur.com | Platform Infrastructure |
-| home-automation | frigate | frigate.cloudjur.com | Media Service |
-| home-automation | home-assistant-app | hass.cloudjur.com | Application Service |
-| home-automation | home-assistant-app | home-assistant.cloudjur.com | Application Service |
-| home-automation | home-assistant-codeserver | hass-code.cloudjur.com | Management tools |
-| media | calibre-web-automated | books.cloudjur.com | Media Service |
-| media | filebrowser | filebrowser.cloudjur.com | Platform Infrastructure |
-| media | jellyfin | jellyfin.cloudjur.com | Media Service |
-| media | komga | komga.cloudjur.com | Media Service |
-| media | maintainerr | maintainerr.cloudjur.com | Media Service |
-| media | opencloud | drive.cloudjur.com | Application Service |
-| media | opencloud | drive.cloudjur.com | Application Service |
-| media | plex | plex.cloudjur.com | Media Service |
-| media | plex | plex.cloudjur.com | Media Service |
-| media | seerr | seerr.cloudjur.com | Media Service |
-| media | seerr | requests.cloudjur.com | Media Service |
-| media | slskd | slskd.cloudjur.com | Downloads Service |
-| media | syncthing | syncthing.cloudjur.com | Application Service |
-| media | tautulli | tautulli.cloudjur.com | Media Service |
-| media | watchstate | watchstate.cloudjur.com | Media Service |
-| network | adguard | adguard.cloudjur.com | Network Infrastructure |
-| network | echo-server-ext | echo-server-ext.cloudjur.com | Management Tools |
-| network | echo-server-ext-auth | echo-server-ext-auth.cloudjur.com | Management Tools |
-| network | echo-server-int | echo-server-int.cloudjur.com | Management Tools |
-| network | omada-controller | omada.cloudjur.com | None |
-| network | switch | switch.cloudjur.com | None |
-| observability | alloy-logs | alloy-logs.cloudjur.com | Observability Service |
-| observability | alloy-profiles | alloy-profiles.cloudjur.com | Observability Service |
-| observability | alloy-receiver | alloy-receiver.cloudjur.com | Observability Service |
-| observability | alloy-singleton | alloy-singleton.cloudjur.com | Observability Service |
-| observability | gatus | gatus.cloudjur.com | Observability Service |
-| observability | grafana-httproute | grafana.cloudjur.com | Observability Service |
-| observability | kromgo | kromgo.cloudjur.com | Observability Service |
-| observability | kube-prometheus-stack-alertmanager | alertmanager.cloudjur.com | Observability Service |
-| observability | kube-prometheus-stack-prometheus | prometheus.cloudjur.com | Observability Service |
-| renovate | renovate-operator | renovate.cloudjur.com | None |
-| security | authentik-server | auth.cloudjur.com | Platform Infrastructure |
-| storage | garage-api | garage.cloudjur.com | None |
-| storage | garage-s3 | s3.cloudjur.com | None |
-| storage | garage-schema-web | schema.cloudjur.com | None |
-| storage | garage-webui | garage-ui.cloudjur.com | Platform Infrastructure |
-| storage | garage-wiki-web | wiki.cloudjur.com | None |
-| storage | garage-wiki-web | wiki.cloudjur.com | None |
-| storage | garage-wiki-web | wiki.cloudjur.com | None |
-| storage | rclone | rclone.cloudjur.com | None |
-| volsync-system | kopia | kopia.cloudjur.com | Platform Infrastructure |
-| database | dragonfly | 6379 | None |
-| database | mosquitto | mosquitto.cloudjur.com | None |
-| database | postgres-lb | postgres.cloudjur.com | None |
-| default | rustdesk-relay | rustdesk-relay.cloudjur.com | None |
-| default | rustdesk-server | rustdesk.cloudjur.com | None |
-| downloads | qbittorrent-bittorrent | 50413 | None |
-| kube-system | kube-api | k8s.cloudjur.com | None |
-| media | slskd-soulseek | 50429 | None |
-| media | syncthing-listen | 21027 | None |
-| network | envoy-external | external.cloudjur.com | None |
-| network | envoy-internal | internal.cloudjur.com | None |
+
+<!-- Generated by scripts/sync_service_docs.py - DO NOT EDIT MANUALLY -->
+<!-- Last generated: 2026-08-25 01:41 UTC -->
+
+| Namespace | App | URL | Route | Gateway | Homepage Group |
+| --- | --- | --- | --- | --- | --- |
+| ai | hermes-app | hermes.cloudjur.com | HTTPROUTE | internal | None |
+| ai | hermes-codeserver | hermes-code.cloudjur.com | HTTPROUTE | internal | None |
+| ai | litellm | litellm.cloudjur.com | HTTPROUTE | internal | None |
+| ai | mcp-gateway | mcp.cloudjur.com | HTTPROUTE | internal | None |
+| ai | mcp-gateway-internal | mcp-direct.cloudjur.com | HTTPROUTE | internal | None |
+| ai | memini | memini.cloudjur.com | HTTPROUTE | internal | None |
+| ai | open-webui | chat.cloudjur.com | HTTPROUTE | external | Application Service |
+| ai | openclaw-app | openclaw.cloudjur.com | HTTPROUTE | internal | None |
+| ai | openclaw-codeserver | openclaw-code.cloudjur.com | HTTPROUTE | internal | None |
+| ai | openclaw-imageui | generate.cloudjur.com | HTTPROUTE | internal | None |
+| database | dragonfly | 10.10.30.8:6379 | LoadBalancer | - | None |
+| database | mosquitto | mosquitto.cloudjur.com | LoadBalancer | - | None |
+| database | postgres-lb | postgres.cloudjur.com | LoadBalancer | - | None |
+| default | atuin | atuin.cloudjur.com | HTTPROUTE | internal | Other Services |
+| default | convertx | convertx.cloudjur.com | HTTPROUTE | internal | Utility Service |
+| default | cyberchef | cyberchef.cloudjur.com | HTTPROUTE | internal | Utility Service |
+| default | glance | g.cloudjur.com | HTTPROUTE | internal | Application Service |
+| default | glance | glance.cloudjur.com | HTTPROUTE | internal | Application Service |
+| default | homepage | h.cloudjur.com | HTTPROUTE | internal | Utility Service |
+| default | homepage | homepage.cloudjur.com | HTTPROUTE | internal | Utility Service |
+| default | it-tools | it-tools.cloudjur.com | HTTPROUTE | internal | Utility Service |
+| default | n8n-app | n8n.cloudjur.com | HTTPROUTE | internal | Other Services |
+| default | n8n-webhooks | n8n-webhook.cloudjur.com | HTTPROUTE | internal | None |
+| default | odoo | erp.cloudjur.com | HTTPROUTE | external | None |
+| default | odoo | odoo.cloudjur.com | HTTPROUTE | external | None |
+| default | picoshare | share.cloudjur.com | HTTPROUTE | external | Storage |
+| default | rustdesk-relay | rustdesk-relay.cloudjur.com | LoadBalancer | - | None |
+| default | rustdesk-server | rustdesk.cloudjur.com | LoadBalancer | - | None |
+| default | searxng | search.cloudjur.com | HTTPROUTE | internal | Application Service |
+| default | sparkyfitness-home | fitness.cloudjur.com | HTTPROUTE | internal | None |
+| default | sparkyfitness-mcp | fitness-mcp.cloudjur.com | HTTPROUTE | internal | None |
+| default | sure | money.cloudjur.com | HTTPROUTE | internal | Application Service |
+| default | thelounge | thelounge.cloudjur.com | HTTPROUTE | internal | Application Service |
+| default | trek | trips.cloudjur.com | HTTPROUTE | external | Application Service |
+| dev | forgejo | git.cloudjur.com | HTTPROUTE | external | Platform Infrastructure |
+| downloads | autobangumi | autobangumi.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | autobrr | autobrr.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | bazarr | bazarr.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | lidarr | lidarr.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | metube | metube.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | profilarr | profilarr.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | prowlarr | prowlarr.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | qbittorrent-app | qb.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | qbittorrent-app | qbittorrent.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | qbittorrent-bittorrent | 10.10.30.13:50413 | LoadBalancer | - | None |
+| downloads | qbittorrent-qbop | qbop.cloudjur.com | HTTPROUTE | internal | None |
+| downloads | qui | qui.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | radarr | radarr.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | sabnzbd | sab.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | sabnzbd | sabnzbd.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | shelfmark | dl-books.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | sonarr | sonarr.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| downloads | webhook | webhook.cloudjur.com | HTTPROUTE | internal | Other Services |
+| flux-system | flux-operator | flux-operator.cloudjur.com | HTTPROUTE | internal | Platform Infrastructure |
+| flux-system | github-webhook | flux-webhook.cloudjur.com | HTTPROUTE | external | Other Services |
+| flux-system | headlamp | headlamp.cloudjur.com | HTTPROUTE | internal | Platform Infrastructure |
+| flux-system | konflate | konflate.cloudjur.com | HTTPROUTE | external | None |
+| home-automation | frigate | frigate.cloudjur.com | HTTPROUTE | internal | Media Service |
+| home-automation | home-assistant-app | hass.cloudjur.com | HTTPROUTE | external | Application Service |
+| home-automation | home-assistant-app | home-assistant.cloudjur.com | HTTPROUTE | external | Application Service |
+| home-automation | home-assistant-codeserver | hass-code.cloudjur.com | HTTPROUTE | internal | Management tools |
+| kube-system | kube-api | k8s.cloudjur.com | LoadBalancer | - | None |
+| media | calibre-web-automated | books.cloudjur.com | HTTPROUTE | external | Media Service |
+| media | filebrowser | filebrowser.cloudjur.com | HTTPROUTE | internal | Platform Infrastructure |
+| media | jellyfin | jellyfin.cloudjur.com | HTTPROUTE | external | Media Service |
+| media | komga | komga.cloudjur.com | HTTPROUTE | external | Media Service |
+| media | maintainerr | maintainerr.cloudjur.com | HTTPROUTE | internal | Media Service |
+| media | opencloud | drive.cloudjur.com | HTTPROUTE | external | Application Service |
+| media | plex | plex.cloudjur.com | HTTPROUTE | external | Media Service |
+| media | seerr | requests.cloudjur.com | HTTPROUTE | external | Media Service |
+| media | seerr | seerr.cloudjur.com | HTTPROUTE | external | Media Service |
+| media | slskd | slskd.cloudjur.com | HTTPROUTE | internal | Downloads Service |
+| media | slskd-soulseek | 10.10.30.77:50429 | LoadBalancer | - | None |
+| media | syncthing | syncthing.cloudjur.com | HTTPROUTE | internal | Application Service |
+| media | syncthing-listen | 10.10.30.9:21027 | LoadBalancer | - | None |
+| media | tautulli | tautulli.cloudjur.com | HTTPROUTE | internal | Media Service |
+| media | watchstate | watchstate.cloudjur.com | HTTPROUTE | internal | Media Service |
+| network | adguard | adguard.cloudjur.com | HTTPROUTE | internal | Network Infrastructure |
+| network | ap | ap.cloudjur.com | TLSROUTE | internal | None |
+| network | echo-server-ext | echo-server-ext.cloudjur.com | HTTPROUTE | external | Management Tools |
+| network | echo-server-ext-auth | echo-server-ext-auth.cloudjur.com | HTTPROUTE | external | Management Tools |
+| network | echo-server-int | echo-server-int.cloudjur.com | HTTPROUTE | internal | Management Tools |
+| network | envoy-external | external.cloudjur.com | LoadBalancer | - | None |
+| network | envoy-internal | internal.cloudjur.com | LoadBalancer | - | None |
+| network | https-redirect |  | HTTPROUTE | external | None |
+| network | nas | nas.cloudjur.com | TLSROUTE | internal | None |
+| network | pve | pve.cloudjur.com | TLSROUTE | internal | None |
+| network | switch | switch.cloudjur.com | HTTPROUTE | internal | Network Infrastructure |
+| observability | alloy-logs | alloy-logs.cloudjur.com | HTTPROUTE | internal | Observability Service |
+| observability | alloy-profiles | alloy-profiles.cloudjur.com | HTTPROUTE | internal | Observability Service |
+| observability | alloy-receiver | alloy-receiver.cloudjur.com | HTTPROUTE | internal | Observability Service |
+| observability | alloy-singleton | alloy-singleton.cloudjur.com | HTTPROUTE | internal | Observability Service |
+| observability | gatus | gatus.cloudjur.com | HTTPROUTE | external | Observability Service |
+| observability | grafana-httproute | grafana.cloudjur.com | HTTPROUTE | external | Observability Service |
+| observability | kromgo | kromgo.cloudjur.com | HTTPROUTE | external | Observability Service |
+| observability | kube-prometheus-stack-alertmanager | alertmanager.cloudjur.com | HTTPROUTE | internal | Observability Service |
+| observability | kube-prometheus-stack-prometheus | prometheus.cloudjur.com | HTTPROUTE | internal | Observability Service |
+| renovate | renovate-operator | renovate.cloudjur.com | HTTPROUTE | internal | None |
+| security | authentik-server | auth.cloudjur.com | HTTPROUTE | external | Platform Infrastructure |
+| storage | garage-api | garage.cloudjur.com | HTTPROUTE | internal | None |
+| storage | garage-s3 | s3.cloudjur.com | HTTPROUTE | internal | None |
+| storage | garage-schema-web | schema.cloudjur.com | HTTPROUTE | internal | None |
+| storage | garage-webui | garage-ui.cloudjur.com | HTTPROUTE | internal | Platform Infrastructure |
+| storage | garage-wiki-web | wiki.cloudjur.com | HTTPROUTE | external | None |
+| storage | kopia | kopia.cloudjur.com | HTTPROUTE | internal | Platform Infrastructure |
+| storage | rclone | rclone.cloudjur.com | HTTPROUTE | internal | None |
+| workadventure | coturn | 10.10.30.49:49160 | LoadBalancer | - | None |
+| workadventure | synapse | matrix.cloudjur.com | HTTPROUTE | internal | None |
+| workadventure | workadventure | gather.cloudjur.com | HTTPROUTE | external | None |
+
+## Missing Homepage Integration
+
+Services without `gethomepage.dev/enabled: "true"`:
+
+- `ai/hermes-app` (hermes.cloudjur.com)
+- `ai/hermes-codeserver` (hermes-code.cloudjur.com)
+- `ai/litellm` (litellm.cloudjur.com)
+- `ai/mcp-gateway` (mcp.cloudjur.com)
+- `ai/mcp-gateway-internal` (mcp-direct.cloudjur.com)
+- `ai/memini` (memini.cloudjur.com)
+- `ai/openclaw-app` (openclaw.cloudjur.com)
+- `ai/openclaw-codeserver` (openclaw-code.cloudjur.com)
+- `ai/openclaw-imageui` (generate.cloudjur.com)
+- `database/dragonfly` (10.10.30.8:6379)
+- `database/mosquitto` (mosquitto.cloudjur.com)
+- `database/postgres-lb` (postgres.cloudjur.com)
+- `default/n8n-webhooks` (n8n-webhook.cloudjur.com)
+- `default/odoo` (erp.cloudjur.com)
+- `default/odoo` (odoo.cloudjur.com)
+- `default/rustdesk-relay` (rustdesk-relay.cloudjur.com)
+- `default/rustdesk-server` (rustdesk.cloudjur.com)
+- `default/sparkyfitness-home` (fitness.cloudjur.com)
+- `default/sparkyfitness-mcp` (fitness-mcp.cloudjur.com)
+- `downloads/qbittorrent-bittorrent` (10.10.30.13:50413)
+- `downloads/qbittorrent-qbop` (qbop.cloudjur.com)
+- `flux-system/konflate` (konflate.cloudjur.com)
+- `kube-system/kube-api` (k8s.cloudjur.com)
+- `media/slskd-soulseek` (10.10.30.77:50429)
+- `media/syncthing-listen` (10.10.30.9:21027)
+- `network/envoy-external` (external.cloudjur.com)
+- `network/envoy-internal` (internal.cloudjur.com)
+- `network/https-redirect` ()
+- `renovate/renovate-operator` (renovate.cloudjur.com)
+- `storage/garage-api` (garage.cloudjur.com)
+- `storage/garage-s3` (s3.cloudjur.com)
+- `storage/garage-schema-web` (schema.cloudjur.com)
+- `storage/garage-wiki-web` (wiki.cloudjur.com)
+- `storage/rclone` (rclone.cloudjur.com)
+- `workadventure/coturn` (10.10.30.49:49160)
+- `workadventure/synapse` (matrix.cloudjur.com)
+- `workadventure/workadventure` (gather.cloudjur.com)
+
+> TLS passthrough routes (below) cannot be auto-discovered by Homepage;
+> manage their dashboard entries in `kubernetes/apps/default/homepage/app/configmap.yaml`.
+
+- `network/ap` (ap.cloudjur.com)
+- `network/nas` (nas.cloudjur.com)
+- `network/pve` (pve.cloudjur.com)

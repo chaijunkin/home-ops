@@ -1,12 +1,12 @@
 # Convertx
 
-**Description:** To be filled.
+**Description:** Self-hosted web file converter (1000+ formats).
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Convertx Source Code](https://github.com/search?q=convertx)
+- **Project Repository:** [Convertx Source Code](https://github.com/c4illin/ConvertX)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

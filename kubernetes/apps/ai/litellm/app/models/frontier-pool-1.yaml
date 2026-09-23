@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: frontier-pool-1
+spec:
+  modelName: frontier-pool
+  proxyRef: litellm
+  params:
+    model: openai/glm-5.3-flash
+    apiBase: https://opencode.ai/zen/go/v1
+    apiKeyRef:
+      name: litellm
+      key: OPENCODE_GO_API_KEY
+    dropParams: true
+    additional:
+      order: 1
+      extra_headers:
+        x-opencode-session: "litellm-proxy"
+  info:
+    mode: chat
+    maxInputTokens: 1000000
+    maxOutputTokens: 131072
+    supportsFunctionCalling: true
+    supportsVision: true
+    extra:
+      supports_reasoning: true

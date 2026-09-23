@@ -1,12 +1,12 @@
 # Flux-Operator
 
-**Description:** To be filled.
+**Description:** Operator managing the lifecycle of Flux distributions.
 **Category:** flux-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Flux-Operator Source Code](https://github.com/search?q=flux-operator)
+- **Project Repository:** [Flux-Operator Source Code](https://github.com/controlplaneio-fluxcd/flux-operator)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

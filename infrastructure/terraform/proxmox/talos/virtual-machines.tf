@@ -12,28 +12,29 @@ resource "proxmox_virtual_environment_vm" "this" {
   scsi_hardware = "virtio-scsi-single"
   ### BIOS ###
   machine       = "q35"
-  bios          = "seabios"
+  bios          = each.value.igpu ? "ovmf" : "seabios"
   ### BIOS ###
 
-  ### EEFI ###
-  # started = false
-  # # 2. UEFI BIOS - Mandatory for Talos and modern Intel Drivers
-  # bios = "ovmf"
+  ### UEFI EFI Disk & Serial Console (Mandatory for Intel iGPU) ###
+  dynamic "serial_device" {
+    for_each = each.value.igpu ? [1] : []
+    content {}
+  }
 
-  # # 3. Disable Virtual Display to avoid "Connector Leaked" errors
-  # serial_device {}
-  # vga {
-  #   type = "serial0"
-  # }
+  vga {
+    type = each.value.igpu ? "serial0" : "std"
+  }
 
-  #   # # comment if not using ovmf bios, or if you want to use legacy-igd with i440fx machine type.
-  # efi_disk {
-  #   datastore_id = "fast"
-  #   file_format = "raw"
-  #   type = "2m"
-  #   pre_enrolled_keys = false
-  # }
-  ### EEFI ###
+  dynamic "efi_disk" {
+    for_each = each.value.igpu ? [1] : []
+    content {
+      datastore_id      = "fast"
+      file_format       = "raw"
+      type              = "2m"
+      pre_enrolled_keys = false
+    }
+  }
+  ### UEFI EFI Disk & Serial Console ###
 
   agent {
     enabled = true
@@ -122,29 +123,12 @@ resource "proxmox_virtual_environment_vm" "this" {
   dynamic "hostpci" {
     for_each = each.value.igpu ? [1] : []
     content {
-      # Passthrough iGPU
-      ### VIRTUAL
+      # Passthrough raw physical Intel iGPU
       device = "hostpci0"
-      # mapping = "iGPU"
       pcie   = true
       rombar = true
-      # rombar = false # DRAFT
       xvga   = false
-
-      id   = "0000:00:02.0"
-      # mdev = "i915-GVTg_V5_8"
-      # rom_file = "/usr/share/kvm/igd.rom"
-      # legacy-igd = 1 # REMEMBERME: This is required for i440fx machine type, but causes "Connector Leaked" errors with OVMF. Since we're using OVMF, we can omit this and it should work fine with modern Intel Drivers.
-
-      # rombar = true
-
-      # # pcie   = false
-      # # ### PHYSICAL
-      # # device  = "hostpci0"
-      # # mapping = "iGPU"
-      # pcie = true
-      # # rombar  = true
-      # xvga    = false
+      id     = "0000:00:02.0"
     }
   }
 }

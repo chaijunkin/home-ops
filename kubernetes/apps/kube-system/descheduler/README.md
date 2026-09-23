@@ -1,12 +1,12 @@
 # Descheduler
 
-**Description:** To be filled.
+**Description:** Evicts pods to rebalance scheduling across nodes.
 **Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Descheduler Source Code](https://github.com/search?q=descheduler)
+- **Project Repository:** [Descheduler Source Code](https://github.com/kubernetes-sigs/descheduler)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

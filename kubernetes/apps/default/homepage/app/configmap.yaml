@@ -88,14 +88,18 @@ data:
               url: https://gateway.cloudjur.com
               username: {{HOMEPAGE_VAR_OPNSENSE_USERNAME}}
               password: {{HOMEPAGE_VAR_OPNSENSE_API_KEY}}
-        - Switch:
-            description: Managed switch
-            href: https://switch.cloudjur.com
-            icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/tp-link.png
         - Access point:
             description: Wifi provider
             href: https://ap.cloudjur.com
             icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/omada.png
+        - NAS:
+            description: Cockpit server manager
+            href: https://nas.cloudjur.com
+            icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/cockpit.png
+        - Proxmox:
+            description: Virtualization host
+            href: https://pve.cloudjur.com
+            icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/proxmox.png
         # - Kutt:
         #     description: URL shortner
         #     href: https://kutt.cloudjur.com

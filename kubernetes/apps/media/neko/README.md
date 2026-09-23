@@ -1,13 +1,13 @@
 # Neko
 
-**Description:** To be filled.
+**Description:** Shared virtual browser (watch together) with Firefox.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Neko Source Code](https://github.com/search?q=neko)
-- **Helm/Manifest Source:** `https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/neko.png`
+- **Project Repository:** [Neko Source Code](https://github.com/m1k1o/neko)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

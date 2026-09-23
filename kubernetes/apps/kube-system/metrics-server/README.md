@@ -1,12 +1,12 @@
 # Metrics-Server
 
-**Description:** To be filled.
+**Description:** Cluster-wide resource metrics source (kubectl top).
 **Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Metrics-Server Source Code](https://github.com/search?q=metrics-server)
+- **Project Repository:** [Metrics-Server Source Code](https://github.com/kubernetes-sigs/metrics-server)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

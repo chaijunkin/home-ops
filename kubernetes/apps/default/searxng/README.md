@@ -1,18 +1,18 @@
 # Searxng
 
-**Description:** To be filled.
+**Description:** Privacy-respecting metasearch engine.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Searxng Source Code](https://github.com/search?q=searxng)
+- **Project Repository:** [Searxng Source Code](https://github.com/searxng/searxng)
 - **Helm/Manifest Source:** `Unknown`
 
 ---
 
 ## Related Links
-- [Documentation]() <!-- Add link to upstream docs -->
+- [Documentation](https://docs.searxng.org)
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/searxng)
 
 ## Notes

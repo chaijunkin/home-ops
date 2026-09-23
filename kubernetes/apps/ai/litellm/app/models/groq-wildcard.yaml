@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: groq-wildcard
+spec:
+  modelName: groq/*
+  proxyRef: litellm
+  params:
+    model: groq/*
+    apiKeyRef:
+      name: litellm
+      key: GROQ_API_KEY
+    dropParams: true

@@ -42,3 +42,26 @@ spec:
     namespace: flux-system
   targetNamespace: observability
   wait: false
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app mcp-grafana
+  namespace: observability
+spec:
+  targetNamespace: observability
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: grafana-instance
+  interval: 24h
+  path: ./kubernetes/apps/observability/grafana-operator/mcp
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false
+

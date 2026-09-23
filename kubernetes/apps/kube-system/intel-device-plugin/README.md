@@ -1,12 +1,12 @@
 # Intel-Device-Plugin
 
-**Description:** To be filled.
+**Description:** Exposes Intel GPU devices to workloads (QuickSync).
 **Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Intel-Device-Plugin Source Code](https://github.com/search?q=intel-device-plugin)
+- **Project Repository:** [Intel-Device-Plugin Source Code](https://github.com/intel/intel-device-plugins-for-kubernetes)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

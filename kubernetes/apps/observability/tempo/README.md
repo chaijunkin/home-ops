@@ -1,12 +1,12 @@
 # Tempo
 
-**Description:** To be filled.
+**Description:** Distributed tracing backend.
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [Tempo Source Code](https://github.com/search?q=tempo)
+- **Project Repository:** [Tempo Source Code](https://github.com/grafana/tempo)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

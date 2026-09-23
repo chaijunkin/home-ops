@@ -1,13 +1,13 @@
 # Headlamp
 
-**Description:** To be filled.
+**Description:** User-friendly Kubernetes web UI.
 **Category:** flux-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Headlamp Source Code](https://github.com/search?q=headlamp)
-- **Helm/Manifest Source:** `https://kubernetes.default`
+- **Project Repository:** [Headlamp Source Code](https://github.com/headlamp-k8s/headlamp)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

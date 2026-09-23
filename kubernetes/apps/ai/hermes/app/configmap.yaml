@@ -6,21 +6,27 @@ metadata:
 data:
   config.yaml: |
     model:
-      default: gemini-2.5-pro
+      default: glm-5.3-flash
       provider: litellm
     fallback_providers:
       - provider: litellm
-        model: gemini-2.5-flash
+        model: opencode-go/deepseek-v4-flash
+      - provider: litellm
+        model: opencode-go/kimi-k2.7-code
       - provider: litellm
         model: self-hosted
+      - provider: litellm
+        model: opencode-go/qwen3.7-max
+      - provider: litellm
+        model: opencode-go/minimax-m3
     providers:
       litellm:
         base_url: http://litellm.ai:4000/v1
-        api_key: $${LITELLM_API_KEY}
+        key_env: LITELLM_API_KEY
       litellm-anthropic:
         base_url: http://litellm.ai:4000/
         api_mode: anthropic_message
-        api_key: $${LITELLM_API_KEY}
+        key_env: LITELLM_API_KEY
     toolsets:
       - hermes-cli
     terminal:
@@ -59,20 +65,68 @@ data:
     auxiliary:
       vision:
         provider: litellm
-        model: gemini-2.5-flash
+        model: glm-5.3-flash
       compression:
         provider: litellm
-        model: gemini-2.5-flash
+        model: glm-5.3-flash
         timeout: 180
       web_extract:
         provider: litellm
-        model: gemini-2.5-flash
+        model: glm-5.3-flash
         timeout: 120
       approval:
         provider: litellm
-        model: gemini-2.5-flash
+        model: glm-5.3-flash
         timeout: 60
       session_search:
         provider: litellm
         model: self-hosted
         timeout: 120
+    discord:
+      require_mention: true
+      thread_require_mention: false
+      auto_thread: true
+      reactions: true
+      ignored_channels: []
+      no_thread_channels: []
+      history_backfill: false
+      history_backfill_limit: 50
+      channel_prompts: {}
+      allow_mentions:
+        everyone: false
+        roles: false
+        users: true
+        replied_user: true
+  env: |-
+    LITELLM_API_KEY={{ .LITELLM_VIRTUAL_KEY }}
+    OPENAI_API_KEY={{ .LITELLM_VIRTUAL_KEY }}
+    OPENAI_BASE_URL=http://litellm.ai:4000/v1
+    SUMMARY_LLM_API_KEY={{ .LITELLM_VIRTUAL_KEY }}
+    API_SERVER_KEY={{ .API_SERVER_KEY }}
+    COMPOSIO_API_KEY={{ .COMPOSIO_API_KEY }}
+    DISCORD_ALLOWED_USERS={{ .DISCORD_ALLOWED_USERS }}
+    DISCORD_BOT_TOKEN={{ .DISCORD_BOT_TOKEN }}
+    DISCORD_HOME_CHANNEL={{ .DISCORD_HOME_CHANNEL }}
+    DISCORD_FREE_RESPONSE_CHANNELS={{ .DISCORD_FREE_RESPONSE_CHANNELS }}
+    MEMINI_API_KEY={{ .MEMINI_API_KEY }}
+  ssh_config: |
+    Host git.cloudjur.com
+      HostName git.cloudjur.com
+      User git
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+
+    Host github.com
+      HostName github.com
+      User git
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+
+    Host *
+      IdentityFile /opt/data/.ssh/id_ed25519
+      StrictHostKeyChecking accept-new
+      UserKnownHostsFile /opt/data/.ssh/known_hosts
+      ServerAliveInterval 60
+      ServerAliveCountMax 3

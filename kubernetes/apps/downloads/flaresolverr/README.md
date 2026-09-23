@@ -1,12 +1,12 @@
 # Flaresolverr
 
-**Description:** To be filled.
+**Description:** Proxy solving Cloudflare challenges for *arr indexers.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Flaresolverr Source Code](https://github.com/search?q=flaresolverr)
+- **Project Repository:** [Flaresolverr Source Code](https://github.com/FlareSolverr/FlareSolverr)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,18 +1,18 @@
 # Toolhive
 
-**Description:** To be filled.
+**Description:** Operator deploying and securing MCP servers.
 **Category:** ai
 
 ---
 
 ## Resources
-- **Project Repository:** [Toolhive Source Code](https://github.com/search?q=toolhive)
-- **Helm/Manifest Source:** `https://raw.githubusercontent.com/stacklok/toolhive/main/examples/otel/grafana-dashboards/toolhive-mcp-grafana-dashboard-otel-scrape.json`
+- **Project Repository:** [Toolhive Source Code](https://github.com/stacklok/toolhive)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 
 ## Related Links
-- [Documentation]() <!-- Add link to upstream docs -->
+- [Documentation](https://docs.stacklok.com/toolhive)
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/toolhive)
 
 ## Notes

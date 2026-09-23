@@ -22,11 +22,12 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
-    # - ../../../../components/kopiur/adhoc-snapshot
-    # - ../../../../components/volsync
+      # - ../../../../components/kopiur/adhoc-snapshot
+      # - ../../../../components/volsync
   postBuild:
     substitute:
       APP: hermes
       KOPIUR_CAPACITY: 20Gi
-      KOPIUR_PGID: "10000"
       KOPIUR_PUID: "10000"
+      KOPIUR_PGID: "10000"
+      KOPIUR_NONROOT: "true"

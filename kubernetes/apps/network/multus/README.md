@@ -1,12 +1,12 @@
 # Multus
 
-**Description:** To be filled.
+**Description:** Multi-network CNI attaching pods to VLAN interfaces.
 **Category:** network
 
 ---
 
 ## Resources
-- **Project Repository:** [Multus Source Code](https://github.com/search?q=multus)
+- **Project Repository:** [Multus Source Code](https://github.com/k8snetworkplumbingwg/multus-cni)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/kopiur.home-operations.com/snapshotpolicy_v1alpha1.json
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: SnapshotPolicy
 metadata:
@@ -5,6 +6,9 @@ metadata:
   annotations:
     kopiur.home-operations.com/allow-identity-change: "true"
 spec:
+  copyMethod: Direct
+  files:
+    ignoreRules: ${KOPIUR_IGNORE_RULES:=[]}
   compression:
     compressor: zstd
   credentialProjection:
@@ -27,4 +31,4 @@ spec:
   sources:
     - pvc:
         name: ${KOPIUR_CLAIM:-${APP}}
-  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=local-hostpath}
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=miroir-snap}

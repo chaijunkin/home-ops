@@ -1,12 +1,12 @@
 # Changedetection
 
-**Description:** To be filled.
+**Description:** Website change detection and notifications (with browserless Chrome).
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Changedetection Source Code](https://github.com/search?q=changedetection)
+- **Project Repository:** [Changedetection Source Code](https://github.com/dgtlmoon/changedetection.io)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

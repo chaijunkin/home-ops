@@ -1,12 +1,12 @@
 # Autobangumi
 
-**Description:** To be filled.
+**Description:** Automated anime RSS downloading pipeline.
 **Category:** downloads
 
 ---
 
 ## Resources
-- **Project Repository:** [Autobangumi Source Code](https://github.com/search?q=autobangumi)
+- **Project Repository:** [Autobangumi Source Code](https://github.com/EstrellaXD/Auto_Bangumi)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

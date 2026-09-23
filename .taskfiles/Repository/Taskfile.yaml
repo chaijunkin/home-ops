@@ -45,3 +45,16 @@ tasks:
     cmd: bash {{.SCRIPTS_DIR}}/httproute-csv.sh
     preconditions:
       - test -f {{.SCRIPTS_DIR}}/httproute-csv.sh
+
+  sync-docs:
+    desc: Sync service documentation (READMEs, services list, vault inventory)
+    cmds:
+      - python3 {{.SCRIPTS_DIR}}/sync_service_docs.py --all
+    preconditions:
+      - test -f {{.SCRIPTS_DIR}}/sync_service_docs.py
+
+  check-docs:
+    desc: Report documentation drift without writing (CI-friendly)
+    cmd: python3 {{.SCRIPTS_DIR}}/sync_service_docs.py --all --check
+    preconditions:
+      - test -f {{.SCRIPTS_DIR}}/sync_service_docs.py

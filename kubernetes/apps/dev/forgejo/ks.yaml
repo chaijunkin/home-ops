@@ -11,8 +11,8 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
-    # - ../../../../components/volsync
-    # - ../../../../components/kopiur/adhoc-snapshot
+      # - ../../../../components/volsync
+      # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/anubis
   dependsOn:
     - name: openebs
@@ -28,6 +28,7 @@ spec:
       APP_GID: "1000"
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"
+      KOPIUR_NONROOT: "true"
       VOLSYNC_CAPACITY: 10Gi
       ANUBIS_TARGET: http://forgejo-http.dev.svc.cluster.local:3000
       ANUBIS_MEM_LIMIT: 384Mi

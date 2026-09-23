@@ -1,13 +1,13 @@
 # Flux-Instance
 
-**Description:** To be filled.
+**Description:** Declarative Flux CD installation managed by flux-operator.
 **Category:** flux-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Flux-Instance Source Code](https://github.com/search?q=flux-instance)
-- **Helm/Manifest Source:** `https://github.com/chaijunkin/home-ops`
+- **Project Repository:** [Flux-Instance Source Code](https://github.com/controlplaneio-fluxcd/flux-operator)
+- **Helm/Manifest Source:** `Unknown`
 
 ---
 

@@ -1,12 +1,12 @@
 # Slskd
 
-**Description:** To be filled.
+**Description:** Soulseek client with modern web UI.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Slskd Source Code](https://github.com/search?q=slskd)
+- **Project Repository:** [Slskd Source Code](https://github.com/slskd/slskd)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

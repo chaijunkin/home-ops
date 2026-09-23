@@ -1,12 +1,12 @@
 # Watchstate
 
-**Description:** To be filled.
+**Description:** Syncs watch state between Plex/Jellyfin backends.
 **Category:** media
 
 ---
 
 ## Resources
-- **Project Repository:** [Watchstate Source Code](https://github.com/search?q=watchstate)
+- **Project Repository:** [Watchstate Source Code](https://github.com/arabcoders/watchstate)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

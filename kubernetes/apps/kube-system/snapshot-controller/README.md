@@ -1,12 +1,12 @@
 # Snapshot-Controller
 
-**Description:** To be filled.
-**Category:** volsync-system
+**Description:** Volume snapshot CRDs and controller.
+**Category:** kube-system
 
 ---
 
 ## Resources
-- **Project Repository:** [Snapshot-Controller Source Code](https://github.com/search?q=snapshot-controller)
+- **Project Repository:** [Snapshot-Controller Source Code](https://github.com/kubernetes-csi/external-snapshotter)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

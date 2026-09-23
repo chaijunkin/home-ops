@@ -1,12 +1,12 @@
 # Renovate-Operator
 
-**Description:** To be filled.
+**Description:** Kubernetes operator scheduling Renovate dependency updates.
 **Category:** renovate
 
 ---
 
 ## Resources
-- **Project Repository:** [Renovate-Operator Source Code](https://github.com/search?q=renovate-operator)
+- **Project Repository:** [Renovate-Operator Source Code](https://github.com/mirceanton/renovate-operator)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

@@ -1,12 +1,12 @@
 # Tuppr
 
-**Description:** To be filled.
+**Description:** Automated Talos and Kubernetes upgrade provider for Flux.
 **Category:** system-upgrade
 
 ---
 
 ## Resources
-- **Project Repository:** [Tuppr Source Code](https://github.com/search?q=tuppr)
+- **Project Repository:** [Tuppr Source Code](https://github.com/home-operations/tuppr)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

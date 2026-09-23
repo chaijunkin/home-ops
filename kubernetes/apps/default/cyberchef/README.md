@@ -1,12 +1,12 @@
 # Cyberchef
 
-**Description:** To be filled.
+**Description:** Cyber Swiss Army Knife for encoding, decoding and analysis.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Cyberchef Source Code](https://github.com/search?q=cyberchef)
+- **Project Repository:** [Cyberchef Source Code](https://github.com/gchq/CyberChef)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

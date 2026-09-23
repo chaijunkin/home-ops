@@ -1,12 +1,12 @@
 # Policy-Reporter
 
-**Description:** To be filled.
+**Description:** Reports PolicyReport violations and sends alerts.
 **Category:** security
 
 ---
 
 ## Resources
-- **Project Repository:** [Policy-Reporter Source Code](https://github.com/search?q=policy-reporter)
+- **Project Repository:** [Policy-Reporter Source Code](https://github.com/kyverno/policy-reporter)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

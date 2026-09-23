@@ -1,12 +1,12 @@
 # Silence-Operator
 
-**Description:** To be filled.
+**Description:** Manages Alertmanager silences declaratively.
 **Category:** observability
 
 ---
 
 ## Resources
-- **Project Repository:** [Silence-Operator Source Code](https://github.com/search?q=silence-operator)
+- **Project Repository:** [Silence-Operator Source Code](https://github.com/giantswarm/silence-operator)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

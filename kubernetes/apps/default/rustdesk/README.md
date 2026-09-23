@@ -1,12 +1,12 @@
 # Rustdesk
 
-**Description:** To be filled.
+**Description:** Self-hosted remote desktop relay/signaling server.
 **Category:** default
 
 ---
 
 ## Resources
-- **Project Repository:** [Rustdesk Source Code](https://github.com/search?q=rustdesk)
+- **Project Repository:** [Rustdesk Source Code](https://github.com/rustdesk/rustdesk-server)
 - **Helm/Manifest Source:** `Unknown`
 
 ---

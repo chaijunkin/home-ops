@@ -1,18 +1,18 @@
 # Ollama
 
-**Description:** To be filled.
+**Description:** Local LLM runtime (Intel iGPU via ipex-llm Vulkan/XPU build).
 **Category:** ai
 
 ---
 
 ## Resources
-- **Project Repository:** [Ollama Source Code](https://github.com/search?q=ollama)
+- **Project Repository:** [Ollama Source Code](https://github.com/ollama/ollama)
 - **Helm/Manifest Source:** `Unknown`
 
 ---
 
 ## Related Links
-- [Documentation]() <!-- Add link to upstream docs -->
+- [Documentation](https://github.com/ollama/ollama#readme)
 - [Application PRR Document](https://wiki.cloudjur.com/pages/tech/cloudjur/application/ollama)
 
 ## Notes

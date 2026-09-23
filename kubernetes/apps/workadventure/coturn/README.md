@@ -1,12 +1,12 @@
 # Coturn
 
-**Description:** To be filled.
+**Description:** TURN/STUN relay for WebRTC connectivity.
 **Category:** workadventure
 
 ---
 
 ## Resources
-- **Project Repository:** [Coturn Source Code](https://github.com/search?q=coturn)
+- **Project Repository:** [Coturn Source Code](https://github.com/coturn/coturn)
 - **Helm/Manifest Source:** `Unknown`
 
 ---
