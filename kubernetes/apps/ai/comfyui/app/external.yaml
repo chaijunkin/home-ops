@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: comfyui
+  namespace: ai
+spec:
+  ports:
+    - name: http
+      port: 8188
+      targetPort: 8188
+      protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: comfyui
+  namespace: ai
+subsets:
+  - addresses:
+      - ip: 192.168.1.149
+    ports:
+      - name: http
+        port: 8188
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: comfyui
+  namespace: ai
+spec:
+  parentRefs:
+    - name: envoy-internal
+      namespace: network
+  hostnames:
+    - "comfyui.cloudjur.com"
+  rules:
+    - backendRefs:
+        - name: comfyui
+          port: 8188

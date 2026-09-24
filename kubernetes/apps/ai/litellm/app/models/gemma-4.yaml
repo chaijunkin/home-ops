@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: gemma-4
+spec:
+  modelName: gemma-4
+  proxyRef: litellm
+  params:
+    model: openai/gemma-4
+    apiBase: http://192.168.1.149:8734/v1
+    apiKey: strix-halo
+    additional:
+      max_parallel_requests: 2
+      order: 1
+  info:
+    mode: chat
+    maxInputTokens: 8192
+    maxOutputTokens: 8192
+    supportsFunctionCalling: true
+    supportsVision: false

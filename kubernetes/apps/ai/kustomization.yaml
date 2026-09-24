@@ -29,3 +29,4 @@ resources:
   - ./litellm/ks.yaml
   - ./memini/ks.yaml
   - ./llmkube/ks.yaml
+  - ./strix-halo-services

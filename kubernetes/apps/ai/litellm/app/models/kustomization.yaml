@@ -33,3 +33,5 @@ resources:
   - ./reasoning-pool-3.yaml
   - ./self-hosted.yaml
   - ./vercel-wildcard.yaml
+  - ./nemotron-3-5.yaml
+  - ./gemma-4.yaml
