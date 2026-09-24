@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: qwen3.8-flash-next
+spec:
+  modelName: qwen3.8-flash-next
+  proxyRef: litellm
+  params:
+    model: openai/qwen3.8-flash-next
+    apiBase: http://192.168.1.149:8731/v1
+    apiKey: halogen
+    additional:
+      max_parallel_requests: 2
+      order: 2
+  info:
+    mode: chat
+    maxInputTokens: 262144
+    maxOutputTokens: 16384
+    supportsFunctionCalling: true
+    supportsVision: false

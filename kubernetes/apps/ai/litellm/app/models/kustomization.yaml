@@ -31,7 +31,8 @@ resources:
   - ./reasoning-pool-1.yaml
   - ./reasoning-pool-2.yaml
   - ./reasoning-pool-3.yaml
-  - ./self-hosted.yaml
+  - ./qwen3.8-flash-next.yaml
+  - ./qwen3.8-flash-next-chat.yaml
   - ./vercel-wildcard.yaml
   - ./nemotron-3-5.yaml
   - ./gemma-4.yaml
