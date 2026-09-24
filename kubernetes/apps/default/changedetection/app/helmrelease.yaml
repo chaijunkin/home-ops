@@ -47,6 +47,9 @@ spec:
               PORT: &port 5000
               USE_X_SETTINGS: 1
               PLAYWRIGHT_DRIVER_URL: ws://127.0.0.1:3000/?stealth=1&--disable-web-security=true&--user-data-dir=~/browserless-cache-123
+            envFrom:
+              - secretRef:
+                  name: changedetection-secret
           browser:
             image:
               repository: docker.io/browserless/chrome
