@@ -9,9 +9,9 @@ echo "============================================="
 echo ""
 
 echo ">>> Checking Systemd Services..."
-ssh -o StrictHostKeyChecking=no $HOST "systemctl is-active podman-strix-halo-27b podman-nemotron-3.5 podman-gemma-4 podman-memini-embed podman-memini-rerank podman-whisper podman-comfyui" | awk '
+ssh -o StrictHostKeyChecking=no $HOST "systemctl is-active podman-strix-halo-flash-next podman-strix-halo-qwen-27b podman-nemotron-3.5 podman-gemma-4 podman-memini-embed podman-memini-rerank podman-whisper podman-comfyui" | awk '
 BEGIN {
-    split("strix-halo-27b nemotron-3.5 gemma-4 memini-embed memini-rerank whisper comfyui", services, " ")
+    split("strix-halo-flash-next strix-halo-qwen-27b nemotron-3.5 gemma-4 memini-embed memini-rerank whisper comfyui", services, " ")
     i = 1
 }
 {
@@ -23,7 +23,8 @@ echo ""
 
 echo ">>> Checking HTTP /health Endpoints..."
 SERVICES=(
-    "strix-halo-27b:8732"
+    "strix-halo-flash-next:8732"
+    "strix-halo-qwen-27b:8737"
     "nemotron-3.5:8733"
     "gemma-4:8734"
     "memini-embed:8735"

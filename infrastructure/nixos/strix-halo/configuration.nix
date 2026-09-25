@@ -155,7 +155,7 @@
     #   ];
     # };
 
-    containers."strix-halo-27b" = {
+    containers."strix-halo-flash-next" = {
       image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
       ports = [ "8732:8080" ];
       volumes = [
@@ -184,6 +184,41 @@
         "--chat-template-kwargs" "{\"reasoning_effort\":\"low\"}"
         "--no-reasoning-preserve"
         "--image-min-tokens" "1024"
+      ];
+      extraOptions = [
+        "--device=/dev/kfd"
+        "--device=/dev/dri"
+        "--group-add=keep-groups"
+        "--cap-add=SYS_PTRACE"
+        "--security-opt=seccomp=unconfined"
+        "--ipc=host"
+      ];
+    };
+
+    containers."strix-halo-qwen-27b" = {
+      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
+      ports = [ "8737:8080" ];
+      volumes = [
+        "/var/lib/strix-halo-models:/models"
+      ];
+      environment = {
+        HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+        GGML_HIP_ENABLE_UNIFIED_MEMORY = "1";
+      };
+      cmd = [
+        "--host" "0.0.0.0"
+        "--port" "8080"
+        "--model" "/models/Qwen3.8-27B-Q4_K_M.gguf"
+        "--alias" "qwen3.8-27b"
+        "--load-mode" "none"
+        "--lazy-mode" "on-direct"
+        "-fit" "off"
+        "--temp" "1.0"
+        "--top-p" "0.95"
+        "--top-k" "20"
+        "--min-p" "0"
+        "--presence-penalty" "0.0"
+        "--repeat-penalty" "1.0"
       ];
       extraOptions = [
         "--device=/dev/kfd"
@@ -424,8 +459,10 @@
   systemd.services."podman-memini-embed".wants = [ "download-strix-models.service" ];
   systemd.services."podman-memini-rerank".after = [ "download-strix-models.service" ];
   systemd.services."podman-memini-rerank".wants = [ "download-strix-models.service" ];
-  systemd.services."podman-strix-halo-27b".after = [ "download-strix-models.service" ];
-  systemd.services."podman-strix-halo-27b".wants = [ "download-strix-models.service" ];
+  systemd.services."podman-strix-halo-flash-next".after = [ "download-strix-models.service" ];
+  systemd.services."podman-strix-halo-flash-next".wants = [ "download-strix-models.service" ];
+  systemd.services."podman-strix-halo-qwen-27b".after = [ "download-strix-models.service" ];
+  systemd.services."podman-strix-halo-qwen-27b".wants = [ "download-strix-models.service" ];
 
   # Automated model downloader
   systemd.services.download-strix-models = {
@@ -471,6 +508,12 @@
       if [ ! -s "mmproj-Qwen3.8-Flash-Next-f16.gguf" ]; then
         ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/mmproj-Qwen3.8-Flash-Next-f16.gguf"
         mv "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "mmproj-Qwen3.8-Flash-Next-f16.gguf"
+      fi
+
+      # Download Qwen3.8 27B
+      if [ ! -s "Qwen3.8-27B-Q4_K_M.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-27B-Q4_K_M.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-27B-GGUF/resolve/main/Qwen3.8-27B-Q4_K_M.gguf"
+        mv "Qwen3.8-27B-Q4_K_M.gguf.tmp" "Qwen3.8-27B-Q4_K_M.gguf"
       fi
 
       # Download Memini Embed
