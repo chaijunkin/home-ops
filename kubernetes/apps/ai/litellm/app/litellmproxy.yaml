@@ -115,9 +115,7 @@ spec:
     fallbacks:
       - qwen3.8-flash-next:
           - qwen3.8-flash-next-chat
-      - qwen3.8-flash-next-chat:
-          - glm-5.3-flash
-          - opencode-go/deepseek-v4-flash
+
       - qwen3.8-27b:
           - qwen3.8-flash-next-chat
       - qwen3.8-27b-chat:
@@ -126,10 +124,7 @@ spec:
           - qwen3.8-flash-next
           - glm-5.3-flash
     context_window_fallbacks:
-      - qwen3.8-flash-next:
-          - glm-5.3-flash
-      - qwen3.8-flash-next-chat:
-          - glm-5.3-flash
+
       - qwen3.8-27b:
           - qwen3.8-flash-next-chat
       - qwen3.8-27b-chat:
