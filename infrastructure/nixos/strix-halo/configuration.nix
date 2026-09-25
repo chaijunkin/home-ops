@@ -74,7 +74,7 @@
     port = 9100;
   };
 
-  networking.firewall.allowedTCPPorts = [ 9100 ];
+  networking.firewall.allowedTCPPorts = [ 9100 8081 8188 8732 8737 ];
   
   # Ensure your personal SSH key is authorized so you can log in after installation!
   users.users.root.openssh.authorizedKeys.keys = [
