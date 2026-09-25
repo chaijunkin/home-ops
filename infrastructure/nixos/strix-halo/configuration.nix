@@ -361,58 +361,58 @@
     #   ];
     # };
 
-    containers."memini-embed" = {
-      image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
-      ports = [ "8735:8080" ];
-      volumes = [
-        "/var/lib/strix-halo-models:/models"
-      ];
-      cmd = [
-        "llama-server"
-        "--host" "0.0.0.0"
-        "--port" "8080"
-        "--model" "/models/Qwen3-Embedding-0.6B-Q8_0.gguf"
-        "--alias" "memini-embed"
-        "--embedding"
-        "--cont-batching"
-        "--kv-unified"
-        "--threads" "6"
-        "--threads-batch" "12"
-        "--load-mode" "mmap"
-      ];
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-      ];
-    };
-
-    containers."memini-rerank" = {
-      image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
-      ports = [ "8736:8080" ];
-      volumes = [
-        "/var/lib/strix-halo-models:/models"
-      ];
-      cmd = [
-        "llama-server"
-        "--host" "0.0.0.0"
-        "--port" "8080"
-        "--model" "/models/bge-reranker-v2-m3-Q8_0.gguf"
-        "--alias" "memini-rerank"
-        "--reranking"
-        "--cont-batching"
-        "--kv-unified"
-        "--threads" "6"
-        "--threads-batch" "12"
-        "--load-mode" "mmap"
-      ];
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-      ];
-    };
-
+    # containers."memini-embed" = {
+    #   image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
+    #   ports = [ "8735:8080" ];
+    #   volumes = [
+    #     "/var/lib/strix-halo-models:/models"
+    #   ];
+    #   cmd = [
+    #     "llama-server"
+    #     "--host" "0.0.0.0"
+    #     "--port" "8080"
+    #     "--model" "/models/Qwen3-Embedding-0.6B-Q8_0.gguf"
+    #     "--alias" "memini-embed"
+    #     "--embedding"
+    #     "--cont-batching"
+    #     "--kv-unified"
+    #     "--threads" "6"
+    #     "--threads-batch" "12"
+    #     "--load-mode" "mmap"
+    #   ];
+    #   extraOptions = [
+    #     "--device=/dev/kfd"
+    #     "--device=/dev/dri"
+    #     "--group-add=keep-groups"
+    #   ];
+    # };
+    # 
+    # containers."memini-rerank" = {
+    #   image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
+    #   ports = [ "8736:8080" ];
+    #   volumes = [
+    #     "/var/lib/strix-halo-models:/models"
+    #   ];
+    #   cmd = [
+    #     "llama-server"
+    #     "--host" "0.0.0.0"
+    #     "--port" "8080"
+    #     "--model" "/models/bge-reranker-v2-m3-Q8_0.gguf"
+    #     "--alias" "memini-rerank"
+    #     "--reranking"
+    #     "--cont-batching"
+    #     "--kv-unified"
+    #     "--threads" "6"
+    #     "--threads-batch" "12"
+    #     "--load-mode" "mmap"
+    #   ];
+    #   extraOptions = [
+    #     "--device=/dev/kfd"
+    #     "--device=/dev/dri"
+    #     "--group-add=keep-groups"
+    #   ];
+    # };
+    
     containers."comfyui" = {
       image = "docker.io/yanwk/comfyui-boot:rocm7@sha256:c16f96a94c4760037d2d854acbe93ce594d4314b7bcb665da9f3cae225d7339c";
       ports = [ "8188:8188" ];
@@ -455,10 +455,10 @@
   # systemd.services."podman-nemotron-3.5".wants = [ "download-strix-models.service" ];
   # systemd.services."podman-gemma-4".after = [ "download-strix-models.service" ];
   # systemd.services."podman-gemma-4".wants = [ "download-strix-models.service" ];
-  systemd.services."podman-memini-embed".after = [ "download-strix-models.service" ];
-  systemd.services."podman-memini-embed".wants = [ "download-strix-models.service" ];
-  systemd.services."podman-memini-rerank".after = [ "download-strix-models.service" ];
-  systemd.services."podman-memini-rerank".wants = [ "download-strix-models.service" ];
+  # systemd.services."podman-memini-embed".after = [ "download-strix-models.service" ];
+  # systemd.services."podman-memini-embed".wants = [ "download-strix-models.service" ];
+  # systemd.services."podman-memini-rerank".after = [ "download-strix-models.service" ];
+  # systemd.services."podman-memini-rerank".wants = [ "download-strix-models.service" ];
   systemd.services."podman-strix-halo-flash-next".after = [ "download-strix-models.service" ];
   systemd.services."podman-strix-halo-flash-next".wants = [ "download-strix-models.service" ];
   systemd.services."podman-strix-halo-qwen-27b".after = [ "download-strix-models.service" ];
