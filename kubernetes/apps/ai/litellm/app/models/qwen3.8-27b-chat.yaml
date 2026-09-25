@@ -10,8 +10,17 @@ spec:
     model: openai/qwen3.8-27b
     apiBase: http://192.168.1.149:8737/v1
     apiKey: halogen
-    temperature: 0.7
-    top_p: 0.95
-    top_k: 20
+    additional:
+      temperature: 0.7
+      top_p: 0.95
+      top_k: 20
+      presence_penalty: 0.0
+      reasoning_effort: none
+      allowed_openai_params:
+        - reasoning_effort
   info:
     mode: chat
+    maxInputTokens: 32768
+    maxOutputTokens: 16384
+    supportsFunctionCalling: true
+    supportsVision: false
