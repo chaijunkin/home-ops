@@ -118,6 +118,10 @@ spec:
       - qwen3.8-flash-next-chat:
           - glm-5.3-flash
           - opencode-go/deepseek-v4-flash
+      - qwen3.8-27b:
+          - qwen3.8-flash-next-chat
+      - qwen3.8-27b-chat:
+          - qwen3.8-flash-next-chat
       - auto:
           - qwen3.8-flash-next
           - glm-5.3-flash
@@ -126,6 +130,10 @@ spec:
           - glm-5.3-flash
       - qwen3.8-flash-next-chat:
           - glm-5.3-flash
+      - qwen3.8-27b:
+          - qwen3.8-flash-next-chat
+      - qwen3.8-27b-chat:
+          - qwen3.8-flash-next-chat
   service:
     port: 4000
     type: ClusterIP
