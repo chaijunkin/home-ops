@@ -7,8 +7,21 @@ spec:
   modelName: self-hosted
   proxyRef: litellm
   params:
-    model: openai/qwen3.8-flash-next-chat
-    apiBase: http://192.168.1.149:8732/v1
-    apiKey: halogen
+    model: auto_router/complexity_router
+    additional:
+      complexity_router_default_model: qwen3.8-flash-next-chat
+      complexity_router_config:
+        tiers:
+          SIMPLE: qwen3.8-flash-next-chat
+          MEDIUM: qwen3.8-flash-next-chat
+          COMPLEX: qwen3.8-27b
+          REASONING: qwen3.8-27b
+        classifier_type: llm
+        classifier_llm_config:
+          model: qwen3.8-flash-next-chat
+          timeout_ms: 20000
+        classifier_fallback: default_model
+        session_affinity: true
+        session_affinity_ttl_seconds: 3600
   info:
     mode: chat
