@@ -25,3 +25,5 @@ spec:
         session_affinity_ttl_seconds: 3600
   info:
     mode: chat
+    maxInputTokens: 32768
+    maxOutputTokens: 16384
