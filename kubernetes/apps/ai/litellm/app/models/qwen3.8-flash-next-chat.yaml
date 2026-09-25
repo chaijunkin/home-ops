@@ -20,7 +20,7 @@ spec:
         - reasoning_effort
   info:
     mode: chat
-    maxInputTokens: 32768
+    maxInputTokens: 65536
     maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: false
