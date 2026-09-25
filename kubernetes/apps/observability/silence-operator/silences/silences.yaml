@@ -88,4 +88,3 @@ spec:
   matchers:
     - name: alertname
       value: etcdHighNumberOfFailedGRPCRequests # backup cause etcd failed due to poor disk performance
-

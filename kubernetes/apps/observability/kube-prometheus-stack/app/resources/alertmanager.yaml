@@ -16,6 +16,11 @@ route:
       repeat_interval: 5m
     - receiver: "null"
       matchers:
+        - alertname =~ "KopiurSnapshotFailed|KopiurLastBackupFailed|KopiurBackupStale|KopiurBackupConsecutiveFailures|etcdDatabaseHighFragmentationRatio"
+      mute_time_intervals:
+        - kopiur_ssd_backup_window
+    - receiver: "null"
+      matchers:
         - severity = "none"
         - alertname =~ "InfoInhibitor|Watchdog"
     - receiver: remediation-webhook
@@ -106,3 +111,9 @@ receivers:
         title: >-
           {{ "{{" }} .CommonLabels.alertname {{ "}}" }}
           [{{ "{{" }} .Status | toUpper {{ "}}" }}{{ "{{" }} if eq .Status "firing" {{ "}}" }}:{{ "{{" }} .Alerts.Firing | len {{ "}}" }}{{ "{{" }} end {{ "}}" }}]
+time_intervals:
+  - name: kopiur_ssd_backup_window
+    time_intervals:
+      - times:
+          - start_time: "04:00" # 12pm GMT+8
+            end_time: "06:00"   # 2pm GMT+8
