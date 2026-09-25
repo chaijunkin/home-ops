@@ -8,7 +8,7 @@ spec:
   proxyRef: litellm
   params:
     model: openai/qwen3.8-flash-next
-    apiBase: http://192.168.1.149:8731/v1
+    apiBase: http://192.168.1.149:8732/v1
     apiKey: halogen
     additional:
       temperature: 0.7

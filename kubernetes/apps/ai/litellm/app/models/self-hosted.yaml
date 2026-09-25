@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+---
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
@@ -7,17 +7,8 @@ spec:
   modelName: self-hosted
   proxyRef: litellm
   params:
-    # TEMPORARY: Halogen on the Strix Halo mini PC. Revert this block to the
-    # jk-mac-mini LM Studio endpoint when the temporary test is complete.
-    model: openai/qwen38-flash-next
-    apiBase: http://192.168.1.149:8731/v1
+    model: openai/qwen3.8-flash-next-chat
+    apiBase: http://192.168.1.149:8732/v1
     apiKey: halogen
-    additional:
-      max_parallel_requests: 2
-      order: 2
   info:
     mode: chat
-    maxInputTokens: 262144
-    maxOutputTokens: 16384
-    supportsFunctionCalling: true
-    supportsVision: false

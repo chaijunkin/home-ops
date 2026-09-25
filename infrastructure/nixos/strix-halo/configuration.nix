@@ -134,26 +134,26 @@
 
   virtualisation.oci-containers = {
     backend = "podman";
-    containers."halogen" = {
-      image = "ghcr.io/peonist-ai/halogen-flash-server:0.13.4";
-      ports = [ "8731:8731" ];
-      volumes = [
-        "/var/lib/halogen-models:/models"
-      ];
-      environment = {
-        HALOGEN_DOWNLOAD = "peonist-ai/halogen-qwen3.8-flash-next";
-        HALOGEN_MAX_TOK = "16384";
-        HALOGEN_KV_POOL_POSITIONS = "262144";
-        HALOGEN_KV_SLOTS = "2";
-      };
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-        "--ipc=host"
-        "--ulimit=memlock=-1:-1"
-      ];
-    };
+    # containers."halogen" = {
+    #   image = "ghcr.io/peonist-ai/halogen-flash-server:0.13.4";
+    #   ports = [ "8731:8731" ];
+    #   volumes = [
+    #     "/var/lib/halogen-models:/models"
+    #   ];
+    #   environment = {
+    #     HALOGEN_DOWNLOAD = "peonist-ai/halogen-qwen3.8-flash-next";
+    #     HALOGEN_MAX_TOK = "16384";
+    #     HALOGEN_KV_POOL_POSITIONS = "262144";
+    #     HALOGEN_KV_SLOTS = "2";
+    #   };
+    #   extraOptions = [
+    #     "--device=/dev/kfd"
+    #     "--device=/dev/dri"
+    #     "--group-add=keep-groups"
+    #     "--ipc=host"
+    #     "--ulimit=memlock=-1:-1"
+    #   ];
+    # };
 
     containers."strix-halo-27b" = {
       image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
@@ -169,7 +169,8 @@
         "--host" "0.0.0.0"
         "--port" "8080"
         "--model" "/models/Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf"
-        "--alias" "qwen3.8-27b-strix"
+        "--mmproj" "/models/mmproj-Qwen3.8-Flash-Next-f16.gguf"
+        "--alias" "qwen3.8-flash-next"
         "--load-mode" "none"
         "--lazy-mode" "on-direct"
         "-fit" "off"
@@ -423,6 +424,8 @@
   systemd.services."podman-memini-embed".wants = [ "download-strix-models.service" ];
   systemd.services."podman-memini-rerank".after = [ "download-strix-models.service" ];
   systemd.services."podman-memini-rerank".wants = [ "download-strix-models.service" ];
+  systemd.services."podman-strix-halo-27b".after = [ "download-strix-models.service" ];
+  systemd.services."podman-strix-halo-27b".wants = [ "download-strix-models.service" ];
 
   # Automated model downloader
   systemd.services.download-strix-models = {
@@ -442,19 +445,37 @@
 
       # Download Gemma 4
       if [ ! -s "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf" ]; then
-        ${pkgs.curl}/bin/curl -L -o "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf.tmp" "https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF/resolve/main/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf.tmp" "https://huggingface.co/unsloth/gemma-4-E4B-it-qat-GGUF/resolve/main/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
         mv "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf.tmp" "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
       fi
 
       # Download Nemotron 3.5 Lightning
       if [ ! -s "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf" ]; then
-        ${pkgs.curl}/bin/curl -L -o "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf.tmp" "https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF/resolve/main/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf"
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf.tmp" "https://huggingface.co/unsloth/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-GGUF/resolve/main/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf"
         mv "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf.tmp" "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf"
+      fi
+
+      # Download Qwen3.8 Flash Next IQ4
+      if [ ! -s "Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-IQ4_NL/Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf"
+        mv "Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf.tmp" "Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf"
+      fi
+      if [ ! -s "Qwen3.8-Flash-Next-IQ4_NL-00002-of-00003.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-IQ4_NL-00002-of-00003.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-IQ4_NL/Qwen3.8-Flash-Next-IQ4_NL-00002-of-00003.gguf"
+        mv "Qwen3.8-Flash-Next-IQ4_NL-00002-of-00003.gguf.tmp" "Qwen3.8-Flash-Next-IQ4_NL-00002-of-00003.gguf"
+      fi
+      if [ ! -s "Qwen3.8-Flash-Next-IQ4_NL-00003-of-00003.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-IQ4_NL-00003-of-00003.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-IQ4_NL/Qwen3.8-Flash-Next-IQ4_NL-00003-of-00003.gguf"
+        mv "Qwen3.8-Flash-Next-IQ4_NL-00003-of-00003.gguf.tmp" "Qwen3.8-Flash-Next-IQ4_NL-00003-of-00003.gguf"
+      fi
+      if [ ! -s "mmproj-Qwen3.8-Flash-Next-f16.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/mmproj-Qwen3.8-Flash-Next-f16.gguf"
+        mv "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "mmproj-Qwen3.8-Flash-Next-f16.gguf"
       fi
 
       # Download Memini Embed
       if [ ! -s "Qwen3-Embedding-0.6B-Q8_0.gguf" ]; then
-        ${pkgs.curl}/bin/curl -L -o "Qwen3-Embedding-0.6B-Q8_0.gguf.tmp" "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf"
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3-Embedding-0.6B-Q8_0.gguf.tmp" "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf"
         mv "Qwen3-Embedding-0.6B-Q8_0.gguf.tmp" "Qwen3-Embedding-0.6B-Q8_0.gguf"
       fi
 
