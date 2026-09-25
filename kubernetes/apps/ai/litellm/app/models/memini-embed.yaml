@@ -8,8 +8,8 @@ spec:
   proxyRef: litellm
   params:
     model: openai/memini-embed
-    apiBase: http://192.168.1.149:8735/v1
-    apiKey: strix-halo
+    apiBase: http://memini-embed.ai:8080/v1
+    apiKey: memini-embed
   info:
     mode: embedding
     maxInputTokens: 32768

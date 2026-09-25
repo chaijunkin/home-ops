@@ -7,9 +7,9 @@ spec:
   modelName: memini-rerank
   proxyRef: litellm
   params:
-    model: openai/memini-rerank
-    apiBase: http://192.168.1.149:8736/v1
-    apiKey: strix-halo
+    model: infinity/memini-rerank
+    apiBase: http://memini-rerank.ai:8080
+    apiKey: memini-rerank
   info:
     mode: rerank
     extra:
