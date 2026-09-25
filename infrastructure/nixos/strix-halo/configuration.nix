@@ -301,65 +301,65 @@
       ];
     };
 
-    containers."nemotron-3.5" = {
-      image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
-      ports = [ "8733:8080" ];
-      volumes = [
-        "/var/lib/strix-halo-models:/models"
-      ];
-      cmd = [
-        "llama-server"
-        "--host" "0.0.0.0"
-        "--port" "8080"
-        "--model" "/models/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf"
-        "--alias" "nemotron-3.5-lightning-30b-a3b"
-        "--temp" "1.0"
-        "--top-p" "0.95"
-        "--image-min-tokens" "1024"
-        "--cont-batching"
-        "--cache-prompt"
-        "--cache-ram" "4096"
-        "--kv-unified"
-        "--checkpoint-min-step" "32768"
-        "--threads" "16"
-        "--threads-batch" "21"
-        "--load-mode" "none"
-      ];
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-      ];
-    };
-
-    containers."gemma-4" = {
-      image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
-      ports = [ "8734:8080" ];
-      volumes = [
-        "/var/lib/strix-halo-models:/models"
-      ];
-      cmd = [
-        "llama-server"
-        "--host" "0.0.0.0"
-        "--port" "8080"
-        "--model" "/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
-        "--alias" "gemma-4-e4b"
-        "--cont-batching"
-        "--kv-unified"
-        "--temp" "1.0"
-        "--top-p" "0.95"
-        "--top-k" "64"
-        "--min-p" "0"
-        "--threads" "16"
-        "--threads-batch" "21"
-        "--load-mode" "none"
-      ];
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-      ];
-    };
+    # containers."nemotron-3.5" = {
+    #   image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
+    #   ports = [ "8733:8080" ];
+    #   volumes = [
+    #     "/var/lib/strix-halo-models:/models"
+    #   ];
+    #   cmd = [
+    #     "llama-server"
+    #     "--host" "0.0.0.0"
+    #     "--port" "8080"
+    #     "--model" "/models/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf"
+    #     "--alias" "nemotron-3.5-lightning-30b-a3b"
+    #     "--temp" "1.0"
+    #     "--top-p" "0.95"
+    #     "--image-min-tokens" "1024"
+    #     "--cont-batching"
+    #     "--cache-prompt"
+    #     "--cache-ram" "4096"
+    #     "--kv-unified"
+    #     "--checkpoint-min-step" "32768"
+    #     "--threads" "16"
+    #     "--threads-batch" "21"
+    #     "--load-mode" "none"
+    #   ];
+    #   extraOptions = [
+    #     "--device=/dev/kfd"
+    #     "--device=/dev/dri"
+    #     "--group-add=keep-groups"
+    #   ];
+    # };
+    # 
+    # containers."gemma-4" = {
+    #   image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
+    #   ports = [ "8734:8080" ];
+    #   volumes = [
+    #     "/var/lib/strix-halo-models:/models"
+    #   ];
+    #   cmd = [
+    #     "llama-server"
+    #     "--host" "0.0.0.0"
+    #     "--port" "8080"
+    #     "--model" "/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
+    #     "--alias" "gemma-4-e4b"
+    #     "--cont-batching"
+    #     "--kv-unified"
+    #     "--temp" "1.0"
+    #     "--top-p" "0.95"
+    #     "--top-k" "64"
+    #     "--min-p" "0"
+    #     "--threads" "16"
+    #     "--threads-batch" "21"
+    #     "--load-mode" "none"
+    #   ];
+    #   extraOptions = [
+    #     "--device=/dev/kfd"
+    #     "--device=/dev/dri"
+    #     "--group-add=keep-groups"
+    #   ];
+    # };
 
     containers."memini-embed" = {
       image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
@@ -451,10 +451,10 @@
     };
   };
 
-  systemd.services."podman-nemotron-3.5".after = [ "download-strix-models.service" ];
-  systemd.services."podman-nemotron-3.5".wants = [ "download-strix-models.service" ];
-  systemd.services."podman-gemma-4".after = [ "download-strix-models.service" ];
-  systemd.services."podman-gemma-4".wants = [ "download-strix-models.service" ];
+  # systemd.services."podman-nemotron-3.5".after = [ "download-strix-models.service" ];
+  # systemd.services."podman-nemotron-3.5".wants = [ "download-strix-models.service" ];
+  # systemd.services."podman-gemma-4".after = [ "download-strix-models.service" ];
+  # systemd.services."podman-gemma-4".wants = [ "download-strix-models.service" ];
   systemd.services."podman-memini-embed".after = [ "download-strix-models.service" ];
   systemd.services."podman-memini-embed".wants = [ "download-strix-models.service" ];
   systemd.services."podman-memini-rerank".after = [ "download-strix-models.service" ];
