@@ -12,4 +12,3 @@ spec:
     apiKey: halogen
   info:
     mode: chat
-    id: qwen3.8-27b

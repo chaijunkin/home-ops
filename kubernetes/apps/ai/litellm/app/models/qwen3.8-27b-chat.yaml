@@ -15,4 +15,3 @@ spec:
     top_k: 20
   info:
     mode: chat
-    id: qwen3.8-27b-chat
