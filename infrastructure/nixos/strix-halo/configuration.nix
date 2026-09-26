@@ -132,6 +132,30 @@
     dockerCompat = true;
   };
 
+  systemd.services.strix-halo-qwen-27b = {
+    description = "Gufo Inference Engine for Qwen 27B";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    environment = {
+      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+    };
+    serviceConfig = {
+      ExecStart = ''
+        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
+          --host 0.0.0.0 \
+          --port 8737 \
+          llm \
+          --model /var/lib/strix-halo-models/Qwen3.8-27B-Q4_K_M.gguf \
+          --speculative dflash2 \
+          --dflash-model /var/lib/strix-halo-models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf \
+          --context 131072 \
+          --max-tokens 16384
+      '';
+      Restart = "always";
+      LimitMEMLOCK = "infinity";
+    };
+  };
+
   virtualisation.oci-containers = {
     backend = "podman";
     # containers."halogen" = {
@@ -197,29 +221,7 @@
       ];
     };
 
-  systemd.services.strix-halo-qwen-27b = {
-    description = "Gufo Inference Engine for Qwen 27B";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    environment = {
-      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-    };
-    serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8737 \
-          llm \
-          --model /var/lib/strix-halo-models/Qwen3.8-27B-Q4_K_M.gguf \
-          --speculative dflash2 \
-          --dflash-model /var/lib/strix-halo-models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf \
-          --context 131072 \
-          --max-tokens 16384
-      '';
-      Restart = "always";
-      LimitMEMLOCK = "infinity";
-    };
-  };
+
 
     containers."whisper" = {
       image = "docker.io/kyuz0/amd-strix-halo-toolboxes:vulkan-radv@sha256:147aae684ca987745aa4ec21ae2143dddf9bcc221f041178d91679b3ea0021b8";
