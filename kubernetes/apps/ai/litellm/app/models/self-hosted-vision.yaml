@@ -18,6 +18,7 @@ spec:
       reasoning_effort: none
       allowed_openai_params:
         - reasoning_effort
+        - stream_options
   info:
     mode: chat
     maxInputTokens: 131072
