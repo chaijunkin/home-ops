@@ -665,17 +665,23 @@
       forward_to = [prometheus.remote_write.ingest.receiver]
     }
 
-    prometheus.scrape "halogen" {
+    prometheus.scrape "gufo" {
       targets = [
-        { __address__ = "127.0.0.1:8731", instance = "192.168.1.149:8731" },
+        { __address__ = "127.0.0.1:8732", instance = "192.168.1.149:8732" },
+        { __address__ = "127.0.0.1:8737", instance = "192.168.1.149:8737" },
+        { __address__ = "127.0.0.1:8738", instance = "192.168.1.149:8738" },
+        { __address__ = "127.0.0.1:8739", instance = "192.168.1.149:8739" },
+        { __address__ = "127.0.0.1:8740", instance = "192.168.1.149:8740" },
+        { __address__ = "127.0.0.1:8741", instance = "192.168.1.149:8741" },
+        { __address__ = "127.0.0.1:8742", instance = "192.168.1.149:8742" },
       ]
-      forward_to = [prometheus.relabel.halogen.receiver]
+      forward_to = [prometheus.relabel.gufo.receiver]
     }
 
-    prometheus.relabel "halogen" {
+    prometheus.relabel "gufo" {
       rule {
         target_label = "job"
-        replacement  = "halogen"
+        replacement  = "gufo"
       }
       rule {
         target_label = "namespace"
@@ -687,7 +693,7 @@
       }
       rule {
         target_label = "service"
-        replacement  = "halogen"
+        replacement  = "gufo"
       }
       forward_to = [prometheus.remote_write.ingest.receiver]
     }
@@ -699,11 +705,11 @@
     }
 
     // ------------------------------------------------------------------
-    // PROFILES: eBPF CPU profiling of the halogen process -> Pyroscope
+    // PROFILES: eBPF CPU profiling of the gufo process -> Pyroscope
     // ------------------------------------------------------------------
-    pyroscope.ebpf "halogen" {
+    pyroscope.ebpf "gufo" {
       targets = [
-        { __address__ = "halogen" },
+        { __address__ = "gufo" },
       ]
       forward_to = [pyroscope.write.ingest.receiver]
     }
@@ -715,18 +721,16 @@
     }
 
     // ------------------------------------------------------------------
-    // TRACES: eBPF auto-instrumentation of halogen HTTP (port 8731) -> OTLP
+    // TRACES: eBPF auto-instrumentation of gufo HTTP -> OTLP
     // Runs inside Alloy as a child process (same root/eBPF perms as profiling).
-    // Replaces the standalone Beyla container, whose ghcr.io image was pulled
-    // (Beyla migrated to Google Artifact Registry / donated to OpenTelemetry).
     // Discovery by open_ports works across the container netns because Alloy
     // runs on the host as root and sees every socket via eBPF.
     // ------------------------------------------------------------------
-    beyla.ebpf "halogen" {
+    beyla.ebpf "gufo" {
       discovery {
         instrument {
-          open_ports = "8731"
-          name       = "halogen"
+          open_ports = "8732,8737,8738,8739,8740,8741,8742"
+          name       = "gufo"
         }
       }
       traces {
