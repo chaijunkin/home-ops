@@ -174,10 +174,8 @@
           --host 0.0.0.0 \
           --port 8732 \
           llm \
-          --model /var/lib/strix-halo-models/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf \
-          --mmproj /var/lib/strix-halo-models/mmproj-BF16.gguf \
-          --speculative mtp \
-          --mtp-model /var/lib/strix-halo-models/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf \
+          --model /var/lib/strix-halo-models/Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf \
+          --mmproj /var/lib/strix-halo-models/mmproj-Qwen3.8-Flash-Next-f16.gguf \
           --context 32768
       '';
       LimitMEMLOCK = "infinity";
