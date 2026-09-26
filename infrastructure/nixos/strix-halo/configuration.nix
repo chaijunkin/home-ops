@@ -141,17 +141,16 @@
       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
     serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8737 \
-          llm \
-          --model /var/lib/strix-halo-models/Qwen3.8-27B-Q4_K_M.gguf \
-          --speculative dflash2 \
-          --dflash-model /var/lib/strix-halo-models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf \
-          --context 131072 \
-          --max-tokens 16384
-      '';
+      ExecStart = gufo.lib.x86_64-linux.mkServe {
+        host = "0.0.0.0";
+        port = 8737;
+        modality = "llm";
+        model = "/var/lib/strix-halo-models/Qwen3.8-27B-Q4_K_M.gguf";
+        speculative = "dflash2";
+        dflashModel = "/var/lib/strix-halo-models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf";
+        context = 131072;
+        maxTokens = 16384;
+      };
       Restart = "always";
       LimitMEMLOCK = "infinity";
     };
@@ -169,15 +168,14 @@
       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
     serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8732 \
-          llm \
-          --model /var/lib/strix-halo-models/Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf \
-          --mmproj /var/lib/strix-halo-models/mmproj-Qwen3.8-Flash-Next-f16.gguf \
-          --context 32768
-      '';
+      ExecStart = gufo.lib.x86_64-linux.mkServe {
+        host = "0.0.0.0";
+        port = 8732;
+        modality = "llm";
+        model = "/var/lib/strix-halo-models/Qwen3.8-Flash-Next-IQ4_NL-00001-of-00003.gguf";
+        context = 32768;
+        extraArgs = [ "--mmproj" "/var/lib/strix-halo-models/mmproj-Qwen3.8-Flash-Next-f16.gguf" ];
+      };
       LimitMEMLOCK = "infinity";
     };
   };
@@ -189,14 +187,13 @@
       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
     serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8738 \
-          llm \
-          --model /var/lib/strix-halo-models/DeepSeek-V4-Flash-0731-00001-of-00008.gguf \
-          --context 65536
-      '';
+      ExecStart = gufo.lib.x86_64-linux.mkServe {
+        host = "0.0.0.0";
+        port = 8738;
+        modality = "llm";
+        model = "/var/lib/strix-halo-models/DeepSeek-V4-Flash-0731-00001-of-00008.gguf";
+        context = 65536;
+      };
       LimitMEMLOCK = "infinity";
     };
   };
@@ -208,14 +205,13 @@
       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
     serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8739 \
-          asr \
-          --model /var/lib/strix-halo-models/Qwen3-ASR-1.7B \
-          --context 8192
-      '';
+      ExecStart = gufo.lib.x86_64-linux.mkServe {
+        host = "0.0.0.0";
+        port = 8739;
+        modality = "asr";
+        model = "/var/lib/strix-halo-models/Qwen3-ASR-1.7B";
+        context = 8192;
+      };
       LimitMEMLOCK = "infinity";
     };
   };
@@ -227,14 +223,13 @@
       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
     serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8740 \
-          tts \
-          --model /var/lib/strix-halo-models/Qwen3-TTS-12Hz-1.7B \
-          --context 4096
-      '';
+      ExecStart = gufo.lib.x86_64-linux.mkServe {
+        host = "0.0.0.0";
+        port = 8740;
+        modality = "tts";
+        model = "/var/lib/strix-halo-models/Qwen3-TTS-12Hz-1.7B";
+        context = 4096;
+      };
       LimitMEMLOCK = "infinity";
     };
   };
@@ -246,14 +241,13 @@
       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
     serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8741 \
-          image \
-          --model /var/lib/strix-halo-models/Qwen-Image-2.1 \
-          --max-request-bytes 33554432
-      '';
+      ExecStart = gufo.lib.x86_64-linux.mkServe {
+        host = "0.0.0.0";
+        port = 8741;
+        modality = "image";
+        model = "/var/lib/strix-halo-models/Qwen-Image-2.1";
+        maxRequestBytes = 33554432;
+      };
       LimitMEMLOCK = "infinity";
     };
   };
