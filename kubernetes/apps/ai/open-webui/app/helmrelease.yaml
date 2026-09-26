@@ -61,6 +61,12 @@ spec:
               ENABLE_WEBSOCKET_SUPPORT: "true"
               WEBSOCKET_MANAGER: redis
               WEBSOCKET_REDIS_URL: redis://dragonfly.database.svc.cluster.local:6379/15
+              MEMINI_BASE_URL: http://memini.ai.svc.cluster.local:8080
+              MEMINI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: memini-secret
+                    key: MEMINI_API_KEY
             envFrom:
               - secretRef:
                   name: "{{ .Release.Name }}-secret"
