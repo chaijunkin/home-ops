@@ -135,7 +135,8 @@
   systemd.services.strix-halo-qwen-27b = {
     description = "Gufo Inference Engine for Qwen 27B";
     wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
+    after = [ "network.target" "download-strix-models.service" ];
+    wants = [ "download-strix-models.service" ];
     environment = {
       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
@@ -530,8 +531,7 @@
   # systemd.services."podman-memini-embed".wants = [ "download-strix-models.service" ];
   # systemd.services."podman-memini-rerank".after = [ "download-strix-models.service" ];
   # systemd.services."podman-memini-rerank".wants = [ "download-strix-models.service" ];
-  systemd.services."strix-halo-qwen-27b".after = [ "download-strix-models.service" ];
-  systemd.services."strix-halo-qwen-27b".wants = [ "download-strix-models.service" ];
+
 
   # Automated model downloader
   systemd.services.download-strix-models = {
