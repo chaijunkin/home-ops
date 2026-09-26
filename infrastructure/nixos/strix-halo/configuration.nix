@@ -141,7 +141,7 @@
       ];
       environment = {
         HALOGEN_DOWNLOAD = "peonist-ai/halogen-qwen3.8-flash-next";
-        HALOGEN_MAX_TOK = "16384";
+        HALOGEN_MAX_TOK = "8192";
         HALOGEN_KV_POOL_POSITIONS = "262144";
         HALOGEN_KV_SLOTS = "2";
       };
@@ -162,7 +162,7 @@
       ];
       environment = {
         LLAMA_ARG_MODEL = "/models/Qwen3.8-27B-Q4_K_M.gguf";
-        LLAMA_ARG_CTX_SIZE = "131072";
+        LLAMA_ARG_CTX_SIZE = "32768";
         LLAMA_ARG_N_GPU_LAYERS = "999";
         LLAMA_ARG_PORT = "8080";
       };
