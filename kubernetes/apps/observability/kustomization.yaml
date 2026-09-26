@@ -20,3 +20,4 @@ resources:
   - ./silence-operator/ks.yaml
   - ./tempo/ks.yaml
   - ./webhook/ks.yaml
+  - ./k6-operator/ks.yaml
