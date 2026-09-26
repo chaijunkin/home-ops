@@ -10,6 +10,8 @@ spec:
     model: "openai/Qwen3.8 27B"
     apiBase: http://192.168.1.149:8737/v1
     apiKey: halogen
+    fallbacks:
+      - self-hosted-vision
     additional:
       temperature: 0.7
       top_p: 0.8
