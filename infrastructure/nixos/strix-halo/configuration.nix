@@ -301,6 +301,77 @@
     #   ];
     # };
 
+    # containers."whisper" = {
+    #   image = "docker.io/kyuz0/amd-strix-halo-toolboxes:vulkan-radv@sha256:147aae684ca987745aa4ec21ae2143dddf9bcc221f041178d91679b3ea0021b8";
+    #   ports = [ "8081:8080" ];
+    #   volumes = [
+    #     "/var/lib/whisper-cache:/cache"
+    #   ];
+    #   environment = {
+    #     WHISPER_VERSION = "v1.8.4";
+    #     WHISPER_MODEL_FILE = "ggml-large-v3-turbo-q8_0.bin";
+    #     LD_LIBRARY_PATH = "/cache/bin/v1.8.4";
+    #   };
+    #   # We combine the Jory initContainer download logic and the main execution into a single shell entrypoint
+    #   entrypoint = "bash";
+    #   cmd = [
+    #     "-c"
+    #     ''
+    #       set -euo pipefail
+    #       cd /cache
+    #       if [ ! -x "bin/''${WHISPER_VERSION}/whisper-server" ]; then
+    #         curl -fsSL -o w.tgz "https://github.com/lemonade-sdk/whisper.cpp-rocm/releases/download/''${WHISPER_VERSION}/whisper-''${WHISPER_VERSION}-linux-vulkan-x86_64.tar.gz"
+    #         python3 -c "import tarfile;tarfile.open('w.tgz').extractall('x')"
+    #         mkdir -p "bin/''${WHISPER_VERSION}"
+    #         mv x/whisper-*-linux-vulkan-x86_64/* "bin/''${WHISPER_VERSION}/"
+    #         rm -rf x w.tgz
+    #       fi
+    #       if [ ! -s "''${WHISPER_MODEL_FILE}" ]; then
+    #         curl -fsSL -o "''${WHISPER_MODEL_FILE}" "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/''${WHISPER_MODEL_FILE}"
+    #       fi
+    #       exec /cache/bin/''${WHISPER_VERSION}/whisper-server --model "/cache/''${WHISPER_MODEL_FILE}" --host 0.0.0.0 --port 8080 --threads 4
+    #     ''
+    #   ];
+    #   extraOptions = [
+    #     "--device=/dev/kfd"
+    #     "--device=/dev/dri"
+    #     "--group-add=keep-groups"
+    #     "--security-opt=seccomp=unconfined"
+    #   ];
+    # };
+# 
+    # containers."lemonade-tts" = {
+    #   image = "ghcr.io/lemonade-sdk/lemonade-server:latest@sha256:583130946a9f57dada3e42ac047c2b842d56e041bbb5e6d38422e38746ce49eb";
+    #   ports = [ "13305:13305" ];
+    #   volumes = [
+    #     "/var/lib/lemonade-tts-config:/opt/lemonade/.config/lemonade"
+    #     "/var/lib/lemonade-tts-cache:/opt/lemonade/.cache"
+    #     "/var/lib/lemonade-tts-models:/opt/lemonade/llama"
+    #   ];
+    #   # Combine Jory's init container config writing and the main execution
+    #   entrypoint = "sh";
+    #   cmd = [
+    #     "-c"
+    #     ''
+    #       set -eu
+    #       mkdir -p /opt/lemonade/.config/lemonade
+    #       cat > /opt/lemonade/.config/lemonade/config.json <<'JSON'
+    #       {
+    #         "openmoss": {
+    #           "backend": "vulkan"
+    #         }
+    #       }
+    #       JSON
+    #       exec ./lemond --host 0.0.0.0 --port 13305
+    #     ''
+    #   ];
+    #   extraOptions = [
+    #     "--device=/dev/kfd"
+    #     "--device=/dev/dri"
+    #     "--group-add=keep-groups"
+    #   ];
+    # };
+
     # containers."nemotron-3.5" = {
     #   image = "docker.io/kyuz0/amd-strix-halo-toolboxes:rocm-6.4.4@sha256:1c655ca0443655f2e7603d054770b07cd8c79267145728b3261295f005053947";
     #   ports = [ "8733:8080" ];
@@ -459,10 +530,8 @@
   # systemd.services."podman-memini-embed".wants = [ "download-strix-models.service" ];
   # systemd.services."podman-memini-rerank".after = [ "download-strix-models.service" ];
   # systemd.services."podman-memini-rerank".wants = [ "download-strix-models.service" ];
-  systemd.services."podman-strix-halo-flash-next".after = [ "download-strix-models.service" ];
-  systemd.services."podman-strix-halo-flash-next".wants = [ "download-strix-models.service" ];
-  systemd.services."podman-strix-halo-qwen-27b".after = [ "download-strix-models.service" ];
-  systemd.services."podman-strix-halo-qwen-27b".wants = [ "download-strix-models.service" ];
+  systemd.services."strix-halo-qwen-27b".after = [ "download-strix-models.service" ];
+  systemd.services."strix-halo-qwen-27b".wants = [ "download-strix-models.service" ];
 
   # Automated model downloader
   systemd.services.download-strix-models = {
