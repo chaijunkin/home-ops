@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, gufo, ... }:
 
 {
   imports = [
@@ -197,42 +197,29 @@
       ];
     };
 
-    containers."strix-halo-qwen-27b" = {
-      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
-      ports = [ "8737:8080" ];
-      volumes = [
-        "/var/lib/strix-halo-models:/models"
-      ];
-      environment = {
-        HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-        GGML_HIP_ENABLE_UNIFIED_MEMORY = "1";
-      };
-      cmd = [
-        "--host" "0.0.0.0"
-        "--port" "8080"
-        "--model" "/models/Qwen3.8-27B-Q4_K_M.gguf"
-        "--alias" "qwen3.8-27b"
-        "-c" "131072"
-        "-fa" "on"
-        "--load-mode" "none"
-        "--lazy-mode" "on-direct"
-        "-fit" "off"
-        "--temp" "1.0"
-        "--top-p" "0.95"
-        "--top-k" "20"
-        "--min-p" "0"
-        "--presence-penalty" "0.0"
-        "--repeat-penalty" "1.0"
-      ];
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-        "--cap-add=SYS_PTRACE"
-        "--security-opt=seccomp=unconfined"
-        "--ipc=host"
-      ];
+  systemd.services.strix-halo-qwen-27b = {
+    description = "Gufo Inference Engine for Qwen 27B";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    environment = {
+      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
     };
+    serviceConfig = {
+      ExecStart = ''
+        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
+          --host 0.0.0.0 \
+          --port 8737 \
+          llm \
+          --model /var/lib/strix-halo-models/Qwen3.8-27B-Q4_K_M.gguf \
+          --speculative dflash2 \
+          --dflash-model /var/lib/strix-halo-models/Qwen3.8-27B-DFlash2-Q4_K_M.gguf \
+          --context 131072 \
+          --max-tokens 16384
+      '';
+      Restart = "always";
+      LimitMEMLOCK = "infinity";
+    };
+  };
 
     containers."whisper" = {
       image = "docker.io/kyuz0/amd-strix-halo-toolboxes:vulkan-radv@sha256:147aae684ca987745aa4ec21ae2143dddf9bcc221f041178d91679b3ea0021b8";
