@@ -2,7 +2,7 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: self-hosted-2
+  name: self-hosted
 spec:
   modelName: self-hosted
   proxyRef: litellm

@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./auto.yaml
   - ./self-hosted.yaml
+  - ./self-hosted-vision.yaml
   - ./cerebras-wildcard.yaml
   - ./frontier-pool-1.yaml
   - ./frontier-pool-2.yaml

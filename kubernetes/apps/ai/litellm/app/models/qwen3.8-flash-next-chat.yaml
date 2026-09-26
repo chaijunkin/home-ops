@@ -23,4 +23,4 @@ spec:
     maxInputTokens: 131072
     maxOutputTokens: 16384
     supportsFunctionCalling: true
-    supportsVision: false
+    supportsVision: true

@@ -2,9 +2,9 @@
 apiVersion: litellm.home-operations.com/v1alpha1
 kind: LiteLLMModel
 metadata:
-  name: self-hosted-1
+  name: self-hosted-vision
 spec:
-  modelName: self-hosted
+  modelName: self-hosted-vision
   proxyRef: litellm
   params:
     model: openai/qwen3.8-flash-next
@@ -23,4 +23,4 @@ spec:
     maxInputTokens: 131072
     maxOutputTokens: 16384
     supportsFunctionCalling: true
-    supportsVision: false
+    supportsVision: true
