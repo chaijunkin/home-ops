@@ -21,7 +21,7 @@ spec:
         - stream_options
   info:
     mode: chat
-    maxInputTokens: 131072
+    maxInputTokens: 81920
     maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: false
