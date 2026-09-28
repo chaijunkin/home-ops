@@ -149,6 +149,8 @@
         LLAMA_ARG_PORT = "8080";
         LLAMA_ARG_N_GPU_LAYERS = "999";
         LLAMA_ARG_ALIAS = "qwen3.8-flash-next";
+        LLAMA_ARG_LOAD_MODE = "none";
+        LLAMA_ARG_LAZY_MODE = "on-direct";
       };
       extraOptions = [
         "--device=/dev/kfd"
