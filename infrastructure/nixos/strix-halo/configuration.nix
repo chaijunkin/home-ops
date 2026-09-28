@@ -142,6 +142,7 @@
       ];
       environment = {
         HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+        GGML_HIP_ENABLE_UNIFIED_MEMORY = "1";
         LLAMA_ARG_MODEL = "/models/Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf";
         LLAMA_ARG_MMPROJ = "/models/mmproj-Qwen3.8-Flash-Next-f16.gguf";
         LLAMA_ARG_CTX_SIZE = "262144";
