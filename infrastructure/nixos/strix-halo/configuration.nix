@@ -17,10 +17,6 @@
         content = {
           type = "gpt";
           partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02"; # for grub MBR
-            };
             ESP = {
               size = "512M";
               type = "EF00";
@@ -48,11 +44,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Enable swap safety net
+  zramSwap.enable = true;
+  swapDevices = [ { device = "/var/lib/swapfile"; size = 32768; } ];
+
   # --- STRIX HALO VRAM HACKS ---
   # These kernel arguments force the AMD APU to pin UMA memory as dedicated VRAM for AI workloads.
   boot.kernelParams = [
     "amd_iommu=off"
-    "amdgpu.gttsize=126976"
+    "amdgpu.gttsize=114688"
     "mitigations=off"
     "ttm.pages_limit=32505856"
     "amdgpu.vm_update_mode=0"
@@ -74,7 +74,7 @@
     port = 9100;
   };
 
-  networking.firewall.allowedTCPPorts = [ 9100 8081 8188 8732 8737 ];
+  networking.firewall.allowedTCPPorts = [ 9100 8081 8188 8732 8737 8741 8742 8743 8744 ];
   
   # Ensure your personal SSH key is authorized so you can log in after installation!
   users.users.root.openssh.authorizedKeys.keys = [
@@ -133,18 +133,27 @@
   };
 
   virtualisation.oci-containers = {
-    containers."halogen" = {
-      image = "ghcr.io/peonist-ai/halogen-flash-server:0.13.4";
-      ports = [ "8732:8731" ];
+    containers."qwen38-flash-next" = {
+      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:20260924T104050";
+      autoStart = false;
+      ports = [ "8732:8080" ];
       volumes = [
-        "/var/lib/halogen-models:/models"
+        "/var/lib/strix-halo-models:/models"
       ];
       environment = {
-        HALOGEN_DOWNLOAD = "peonist-ai/halogen-qwen3.8-flash-next";
-        HALOGEN_MAX_TOK = "8192";
-        HALOGEN_KV_POOL_POSITIONS = "262144";
-        HALOGEN_KV_SLOTS = "2";
+        HSA_OVERRIDE_GFX_VERSION = "11.5.1";
       };
+      cmd = [
+        "gufo" "serve" "llm"
+        "--host" "0.0.0.0"
+        "--port" "8080"
+        "--sessions" "2"
+        "--model" "/models/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
+        "--mmproj" "/models/mmproj-Qwen3.8-Flash-Next-f16.gguf"
+        "--served-model-name" "qwen3.8-flash-next"
+        "--context" "262144"
+        "--max-tokens" "32768"
+      ];
       extraOptions = [
         "--device=/dev/kfd"
         "--device=/dev/dri"
@@ -155,16 +164,70 @@
     };
 
     containers."strix-halo-27b" = {
-      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
+      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:20260924T104050";
+      autoStart = true;
       ports = [ "8737:8080" ];
       volumes = [
         "/var/lib/strix-halo-models:/models"
       ];
       environment = {
-        LLAMA_ARG_MODEL = "/models/Qwen3.8-27B-Q4_K_M.gguf";
-        LLAMA_ARG_CTX_SIZE = "81920";
+        HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+      };
+      cmd = [
+        "gufo" "serve" "llm"
+        "--host" "0.0.0.0"
+        "--port" "8080"
+        "--model" "/models/Qwen3.8-27B-Q4_K_M.gguf"
+        "--served-model-name" "qwen3.8-27b"
+        "--context" "81920"
+      ];
+      extraOptions = [
+        "--device=/dev/kfd"
+        "--device=/dev/dri"
+        "--group-add=keep-groups"
+        "--ipc=host"
+        "--ulimit=memlock=-1:-1"
+      ];
+    };
+
+    containers."memini-embeddings" = {
+      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
+      autoStart = true;
+      ports = [ "8743:8080" ];
+      volumes = [
+        "/var/lib/strix-halo-models:/models"
+      ];
+      environment = {
+        LLAMA_ARG_MODEL = "/models/Qwen3-Embedding-0.6B-Q8_0.gguf";
+        LLAMA_ARG_CTX_SIZE = "8192";
         LLAMA_ARG_N_GPU_LAYERS = "999";
         LLAMA_ARG_PORT = "8080";
+        LLAMA_ARG_EMBEDDING = "true";
+        LLAMA_ARG_ALIAS = "memini-embed";
+      };
+      extraOptions = [
+        "--device=/dev/kfd"
+        "--device=/dev/dri"
+        "--group-add=keep-groups"
+        "--ipc=host"
+        "--ulimit=memlock=-1:-1"
+      ];
+    };
+
+    containers."memini-reranker" = {
+      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
+      autoStart = true;
+      ports = [ "8744:8080" ];
+      volumes = [
+        "/var/lib/strix-halo-models:/models"
+      ];
+      environment = {
+        LLAMA_ARG_MODEL = "/models/bge-reranker-v2-m3-Q8_0.gguf";
+        LLAMA_ARG_CTX_SIZE = "8192";
+        LLAMA_ARG_N_GPU_LAYERS = "999";
+        LLAMA_ARG_PORT = "8080";
+        LLAMA_ARG_RERANKING = "true";
+        LLAMA_ARG_ALIAS = "memini-rerank";
       };
       extraOptions = [
         "--device=/dev/kfd"
@@ -482,6 +545,7 @@
     
     containers."comfyui" = {
       image = "docker.io/yanwk/comfyui-boot:rocm7@sha256:c16f96a94c4760037d2d854acbe93ce594d4314b7bcb665da9f3cae225d7339c";
+      autoStart = false;
       ports = [ "8188:8188" ];
       volumes = [
         "/var/lib/comfyui-data:/root/ComfyUI"
@@ -492,7 +556,7 @@
         HIP_VISIBLE_DEVICES = "0";
         ROCR_VISIBLE_DEVICES = "0";
         PYTORCH_HIP_ALLOC_CONF = "max_split_size_mb:256,garbage_collection_threshold:0.6";
-        CLI_ARGS = "--listen 0.0.0.0 --port 8188 --use-pytorch-cross-attention --disable-mmap --reserve-vram 114 --highvram";
+        CLI_ARGS = "--listen 0.0.0.0 --port 8188 --use-pytorch-cross-attention --disable-mmap --highvram";
       };
       extraOptions = [
         "--device=/dev/kfd"
@@ -556,25 +620,25 @@
         mv "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf.tmp" "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf"
       fi
 
-      # Download Qwen3.8 Flash Next Q4_K_M
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf"
+      # Download Qwen3.8 Flash Next UD_Q4_K_XL
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
       fi
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf"
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf"
       fi
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf"
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf"
       fi
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf"
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf"
       fi
       if [ ! -s "mmproj-Qwen3.8-Flash-Next-f16.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/mmproj-Qwen3.8-Flash-Next-f16.gguf"
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/main/mmproj-Qwen3.8-Flash-Next-f16.gguf"
         mv "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "mmproj-Qwen3.8-Flash-Next-f16.gguf"
       fi
 
@@ -732,7 +796,7 @@
     beyla.ebpf "gufo" {
       discovery {
         instrument {
-          open_ports = "8732,8737,8738,8739,8740,8741,8742"
+          open_ports = "8732,8737,8738,8739,8740,8741,8742,8743,8744"
           name       = "gufo"
         }
       }
