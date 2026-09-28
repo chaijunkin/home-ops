@@ -162,7 +162,7 @@
       ];
       environment = {
         LLAMA_ARG_MODEL = "/models/Qwen3.8-27B-Q4_K_M.gguf";
-        LLAMA_ARG_CTX_SIZE = "32768";
+        LLAMA_ARG_CTX_SIZE = "81920";
         LLAMA_ARG_N_GPU_LAYERS = "999";
         LLAMA_ARG_PORT = "8080";
       };

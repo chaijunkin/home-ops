@@ -59,6 +59,8 @@ data:
         - hermes-cli
       telegram:
         - hermes-telegram
+      matrix:
+        - hermes-matrix
     mcp_servers:
       toolhive:
         url: http://vmcp-mcp-gateway-internal.ai:4483/mcp
@@ -82,21 +84,12 @@ data:
         provider: litellm
         model: self-hosted
         timeout: 120
-    discord:
+    matrix:
+      enabled: true
       require_mention: true
-      thread_require_mention: false
       auto_thread: true
-      reactions: true
-      ignored_channels: []
-      no_thread_channels: []
-      history_backfill: false
-      history_backfill_limit: 50
-      channel_prompts: {}
-      allow_mentions:
-        everyone: false
-        roles: false
-        users: true
-        replied_user: true
+      allowed_users:
+        - "@jkchai:matrix.cloudjur.com"
   env: |-
     LITELLM_API_KEY={{ .LITELLM_VIRTUAL_KEY }}
     OPENAI_API_KEY={{ .LITELLM_VIRTUAL_KEY }}
@@ -109,6 +102,9 @@ data:
     DISCORD_HOME_CHANNEL={{ .DISCORD_HOME_CHANNEL }}
     DISCORD_FREE_RESPONSE_CHANNELS={{ .DISCORD_FREE_RESPONSE_CHANNELS }}
     MEMINI_API_KEY={{ .MEMINI_API_KEY }}
+    MATRIX_HOMESERVER_URL=https://matrix.cloudjur.com
+    MATRIX_USER_ID=@hermes:matrix.cloudjur.com
+    MATRIX_ACCESS_TOKEN={{ .MATRIX_ACCESS_TOKEN }}
   ssh_config: |
     Host git.cloudjur.com
       HostName git.cloudjur.com
