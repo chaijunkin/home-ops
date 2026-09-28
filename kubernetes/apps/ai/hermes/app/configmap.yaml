@@ -104,7 +104,7 @@ data:
       DISCORD_FREE_RESPONSE_CHANNELS={{ .DISCORD_FREE_RESPONSE_CHANNELS }}
       MEMINI_API_KEY={{ .MEMINI_API_KEY }}
       MATRIX_HOMESERVER=https://matrix.cloudjur.com
-      MATRIX_USER_ID=@hermes:matrix.cloudjur.com
+      MATRIX_USER_ID=@junkin:matrix.cloudjur.com
       MATRIX_ACCESS_TOKEN={{ .MATRIX_ACCESS_TOKEN }}
   ssh_config: |
     Host git.cloudjur.com
