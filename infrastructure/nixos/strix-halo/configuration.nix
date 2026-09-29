@@ -134,7 +134,7 @@
 
   virtualisation.oci-containers = {
     containers."qwen38-flash-next" = {
-      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:20260924T104050";
+      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
       autoStart = true;
       ports = [ "8732:8080" ];
       volumes = [
@@ -142,16 +142,21 @@
       ];
       environment = {
         HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+        GGML_HIP_ENABLE_UNIFIED_MEMORY = "1";
       };
       cmd = [
-        "gufo" "serve" "llm"
+        "/app/llama-server"
         "--host" "0.0.0.0"
         "--port" "8080"
         "--model" "/models/Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf"
         "--mmproj" "/models/mmproj-Qwen3.8-Flash-Next-f16.gguf"
-        "--served-model-name" "qwen3.8-flash-next"
-        "--context" "131072"
-        "--sessions" "1"
+        "--alias" "qwen3.8-flash-next"
+        "--ctx-size" "131072"
+        "--n-gpu-layers" "999"
+        "--batch-size" "16384"
+        "--ubatch-size" "16384"
+        "--parallel" "1"
+        "--flash-attn"
       ];
       extraOptions = [
         "--device=/dev/kfd"
