@@ -155,7 +155,7 @@
         "--batch-size" "16384"
         "--ubatch-size" "16384"
         "--parallel" "1"
-        "--flash-attn"
+        "--flash-attn" "on"
       ];
       extraOptions = [
         "--device=/dev/kfd"
