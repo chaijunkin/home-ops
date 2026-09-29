@@ -23,11 +23,13 @@
 
 ## Temporary self-hosted backend
 
-The `self-hosted` and `self-hosted-vision` model aliases are routed to the Gufo
-OpenAI-compatible server on the Strix Halo mini PC at `192.168.1.149:8732`,
-serving `qwen3.8-flash-next`. The canonical `qwen3.8-flash-next` model alias
-includes the default chat sampling settings used by these aliases.
-
+The `self-hosted`, `auto`, and `qwen3.8-flash-next` model aliases are routed to
+the Gufo OpenAI-compatible server on the Strix Halo mini PC at
+`192.168.1.149:8732`, serving `qwen3.8-flash-next`. `auto` keeps the
+complexity-router interface, with all tiers and the classifier routed to this
+self-hosted model. There are no cloud fallbacks. The single `self-hosted` alias
+supports both vision and function tools. Clients using MCP tools must use Chat
+Completions because Gufo's `/v1/responses` endpoint does not support tools.
 Hardware: FAEX1, AMD Ryzen AI Max+ 395 with integrated Radeon 8060S, 128GB RAM,
 1.8TB NVMe, running NixOS. Gufo is configured with a 131,072-token context and
 one session. ComfyUI also runs on this host; both services share the GPU and
