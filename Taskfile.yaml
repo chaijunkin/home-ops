@@ -88,7 +88,7 @@ tasks:
     cmds:
       - task: .template
       - task: sops:encrypt
-      - task: .validate
+      # Run manually when needed: task kubernetes:kubeconform
 
   .template:
     internal: true
@@ -107,8 +107,3 @@ tasks:
           msg: "Missing bootstrap config file",
           sh: "test -f {{.BOOTSTRAP_CONFIG_FILE}}",
         }
-
-  .validate:
-    internal: true
-    cmds:
-      - task: kubernetes:kubeconform

@@ -93,7 +93,7 @@ You modify a global variable in `config.yaml`. To apply this to the repository, 
 
 | Task | Command |
 |------|---------|
-| Validate Manifests | `task kubernetes:kubeconform` |
+| Validate Manifests (on demand) | `task kubernetes:kubeconform` |
 | Encrypt Secrets | `task sops:encrypt` |
 | Check Fly App Logs | `task fly:app:logs APP=<name>` |
 | Deploy Fly App | `task fly:app:deploy APP=<name>` |
