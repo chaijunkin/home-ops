@@ -13,13 +13,14 @@ the app that consumes them**, not under `llmkube/`.
 ## Naming convention
 
 LiteLLM fronts every role; consumers only ever see LiteLLM model names.
-Cluster-local llmkube services own the clean `memini-*` names and are the
-primary backends; LM Studio carries the `lmstudio-*` prefix as secondary:
+Memini's primary embedding and reranking backends run on Strix Halo. The old
+llmkube manifests remain available for rollback but are excluded from Memini's
+Kustomization. LM Studio carries the `lmstudio-*` prefix as a secondary route:
 
 | LiteLLM route     | Backend                                   | Weights                   |
 | ----------------- | ----------------------------------------- | ------------------------- |
-| `memini-embed`    | llmkube `memini-embed` (CPU, primary)     | Qwen3-Embedding-0.6B Q8_0 |
-| `memini-rerank`   | llmkube `memini-rerank` (CPU)             | Qwen3-Reranker-0.6B Q8_0  |
+| `memini-embed`    | Strix Halo `memini-embeddings` (GPU)      | Qwen3-Embedding-0.6B Q8_0 |
+| `memini-rerank`   | Strix Halo `memini-reranker` (GPU)        | BGE-Reranker-v2-M3 Q8_0   |
 | `lmstudio-embed`  | LM Studio on jk-mac-mini (secondary)      | same embedding weights    |
 | `memini-summary`  | Gemini 2.5 Flash Lite (cloud)             | —                         |
 
@@ -38,15 +39,15 @@ llmkube/                      # operator only (+ this README)
   ocirepository.yaml  helmrelease.yaml  ks.yaml
 
 memini/app/models/            # memini's llama.cpp services, reconciled by the
-  memini-rerank.yaml          #   memini Flux KS (active)
-  memini-embed.yaml           #   fallback: enable here if LM Studio embed is down
+  memini-rerank.yaml          #   rollback manifests (not in the active Kustomization)
+  memini-embed.yaml
 memini/app/helmrelease.yaml   # consumer config — all three roles referenced by name
-litellm/app/configmap.yaml    # `memini-embed` + `memini-summary` LiteLLM routes
+litellm/app/models/           # `memini-*` LiteLLM routes
 ```
 
 There is no dedicated `llmkube-models` Kustomization; each consuming app's own
-KS ships its models. The memini KS `dependsOn` the `llmkube` operator so the
-CRDs exist first.
+KS ships its models. Memini no longer depends on the llmkube operator for its
+embedding and reranking services.
 
 ## CPU-only adaptations
 

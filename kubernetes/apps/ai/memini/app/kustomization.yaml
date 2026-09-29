@@ -5,7 +5,6 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-    # Cluster-local llama.cpp services (llmkube CRs) — primary embed/rerank path.
-    # Secondary routes (`lmstudio-*`) live in the litellm configmap.
-  - ./models/memini-rerank.yaml
-  - ./models/memini-embed.yaml
+  # Retained for rollback; Memini's models are hosted on Strix Halo via LiteLLM.
+  # - ./models/memini-rerank.yaml
+  # - ./models/memini-embed.yaml

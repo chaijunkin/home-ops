@@ -6,7 +6,8 @@
 > The services running on this host (`192.168.1.149`) are exposed and consumed by the `chaijunkin-home-ops` Talos cluster via ExternalName Services and Litellm Proxy routing.
 
 Qwen3.8 Flash-Next serves the canonical model name `qwen3.8-flash-next` on port
-8732. ComfyUI is available on port 8188. The ComfyUI data directory is
+8732. Memini's Qwen3 embedding model and BGE reranker are served on ports 8743
+and 8744, respectively. ComfyUI is available on port 8188. The ComfyUI data directory is
 `/var/lib/comfyui-data`; add compatible checkpoints and other model files under
 its `models/` subdirectories before queuing image-generation workflows.
 > 

@@ -174,7 +174,7 @@
         LLAMA_ARG_CTX_SIZE = "8192";
         LLAMA_ARG_N_GPU_LAYERS = "999";
         LLAMA_ARG_PORT = "8080";
-        LLAMA_ARG_EMBEDDING = "true";
+        LLAMA_ARG_EMBEDDINGS = "true";
         LLAMA_ARG_ALIAS = "memini-embed";
       };
       extraOptions = [
