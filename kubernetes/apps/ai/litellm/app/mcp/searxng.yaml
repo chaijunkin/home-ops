@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmcpserver_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMMCPServer
+metadata:
+  name: searxng
+spec:
+  alias: searxng
+  proxyRef: litellm
+  transport: http
+  url: http://mcp-searxng-proxy.ai.svc.cluster.local:8080/mcp

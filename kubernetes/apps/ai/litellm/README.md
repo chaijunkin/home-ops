@@ -38,6 +38,16 @@ Hardware: FAEX1, AMD Ryzen AI Max+ 395 with integrated Radeon 8060S, 128GB RAM,
 one session. ComfyUI also runs on this host; both services share the GPU and
 may contend for memory during image generation.
 
+## ToolHive MCP connectors
+
+LiteLLM registers one remote `LiteLLMMCPServer` connector for each active
+ToolHive MCPServer. These point to ToolHive's existing in-cluster proxy
+Services; LiteLLM does not create or own duplicate MCP workloads. Open WebUI
+can connect to the individual LiteLLM MCP server endpoints to keep each
+application's tool catalog separate. Enabling multiple connections at once
+still combines their tools in a completion request and can exceed Gufo's
+128-function limit.
+
 ## Strix Halo telemetry
 
 The Strix Halo host is monitored through two Prometheus endpoints:
