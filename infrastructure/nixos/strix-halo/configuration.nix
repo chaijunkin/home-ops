@@ -145,7 +145,6 @@
         GGML_HIP_ENABLE_UNIFIED_MEMORY = "1";
       };
       cmd = [
-        "/app/llama-server"
         "--host" "0.0.0.0"
         "--port" "8080"
         "--model" "/models/Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf"
