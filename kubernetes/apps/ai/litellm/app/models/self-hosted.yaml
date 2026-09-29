@@ -7,8 +7,8 @@ spec:
   modelName: self-hosted
   proxyRef: litellm
   params:
-    model: "openai/qwen3.8-27b"
-    apiBase: http://192.168.1.149:8737/v1
+    model: openai/qwen3.8-flash-next
+    apiBase: http://192.168.1.149:8732/v1
     apiKey: halogen
 
     additional:

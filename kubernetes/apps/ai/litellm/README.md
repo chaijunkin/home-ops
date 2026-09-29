@@ -23,25 +23,24 @@
 
 ## Temporary self-hosted backend
 
-The `self-hosted` model alias is temporarily routed to the Halogen OpenAI-compatible
-server on the Strix Halo mini PC at `192.168.1.149:8731`, serving
-`qwen38-flash-next`. This preserves the existing OpenClaw and Hermes model name
-while testing the new hardware.
+The `self-hosted` and `self-hosted-vision` model aliases are routed to the Gufo
+OpenAI-compatible server on the Strix Halo mini PC at `192.168.1.149:8732`,
+serving `qwen3.8-flash-next`. The canonical `qwen3.8-flash-next` model alias
+includes the default chat sampling settings used by these aliases.
 
 Hardware: FAEX1, AMD Ryzen AI Max+ 395 with integrated Radeon 8060S, 128GB RAM,
-1.8TB NVMe, running NixOS. Halogen is configured with a 16,384-token working
-limit and a 262,144-position KV pool. This backend is temporary; restore the
-`jk-mac-mini` LM Studio endpoint in `app/models/self-hosted.yaml` when testing
-is complete.
+1.8TB NVMe, running NixOS. Gufo is configured with a 131,072-token context and
+one session. ComfyUI also runs on this host; both services share the GPU and
+may contend for memory during image generation.
 
 ## Strix Halo telemetry
 
-The temporary Halogen host is monitored through two Prometheus endpoints:
+The Strix Halo host is monitored through two Prometheus endpoints:
 
-- `192.168.1.149:8731/metrics` — Halogen request, token, prefill/decode, and KV-pool metrics.
+- `192.168.1.149:8732/metrics` — Gufo request, token, prefill/decode, and GPU metrics.
 - `192.168.1.149:9100/metrics` — NixOS node and AMDGPU sysfs metrics.
 
-The host uses the `strix-halo` node label and the Halogen endpoint uses
-`service=halogen`, `namespace=llm`, and `job=halogen`. The ROCm dashboard's
+The host uses the `strix-halo` node label and the Gufo endpoint uses
+`service=gufo`, `namespace=llm`, and `job=gufo`. The ROCm dashboard's
 service selector is label-based so it works for this native Podman service as
 well as Kubernetes-hosted llama.cpp services.

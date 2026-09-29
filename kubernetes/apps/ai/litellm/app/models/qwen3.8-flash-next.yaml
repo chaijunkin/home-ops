@@ -11,6 +11,14 @@ spec:
     apiBase: http://192.168.1.149:8732/v1
     apiKey: halogen
     additional:
+      temperature: 0.7
+      top_p: 0.8
+      presence_penalty: 1.5
+      repetition_penalty: 1.0
+      reasoning_effort: none
+      allowed_openai_params:
+        - reasoning_effort
+        - stream_options
       max_parallel_requests: 2
       order: 2
   info:
@@ -18,4 +26,4 @@ spec:
     maxInputTokens: 131072
     maxOutputTokens: 16384
     supportsFunctionCalling: true
-    supportsVision: false
+    supportsVision: true

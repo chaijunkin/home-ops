@@ -74,7 +74,7 @@
     port = 9100;
   };
 
-  networking.firewall.allowedTCPPorts = [ 9100 8081 8188 8732 8737 8741 8742 8743 8744 ];
+  networking.firewall.allowedTCPPorts = [ 9100 8081 8188 8732 8741 8742 8743 8744 ];
   
   # Ensure your personal SSH key is authorized so you can log in after installation!
   users.users.root.openssh.authorizedKeys.keys = [
@@ -126,7 +126,7 @@
     unzip
   ];
 
-  # --- HALOGEN FLASH SERVER ---
+  # --- GUFO INFERENCE SERVICES ---
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
@@ -147,38 +147,11 @@
         "gufo" "serve" "llm"
         "--host" "0.0.0.0"
         "--port" "8080"
-        "--model" "/models/Qwen3.8-Flash-Next-APEX-I-Compact-00001-of-00006.gguf"
-        "--mmproj" "/models/mmproj-Qwen3.8-Flash-Next-f16.gguf"
+        "--model" "/models/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
+        "--mmproj" "/models/mmproj-BF16.gguf"
         "--served-model-name" "qwen3.8-flash-next"
         "--context" "131072"
         "--sessions" "1"
-      ];
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-        "--ipc=host"
-        "--ulimit=memlock=-1:-1"
-      ];
-    };
-
-    containers."strix-halo-27b" = {
-      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:20260924T104050";
-      autoStart = false;
-      ports = [ "8737:8080" ];
-      volumes = [
-        "/var/lib/strix-halo-models:/models"
-      ];
-      environment = {
-        HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-      };
-      cmd = [
-        "gufo" "serve" "llm"
-        "--host" "0.0.0.0"
-        "--port" "8080"
-        "--model" "/models/Qwen3.8-27B-Q4_K_M.gguf"
-        "--served-model-name" "qwen3.8-27b"
-        "--context" "81920"
       ];
       extraOptions = [
         "--device=/dev/kfd"
@@ -544,7 +517,7 @@
     
     containers."comfyui" = {
       image = "docker.io/yanwk/comfyui-boot:rocm7@sha256:c16f96a94c4760037d2d854acbe93ce594d4314b7bcb665da9f3cae225d7339c";
-      autoStart = false;
+      autoStart = true;
       ports = [ "8188:8188" ];
       volumes = [
         "/var/lib/comfyui-data:/root/ComfyUI"
@@ -619,32 +592,26 @@
         mv "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf.tmp" "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-UD-Q4_K_XL.gguf"
       fi
 
-      # Download Qwen3.8 Flash Next Q4_K_M
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00001-of-00004.gguf"
+      # Download Gufo-supported Qwen3.8 Flash Next UD-Q4_K_XL
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/38bb39ee97821de2c9009abb7e93950eec396e66/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
       fi
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00002-of-00004.gguf"
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/38bb39ee97821de2c9009abb7e93950eec396e66/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00002-of-00004.gguf"
       fi
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00003-of-00004.gguf"
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/38bb39ee97821de2c9009abb7e93950eec396e66/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00003-of-00004.gguf"
       fi
-      if [ ! -s "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/Qwen3.8-Flash-Next-Q4_K_M/Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf"
-        mv "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-Q4_K_M-00004-of-00004.gguf"
+      if [ ! -s "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/38bb39ee97821de2c9009abb7e93950eec396e66/UD-Q4_K_XL/Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf"
+        mv "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf.tmp" "Qwen3.8-Flash-Next-UD-Q4_K_XL-00004-of-00004.gguf"
       fi
-      if [ ! -s "mmproj-Qwen3.8-Flash-Next-f16.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-Flash-Next-GGUF/resolve/main/mmproj-Qwen3.8-Flash-Next-f16.gguf"
-        mv "mmproj-Qwen3.8-Flash-Next-f16.gguf.tmp" "mmproj-Qwen3.8-Flash-Next-f16.gguf"
-      fi
-
-      # Download Qwen3.8 27B
-      if [ ! -s "Qwen3.8-27B-Q4_K_M.gguf" ]; then
-        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3.8-27B-Q4_K_M.gguf.tmp" "https://huggingface.co/bartowski/Qwen3.8-27B-GGUF/resolve/main/Qwen3.8-27B-Q4_K_M.gguf"
-        mv "Qwen3.8-27B-Q4_K_M.gguf.tmp" "Qwen3.8-27B-Q4_K_M.gguf"
+      if [ ! -s "mmproj-BF16.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "mmproj-BF16.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/38bb39ee97821de2c9009abb7e93950eec396e66/mmproj-BF16.gguf"
+        mv "mmproj-BF16.gguf.tmp" "mmproj-BF16.gguf"
       fi
 
       # Download Memini Embed
@@ -734,7 +701,6 @@
     prometheus.scrape "gufo" {
       targets = [
         { __address__ = "127.0.0.1:8732", instance = "192.168.1.149:8732" },
-        { __address__ = "127.0.0.1:8737", instance = "192.168.1.149:8737" },
         { __address__ = "127.0.0.1:8738", instance = "192.168.1.149:8738" },
         { __address__ = "127.0.0.1:8739", instance = "192.168.1.149:8739" },
         { __address__ = "127.0.0.1:8740", instance = "192.168.1.149:8740" },
@@ -795,7 +761,7 @@
     beyla.ebpf "gufo" {
       discovery {
         instrument {
-          open_ports = "8732,8737,8738,8739,8740,8741,8742,8743,8744"
+          open_ports = "8732,8738,8739,8740,8741,8742,8743,8744"
           name       = "gufo"
         }
       }

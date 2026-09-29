@@ -9,42 +9,32 @@ echo "============================================="
 echo ""
 
 echo ">>> Checking Systemd Services..."
-ssh -o StrictHostKeyChecking=no $HOST "systemctl is-active podman-strix-halo-flash-next podman-strix-halo-qwen-27b podman-nemotron-3.5 podman-gemma-4 podman-memini-embed podman-memini-rerank podman-whisper podman-comfyui" | awk '
-BEGIN {
-    split("strix-halo-flash-next strix-halo-qwen-27b nemotron-3.5 gemma-4 memini-embed memini-rerank whisper comfyui", services, " ")
-    i = 1
-}
-{
-    printf "%-25s : %s\n", services[i], $0
-    i++
-}
-'
+for SERVICE in qwen38-flash-next comfyui memini-embeddings memini-reranker drm-exporter; do
+    STATUS=$(ssh -o BatchMode=yes "$HOST" "systemctl is-active podman-${SERVICE}.service" 2>/dev/null || echo "inactive")
+    printf "%-25s : %s\n" "$SERVICE" "$STATUS"
+done
 echo ""
 
-echo ">>> Checking HTTP /health Endpoints..."
+echo ">>> Checking HTTP Endpoints..."
 SERVICES=(
-    "strix-halo-flash-next:8732"
-    "strix-halo-qwen-27b:8737"
-    "nemotron-3.5:8733"
-    "gemma-4:8734"
-    "memini-embed:8735"
-    "memini-rerank:8736"
-    "whisper:8081"
+    "qwen38-flash-next:8732/v1/models"
+    "comfyui:8188/"
+    "memini-embeddings:8743/health"
+    "memini-reranker:8744/health"
 )
 
 for SERVICE in "${SERVICES[@]}"; do
     NAME="${SERVICE%%:*}"
-    PORT="${SERVICE##*:}"
+    ENDPOINT="${SERVICE#*:}"
     
-    # Send a quick curl request to the health endpoint (2 seconds timeout)
-    STATUS=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 "http://192.168.1.149:${PORT}/health" || echo "failed")
-    
+    STATUS=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 2 "http://192.168.1.149:${ENDPOINT}" || echo "failed")
+
     if [ "$STATUS" = "200" ]; then
-        printf "%-25s : \033[32mOK (200)\033[0m on port %s\n" "$NAME" "$PORT"
+        printf "%-25s : \033[32mOK (200)\033[0m at %s\n" "$NAME" "$ENDPOINT"
     elif [[ "$STATUS" == *"failed"* ]] || [[ "$STATUS" == *"000"* ]]; then
-        printf "%-25s : \033[31mUNREACHABLE\033[0m on port %s\n" "$NAME" "$PORT"
+        printf "%-25s : \033[31mUNREACHABLE\033[0m at %s\n" "$NAME" "$ENDPOINT"
     else
-        printf "%-25s : \033[33mHTTP %s\033[0m on port %s\n" "$NAME" "$STATUS" "$PORT"
+        printf "%-25s : \033[33mHTTP %s\033[0m at %s\n" "$NAME" "$STATUS" "$ENDPOINT"
     fi
 done
 
@@ -52,4 +42,4 @@ echo ""
 echo "============================================="
 echo "   Container Status (podman ps)              "
 echo "============================================="
-ssh -o StrictHostKeyChecking=no $HOST "podman ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
+ssh -o BatchMode=yes "$HOST" "podman ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'"
