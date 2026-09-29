@@ -74,7 +74,7 @@
     port = 9100;
   };
 
-  networking.firewall.allowedTCPPorts = [ 9100 8081 8188 8732 8741 8742 8743 8744 ];
+  networking.firewall.allowedTCPPorts = [ 9100 8081 8188 8732 8741 8742 8743 8744 8745 8746 ];
   
   # Ensure your personal SSH key is authorized so you can log in after installation!
   users.users.root.openssh.authorizedKeys.keys = [
@@ -190,6 +190,54 @@
       image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
       autoStart = true;
       ports = [ "8744:8080" ];
+      volumes = [
+        "/var/lib/strix-halo-models:/models"
+      ];
+      environment = {
+        LLAMA_ARG_MODEL = "/models/bge-reranker-v2-m3-Q8_0.gguf";
+        LLAMA_ARG_CTX_SIZE = "8192";
+        LLAMA_ARG_N_GPU_LAYERS = "999";
+        LLAMA_ARG_PORT = "8080";
+        LLAMA_ARG_RERANKING = "true";
+        LLAMA_ARG_ALIAS = "memini-rerank";
+      };
+      extraOptions = [
+        "--device=/dev/kfd"
+        "--device=/dev/dri"
+        "--group-add=keep-groups"
+        "--ipc=host"
+        "--ulimit=memlock=-1:-1"
+      ];
+    };
+
+    containers."memini-embeddings-green" = {
+      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
+      autoStart = true;
+      ports = [ "8745:8080" ];
+      volumes = [
+        "/var/lib/strix-halo-models:/models"
+      ];
+      environment = {
+        LLAMA_ARG_MODEL = "/models/Qwen3-Embedding-0.6B-Q8_0.gguf";
+        LLAMA_ARG_CTX_SIZE = "8192";
+        LLAMA_ARG_N_GPU_LAYERS = "999";
+        LLAMA_ARG_PORT = "8080";
+        LLAMA_ARG_EMBEDDINGS = "true";
+        LLAMA_ARG_ALIAS = "memini-embed";
+      };
+      extraOptions = [
+        "--device=/dev/kfd"
+        "--device=/dev/dri"
+        "--group-add=keep-groups"
+        "--ipc=host"
+        "--ulimit=memlock=-1:-1"
+      ];
+    };
+
+    containers."memini-reranker-green" = {
+      image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
+      autoStart = true;
+      ports = [ "8746:8080" ];
       volumes = [
         "/var/lib/strix-halo-models:/models"
       ];
@@ -761,7 +809,7 @@
     beyla.ebpf "gufo" {
       discovery {
         instrument {
-          open_ports = "8732,8738,8739,8740,8741,8742,8743,8744"
+          open_ports = "8732,8738,8739,8740,8741,8742,8743,8744,8745,8746"
           name       = "gufo"
         }
       }
