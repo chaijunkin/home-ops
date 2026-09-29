@@ -25,7 +25,10 @@
 
 The `self-hosted`, `auto`, and `qwen3.8-flash-next` model aliases are routed to
 the Gufo OpenAI-compatible server on the Strix Halo mini PC at
-`192.168.1.149:8732`, serving `qwen3.8-flash-next`. `auto` keeps the
+`192.168.1.149:8732`, serving `qwen3.8-flash-next`. LiteLLM uses its
+`hosted_vllm` provider for these aliases so Anthropic Messages requests are
+translated to Chat Completions rather than Gufo's unsupported Responses API.
+`auto` keeps the
 complexity-router interface, with all tiers and the classifier routed to this
 self-hosted model. There are no cloud fallbacks. The single `self-hosted` alias
 supports both vision and function tools. Clients using MCP tools must use Chat

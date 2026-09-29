@@ -7,7 +7,7 @@ spec:
   modelName: self-hosted
   proxyRef: litellm
   params:
-    model: openai/qwen3.8-flash-next
+    model: hosted_vllm/qwen3.8-flash-next
     apiBase: http://192.168.1.149:8732/v1
     apiKey: halogen
 
