@@ -151,6 +151,9 @@
         LLAMA_ARG_ALIAS = "qwen3.8-flash-next";
         LLAMA_ARG_LOAD_MODE = "none";
         LLAMA_ARG_LAZY_MODE = "on-direct";
+        LLAMA_ARG_FLASH_ATTN = "1";
+        LLAMA_ARG_BATCH_SIZE = "16384";
+        LLAMA_ARG_UBATCH_SIZE = "16384";
       };
       extraOptions = [
         "--device=/dev/kfd"
