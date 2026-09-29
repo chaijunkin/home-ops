@@ -768,7 +768,7 @@
 
     prometheus.remote_write "ingest" {
       endpoint {
-        url = "https://metrics-ingest.cloudjur.com/api/v1/write"
+        url = "https://metrics-ingest.cloudjur.com/api/v1/metrics/write"
       }
     }
 
