@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: ghcr.io/chaijunkin/bw
-              tag: 2026.7.0@sha256:d0c4da1d162a3b8313ea0da603b509e22e0ede8f5bdce3168ddc77ac56b1d913
+              tag: 2026.9.1@sha256:833075d9b63f8f461a298cbd25fd43ac992cccc1e87573dbe0ad33de1e249e19
             envFrom:
               - secretRef:
                   name: bitwarden-cli
