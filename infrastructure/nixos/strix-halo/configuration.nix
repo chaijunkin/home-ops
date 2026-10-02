@@ -7,6 +7,10 @@
 
   networking.hostName = "strix-halo";
 
+  sops.defaultSopsFile = ./secrets/secrets.sops.yaml;
+  sops.age.keyFile = "/var/lib/sops-age/keys.txt";
+  sops.secrets.hf_token = {};
+
   # Disk layout (nixos-anywhere requires disko for automated partitioning)
   # NOTE: We are using a very basic single-ext4 partition scheme for your single drive.
   disko.devices = {
@@ -724,26 +728,18 @@
       export HF_HUB_ENABLE_HF_TRANSFER=0
       export PATH=${pkgs.python3Packages.huggingface-hub}/bin:$PATH
 
-      if [ ! -d "Qwen3-TTS-12Hz-1.7B" ] || [ -z "$(ls -A Qwen3-TTS-12Hz-1.7B 2>/dev/null)" ]; then
-        hf download Qwen/Qwen3-TTS-12Hz-1.7B --local-dir Qwen3-TTS-12Hz-1.7B || true
+      # Load HF_TOKEN if available via SOPS
+      if [ -f "${config.sops.secrets.hf_token.path}" ]; then
+        export HF_TOKEN=$(cat ${config.sops.secrets.hf_token.path})
       fi
 
-      if [ ! -d "Qwen3-ASR-1.7B" ] || [ -z "$(ls -A Qwen3-ASR-1.7B 2>/dev/null)" ]; then
-        hf download Qwen/Qwen3-ASR-1.7B-hf --local-dir Qwen3-ASR-1.7B || true
-      fi
-
-      if [ ! -d "Qwen-Image-2.1" ] || [ -z "$(ls -A Qwen-Image-2.1 2>/dev/null)" ]; then
-        hf download Qwen/Qwen-Image-2.1 --local-dir Qwen-Image-2.1 || true
-      fi
-
-      if [ ! -s "DeepSeek-V4-Flash-0731-00001-of-00008.gguf" ]; then
-        hf download unsloth/DeepSeek-V4-Flash-0731-GGUF --include "*UD-Q4_K_XL*" --local-dir . || true
-      fi
+      hf download Qwen/Qwen3-TTS-12Hz-1.7B --local-dir Qwen3-TTS-12Hz-1.7B || true
+      hf download Qwen/Qwen3-ASR-1.7B-hf --local-dir Qwen3-ASR-1.7B || true
+      hf download Qwen/Qwen-Image-2.1 --local-dir Qwen-Image-2.1 || true
+      hf download unsloth/DeepSeek-V4-Flash-0731-GGUF --include "*UD-Q4_K_XL*" --local-dir . || true
       
-      if [ ! -d "MiniMax-H3-FL2VA" ] || [ -z "$(ls -A MiniMax-H3-FL2VA 2>/dev/null)" ]; then
-        # Will silently fail and continue if a gated model requires authentication
-        hf download MiniMaxAI/MiniMax-H3 --local-dir MiniMax-H3-FL2VA || true
-      fi
+      # Will silently fail and continue if a gated model requires authentication
+      hf download MiniMaxAI/MiniMax-H3 --local-dir MiniMax-H3-FL2VA || true
     '';
   };
 
