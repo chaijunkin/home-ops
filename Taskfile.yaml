@@ -53,6 +53,7 @@ includes:
     aliases: ["repo"]
     taskfile: .taskfiles/repository/Taskfile.yaml
   talos: .taskfiles/talos/Taskfile.yaml
+  nixos: .taskfiles/NixOS/Taskfile.yaml
   sops: .taskfiles/sops/Taskfile.yaml
   workstation: .taskfiles/workstation
   user:

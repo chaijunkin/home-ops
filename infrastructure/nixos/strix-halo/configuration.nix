@@ -134,7 +134,7 @@
 
   virtualisation.oci-containers = {
     containers."qwen38-flash-next" = {
-      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:latest";
+      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
       autoStart = true;
       ports = [ "8732:8080" ];
       volumes = [

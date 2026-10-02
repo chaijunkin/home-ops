@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
-    gufo.url = "github:gufo-org/gufo";
+    gufo.url = "github:gufo-org/gufo/v0.5.0";
   };
 
   outputs = { self, nixpkgs, disko, gufo }: {

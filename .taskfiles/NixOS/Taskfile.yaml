@@ -1,0 +1,22 @@
+version: "3"
+
+vars:
+  STRIX_HOST: 192.168.1.149
+  STRIX_USER: root
+  STRIX_SSH_KEY: "{{.HOME}}/.ssh/jk_inventory"
+  STRIX_FLAKE_DIR: "{{.ROOT_DIR}}/infrastructure/nixos/strix-halo"
+  STRIX_REMOTE_DIR: /etc/nixos
+
+tasks:
+  apply:
+    desc: Deploy the Strix Halo NixOS configuration
+    preconditions:
+      - sh: command -v scp
+        msg: "scp is required to copy the NixOS flake to Strix Halo"
+      - sh: command -v ssh
+        msg: "ssh is required to activate the NixOS configuration"
+      - sh: test -r "{{.STRIX_SSH_KEY}}"
+        msg: "SSH identity file not readable: {{.STRIX_SSH_KEY}}"
+    cmds:
+      - scp -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_FLAKE_DIR}}/configuration.nix" "{{.STRIX_FLAKE_DIR}}/flake.nix" "{{.STRIX_FLAKE_DIR}}/flake.lock" "{{.STRIX_USER}}@{{.STRIX_HOST}}:{{.STRIX_REMOTE_DIR}}/"
+      - ssh -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_USER}}@{{.STRIX_HOST}}" "nixos-rebuild switch --flake {{.STRIX_REMOTE_DIR}}#strix-halo"

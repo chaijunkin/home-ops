@@ -23,10 +23,16 @@ stored vectors; this same-model rollout does not.
 
 ## Deployment
 
-To deploy this configuration to the host:
+Deploy the flake and activate it on Strix Halo with the repository Taskfile:
 
 ```bash
-# Copy changed NixOS files and activate the flake
-scp configuration.nix flake.nix flake.lock root@192.168.1.149:/etc/nixos/
-ssh root@192.168.1.149 "nixos-rebuild switch --flake /etc/nixos#strix-halo"
+task nixos:apply
 ```
+
+The task defaults to `root@192.168.1.149` and `~/.ssh/jk_inventory`. Override
+`STRIX_HOST`, `STRIX_USER`, or `STRIX_SSH_KEY` when running it against a
+different target or with a different SSH identity.
+
+The Gufo source and runtime image are pinned to the same upstream release in
+`flake.nix` and `configuration.nix`; update both pins and regenerate
+`flake.lock` before deploying a Gufo release.
