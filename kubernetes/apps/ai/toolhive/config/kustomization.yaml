@@ -5,6 +5,7 @@ resources:
   - ./externalsecret.yaml
   - ./grafanadashboard.yaml
   - ./httproute.yaml
+  - ./litellmvirtualkey.yaml
   - ./mcpgroup.yaml
   - ./mcpoidcconfig.yaml
   - ./mcptelemetry.yaml

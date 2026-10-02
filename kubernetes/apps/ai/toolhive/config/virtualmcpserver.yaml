@@ -73,13 +73,19 @@ spec:
               cpu: 100m
               memory: 128Mi
 ---
-# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/virtualmcpserver_v1alpha1.json
-apiVersion: toolhive.stacklok.dev/v1alpha1
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/virtualmcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
 kind: VirtualMCPServer
 metadata:
   name: mcp-gateway-internal
 spec:
   config:
+    optimizer:
+      embeddingModel: memini-embed
+      embeddingProvider: openai
+      embeddingService: http://litellm.ai.svc.cluster.local:4000/v1
+      embeddingServiceTimeout: 180s
+      maxToolsToReturn: 8
     groupRef: mcp-tools
     aggregation:
       conflictResolution: prefix
@@ -97,6 +103,12 @@ spec:
     spec:
       containers:
         - name: vmcp
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: key
+                  name: toolhive-embed
           resources:
             limits:
               cpu:

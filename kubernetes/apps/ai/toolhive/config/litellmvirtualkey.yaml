@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmvirtualkey_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMVirtualKey
+metadata:
+  name: toolhive-embed
+spec:
+  keyAlias: toolhive-embed
+  models:
+    - memini-embed
+  proxyRef: litellm
+  secretName: toolhive-embed
