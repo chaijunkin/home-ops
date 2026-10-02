@@ -135,7 +135,7 @@
   virtualisation.oci-containers = {
     containers."qwen38-flash-next" = {
       image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
-      autoStart = true;
+      autoStart = false;
       ports = [ "8732:8080" ];
       volumes = [
         "/var/lib/strix-halo-models:/models"
@@ -152,6 +152,37 @@
         "--served-model-name" "qwen3.8-flash-next"
         "--context" "131072"
         "--sessions" "1"
+      ];
+      extraOptions = [
+        "--device=/dev/kfd"
+        "--device=/dev/dri"
+        "--group-add=keep-groups"
+        "--ipc=host"
+        "--ulimit=memlock=-1:-1"
+      ];
+    };
+    
+    containers."qwen27b" = {
+      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
+      autoStart = true; # Set to true and set qwen38-flash-next to false when switching
+      ports = [ "8732:8080" ]; # Both use the same port, so only run one at a time!
+      volumes = [
+        "/var/lib/strix-halo-models:/models"
+      ];
+      environment = {
+        HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+      };
+      cmd = [
+        "gufo" "serve" "llm"
+        "--host" "0.0.0.0"
+        "--port" "8080"
+        "--model" "/models/qwen3.8-27b/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+        "--mmproj" "/models/qwen3.8-27b/mmproj-BF16.gguf"
+        "--speculative" "dflash2"
+        "--dflash-model" "/models/qwen3.8-27b/Qwen3.8-27B-DFlash2-Q4_K_M.gguf"
+        "--served-model-name" "qwen3.8-27b"
+        "--context" "131072"
+        "--sessions" "2"
       ];
       extraOptions = [
         "--device=/dev/kfd"
@@ -672,6 +703,46 @@
       if [ ! -s "bge-reranker-v2-m3-Q8_0.gguf" ]; then
         ${pkgs.curl}/bin/curl -L -o "bge-reranker-v2-m3-Q8_0.gguf.tmp" "https://huggingface.co/gpustack/bge-reranker-v2-m3-GGUF/resolve/main/bge-reranker-v2-m3-Q8_0.gguf"
         mv "bge-reranker-v2-m3-Q8_0.gguf.tmp" "bge-reranker-v2-m3-Q8_0.gguf"
+      fi
+
+      # Download Qwen3.8-27B (Unsloth + DFlash2)
+      mkdir -p qwen3.8-27b
+      if [ ! -s "qwen3.8-27b/Qwen3.8-27B-UD-Q4_K_XL.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "qwen3.8-27b/Qwen3.8-27B-UD-Q4_K_XL.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF/resolve/main/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+        mv "qwen3.8-27b/Qwen3.8-27B-UD-Q4_K_XL.gguf.tmp" "qwen3.8-27b/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+      fi
+      if [ ! -s "qwen3.8-27b/mmproj-BF16.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "qwen3.8-27b/mmproj-BF16.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-27B-GGUF/resolve/main/mmproj-BF16.gguf"
+        mv "qwen3.8-27b/mmproj-BF16.gguf.tmp" "qwen3.8-27b/mmproj-BF16.gguf"
+      fi
+      if [ ! -s "qwen3.8-27b/Qwen3.8-27B-DFlash2-Q4_K_M.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "qwen3.8-27b/Qwen3.8-27B-DFlash2-Q4_K_M.gguf.tmp" "https://huggingface.co/z-lab/Qwen3.8-27B-DFlash2-GGUF/resolve/main/Qwen3.8-27B-DFlash2-Q4_K_M.gguf"
+        mv "qwen3.8-27b/Qwen3.8-27B-DFlash2-Q4_K_M.gguf.tmp" "qwen3.8-27b/Qwen3.8-27B-DFlash2-Q4_K_M.gguf"
+      fi
+
+      # Multiverse Models via huggingface-cli
+      export HF_HUB_ENABLE_HF_TRANSFER=0
+      export PATH=${pkgs.python3Packages.huggingface-hub}/bin:$PATH
+
+      if [ ! -d "Qwen3-TTS-12Hz-1.7B" ] || [ -z "$(ls -A Qwen3-TTS-12Hz-1.7B 2>/dev/null)" ]; then
+        hf download Qwen/Qwen3-TTS-12Hz-1.7B --local-dir Qwen3-TTS-12Hz-1.7B || true
+      fi
+
+      if [ ! -d "Qwen3-ASR-1.7B" ] || [ -z "$(ls -A Qwen3-ASR-1.7B 2>/dev/null)" ]; then
+        hf download Qwen/Qwen3-ASR-1.7B-hf --local-dir Qwen3-ASR-1.7B || true
+      fi
+
+      if [ ! -d "Qwen-Image-2.1" ] || [ -z "$(ls -A Qwen-Image-2.1 2>/dev/null)" ]; then
+        hf download Qwen/Qwen-Image-2.1 --local-dir Qwen-Image-2.1 || true
+      fi
+
+      if [ ! -s "DeepSeek-V4-Flash-0731-00001-of-00008.gguf" ]; then
+        hf download unsloth/DeepSeek-V4-Flash-0731-GGUF --include "*UD-Q4_K_XL*" --local-dir . || true
+      fi
+      
+      if [ ! -d "MiniMax-H3-FL2VA" ] || [ -z "$(ls -A MiniMax-H3-FL2VA 2>/dev/null)" ]; then
+        # Will silently fail and continue if a gated model requires authentication
+        hf download MiniMaxAI/MiniMax-H3 --local-dir MiniMax-H3-FL2VA || true
       fi
     '';
   };

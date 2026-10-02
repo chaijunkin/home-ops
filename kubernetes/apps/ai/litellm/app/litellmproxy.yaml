@@ -113,7 +113,7 @@ spec:
     cooldown_time: 30
     enable_pre_call_checks: true
     model_group_alias:
-      self-hosted: qwen3.8-flash-next
+      self-hosted: qwen3.8-27b
   service:
     port: 4000
     type: ClusterIP
