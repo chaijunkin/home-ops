@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: qwen3.8-27b
+spec:
+  modelName: qwen3.8-27b
+  proxyRef: litellm
+  params:
+    model: hosted_vllm/qwen3.8-27b
+    apiBase: http://192.168.1.149:8732/v1
+    apiKey: gufo-key
+    additional:
+      temperature: 0.7
+      top_p: 0.8
+      reasoning_effort: none
+      allowed_openai_params:
+        - reasoning_effort
+        - stream_options
+      max_parallel_requests: 2
+      order: 1
+  info:
+    mode: chat
+    maxInputTokens: 131072
+    maxOutputTokens: 16384
+    supportsFunctionCalling: true
+    supportsVision: true

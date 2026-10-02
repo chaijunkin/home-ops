@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: qwen-image
+spec:
+  modelName: qwen-image
+  proxyRef: litellm
+  params:
+    model: openai/qwen-image-2.1
+    apiBase: http://192.168.1.149:8741/v1
+    apiKey: gufo-key
+    additional:
+      max_parallel_requests: 1
+  info:
+    mode: image_generation
+    supportsFunctionCalling: false
+    supportsVision: true

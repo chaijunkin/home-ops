@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: minimax-h3
+spec:
+  modelName: minimax-h3
+  proxyRef: litellm
+  params:
+    model: openai/minimax-h3-fl2va
+    apiBase: http://192.168.1.149:8742/v1
+    apiKey: gufo-key
+    additional:
+      max_parallel_requests: 1
+  info:
+    mode: chat
+    supportsFunctionCalling: false
+    supportsVision: true

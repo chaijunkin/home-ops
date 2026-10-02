@@ -35,3 +35,9 @@ resources:
   - ./vercel-wildcard.yaml
   - ./nemotron-3-5.yaml
   - ./gemma-4.yaml
+  - ./dsv4f-local.yaml
+  - ./qwen-image.yaml
+  - ./minimax-h3.yaml
+  - ./qwen3-asr.yaml
+  - ./qwen3-tts.yaml
+  - ./qwen3.8-27b.yaml
