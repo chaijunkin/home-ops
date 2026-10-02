@@ -36,7 +36,7 @@ spec:
               MEMINI_DISTILL_ON_WRITE: "true"
               MEMINI_REEMBED_ON_MODEL_CHANGE: "true"
               MEMINI_EMBED_BASE_URL: http://litellm.ai:4000/v1
-              MEMINI_EMBED_MODEL: memini-embed
+              MEMINI_EMBED_MODEL: embed
               MEMINI_EMBED_DIMS: "1024"
               MEMINI_EMBED_MAX_CONCURRENCY: "2"
               MEMINI_EMBED_MAX_ITEM_CHARS: "6000"

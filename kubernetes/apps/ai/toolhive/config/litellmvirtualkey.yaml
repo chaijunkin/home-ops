@@ -6,6 +6,6 @@ metadata:
 spec:
   keyAlias: toolhive-embed
   models:
-    - memini-embed
+    - embed
   proxyRef: litellm
   secretName: toolhive-embed

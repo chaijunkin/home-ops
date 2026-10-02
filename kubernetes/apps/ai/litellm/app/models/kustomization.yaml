@@ -14,7 +14,7 @@ resources:
   - ./hf-wildcard.yaml
   - ./ilmu-wildcard.yaml
   - ./lmstudio-embed.yaml
-  - ./memini-embed.yaml
+  - ./embed.yaml
   - ./memini-rerank.yaml
   - ./memini-summary.yaml
   - ./mistral-wildcard.yaml

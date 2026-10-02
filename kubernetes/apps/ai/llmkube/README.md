@@ -19,7 +19,7 @@ Kustomization. LM Studio carries the `lmstudio-*` prefix as a secondary route:
 
 | LiteLLM route     | Backend                                   | Weights                   |
 | ----------------- | ----------------------------------------- | ------------------------- |
-| `memini-embed`    | Strix Halo `memini-embeddings` (GPU)      | Qwen3-Embedding-0.6B Q8_0 |
+| `embed`           | Strix Halo `memini-embeddings` (GPU)      | Qwen3-Embedding-0.6B Q8_0 |
 | `memini-rerank`   | Strix Halo `memini-reranker` (GPU)        | BGE-Reranker-v2-M3 Q8_0   |
 | `lmstudio-embed`  | LM Studio on jk-mac-mini (secondary)      | same embedding weights    |
 | `memini-summary`  | Gemini 2.5 Flash Lite (cloud)             | —                         |
@@ -32,6 +32,10 @@ Consumers reference only these stable names, so the model behind a role can
 change without touching client config. This layout is also what the future
 litellm-operator migration expects.
 
+The `embed` LiteLLM route still targets the Strix Halo service whose internal
+llama.cpp model alias is `memini-embed`; that backend name is not exposed to
+LiteLLM clients.
+
 ## Where things live
 
 ```
@@ -42,7 +46,7 @@ memini/app/models/            # memini's llama.cpp services, reconciled by the
   memini-rerank.yaml          #   rollback manifests (not in the active Kustomization)
   memini-embed.yaml
 memini/app/helmrelease.yaml   # consumer config — all three roles referenced by name
-litellm/app/models/           # `memini-*` LiteLLM routes
+litellm/app/models/           # LiteLLM routes, including `embed`
 ```
 
 There is no dedicated `llmkube-models` Kustomization; each consuming app's own

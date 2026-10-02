@@ -81,7 +81,7 @@ metadata:
 spec:
   config:
     optimizer:
-      embeddingModel: memini-embed
+      embeddingModel: embed
       embeddingProvider: openai
       embeddingService: http://litellm.ai.svc.cluster.local:4000/v1
       embeddingServiceTimeout: 180s

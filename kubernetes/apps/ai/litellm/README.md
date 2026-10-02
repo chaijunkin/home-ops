@@ -60,7 +60,7 @@ The host uses the `strix-halo` node label and the Gufo endpoint uses
 service selector is label-based so it works for this native Podman service as
 well as Kubernetes-hosted llama.cpp services.
 
-Memini's `memini-embed` and `memini-rerank` LiteLLM routes connect directly to
+Memini's `embed` and `memini-rerank` LiteLLM routes connect directly to
 the Strix Halo llama.cpp services at `192.168.1.149:8743` and
 `192.168.1.149:8744`. The embedding model returns 1024-dimensional vectors,
 matching Memini's configured `MEMINI_EMBED_DIMS`.
