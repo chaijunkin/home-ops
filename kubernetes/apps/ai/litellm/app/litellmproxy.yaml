@@ -112,6 +112,8 @@ spec:
     routing_strategy: simple-shuffle
     cooldown_time: 30
     enable_pre_call_checks: true
+    model_group_alias:
+      self-hosted: qwen3.8-flash-next
   service:
     port: 4000
     type: ClusterIP

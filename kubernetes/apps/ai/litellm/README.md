@@ -23,16 +23,19 @@
 
 ## Temporary self-hosted backend
 
-The `self-hosted`, `auto`, and `qwen3.8-flash-next` model aliases are routed to
-the Gufo OpenAI-compatible server on the Strix Halo mini PC at
-`192.168.1.149:8732`, serving `qwen3.8-flash-next`. LiteLLM uses its
-`hosted_vllm` provider for these aliases so Anthropic Messages requests are
-translated to Chat Completions rather than Gufo's unsupported Responses API.
-`auto` keeps the
-complexity-router interface, with all tiers and the classifier routed to this
-self-hosted model. There are no cloud fallbacks. The single `self-hosted` alias
-supports both vision and function tools. Clients using MCP tools must use Chat
-Completions because Gufo's `/v1/responses` endpoint does not support tools.
+The canonical `qwen3.8-flash-next` LiteLLM model group routes to the Gufo
+OpenAI-compatible server on Strix Halo at `192.168.1.149:8732`. LiteLLM uses
+the `hosted_vllm` provider to translate Anthropic Messages requests to Chat
+Completions rather than Gufo's unsupported Responses API. The `self-hosted`
+client name is a LiteLLM router alias for `qwen3.8-flash-next`; both names use
+the same model configuration and upstream. Responses and model discovery may
+identify the canonical name rather than `self-hosted`.
+
+`auto` keeps the complexity-router interface, with its classifier and tiers
+routed through their configured model groups. There are no cloud fallbacks.
+The canonical model supports both vision and function tools. Clients using MCP
+tools must use Chat Completions because Gufo's `/v1/responses` endpoint does
+not support tools.
 Hardware: FAEX1, AMD Ryzen AI Max+ 395 with integrated Radeon 8060S, 128GB RAM,
 1.8TB NVMe, running NixOS. Gufo is configured with a 131,072-token context and
 one session. ComfyUI also runs on this host; both services share the GPU and
