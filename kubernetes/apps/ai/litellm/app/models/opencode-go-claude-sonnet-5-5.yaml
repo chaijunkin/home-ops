@@ -7,16 +7,12 @@ spec:
   modelName: opencode-go/claude-sonnet-5-5
   params:
     model: anthropic/claude-sonnet-5-5
-    apiBase: https://opencode.ai./zen/go
+    apiBase: https://opencode.ai/zen/go
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY
     dropParams: true
-    additional:
-      extra_headers:
-        x-opencode-session: "litellm-proxy"
   info:
-    mode: chat
     maxInputTokens: 200000
     maxOutputTokens: 8192
     supportsFunctionCalling: true

@@ -9,13 +9,13 @@ spec:
   params:
     model: auto_router/complexity_router
     additional:
-      complexity_router_default_model: opencode-go/deepseek-v4-flash
+      complexity_router_default_model: frontier-pool
       complexity_router_config:
         tiers:
           SIMPLE: opencode-go/gpt-6-luna
-          MEDIUM: opencode-go/deepseek-v4-flash
+          MEDIUM: frontier-pool
           COMPLEX: opencode-go/claude-sonnet-5-5
-          REASONING: opencode-go/claude-sonnet-5-5
+          REASONING: reasoning-pool
         classifier_type: llm
         classifier_llm_config:
           model: opencode-go/gpt-6-luna
