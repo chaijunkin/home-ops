@@ -8,7 +8,7 @@ spec:
   proxyRef: litellm
   params:
     model: openai/glm-5.3-flash
-    apiBase: https://opencode.ai/zen/go/v1
+    apiBase: https://opencode.ai./zen/go/v1
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY
@@ -56,7 +56,7 @@ spec:
   proxyRef: litellm
   params:
     model: anthropic/minimax-m3
-    apiBase: https://opencode.ai/zen/go
+    apiBase: https://opencode.ai./zen/go
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY

@@ -7,7 +7,7 @@ spec:
   modelName: opencode-go/qwen3.7-max
   params:
     model: anthropic/qwen3.7-max
-    apiBase: https://opencode.ai/zen/go
+    apiBase: https://opencode.ai./zen/go
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY

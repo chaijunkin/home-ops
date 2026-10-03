@@ -7,7 +7,7 @@ spec:
   modelName: opencode-go/mimo-v2.5
   params:
     model: openai/mimo-v2.5
-    apiBase: https://opencode.ai/zen/go/v1
+    apiBase: https://opencode.ai./zen/go/v1
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY

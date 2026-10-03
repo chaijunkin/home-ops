@@ -7,7 +7,7 @@ spec:
   modelName: opencode-go/gpt-6-luna
   params:
     model: openai/gpt-6-luna
-    apiBase: https://opencode.ai/zen/go/v1
+    apiBase: https://opencode.ai./zen/go/v1
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY

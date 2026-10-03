@@ -7,7 +7,7 @@ spec:
   modelName: opencode-go/claude-sonnet-5-5
   params:
     model: openai/claude-sonnet-5-5
-    apiBase: https://opencode.ai/zen/go/v1
+    apiBase: https://opencode.ai./zen/go/v1
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY

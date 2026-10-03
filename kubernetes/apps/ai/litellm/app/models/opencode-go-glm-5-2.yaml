@@ -7,7 +7,7 @@ spec:
   modelName: opencode-go/glm-5.2
   params:
     model: openai/glm-5.2
-    apiBase: https://opencode.ai/zen/go/v1
+    apiBase: https://opencode.ai./zen/go/v1
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY

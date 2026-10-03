@@ -7,7 +7,7 @@ spec:
   modelName: opencode-go/minimax-m3
   params:
     model: anthropic/minimax-m3
-    apiBase: https://opencode.ai/zen/go
+    apiBase: https://opencode.ai./zen/go
     apiKeyRef:
       name: litellm
       key: OPENCODE_GO_API_KEY
