@@ -5,8 +5,10 @@ metadata:
   name: fli
 spec:
   image: ghcr.io/punitarani/fli:latest
-  transport: stdio
+  transport: streamable-http
   mcpPort: 8000
   proxyPort: 8080
+  args:
+    - fli-mcp-http
   groupRef:
     name: mcp-tools
