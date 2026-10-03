@@ -56,7 +56,7 @@ spec:
               - env:
                   - name: DEBIAN_FRONTEND
                     value: noninteractive
-                image: ghcr.io/chaijunkin/forgejo-runner:2026.09.22@sha256:c582459051809bfa73647995281b4e7f8a82bfb089053f000d9876b84341f545
+                image: ghcr.io/chaijunkin/forgejo-runner:2026.10.03@sha256:bc1cadc08ce0e502c42806562fd0a47db5730cffb4ca236d46dddd174571d769
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
