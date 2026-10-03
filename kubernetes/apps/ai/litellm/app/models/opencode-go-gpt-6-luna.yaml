@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/litellm.home-operations.com/litellmmodel_v1alpha1.json
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: opencode-go-gpt-6-luna
+spec:
+  modelName: opencode-go/gpt-6-luna
+  params:
+    model: openai/gpt-6-luna
+    apiBase: https://opencode.ai/zen/go/v1
+    apiKeyRef:
+      name: litellm
+      key: OPENCODE_GO_API_KEY
+    dropParams: true
+    additional:
+      extra_headers:
+        x-opencode-session: "litellm-proxy"
+  info:
+    maxInputTokens: 128000
+    maxOutputTokens: 16384
+    supportsFunctionCalling: true

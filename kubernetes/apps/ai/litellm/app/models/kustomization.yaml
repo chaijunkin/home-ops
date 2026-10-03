@@ -18,6 +18,8 @@ resources:
   - ./nvidia-wildcard.yaml
   - ./opencode-embed.yaml
   - ./opencode-go-deepseek-v4-flash.yaml
+  - ./opencode-go-gpt-6-luna.yaml
+  - ./opencode-go-claude-sonnet-5-5.yaml
   - ./opencode-go-glm-5-2.yaml
   - ./opencode-go-kimi-k2-6.yaml
   - ./opencode-go-kimi-k2-7-code.yaml

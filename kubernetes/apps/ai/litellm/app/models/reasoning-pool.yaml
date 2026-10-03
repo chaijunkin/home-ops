@@ -14,7 +14,7 @@ spec:
       key: OPENCODE_GO_API_KEY
     dropParams: true
     additional:
-      order: 1
+      order: 2
       extra_headers:
         x-opencode-session: "litellm-proxy"
   info:
@@ -38,7 +38,7 @@ spec:
     apiBase: https://integrate.api.nvidia.com/v1
     apiKey: os.environ/NVIDIA_API_KEY
     additional:
-      order: 2
+      order: 1
   info:
     mode: chat
     maxInputTokens: 131072
