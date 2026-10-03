@@ -744,6 +744,30 @@
     '';
   };
 
+  # Automated ComfyUI model downloader
+  systemd.services.download-comfyui-models = {
+    description = "Download Diffusion Models for ComfyUI";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      User = "root";
+    };
+    script = ''
+      set -e
+      mkdir -p /var/lib/comfyui-data/models/checkpoints
+      cd /var/lib/comfyui-data/models/checkpoints
+
+      # Download SDXL Base 1.0 (standard for Open-WebUI)
+      if [ ! -s "sd_xl_base_1.0.safetensors" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "sd_xl_base_1.0.safetensors.tmp" "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors"
+        mv "sd_xl_base_1.0.safetensors.tmp" "sd_xl_base_1.0.safetensors"
+      fi
+    '';
+  };
+
   # Podman requires bind mount source directories to exist beforehand
   systemd.tmpfiles.rules = [
     "d /var/lib/halogen-models 0755 root root -"
