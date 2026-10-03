@@ -62,6 +62,8 @@ spec:
                 memory: 8Gi
     service:
       app:
+        controller: opencode
+        forceRename: opencode-svc
         ports:
           http:
             port: *port

@@ -16,6 +16,7 @@ spec:
       extra_headers:
         x-opencode-session: "litellm-proxy"
   info:
+    mode: chat
     maxInputTokens: 128000
     maxOutputTokens: 16384
     supportsFunctionCalling: true
