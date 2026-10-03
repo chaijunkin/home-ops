@@ -42,17 +42,33 @@ spec:
               ENABLE_OPENAI_API: true
               OPENAI_API_BASE_URL: http://litellm.ai.svc.cluster.local:4000/v1
               ENABLE_OLLAMA_API: false
-              # ENABLE_IMAGE_GENERATION: True
-              # IMAGE_GENERATION_ENGINE: automatic1111
-              # IMAGE_GENERATION_MODEL: dreamshaper_8
-              # IMAGE_SIZE: 400x400
-              # IMAGE_STEPS: 8
-              # AUTOMATIC1111_BASE_URL: http://sdnext:7860/
-              # AUTOMATIC1111_CFG_SCALE: 2
-              # AUTOMATIC1111_SAMPLER: DPM++ SDE
-              # AUTOMATIC1111_SCHEDULER: Karras
-              # Open-webui settings
-              # OLLAMA_BASE_URL: http://ollama.ai:11434
+
+              # Image Generation via ComfyUI
+              ENABLE_IMAGE_GENERATION: true
+              IMAGE_GENERATION_ENGINE: comfyui
+              COMFYUI_BASE_URL: http://comfyui.ai.svc.cluster.local:8188/
+
+              # Text-to-Speech via LiteLLM -> Qwen3-TTS
+              AUDIO_TTS_ENGINE: openai
+              AUDIO_TTS_OPENAI_API_BASE_URL: http://litellm.ai.svc.cluster.local:4000/v1
+              AUDIO_TTS_OPENAI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "{{ .Release.Name }}-secret"
+                    key: OPENAI_API_KEY
+              AUDIO_TTS_MODEL: qwen3-tts
+
+              # Speech-to-Text via LiteLLM -> Qwen3-ASR
+              AUDIO_STT_ENGINE: openai
+              AUDIO_STT_OPENAI_API_BASE_URL: http://litellm.ai.svc.cluster.local:4000/v1
+              AUDIO_STT_OPENAI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: "{{ .Release.Name }}-secret"
+                    key: OPENAI_API_KEY
+              AUDIO_STT_MODEL: qwen3-asr
+
+              # Web Search
               ENABLE_RAG_WEB_SEARCH: true
               ENABLE_SEARCH_QUERY: true
               WEB_SEARCH_ENGINE: searxng

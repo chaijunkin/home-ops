@@ -19,4 +19,51 @@ tasks:
         msg: "SSH identity file not readable: {{.STRIX_SSH_KEY}}"
     cmds:
       - scp -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_FLAKE_DIR}}/configuration.nix" "{{.STRIX_FLAKE_DIR}}/flake.nix" "{{.STRIX_FLAKE_DIR}}/flake.lock" "{{.STRIX_USER}}@{{.STRIX_HOST}}:{{.STRIX_REMOTE_DIR}}/"
+      - ssh -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_USER}}@{{.STRIX_HOST}}" "mkdir -p {{.STRIX_REMOTE_DIR}}/secrets"
+      - scp -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_FLAKE_DIR}}/secrets/secrets.sops.yaml" "{{.STRIX_USER}}@{{.STRIX_HOST}}:{{.STRIX_REMOTE_DIR}}/secrets/"
       - ssh -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_USER}}@{{.STRIX_HOST}}" "nixos-rebuild switch --flake {{.STRIX_REMOTE_DIR}}#strix-halo"
+
+  encrypt-secret:
+    desc: "Encrypt a plaintext secret for Strix Halo (usage: task nixos:encrypt-secret FILE=infrastructure/nixos/strix-halo/secrets/secrets.sops.yaml)"
+    requires:
+      vars: [FILE]
+    preconditions:
+      - {msg: "Missing age key file", sh: "test -f {{.AGE_FILE}}"}
+      - {msg: "Missing SOPS config", sh: "test -f {{.ROOT_DIR}}/.sops.yaml"}
+      - {msg: "FILE does not exist", sh: "test -f {{.ROOT_DIR}}/{{.FILE}}"}
+    cmds:
+      - SOPS_AGE_KEY_FILE={{.AGE_FILE}} sops --encrypt --in-place {{.ROOT_DIR}}/{{.FILE}}
+
+  edit-secret:
+    desc: "Decrypt and edit a Strix Halo secret in $EDITOR, then re-encrypt (usage: task nixos:edit-secret FILE=infrastructure/nixos/strix-halo/secrets/secrets.sops.yaml)"
+    requires:
+      vars: [FILE]
+    preconditions:
+      - {msg: "Missing age key file", sh: "test -f {{.AGE_FILE}}"}
+      - {msg: "Missing SOPS config", sh: "test -f {{.ROOT_DIR}}/.sops.yaml"}
+      - {msg: "FILE does not exist", sh: "test -f {{.ROOT_DIR}}/{{.FILE}}"}
+    cmds:
+      - SOPS_AGE_KEY_FILE={{.AGE_FILE}} sops {{.ROOT_DIR}}/{{.FILE}}
+
+  copy-key:
+    desc: Copy the strix-halo node age private key from the remote machine to age2.key (for local backup)
+    preconditions:
+      - {msg: "SSH key not readable", sh: "test -r {{.STRIX_SSH_KEY}}"}
+    cmds:
+      - scp -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_USER}}@{{.STRIX_HOST}}:/var/lib/sops-age/keys.txt" "{{.AGE2_FILE}}"
+      - cmd: echo "Node age key saved to {{.AGE2_FILE}} (gitignored)"
+        silent: true
+
+  rotate-key:
+    desc: Generate a fresh age key on the strix-halo node, copy it locally, and print the new public key for .sops.yaml
+    preconditions:
+      - {msg: "SSH key not readable", sh: "test -r {{.STRIX_SSH_KEY}}"}
+      - {
+          msg: "age not installed on node",
+          sh: "ssh -i {{.STRIX_SSH_KEY}} -o IdentitiesOnly=yes {{.STRIX_USER}}@{{.STRIX_HOST}} 'command -v age-keygen'",
+        }
+    cmds:
+      - ssh -i "{{.STRIX_SSH_KEY}}" -o IdentitiesOnly=yes "{{.STRIX_USER}}@{{.STRIX_HOST}}" "age-keygen -o /var/lib/sops-age/keys.txt 2>&1 | grep 'public key'"
+      - task: copy-key
+      - cmd: 'echo "Update .sops.yaml with the public key above, then run: sops updatekeys --yes infrastructure/nixos/strix-halo/secrets/secrets.sops.yaml"'
+        silent: true

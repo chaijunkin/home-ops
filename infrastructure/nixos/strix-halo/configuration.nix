@@ -128,6 +128,7 @@
     tree
     fastfetch
     unzip
+    age
   ];
 
   # --- GUFO INFERENCE SERVICES ---

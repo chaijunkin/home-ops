@@ -14,6 +14,7 @@ vars:
   SCRIPTS_DIR: "{{.ROOT_DIR}}/scripts"
   # Files
   AGE_FILE: "{{.ROOT_DIR}}/age.key"
+  AGE2_FILE: "{{.ROOT_DIR}}/age2.key" # strix-halo node key
   BOOTSTRAP_CONFIG_FILE: "{{.ROOT_DIR}}/config.yaml"
   KUBECONFIG_FILE: "{{.ROOT_DIR}}/kubeconfig"
   MAKEJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/makejinja.toml"
