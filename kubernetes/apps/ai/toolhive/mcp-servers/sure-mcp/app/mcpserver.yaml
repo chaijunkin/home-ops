@@ -21,31 +21,13 @@ spec:
                   name: sure-mcp-secret
                   key: MCP_API_TOKEN
           command:
-            - node
+            - npx
           args:
-            - -e
-            - |
-              const https = require('https');
-              const readline = require('readline');
-              const rl = readline.createInterface({ input: process.stdin, terminal: false });
-              rl.on('line', (line) => {
-                if (!line.trim()) return;
-                const req = https.request({
-                  hostname: 'money.cloudjur.com',
-                  port: 443,
-                  path: '/mcp',
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.MCP_API_TOKEN}`,
-                    'Content-Length': Buffer.byteLength(line)
-                  }
-                }, (res) => {
-                  let data = '';
-                  res.on('data', c => data += c);
-                  res.on('end', () => console.log(data));
-                });
-                req.on('error', console.error);
-                req.write(line);
-                req.end();
-              });
+            - -y
+            - mcp-remote
+            - https://money.cloudjur.com/mcp
+            - --allow-http
+            - --transport
+            - http-only
+            - --header
+            - "Authorization: Bearer $(MCP_API_TOKEN)"
