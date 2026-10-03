@@ -82,3 +82,15 @@ spec:
         defaultMode: 0755
         globalMounts:
           - path: /etc/opencode
+      default-vault:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Apps/Obsidian/DefaultVault
+        globalMounts:
+          - path: /mnt/defaultvault
+      developer:
+        type: nfs
+        server: smb.cloudjur.com
+        path: /tank/Developer
+        globalMounts:
+          - path: /mnt/developer

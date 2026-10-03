@@ -18,13 +18,13 @@ data:
     printf 'https://x-access-token:%s@github.com\n' "${GITHUB_TOKEN}" > "${HOME}/.git-credentials"
     umask 022
 
-    mkdir -p "${HOME}/projects"
-    if [[ ! -d "${HOME}/projects/home-ops/.git" ]]; then
-      git clone --filter=blob:none https://github.com/chaijunkin/home-ops.git "${HOME}/projects/home-ops" \
+    mkdir -p "${HOME}/Developer/github.com/chaijunkin"
+    if [[ ! -d "${HOME}/Developer/github.com/chaijunkin/home-ops/.git" ]]; then
+      git clone --filter=blob:none https://github.com/chaijunkin/home-ops.git "${HOME}/Developer/github.com/chaijunkin/home-ops" \
         || echo "WARN: home-ops clone failed; clone it from a session instead"
     fi
 
-    cd "${HOME}/projects"
+    cd "${HOME}/Developer/github.com/chaijunkin/home-ops"
     exec opencode serve --hostname 0.0.0.0 --port 4096
   opencode.json: |
     {
