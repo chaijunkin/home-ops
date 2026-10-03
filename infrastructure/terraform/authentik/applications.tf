@@ -330,6 +330,15 @@ locals {
       launch_url        = "https://mealie.${var.public_domain}/"
       property_mappings = local.default_property_mappings
     },
+    opencode = {
+      client_id         = "opencode"
+      client_secret     = var.opencode_secret
+      group             = "users"
+      icon_url          = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/code.png"
+      redirect_uri      = "https://opencode.${var.public_domain}/oauth2/callback"
+      launch_url        = "https://opencode.${var.public_domain}/"
+      property_mappings = local.default_property_mappings
+    },
   }
 }
 

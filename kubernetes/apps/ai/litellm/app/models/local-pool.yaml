@@ -1,0 +1,69 @@
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: local-pool-27b
+spec:
+  modelName: local-pool
+  proxyRef: litellm
+  params:
+    model: hosted_vllm/qwen3.8-27b
+    apiBase: http://192.168.1.149:8732/v1
+    apiKey: gufo-key
+    additional:
+      temperature: 1.0
+      top_p: 0.95
+      order: 1
+      max_parallel_requests: 2
+  info:
+    mode: chat
+    maxInputTokens: 131072
+    maxOutputTokens: 24576
+    supportsFunctionCalling: true
+    supportsVision: true
+# ---
+# apiVersion: litellm.home-operations.com/v1alpha1
+# kind: LiteLLMModel
+# metadata:
+#   name: local-pool-flash-next
+# spec:
+#   modelName: local-pool
+#   proxyRef: litellm
+#   params:
+#     model: hosted_vllm/qwen3.8-flash-next
+#     apiBase: http://192.168.1.149:8732/v1
+#     apiKey: halogen
+#     additional:
+#       temperature: 1.0
+#       top_p: 0.95
+#       order: 2
+#       max_parallel_requests: 1
+#   info:
+#     mode: chat
+#     maxInputTokens: 245760
+#     maxOutputTokens: 16384
+#     supportsFunctionCalling: true
+#     supportsVision: true
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: local-pool-chat-27b
+spec:
+  modelName: local-pool-chat
+  proxyRef: litellm
+  params:
+    model: hosted_vllm/qwen3.8-27b
+    apiBase: http://192.168.1.149:8732/v1
+    apiKey: gufo-key
+    additional:
+      temperature: 1.0
+      top_p: 0.95
+      order: 1
+      max_parallel_requests: 2
+  info:
+    mode: chat
+    maxInputTokens: 131072
+    maxOutputTokens: 24576
+    supportsFunctionCalling: true
+    supportsVision: true

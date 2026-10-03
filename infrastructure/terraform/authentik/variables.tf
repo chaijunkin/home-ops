@@ -386,3 +386,10 @@ variable "mealie_secret" {
   sensitive   = true
   default     = null
 }
+
+variable "opencode_secret" {
+  type        = string
+  description = "OpenCode Client Secret"
+  sensitive   = true
+  default     = null
+}

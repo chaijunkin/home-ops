@@ -4,9 +4,7 @@ kind: Kustomization
 resources:
   - ./auto.yaml
   - ./cerebras-wildcard.yaml
-  - ./frontier-pool-1.yaml
-  - ./frontier-pool-2.yaml
-  - ./frontier-pool-3.yaml
+  - ./frontier-pool.yaml
   - ./gemini-wildcard.yaml
   - ./glm-5.3-flash.yaml
   - ./groq-wildcard.yaml
@@ -28,10 +26,7 @@ resources:
   - ./opencode-go-qwen3-6-plus.yaml
   - ./opencode-go-qwen3-7-max.yaml
   - ./openrouter-wildcard.yaml
-  - ./reasoning-pool-1.yaml
-  - ./reasoning-pool-2.yaml
-  - ./reasoning-pool-3.yaml
-  - ./qwen3.8-flash-next.yaml
+  - ./reasoning-pool.yaml
   - ./vercel-wildcard.yaml
   - ./nemotron-3-5.yaml
   - ./gemma-4.yaml
@@ -41,3 +36,7 @@ resources:
   - ./qwen3-asr.yaml
   - ./qwen3-tts.yaml
   - ./qwen3.8-27b.yaml
+  - ./qwen3.8-flash-next.yaml
+  - ./free-pool.yaml
+  - ./implementation-pool.yaml
+  - ./local-pool.yaml

@@ -30,3 +30,4 @@ resources:
   - ./memini/ks.yaml
   - ./llmkube/ks.yaml
   - ./strix-halo-services
+  - ./opencode/ks.yaml

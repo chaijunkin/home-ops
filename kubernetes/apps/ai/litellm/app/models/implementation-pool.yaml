@@ -1,0 +1,73 @@
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: implementation-pool-glm
+spec:
+  modelName: implementation-pool
+  proxyRef: litellm
+  params:
+    model: openai/glm-5.3-flash
+    apiBase: https://opencode.ai/zen/go/v1
+    apiKeyRef:
+      name: litellm
+      key: OPENCODE_GO_API_KEY
+    dropParams: true
+    additional:
+      order: 1
+      extra_headers:
+        x-opencode-session: "litellm-proxy"
+  info:
+    mode: chat
+    maxInputTokens: 1000000
+    maxOutputTokens: 131072
+    supportsFunctionCalling: true
+    supportsVision: true
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: implementation-pool-27b
+spec:
+  modelName: implementation-pool
+  proxyRef: litellm
+  params:
+    model: hosted_vllm/qwen3.8-27b
+    apiBase: http://192.168.1.149:8732/v1
+    apiKey: gufo-key
+    additional:
+      temperature: 1.0
+      top_p: 0.95
+      order: 2
+      max_parallel_requests: 2
+  info:
+    mode: chat
+    maxInputTokens: 131072
+    maxOutputTokens: 24576
+    supportsFunctionCalling: true
+    supportsVision: true
+---
+apiVersion: litellm.home-operations.com/v1alpha1
+kind: LiteLLMModel
+metadata:
+  name: implementation-pool-minimax
+spec:
+  modelName: implementation-pool
+  proxyRef: litellm
+  params:
+    model: anthropic/minimax-m3
+    apiBase: https://opencode.ai/zen/go
+    apiKeyRef:
+      name: litellm
+      key: OPENCODE_GO_API_KEY
+    dropParams: true
+    additional:
+      order: 3
+      extra_headers:
+        x-opencode-session: "litellm-proxy"
+  info:
+    mode: chat
+    maxInputTokens: 1000000
+    maxOutputTokens: 131072
+    supportsFunctionCalling: true
+    supportsVision: true
