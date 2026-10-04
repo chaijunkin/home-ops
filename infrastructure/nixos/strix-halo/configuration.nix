@@ -140,7 +140,7 @@
   virtualisation.oci-containers = {
     containers."qwen38-flash-next" = {
       image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
-      autoStart = false;
+      autoStart = true;
       ports = [ "8732:8080" ];
       volumes = [
         "/var/lib/strix-halo-models:/models"
@@ -167,36 +167,36 @@
       ];
     };
     
-    containers."qwen27b" = {
-      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
-      autoStart = true; # Set to true and set qwen38-flash-next to false when switching
-      ports = [ "8732:8080" ]; # Both use the same port, so only run one at a time!
-      volumes = [
-        "/var/lib/strix-halo-models:/models"
-      ];
-      environment = {
-        HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-      };
-      cmd = [
-        "gufo" "serve" "llm"
-        "--host" "0.0.0.0"
-        "--port" "8080"
-        "--model" "/models/qwen3.8-27b/Qwen3.8-27B-UD-Q4_K_XL.gguf"
-        "--mmproj" "/models/qwen3.8-27b/mmproj-BF16.gguf"
-        "--speculative" "dflash2"
-        "--dflash-model" "/models/qwen3.8-27b/Qwen3.8-27B-DFlash2-Q4_K_M.gguf"
-        "--served-model-name" "qwen3.8-27b"
-        "--context" "131072"
-        "--sessions" "2"
-      ];
-      extraOptions = [
-        "--device=/dev/kfd"
-        "--device=/dev/dri"
-        "--group-add=keep-groups"
-        "--ipc=host"
-        "--ulimit=memlock=-1:-1"
-      ];
-    };
+#     containers."qwen27b" = {
+#       image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
+#       autoStart = true; # Set to true and set qwen38-flash-next to false when switching
+#       ports = [ "8732:8080" ]; # Both use the same port, so only run one at a time!
+#       volumes = [
+#         "/var/lib/strix-halo-models:/models"
+#       ];
+#       environment = {
+#         HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+#       };
+#       cmd = [
+#         "gufo" "serve" "llm"
+#         "--host" "0.0.0.0"
+#         "--port" "8080"
+#         "--model" "/models/qwen3.8-27b/Qwen3.8-27B-UD-Q4_K_XL.gguf"
+#         "--mmproj" "/models/qwen3.8-27b/mmproj-BF16.gguf"
+#         "--speculative" "dflash2"
+#         "--dflash-model" "/models/qwen3.8-27b/Qwen3.8-27B-DFlash2-Q4_K_M.gguf"
+#         "--served-model-name" "qwen3.8-27b"
+#         "--context" "131072"
+#         "--sessions" "2"
+#       ];
+#       extraOptions = [
+#         "--device=/dev/kfd"
+#         "--device=/dev/dri"
+#         "--group-add=keep-groups"
+#         "--ipc=host"
+#         "--ulimit=memlock=-1:-1"
+#       ];
+#     };
 
     containers."memini-embeddings" = {
       image = "ghcr.io/joryirving/llama-qwen4exp:b0f31f58-rocm-custom@sha256:e9f705a606a147836fab6667199e1443943542026b4091e3110bdfacdbac5048";
@@ -302,96 +302,96 @@
   # ------------------------------------------------------------------
 
 
-  systemd.services.strix-halo-deepseek-v4-flash = {
-    description = "Gufo Inference Engine for DeepSeek V4 Flash";
-    after = [ "network.target" ];
-    environment = {
-      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-    };
-    serviceConfig = {
-      ExecStart = gufo.lib.x86_64-linux.mkServe {
-        host = "0.0.0.0";
-        port = 8738;
-        modality = "llm";
-        model = "/var/lib/strix-halo-models/DeepSeek-V4-Flash-0731-00001-of-00008.gguf";
-        context = 65536;
-      };
-      LimitMEMLOCK = "infinity";
-    };
-  };
+#   systemd.services.strix-halo-deepseek-v4-flash = {
+#     description = "Gufo Inference Engine for DeepSeek V4 Flash";
+#     after = [ "network.target" ];
+#     environment = {
+#       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+#     };
+#     serviceConfig = {
+#       ExecStart = gufo.lib.x86_64-linux.mkServe {
+#         host = "0.0.0.0";
+#         port = 8738;
+#         modality = "llm";
+#         model = "/var/lib/strix-halo-models/DeepSeek-V4-Flash-0731-00001-of-00008.gguf";
+#         context = 65536;
+#       };
+#       LimitMEMLOCK = "infinity";
+#     };
+#   };
 
-  systemd.services.strix-halo-qwen3-asr = {
-    description = "Gufo Inference Engine for Qwen3 ASR";
-    after = [ "network.target" ];
-    environment = {
-      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-    };
-    serviceConfig = {
-      ExecStart = gufo.lib.x86_64-linux.mkServe {
-        host = "0.0.0.0";
-        port = 8739;
-        modality = "asr";
-        model = "/var/lib/strix-halo-models/Qwen3-ASR-1.7B";
-        context = 8192;
-      };
-      LimitMEMLOCK = "infinity";
-    };
-  };
+#   systemd.services.strix-halo-qwen3-asr = {
+#     description = "Gufo Inference Engine for Qwen3 ASR";
+#     after = [ "network.target" ];
+#     environment = {
+#       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+#     };
+#     serviceConfig = {
+#       ExecStart = gufo.lib.x86_64-linux.mkServe {
+#         host = "0.0.0.0";
+#         port = 8739;
+#         modality = "asr";
+#         model = "/var/lib/strix-halo-models/Qwen3-ASR-1.7B";
+#         context = 8192;
+#       };
+#       LimitMEMLOCK = "infinity";
+#     };
+#   };
 
-  systemd.services.strix-halo-qwen3-tts = {
-    description = "Gufo Inference Engine for Qwen3 TTS";
-    after = [ "network.target" ];
-    environment = {
-      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-    };
-    serviceConfig = {
-      ExecStart = gufo.lib.x86_64-linux.mkServe {
-        host = "0.0.0.0";
-        port = 8740;
-        modality = "tts";
-        model = "/var/lib/strix-halo-models/Qwen3-TTS-12Hz-1.7B";
-        context = 4096;
-      };
-      LimitMEMLOCK = "infinity";
-    };
-  };
+#   systemd.services.strix-halo-qwen3-tts = {
+#     description = "Gufo Inference Engine for Qwen3 TTS";
+#     after = [ "network.target" ];
+#     environment = {
+#       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+#     };
+#     serviceConfig = {
+#       ExecStart = gufo.lib.x86_64-linux.mkServe {
+#         host = "0.0.0.0";
+#         port = 8740;
+#         modality = "tts";
+#         model = "/var/lib/strix-halo-models/Qwen3-TTS-12Hz-1.7B";
+#         context = 4096;
+#       };
+#       LimitMEMLOCK = "infinity";
+#     };
+#   };
 
-  systemd.services.strix-halo-qwen-image-2 = {
-    description = "Gufo Inference Engine for Qwen Image 2.1";
-    after = [ "network.target" ];
-    environment = {
-      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-    };
-    serviceConfig = {
-      ExecStart = gufo.lib.x86_64-linux.mkServe {
-        host = "0.0.0.0";
-        port = 8741;
-        modality = "image";
-        model = "/var/lib/strix-halo-models/Qwen-Image-2.1";
-        maxRequestBytes = 33554432;
-      };
-      LimitMEMLOCK = "infinity";
-    };
-  };
+#   systemd.services.strix-halo-qwen-image-2 = {
+#     description = "Gufo Inference Engine for Qwen Image 2.1";
+#     after = [ "network.target" ];
+#     environment = {
+#       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+#     };
+#     serviceConfig = {
+#       ExecStart = gufo.lib.x86_64-linux.mkServe {
+#         host = "0.0.0.0";
+#         port = 8741;
+#         modality = "image";
+#         model = "/var/lib/strix-halo-models/Qwen-Image-2.1";
+#         maxRequestBytes = 33554432;
+#       };
+#       LimitMEMLOCK = "infinity";
+#     };
+#   };
 
-  systemd.services.strix-halo-minimax-h3 = {
-    description = "Gufo Inference Engine for MiniMax H3 FL2VA";
-    after = [ "network.target" ];
-    environment = {
-      HSA_OVERRIDE_GFX_VERSION = "11.5.1";
-    };
-    serviceConfig = {
-      ExecStart = ''
-        ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
-          --host 0.0.0.0 \
-          --port 8742 \
-          h3 \
-          --model /var/lib/strix-halo-models/MiniMax-H3-FL2VA \
-          --preset quality
-      '';
-      LimitMEMLOCK = "infinity";
-    };
-  };
+#   systemd.services.strix-halo-minimax-h3 = {
+#     description = "Gufo Inference Engine for MiniMax H3 FL2VA";
+#     after = [ "network.target" ];
+#     environment = {
+#       HSA_OVERRIDE_GFX_VERSION = "11.5.1";
+#     };
+#     serviceConfig = {
+#       ExecStart = ''
+#         ${gufo.packages.x86_64-linux.default}/bin/gufo serve \
+#           --host 0.0.0.0 \
+#           --port 8742 \
+#           h3 \
+#           --model /var/lib/strix-halo-models/MiniMax-H3-FL2VA \
+#           --preset quality
+#       '';
+#       LimitMEMLOCK = "infinity";
+#     };
+#   };
 
   virtualisation.oci-containers = {
     backend = "podman";

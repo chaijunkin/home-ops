@@ -101,10 +101,6 @@ data:
             
             "qwen3.8-flash-next-chat": { "name": "Qwen3.8-Flash-Next non-thinking (Strix)", "limit": { "context": 245760, "output": 16384 } },
             "qwen3.8-flash-next": { "name": "Qwen3.8-Flash-Next IQ4_NL (Strix ROCm, vision)", "limit": { "context": 245760, "output": 16384 } },
-            "qwen3.8-27b": { "name": "Qwen3.8-27B (Strix Halo)", "limit": { "context": 147456, "output": 24576 } },
-            "qwen3.8-27b-chat": { "name": "Qwen3.8-27B non-thinking (Strix Halo)", "limit": { "context": 147456, "output": 16384 } },
-            "gemma-4-12b-it-qat": { "name": "Gemma-4-12B-it-QAT (Strix Halo)", "limit": { "context": 262144, "output": 32768 } },
-            "gemma-4-12b-it-qat-chat": { "name": "Gemma-4-12B non-thinking (Strix Halo)", "limit": { "context": 262144, "output": 16384 } },
             "kimi-k2.7": { "name": "Kimi K2.7 Code", "limit": { "context": 262144, "output": 32768 } },
             "kimi-k3": { "name": "Kimi K3", "limit": { "context": 1048576, "output": 131072 } },
             "dsv4.1f": { "name": "DeepSeek V4.1 Flash", "limit": { "context": 1000000, "output": 131072 } },
