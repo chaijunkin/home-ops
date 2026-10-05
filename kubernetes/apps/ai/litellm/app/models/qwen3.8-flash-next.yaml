@@ -23,7 +23,7 @@ spec:
       order: 2
   info:
     mode: chat
-    maxInputTokens: 131072
+    maxInputTokens: 245760
     maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: true

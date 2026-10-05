@@ -37,7 +37,7 @@ resources:
   - ./minimax-h3.yaml
   - ./qwen3-asr.yaml
   - ./qwen3-tts.yaml
-  - ./qwen3.8-27b.yaml
+
   - ./qwen3.8-flash-next.yaml
   - ./free-pool.yaml
   - ./implementation-pool.yaml

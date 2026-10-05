@@ -155,7 +155,7 @@
         "--model" "/models/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
         "--mmproj" "/models/mmproj-BF16.gguf"
         "--served-model-name" "qwen3.8-flash-next"
-        "--context" "131072"
+        "--context" "245760"
         "--sessions" "1"
       ];
       extraOptions = [
@@ -169,7 +169,7 @@
     
 #     containers."qwen27b" = {
 #       image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
-#       autoStart = true; # Set to true and set qwen38-flash-next to false when switching
+#       autoStart = false; # Set to true and set qwen38-flash-next to false when switching
 #       ports = [ "8732:8080" ]; # Both use the same port, so only run one at a time!
 #       volumes = [
 #         "/var/lib/strix-halo-models:/models"
