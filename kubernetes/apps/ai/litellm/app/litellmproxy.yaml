@@ -10,6 +10,12 @@ spec:
       key: LITELLM_MASTER_KEY
   applyMode: file
   env:
+    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+      value: "http://alloy-receiver.observability.svc.cluster.local:4318"
+    - name: LITELLM_OTEL_V2
+      value: "true"
+    - name: LITELLM_OTEL_INTEGRATION_ENABLE_METRICS
+      value: "true"
     - name: AUTO_REDIRECT_UI_LOGIN_TO_SSO
       value: "true"
     - name: CHATGPT_TOKEN_DIR
