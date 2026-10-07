@@ -39,6 +39,8 @@ spec:
       value: https://auth.cloudjur.com/application/o/litellm/end-session/
     - name: REDIS_URL
       value: redis://dragonfly.database.svc.cluster.local:6379/5
+    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+      value: http://tempo.observability.svc.cluster.local:4317
   envFrom:
     - secretRef:
         name: litellm
@@ -70,6 +72,7 @@ spec:
     merge_reasoning_content_in_choices: true
     failure_callback:
       - prometheus
+      - otel
     num_retries: 2
     prometheus_adapter: true
     request_timeout: 1200
@@ -78,6 +81,7 @@ spec:
     set_verbose: false
     success_callback:
       - prometheus
+      - otel
   livenessProbe:
     httpGet:
       path: /
