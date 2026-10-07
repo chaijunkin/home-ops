@@ -139,3 +139,20 @@ spec:
   configMapRef:
     name: llm-end-to-end
     key: llm-end-to-end.json
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: agent-observability
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: agent-observability
+    key: agent-observability.json

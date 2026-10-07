@@ -26,6 +26,9 @@ configMapGenerator:
   - name: llm-end-to-end
     files:
       - llm-end-to-end.json
+  - name: agent-observability
+    files:
+      - agent-observability.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
