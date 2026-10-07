@@ -23,6 +23,9 @@ configMapGenerator:
   - name: litellm-v2
     files:
       - litellm-v2.json
+  - name: llm-end-to-end
+    files:
+      - llm-end-to-end.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

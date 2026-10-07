@@ -1,0 +1,159 @@
+{
+  "title": "LLM End-to-End Tracing & Flow",
+  "timezone": "browser",
+  "tags": [
+    "ai",
+    "llm",
+    "tracing"
+  ],
+  "schemaVersion": 39,
+  "refresh": "5s",
+  "panels": [
+    {
+      "type": "row",
+      "title": "1. LiteLLM API Gateway (Routing & Queueing)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Requests per Second",
+      "targets": [
+        {
+          "expr": "sum(rate(litellm_requests_total[1m])) by (model)",
+          "legendFormat": "{{model}}"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Gateway Latency (95th Percentile)",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(litellm_request_latency_seconds_bucket[1m])) by (le))",
+          "legendFormat": "P95 Latency"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 1
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Failures & Fallbacks",
+      "targets": [
+        {
+          "expr": "sum(rate(litellm_deployment_failed_requests_total[1m])) by (model)",
+          "legendFormat": "{{model}}"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      }
+    },
+    {
+      "type": "row",
+      "title": "2. Gufo Inference Engine (qwen3.8-flash-next)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Token Generation Speed (TPS)",
+      "targets": [
+        {
+          "expr": "sum(rate(vllm:generation_tokens_total{job=\"gufo\"}[1m]))",
+          "legendFormat": "Tokens / sec"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "Engine KV Cache Usage",
+      "targets": [
+        {
+          "expr": "vllm:gpu_cache_usage_perc{job=\"gufo\"}",
+          "legendFormat": "Cache %"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      }
+    },
+    {
+      "type": "row",
+      "title": "3. Strix Halo APU (Hardware)",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "APU VRAM Usage",
+      "targets": [
+        {
+          "expr": "node_amdgpu_vram_used_bytes",
+          "legendFormat": "Used"
+        },
+        {
+          "expr": "node_amdgpu_vram_total_bytes",
+          "legendFormat": "Total"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "GPU Activity %",
+      "targets": [
+        {
+          "expr": "node_amdgpu_gpu_busy_percent",
+          "legendFormat": "Load %"
+        }
+      ],
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      }
+    }
+  ]
+}
