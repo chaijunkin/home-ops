@@ -156,7 +156,7 @@
         "--mmproj" "/models/mmproj-BF16.gguf"
         "--served-model-name" "qwen3.8-flash-next"
         "--context" "245760"
-        "--sessions" "1"
+        "--sessions" "4"
       ];
       extraOptions = [
         "--device=/dev/kfd"
