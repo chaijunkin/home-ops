@@ -10,24 +10,8 @@ spec:
     name: mcp-tools
   podTemplateSpec:
     spec:
-      volumes:
-        - name: mcp-bin
-          emptyDir: {}
-      initContainers:
-        - name: install-mcp-remote
-          image: node:24-alpine
-          command:
-            - sh
-            - -c
-            - "npm install --prefix /mcp mcp-remote"
-          volumeMounts:
-            - name: mcp-bin
-              mountPath: /mcp
       containers:
         - name: mcp
-          volumeMounts:
-            - name: mcp-bin
-              mountPath: /mcp
           securityContext:
             readOnlyRootFilesystem: false
           env:
@@ -37,10 +21,11 @@ spec:
                   name: sure-mcp-secret
                   key: MCP_API_TOKEN
           command:
-            - node
+            - npx
           args:
-            - /mcp/node_modules/.bin/mcp-remote
-            - http://sure.default.svc.cluster.local:3000/mcp
+            - -y
+            - mcp-remote
+            - https://money.cloudjur.com/mcp
             - --allow-http
             - --transport
             - http-only
