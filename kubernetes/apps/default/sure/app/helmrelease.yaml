@@ -124,6 +124,20 @@ spec:
             envFrom:
               - secretRef:
                   name: sure-secret
+          # Gate Sidekiq on schema readiness: db:prepare is a no-op when the web
+          # migration initContainer already ran, but blocks until pending
+          # migrations are applied if web was skipped or raced.
+          migration:
+            image: *img
+            command:
+              - bash
+              - -lc
+            args: |
+              DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rake db:prepare
+            env: *env
+            envFrom:
+              - secretRef:
+                  name: sure-secret
         containers:
           app:
             image: *img

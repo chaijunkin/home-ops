@@ -51,6 +51,11 @@ application's tool catalog separate. Enabling multiple connections at once
 still combines their tools in a completion request and can exceed Gufo's
 128-function limit.
 
+Do not register the ToolHive `VirtualMCPServer` proxies (`vmcp-mcp-*`) as
+`LiteLLMMCPServer` connectors. The optimizer gateway exposes only
+`find_tool`/`call_tool`, but LiteLLM expands every backend tool it discovers
+through them, which reliably exceeds the limit above.
+
 ## Strix Halo telemetry
 
 The Strix Halo host is monitored through two Prometheus endpoints:
