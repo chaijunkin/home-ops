@@ -45,8 +45,6 @@ spec:
       value: https://auth.cloudjur.com/application/o/litellm/end-session/
     - name: REDIS_URL
       value: redis://dragonfly.database.svc.cluster.local:6379/5
-    - name: OTEL_EXPORTER_OTLP_ENDPOINT
-      value: http://tempo.observability.svc.cluster.local:4317
   envFrom:
     - secretRef:
         name: litellm
