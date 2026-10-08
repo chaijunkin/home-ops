@@ -32,6 +32,12 @@ spec:
             - email
             - offline_access
   config:
+    optimizer:
+      embeddingModel: embed
+      embeddingProvider: openai
+      embeddingService: http://litellm.ai.svc.cluster.local:4000/v1
+      embeddingServiceTimeout: 180s
+      maxToolsToReturn: 8
     aggregation:
       conflictResolution: prefix
       conflictResolutionConfig:
@@ -65,6 +71,11 @@ spec:
           env:
             - name: INSECURE_DISABLE_URL_VALIDATION
               value: "true"
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: key
+                  name: toolhive-embed
           resources:
             limits:
               cpu:
