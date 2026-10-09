@@ -155,7 +155,7 @@
         "--model" "/models/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
         "--mmproj" "/models/mmproj-BF16.gguf"
         "--served-model-name" "qwen3.8-flash-next"
-        "--context" "131072"
+        "--context" "245760"
         "--sessions" "2"
       ];
       extraOptions = [
