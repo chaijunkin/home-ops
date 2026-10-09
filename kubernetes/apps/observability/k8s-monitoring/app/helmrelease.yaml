@@ -167,7 +167,7 @@ spec:
       destinations: [localProfiling]
       collector: alloy-profiles
       ebpf:
-        enabled: true
+        enabled: false
         namespaces: [ai]
       java:
         enabled: false
