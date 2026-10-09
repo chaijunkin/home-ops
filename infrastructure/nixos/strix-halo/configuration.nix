@@ -139,7 +139,7 @@
 
   virtualisation.oci-containers = {
     containers."qwen38-flash-next" = {
-      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
+      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.9.1";
       autoStart = true;
       ports = [ "8732:8080" ];
       volumes = [
@@ -168,7 +168,7 @@
     };
     
 #     containers."qwen27b" = {
-#       image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.5.0";
+#       image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.9.1";
 #       autoStart = false; # Set to true and set qwen38-flash-next to false when switching
 #       ports = [ "8732:8080" ]; # Both use the same port, so only run one at a time!
 #       volumes = [

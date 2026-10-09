@@ -47,16 +47,16 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1790939322,
-        "narHash": "sha256-b47+epLFY6G8IWQX/Ipntul8uOaXhOqYssKQtg4JS1k=",
+        "lastModified": 1791461118,
+        "narHash": "sha256-oCxobQOhviF+e95an8yCUoWHGpPwEmttgd1fAGErX6w=",
         "owner": "gufo-org",
         "repo": "gufo",
-        "rev": "23cacbb9379d5a8e8531535270891729ca6c00dd",
+        "rev": "dea22ceea20d07f95a5ecbb2b06ffad7b93d0548",
         "type": "github"
       },
       "original": {
         "owner": "gufo-org",
-        "ref": "v0.5.0",
+        "ref": "v0.9.1",
         "repo": "gufo",
         "type": "github"
       }
@@ -97,7 +97,28 @@
       "inputs": {
         "disko": "disko",
         "gufo": "gufo",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "sops-nix": "sops-nix"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791103873,
+        "narHash": "sha256-nFxM+pKoZ8LJAEnUXARyCaOAloWgaW9kZQOSjWzKcTE=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "dcd241ba97088c22569d1573286e1b9daad340c0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     }
   },
