@@ -19,6 +19,9 @@ spec:
       allowed_openai_params:
         - reasoning_effort
         - stream_options
+        - preserve_thinking
+      extra_body:
+        preserve_thinking: true
       max_parallel_requests: 2
       order: 2
   info:
@@ -27,3 +30,4 @@ spec:
     maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: true
+    supportsReasoning: true
