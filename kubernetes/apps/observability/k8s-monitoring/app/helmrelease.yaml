@@ -289,6 +289,17 @@ spec:
       # alloy-profiles: DaemonSet that scrapes pprof endpoints and sends to Pyroscope
       alloy-profiles:
         presets: [privileged, daemonset]
+        alloy:
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+                - SYS_PTRACE
+                - BPF
+                - PERFMON
+                - IPC_LOCK
+                - SYS_RESOURCE
 
     # ---------------------------------------------------------------------------
     # Alloy Operator — manages the Alloy CRDs
