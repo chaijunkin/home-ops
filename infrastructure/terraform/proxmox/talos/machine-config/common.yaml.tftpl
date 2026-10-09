@@ -60,6 +60,7 @@ machine:
     topology.kubernetes.io/region: ${cluster_name}
     topology.kubernetes.io/zone: ${node_name}
   sysctls:
+    kernel.kptr_restrict: 1                # eBPF Profiling (Pyroscope)
     fs.inotify.max_user_watches: 1048576   # Watchdog
     fs.inotify.max_user_instances: 8192    # Watchdog
     net.core.default_qdisc: fq             # 10Gb/s
