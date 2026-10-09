@@ -300,6 +300,7 @@ spec:
                 - PERFMON
                 - IPC_LOCK
                 - SYS_RESOURCE
+                - SYSLOG
 
     # ---------------------------------------------------------------------------
     # Alloy Operator — manages the Alloy CRDs
