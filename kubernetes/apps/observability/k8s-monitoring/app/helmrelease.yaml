@@ -161,19 +161,19 @@ spec:
           enabled: true
           port: 9411
 
-    # # Continuous profiling — scrapes pprof endpoints and forwards to Pyroscope
-    # profiling:
-    #   enabled: true
-    #   destinations: [localProfiling]
-    #   collector: alloy-profiles
-    #   ebpf:
-    #     enabled: true
-    #     namespaces: [ai]
-    #   java:
-    #     enabled: false
-    #   pprof:
-    #     enabled: true
-    #     namespaces: [ai]
+    # Continuous profiling — scrapes pprof endpoints and forwards to Pyroscope
+    profiling:
+      enabled: true
+      destinations: [localProfiling]
+      collector: alloy-profiles
+      ebpf:
+        enabled: true
+        namespaces: [ai]
+      java:
+        enabled: false
+      pprof:
+        enabled: true
+        namespaces: [ai]
 
     # ---------------------------------------------------------------------------
     # Native-protocol ingest receivers on alloy-receiver — the single gateway
@@ -286,9 +286,9 @@ spec:
               protocol: TCP
               appProtocol: http
 
-      # # alloy-profiles: DaemonSet that scrapes pprof endpoints and sends to Pyroscope
-      # alloy-profiles:
-      #   presets: [privileged, daemonset]
+      # alloy-profiles: DaemonSet that scrapes pprof endpoints and sends to Pyroscope
+      alloy-profiles:
+        presets: [privileged, daemonset]
 
     # ---------------------------------------------------------------------------
     # Alloy Operator — manages the Alloy CRDs
