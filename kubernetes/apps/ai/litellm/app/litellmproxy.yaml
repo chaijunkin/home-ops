@@ -65,7 +65,7 @@ spec:
   generalSettings:
     health_check_endpoint: /v1/health
     store_model_in_db: true
-  image: ghcr.io/berriai/litellm-database:v1.102.0@sha256:70e3754699d2c5e969c65445e3b52cf58cf7998a815f2cb3551776152bbffaaf
+  image: ghcr.io/berriai/litellm-database:v1.104.2@sha256:5a9ff0fd7177372f2ccd8949cb121f67e281f4d13d026af51f9c096c0626f50a
   litellmSettings:
     cache: true
     cache_params:
