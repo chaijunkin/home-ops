@@ -33,7 +33,7 @@ spec:
               OPENCODE_CONFIG: /etc/opencode/opencode.json
               TZ: Asia/Kuala_Lumpur
               OTEL_SERVICE_NAME: opencode
-              OTEL_EXPORTER_OTLP_ENDPOINT: http://alloy-receiver.observability.svc.cluster.local:4318
+              OTEL_EXPORTER_OTLP_ENDPOINT: http://k8s-monitoring-alloy-receiver.observability.svc.cluster.local:4318
               OTEL_EXPORTER_OTLP_INSECURE: "true"
             envFrom:
               - secretRef:
