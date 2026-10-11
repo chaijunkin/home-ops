@@ -28,4 +28,3 @@ spec:
     maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: true
-    supportsReasoning: true
