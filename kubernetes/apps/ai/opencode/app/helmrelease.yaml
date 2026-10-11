@@ -31,7 +31,7 @@ spec:
             env:
               HOME: &homepath /home/opencode
               OPENCODE_CONFIG: /etc/opencode/opencode.json
-              TZ: America/Edmonton
+              TZ: Asia/Kuala_Lumpur
               OTEL_SERVICE_NAME: opencode
               OTEL_EXPORTER_OTLP_ENDPOINT: http://alloy-receiver.observability.svc.cluster.local:4318
               OTEL_EXPORTER_OTLP_INSECURE: "true"
