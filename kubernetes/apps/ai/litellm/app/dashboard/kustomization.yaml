@@ -29,6 +29,24 @@ configMapGenerator:
   - name: agent-observability
     files:
       - agent-observability.json
+  - name: agent-analytics
+    files:
+      - agent-analytics.json
+  - name: agent-tools
+    files:
+      - agent-tools.json
+  - name: agent-conversations
+    files:
+      - agent-conversations.json
+  - name: agent-fleet
+    files:
+      - agent-fleet.json
+  - name: agent-evaluations
+    files:
+      - agent-evaluations.json
+  - name: agent-experiments
+    files:
+      - agent-experiments.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
