@@ -32,12 +32,11 @@ spec:
               # Monitoring
               ENABLE_OTEL: true
               ENABLE_OTEL_METRICS: true
+              ENABLE_OTEL_TRACES: true
+              ENABLE_OTEL_LOGS: true
               OTEL_SERVICE_NAME: open-webui
-              OTEL_EXPORTER_OTLP_ENDPOINT: http://k8s-monitoring-alloy-receiver.observability:4317
-              # OTEL_EXPORTER_OTLP_ENDPOINT: http://kube-prometheus-stack-prometheus.observability:9090/api/v1/otlp/v1/metrics
-              # OTEL_METRICS_OTLP_SPAN_EXPORTER: http
+              OTEL_EXPORTER_OTLP_ENDPOINT: http://k8s-monitoring-alloy-receiver.observability.svc.cluster.local:4317
               OTEL_EXPORTER_OTLP_INSECURE: true
-              ENABLE_OTEL_TRACES: false
               # Open-webui settings
               ENABLE_OPENAI_API: true
               OPENAI_API_BASE_URL: http://litellm.ai.svc.cluster.local:4000/v1

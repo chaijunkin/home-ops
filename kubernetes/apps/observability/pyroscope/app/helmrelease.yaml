@@ -30,8 +30,15 @@ spec:
     remediation:
       retries: 3
   values:
+    architecture:
+      storage:
+        v1: true
+        v2: false
     pyroscope:
       replicaCount: 1
+      persistence:
+        enabled: true
+        size: 10Gi
     agent:
       enabled: false
     alloy:

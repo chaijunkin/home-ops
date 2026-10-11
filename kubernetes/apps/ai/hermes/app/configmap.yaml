@@ -116,3 +116,12 @@ data:
       UserKnownHostsFile /opt/data/.ssh/known_hosts
       ServerAliveInterval 60
       ServerAliveCountMax 3
+  hermes_otel.yaml: |
+    enabled: true
+    service_name: hermes
+    backends:
+      - type: otlp
+        name: alloy-receiver
+        endpoint: http://k8s-monitoring-alloy-receiver.observability.svc.cluster.local:4318/v1/traces
+        metrics: true
+        logs: true
