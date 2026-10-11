@@ -36,9 +36,6 @@ spec:
         v2: false
     pyroscope:
       replicaCount: 1
-      persistence:
-        enabled: true
-        size: 10Gi
     agent:
       enabled: false
     alloy:
