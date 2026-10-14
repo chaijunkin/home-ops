@@ -20,6 +20,21 @@ spec:
       jellyfin:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          disable-problematic-plugins:
+            image:
+              repository: alpine
+              tag: 3.21
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                mkdir -p /config/plugins_disabled
+                for p in /config/plugins/Intro\ Skipper*; do
+                  if [ -e "$p" ]; then
+                    echo "Moving hanging plugin $p to /config/plugins_disabled/"
+                    mv "$p" /config/plugins_disabled/
+                  fi
+                done
         containers:
           app:
             image:
@@ -35,7 +50,7 @@ spec:
                 }}.cloudjur.com
 
             probes:
-              liveness: &probes
+              liveness:
                 enabled: true
                 custom: true
                 spec:
@@ -46,9 +61,27 @@ spec:
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
-              readiness: *probes
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /System/Ping
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
               startup:
-                enabled: false
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /System/Ping
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 5
+                  failureThreshold: 30
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
