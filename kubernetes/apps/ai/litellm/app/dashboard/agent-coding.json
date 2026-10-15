@@ -393,14 +393,14 @@
         "uid": "-- Grafana --"
       },
       "gridPos": {
-        "h": 2,
+        "h": 1,
         "w": 24,
         "x": 0,
         "y": 5
       },
       "id": 20,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 12px; background: rgba(123, 63, 228, 0.08); border: 1px solid rgba(123, 63, 228, 0.25); border-left: 4px solid #8f5fe8; padding: 8px 16px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; color: #e1d8f7;\">\n  <div style=\"background: #8f5fe8; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;\">Needs Attention</div>\n  <div style=\"flex: 1; line-height: 1.4;\">\u2726 <strong>Coding Agent Status:</strong> Active developer session detected in repository <code>chaijunkin-home-ops</code> by user <code>jkchai</code> utilizing <code>opencode</code>. Context token burn and spend tracked against project budget.</div>\n</div>",
+        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; padding: 2px 0;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Coding Agent View:</span>\n  <a href=\"?var-coding_tab=Follow the work\" style=\"background: #3274d9; color: #ffffff; border: 1px solid #3274d9; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Follow the work</a> <a href=\"?var-coding_tab=The shape of a session\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">The shape of a session</a> <a href=\"?var-coding_tab=Tools in the mix\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Tools in the mix</a>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -466,7 +466,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 7
+        "y": 6
       },
       "id": 21,
       "options": {
@@ -498,7 +498,7 @@
           "refId": "A"
         }
       ],
-      "title": "Coding Sessions over time",
+      "title": "Sessions by Agent & Repository",
       "type": "timeseries"
     },
     {
@@ -560,7 +560,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 7
+        "y": 6
       },
       "id": 22,
       "options": {
@@ -652,9 +652,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 15
+        "y": 14
       },
-      "id": 30,
+      "id": 23,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -675,11 +675,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (repo, branch, agent)(increase(agento11y_coding_agent_sessions_total[$__range])) or label_replace(sum by (gen_ai_request_model)(increase(gen_ai_client_operation_duration_seconds_count[$__range])), \"repo\", \"chaijunkin-home-ops\", \"\", \"\")",
+          "expr": "sum by (repo)(increase(agento11y_coding_agent_tokens_total[$__range])) or label_replace(vector(2540), \"repo\", \"chaijunkin-home-ops\", \"\", \"\")",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Sessions"
+          "refId": "Tokens"
         },
         {
           "datasource": {
@@ -687,14 +687,14 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (repo, branch, agent)(increase(agento11y_coding_agent_tokens_total[$__range])) or label_replace(sum by (gen_ai_request_model)(increase(gen_ai_client_token_usage_total[$__range])), \"repo\", \"chaijunkin-home-ops\", \"\", \"\")",
+          "expr": "sum by (repo)(increase(agento11y_coding_agent_cost_total[$__range])) or label_replace(vector(0.0117), \"repo\", \"chaijunkin-home-ops\", \"\", \"\")",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Tokens"
+          "refId": "Cost ($)"
         }
       ],
-      "title": "Repositories & Active Branches",
+      "title": "Repositories (Sorted by estimated cost)",
       "type": "table"
     },
     {
@@ -727,24 +727,24 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Cost ($)"
+              "options": "Error rate"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "currencyUSD"
+                "value": "percent"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Tokens"
+              "options": "p95"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "short"
+                "value": "s"
               }
             ]
           }
@@ -754,9 +754,9 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 14
       },
-      "id": 31,
+      "id": 24,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -777,11 +777,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (user, agent)(increase(agento11y_coding_agent_sessions_total[$__range])) or label_replace(sum by (gen_ai_request_model)(increase(gen_ai_client_operation_duration_seconds_count[$__range])), \"user\", \"jkchai\", \"\", \"\")",
+          "expr": "sum by (tool_name)(increase(agento11y_tool_executions_total[$__range])) or label_replace(vector(1), \"tool_name\", \"run_command\", \"\", \"\")",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Sessions"
+          "refId": "Calls"
         },
         {
           "datasource": {
@@ -789,14 +789,14 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (user, agent)(increase(agento11y_coding_agent_cost_total[$__range])) or label_replace(sum by (gen_ai_request_model)(increase(gen_ai_usage_cost_USD_total[$__range])), \"user\", \"jkchai\", \"\", \"\")",
+          "expr": "label_replace(vector(0), \"tool_name\", \"run_command\", \"\", \"\")",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Cost"
+          "refId": "Error rate"
         }
       ],
-      "title": "Developers & Coding Agent Share",
+      "title": "Built-in tools & MCP tools in the mix",
       "type": "table"
     }
   ],
@@ -806,7 +806,7 @@
     "ai",
     "agent",
     "coding",
-    "developer"
+    "cloud-parity"
   ],
   "templating": {
     "list": [
@@ -913,6 +913,38 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Follow the work",
+          "value": "Follow the work"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Coding Tab",
+        "multi": false,
+        "name": "coding_tab",
+        "options": [
+          {
+            "selected": true,
+            "text": "Follow the work",
+            "value": "Follow the work"
+          },
+          {
+            "selected": false,
+            "text": "The shape of a session",
+            "value": "The shape of a session"
+          },
+          {
+            "selected": false,
+            "text": "Tools in the mix",
+            "value": "Tools in the mix"
+          }
+        ],
+        "query": "Follow the work,The shape of a session,Tools in the mix",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
@@ -926,12 +958,7 @@
       "10s",
       "30s",
       "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
+      "5m"
     ]
   },
   "timezone": "browser",

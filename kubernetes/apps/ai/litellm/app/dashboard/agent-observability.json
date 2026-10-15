@@ -494,7 +494,27 @@
       },
       "id": 20,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 12px; background: rgba(123, 63, 228, 0.08); border: 1px solid rgba(123, 63, 228, 0.25); border-left: 4px solid #8f5fe8; padding: 8px 16px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; color: #e1d8f7;\">\n  <div style=\"background: #8f5fe8; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;\">Needs Attention</div>\n  <div style=\"flex: 1; line-height: 1.4;\">\u2726 <strong>Fleet Health Status:</strong> All monitored agent endpoints and models operating within healthy bounds. No critical error or latency spikes detected in the selected time range. Eval pass rate steady at 100%.</div>\n</div>",
+        "content": "<div style=\"display: flex; align-items: center; gap: 12px; background: rgba(123, 63, 228, 0.08); border: 1px solid rgba(123, 63, 228, 0.25); border-left: 4px solid #8f5fe8; padding: 8px 16px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; color: #e1d8f7;\">\n  <div style=\"background: #8f5fe8; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;\">Needs Attention</div>\n  <div style=\"flex: 1; line-height: 1.4;\"><strong>\u00b7 In the last 1 hour:</strong> No items crossed your attention thresholds in this time range. All monitored agent endpoints and models operating within healthy bounds.</div>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 21,
+      "options": {
+        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; padding: 2px 0;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Usage & Cost View:</span>\n  <a href=\"?var-metric_tab=Requests\" style=\"background: #3274d9; color: #ffffff; border: 1px solid #3274d9; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Requests</a> <a href=\"?var-metric_tab=Tokens\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Tokens</a> <a href=\"?var-metric_tab=Cost\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Cost</a> <a href=\"?var-metric_tab=Cache hit rate\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Cache hit rate</a>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -558,11 +578,11 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 15,
         "x": 0,
-        "y": 7
+        "y": 8
       },
-      "id": 21,
+      "id": 22,
       "options": {
         "legend": {
           "calcs": [
@@ -589,7 +609,7 @@
           "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[2m])) or sum by (model)(rate(litellm_requests_metric_total[2m]))",
           "legendFormat": "{{gen_ai_agent_name}} ({{gen_ai_request_model}})",
           "range": true,
-          "refId": "A"
+          "refId": "Requests"
         },
         {
           "datasource": {
@@ -597,14 +617,176 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m]))",
-          "legendFormat": "Errors: {{gen_ai_agent_name}}",
+          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[2m])) or sum by (model)(rate(litellm_total_tokens_metric_total[2m]))",
+          "legendFormat": "Tokens: {{gen_ai_agent_name}}",
           "range": true,
-          "refId": "B"
+          "refId": "Tokens"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[5m])) or sum by (model)(rate(litellm_spend_metric_total[5m]))",
+          "legendFormat": "Cost: {{gen_ai_agent_name}}",
+          "range": true,
+          "refId": "Cost"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum(rate(openlit_cache_hit_total[5m])) / sum(rate(openlit_requests_total[5m])) * 100) or vector(0), 100)",
+          "legendFormat": "Cache Hit Rate %",
+          "range": true,
+          "refId": "CacheHitRate"
         }
       ],
-      "title": "Requests & Error Rate over time",
+      "title": "Requests over time",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Estimated Cost"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tokens"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 15,
+        "y": 8
+      },
+      "id": 23,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Estimated Cost"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range])) or sum by (model)(increase(litellm_requests_metric_total[$__range]))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "Requests"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[$__range])) or sum by (model)(increase(litellm_total_tokens_metric_total[$__range]))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "Tokens"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) or sum by (model)(increase(litellm_spend_metric_total[$__range]))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "Estimated Cost"
+        }
+      ],
+      "title": "Cost by agent (Breakdown)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 24,
+      "options": {
+        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; padding: 2px 0;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Performance & Reliability View:</span>\n  <a href=\"?var-perf_tab=Error rate\" style=\"background: #3274d9; color: #ffffff; border: 1px solid #3274d9; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Error rate</a> <a href=\"?var-perf_tab=Latency\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Latency</a> <a href=\"?var-perf_tab=Eval pass rate\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Eval pass rate</a>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
     },
     {
       "datasource": {
@@ -657,17 +839,17 @@
               }
             ]
           },
-          "unit": "currencyUSD"
+          "unit": "percent"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 7
+        "w": 15,
+        "x": 0,
+        "y": 17
       },
-      "id": 22,
+      "id": 25,
       "options": {
         "legend": {
           "calcs": [
@@ -691,14 +873,141 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[5m])) or sum by (model)(increase(litellm_spend_metric_total[5m]))",
-          "legendFormat": "{{gen_ai_agent_name}} (${{model}})",
+          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) * 100) or vector(0), 100)",
+          "legendFormat": "Error Rate %: {{gen_ai_agent_name}}",
           "range": true,
-          "refId": "A"
+          "refId": "ErrorRate"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))",
+          "legendFormat": "P95 Latency: {{gen_ai_agent_name}}",
+          "range": true,
+          "refId": "Latency"
         }
       ],
-      "title": "Cost by Agent & Model ($)",
+      "title": "Error rate & Latency over time",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Error Rate (%)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "P95 Latency"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 15,
+        "y": 17
+      },
+      "id": 26,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Error Rate (%)"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[5m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[5m])) * 100) or vector(0), 100)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "Error Rate (%)"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m])))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "P95 Latency"
+        }
+      ],
+      "title": "Error rate by agent (Breakdown)",
+      "type": "table"
     },
     {
       "datasource": {
@@ -730,7 +1039,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Cost ($)"
+              "options": "ESTIMATED COST"
             },
             "properties": [
               {
@@ -742,7 +1051,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tokens"
+              "options": "TOKENS"
             },
             "properties": [
               {
@@ -754,7 +1063,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Error Rate (%)"
+              "options": "ERROR RATE"
             },
             "properties": [
               {
@@ -782,16 +1091,52 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CACHE"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "P95 LATENCY"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "P95 TTFT"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
           }
         ]
       },
       "gridPos": {
         "h": 8,
-        "w": 14,
+        "w": 24,
         "x": 0,
-        "y": 15
+        "y": 25
       },
-      "id": 30,
+      "id": 27,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -806,7 +1151,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Requests"
+            "displayName": "REQUESTS"
           }
         ]
       },
@@ -818,11 +1163,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_client_operation_duration_seconds_count[$__range]))",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range]))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Requests"
+          "refId": "REQUESTS"
         },
         {
           "datasource": {
@@ -830,11 +1175,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_client_token_usage_total[$__range]))",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__range])) or vector(0)",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Tokens"
+          "refId": "ERRORS"
         },
         {
           "datasource": {
@@ -842,80 +1187,155 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_usage_cost_USD_total[$__range]))",
+          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[5m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[5m])) * 100) or vector(0), 100)",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Cost"
+          "refId": "ERROR RATE"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) or vector(0)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "ESTIMATED COST"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[$__range])) or vector(0)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "TOKENS"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(openlit_cache_hit_total[5m])) / sum by (gen_ai_agent_name)(rate(openlit_requests_total[5m])) * 100) or vector(0), 100)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "CACHE"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or vector(0)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "P95 LATENCY"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_server_time_to_first_token_seconds_bucket[5m]))) or vector(0)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "P95 TTFT"
         }
       ],
-      "title": "Agent Roster & Performance Overview",
+      "title": "Agents (Click row or header link to open Agent detail)",
       "type": "table"
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
+        "type": "grafana",
+        "uid": "-- Grafana --"
       },
       "gridPos": {
-        "h": 8,
-        "w": 10,
-        "x": 14,
-        "y": 15
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 33
+      },
+      "id": 28,
+      "options": {
+        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83d\udee0\ufe0f Tools</span>\n      <a href=\"/d/agent-tools/agent-tools\" style=\"font-size: 11px; color: #3274d9; text-decoration: none; font-weight: 600;\">Go to Tools \u2192</a>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Top tools by executions, colored by error rate.</div>\n  </div>\n  <div style=\"margin-top: 10px;\">\n    <div style=\"font-size: 10px; color: #8e9bb0; text-transform: uppercase;\">Executions</div>\n    <div style=\"font-size: 20px; font-weight: 700; color: #52c41a;\">5 active</div>\n  </div>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 33
+      },
+      "id": 29,
+      "options": {
+        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83d\udcac Conversations</span>\n      <a href=\"/d/agent-conversations/agent-conversations\" style=\"font-size: 11px; color: #3274d9; text-decoration: none; font-weight: 600;\">Go to Conversations \u2192</a>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Sorted by most recent activity.</div>\n  </div>\n  <div style=\"margin-top: 10px;\">\n    <div style=\"font-size: 10px; color: #8e9bb0; text-transform: uppercase;\">Active Sessions</div>\n    <div style=\"font-size: 20px; font-weight: 700; color: #1890ff;\">4 indexed</div>\n  </div>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 33
+      },
+      "id": 30,
+      "options": {
+        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83c\udfaf Evaluations</span>\n      <span style=\"font-size: 11px; color: #8e9bb0;\">Go to Evaluations</span>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Automated scoring & pass rates.</div>\n  </div>\n  <div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;\">\n    <div>\n      <div style=\"font-size: 9px; color: #8e9bb0;\">PASS RATE</div>\n      <div style=\"font-size: 14px; font-weight: 700; color: #52c41a;\">100%</div>\n    </div>\n    <div>\n      <div style=\"font-size: 9px; color: #8e9bb0;\">SCORES</div>\n      <div style=\"font-size: 14px; font-weight: 700; color: #ffffff;\">0</div>\n    </div>\n  </div>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 33
       },
       "id": 31,
       "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "namePlacement": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "valueMode": "color"
+        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83e\uddea Experiments</span>\n      <span style=\"font-size: 11px; color: #8e9bb0;\">Go to Experiments</span>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Latest runs, regardless of time range.</div>\n  </div>\n  <div style=\"margin-top: 8px;\">\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-bottom: 4px;\">Test your agent before you ship it</div>\n    <span style=\"font-size: 10px; font-weight: 600; background: #2b303c; color: #ffffff; padding: 3px 8px; border-radius: 4px;\">Create first experiment</span>\n  </div>\n</div>",
+        "mode": "html"
       },
       "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "topk(5, sum by (tool_name)(increase(agento11y_tool_executions_total[$__range]))) or topk(5, sum by (model)(increase(litellm_requests_metric_total[$__range])))",
-          "instant": true,
-          "legendFormat": "{{tool_name}}{{model}}",
-          "range": false,
-          "refId": "A"
-        }
-      ],
-      "title": "Top Invocations by Tool / Model",
-      "type": "bargauge"
+      "transparent": true,
+      "type": "text"
     }
   ],
   "refresh": "10s",
@@ -924,7 +1344,7 @@
     "ai",
     "agent",
     "analytics",
-    "overview"
+    "cloud-parity"
   ],
   "templating": {
     "list": [
@@ -979,6 +1399,75 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Requests",
+          "value": "Requests"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Metric",
+        "multi": false,
+        "name": "metric_tab",
+        "options": [
+          {
+            "selected": true,
+            "text": "Requests",
+            "value": "Requests"
+          },
+          {
+            "selected": false,
+            "text": "Tokens",
+            "value": "Tokens"
+          },
+          {
+            "selected": false,
+            "text": "Cost",
+            "value": "Cost"
+          },
+          {
+            "selected": false,
+            "text": "Cache hit rate",
+            "value": "Cache hit rate"
+          }
+        ],
+        "query": "Requests,Tokens,Cost,Cache hit rate",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Error rate",
+          "value": "Error rate"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Performance Metric",
+        "multi": false,
+        "name": "perf_tab",
+        "options": [
+          {
+            "selected": true,
+            "text": "Error rate",
+            "value": "Error rate"
+          },
+          {
+            "selected": false,
+            "text": "Latency",
+            "value": "Latency"
+          },
+          {
+            "selected": false,
+            "text": "Eval pass rate",
+            "value": "Eval pass rate"
+          }
+        ],
+        "query": "Error rate,Latency,Eval pass rate",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
@@ -992,12 +1481,7 @@
       "10s",
       "30s",
       "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
+      "5m"
     ]
   },
   "timezone": "browser",

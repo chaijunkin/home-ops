@@ -338,7 +338,7 @@
       },
       "id": 20,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 12px; background: rgba(123, 63, 228, 0.08); border: 1px solid rgba(123, 63, 228, 0.25); border-left: 4px solid #8f5fe8; padding: 8px 16px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; color: #e1d8f7;\">\n  <div style=\"background: #8f5fe8; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;\">Needs Attention</div>\n  <div style=\"flex: 1; line-height: 1.4;\">\u2726 <strong>Fleet Roster Status:</strong> 3 distinct production agent personas indexed (<code>cloudjur-k8s-agent</code>, <code>cloudjur-media-agent</code>, <code>cloudjur-security-agent</code>). Claude 3.7 Sonnet and DeepSeek R1 leading token throughput.</div>\n</div>",
+        "content": "<div style=\"display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; font-family: Inter, sans-serif;\">\n  <div style=\"display: flex; gap: 8px; align-items: center;\">\n    <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase;\">View:</span>\n    <a href=\"?var-agent_metric=Generations\" style=\"background: #3274d9; color: #ffffff; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none;\">Generations</a>\n    <a href=\"?var-agent_metric=Tokens\" style=\"background: #22252b; color: #8e9bb0; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none;\">Tokens</a>\n    <a href=\"?var-agent_metric=Error rate\" style=\"background: #22252b; color: #8e9bb0; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none;\">Error rate</a>\n    <a href=\"?var-agent_metric=Estimated cost\" style=\"background: #22252b; color: #8e9bb0; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none;\">Estimated cost</a>\n    <a href=\"?var-agent_metric=Latency\" style=\"background: #22252b; color: #8e9bb0; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none;\">Latency</a>\n  </div>\n  <div style=\"display: flex; gap: 12px; align-items: center;\">\n    <div style=\"font-size: 11px; color: #8e9bb0; background: #22252b; border: 1px solid #333842; padding: 2px 8px; border-radius: 4px;\"><strong>0</strong> anonymous buckets</div>\n    <div style=\"font-size: 11px; color: #8e9bb0; background: #22252b; border: 1px solid #333842; padding: 2px 8px; border-radius: 4px;\"><strong>0</strong> stale (&gt; 7 days)</div>\n    <div style=\"font-size: 11px; color: #8e9bb0; background: #22252b; border: 1px solid #333842; padding: 2px 8px; border-radius: 4px;\"><strong>0</strong> high churn (2+ new versions)</div>\n  </div>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -402,7 +402,7 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 24,
         "x": 0,
         "y": 7
       },
@@ -433,104 +433,32 @@
           "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) or sum by (model)(rate(litellm_requests_metric_total[2m]))",
           "legendFormat": "{{gen_ai_agent_name}} ({{model}})",
           "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Generations per Agent Role",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 15,
-            "gradientMode": "opacity",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "smooth",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
+          "refId": "Generations"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 7
-      },
-      "id": 22,
-      "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[5m])) or sum by (model)(increase(litellm_total_tokens_metric_total[5m]))",
-          "legendFormat": "{{gen_ai_agent_name}}",
+          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[2m]))",
+          "legendFormat": "Tokens: {{gen_ai_agent_name}}",
           "range": true,
-          "refId": "A"
+          "refId": "Tokens"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[5m]))",
+          "legendFormat": "Cost: {{gen_ai_agent_name}}",
+          "range": true,
+          "refId": "Cost"
         }
       ],
-      "title": "Token Consumption by Agent Role",
+      "title": "Generations per agent",
       "type": "timeseries"
     },
     {
@@ -563,7 +491,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Cost ($)"
+              "options": "ESTIMATED COST"
             },
             "properties": [
               {
@@ -575,12 +503,56 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tokens"
+              "options": "TOKENS"
             },
             "properties": [
               {
                 "id": "unit",
                 "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ERROR RATE"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AVG LATENCY"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
               }
             ]
           }
@@ -592,7 +564,7 @@
         "x": 0,
         "y": 15
       },
-      "id": 30,
+      "id": 22,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -603,7 +575,13 @@
           ],
           "show": false
         },
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "TOTAL GENERATIONS"
+          }
+        ]
       },
       "pluginVersion": "11.1.0",
       "targets": [
@@ -613,11 +591,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_client_operation_duration_seconds_count[$__range]))",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range]))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Invocations"
+          "refId": "TOTAL GENERATIONS"
         },
         {
           "datasource": {
@@ -625,11 +603,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_client_token_usage_total[$__range]))",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[$__range]))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Tokens"
+          "refId": "TOKENS"
         },
         {
           "datasource": {
@@ -637,14 +615,38 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_usage_cost_USD_total[$__range]))",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range]))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Cost"
+          "refId": "ESTIMATED COST"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[5m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[5m])) * 100) or vector(0), 100)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "ERROR RATE"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "histogram_quantile(0.50, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or vector(0)",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "AVG LATENCY"
         }
       ],
-      "title": "Agent Fleet Roster & Performance Matrix",
+      "title": "Agent Runtime & Generation Registry",
       "type": "table"
     }
   ],
@@ -654,7 +656,7 @@
     "ai",
     "agent",
     "fleet",
-    "roster"
+    "cloud-parity"
   ],
   "templating": {
     "list": [
@@ -709,6 +711,48 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Generations",
+          "value": "Generations"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Metric",
+        "multi": false,
+        "name": "agent_metric",
+        "options": [
+          {
+            "selected": true,
+            "text": "Generations",
+            "value": "Generations"
+          },
+          {
+            "selected": false,
+            "text": "Tokens",
+            "value": "Tokens"
+          },
+          {
+            "selected": false,
+            "text": "Error rate",
+            "value": "Error rate"
+          },
+          {
+            "selected": false,
+            "text": "Estimated cost",
+            "value": "Estimated cost"
+          },
+          {
+            "selected": false,
+            "text": "Latency",
+            "value": "Latency"
+          }
+        ],
+        "query": "Generations,Tokens,Error rate,Estimated cost,Latency",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
@@ -722,12 +766,7 @@
       "10s",
       "30s",
       "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
+      "5m"
     ]
   },
   "timezone": "browser",

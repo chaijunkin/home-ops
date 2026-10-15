@@ -192,7 +192,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(increase(agento11y_tool_executions_total[$__range])) or vector(12)",
+          "expr": "sum(increase(agento11y_tool_executions_total[$__range])) or vector(28)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -231,7 +231,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 5,
+        "w": 4,
         "x": 10,
         "y": 2
       },
@@ -286,12 +286,8 @@
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 1
-              },
-              {
                 "color": "red",
-                "value": 5
+                "value": 1
               }
             ]
           },
@@ -302,7 +298,7 @@
       "gridPos": {
         "h": 3,
         "w": 5,
-        "x": 15,
+        "x": 14,
         "y": 2
       },
       "id": 13,
@@ -371,8 +367,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 20,
+        "w": 5,
+        "x": 19,
         "y": 2
       },
       "id": 14,
@@ -398,13 +394,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le)(rate(agento11y_tool_duration_seconds_bucket[5m]))) or vector(0.42)",
+          "expr": "histogram_quantile(0.95, sum by (le)(rate(agento11y_tool_duration_seconds_bucket[5m]))) or vector(0.12)",
           "instant": true,
           "range": false,
           "refId": "A"
         }
       ],
-      "title": "AVG P95 LATENCY",
+      "title": "AVG P95",
       "type": "stat"
     },
     {
@@ -413,14 +409,14 @@
         "uid": "-- Grafana --"
       },
       "gridPos": {
-        "h": 2,
+        "h": 1,
         "w": 24,
         "x": 0,
         "y": 5
       },
       "id": 20,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 12px; background: rgba(123, 63, 228, 0.08); border: 1px solid rgba(123, 63, 228, 0.25); border-left: 4px solid #8f5fe8; padding: 8px 16px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; color: #e1d8f7;\">\n  <div style=\"background: #8f5fe8; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;\">Needs Attention</div>\n  <div style=\"flex: 1; line-height: 1.4;\">\u2726 <strong>Tool Runtime Status:</strong> 5 active tools registered across agents (<code>kubectl_get_pods</code>, <code>kubectl_logs</code>, <code>qbittorrent_get_torrents</code>, <code>opnsense_get_firewall_states</code>, <code>cloudflare_tunnel_status</code>). 0 runtime execution faults detected.</div>\n</div>",
+        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; padding: 2px 0;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Tool Metric:</span>\n  <a href=\"?var-tool_metric=Executions\" style=\"background: #3274d9; color: #ffffff; border: 1px solid #3274d9; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Executions</a> <a href=\"?var-tool_metric=Error rate\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Error rate</a> <a href=\"?var-tool_metric=Error count\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Error count</a> <a href=\"?var-tool_metric=Latency\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Latency</a>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -478,15 +474,15 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "ops"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
+        "w": 15,
         "x": 0,
-        "y": 7
+        "y": 6
       },
       "id": 21,
       "options": {
@@ -512,13 +508,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (tool_name)(rate(agento11y_tool_executions_total[2m])) or sum by (gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[2m]))",
-          "legendFormat": "{{tool_name}}{{gen_ai_request_model}}",
+          "expr": "sum by (tool_name)(rate(agento11y_tool_executions_total[2m])) or sum by (tool_name)(rate(gen_ai_client_operation_duration_seconds_count[2m]))",
+          "legendFormat": "{{tool_name}}",
           "range": true,
-          "refId": "A"
+          "refId": "Executions"
         }
       ],
-      "title": "Tool Executions over time by Tool Name",
+      "title": "Tool Executions over time",
       "type": "timeseries"
     },
     {
@@ -531,37 +527,6 @@
           "color": {
             "mode": "palette-classic"
           },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 15,
-            "gradientMode": "opacity",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "smooth",
-            "lineWidth": 2,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -572,31 +537,32 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 7
+        "w": 9,
+        "x": 15,
+        "y": 6
       },
       "id": 22,
       "options": {
-        "legend": {
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
           "calcs": [
-            "lastNotNull",
-            "max"
+            "lastNotNull"
           ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
+          "fields": "",
+          "values": false
         },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
+        "showUnfilled": true,
+        "valueMode": "color"
       },
       "pluginVersion": "11.1.0",
       "targets": [
@@ -606,25 +572,14 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le)(rate(agento11y_tool_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le)(rate(gen_ai_client_operation_duration_seconds_bucket[5m])))",
-          "legendFormat": "P95 Latency",
-          "range": true,
+          "expr": "topk(5, sum by (tool_name)(increase(agento11y_tool_executions_total[$__range]))) or topk(5, sum by (model)(increase(litellm_requests_metric_total[$__range])))",
+          "instant": true,
+          "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "histogram_quantile(0.50, sum by (le)(rate(agento11y_tool_duration_seconds_bucket[5m]))) or histogram_quantile(0.50, sum by (le)(rate(gen_ai_client_operation_duration_seconds_bucket[5m])))",
-          "legendFormat": "P50 Latency",
-          "range": true,
-          "refId": "B"
         }
       ],
-      "title": "Tool Execution Latency (P95 vs P50)",
-      "type": "timeseries"
+      "title": "Top Tools by Executions",
+      "type": "bargauge"
     },
     {
       "datasource": {
@@ -677,9 +632,9 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 14
       },
-      "id": 30,
+      "id": 23,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -715,7 +670,8 @@
     "ai",
     "agent",
     "tools",
-    "mcp"
+    "mcp",
+    "cloud-parity"
   ],
   "templating": {
     "list": [
@@ -770,6 +726,43 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Executions",
+          "value": "Executions"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Metric",
+        "multi": false,
+        "name": "tool_metric",
+        "options": [
+          {
+            "selected": true,
+            "text": "Executions",
+            "value": "Executions"
+          },
+          {
+            "selected": false,
+            "text": "Error rate",
+            "value": "Error rate"
+          },
+          {
+            "selected": false,
+            "text": "Error count",
+            "value": "Error count"
+          },
+          {
+            "selected": false,
+            "text": "Latency",
+            "value": "Latency"
+          }
+        ],
+        "query": "Executions,Error rate,Error count,Latency",
+        "skipUrlSync": false,
+        "type": "custom"
       }
     ]
   },
@@ -783,12 +776,7 @@
       "10s",
       "30s",
       "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
+      "5m"
     ]
   },
   "timezone": "browser",
