@@ -340,7 +340,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.50, sum by (le)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.50, sum by (le)(rate(litellm_request_total_latency_metric_bucket[5m]))) or vector(0)",
+          "expr": "((histogram_quantile(0.50, sum by (le)(increase(gen_ai_client_operation_duration_seconds_bucket[$__range]))) or histogram_quantile(0.50, sum by (le)(increase(litellm_request_total_latency_metric_bucket[$__range])))) >= 0) or vector(0)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -1163,7 +1163,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range]))",
+          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count{gen_ai_agent_name!=\"\"}[$__range]))) or sum by (gen_ai_agent_name)(label_replace(increase(litellm_requests_metric_total[$__range]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\"))",
           "format": "table",
           "instant": true,
           "range": false,
@@ -1175,7 +1175,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__range])) or vector(0)",
+          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count{gen_ai_agent_name!=\"\",error_type!=\"\"}[$__range]))) or sum by (gen_ai_agent_name)(label_replace(increase(litellm_requests_metric_total{status_code=~\"[45].*\"}[$__range]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\"))",
           "format": "table",
           "instant": true,
           "range": false,
@@ -1187,7 +1187,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[5m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[5m])) * 100) or vector(0), 100)",
+          "expr": "clamp_max(((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{gen_ai_agent_name!=\"\",error_type!=\"\"}[5m])) / (sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{gen_ai_agent_name!=\"\"}[5m])) + 0.001) * 100)) or ((sum by (gen_ai_agent_name)(label_replace(rate(litellm_requests_metric_total{status_code=~\"[45].*\"}[5m]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\")) / (sum by (gen_ai_agent_name)(label_replace(rate(litellm_requests_metric_total[5m]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\")) + 0.001) * 100)), 100)",
           "format": "table",
           "instant": true,
           "range": false,
@@ -1199,7 +1199,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) or vector(0)",
+          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total{gen_ai_agent_name!=\"\"}[$__range]))) or sum by (gen_ai_agent_name)(label_replace(increase(litellm_spend_metric_total[$__range]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\"))",
           "format": "table",
           "instant": true,
           "range": false,
@@ -1211,7 +1211,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[$__range])) or vector(0)",
+          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total{gen_ai_agent_name!=\"\"}[$__range]))) or sum by (gen_ai_agent_name)(label_replace(increase(litellm_total_tokens_metric_total[$__range]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\"))",
           "format": "table",
           "instant": true,
           "range": false,
@@ -1223,7 +1223,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(litellm_input_cached_tokens_metric_total[5m])) / (sum by (gen_ai_agent_name)(rate(litellm_total_tokens_metric_total[5m])) + 0.001) * 100) or (sum by (gen_ai_agent_name)(rate(openlit_cache_hit_total[5m])) / (sum by (gen_ai_agent_name)(rate(openlit_requests_total[5m])) + 0.001) * 100) or vector(5.03), 100)",
+          "expr": "clamp_max(((sum by (gen_ai_agent_name)(label_replace(rate(litellm_input_cached_tokens_metric_total[5m]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\")) / (sum by (gen_ai_agent_name)(label_replace(rate(litellm_total_tokens_metric_total[5m]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\")) + 0.001) * 100)) or (sum by (gen_ai_agent_name)(rate(litellm_input_cached_tokens_metric_total[5m])) / (sum by (gen_ai_agent_name)(rate(litellm_total_tokens_metric_total[5m])) + 0.001) * 100) or (sum by (gen_ai_agent_name)(rate(openlit_cache_hit_total[5m])) / (sum by (gen_ai_agent_name)(rate(openlit_requests_total[5m])) + 0.001) * 100), 100)",
           "format": "table",
           "instant": true,
           "range": false,
@@ -1235,7 +1235,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or vector(0)",
+          "expr": "((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_bucket{gen_ai_agent_name!=\"\"}[$__range]))) or histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(label_replace(increase(litellm_request_total_latency_metric_bucket[$__range]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\")))) >= 0)",
           "format": "table",
           "instant": true,
           "range": false,
@@ -1247,7 +1247,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_server_time_to_first_token_seconds_bucket[5m]))) or vector(0)",
+          "expr": "((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(increase(gen_ai_server_time_to_first_token_seconds_bucket{gen_ai_agent_name!=\"\"}[$__range]))) or histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(label_replace(increase(litellm_llm_api_latency_metric_bucket[$__range]), \"gen_ai_agent_name\", \"$1\", \"model\", \"(.*)\")))) >= 0)",
           "format": "table",
           "instant": true,
           "range": false,
