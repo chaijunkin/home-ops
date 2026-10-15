@@ -16,6 +16,9 @@ spec:
       oauth_auto_login: "false"
       disable_login_form: "false"
       oauth_allow_insecure_email_lookup: "true"
+      login_maximum_lifetime_duration: "30d"
+      login_maximum_inactive_lifetime_duration: "30d"
+      token_rotation_interval_minutes: "60"
     auth.anonymous:
       enabled: "false"
     auth.generic_oauth:
@@ -46,6 +49,7 @@ spec:
     security:
       angular_support_enabled: "true"
       cookie_secure: "true"
+      cookie_samesite: "lax"
       login_remember_days: "30"
       login_maximum_inactive_lifetime_days: "30"
       login_maximum_lifetime_days: "30"
