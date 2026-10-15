@@ -62,9 +62,9 @@ data:
           "model": "litellm/opencode-go/kimi-k2-7-code"
         },
         "coder-local": {
-          "description": "Primary coding lane — Qwen3.8-27B on Strix Halo (144k, text-only). The fastest and strongest coder available locally, several slots so it can serve concurrent fan-out. Text-only — route anything involving images to `vision-local` (qwen3.8-flash-next).",
+          "description": "Primary coding lane — Qwen3.8-Flash-Next (local-pool-chat, local, free, vision).",
           "mode": "subagent",
-          "model": "litellm/qwen3.8-27b"
+          "model": "litellm/local-pool-chat"
         },
         "agentic-local": {
           "description": "Long-context and agentic lane — Qwen3.8-Flash-Next IQ4_NL on Strix (262k, vision). Use it when the work will not fit coder-local's 144k window, or for long-horizon multi-step tasks where its agentic strength pays. ~1030 t/s prefill at depth, ~40 t/s decode. ONE slot, so it serialises.",

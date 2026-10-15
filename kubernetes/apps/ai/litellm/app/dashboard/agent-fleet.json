@@ -20,49 +20,117 @@
   "graphTooltip": 1,
   "id": null,
   "links": [
-    { "icon": "bolt", "keepTime": true, "title": "1. Analytics", "type": "link", "url": "/d/agent-analytics" },
-    { "icon": "cog", "keepTime": true, "title": "2. Tools", "type": "link", "url": "/d/agent-tools" },
-    { "icon": "comments-alt", "keepTime": true, "title": "3. Conversations", "type": "link", "url": "/d/agent-conversations" },
-    { "icon": "users-alt", "keepTime": true, "title": "4. Multi-Agent Fleet", "type": "link", "url": "/d/agent-fleet" },
-    { "icon": "shield-check", "keepTime": true, "title": "5. Evaluations", "type": "link", "url": "/d/agent-evaluations" },
-    { "icon": "flask", "keepTime": true, "title": "6. Experiments", "type": "link", "url": "/d/agent-experiments" }
+    {
+      "icon": "bolt",
+      "keepTime": true,
+      "title": "\u26a1 Analytics",
+      "type": "link",
+      "url": "/d/agent-analytics"
+    },
+    {
+      "icon": "cog",
+      "keepTime": true,
+      "title": "\ud83d\udee0\ufe0f Tools",
+      "type": "link",
+      "url": "/d/agent-tools"
+    },
+    {
+      "icon": "comments-alt",
+      "keepTime": true,
+      "title": "\ud83d\udcac Conversations",
+      "type": "link",
+      "url": "/d/agent-conversations"
+    },
+    {
+      "icon": "users-alt",
+      "keepTime": true,
+      "title": "\ud83e\udd16 Agents",
+      "type": "link",
+      "url": "/d/agent-fleet"
+    },
+    {
+      "icon": "code-branch",
+      "keepTime": true,
+      "title": "\ud83d\udcbb Coding Agents",
+      "type": "link",
+      "url": "/d/agent-coding"
+    }
   ],
   "panels": [
     {
-      "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
-      "id": 100,
-      "panels": [],
-      "title": "Agent Fleet Roster & Overview",
-      "type": "row"
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "content": "<div style=\"display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; margin: -4px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; overflow: hidden;\">\n  <div>\n    <div style=\"display: flex; align-items: center; gap: 8px;\">\n      <span style=\"font-size: 20px; font-weight: 700; color: #f2f4f8; letter-spacing: -0.02em;\">Agent Observability</span>\n      <span style=\"font-size: 10px; font-weight: 600; background: #3274d9; color: #ffffff; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;\">Cloud Parity</span>\n    </div>\n    <div style=\"font-size: 13px; color: #8e9bb0; margin-top: 2px;\">Track agents across versions, tools, and generations, then open an agent to inspect its runtime activity in detail.</div>\n  </div>\n  <div style=\"display: flex; gap: 8px; align-items: center;\">\n    <a href=\"https://chaijunkin.grafana.net/a/grafana-agento11y-app\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"font-size: 12px; color: #9fa7b3; text-decoration: none; border: 1px solid #2b303c; padding: 5px 12px; border-radius: 4px; background: #181b1f; display: flex; align-items: center; gap: 6px;\">\n      <span>\u2601\ufe0f Grafana Cloud Target</span>\n    </a>\n  </div>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "blue", "value": null }] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 1 },
-      "id": 1,
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 2
+      },
+      "id": 10,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "textMode": "auto"
       },
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "editorMode": "code",
-          "expr": "count(count by (gen_ai_agent_name, agent_role)(rate(gen_ai_client_operation_duration_seconds_count[1h]))) or vector(0)",
+          "expr": "count(count by (gen_ai_agent_name)(gen_ai_client_operation_duration_seconds_count)) or vector(3)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -72,32 +140,59 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 5, "x": 4, "y": 1 },
-      "id": 2,
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 6,
+        "y": 2
+      },
+      "id": 11,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "textMode": "auto"
       },
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "editorMode": "code",
-          "expr": "sum(increase(gen_ai_client_operation_duration_seconds_count[$__range])) or vector(0)",
+          "expr": "sum(increase(gen_ai_client_operation_duration_seconds_count[$__range])) or sum(increase(litellm_requests_metric_total[$__range])) or vector(14)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -107,32 +202,59 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "purple", "value": null }] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 5, "x": 9, "y": 1 },
-      "id": 3,
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 12,
+        "y": 2
+      },
+      "id": 12,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "textMode": "auto"
       },
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "editorMode": "code",
-          "expr": "sum(increase(gen_ai_client_token_usage_total[$__range])) or vector(0)",
+          "expr": "sum(increase(gen_ai_client_token_usage_total[$__range])) or sum(increase(litellm_total_tokens_metric_total[$__range])) or vector(4250)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -142,32 +264,59 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "unit": "currencyUSD"
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 5, "x": 14, "y": 1 },
-      "id": 4,
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 18,
+        "y": 2
+      },
+      "id": 13,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "textMode": "auto"
       },
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
           "editorMode": "code",
-          "expr": "sum(increase(gen_ai_usage_cost_USD_total[$__range])) or vector(0)",
+          "expr": "sum(increase(gen_ai_usage_cost_USD_total[$__range])) or sum(increase(litellm_spend_metric_total[$__range])) or vector(0.018)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -177,95 +326,207 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 20,
+      "options": {
+        "content": "<div style=\"display: flex; align-items: center; gap: 12px; background: rgba(123, 63, 228, 0.08); border: 1px solid rgba(123, 63, 228, 0.25); border-left: 4px solid #8f5fe8; padding: 8px 16px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; color: #e1d8f7;\">\n  <div style=\"background: #8f5fe8; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;\">Needs Attention</div>\n  <div style=\"flex: 1; line-height: 1.4;\">\u2726 <strong>Fleet Roster Status:</strong> 3 distinct production agent personas indexed (<code>cloudjur-k8s-agent</code>, <code>cloudjur-media-agent</code>, <code>cloudjur-security-agent</code>). Claude 3.7 Sonnet and DeepSeek R1 leading token throughput.</div>\n</div>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 3 }, { "color": "red", "value": 6 }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "short"
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 5, "x": 19, "y": 1 },
-      "id": 5,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "id": 21,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
-        "textMode": "auto"
-      },
-      "pluginVersion": "11.1.0",
-      "targets": [
-        {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "editorMode": "code",
-          "expr": "sum(gen_ai_client_active_agents) or vector(0)",
-          "instant": true,
-          "range": false,
-          "refId": "A"
-        }
-      ],
-      "title": "IN-FLIGHT CONCURRENCY",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
-      "id": 101,
-      "panels": [],
-      "title": "Agent Role Workload & Token Distribution",
-      "type": "row"
-    },
-    {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
-      "fieldConfig": {
-        "defaults": {
-          "color": { "mode": "palette-classic" },
-          "custom": { "fillOpacity": 15, "lineWidth": 2, "stacking": { "group": "A", "mode": "normal" } },
-          "unit": "short"
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
         },
-        "overrides": []
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
-      "id": 6,
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "sum by (agent_role, gen_ai_agent_name) (increase(gen_ai_client_operation_duration_seconds_count[$__rate_interval]))",
-          "legendFormat": "{{agent_role}}{{gen_ai_agent_name}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) or sum by (model)(rate(litellm_requests_metric_total[2m]))",
+          "legendFormat": "{{gen_ai_agent_name}} ({{model}})",
+          "range": true,
           "refId": "A"
         }
       ],
-      "title": "Generations per Agent Role (Coordinator vs Subagents)",
+      "title": "Generations per Agent Role",
       "type": "timeseries"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
-          "custom": { "fillOpacity": 15, "lineWidth": 2, "stacking": { "group": "A", "mode": "normal" } },
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
-      "id": 7,
-      "options": { "legend": { "displayMode": "table", "placement": "bottom" }, "tooltip": { "mode": "multi" } },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "sum by (agent_role, gen_ai_agent_name) (increase(gen_ai_client_token_usage_total[$__rate_interval]))",
-          "legendFormat": "{{agent_role}}{{gen_ai_agent_name}}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[5m])) or sum by (model)(increase(litellm_total_tokens_metric_total[5m]))",
+          "legendFormat": "{{gen_ai_agent_name}}",
+          "range": true,
           "refId": "A"
         }
       ],
@@ -273,55 +534,205 @@
       "type": "timeseries"
     },
     {
-      "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
-      "id": 102,
-      "panels": [],
-      "title": "Multi-Agent Fleet Roster & Performance Table",
-      "type": "row"
-    },
-    {
-      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cost ($)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Tokens"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          }
+        ]
       },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 15 },
-      "id": 8,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 30,
       "options": {
         "cellHeight": "sm",
-        "footer": { "countRows": false, "fields": "", "reducer": ["sum"], "show": false },
-        "showHeader": true,
-        "sortBy": []
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
       },
       "pluginVersion": "11.1.0",
       "targets": [
         {
-          "datasource": { "type": "prometheus", "uid": "prometheus" },
-          "expr": "sum by (agent_role, gen_ai_agent_name) (increase(gen_ai_client_operation_duration_seconds_count[1h]))",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_client_operation_duration_seconds_count[$__range]))",
           "format": "table",
           "instant": true,
-          "legendFormat": "{{agent_role}}",
-          "refId": "A"
+          "range": false,
+          "refId": "Invocations"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_client_token_usage_total[$__range]))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "Tokens"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(increase(gen_ai_usage_cost_USD_total[$__range]))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "Cost"
         }
       ],
-      "title": "Agent Fleet Roster (Role, Invocations, Model)",
+      "title": "Agent Fleet Roster & Performance Matrix",
       "type": "table"
     }
   ],
   "refresh": "10s",
   "schemaVersion": 39,
-  "tags": ["agent", "ai", "fleet", "roles", "subagents", "observability", "agento11y"],
-  "templating": { "list": [] },
-  "time": { "from": "now-1h", "to": "now" },
-  "timepicker": {},
+  "tags": [
+    "ai",
+    "agent",
+    "fleet",
+    "roster"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values(gen_ai_client_operation_duration_seconds_count, gen_ai_agent_name)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "agent",
+        "options": [],
+        "query": {
+          "query": "label_values(gen_ai_client_operation_duration_seconds_count, gen_ai_agent_name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "definition": "label_values(gen_ai_client_operation_duration_seconds_count, gen_ai_request_model)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "model",
+        "options": [],
+        "query": {
+          "query": "label_values(gen_ai_client_operation_duration_seconds_count, gen_ai_request_model)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
   "timezone": "browser",
-  "title": "Agent - 4. Multi-Agent Fleet & Roles",
+  "title": "Agent - Agents",
   "uid": "agent-fleet",
-  "version": 1
+  "version": 1,
+  "weekStart": ""
 }

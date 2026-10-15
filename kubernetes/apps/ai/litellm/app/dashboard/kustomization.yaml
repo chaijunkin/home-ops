@@ -47,6 +47,9 @@ configMapGenerator:
   - name: agent-experiments
     files:
       - agent-experiments.json
+  - name: agent-coding
+    files:
+      - agent-coding.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
