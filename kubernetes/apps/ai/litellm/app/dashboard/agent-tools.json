@@ -25,35 +25,35 @@
       "keepTime": true,
       "title": "\u26a1 Analytics",
       "type": "link",
-      "url": "/d/agent-analytics"
+      "url": "/d/agent-analytics/agent-analytics"
     },
     {
       "icon": "cog",
       "keepTime": true,
       "title": "\ud83d\udee0\ufe0f Tools",
       "type": "link",
-      "url": "/d/agent-tools"
+      "url": "/d/agent-tools/agent-tools"
     },
     {
       "icon": "comments-alt",
       "keepTime": true,
       "title": "\ud83d\udcac Conversations",
       "type": "link",
-      "url": "/d/agent-conversations"
+      "url": "/d/agent-conversations/agent-conversations"
     },
     {
       "icon": "users-alt",
       "keepTime": true,
       "title": "\ud83e\udd16 Agents",
       "type": "link",
-      "url": "/d/agent-fleet"
+      "url": "/d/agent-fleet/agent-agents"
     },
     {
       "icon": "code-branch",
       "keepTime": true,
       "title": "\ud83d\udcbb Coding Agents",
       "type": "link",
-      "url": "/d/agent-coding"
+      "url": "/d/agent-coding/agent-coding-agents"
     }
   ],
   "panels": [
