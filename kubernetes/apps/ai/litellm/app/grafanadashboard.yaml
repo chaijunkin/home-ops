@@ -153,6 +153,8 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
+    - datasourceName: tempo
+      inputName: DS_TEMPO
   configMapRef:
     name: agent-observability
     key: agent-observability.json
