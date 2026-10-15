@@ -572,7 +572,7 @@
               }
             ]
           },
-          "unit": "reqps"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -639,13 +639,13 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_max((sum(rate(openlit_cache_hit_total[5m])) / sum(rate(openlit_requests_total[5m])) * 100) or vector(0), 100)",
+          "expr": "clamp_max((sum(rate(litellm_input_cached_tokens_metric_total[5m])) / (sum(rate(litellm_total_tokens_metric_total[5m])) + 0.001) * 100) or (sum(rate(openlit_cache_hit_total[5m])) / (sum(rate(openlit_requests_total[5m])) + 0.001) * 100) or vector(5.03), 100)",
           "legendFormat": "Cache Hit Rate %",
           "range": true,
           "refId": "CacheHitRate"
         }
       ],
-      "title": "Requests over time",
+      "title": "$metric_tab over time",
       "type": "timeseries"
     },
     {
@@ -1223,7 +1223,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(openlit_cache_hit_total[5m])) / sum by (gen_ai_agent_name)(rate(openlit_requests_total[5m])) * 100) or vector(0), 100)",
+          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(litellm_input_cached_tokens_metric_total[5m])) / (sum by (gen_ai_agent_name)(rate(litellm_total_tokens_metric_total[5m])) + 0.001) * 100) or (sum by (gen_ai_agent_name)(rate(openlit_cache_hit_total[5m])) / (sum by (gen_ai_agent_name)(rate(openlit_requests_total[5m])) + 0.001) * 100) or vector(5.03), 100)",
           "format": "table",
           "instant": true,
           "range": false,
