@@ -514,7 +514,7 @@
       },
       "id": 21,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; padding: 2px 0;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Usage & Cost View:</span>\n  <a href=\"?var-metric_tab=Requests\" style=\"background: #3274d9; color: #ffffff; border: 1px solid #3274d9; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Requests</a> <a href=\"?var-metric_tab=Tokens\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Tokens</a> <a href=\"?var-metric_tab=Cost\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Cost</a> <a href=\"?var-metric_tab=Cache hit rate\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Cache hit rate</a>\n</div>",
+        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3px 0; height: 100%;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px;\">Usage & Cost View:</span>\n  <span style=\"background: #3274d9; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 8px;\">Active: ${metric_tab}</span>\n  <a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Requests&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Requests</a><a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Tokens&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Tokens</a><a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Cost&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Cost</a><a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Cache%20hit%20rate&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Cache hit rate</a>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -781,7 +781,7 @@
       },
       "id": 24,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, sans-serif; padding: 2px 0;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Performance & Reliability View:</span>\n  <a href=\"?var-perf_tab=Error rate\" style=\"background: #3274d9; color: #ffffff; border: 1px solid #3274d9; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Error rate</a> <a href=\"?var-perf_tab=Latency\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Latency</a> <a href=\"?var-perf_tab=Eval pass rate\" style=\"background: #181b1f; color: #8e9bb0; border: 1px solid #2b303c; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; transition: all 0.2s;\">Eval pass rate</a>\n</div>",
+        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3px 0; height: 100%;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px;\">Performance & Reliability View:</span>\n  <span style=\"background: #3274d9; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 8px;\">Active: ${perf_tab}</span>\n  <a href=\"/d/agent-analytics/agent-analytics?var-perf_tab=Error%20rate&var-metric_tab=${metric_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Error rate</a><a href=\"/d/agent-analytics/agent-analytics?var-perf_tab=Latency&var-metric_tab=${metric_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Latency</a><a href=\"/d/agent-analytics/agent-analytics?var-perf_tab=Eval%20pass%20rate&var-metric_tab=${metric_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Eval pass rate</a>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -1255,6 +1255,41 @@
         }
       ],
       "title": "Agents (Click row or header link to open Agent detail)",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "gen_ai_agent_name",
+            "mode": "outer"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
+              "Time 6": true,
+              "Time 7": true
+            },
+            "renameByName": {
+              "gen_ai_agent_name": "AGENT",
+              "Value #REQUESTS": "REQUESTS",
+              "Value #ERRORS": "ERRORS",
+              "Value #ERROR RATE": "ERROR RATE",
+              "Value #ESTIMATED COST": "ESTIMATED COST",
+              "Value #TOKENS": "TOKENS",
+              "Value #CACHE": "CACHE",
+              "Value #P95 LATENCY": "P95 LATENCY",
+              "Value #P95 TTFT": "P95 TTFT"
+            }
+          }
+        }
+      ],
       "type": "table"
     },
     {

@@ -38,11 +38,17 @@ spec:
       enabled: "true"
     news:
       news_feed_enabled: "false"
+    panels:
+      disable_sanitize_html: "true"
     plugins:
       plugin_admin_enabled: "true"
       allow_loading_unsigned_plugins: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
     security:
       angular_support_enabled: "true"
+      cookie_secure: "true"
+      login_remember_days: "30"
+      login_maximum_inactive_lifetime_days: "30"
+      login_maximum_lifetime_days: "30"
     server:
       enable_gzip: "true"
       root_url: https://grafana.cloudjur.com
