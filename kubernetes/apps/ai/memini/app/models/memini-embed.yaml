@@ -20,7 +20,7 @@ metadata:
 spec:
   modelRef: memini-embed
   runtime: llamacpp
-  image: ghcr.io/ggml-org/llama.cpp:server@sha256:82b5129742c04e12c4b710ae1908fd951f6b227339d45f0aa71f1165df353f70
+  image: ghcr.io/ggml-org/llama.cpp:server@sha256:f41d47eee678c02656eefc9ed8cce76cab584aa7032805eeef0e6639fcfda485
   replicas: 1
   priority: normal
   contextSize: 32768
