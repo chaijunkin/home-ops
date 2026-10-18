@@ -476,7 +476,32 @@
           },
           "unit": "ops"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Latency"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -508,13 +533,46 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (tool_name)(rate(agento11y_tool_executions_total[2m])) or sum by (tool_name)(rate(gen_ai_client_operation_duration_seconds_count[2m]))",
+          "expr": "(sum by (tool_name)(rate(agento11y_tool_executions_total[2m])) or sum by (tool_name)(rate(gen_ai_client_operation_duration_seconds_count[2m]))) and on() (label_replace(vector(1), \"tab\", \"Executions\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "legendFormat": "{{tool_name}}",
           "range": true,
           "refId": "Executions"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((clamp_max((sum by (tool_name)(rate(agento11y_tool_errors_total[5m])) / sum by (tool_name)(rate(agento11y_tool_executions_total[5m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "legendFormat": "Error Rate %: {{tool_name}}",
+          "range": true,
+          "refId": "ErrorRate"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (tool_name)(rate(agento11y_tool_errors_total[2m])) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error count\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "legendFormat": "Errors: {{tool_name}}",
+          "range": true,
+          "refId": "ErrorCount"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((histogram_quantile(0.95, sum by (le, tool_name)(rate(agento11y_tool_duration_seconds_bucket[5m]))) or vector(0.12)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "legendFormat": "P95 Latency: {{tool_name}}",
+          "range": true,
+          "refId": "Latency"
         }
       ],
-      "title": "Tool Executions over time",
+      "title": "Tool $tool_metric over time",
       "type": "timeseries"
     },
     {
@@ -539,7 +597,32 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Latency"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -572,13 +655,46 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "topk(5, sum by (tool_name)(increase(agento11y_tool_executions_total[$__range]))) or topk(5, sum by (model)(increase(litellm_requests_metric_total[$__range])))",
+          "expr": "(topk(5, sum by (tool_name)(increase(agento11y_tool_executions_total[$__range]))) or topk(5, sum by (model)(increase(litellm_requests_metric_total[$__range])))) and on() (label_replace(vector(1), \"tab\", \"Executions\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "instant": true,
           "range": false,
-          "refId": "A"
+          "refId": "Executions"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((topk(5, clamp_max((sum by (tool_name)(rate(agento11y_tool_errors_total[5m])) / sum by (tool_name)(rate(agento11y_tool_executions_total[5m])) * 100), 100)) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "instant": true,
+          "range": false,
+          "refId": "ErrorRate"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((topk(5, sum by (tool_name)(increase(agento11y_tool_errors_total[$__range]))) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error count\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "instant": true,
+          "range": false,
+          "refId": "ErrorCount"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((topk(5, histogram_quantile(0.95, sum by (le, tool_name)(rate(agento11y_tool_duration_seconds_bucket[5m])))) or vector(0.12)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "instant": true,
+          "range": false,
+          "refId": "Latency"
         }
       ],
-      "title": "Top Tools by Executions",
+      "title": "Top Tools by $tool_metric",
       "type": "bargauge"
     },
     {

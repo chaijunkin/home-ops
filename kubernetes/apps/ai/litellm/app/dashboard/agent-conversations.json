@@ -464,7 +464,20 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Cost"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -496,13 +509,46 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(rate(agento11y_conversation_turns_total[2m])) or sum(rate(gen_ai_client_operation_duration_seconds_count[2m]))",
+          "expr": "(sum by (gen_ai_agent_name)(rate(agento11y_conversation_turns_total[2m])) or sum(rate(gen_ai_client_operation_duration_seconds_count[2m]))) and on() (label_replace(vector(1), \"tab\", \"Activity\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${conv_metric}\", \"\", \"\"))",
           "legendFormat": "Turns: {{gen_ai_agent_name}}",
           "range": true,
-          "refId": "Turns"
+          "refId": "Activity"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[2m])) or sum by (model)(rate(litellm_total_tokens_metric_total[2m]))) and on() (label_replace(vector(1), \"tab\", \"Tokens\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${conv_metric}\", \"\", \"\"))",
+          "legendFormat": "Tokens: {{gen_ai_agent_name}}",
+          "range": true,
+          "refId": "Tokens"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[5m])) or sum by (model)(rate(litellm_spend_metric_total[5m]))) and on() (label_replace(vector(1), \"tab\", \"Estimated cost\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${conv_metric}\", \"\", \"\"))",
+          "legendFormat": "Cost: {{gen_ai_agent_name}}",
+          "range": true,
+          "refId": "Cost"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Errors\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${conv_metric}\", \"\", \"\"))",
+          "legendFormat": "Errors: {{gen_ai_agent_name}}",
+          "range": true,
+          "refId": "Errors"
         }
       ],
-      "title": "Conversation activity",
+      "title": "Conversation $conv_metric",
       "type": "timeseries"
     },
     {

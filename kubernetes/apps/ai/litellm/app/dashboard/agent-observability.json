@@ -574,7 +574,32 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Cost"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "CacheHitRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -606,7 +631,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name, gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[2m])) or sum by (model)(rate(litellm_requests_metric_total[2m]))",
+          "expr": "(sum by (gen_ai_agent_name, gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[2m])) or sum by (model)(rate(litellm_requests_metric_total[2m]))) and on() (label_replace(vector(1), \"tab\", \"Requests\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "legendFormat": "{{gen_ai_agent_name}} ({{gen_ai_request_model}})",
           "range": true,
           "refId": "Requests"
@@ -617,7 +642,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[2m])) or sum by (model)(rate(litellm_total_tokens_metric_total[2m]))",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[2m])) or sum by (model)(rate(litellm_total_tokens_metric_total[2m]))) and on() (label_replace(vector(1), \"tab\", \"Tokens\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "legendFormat": "Tokens: {{gen_ai_agent_name}}",
           "range": true,
           "refId": "Tokens"
@@ -628,7 +653,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[5m])) or sum by (model)(rate(litellm_spend_metric_total[5m]))",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[5m])) or sum by (model)(rate(litellm_spend_metric_total[5m]))) and on() (label_replace(vector(1), \"tab\", \"Cost\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "legendFormat": "Cost: {{gen_ai_agent_name}}",
           "range": true,
           "refId": "Cost"
@@ -639,7 +664,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_max((sum(rate(litellm_input_cached_tokens_metric_total[5m])) / (sum(rate(litellm_total_tokens_metric_total[5m])) + 0.001) * 100) or (sum(rate(openlit_cache_hit_total[5m])) / (sum(rate(openlit_requests_total[5m])) + 0.001) * 100) or vector(5.03), 100)",
+          "expr": "(clamp_max((sum(rate(litellm_input_cached_tokens_metric_total[5m])) / (sum(rate(litellm_total_tokens_metric_total[5m])) + 0.001) * 100) or (sum(rate(openlit_cache_hit_total[5m])) / (sum(rate(openlit_requests_total[5m])) + 0.001) * 100) or vector(5.03), 100)) and on() (label_replace(vector(1), \"tab\", \"Cache hit rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "legendFormat": "Cache Hit Rate %",
           "range": true,
           "refId": "CacheHitRate"
@@ -677,8 +702,8 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "Estimated Cost"
+              "id": "byFrameRefID",
+              "options": "Cost"
             },
             "properties": [
               {
@@ -690,12 +715,36 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Tokens"
+              "options": "Cost"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "short"
+                "value": "currencyUSD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "CacheHitRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CacheHitRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
               }
             ]
           }
@@ -722,7 +771,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Estimated Cost"
+            "displayName": "Value"
           }
         ]
       },
@@ -734,7 +783,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range])) or sum by (model)(increase(litellm_requests_metric_total[$__range]))",
+          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range])) or sum by (model)(increase(litellm_requests_metric_total[$__range]))) and on() (label_replace(vector(1), \"tab\", \"Requests\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "format": "table",
           "instant": true,
           "range": false,
@@ -746,7 +795,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[$__range])) or sum by (model)(increase(litellm_total_tokens_metric_total[$__range]))",
+          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[$__range])) or sum by (model)(increase(litellm_total_tokens_metric_total[$__range]))) and on() (label_replace(vector(1), \"tab\", \"Tokens\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "format": "table",
           "instant": true,
           "range": false,
@@ -758,14 +807,26 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) or sum by (model)(increase(litellm_spend_metric_total[$__range]))",
+          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) or sum by (model)(increase(litellm_spend_metric_total[$__range]))) and on() (label_replace(vector(1), \"tab\", \"Cost\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Estimated Cost"
+          "refId": "Cost"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(clamp_max((sum by (model)(increase(litellm_input_cached_tokens_metric_total[$__range])) / (sum by (model)(increase(litellm_total_tokens_metric_total[$__range])) + 0.001) * 100) or vector(5.03), 100)) and on() (label_replace(vector(1), \"tab\", \"Cache hit rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "CacheHitRate"
         }
       ],
-      "title": "Cost by agent (Breakdown)",
+      "title": "$metric_tab by agent (Breakdown)",
       "type": "table"
     },
     {
@@ -841,7 +902,20 @@
           },
           "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Latency"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -873,8 +947,8 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) * 100) or vector(0), 100)",
-          "legendFormat": "Error Rate %: {{gen_ai_agent_name}}",
+          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[2m])) / sum by (model)(rate(litellm_deployment_total_requests_total[2m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "legendFormat": "Error Rate %: {{gen_ai_agent_name}}{{model}}",
           "range": true,
           "refId": "ErrorRate"
         },
@@ -884,13 +958,24 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))",
-          "legendFormat": "P95 Latency: {{gen_ai_agent_name}}",
+          "expr": "(((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))) >= 0) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "legendFormat": "P95 Latency: {{gen_ai_agent_name}}{{model}}",
           "range": true,
           "refId": "Latency"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(agento11y_eval_scores_total{passed=\"true\"}[5m])) / sum by (gen_ai_agent_name)(rate(agento11y_eval_executions_total[5m])) * 100) or vector(100), 100)) and on() (label_replace(vector(1), \"tab\", \"Eval pass rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "legendFormat": "Eval Pass Rate %: {{gen_ai_agent_name}}",
+          "range": true,
+          "refId": "EvalPassRate"
         }
       ],
-      "title": "Error rate & Latency over time",
+      "title": "$perf_tab over time",
       "type": "timeseries"
     },
     {
@@ -926,8 +1011,8 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "Error Rate (%)"
+              "id": "byFrameRefID",
+              "options": "ErrorRate"
             },
             "properties": [
               {
@@ -943,12 +1028,72 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "P95 Latency"
+              "options": "ErrorRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Latency"
             },
             "properties": [
               {
                 "id": "unit",
                 "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Latency"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "EvalPassRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "EvalPassRate"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background"
               }
             ]
           }
@@ -975,7 +1120,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Error Rate (%)"
+            "displayName": "Value"
           }
         ]
       },
@@ -987,11 +1132,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[5m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[5m])) * 100) or vector(0), 100)",
+          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[5m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[5m])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[5m])) / sum by (model)(rate(litellm_deployment_total_requests_total[5m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "Error Rate (%)"
+          "refId": "ErrorRate"
         },
         {
           "datasource": {
@@ -999,14 +1144,26 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m])))",
+          "expr": "(((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))) >= 0) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "P95 Latency"
+          "refId": "Latency"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(agento11y_eval_scores_total{passed=\"true\"}[5m])) / sum by (gen_ai_agent_name)(rate(agento11y_eval_executions_total[5m])) * 100) or vector(100), 100)) and on() (label_replace(vector(1), \"tab\", \"Eval pass rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "format": "table",
+          "instant": true,
+          "range": false,
+          "refId": "EvalPassRate"
         }
       ],
-      "title": "Error rate by agent (Breakdown)",
+      "title": "$perf_tab by agent (Breakdown)",
       "type": "table"
     },
     {
