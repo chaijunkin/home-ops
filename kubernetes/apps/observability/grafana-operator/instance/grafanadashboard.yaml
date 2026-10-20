@@ -224,6 +224,147 @@ kind: GrafanaDashboard
 metadata:
   labels:
     dashboards: grafana
+  name: linux-node-cpu-and-system
+spec:
+  allowCrossNamespaceImport: true
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_Prometheus
+  folder: integration---linux-node
+  grafanaCom:
+    id: 22275
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: linux-node-filesystem-and-disks
+spec:
+  allowCrossNamespaceImport: true
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_Prometheus
+  folder: integration---linux-node
+  grafanaCom:
+    id: 22274
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: linux-node-fleet-overview
+spec:
+  allowCrossNamespaceImport: true
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_Metrics
+  folder: integration---linux-node
+  grafanaCom:
+    id: 22269
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: linux-node-logs
+spec:
+  allowCrossNamespaceImport: true
+  datasources:
+    - datasourceName: loki
+      inputName: DS_Loki
+  folder: integration---linux-node
+  grafanaCom:
+    id: 22277
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: linux-node-memory
+spec:
+  allowCrossNamespaceImport: true
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_Prometheus
+  folder: integration---linux-node
+  grafanaCom:
+    id: 22276
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: linux-node-network
+spec:
+  allowCrossNamespaceImport: true
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_Prometheus
+  folder: integration---linux-node
+  grafanaCom:
+    id: 22273
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: linux-node-overview
+spec:
+  allowCrossNamespaceImport: true
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_Prometheus
+  folder: integration---linux-node
+  grafanaCom:
+    id: 22272
+    revision: 1
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
   name: system-node-feature-discovery
 spec:
   allowCrossNamespaceImport: true

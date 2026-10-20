@@ -50,6 +50,24 @@ configMapGenerator:
   - name: agent-coding
     files:
       - agent-coding.json
+  - name: genai-observability
+    files:
+      - genai-observability.json
+  - name: genai-agent-observability
+    files:
+      - genai-agent-observability.json
+  - name: genai-evaluations
+    files:
+      - genai-evaluations.json
+  - name: mcp-observability
+    files:
+      - mcp-observability.json
+  - name: vectordb-observability
+    files:
+      - vectordb-observability.json
+  - name: gpu-monitoring
+    files:
+      - gpu-monitoring.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

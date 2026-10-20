@@ -492,6 +492,39 @@
         "x": 0,
         "y": 5
       },
+      "id": 18,
+      "options": {
+        "content": "<style>\n.tab-pill {\n  transition: all 0.15s ease;\n}\n.tab-pill:hover {\n  background: #2a313d !important;\n  color: #ffffff !important;\n}\n.tab-pill.active {\n  background: #2563eb !important;\n  color: #ffffff !important;\n  border-color: #60a5fa !important;\n  font-weight: 700 !important;\n  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4) !important;\n}\n</style>\n<div style=\"font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 100%; box-sizing: border-box; padding: 0 2px;\">\n  <div style=\"display: flex; align-items: center; gap: 8px;\">\n    <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Sections:</span>\n    <span id=\"active-view-badge\" style=\"background: #3274d9; color: #ffffff; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase;\">Active: Overview</span>\n    <button type=\"button\" class=\"tab-pill\" data-section=\"Overview\" onclick=\"jumpToSection('Overview', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u229e Overview</button><button type=\"button\" class=\"tab-pill\" data-section=\"Tools\" onclick=\"jumpToSection('Tools', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\ud83d\udee0\ufe0f Tools & Drilldowns</button><button type=\"button\" class=\"tab-pill\" data-section=\"Usage & cost\" onclick=\"jumpToSection('Usage & cost', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\ud83d\udcca Usage & cost</button><button type=\"button\" class=\"tab-pill\" data-section=\"Performance & reliability\" onclick=\"jumpToSection('Performance & reliability', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u23f1\ufe0f Performance & reliability</button><button type=\"button\" class=\"tab-pill\" data-section=\"Quality & evaluation\" onclick=\"jumpToSection('Quality & evaluation', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u2714\ufe0f Quality & evaluation</button>\n  </div>\n  <div style=\"display: flex; align-items: center; gap: 6px; font-size: 10px; color: #6e7681;\">\n    <span>Cloud Parity \u00b7 Multi-Row Architecture</span>\n  </div>\n</div>\n<script>\n(function() {\n  window.jumpToSection = function(name, evt) {\n    if (evt) {\n      if (evt.preventDefault) evt.preventDefault();\n      if (evt.stopPropagation) evt.stopPropagation();\n    }\n    // Update pills styling\n    document.querySelectorAll('.tab-pill').forEach(el => {\n      if (el.getAttribute('data-section') === name) {\n        el.classList.add('active');\n      } else {\n        el.classList.remove('active');\n      }\n    });\n\n    const badge = document.getElementById('active-view-badge');\n    if (badge) badge.textContent = 'Active: ' + name;\n\n    const rowMapping = {\n      'Overview': 'Overview',\n      'Tools': 'Tools',\n      'Usage & cost': 'Usage & cost',\n      'Performance & reliability': 'Performance & reliability',\n      'Quality & evaluation': 'Quality & evaluation'\n    };\n    const targetPattern = rowMapping[name] || name;\n\n    // 1. Expand target row if currently collapsed in Grafana Scenes\n    try {\n      const grid = window.__grafanaSceneContext?._state?.body?._state?.grid;\n      if (grid && Array.isArray(grid.state.children)) {\n        for (const child of grid.state.children) {\n          const title = child.state?.title || '';\n          if (child.state && typeof child.state.isCollapsed === 'boolean') {\n            if (title.includes(targetPattern) && child.state.isCollapsed) {\n              grid.toggleRow(child);\n            }\n          }\n        }\n      }\n    } catch(e) {}\n\n    // 2. Smoothly scroll directly to the row\n    if (name === 'Overview') {\n      window.scrollTo({ top: 0, behavior: 'smooth' });\n    } else {\n      try {\n        const allRows = Array.from(document.querySelectorAll('button, [class*=\"row-title\"], [data-testid*=\"dashboard-row\"]'));\n        const targetEl = allRows.find(el => (el.textContent || '').includes(targetPattern));\n        if (targetEl) {\n          const y = targetEl.getBoundingClientRect().top + window.pageYOffset - 60;\n          window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });\n        }\n      } catch(e) {}\n    }\n\n    // 3. Update URL without reload\n    try {\n      const url = new URL(window.location);\n      url.searchParams.set('var-analytics_view', name);\n      if (window.history && window.history.replaceState) {\n        window.history.replaceState(null, '', url.toString());\n      }\n    } catch(e) {}\n\n    return false;\n  };\n\n  // Aliases for compatibility\n  window.selectView = window.jumpToSection;\n  window.jumpSection = window.jumpToSection;\n\n  // Initial highlight on page load\n  setTimeout(() => {\n    const urlParams = new URLSearchParams(window.location.search);\n    const viewParam = urlParams.get('var-analytics_view') || 'Overview';\n    document.querySelectorAll('.tab-pill').forEach(el => {\n      if (el.getAttribute('data-section') === viewParam) {\n        el.classList.add('active');\n      } else {\n        el.classList.remove('active');\n      }\n    });\n    const badge = document.getElementById('active-view-badge');\n    if (badge) badge.textContent = 'Active: ' + viewParam;\n  }, 150);\n})();\n</script>",
+        "mode": "html"
+      },
+      "pluginVersion": "11.1.0",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 19,
+      "panels": [],
+      "title": "\u229e Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "grafana",
+        "uid": "-- Grafana --"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
       "id": 20,
       "options": {
         "content": "<div style=\"display: flex; align-items: center; gap: 12px; background: rgba(123, 63, 228, 0.08); border: 1px solid rgba(123, 63, 228, 0.25); border-left: 4px solid #8f5fe8; padding: 8px 16px; border-radius: 6px; font-family: Inter, sans-serif; font-size: 13px; color: #e1d8f7;\">\n  <div style=\"background: #8f5fe8; color: #ffffff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;\">Needs Attention</div>\n  <div style=\"flex: 1; line-height: 1.4;\"><strong>\u00b7 In the last 1 hour:</strong> No items crossed your attention thresholds in this time range. All monitored agent endpoints and models operating within healthy bounds.</div>\n</div>",
@@ -507,14 +540,14 @@
         "uid": "-- Grafana --"
       },
       "gridPos": {
-        "h": 1,
+        "h": 2,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 10
       },
       "id": 21,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3px 0; height: 100%;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px;\">Usage & Cost View:</span>\n  <span style=\"background: #3274d9; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 8px;\">Active: ${metric_tab}</span>\n  <a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Requests&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Requests</a><a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Tokens&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Tokens</a><a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Cost&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Cost</a><a href=\"/d/agent-analytics/agent-analytics?var-metric_tab=Cache%20hit%20rate&var-perf_tab=${perf_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Cache hit rate</a>\n</div>",
+        "content": "<style>\n.metric-pill:hover, .bd-pill:hover, .donut-pill:hover {\n  background: #2a313d !important;\n  color: #ffffff !important;\n}\n.metric-pill[data-metric=\"${metric_tab}\"] {\n  background: #3b82f6 !important;\n  color: #ffffff !important;\n  border-color: #93c5fd !important;\n  font-weight: 700 !important;\n}\n.bd-pill[data-bd=\"${breakdown_by}\"] {\n  background: #10b981 !important;\n  color: #ffffff !important;\n  border-color: #6ee7b7 !important;\n  font-weight: 700 !important;\n}\n.donut-pill[data-donut=\"${cost_donut_by}\"] {\n  background: #8b5cf6 !important;\n  color: #ffffff !important;\n  border-color: #c4b5fd !important;\n  font-weight: 700 !important;\n}\n</style>\n<div style=\"font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 100%; box-sizing: border-box;\">\n  <div style=\"display: flex; align-items: center; gap: 6px;\">\n    <span style=\"background: #3e4c63; color: #ffffff; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-right: 2px;\">${metric_tab}</span>\n    <button type=\"button\" class=\"metric-pill\" data-metric=\"Requests\" onclick=\"setParam('var-metric_tab', 'Requests', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Requests</button><button type=\"button\" class=\"metric-pill\" data-metric=\"Tokens\" onclick=\"setParam('var-metric_tab', 'Tokens', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Tokens</button><button type=\"button\" class=\"metric-pill\" data-metric=\"Cost\" onclick=\"setParam('var-metric_tab', 'Cost', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Cost</button><button type=\"button\" class=\"metric-pill\" data-metric=\"Cache hit rate\" onclick=\"setParam('var-metric_tab', 'Cache hit rate', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Cache hit rate</button>\n    <div style=\"margin-left: 12px; display: flex; align-items: center; gap: 4px;\">\n      <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.03em;\">Break down by:</span>\n      <span style=\"background: #2563eb; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 700;\">${breakdown_by}</span>\n      <button type=\"button\" class=\"bd-pill\" data-bd=\"None\" onclick=\"setParam('var-breakdown_by', 'None', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">None</button><button type=\"button\" class=\"bd-pill\" data-bd=\"Provider\" onclick=\"setParam('var-breakdown_by', 'Provider', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Provider</button><button type=\"button\" class=\"bd-pill\" data-bd=\"Model\" onclick=\"setParam('var-breakdown_by', 'Model', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Model</button><button type=\"button\" class=\"bd-pill\" data-bd=\"Agent\" onclick=\"setParam('var-breakdown_by', 'Agent', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Agent</button>\n    </div>\n  </div>\n  <div style=\"display: flex; align-items: center; gap: 4px;\">\n    <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.03em;\">Donut slice by:</span>\n    <span style=\"background: #8b5cf6; color: #ffffff; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 700;\">${cost_donut_by}</span>\n    <button type=\"button\" class=\"donut-pill\" data-donut=\"Agent\" onclick=\"setParam('var-cost_donut_by', 'Agent', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Agent</button><button type=\"button\" class=\"donut-pill\" data-donut=\"Model\" onclick=\"setParam('var-cost_donut_by', 'Model', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Model</button><button type=\"button\" class=\"donut-pill\" data-donut=\"Provider\" onclick=\"setParam('var-cost_donut_by', 'Provider', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #2b303c; background: #181b1f; color: #a6b2c4; margin-right: 4px;\">Provider</button>\n  </div>\n</div>\n<script>\n  window.setParam = function(key, val, evt) {\n    if (evt) {\n      if (evt.preventDefault) evt.preventDefault();\n      if (evt.stopPropagation) evt.stopPropagation();\n    }\n    const cleanKey = key.replace(/^var-/, '');\n    try {\n      const sceneVars = window.__grafanaSceneContext?._state?.$variables?._state?.variables;\n      if (sceneVars) {\n        const targetVar = sceneVars.find(v => v._state?.name === cleanKey);\n        if (targetVar && typeof targetVar.changeValueTo === 'function') {\n          targetVar.changeValueTo(val);\n        }\n      }\n    } catch(e) {}\n    try {\n      const url = new URL(window.location);\n      url.searchParams.set('var-' + cleanKey, val);\n      if (window.history && window.history.replaceState) {\n        window.history.replaceState(null, '', url.toString());\n      }\n    } catch(e) {}\n    return false;\n  };\n</script>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -578,7 +611,43 @@
           {
             "matcher": {
               "id": "byFrameRefID",
-              "options": "Cost"
+              "options": "Cost_None"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Cost_Provider"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Cost_Model"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "Cost_Agent"
             },
             "properties": [
               {
@@ -605,7 +674,7 @@
         "h": 8,
         "w": 15,
         "x": 0,
-        "y": 8
+        "y": 12
       },
       "id": 22,
       "options": {
@@ -631,10 +700,10 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (gen_ai_agent_name, gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[2m])) or sum by (model)(rate(litellm_requests_metric_total[2m]))) and on() (label_replace(vector(1), \"tab\", \"Requests\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
-          "legendFormat": "{{gen_ai_agent_name}} ({{gen_ai_request_model}})",
+          "expr": "(sum(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Requests\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"None\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "All Requests",
           "range": true,
-          "refId": "Requests"
+          "refId": "Requests_None"
         },
         {
           "datasource": {
@@ -642,10 +711,10 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[2m])) or sum by (model)(rate(litellm_total_tokens_metric_total[2m]))) and on() (label_replace(vector(1), \"tab\", \"Tokens\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
-          "legendFormat": "Tokens: {{gen_ai_agent_name}}",
+          "expr": "(sum by (gen_ai_provider_name)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum by (api_provider)(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Requests\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Provider\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "{{gen_ai_provider_name}}{{api_provider}}",
           "range": true,
-          "refId": "Tokens"
+          "refId": "Requests_Provider"
         },
         {
           "datasource": {
@@ -653,10 +722,10 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[5m])) or sum by (model)(rate(litellm_spend_metric_total[5m]))) and on() (label_replace(vector(1), \"tab\", \"Cost\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
-          "legendFormat": "Cost: {{gen_ai_agent_name}}",
+          "expr": "(sum by (gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum by (model)(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Requests\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Model\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "{{gen_ai_request_model}}{{model}}",
           "range": true,
-          "refId": "Cost"
+          "refId": "Requests_Model"
         },
         {
           "datasource": {
@@ -664,13 +733,112 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(clamp_max((sum(rate(litellm_input_cached_tokens_metric_total[5m])) / (sum(rate(litellm_total_tokens_metric_total[5m])) + 0.001) * 100) or (sum(rate(openlit_cache_hit_total[5m])) / (sum(rate(openlit_requests_total[5m])) + 0.001) * 100) or vector(5.03), 100)) and on() (label_replace(vector(1), \"tab\", \"Cache hit rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum by (model)(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Requests\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Agent\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "{{gen_ai_agent_name}}{{model}}",
+          "range": true,
+          "refId": "Requests_Agent"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Tokens\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"None\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "All Tokens",
+          "range": true,
+          "refId": "Tokens_None"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_provider_name)(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum by (api_provider)(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Tokens\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Provider\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Tokens: {{gen_ai_provider_name}}{{api_provider}}",
+          "range": true,
+          "refId": "Tokens_Provider"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_request_model)(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum by (model)(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Tokens\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Model\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Tokens: {{gen_ai_request_model}}{{model}}",
+          "range": true,
+          "refId": "Tokens_Model"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum by (model)(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab1\", \"Tokens\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Agent\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Tokens: {{gen_ai_agent_name}}{{model}}",
+          "range": true,
+          "refId": "Tokens_Agent"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab1\", \"Cost\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"None\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "All Cost",
+          "range": true,
+          "refId": "Cost_None"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_provider_name)(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum by (api_provider)(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum by (api_provider)(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab1\", \"Cost\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Provider\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Cost: {{gen_ai_provider_name}}{{api_provider}}",
+          "range": true,
+          "refId": "Cost_Provider"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_request_model)(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab1\", \"Cost\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Model\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Cost: {{gen_ai_request_model}}{{model}}",
+          "range": true,
+          "refId": "Cost_Model"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab1\", \"Cost\", \"\", \"\") and on(tab1) label_replace(vector(1), \"tab1\", \"${metric_tab}\", \"\", \"\")) and on() (label_replace(vector(1), \"tab2\", \"Agent\", \"\", \"\") and on(tab2) label_replace(vector(1), \"tab2\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Cost: {{gen_ai_agent_name}}{{model}}",
+          "range": true,
+          "refId": "Cost_Agent"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(clamp_max((sum(rate(litellm_input_cached_tokens_metric_total[$__rate_interval])) / (sum(rate(litellm_total_tokens_metric_total[$__rate_interval])) + 0.001) * 100) or (sum(rate(openlit_cache_hit_total[$__rate_interval])) / (sum(rate(openlit_requests_total[$__rate_interval])) + 0.001) * 100) or vector(5.03), 100)) and on() (label_replace(vector(1), \"tab\", \"Cache hit rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
           "legendFormat": "Cache Hit Rate %",
           "range": true,
           "refId": "CacheHitRate"
         }
       ],
-      "title": "$metric_tab over time",
+      "title": "$metric_tab over time (Breakdown: $breakdown_by)",
       "type": "timeseries"
     },
     {
@@ -681,99 +849,53 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "custom": {
-            "align": "auto",
-            "displayMode": "auto",
-            "inspect": false
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
+          "unit": "currencyUSD"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "Cost"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "currencyUSD"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Cost"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "currencyUSD"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "CacheHitRate"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "CacheHitRate"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "percent"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 9,
         "x": 15,
-        "y": 8
+        "y": 12
       },
       "id": 23,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
+        "displayLabels": [
+          "name",
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": [
+            "percent",
+            "value"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
             "sum"
           ],
-          "show": false
+          "fields": "",
+          "values": false
         },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Value"
-          }
-        ]
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
       "pluginVersion": "11.1.0",
       "targets": [
@@ -783,11 +905,12 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range])) or sum by (model)(increase(litellm_requests_metric_total[$__range]))) and on() (label_replace(vector(1), \"tab\", \"Requests\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
-          "format": "table",
+          "expr": "((sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) > 0) or (sum by (model)(increase(litellm_spend_metric_total[$__range])) > 0) or (sum by (model)(increase(litellm_requests_metric_total[$__range])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Agent\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${cost_donut_by}\", \"\", \"\"))",
+          "format": "time_series",
           "instant": true,
+          "legendFormat": "{{gen_ai_agent_name}}{{model}}",
           "range": false,
-          "refId": "Requests"
+          "refId": "Agent"
         },
         {
           "datasource": {
@@ -795,11 +918,12 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_client_token_usage_total[$__range])) or sum by (model)(increase(litellm_total_tokens_metric_total[$__range]))) and on() (label_replace(vector(1), \"tab\", \"Tokens\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
-          "format": "table",
+          "expr": "((sum by (gen_ai_request_model)(increase(gen_ai_usage_cost_USD_total[$__range])) > 0) or (sum by (model)(increase(litellm_spend_metric_total[$__range])) > 0) or (sum by (model)(increase(litellm_requests_metric_total[$__range])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Model\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${cost_donut_by}\", \"\", \"\"))",
+          "format": "time_series",
           "instant": true,
+          "legendFormat": "{{gen_ai_request_model}}{{model}}",
           "range": false,
-          "refId": "Tokens"
+          "refId": "Model"
         },
         {
           "datasource": {
@@ -807,27 +931,16 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) or sum by (model)(increase(litellm_spend_metric_total[$__range]))) and on() (label_replace(vector(1), \"tab\", \"Cost\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
-          "format": "table",
+          "expr": "((sum by (gen_ai_provider_name)(increase(gen_ai_usage_cost_USD_total[$__range])) > 0) or (sum by (api_provider)(increase(litellm_spend_metric_total[$__range])) > 0) or (sum by (api_provider)(increase(litellm_requests_metric_total[$__range])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Provider\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${cost_donut_by}\", \"\", \"\"))",
+          "format": "time_series",
           "instant": true,
+          "legendFormat": "{{gen_ai_provider_name}}{{api_provider}}",
           "range": false,
-          "refId": "Cost"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "(clamp_max((sum by (model)(increase(litellm_input_cached_tokens_metric_total[$__range])) / (sum by (model)(increase(litellm_total_tokens_metric_total[$__range])) + 0.001) * 100) or vector(5.03), 100)) and on() (label_replace(vector(1), \"tab\", \"Cache hit rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${metric_tab}\", \"\", \"\"))",
-          "format": "table",
-          "instant": true,
-          "range": false,
-          "refId": "CacheHitRate"
+          "refId": "Provider"
         }
       ],
-      "title": "$metric_tab by agent (Breakdown)",
-      "type": "table"
+      "title": "Cost by $cost_donut_by",
+      "type": "piechart"
     },
     {
       "datasource": {
@@ -835,14 +948,14 @@
         "uid": "-- Grafana --"
       },
       "gridPos": {
-        "h": 1,
+        "h": 2,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 20
       },
       "id": 24,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3px 0; height: 100%;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px;\">Performance & Reliability View:</span>\n  <span style=\"background: #3274d9; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 8px;\">Active: ${perf_tab}</span>\n  <a href=\"/d/agent-analytics/agent-analytics?var-perf_tab=Error%20rate&var-metric_tab=${metric_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Error rate</a><a href=\"/d/agent-analytics/agent-analytics?var-perf_tab=Latency&var-metric_tab=${metric_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Latency</a><a href=\"/d/agent-analytics/agent-analytics?var-perf_tab=Eval%20pass%20rate&var-metric_tab=${metric_tab}&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Eval pass rate</a>\n</div>",
+        "content": "<style>\n.perf-pill {\n  transition: all 0.15s ease;\n}\n.perf-pill:hover {\n  background: #2a313d !important;\n  color: #ffffff !important;\n}\n.perf-pill[data-perf=\"${perf_tab}\"] {\n  background: #2563eb !important;\n  color: #ffffff !important;\n  border-color: #3b82f6 !important;\n  font-weight: 700 !important;\n}\n</style>\n<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3px 0; height: 100%;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px;\">Performance & Reliability View:</span>\n  <span style=\"background: #3274d9; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 8px;\">Active: ${perf_tab}</span>\n  <button type=\"button\" class=\"perf-pill\" data-perf=\"Error rate\" onclick=\"setParam('var-perf_tab', 'Error rate', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Error rate</button><button type=\"button\" class=\"perf-pill\" data-perf=\"Latency\" onclick=\"setParam('var-perf_tab', 'Latency', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Latency</button><button type=\"button\" class=\"perf-pill\" data-perf=\"Eval pass rate\" onclick=\"setParam('var-perf_tab', 'Eval pass rate', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Eval pass rate</button>\n</div>\n<script>\nwindow.setParam = window.setParam || function(key, val, evt) {\n  if (evt) {\n    if (evt.preventDefault) evt.preventDefault();\n    if (evt.stopPropagation) evt.stopPropagation();\n  }\n  const cleanKey = key.replace(/^var-/, '');\n\n  try {\n    document.querySelectorAll('.perf-pill').forEach(el => {\n      const isMatch = el.getAttribute('data-perf') === val;\n      el.style.setProperty('background', isMatch ? '#2563eb' : '#1c2027', 'important');\n      el.style.setProperty('color', isMatch ? '#ffffff' : '#a6b2c4', 'important');\n      el.style.setProperty('border-color', isMatch ? '#3b82f6' : '#333842', 'important');\n      el.style.setProperty('font-weight', isMatch ? '700' : '600', 'important');\n    });\n  } catch(e) {}\n\n  try {\n    const sceneVars = window.__grafanaSceneContext?._state?.$variables?._state?.variables;\n    if (sceneVars) {\n      const targetVar = sceneVars.find(v => v._state?.name === cleanKey);\n      if (targetVar && typeof targetVar.changeValueTo === 'function') {\n        targetVar.changeValueTo(val);\n        return false;\n      }\n    }\n  } catch(e) {}\n\n    // 3. Update URL in address bar without reload\n    try {\n      const url = new URL(window.location);\n      url.searchParams.set('var-' + cleanKey, val);\n      if (window.history && window.history.replaceState) {\n        window.history.replaceState(null, '', url.toString());\n      }\n    } catch(e) {}\n\n    return false;\n  };\n</script>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -921,7 +1034,7 @@
         "h": 8,
         "w": 15,
         "x": 0,
-        "y": 17
+        "y": 22
       },
       "id": 25,
       "options": {
@@ -947,7 +1060,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[2m])) / sum by (model)(rate(litellm_deployment_total_requests_total[2m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "expr": "(clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__rate_interval])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[$__rate_interval])) / sum by (model)(rate(litellm_deployment_total_requests_total[$__rate_interval])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
           "legendFormat": "Error Rate %: {{gen_ai_agent_name}}{{model}}",
           "range": true,
           "refId": "ErrorRate"
@@ -958,7 +1071,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))) >= 0) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "expr": "(((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[$__rate_interval]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[$__rate_interval])))) > 0)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
           "legendFormat": "P95 Latency: {{gen_ai_agent_name}}{{model}}",
           "range": true,
           "refId": "Latency"
@@ -969,7 +1082,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(agento11y_eval_scores_total{passed=\"true\"}[5m])) / sum by (gen_ai_agent_name)(rate(agento11y_eval_executions_total[5m])) * 100) or vector(100), 100)) and on() (label_replace(vector(1), \"tab\", \"Eval pass rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "expr": "(clamp_max((sum by (gen_ai_agent_name)(rate(agento11y_eval_scores_total{passed=\"true\"}[$__rate_interval])) / sum by (gen_ai_agent_name)(rate(agento11y_eval_executions_total[$__rate_interval])) * 100) or vector(100), 100)) and on() (label_replace(vector(1), \"tab\", \"Eval pass rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
           "legendFormat": "Eval Pass Rate %: {{gen_ai_agent_name}}",
           "range": true,
           "refId": "EvalPassRate"
@@ -1103,7 +1216,7 @@
         "h": 8,
         "w": 9,
         "x": 15,
-        "y": 17
+        "y": 22
       },
       "id": 26,
       "options": {
@@ -1125,6 +1238,19 @@
         ]
       },
       "pluginVersion": "11.1.0",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "Value": "$perf_tab"
+            }
+          }
+        }
+      ],
       "targets": [
         {
           "datasource": {
@@ -1132,35 +1258,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[5m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[5m])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[5m])) / sum by (model)(rate(litellm_deployment_total_requests_total[5m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
+          "expr": "((clamp_max((sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__range])) / (sum by (gen_ai_agent_name)(increase(gen_ai_client_operation_duration_seconds_count[$__range])) + 0.001) * 100) or (sum by (model)(increase(litellm_deployment_failure_responses_total[$__range])) / (sum by (model)(increase(litellm_deployment_total_requests_total[$__range])) + 0.001) * 100) or (sum by (model)(increase(litellm_requests_metric_total[$__range])) * 0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\")))\nor\n((((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[$__range]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[$__range])))) > 0)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\")))\nor\n((clamp_max((sum by (gen_ai_agent_name)(increase(agento11y_eval_scores_total{passed=\"true\"}[$__range])) / (sum by (gen_ai_agent_name)(increase(agento11y_eval_executions_total[$__range])) + 0.001) * 100) or (sum by (model)(increase(litellm_requests_metric_total[$__range])) * 0 + 100), 100)) and on() (label_replace(vector(1), \"tab\", \"Eval pass rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\")))",
           "format": "table",
           "instant": true,
           "range": false,
-          "refId": "ErrorRate"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "(((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))) >= 0) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
-          "format": "table",
-          "instant": true,
-          "range": false,
-          "refId": "Latency"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(agento11y_eval_scores_total{passed=\"true\"}[5m])) / sum by (gen_ai_agent_name)(rate(agento11y_eval_executions_total[5m])) * 100) or vector(100), 100)) and on() (label_replace(vector(1), \"tab\", \"Eval pass rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${perf_tab}\", \"\", \"\"))",
-          "format": "table",
-          "instant": true,
-          "range": false,
-          "refId": "EvalPassRate"
+          "refId": "A"
         }
       ],
       "title": "$perf_tab by agent (Breakdown)",
@@ -1291,7 +1393,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 30
       },
       "id": 27,
       "options": {
@@ -1450,6 +1552,19 @@
       "type": "table"
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "id": 32,
+      "panels": [],
+      "title": "\ud83d\udee0\ufe0f Tools, Conversations, Evaluations & Experiments",
+      "type": "row"
+    },
+    {
       "datasource": {
         "type": "grafana",
         "uid": "-- Grafana --"
@@ -1458,7 +1573,7 @@
         "h": 5,
         "w": 6,
         "x": 0,
-        "y": 33
+        "y": 39
       },
       "id": 28,
       "options": {
@@ -1478,7 +1593,7 @@
         "h": 5,
         "w": 6,
         "x": 6,
-        "y": 33
+        "y": 39
       },
       "id": 29,
       "options": {
@@ -1498,7 +1613,7 @@
         "h": 5,
         "w": 6,
         "x": 12,
-        "y": 33
+        "y": 39
       },
       "id": 30,
       "options": {
@@ -1518,7 +1633,7 @@
         "h": 5,
         "w": 6,
         "x": 18,
-        "y": 33
+        "y": 39
       },
       "id": 31,
       "options": {
@@ -1528,6 +1643,2329 @@
       "pluginVersion": "11.1.0",
       "transparent": true,
       "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 44
+      },
+      "id": 34,
+      "panels": [],
+      "title": "\ud83d\udcca Usage & cost",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 45
+      },
+      "id": 35,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"None\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "All Requests",
+          "range": true,
+          "refId": "Req_None"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_provider_name)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum by (api_provider)(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"Provider\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "{{gen_ai_provider_name}}{{api_provider}}",
+          "range": true,
+          "refId": "Req_Provider"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum by (model)(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"Model\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "{{gen_ai_request_model}}{{model}}",
+          "range": true,
+          "refId": "Req_Model"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) or sum by (model)(rate(litellm_requests_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"Agent\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "{{gen_ai_agent_name}}{{model}}",
+          "range": true,
+          "refId": "Req_Agent"
+        }
+      ],
+      "title": "Requests over time (Breakdown: $breakdown_by)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 45
+      },
+      "id": 36,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(gen_ai_client_operation_duration_seconds_count[$__range])) or sum(increase(litellm_requests_metric_total[$__range])) or vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Requests",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 53
+      },
+      "id": 37,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"None\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Total Cost",
+          "range": true,
+          "refId": "Cost_None"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_provider_name)(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum by (api_provider)(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum by (api_provider)(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Provider\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Cost: {{gen_ai_provider_name}}{{api_provider}}",
+          "range": true,
+          "refId": "Cost_Provider"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_request_model)(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Model\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Cost: {{gen_ai_request_model}}{{model}}",
+          "range": true,
+          "refId": "Cost_Model"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_agent_name)(rate(gen_ai_usage_cost_USD_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_spend_metric_total[$__rate_interval])) > 0) or (sum by (model)(rate(litellm_requests_metric_total[$__rate_interval])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Agent\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Cost: {{gen_ai_agent_name}}{{model}}",
+          "range": true,
+          "refId": "Cost_Agent"
+        }
+      ],
+      "title": "Estimated cost over time (Breakdown: $breakdown_by)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "unit": "currencyUSD"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 53
+      },
+      "id": 38,
+      "options": {
+        "displayLabels": [
+          "name",
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": [
+            "percent",
+            "value"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_agent_name)(increase(gen_ai_usage_cost_USD_total[$__range])) > 0) or (sum by (model)(increase(litellm_spend_metric_total[$__range])) > 0) or (sum by (model)(increase(litellm_requests_metric_total[$__range])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Agent\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${cost_donut_by}\", \"\", \"\"))",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{gen_ai_agent_name}}{{model}}",
+          "range": false,
+          "refId": "Agent"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_request_model)(increase(gen_ai_usage_cost_USD_total[$__range])) > 0) or (sum by (model)(increase(litellm_spend_metric_total[$__range])) > 0) or (sum by (model)(increase(litellm_requests_metric_total[$__range])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Model\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${cost_donut_by}\", \"\", \"\"))",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{gen_ai_request_model}}{{model}}",
+          "range": false,
+          "refId": "Model"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((sum by (gen_ai_provider_name)(increase(gen_ai_usage_cost_USD_total[$__range])) > 0) or (sum by (api_provider)(increase(litellm_spend_metric_total[$__range])) > 0) or (sum by (api_provider)(increase(litellm_requests_metric_total[$__range])) * 0.0001)) and on() (label_replace(vector(1), \"tab\", \"Provider\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${cost_donut_by}\", \"\", \"\"))",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{gen_ai_provider_name}}{{api_provider}}",
+          "range": false,
+          "refId": "Provider"
+        }
+      ],
+      "title": "Estimated cost by $cost_donut_by",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 61
+      },
+      "id": 39,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"None\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "All Tokens",
+          "range": true,
+          "refId": "Tokens_None"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_provider_name)(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum by (api_provider)(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"Provider\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Tokens: {{gen_ai_provider_name}}{{api_provider}}",
+          "range": true,
+          "refId": "Tokens_Provider"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_request_model)(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum by (model)(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"Model\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Tokens: {{gen_ai_request_model}}{{model}}",
+          "range": true,
+          "refId": "Tokens_Model"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(sum by (gen_ai_agent_name)(rate(gen_ai_client_token_usage_total[$__rate_interval])) or sum by (model)(rate(litellm_total_tokens_metric_total[$__rate_interval]))) and on() (label_replace(vector(1), \"tab\", \"Agent\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Tokens: {{gen_ai_agent_name}}{{model}}",
+          "range": true,
+          "refId": "Tokens_Agent"
+        }
+      ],
+      "title": "Tokens over time (Breakdown: $breakdown_by)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 61
+      },
+      "id": 40,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(gen_ai_client_token_usage_total[$__range])) or sum(increase(litellm_total_tokens_metric_total[$__range])) or vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Total Tokens",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 69
+      },
+      "id": 41,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(gen_ai_client_token_usage_total{token_type=\"input\"}[$__rate_interval])) or sum(rate(litellm_input_tokens_metric_total[$__rate_interval]))",
+          "legendFormat": "Prompt Tokens (Input)",
+          "range": true,
+          "refId": "PromptTokens"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(gen_ai_client_token_usage_total{token_type=\"output\"}[$__rate_interval])) or sum(rate(litellm_output_tokens_metric_total[$__rate_interval]))",
+          "legendFormat": "Completion Tokens (Output)",
+          "range": true,
+          "refId": "CompletionTokens"
+        }
+      ],
+      "title": "Total tokens over time by type",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 69
+      },
+      "id": 42,
+      "options": {
+        "displayLabels": [
+          "name",
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": [
+            "percent",
+            "value"
+          ]
+        },
+        "pieType": "donut",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(litellm_input_tokens_metric_total[$__range])) or sum(increase(gen_ai_client_token_usage_total{token_type=\"input\"}[$__range]))",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "Prompt (Input)",
+          "range": false,
+          "refId": "Prompt"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(litellm_output_tokens_metric_total[$__range])) or sum(increase(gen_ai_client_token_usage_total{token_type=\"output\"}[$__range]))",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "Completion (Output)",
+          "range": false,
+          "refId": "Completion"
+        }
+      ],
+      "title": "Tokens by type",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 77
+      },
+      "id": 43,
+      "options": {
+        "minVizHeight": 10,
+        "minVizWidth": 10,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum(rate(litellm_input_cached_tokens_metric_total[$__rate_interval])) / (sum(rate(litellm_total_tokens_metric_total[$__rate_interval])) + 0.001) * 100) or (sum(rate(openlit_cache_hit_total[$__rate_interval])) / (sum(rate(openlit_requests_total[$__rate_interval])) + 0.001) * 100) or vector(5.03), 100)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Cache hit rate by agent",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 50
+              },
+              {
+                "color": "green",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 77
+      },
+      "id": 44,
+      "options": {
+        "minVizHeight": 10,
+        "minVizWidth": 10,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum(rate(litellm_input_cached_tokens_metric_total[$__rate_interval])) / (sum(rate(litellm_total_tokens_metric_total[$__rate_interval])) + 0.001) * 100) or vector(5.03), 100)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Cache hit rate by model",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 84
+      },
+      "id": 45,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(litellm_input_cached_tokens_metric_total[$__range])) or vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Cache read tokens",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 84
+      },
+      "id": 46,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(litellm_input_cached_tokens_metric_total[$__rate_interval])) or sum(rate(openlit_cache_hit_total[$__rate_interval]))",
+          "legendFormat": "Cache Read Tokens",
+          "range": true,
+          "refId": "CacheRead"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(openlit_cache_write_total[$__rate_interval])) or vector(0)",
+          "legendFormat": "Cache Write Tokens",
+          "range": true,
+          "refId": "CacheWrite"
+        }
+      ],
+      "title": "Cache read vs write by agent over time",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 91
+      },
+      "id": 48,
+      "panels": [],
+      "title": "\u23f1\ufe0f Performance & reliability",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 92
+      },
+      "id": 50,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(clamp_max((sum(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__rate_interval])) / sum(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) * 100) or (sum(rate(litellm_deployment_failure_responses_total[$__rate_interval])) / sum(rate(litellm_deployment_total_requests_total[$__rate_interval])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"None\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Error Rate % (All)",
+          "range": true,
+          "refId": "Err_None"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(clamp_max((sum by (gen_ai_provider_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__rate_interval])) / sum by (gen_ai_provider_name)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) * 100) or (sum by (api_provider)(rate(litellm_deployment_failure_responses_total[$__rate_interval])) / sum by (api_provider)(rate(litellm_deployment_total_requests_total[$__rate_interval])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Provider\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Error Rate %: {{gen_ai_provider_name}}{{api_provider}}",
+          "range": true,
+          "refId": "Err_Provider"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(clamp_max((sum by (gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__rate_interval])) / sum by (gen_ai_request_model)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[$__rate_interval])) / sum by (model)(rate(litellm_deployment_total_requests_total[$__rate_interval])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Model\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Error Rate %: {{gen_ai_request_model}}{{model}}",
+          "range": true,
+          "refId": "Err_Model"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "(clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__rate_interval])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[$__rate_interval])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[$__rate_interval])) / sum by (model)(rate(litellm_deployment_total_requests_total[$__rate_interval])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Agent\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${breakdown_by}\", \"\", \"\"))",
+          "legendFormat": "Error Rate %: {{gen_ai_agent_name}}{{model}}",
+          "range": true,
+          "refId": "Err_Agent"
+        }
+      ],
+      "title": "Error rate over time (Breakdown: $breakdown_by)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 92
+      },
+      "id": 51,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(litellm_deployment_failure_responses_total[$__range])) or sum(increase(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__range])) or vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Errors by code",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 100
+      },
+      "id": 52,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by (status_code)(rate(litellm_requests_metric_total{status_code=~\"[45].*\"}[$__rate_interval])) or sum by (error_type)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "Error Code: {{status_code}}{{error_type}}",
+          "range": true,
+          "refId": "ErrorsByCode"
+        }
+      ],
+      "title": "Errors by code over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "color-background",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 100
+      },
+      "id": 53,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Error Rate %"
+          }
+        ]
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum by (model)(increase(litellm_deployment_failure_responses_total[$__range])) / (sum by (model)(increase(litellm_deployment_total_requests_total[$__range])) + 0.001) * 100) or (sum by (model)(increase(litellm_requests_metric_total[$__range])) * 0), 100)",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "{{model}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Error rate by agent",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "Value": "Error Rate %"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 104
+      },
+      "id": 54,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((histogram_quantile(0.50, sum by (le)(rate(gen_ai_client_operation_duration_seconds_bucket[$__rate_interval]))) or histogram_quantile(0.50, sum by (le)(rate(litellm_request_total_latency_metric_bucket[$__rate_interval])))) > 0)",
+          "legendFormat": "P50 Latency",
+          "range": true,
+          "refId": "P50"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((histogram_quantile(0.90, sum by (le)(rate(gen_ai_client_operation_duration_seconds_bucket[$__rate_interval]))) or histogram_quantile(0.90, sum by (le)(rate(litellm_request_total_latency_metric_bucket[$__rate_interval])))) > 0)",
+          "legendFormat": "P90 Latency",
+          "range": true,
+          "refId": "P90"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((histogram_quantile(0.95, sum by (le)(rate(gen_ai_client_operation_duration_seconds_bucket[$__rate_interval]))) or histogram_quantile(0.95, sum by (le)(rate(litellm_request_total_latency_metric_bucket[$__rate_interval])))) > 0)",
+          "legendFormat": "P95 Latency",
+          "range": true,
+          "refId": "P95"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((histogram_quantile(0.99, sum by (le)(rate(gen_ai_client_operation_duration_seconds_bucket[$__rate_interval]))) or histogram_quantile(0.99, sum by (le)(rate(litellm_request_total_latency_metric_bucket[$__rate_interval])))) > 0)",
+          "legendFormat": "P99 Latency",
+          "range": true,
+          "refId": "P99"
+        }
+      ],
+      "title": "Latency over time (P50, P90, P95, P99)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 2
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 108
+      },
+      "id": 55,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "((histogram_quantile(0.95, sum by (le)(rate(litellm_llm_api_latency_metric_bucket[$__rate_interval]))) or histogram_quantile(0.95, sum by (le)(rate(gen_ai_server_time_to_first_token_seconds_bucket[$__rate_interval])))) >= 0) or vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Time to First Token (P95 TTFT)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 16,
+        "x": 0,
+        "y": 108
+      },
+      "id": 56,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(gen_ai_client_operation_duration_seconds_count{operation=\"execute_tool\", error_type!=\"\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "Tool Error Rate %",
+          "range": true,
+          "refId": "ToolErr"
+        }
+      ],
+      "title": "Tool error rate over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 16,
+        "y": 108
+      },
+      "id": 57,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "count(sum by (model)(rate(litellm_deployment_failure_responses_total[$__rate_interval])) > 0) or vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Agents with errors",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 112
+      },
+      "id": 58,
+      "panels": [],
+      "title": "\u2714\ufe0f Quality & evaluation",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 113
+      },
+      "id": 60,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum(rate(agento11y_eval_scores_total{passed=\"true\"}[$__rate_interval])) / (sum(rate(agento11y_eval_executions_total[$__rate_interval])) + 0.001) * 100) or vector(100), 100)",
+          "legendFormat": "Pass Rate %",
+          "range": true,
+          "refId": "PassRate"
+        }
+      ],
+      "title": "Pass Rate over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 15,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 113
+      },
+      "id": 61,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(rate(agento11y_eval_executions_total[$__rate_interval])) or vector(0)",
+          "legendFormat": "Evaluations / sec",
+          "range": true,
+          "refId": "EvalVolume"
+        }
+      ],
+      "title": "Evaluation volume over time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 121
+      },
+      "id": 62,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum(increase(agento11y_eval_scores_total{passed=\"true\"}[$__range])) / (sum(increase(agento11y_eval_executions_total[$__range])) + 0.001) * 100) or vector(100), 100)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Pass rate by evaluator",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 121
+      },
+      "id": 63,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(agento11y_eval_executions_total[$__range])) or vector(0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Evaluations by evaluator",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 129
+      },
+      "id": 64,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "clamp_max((sum(increase(agento11y_eval_scores_total{passed=\"true\"}[$__range])) / (sum(increase(agento11y_eval_executions_total[$__range])) + 0.001) * 100) or vector(100), 100)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Experiment pass rate",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 129
+      },
+      "id": 65,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "11.1.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "avg(agento11y_eval_score) or vector(1.0)",
+          "instant": true,
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Experiment headline score",
+      "type": "stat"
     }
   ],
   "refresh": "10s",
@@ -1591,6 +4029,112 @@
         "skipUrlSync": false,
         "sort": 1,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Overview",
+          "value": "Overview"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "View",
+        "multi": false,
+        "name": "analytics_view",
+        "options": [
+          {
+            "selected": true,
+            "text": "Overview",
+            "value": "Overview"
+          },
+          {
+            "selected": false,
+            "text": "Usage & cost",
+            "value": "Usage & cost"
+          },
+          {
+            "selected": false,
+            "text": "Performance & reliability",
+            "value": "Performance & reliability"
+          },
+          {
+            "selected": false,
+            "text": "Quality & evaluation",
+            "value": "Quality & evaluation"
+          }
+        ],
+        "query": "Overview,Usage & cost,Performance & reliability,Quality & evaluation",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Agent",
+          "value": "Agent"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Break down by",
+        "multi": false,
+        "name": "breakdown_by",
+        "options": [
+          {
+            "selected": false,
+            "text": "None",
+            "value": "None"
+          },
+          {
+            "selected": false,
+            "text": "Provider",
+            "value": "Provider"
+          },
+          {
+            "selected": false,
+            "text": "Model",
+            "value": "Model"
+          },
+          {
+            "selected": true,
+            "text": "Agent",
+            "value": "Agent"
+          }
+        ],
+        "query": "None,Provider,Model,Agent",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Agent",
+          "value": "Agent"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "Cost Donut",
+        "multi": false,
+        "name": "cost_donut_by",
+        "options": [
+          {
+            "selected": true,
+            "text": "Agent",
+            "value": "Agent"
+          },
+          {
+            "selected": false,
+            "text": "Model",
+            "value": "Model"
+          },
+          {
+            "selected": false,
+            "text": "Provider",
+            "value": "Provider"
+          }
+        ],
+        "query": "Agent,Model,Provider",
+        "skipUrlSync": false,
+        "type": "custom"
       },
       {
         "current": {
@@ -1677,7 +4221,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Agent Observability",
+  "title": "Agent - Observability",
   "uid": "agent-o11y",
   "version": 1,
   "weekStart": ""

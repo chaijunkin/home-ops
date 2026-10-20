@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/toolhive.stacklok.dev/mcpserver_v1beta1.json
+apiVersion: toolhive.stacklok.dev/v1beta1
+kind: MCPServer
+metadata:
+  name: rea
+spec:
+  image: node:24-alpine
+  transport: stdio
+  groupRef:
+    name: mcp-tools
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 1Gi
+  podTemplateSpec:
+    spec:
+      containers:
+        - name: mcp
+          securityContext:
+            readOnlyRootFilesystem: false
+          command:
+            - npx
+          args:
+            - -y
+            - rea-agents@6.3.0
+            - mcp

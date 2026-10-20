@@ -5,6 +5,7 @@ resources:
   # - ./context7.yaml
   # - ./fli.yaml
   # - ./home-assistant.yaml
-  - ./searxng.yaml
+  # - ./searxng.yaml
   # - ./sparkyfitness.yaml
   # - ./sure.yaml
+  # - ./rea.yaml

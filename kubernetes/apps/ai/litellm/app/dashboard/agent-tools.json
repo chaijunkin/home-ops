@@ -416,7 +416,7 @@
       },
       "id": 20,
       "options": {
-        "content": "<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3px 0; height: 100%;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px;\">Tool Metric:</span>\n  <span style=\"background: #3274d9; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 8px;\">Active: ${tool_metric}</span>\n  <a href=\"/d/agent-tools/agent-tools?var-tool_metric=Executions&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Executions</a><a href=\"/d/agent-tools/agent-tools?var-tool_metric=Error%20rate&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Error rate</a><a href=\"/d/agent-tools/agent-tools?var-tool_metric=Error%20count&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Error count</a><a href=\"/d/agent-tools/agent-tools?var-tool_metric=Latency&var-agent=${agent}&var-model=${model}&${__url_time_range}\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; text-decoration: none; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Latency</a>\n</div>",
+        "content": "<style>\n.perf-pill {\n  transition: all 0.15s ease;\n}\n.perf-pill:hover {\n  background: #2a313d !important;\n  color: #ffffff !important;\n}\n.perf-pill[data-perf=\"${tool_metric}\"] {\n  background: #2563eb !important;\n  color: #ffffff !important;\n  border-color: #3b82f6 !important;\n  font-weight: 700 !important;\n}\n</style>\n<div style=\"display: flex; align-items: center; gap: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 3px 0; height: 100%;\">\n  <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px;\">Tool Metric:</span>\n  <span style=\"background: #3274d9; color: #ffffff; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 8px;\">Active: ${tool_metric}</span>\n  <button type=\"button\" class=\"perf-pill\" data-perf=\"Executions\" onclick=\"setParam('var-tool_metric', 'Executions', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Executions</button><button type=\"button\" class=\"perf-pill\" data-perf=\"Error rate\" onclick=\"setParam('var-tool_metric', 'Error rate', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Error rate</button><button type=\"button\" class=\"perf-pill\" data-perf=\"Error count\" onclick=\"setParam('var-tool_metric', 'Error count', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Error count</button><button type=\"button\" class=\"perf-pill\" data-perf=\"Latency\" onclick=\"setParam('var-tool_metric', 'Latency', event); return false;\" style=\"display: inline-flex; align-items: center; padding: 4px 14px; border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #a6b2c4; margin-right: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">Latency</button>\n</div>\n<script>\nwindow.setParam = window.setParam || function(key, val, evt) {\n  if (evt) {\n    if (evt.preventDefault) evt.preventDefault();\n    if (evt.stopPropagation) evt.stopPropagation();\n  }\n  const cleanKey = key.replace(/^var-/, '');\n\n  try {\n    document.querySelectorAll('.perf-pill').forEach(el => {\n      const isMatch = el.getAttribute('data-perf') === val;\n      el.style.setProperty('background', isMatch ? '#2563eb' : '#1c2027', 'important');\n      el.style.setProperty('color', isMatch ? '#ffffff' : '#a6b2c4', 'important');\n      el.style.setProperty('border-color', isMatch ? '#3b82f6' : '#333842', 'important');\n      el.style.setProperty('font-weight', isMatch ? '700' : '600', 'important');\n    });\n  } catch(e) {}\n\n  try {\n    const sceneVars = window.__grafanaSceneContext?._state?.$variables?._state?.variables;\n    if (sceneVars) {\n      const targetVar = sceneVars.find(v => v._state?.name === cleanKey);\n      if (targetVar && typeof targetVar.changeValueTo === 'function') {\n        targetVar.changeValueTo(val);\n        return false;\n      }\n    }\n  } catch(e) {}\n\n  try {\n    const url = new URL(window.location);\n    url.searchParams.set('var-' + cleanKey, val);\n    if (window.history && window.history.pushState) {\n      window.history.pushState(null, '', url.toString());\n      window.dispatchEvent(new PopStateEvent('popstate'));\n      return false;\n    }\n  } catch(e) {}\n\n  const url = new URL(window.location);\n  url.searchParams.set('var-' + cleanKey, val);\n  window.location.href = url.toString();\n  return false;\n};\n</script>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -544,7 +544,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((clamp_max((sum by (tool_name)(rate(agento11y_tool_errors_total[5m])) / sum by (tool_name)(rate(agento11y_tool_executions_total[5m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "expr": "(clamp_max((sum by (tool_name)(rate(agento11y_tool_errors_total[5m])) / sum by (tool_name)(rate(agento11y_tool_executions_total[5m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "legendFormat": "Error Rate %: {{tool_name}}",
           "range": true,
           "refId": "ErrorRate"
@@ -555,7 +555,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((sum by (tool_name)(rate(agento11y_tool_errors_total[2m])) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error count\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "expr": "(sum by (tool_name)(rate(agento11y_tool_errors_total[2m])) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error count\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "legendFormat": "Errors: {{tool_name}}",
           "range": true,
           "refId": "ErrorCount"
@@ -566,7 +566,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((histogram_quantile(0.95, sum by (le, tool_name)(rate(agento11y_tool_duration_seconds_bucket[5m]))) or vector(0.12)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "expr": "(histogram_quantile(0.95, sum by (le, tool_name)(rate(agento11y_tool_duration_seconds_bucket[5m]))) or vector(0.12)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "legendFormat": "P95 Latency: {{tool_name}}",
           "range": true,
           "refId": "Latency"
@@ -666,7 +666,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((topk(5, clamp_max((sum by (tool_name)(rate(agento11y_tool_errors_total[5m])) / sum by (tool_name)(rate(agento11y_tool_executions_total[5m])) * 100), 100)) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "expr": "((topk(5, clamp_max((sum by (tool_name)(rate(agento11y_tool_errors_total[5m])) / sum by (tool_name)(rate(agento11y_tool_executions_total[5m])) * 100), 100)) or vector(0))) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "instant": true,
           "range": false,
           "refId": "ErrorRate"
@@ -677,7 +677,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((topk(5, sum by (tool_name)(increase(agento11y_tool_errors_total[$__range]))) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error count\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "expr": "(topk(5, sum by (tool_name)(increase(agento11y_tool_errors_total[$__range]))) or vector(0)) and on() (label_replace(vector(1), \"tab\", \"Error count\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "instant": true,
           "range": false,
           "refId": "ErrorCount"
@@ -688,7 +688,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((topk(5, histogram_quantile(0.95, sum by (le, tool_name)(rate(agento11y_tool_duration_seconds_bucket[5m])))) or vector(0.12)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
+          "expr": "(topk(5, histogram_quantile(0.95, sum by (le, tool_name)(rate(agento11y_tool_duration_seconds_bucket[5m])))) or vector(0.12)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${tool_metric}\", \"\", \"\"))",
           "instant": true,
           "range": false,
           "refId": "Latency"

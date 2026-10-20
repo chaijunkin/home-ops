@@ -489,7 +489,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "((clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[2m])) / sum by (model)(rate(litellm_deployment_total_requests_total[2m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${agent_metric}\", \"\", \"\"))",
+          "expr": "(clamp_max((sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count{error_type!=\"\"}[2m])) / sum by (gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_count[2m])) * 100) or (sum by (model)(rate(litellm_deployment_failure_responses_total[2m])) / sum by (model)(rate(litellm_deployment_total_requests_total[2m])) * 100) or vector(0), 100)) and on() (label_replace(vector(1), \"tab\", \"Error rate\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${agent_metric}\", \"\", \"\"))",
           "legendFormat": "Error Rate %: {{gen_ai_agent_name}} ({{model}})",
           "range": true,
           "refId": "ErrorRate"
@@ -511,7 +511,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "(((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))) >= 0) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${agent_metric}\", \"\", \"\"))",
+          "expr": "(((histogram_quantile(0.95, sum by (le, gen_ai_agent_name)(rate(gen_ai_client_operation_duration_seconds_bucket[5m]))) or histogram_quantile(0.95, sum by (le, model)(rate(litellm_request_total_latency_metric_bucket[5m])))) >= 0)) and on() (label_replace(vector(1), \"tab\", \"Latency\", \"\", \"\") and on(tab) label_replace(vector(1), \"tab\", \"${agent_metric}\", \"\", \"\"))",
           "legendFormat": "P95 Latency: {{gen_ai_agent_name}} ({{model}})",
           "range": true,
           "refId": "Latency"

@@ -117,3 +117,40 @@ spec:
 #       dashboards: grafana
 #   title: System
 #   uid: system-folder
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: integration-aiobservability
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  title: Integration - AIObservability
+  uid: integration---aiobservability
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: integration-linux-node
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  title: Integration - Linux Node
+  uid: integration---linux-node
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanafolder_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaFolder
+metadata:
+  name: integration-postgresql
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  title: Integration - PostgreSQL
+  uid: integration---postgresql
+
