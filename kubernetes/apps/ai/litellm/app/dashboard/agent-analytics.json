@@ -494,7 +494,7 @@
       },
       "id": 18,
       "options": {
-        "content": "<style>\n.tab-pill {\n  transition: all 0.15s ease;\n}\n.tab-pill:hover {\n  background: #2a313d !important;\n  color: #ffffff !important;\n}\n.tab-pill.active {\n  background: #2563eb !important;\n  color: #ffffff !important;\n  border-color: #60a5fa !important;\n  font-weight: 700 !important;\n  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4) !important;\n}\n</style>\n<div style=\"font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 100%; box-sizing: border-box; padding: 0 2px;\">\n  <div style=\"display: flex; align-items: center; gap: 8px;\">\n    <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Sections:</span>\n    <span id=\"active-view-badge\" style=\"background: #3274d9; color: #ffffff; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase;\">Active: Overview</span>\n    <button type=\"button\" class=\"tab-pill\" data-section=\"Overview\" onclick=\"jumpToSection('Overview', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u229e Overview</button><button type=\"button\" class=\"tab-pill\" data-section=\"Tools\" onclick=\"jumpToSection('Tools', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\ud83d\udee0\ufe0f Tools & Drilldowns</button><button type=\"button\" class=\"tab-pill\" data-section=\"Usage & cost\" onclick=\"jumpToSection('Usage & cost', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\ud83d\udcca Usage & cost</button><button type=\"button\" class=\"tab-pill\" data-section=\"Performance & reliability\" onclick=\"jumpToSection('Performance & reliability', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u23f1\ufe0f Performance & reliability</button><button type=\"button\" class=\"tab-pill\" data-section=\"Quality & evaluation\" onclick=\"jumpToSection('Quality & evaluation', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u2714\ufe0f Quality & evaluation</button>\n  </div>\n  <div style=\"display: flex; align-items: center; gap: 6px; font-size: 10px; color: #6e7681;\">\n    <span>Cloud Parity \u00b7 Multi-Row Architecture</span>\n  </div>\n</div>\n<script>\n(function() {\n  window.jumpToSection = function(name, evt) {\n    if (evt) {\n      if (evt.preventDefault) evt.preventDefault();\n      if (evt.stopPropagation) evt.stopPropagation();\n    }\n    // Update pills styling\n    document.querySelectorAll('.tab-pill').forEach(el => {\n      if (el.getAttribute('data-section') === name) {\n        el.classList.add('active');\n      } else {\n        el.classList.remove('active');\n      }\n    });\n\n    const badge = document.getElementById('active-view-badge');\n    if (badge) badge.textContent = 'Active: ' + name;\n\n    const rowMapping = {\n      'Overview': 'Overview',\n      'Tools': 'Tools',\n      'Usage & cost': 'Usage & cost',\n      'Performance & reliability': 'Performance & reliability',\n      'Quality & evaluation': 'Quality & evaluation'\n    };\n    const targetPattern = rowMapping[name] || name;\n\n    // 1. Expand target row if currently collapsed in Grafana Scenes\n    try {\n      const grid = window.__grafanaSceneContext?._state?.body?._state?.grid;\n      if (grid && Array.isArray(grid.state.children)) {\n        for (const child of grid.state.children) {\n          const title = child.state?.title || '';\n          if (child.state && typeof child.state.isCollapsed === 'boolean') {\n            if (title.includes(targetPattern) && child.state.isCollapsed) {\n              grid.toggleRow(child);\n            }\n          }\n        }\n      }\n    } catch(e) {}\n\n    // 2. Smoothly scroll directly to the row\n    if (name === 'Overview') {\n      window.scrollTo({ top: 0, behavior: 'smooth' });\n    } else {\n      try {\n        const allRows = Array.from(document.querySelectorAll('button, [class*=\"row-title\"], [data-testid*=\"dashboard-row\"]'));\n        const targetEl = allRows.find(el => (el.textContent || '').includes(targetPattern));\n        if (targetEl) {\n          const y = targetEl.getBoundingClientRect().top + window.pageYOffset - 60;\n          window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });\n        }\n      } catch(e) {}\n    }\n\n    // 3. Update URL without reload\n    try {\n      const url = new URL(window.location);\n      url.searchParams.set('var-analytics_view', name);\n      if (window.history && window.history.replaceState) {\n        window.history.replaceState(null, '', url.toString());\n      }\n    } catch(e) {}\n\n    return false;\n  };\n\n  // Aliases for compatibility\n  window.selectView = window.jumpToSection;\n  window.jumpSection = window.jumpToSection;\n\n  // Initial highlight on page load\n  setTimeout(() => {\n    const urlParams = new URLSearchParams(window.location.search);\n    const viewParam = urlParams.get('var-analytics_view') || 'Overview';\n    document.querySelectorAll('.tab-pill').forEach(el => {\n      if (el.getAttribute('data-section') === viewParam) {\n        el.classList.add('active');\n      } else {\n        el.classList.remove('active');\n      }\n    });\n    const badge = document.getElementById('active-view-badge');\n    if (badge) badge.textContent = 'Active: ' + viewParam;\n  }, 150);\n})();\n</script>",
+        "content": "<style>\n.tab-pill {\n  transition: all 0.15s ease;\n}\n.tab-pill:hover {\n  background: #2a313d !important;\n  color: #ffffff !important;\n}\n.tab-pill.active {\n  background: #2563eb !important;\n  color: #ffffff !important;\n  border-color: #60a5fa !important;\n  font-weight: 700 !important;\n  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4) !important;\n}\n</style>\n<div style=\"font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; display: flex; align-items: center; justify-content: space-between; width: 100%; height: 100%; box-sizing: border-box; padding: 0 2px;\">\n  <div style=\"display: flex; align-items: center; gap: 8px;\">\n    <span style=\"font-size: 11px; font-weight: 700; color: #8e9bb0; text-transform: uppercase; letter-spacing: 0.05em;\">Sections:</span>\n    <span id=\"active-view-badge\" style=\"background: #3274d9; color: #ffffff; padding: 2px 7px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase;\">Active: Overview</span>\n    <button type=\"button\" class=\"tab-pill\" data-section=\"Overview\" onclick=\"jumpToSection('Overview', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u229e Overview</button><button type=\"button\" class=\"tab-pill\" data-section=\"Tools\" onclick=\"jumpToSection('Tools', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\ud83d\udee0\ufe0f Tools & Drilldowns</button><button type=\"button\" class=\"tab-pill\" data-section=\"Usage & cost\" onclick=\"jumpToSection('Usage & cost', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\ud83d\udcca Usage & cost</button><button type=\"button\" class=\"tab-pill\" data-section=\"Performance & reliability\" onclick=\"jumpToSection('Performance & reliability', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u23f1\ufe0f Performance & reliability</button><button type=\"button\" class=\"tab-pill\" data-section=\"Quality & evaluation\" onclick=\"jumpToSection('Quality & evaluation', event); return false;\" style=\"display: inline-flex; align-items: center; gap: 5px; padding: 5px 13px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid #333842; background: #1c2027; color: #d0d7de; box-shadow: 0 1px 2px rgba(0,0,0,0.2);\">\u2714\ufe0f Quality & evaluation</button>\n  </div>\n  <div style=\"display: flex; align-items: center; gap: 6px; font-size: 10px; color: #6e7681;\">\n    <span>Cloud Parity \u00b7 Multi-Row Architecture</span>\n  </div>\n</div>\n<script>\n(function() {\n  window.jumpToSection = function(name, evt) {\n    if (evt) {\n      if (evt.preventDefault) evt.preventDefault();\n      if (evt.stopPropagation) evt.stopPropagation();\n    }\n    // Update pills styling immediately\n    document.querySelectorAll('.tab-pill').forEach(el => {\n      const isMatch = el.getAttribute('data-section') === name;\n      if (isMatch) {\n        el.classList.add('active');\n        el.style.setProperty('background', '#2563eb', 'important');\n        el.style.setProperty('color', '#ffffff', 'important');\n        el.style.setProperty('border-color', '#60a5fa', 'important');\n      } else {\n        el.classList.remove('active');\n        el.style.setProperty('background', '#1c2027', 'important');\n        el.style.setProperty('color', '#d0d7de', 'important');\n        el.style.setProperty('border-color', '#333842', 'important');\n      }\n    });\n\n    const badge = document.getElementById('active-view-badge');\n    if (badge) badge.textContent = 'Active: ' + name;\n\n    const rowMapping = {\n      'Overview': 'Overview',\n      'Tools': 'Tools',\n      'Usage & cost': 'Usage & cost',\n      'Performance & reliability': 'Performance & reliability',\n      'Quality & evaluation': 'Quality & evaluation'\n    };\n    const targetPattern = rowMapping[name] || name;\n\n    if (name === 'Overview') {\n      window.scrollTo({ top: 0, behavior: 'smooth' });\n    } else {\n      try {\n        const grid = window.__grafanaSceneContext?._state?.body?._state?.grid;\n        const gridContainer = document.querySelector('.react-grid-layout');\n        const containerTop = gridContainer ? gridContainer.getBoundingClientRect().top + window.pageYOffset : 185;\n\n        if (grid && Array.isArray(grid.state.children)) {\n          const targetChild = grid.state.children.find(c => c.state?.title && c.state.title.includes(targetPattern));\n          if (targetChild) {\n            // 1. Expand row if currently collapsed\n            if (targetChild.state.isCollapsed) {\n              grid.toggleRow(targetChild);\n            }\n            // 2. Accurate scroll accounting for virtualization\n            const targetY = containerTop + (targetChild.state.y * 38) - 50;\n            window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });\n          }\n        } else {\n          // Fallback DOM search if grid context is not accessible\n          const allRows = Array.from(document.querySelectorAll('button, [class*=\"row-title\"], [data-testid*=\"dashboard-row\"]'));\n          const targetEl = allRows.find(el => (el.textContent || '').includes(targetPattern));\n          if (targetEl) {\n            const y = targetEl.getBoundingClientRect().top + window.pageYOffset - 50;\n            window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });\n          }\n        }\n      } catch(e) {\n        console.warn('Scroll to section error:', e);\n      }\n    }\n\n    // Update URL without reload\n    try {\n      const url = new URL(window.location);\n      url.searchParams.set('var-analytics_view', name);\n      if (window.history && window.history.replaceState) {\n        window.history.replaceState(null, '', url.toString());\n      }\n    } catch(e) {}\n\n    return false;\n  };\n\n  window.selectView = window.jumpToSection;\n  window.jumpSection = window.jumpToSection;\n\n  setTimeout(() => {\n    const urlParams = new URLSearchParams(window.location.search);\n    const viewParam = urlParams.get('var-analytics_view') || 'Overview';\n    document.querySelectorAll('.tab-pill').forEach(el => {\n      const isMatch = el.getAttribute('data-section') === viewParam;\n      if (isMatch) {\n        el.classList.add('active');\n        el.style.setProperty('background', '#2563eb', 'important');\n        el.style.setProperty('color', '#ffffff', 'important');\n        el.style.setProperty('border-color', '#60a5fa', 'important');\n      } else {\n        el.classList.remove('active');\n        el.style.setProperty('background', '#1c2027', 'important');\n        el.style.setProperty('color', '#d0d7de', 'important');\n        el.style.setProperty('border-color', '#333842', 'important');\n      }\n    });\n    const badge = document.getElementById('active-view-badge');\n    if (badge) badge.textContent = 'Active: ' + viewParam;\n  }, 150);\n})();\n</script>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -1617,7 +1617,7 @@
       },
       "id": 30,
       "options": {
-        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83c\udfaf Evaluations</span>\n      <span style=\"font-size: 11px; color: #8e9bb0;\">Go to Evaluations</span>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Automated scoring & pass rates.</div>\n  </div>\n  <div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;\">\n    <div>\n      <div style=\"font-size: 9px; color: #8e9bb0;\">PASS RATE</div>\n      <div style=\"font-size: 14px; font-weight: 700; color: #52c41a;\">100%</div>\n    </div>\n    <div>\n      <div style=\"font-size: 9px; color: #8e9bb0;\">SCORES</div>\n      <div style=\"font-size: 14px; font-weight: 700; color: #ffffff;\">0</div>\n    </div>\n  </div>\n</div>",
+        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83c\udfaf Evaluations</span>\n      <a href=\"/d/agent-evaluations/agent-evaluations\" style=\"font-size: 11px; color: #3274d9; text-decoration: none; font-weight: 600;\">Go to Evaluations \u2192</a>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Automated scoring & pass rates.</div>\n  </div>\n  <div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px;\">\n    <div>\n      <div style=\"font-size: 9px; color: #8e9bb0;\">PASS RATE</div>\n      <div style=\"font-size: 14px; font-weight: 700; color: #52c41a;\">100%</div>\n    </div>\n    <div>\n      <div style=\"font-size: 9px; color: #8e9bb0;\">SCORES</div>\n      <div style=\"font-size: 14px; font-weight: 700; color: #ffffff;\">0</div>\n    </div>\n  </div>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -1637,7 +1637,7 @@
       },
       "id": 31,
       "options": {
-        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83e\uddea Experiments</span>\n      <span style=\"font-size: 11px; color: #8e9bb0;\">Go to Experiments</span>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Latest runs, regardless of time range.</div>\n  </div>\n  <div style=\"margin-top: 8px;\">\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-bottom: 4px;\">Test your agent before you ship it</div>\n    <span style=\"font-size: 10px; font-weight: 600; background: #2b303c; color: #ffffff; padding: 3px 8px; border-radius: 4px;\">Create first experiment</span>\n  </div>\n</div>",
+        "content": "<div style=\"background: #181b1f; border: 1px solid #2b303c; border-radius: 6px; padding: 12px; height: 100%; display: flex; flex-direction: column; justify-content: space-between; font-family: Inter, sans-serif;\">\n  <div>\n    <div style=\"display: flex; justify-content: space-between; align-items: center;\">\n      <span style=\"font-size: 14px; font-weight: 700; color: #f2f4f8;\">\ud83e\uddea Experiments</span>\n      <a href=\"/d/agent-experiments/agent-experiments\" style=\"font-size: 11px; color: #3274d9; text-decoration: none; font-weight: 600;\">Go to Experiments \u2192</a>\n    </div>\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-top: 4px;\">Latest runs, regardless of time range.</div>\n  </div>\n  <div style=\"margin-top: 8px;\">\n    <div style=\"font-size: 11px; color: #8e9bb0; margin-bottom: 4px;\">Test your agent before you ship it</div>\n    <a href=\"/d/agent-experiments/agent-experiments\" style=\"text-decoration: none; display: inline-block;\"><span style=\"font-size: 10px; font-weight: 600; background: #2b303c; color: #ffffff; padding: 3px 8px; border-radius: 4px;\">Open Experiments</span></a>\n  </div>\n</div>",
         "mode": "html"
       },
       "pluginVersion": "11.1.0",
@@ -2628,7 +2628,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 84
+        "y": 77
       },
       "id": 45,
       "options": {
@@ -2718,10 +2718,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 24,
         "x": 0,
-        "y": 84
+        "y": 83
       },
       "id": 46,
       "options": {
@@ -3216,7 +3216,7 @@
         "h": 8,
         "w": 16,
         "x": 0,
-        "y": 104
+        "y": 108
       },
       "id": 54,
       "options": {
@@ -3410,10 +3410,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 16,
         "x": 0,
-        "y": 108
+        "y": 116
       },
       "id": 56,
       "options": {
@@ -3477,10 +3477,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 8,
         "w": 8,
         "x": 16,
-        "y": 108
+        "y": 116
       },
       "id": 57,
       "options": {
@@ -3520,7 +3520,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 112
+        "y": 124
       },
       "id": 58,
       "panels": [],
@@ -3586,7 +3586,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 113
+        "y": 125
       },
       "id": 60,
       "options": {
@@ -3680,7 +3680,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 113
+        "y": 125
       },
       "id": 61,
       "options": {
@@ -3747,7 +3747,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 121
+        "y": 133
       },
       "id": 62,
       "options": {
@@ -3809,7 +3809,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 121
+        "y": 133
       },
       "id": 63,
       "options": {
@@ -3871,7 +3871,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 129
+        "y": 133
       },
       "id": 64,
       "options": {
@@ -3933,7 +3933,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 129
+        "y": 133
       },
       "id": 65,
       "options": {

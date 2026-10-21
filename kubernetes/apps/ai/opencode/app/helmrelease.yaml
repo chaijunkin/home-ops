@@ -76,6 +76,22 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
+        rules:
+          - backendRefs:
+              - name: opencode-svc
+                port: *port
+      api:
+        hostnames: ["opencode-api.cloudjur.com"]
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        annotations:
+          gatus.home-operations.com/endpoint: |
+            conditions: ["len([BODY]) == 0"]
+        rules:
+          - backendRefs:
+              - name: opencode-svc
+                port: *port
     persistence:
       home:
         existingClaim: *app
