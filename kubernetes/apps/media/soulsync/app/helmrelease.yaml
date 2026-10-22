@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: ghcr.io/nezreka/soulsync
-              tag: 3.4.5@sha256:018227729c6d3fbc62622d1b5fda72700b69fd0cf1f891d96c9b844fe2a84e47
+              tag: 3.5.9@sha256:4f9b5a3d39f0585228020045da088098773371582f80e91c5c6ba52ce5036404
             env:
               FLASK_ENV: production
               PGID: 1000
