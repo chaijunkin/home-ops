@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: memini-rules
+  namespace: ai
+spec:
+  groups:
+    - name: memini.rules
+      rules:
+        - alert: MeminiDown
+          expr: up{job="memini"} == 0
+          for: 3m
+          annotations:
+            summary: Memini service {{ $labels.instance }} is down
+            description: Memini memory engine has been unreachable for more than 3 minutes.
+          labels:
+            severity: critical
+        - alert: MeminiRestartCrashLoop
+          expr: increase(kube_pod_container_status_restarts_total{container="memini"}[15m]) > 2
+          for: 2m
+          annotations:
+            summary: Memini pod {{ $labels.pod }} is restarting frequently
+            description: Memini container has restarted {{ $value }} times within the last 15 minutes.
+          labels:
+            severity: warning

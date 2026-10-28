@@ -80,3 +80,48 @@ spec:
               inference slots for 10m — work is serialising on this model
           labels:
             severity: warning
+    - name: aiobservability.rules
+      rules:
+        - alert: LiteLLMDown
+          expr: up{job="litellm"} == 0
+          for: 2m
+          annotations:
+            summary: LiteLLM proxy instance {{ $labels.instance }} is down
+            description: LiteLLM proxy has been unreachable for more than 2 minutes.
+          labels:
+            severity: critical
+        - alert: AIObservabilityLocalLLMDown
+          expr: up{job="gufo"} == 0
+          for: 2m
+          annotations:
+            summary: Local LLM backend {{ $labels.instance }} is offline
+            description: Gufo/vLLM inference on Strix Halo ({{ $labels.instance }}) has been unreachable for >2m.
+          labels:
+            severity: critical
+        - alert: AIObservabilityHighFailureRate
+          expr: |-
+            sum by (requested_model) (rate(litellm_deployment_failure_responses_total[5m]))
+            /
+            (sum by (requested_model) (rate(litellm_requests_metric_total[5m])) + 0.001) * 100 > 10
+          for: 5m
+          annotations:
+            summary: LiteLLM model {{ $labels.requested_model }} high failure rate (>10%)
+            description: More than 10% of requests to model {{ $labels.requested_model }} are failing over 5m.
+          labels:
+            severity: critical
+        - alert: AIObservabilityHighLatencyP95
+          expr: histogram_quantile(0.95, sum by (le, requested_model) (rate(litellm_request_total_latency_metric_bucket[5m]))) > 30
+          for: 10m
+          annotations:
+            summary: LiteLLM model {{ $labels.requested_model }} P95 latency high (>30s)
+            description: 95th percentile latency for {{ $labels.requested_model }} exceeded 30s for 10m.
+          labels:
+            severity: warning
+        - alert: AIObservabilityAPUMemoryPressure
+          expr: (node_memory_MemAvailable_bytes{instance="192.168.1.149:9100"} / node_memory_MemTotal_bytes{instance="192.168.1.149:9100"}) * 100 < 10
+          for: 5m
+          annotations:
+            summary: Strix Halo APU host memory under severe pressure (<10% available)
+            description: Available memory on Strix Halo APU is under 10%, threatening a Gufo/Podman OOM crash.
+          labels:
+            severity: warning

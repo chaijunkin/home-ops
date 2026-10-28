@@ -5,6 +5,7 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./externalsecret.yaml
+  - ./prometheusrule.yaml
   # Retained for rollback; Memini's models are hosted on Strix Halo via LiteLLM.
   # - ./models/memini-rerank.yaml
   # - ./models/memini-embed.yaml

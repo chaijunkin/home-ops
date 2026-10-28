@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: linux-node-alerts
+  namespace: observability
+spec:
+  groups:
+    - name: linux.node.rules
+      rules:
+        - alert: LinuxNodeHostDown
+          expr: up{job="node-exporter"} == 0
+          for: 3m
+          annotations:
+            summary: Linux node {{ $labels.instance }} is unreachable
+            description: Node exporter on {{ $labels.instance }} has been unreachable for more than 3 minutes.
+          labels:
+            severity: critical
+        - alert: LinuxNodeHighCpuLoad
+          expr: (100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)) > 90
+          for: 15m
+          annotations:
+            summary: Linux node {{ $labels.instance }} high CPU load (>90%)
+            description: CPU load on {{ $labels.instance }} has exceeded 90% for 15 minutes.
+          labels:
+            severity: warning
+        - alert: LinuxNodeHighMemoryUsage
+          expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+          for: 10m
+          annotations:
+            summary: Linux node {{ $labels.instance }} memory pressure (>90%)
+            description: Host {{ $labels.instance }} has less than 10% available memory.
+          labels:
+            severity: warning
+        - alert: LinuxNodeDiskSpaceFillingUp
+          expr: |-
+            (node_filesystem_free_bytes{fstype!~"tmpfs|overlay|squashfs"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay|squashfs"}) * 100 < 15
+            and
+            predict_linear(node_filesystem_free_bytes{fstype!~"tmpfs|overlay|squashfs"}[1h], 24 * 3600) < 0
+          for: 1h
+          annotations:
+            summary: Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} filling rapidly
+            description: Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} has less than 15% space and is predicted to fill within 24 hours.
+          labels:
+            severity: warning
+        - alert: LinuxNodeFilesystemAlmostFull
+          expr: (1 - (node_filesystem_free_bytes{fstype!~"tmpfs|overlay|squashfs"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay|squashfs"})) * 100 > 85
+          for: 5m
+          annotations:
+            summary: Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} is >85% full
+            description: Disk usage on {{ $labels.mountpoint }} ({{ $labels.instance }}) exceeded 85%.
+          labels:
+            severity: warning
