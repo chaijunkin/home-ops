@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: home-assistant-rules
+  namespace: home-automation
+spec:
+  groups:
+    - name: home-assistant.rules
+      rules:
+        - alert: HomeAssistantDown
+          expr: up{app_kubernetes_io_name="home-assistant"} == 0
+          for: 3m
+          annotations:
+            summary: Home Assistant instance {{ $labels.instance }} is down
+            description: Home Assistant core service has been unresponsive for more than 3 minutes.
+          labels:
+            severity: critical
+        - alert: HomeAssistantRestartCrashLoop
+          expr: increase(kube_pod_container_status_restarts_total{container="home-assistant"}[15m]) > 2
+          for: 2m
+          annotations:
+            summary: Home Assistant pod {{ $labels.pod }} is restarting frequently
+            description: Home Assistant container has restarted {{ $value }} times in the past 15 minutes.
+          labels:
+            severity: warning

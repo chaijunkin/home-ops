@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cloudflare-tunnel-rules
+  namespace: network
+spec:
+  groups:
+    - name: cloudflare-tunnel.rules
+      rules:
+        - alert: CloudflareTunnelOffline
+          expr: cloudflared_tunnel_user_connections == 0
+          for: 2m
+          annotations:
+            summary: Cloudflare tunnel on {{ $labels.instance }} has 0 connections
+            description: Cloudflare tunnel daemon has lost all active connections to the edge.
+          labels:
+            severity: critical
+        - alert: CloudflareTunnelDown
+          expr: up{service="cloudflare-tunnel"} == 0
+          for: 2m
+          annotations:
+            summary: Cloudflare tunnel service {{ $labels.instance }} is down
+            description: The cloudflared pod is unresponsive or failing health checks.
+          labels:
+            severity: critical
+        - alert: CloudflareTunnelHighErrorRate
+          expr: rate(cloudflared_tunnel_request_errors[5m]) > 0.5
+          for: 5m
+          annotations:
+            summary: Cloudflare tunnel elevated request error rate
+            description: Cloudflare tunnel on {{ $labels.instance }} is experiencing elevated request errors.
+          labels:
+            severity: warning

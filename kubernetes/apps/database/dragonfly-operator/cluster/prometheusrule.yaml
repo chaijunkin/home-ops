@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: dragonfly-rules
+  namespace: database
+spec:
+  groups:
+    - name: dragonfly.rules
+      rules:
+        - alert: DragonflyDown
+          expr: up{app="dragonfly"} == 0
+          for: 2m
+          annotations:
+            summary: Dragonfly instance {{ $labels.instance }} is down
+            description: Dragonfly/Redis cache node has been unresponsive for more than 2 minutes.
+          labels:
+            severity: critical
+        - alert: DragonflyHighMemoryUsage
+          expr: (dragonfly_used_memory_bytes / dragonfly_memory_limit_bytes) * 100 > 85
+          for: 5m
+          annotations:
+            summary: Dragonfly memory usage > 85% on {{ $labels.instance }}
+            description: Dragonfly memory utilization has exceeded 85% of its allocated limit for 5 minutes.
+          labels:
+            severity: warning
+        - alert: DragonflyClientConnectionSpike
+          expr: dragonfly_connected_clients > 500
+          for: 5m
+          annotations:
+            summary: Dragonfly connection spike on {{ $labels.instance }}
+            description: Dragonfly has {{ $value }} connected clients, exceeding the normal threshold.
+          labels:
+            severity: warning
