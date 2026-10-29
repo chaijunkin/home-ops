@@ -98,7 +98,7 @@ spec:
           codeserver:
             image:
               repository: ghcr.io/coder/code-server
-              tag: 4.138.0@sha256:81706b71ace316157850cbcfb574714d1067249c107a415b3a03dc6b613ebfbc
+              tag: 4.144.0@sha256:b9e8056bb74bd0c4f90284c7559eddeccd38400cfedc28e64c9d3ca50fef1f83
             env:
               TZ: Asia/Kuala_Lumpur
             args:
