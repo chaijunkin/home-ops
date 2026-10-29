@@ -26,11 +26,14 @@ spec:
       key: KOPIA_PASSWORD
       name: kopiur-repository-secret
       namespace: storage
+  concurrency:
+    maxConcurrentJobs: 2
   identityDefaults:
     hostnameExpr: namespace
     usernameExpr: policyName
   scheduleDefaults:
     timezone: Asia/Kuala_Lumpur
+    jitter: 45m
   # maintenance:
   #   enabled: true
   #   namespace: storage
