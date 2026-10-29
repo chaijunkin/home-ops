@@ -30,13 +30,14 @@ resources:
   - ./openrouter-wildcard.yaml
   - ./reasoning-pool.yaml
   - ./vercel-wildcard.yaml
-  - ./nemotron-3-5.yaml
-  - ./gemma-4.yaml
-  - ./dsv4f-local.yaml
-  - ./qwen-image.yaml
-  - ./minimax-h3.yaml
-  - ./qwen3-asr.yaml
-  - ./qwen3-tts.yaml
+  # Inactive bare-metal models (ports closed on Strix Halo)
+  # - ./nemotron-3-5.yaml
+  # - ./gemma-4.yaml
+  # - ./dsv4f-local.yaml
+  # - ./qwen-image.yaml
+  # - ./minimax-h3.yaml
+  # - ./qwen3-asr.yaml
+  # - ./qwen3-tts.yaml
 
   - ./qwen3.8-flash-next.yaml
   - ./free-pool.yaml

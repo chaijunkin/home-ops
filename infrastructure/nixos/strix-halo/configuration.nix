@@ -52,6 +52,21 @@
   zramSwap.enable = true;
   swapDevices = [ { device = "/var/lib/swapfile"; size = 32768; } ];
 
+  # High-performance CPU frequency governor for low-latency prefill & decode
+  powerManagement.cpuFreqGovernor = "performance";
+
+  # Prevent headless AI server from entering sleep/suspend or responding to power button
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+    HandleSuspendKey = "ignore";
+    HandleHibernateKey = "ignore";
+    HandleLidSwitch = "ignore";
+  };
+
   # --- STRIX HALO VRAM HACKS ---
   # These kernel arguments force the AMD APU to pin UMA memory as dedicated VRAM for AI workloads.
   boot.kernelParams = [

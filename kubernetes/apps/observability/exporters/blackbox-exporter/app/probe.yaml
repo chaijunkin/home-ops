@@ -19,7 +19,28 @@ spec:
         - pikvm.cloudjur.com
         - plv.cloudjur.com # piano led visualizer
         - gateway.cloudjur.com
-          # - pikvm.cloudjur.com
+        - 192.168.1.149 # strix-halo inference host
+  metricRelabelings:
+    - targetLabel: service
+      replacement: blackbox-exporter
+      action: replace
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/probe_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: strix-halo-ai
+spec:
+  interval: 30s
+  module: http_2xx
+  prober:
+    url: blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - http://192.168.1.149:8732/health
+        - http://192.168.1.149:8743/health
+        - http://192.168.1.149:8744/health
   metricRelabelings:
     - targetLabel: service
       replacement: blackbox-exporter
