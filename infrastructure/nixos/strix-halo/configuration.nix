@@ -139,7 +139,7 @@
 
   virtualisation.oci-containers = {
     containers."qwen38-flash-next" = {
-      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.9.1";
+      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.27.0";
       autoStart = true;
       ports = [ "8732:8080" ];
       volumes = [
@@ -155,6 +155,10 @@
         "--model" "/models/Qwen3.8-Flash-Next-UD-Q4_K_XL-00001-of-00004.gguf"
         "--mmproj" "/models/mmproj-BF16.gguf"
         "--served-model-name" "qwen3.8-flash-next"
+        "--speculative" "mtp"
+        "--mtp-model" "/models/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf"
+        "--cache-disk" "/models/cache"
+        "--cache-disk-bytes" "17179869184"
         "--context" "245760"
         "--sessions" "2"
       ];
@@ -554,6 +558,12 @@
         mv "mmproj-BF16.gguf.tmp" "mmproj-BF16.gguf"
       fi
 
+      # Download Qwen3.8 Flash Next MTP draft model for speculative decoding
+      if [ ! -s "mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf" ]; then
+        ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf.tmp" "https://huggingface.co/unsloth/Qwen3.8-Flash-Next-GGUF/resolve/main/MTP/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf"
+        mv "mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf.tmp" "mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf"
+      fi
+
       # Download Memini Embed
       if [ ! -s "Qwen3-Embedding-0.6B-Q8_0.gguf" ]; then
         ${pkgs.curl}/bin/curl --retry 5 -C - -L -o "Qwen3-Embedding-0.6B-Q8_0.gguf.tmp" "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf"
@@ -628,6 +638,7 @@
   systemd.tmpfiles.rules = [
     "d /var/lib/halogen-models 0755 root root -"
     "d /var/lib/strix-halo-models 0755 root root -"
+    "d /var/lib/strix-halo-models/cache 0777 root root -"
     "d /var/lib/whisper-cache 0755 root root -"
     "d /var/lib/lemonade-tts-config 0777 root root -"
     "d /var/lib/lemonade-tts-cache 0777 root root -"
@@ -697,11 +708,6 @@
     prometheus.scrape "gufo" {
       targets = [
         { __address__ = "127.0.0.1:8732", instance = "192.168.1.149:8732" },
-        { __address__ = "127.0.0.1:8738", instance = "192.168.1.149:8738" },
-        { __address__ = "127.0.0.1:8739", instance = "192.168.1.149:8739" },
-        { __address__ = "127.0.0.1:8740", instance = "192.168.1.149:8740" },
-        { __address__ = "127.0.0.1:8741", instance = "192.168.1.149:8741" },
-        { __address__ = "127.0.0.1:8742", instance = "192.168.1.149:8742" },
       ]
       forward_to = [prometheus.relabel.gufo.receiver]
     }
