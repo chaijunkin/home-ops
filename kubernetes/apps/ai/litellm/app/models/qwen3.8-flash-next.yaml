@@ -9,7 +9,7 @@ spec:
   params:
     model: hosted_vllm/qwen3.8-flash-next
     apiBase: http://192.168.1.149:8732/v1
-    apiKey: halogen
+    apiKey: gufo-key
     additional:
       temperature: 0.7
       top_p: 0.8
@@ -26,7 +26,7 @@ spec:
       order: 2
   info:
     mode: chat
-    maxInputTokens: 245760
+    maxInputTokens: 131072
     maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: true

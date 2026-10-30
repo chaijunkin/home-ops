@@ -174,8 +174,11 @@
         "--mtp-model" "/models/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf"
         "--cache-disk" "/models/cache"
         "--cache-disk-bytes" "17179869184"
-        "--context" "245760"
+        "--context" "131072"
         "--sessions" "2"
+        "--prefill-chunk" "512"
+        "--max-pending" "16"
+        "--stall-timeout-ms" "90000"
       ];
       extraOptions = [
         "--device=/dev/kfd"

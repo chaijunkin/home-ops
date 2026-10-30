@@ -125,3 +125,23 @@ spec:
             description: Available memory on Strix Halo APU is under 5% (<6GB), threatening a Gufo/Podman OOM crash.
           labels:
             severity: warning
+        - alert: AIObservabilityGPUDeviceLost
+          expr: gufo_device_lost_total > 0
+          for: 0m
+          annotations:
+            summary: Strix Halo GPU compute device lost (driver/kernel fault)
+            description: Gufo runtime reported a GPU device loss event on {{ $labels.instance }}. The AMD KFD/ROCm driver has faulted.
+          labels:
+            severity: critical
+        - alert: AIObservabilitySpecDecodeAcceptanceLow
+          expr: |-
+            (sum by (service) (rate(llamacpp:spec_decode_num_accepted_tokens_total[15m]))
+            /
+            clamp_min(sum by (service) (rate(llamacpp:spec_decode_num_draft_tokens_total[15m])), 0.0001)) * 100 < 40
+            and sum by (service) (rate(llamacpp:spec_decode_num_draft_tokens_total[15m])) > 0.1
+          for: 15m
+          annotations:
+            summary: Speculative decoding acceptance rate below 40% on {{ $labels.service }}
+            description: Speculative draft token acceptance rate has fallen below 40% over 15m, signaling draft model divergence or quantization mismatch.
+          labels:
+            severity: warning
