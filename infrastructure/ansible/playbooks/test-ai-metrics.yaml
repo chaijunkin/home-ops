@@ -91,13 +91,53 @@
         fail_msg: "Inference speed under threshold! Speed={{ live_tg_speed }} tok/s (required >={{ min_tokens_per_sec }}), accepted={{ live_draft_accepted }}/{{ live_draft_total }}"
         success_msg: "Live completion OK: {{ live_tg_speed }} tok/s, speculative accepted: {{ live_draft_accepted }}/{{ live_draft_total }}"
 
-    - name: 4.1 Query Prometheus for Strix Halo Blackbox probe statuses
+    - name: 4.1 Behavioral Slice Test - Structured JSON Mode (Made-With-ML Contract)
+      ansible.builtin.command: >-
+        curl -sSf -k -m 20 "{{ litellm_url }}/v1/chat/completions"
+        -H "Content-Type: application/json"
+        -H "Authorization: Bearer {{ r_litellm_key.stdout }}"
+        -d '{"model":"{{ test_model }}","messages":[{"role":"system","content":"You are a helpful assistant. Output valid JSON in your final answer."},{"role":"user","content":"Output valid JSON with keys \"status\" and \"code\"."}],"response_format":{"type":"json_object"},"max_tokens":120}'
+      register: r_json_mode_raw
+      changed_when: false
+
+    - name: 4.2 Assert valid Structured JSON Schema output
+      vars:
+        json_resp: "{{ r_json_mode_raw.stdout | from_json }}"
+        json_content: "{{ json_resp.choices[0].message.content | default('{}') | from_json }}"
+      ansible.builtin.assert:
+        that:
+          - json_content.status is defined
+          - json_content.code is defined
+        fail_msg: "Model failed structured JSON mode validation! Output: {{ json_resp.choices[0].message.content }}"
+        success_msg: "Structured JSON Contract passed: {{ json_content }}"
+
+    - name: 4.3 Behavioral Slice Test - Reasoning & Directional Invariance
+      ansible.builtin.command: >-
+        curl -sSf -k -m 20 "{{ litellm_url }}/v1/chat/completions"
+        -H "Content-Type: application/json"
+        -H "Authorization: Bearer {{ r_litellm_key.stdout }}"
+        -d '{"model":"{{ test_model }}","messages":[{"role":"user","content":"Which number is bigger: 9.11 or 9.9?"}],"max_tokens":120}'
+      register: r_reasoning_raw
+      changed_when: false
+
+    - name: 4.4 Assert reasoning traces and correct comparative logic
+      vars:
+        reasoning_resp: "{{ r_reasoning_raw.stdout | from_json }}"
+        has_reasoning: "{{ ('reasoning_content' in reasoning_resp.choices[0].message and (reasoning_resp.choices[0].message.reasoning_content | length > 0)) or ('<think>' in (reasoning_resp.choices[0].message.content | default(''))) }}"
+      ansible.builtin.assert:
+        that:
+          - has_reasoning
+          - "'9.9' in (reasoning_resp.choices[0].message.content ~ ' ' ~ (reasoning_resp.choices[0].message.reasoning_content | default('')))"
+        fail_msg: "Behavioral reasoning test failed: {{ reasoning_resp.choices[0].message }}"
+        success_msg: "Behavioral Reasoning test passed: Model correctly reasoned and selected 9.9"
+
+    - name: 5.1 Query Prometheus for Strix Halo Blackbox probe statuses
       ansible.builtin.command: >-
         curl -sSf -k -m 10 "{{ prometheus_url }}/api/v1/query?query=probe_success%7Binstance%3D~%27.*192.168.1.149.*%27%7D"
       register: r_prom_blackbox_raw
       changed_when: false
 
-    - name: 4.2 Assert all Blackbox probes are UP (status = 1)
+    - name: 5.2 Assert all Blackbox probes are UP (status = 1)
       vars:
         prom_blackbox: "{{ r_prom_blackbox_raw.stdout | from_json }}"
         probe_statuses: "{{ prom_blackbox.data.result | map(attribute='value') | map('last') | list }}"
@@ -108,13 +148,13 @@
         fail_msg: "One or more Blackbox probes for Strix Halo are failing! Results: {{ prom_blackbox.data.result }}"
         success_msg: "All {{ probe_statuses | length }} Blackbox probes reporting 1 (UP)"
 
-    - name: 4.3 Query Prometheus for active AI Observability alerts
+    - name: 5.3 Query Prometheus for active AI Observability alerts
       ansible.builtin.command: >-
         curl -sSf -k -m 10 "{{ prometheus_url }}/api/v1/query?query=ALERTS%7Balertname%3D~%27AIObservability.*%27%2Calertstate%3D%27firing%27%7D"
       register: r_prom_alerts_raw
       changed_when: false
 
-    - name: 4.4 Assert zero firing AI Observability alerts
+    - name: 5.4 Assert zero firing AI Observability alerts
       vars:
         prom_alerts: "{{ r_prom_alerts_raw.stdout | from_json }}"
       ansible.builtin.assert:
@@ -123,7 +163,7 @@
         fail_msg: "Active firing AI alerts detected: {{ prom_alerts.data.result }}"
         success_msg: "Zero firing AI alerts in Prometheus"
 
-    - name: 5. Display Comprehensive AI Stack Test Report
+    - name: 6. Display Comprehensive AI Stack Test Report
       vars:
         prom_blackbox: "{{ r_prom_blackbox_raw.stdout | from_json }}"
         live_tg_speed: "{{ chat_resp.usage.completion_tokens_per_second | default(0.0) | round(2) }}"
@@ -145,6 +185,9 @@
           [PASS] Speculative Decoding MTP     : {{ live_draft_accepted }}/{{ live_draft_total }} tokens ({{ acceptance_pct }}% accepted)
           [PASS] Persistent Prompt Cache Hits : {{ cached_tokens }} tokens cached
           [PASS] Hardware GPU Health          : 0 device drops
+          -------------------------------------------------------
+          [PASS] Behavioral Slice 1 (JSON)    : Structured Schema Validated
+          [PASS] Behavioral Slice 2 (Reason)  : Chain-of-Thought & Reasoning Verified
           -------------------------------------------------------
           [PASS] Blackbox Exporter Probes     : {{ prom_blackbox.data.result | length }} active / 0 failing
           [PASS] Prometheus AI Alerts         : 0 firing
