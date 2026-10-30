@@ -6,8 +6,8 @@ set shell := ['bash', '-euo', 'pipefail', '-c']
 default:
     just -l ansible
 
-ANSIBLE_DIR := justfile_directory()
-VIRTUAL_ENV := justfile_directory() / "../../.venv"
+ANSIBLE_DIR := justfile_directory() / "infrastructure/ansible"
+VIRTUAL_ENV := justfile_directory() / ".venv"
 ANSIBLE_INVENTORY_FILE := ANSIBLE_DIR / "inventory/hosts.yaml"
 ANSIBLE_REQUIREMENTS_FILE := ANSIBLE_DIR / "requirements.yaml"
 ANSIBLE_PIP_REQUIREMENTS_FILE := ANSIBLE_DIR / "requirements.txt"
@@ -23,6 +23,10 @@ deps:
 [doc('Run an Ansible playbook')]
 run playbook *args: deps
     "{{ VIRTUAL_ENV }}/bin/ansible-playbook" --inventory "{{ ANSIBLE_INVENTORY_FILE }}" "{{ ANSIBLE_DIR }}/playbooks/{{ playbook }}.yaml" {{ args }}
+
+[doc('Test AI inference performance, metrics, and Prometheus observability')]
+test-ai:
+    ansible-playbook "{{ ANSIBLE_DIR }}/playbooks/test-ai-metrics.yaml"
 
 [confirm('Shutdown all Kubernetes nodes via Ansible ?')]
 [doc('Shutdown all Kubernetes nodes')]

@@ -118,10 +118,10 @@ spec:
           labels:
             severity: warning
         - alert: AIObservabilityAPUMemoryPressure
-          expr: (node_memory_MemAvailable_bytes{instance="192.168.1.149:9100"} / node_memory_MemTotal_bytes{instance="192.168.1.149:9100"}) * 100 < 10
+          expr: (node_memory_MemAvailable_bytes{instance="192.168.1.149:9100"} / node_memory_MemTotal_bytes{instance="192.168.1.149:9100"}) * 100 < 5
           for: 5m
           annotations:
-            summary: Strix Halo APU host memory under severe pressure (<10% available)
-            description: Available memory on Strix Halo APU is under 10%, threatening a Gufo/Podman OOM crash.
+            summary: Strix Halo APU host memory under severe pressure (<5% available)
+            description: Available memory on Strix Halo APU is under 5% (<6GB), threatening a Gufo/Podman OOM crash.
           labels:
             severity: warning
