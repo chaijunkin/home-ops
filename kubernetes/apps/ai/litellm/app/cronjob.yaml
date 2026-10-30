@@ -23,7 +23,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: smoke-test
-              image: curlimages/curl:8.12.1
+              image: curlimages/curl:8.23.0
               env:
                 - name: LITELLM_MASTER_KEY
                   valueFrom:
