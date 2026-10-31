@@ -7,22 +7,20 @@ spec:
   modelName: reasoning-pool
   proxyRef: litellm
   params:
-    model: openai/deepseek-v4-flash
-    apiBase: https://opencode.ai./zen/go/v1
-    apiKeyRef:
-      name: litellm
-      key: OPENCODE_GO_API_KEY
-    dropParams: true
+    model: hosted_vllm/qwen3.8-flash-next
+    apiBase: http://192.168.1.149:8732/v1
+    apiKey: gufo-key
     additional:
+      temperature: 1.0
+      top_p: 0.95
       order: 1
-      extra_headers:
-        x-opencode-session: "litellm-proxy"
+      max_parallel_requests: 2
   info:
     mode: chat
-    maxInputTokens: 1000000
-    maxOutputTokens: 131072
+    maxInputTokens: 245760
+    maxOutputTokens: 24576
     supportsFunctionCalling: true
-    supportsVision: false
+    supportsVision: true
     extra:
       supports_reasoning: true
 ---
@@ -34,22 +32,19 @@ spec:
   modelName: reasoning-pool
   proxyRef: litellm
   params:
-    model: openai/kimi-k2.7-code
-    apiBase: https://opencode.ai./zen/go/v1
+    model: gemini/gemini-2.5-flash
     apiKeyRef:
       name: litellm
-      key: OPENCODE_GO_API_KEY
+      key: GEMINI_API_KEY
     dropParams: true
     additional:
       order: 2
-      extra_headers:
-        x-opencode-session: "litellm-proxy"
   info:
     mode: chat
-    maxInputTokens: 262128
-    maxOutputTokens: 131072
+    maxInputTokens: 1000000
+    maxOutputTokens: 16384
     supportsFunctionCalling: true
-    supportsVision: false
+    supportsVision: true
     extra:
       supports_reasoning: true
 ---
@@ -61,20 +56,17 @@ spec:
   modelName: reasoning-pool
   proxyRef: litellm
   params:
-    model: anthropic/qwen3.7-max
-    apiBase: https://opencode.ai./zen/go
+    model: openrouter/openrouter/free
     apiKeyRef:
       name: litellm
-      key: OPENCODE_GO_API_KEY
+      key: OPENROUTER_API_KEY
     dropParams: true
     additional:
       order: 3
-      extra_headers:
-        x-opencode-session: "litellm-proxy"
   info:
     mode: chat
-    maxInputTokens: 262144
-    maxOutputTokens: 32768
+    maxInputTokens: 200000
+    maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: true
     extra:

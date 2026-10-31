@@ -6,7 +6,6 @@ resources:
   - ./cerebras-wildcard.yaml
   - ./frontier-pool.yaml
   - ./gemini-wildcard.yaml
-  - ./glm-5.3-flash.yaml
   - ./groq-wildcard.yaml
   - ./hf-wildcard.yaml
   - ./ilmu-wildcard.yaml
@@ -16,20 +15,22 @@ resources:
   - ./memini-summary.yaml
   - ./mistral-wildcard.yaml
   - ./nvidia-wildcard.yaml
-  - ./opencode-embed.yaml
-  - ./opencode-go-deepseek-v4-flash.yaml
-  - ./opencode-go-gpt-6-luna.yaml
-  - ./opencode-go-claude-sonnet-5-5.yaml
-  - ./opencode-go-glm-5-2.yaml
-  - ./opencode-go-kimi-k2-6.yaml
-  - ./opencode-go-kimi-k2-7-code.yaml
-  - ./opencode-go-mimo-v2-5.yaml
-  - ./opencode-go-minimax-m3.yaml
-  - ./opencode-go-qwen3-6-plus.yaml
-  - ./opencode-go-qwen3-7-max.yaml
   - ./openrouter-wildcard.yaml
   - ./reasoning-pool.yaml
   - ./vercel-wildcard.yaml
+  # Inactive OpenCode Go cloud models (unsubscribed)
+  # - ./glm-5.3-flash.yaml
+  # - ./opencode-embed.yaml
+  # - ./opencode-go-deepseek-v4-flash.yaml
+  # - ./opencode-go-gpt-6-luna.yaml
+  # - ./opencode-go-claude-sonnet-5-5.yaml
+  # - ./opencode-go-glm-5-2.yaml
+  # - ./opencode-go-kimi-k2-6.yaml
+  # - ./opencode-go-kimi-k2-7-code.yaml
+  # - ./opencode-go-mimo-v2-5.yaml
+  # - ./opencode-go-minimax-m3.yaml
+  # - ./opencode-go-qwen3-6-plus.yaml
+  # - ./opencode-go-qwen3-7-max.yaml
   # Inactive bare-metal models (ports closed on Strix Halo)
   # - ./nemotron-3-5.yaml
   # - ./gemma-4.yaml

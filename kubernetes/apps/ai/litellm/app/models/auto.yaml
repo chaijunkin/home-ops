@@ -9,16 +9,16 @@ spec:
   params:
     model: auto_router/complexity_router
     additional:
-      complexity_router_default_model: frontier-pool
+      complexity_router_default_model: local-pool-chat
       complexity_router_config:
         tiers:
-          SIMPLE: opencode-go/gpt-6-luna
-          MEDIUM: frontier-pool
-          COMPLEX: opencode-go/claude-sonnet-5-5
-          REASONING: reasoning-pool
+          SIMPLE: local-pool-chat
+          MEDIUM: local-pool-chat
+          COMPLEX: qwen3.8-flash-next
+          REASONING: qwen3.8-flash-next
         classifier_type: llm
         classifier_llm_config:
-          model: opencode-go/gpt-6-luna
+          model: local-pool-chat
           timeout_ms: 20000
         classifier_fallback: default_model
         session_affinity: true
