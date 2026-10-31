@@ -24,6 +24,12 @@ spec:
     parameters:
       max_connections: "600"
       shared_buffers: 512MB
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      memory: 2Gi
   probes:
     liveness:
       timeoutSeconds: 10

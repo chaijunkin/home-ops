@@ -28,6 +28,9 @@ spec:
       namespace: storage
   concurrency:
     maxConcurrentJobs: 2
+  health:
+    probe:
+      interval: 12h
   identityDefaults:
     hostnameExpr: namespace
     usernameExpr: policyName

@@ -52,6 +52,9 @@ spec:
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.69.0.0/16 # ${CLUSTER_CIDR}
+    k8sClientRateLimit:
+      qps: 50
+      burst: 100
     k8sServiceHost: 127.0.0.1
     # k8sServicePort: 6444
     k8sServicePort: 7445 # prism IP
@@ -59,6 +62,9 @@ spec:
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
       enabled: true
+      leaseDuration: 120s
+      leaseRenewDeadline: 60s
+      leaseRetryPeriod: 10s
     loadBalancer:
       algorithm: maglev
       mode: dsr
@@ -69,6 +75,8 @@ spec:
     operator:
       replicas: 1
       rollOutPods: true
+      unmanagedPodWatcher:
+        restart: false
       resources:
         requests:
           cpu: 100m

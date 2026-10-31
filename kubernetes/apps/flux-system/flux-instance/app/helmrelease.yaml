@@ -34,10 +34,10 @@ spec:
           - patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
-                value: --concurrent=10
+                value: --concurrent=4
               - op: add
                 path: /spec/template/spec/containers/0/args/-
-                value: --requeue-dependency=5s
+                value: --requeue-dependency=15s
             target:
               kind: Deployment
               name:
@@ -64,7 +64,7 @@ spec:
           - patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
-                value: --concurrent=20
+                value: --concurrent=4
               - op: replace
                 path: /spec/template/spec/volumes/0
                 value:
