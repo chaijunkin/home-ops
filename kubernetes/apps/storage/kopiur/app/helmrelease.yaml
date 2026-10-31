@@ -34,8 +34,11 @@ spec:
       credentialProjection:
         enabled: true
     installScope: cluster
-    maxConcurrentJobs: 4
-    reconcileConcurrency: 4
+    leaderElection:
+      enabled: false
+    maxConcurrentJobs: 2
+    maxConcurrentDeleteJobs: 1
+    reconcileConcurrency: 2
     monitoring:
       dashboards:
         enabled: true

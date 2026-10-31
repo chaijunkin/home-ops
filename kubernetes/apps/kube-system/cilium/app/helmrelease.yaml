@@ -69,6 +69,10 @@ spec:
     operator:
       replicas: 1
       rollOutPods: true
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
       prometheus:
         enabled: true
         serviceMonitor:

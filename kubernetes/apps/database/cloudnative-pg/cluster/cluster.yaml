@@ -24,6 +24,13 @@ spec:
     parameters:
       max_connections: "600"
       shared_buffers: 512MB
+  probes:
+    liveness:
+      timeoutSeconds: 10
+      failureThreshold: 6
+    readiness:
+      timeoutSeconds: 10
+      failureThreshold: 6
   monitoring:
     enablePodMonitor: true
     podMonitorMetricRelabelings:

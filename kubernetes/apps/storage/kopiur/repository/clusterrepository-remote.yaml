@@ -31,6 +31,22 @@ spec:
     usernameExpr: policyName
   catalog:
     adoption: Ignore
+    periodicRefresh: false
+  parameters:
+    epoch:
+      minDuration: 1h
   scheduleDefaults:
     timezone: Asia/Kuala_Lumpur
     jitter: 45m
+  moverDefaults:
+    cache:
+      contentCacheSizeMb: 512
+      metadataCacheSizeMb: 512
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    ttlSecondsAfterFinished: 300
