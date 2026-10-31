@@ -16,6 +16,7 @@ spec:
   catalog:
     adoption: Ignore
     periodicRefresh: false
+    refreshInterval: 12h
   create:
     enabled: true # Step 1, then disable this
   credentialProjection:
@@ -32,7 +33,7 @@ spec:
     usernameExpr: policyName
   parameters:
     epoch:
-      minDuration: 1h
+      minDuration: 12h
   scheduleDefaults:
     timezone: Asia/Kuala_Lumpur
     jitter: 45m
@@ -44,7 +45,7 @@ spec:
         cron: "0 3 * * *"
         jitter: 1h
       quick:
-        cron: "0 */6 * * *"
+        cron: "0 */12 * * *"
         jitter: 30m
       timezone: Asia/Kuala_Lumpur
     takeoverPolicy: Force

@@ -32,9 +32,10 @@ spec:
   catalog:
     adoption: Ignore
     periodicRefresh: false
+    refreshInterval: 12h
   parameters:
     epoch:
-      minDuration: 1h
+      minDuration: 12h
   scheduleDefaults:
     timezone: Asia/Kuala_Lumpur
     jitter: 45m
