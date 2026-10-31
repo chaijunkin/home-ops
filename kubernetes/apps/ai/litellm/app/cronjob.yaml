@@ -59,7 +59,7 @@ spec:
                     -H "Content-Type: application/json" \
                     -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
                     -d '{"model":"local-pool-chat","messages":[{"role":"system","content":"You are a helpful assistant. Output valid JSON in your final answer."},{"role":"user","content":"Output valid JSON with keys \"status\" and \"code\"."}],"response_format":{"type":"json_object"},"max_tokens":120}')
-                  echo "$JSON_RESP" | grep -q '\\"status\\"' && echo "$JSON_RESP" | grep -q '\\"code\\"' || {
+                  echo "$JSON_RESP" | grep -q '"status"' && echo "$JSON_RESP" | grep -q '"code"' || {
                     echo "[FAIL] Structured JSON schema check failed: $JSON_RESP"
                     exit 1
                   }
