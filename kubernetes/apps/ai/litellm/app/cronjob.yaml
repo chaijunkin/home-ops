@@ -52,8 +52,29 @@ spec:
                     echo "[FAIL] Missing draft_tokens_accepted in response: $RESP"
                     exit 1
                   }
-                  
                   echo "[PASS] Live completion succeeded with MTP speculative decoding."
+
+                  # 4. Behavioral Slice 1: Structured JSON Schema Validation
+                  JSON_RESP=$(curl -sSf -m 25 http://litellm.ai.svc.cluster.local:4000/v1/chat/completions \
+                    -H "Content-Type: application/json" \
+                    -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
+                    -d '{"model":"local-pool-chat","messages":[{"role":"system","content":"You are a helpful assistant. Output valid JSON in your final answer."},{"role":"user","content":"Output valid JSON with keys \"status\" and \"code\"."}],"response_format":{"type":"json_object"},"max_tokens":120}')
+                  echo "$JSON_RESP" | grep -q '\\"status\\"' && echo "$JSON_RESP" | grep -q '\\"code\\"' || {
+                    echo "[FAIL] Structured JSON schema check failed: $JSON_RESP"
+                    exit 1
+                  }
+                  echo "[PASS] Behavioral Slice 1 (Structured JSON Schema) passed."
+
+                  # 5. Behavioral Slice 2: Reasoning & Comparative Logic
+                  REASON_RESP=$(curl -sSf -m 25 http://litellm.ai.svc.cluster.local:4000/v1/chat/completions \
+                    -H "Content-Type: application/json" \
+                    -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
+                    -d '{"model":"local-pool-chat","messages":[{"role":"user","content":"Which number is bigger: 9.11 or 9.9?"}],"max_tokens":120}')
+                  echo "$REASON_RESP" | grep -q "9.9" || {
+                    echo "[FAIL] Behavioral reasoning check failed: $REASON_RESP"
+                    exit 1
+                  }
+                  echo "[PASS] Behavioral Slice 2 (Reasoning & Comparative Logic) passed."
                   echo "[$(date -u)] Deep AI inference smoke test completed successfully."
               resources:
                 requests:
