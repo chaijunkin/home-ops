@@ -25,7 +25,7 @@ spec:
   create:
     enabled: true # Step 1, then disable this
   concurrency:
-    maxConcurrentJobs: 2
+    maxConcurrentJobs: 1
   health:
     probe:
       interval: 12h
@@ -44,8 +44,8 @@ spec:
     jitter: 45m
   moverDefaults:
     cache:
-      contentCacheSizeMb: 512
-      metadataCacheSizeMb: 512
+      contentCacheSizeMb: 128
+      metadataCacheSizeMb: 128
     resources:
       requests:
         cpu: 50m
@@ -53,4 +53,4 @@ spec:
       limits:
         cpu: 500m
         memory: 1Gi
-    ttlSecondsAfterFinished: 300
+    ttlSecondsAfterFinished: 3600
