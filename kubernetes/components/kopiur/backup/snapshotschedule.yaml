@@ -8,3 +8,7 @@ spec:
     name: ${APP}
   schedule:
     cron: 0 0,12 * * *
+    # Skip a slot missed by more than 30 minutes (e.g. the node rebooted mid-wave)
+    # instead of releasing every backlogged job at once. Measured against the
+    # jittered slot, not the cron minute (kopiur snapshot_schedule.rs:missed_deadline).
+    startingDeadlineSeconds: 1800

@@ -14,11 +14,26 @@ route:
       matchers:
         - alertname =~ "Watchdog"
       repeat_interval: 5m
-    - receiver: "null"
+    # Backup failures must reach a human. They used to be routed to "null", which
+    # discarded every one of them unconditionally and made the mute_time_intervals
+    # below a no-op: freshrss failed 10 consecutive snapshots on the remote tier and
+    # 7 on the local tier over 5 days with four alerts firing and no notification.
+    # Still muted inside the backup window, where a transient failure normally
+    # retries itself.
+    - receiver: discord
       matchers:
-        - alertname =~ "KopiurSnapshotFailed|KopiurLastBackupFailed|KopiurBackupStale|KopiurBackupConsecutiveFailures|etcdDatabaseHighFragmentationRatio"
+        - alertname =~ "KopiurSnapshotFailed|KopiurLastBackupFailed|KopiurBackupStale|KopiurBackupConsecutiveFailures"
       mute_time_intervals:
         - kopiur_ssd_backup_window
+      repeat_interval: 24h
+    - receiver: "null"
+      matchers:
+        - alertname =~ "etcdDatabaseHighFragmentationRatio"
+      # Kept black-holed deliberately, unlike the backup alerts above: it is firing
+      # right now at 0.628 against a 0.5 threshold and will keep firing until an
+      # etcd defrag maintenance window is run. Routing it to Discord would produce a
+      # permanent alert that no on-call action can clear. Tracked as a scheduled
+      # maintenance item, not an incident.
     - receiver: "null"
       matchers:
         - severity = "none"
