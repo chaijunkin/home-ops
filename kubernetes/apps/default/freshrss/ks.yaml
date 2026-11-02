@@ -27,9 +27,15 @@ spec:
     substitute:
       APP: *appname
       KOPIUR_CAPACITY: 2Gi
-      KOPIUR_PUID: "1000"
+      # data/users/admin is 0770 apache-owned and holds db.sqlite (subscriptions +
+      # read state), so it cannot be ignored; the unprivileged mover (uid 1000)
+      # gets PermissionDenied, which fails the whole snapshot. Run the mover as
+      # root like ai/open-webui and docs/ai-context/kopiur-troubleshooting.md
+      # "Solution 1", but keep PGID/fsGroup at 1000: setting it to 0 would make
+      # kubelet chgrp -R the PVC and ping-pong ownership with the app pod.
+      KOPIUR_PUID: "0"
       KOPIUR_PGID: "1000"
-      KOPIUR_NONROOT: "true"
+      KOPIUR_NONROOT: "false"
   dependsOn:
     - name: openebs
       namespace: storage
