@@ -41,7 +41,7 @@ spec:
       minDuration: 12h
   scheduleDefaults:
     timezone: Asia/Kuala_Lumpur
-    jitter: 45m
+    jitter: 4h
   moverDefaults:
     cache:
       contentCacheSizeMb: 128
