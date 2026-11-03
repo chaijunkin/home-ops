@@ -5,3 +5,4 @@ resources:
   - ./alerts
   - ./repos
   - ./sops
+  - ./limitrange.yaml
