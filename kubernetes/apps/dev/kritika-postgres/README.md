@@ -33,10 +33,11 @@ app itself is deployed. Nothing consumes this database yet.
   need not (upstream database.md).
 - **Security & IAM:** `enableSuperuserAccess: false`. Two roles per upstream: owner `kritika`
   (initdb, runs migrations, NOT superuser) and app `kritika_app` via `DatabaseRole` (no table
-  ownership, no BYPASSRLS — Kritika refuses anything else). Passwords are ESO `Password`-generated
-  at reconcile (`refreshInterval: Never` → generatorState is the persistence), URI-safe charset,
-  never in Git. TODO before the real app install: move both into Bitwarden via
-  `bitwarden-login` like the shared cluster, so they survive a dev-namespace wipe review.
+  ownership, no BYPASSRLS — Kritika refuses anything else). Passwords live in **Bitwarden login
+  items** consumed by plain ExternalSecrets (operator decision 2026-11-04: no runtime generators —
+  the credential must outlive the cluster state storing it), same pattern as the shared cluster's
+  `cloudnative-pg-secret`. Item UUIDs are the only Git-visible handle; passwords never are. Keep
+  item passwords alphanumeric so the templated connection URI needs no escaping.
 
 ## Verifying the spike (SC-001 closure)
 
