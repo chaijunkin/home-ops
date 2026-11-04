@@ -21,6 +21,7 @@ spec:
     podSecurityContext:
       fsGroup: ${KOPIUR_PGID:=2000}
       fsGroupChangePolicy: OnRootMismatch
+      supplementalGroups: ${KOPIUR_SUPPLEMENTAL_GROUPS:=[]}
   repository:
     kind: ClusterRepository
     name: remote
