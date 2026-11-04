@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/master/limitrange.json
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-container-request
+spec:
+  limits:
+    # A memory request floor for containers that declare no resources at all.
+    #
+    # Containers with neither requests nor limits are BestEffort, and Talos's OOM
+    # controller reaps BestEffort cgroups first whenever the node runs short of
+    # memory: it killed 371 of them in one day, which is what made whole services
+    # flap. A request (deliberately with NO limit) moves those pods to Burstable,
+    # out of the reaper's target class, and makes the scheduler account for them.
+    #
+    # Only unset requests are defaulted, so every workload that already declares
+    # resources is unaffected. No `default` limits are set here on purpose: a
+    # blanket limit would OOM-kill the busiest of these pods (changedetection
+    # uses 1.3 GiB) instead of letting them burst.
+    - type: Container
+      defaultRequest:
+        memory: 64Mi
