@@ -25,9 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: kritika-postgres
-      namespace: dev
   values:
     controllers:
       kritika-postgres-backup:

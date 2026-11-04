@@ -8,9 +8,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: kritika-postgres
-  dependsOn:
-    - name: cloudnative-pg
-      namespace: database
   interval: 1h
   path: ./kubernetes/apps/dev/kritika-postgres/app
   prune: true
