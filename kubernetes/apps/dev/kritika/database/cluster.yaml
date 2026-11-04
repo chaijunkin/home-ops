@@ -18,6 +18,11 @@ spec:
   # Kritika refuses a superuser owner role and refuses to start unless BOTH extensions below
   # exist (internal/store/store.go ErrNoVectorExtension); vchord must be preloaded.
   enableSuperuserAccess: false
+  # With one instance, CNPG's default PDB (minAvailable: 1 for the primary) always reports 0
+  # allowed disruptions — kubectl drain would block forever waiting on the only copy. Verified
+  # on this cluster: the shared cluster's postgres-primary PDB shows exactly that. Durability
+  # here is the dump job (../backup), not a PDB. Same reasoning and value as bjw-s/home-ops.
+  enablePDB: false
   postgresql:
     extensions:
       - name: vchord

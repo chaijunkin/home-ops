@@ -34,7 +34,8 @@ spec:
   name: kritika_app
   login: true
   ensure: present
+  # Must match the ExternalSecret, which deliberately avoids CNPG's reserved `<cluster>-app`.
   passwordSecret:
-    name: kritika-postgres-app
+    name: kritika-postgres-approle
   # Deleting this resource must not drop the role out from under running connections.
   databaseRoleReclaimPolicy: retain

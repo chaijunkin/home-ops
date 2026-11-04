@@ -6,7 +6,9 @@ app itself is deployed. Nothing consumes this database yet.
 **Category:** database
 
 ## Resources
-- **Manifests:** `kubernetes/apps/dev/kritika-postgres`
+- **Manifests:** `kubernetes/apps/dev/kritika` — `database/` (cluster, extensions, roles,
+  credentials) and `backup/` (daily dump job). The Kritika app lands as `app/` beside them in a
+  follow-up PR; folder layout follows bjw-s and onedr0p/home-ops (`kritika-database` ← `kritika`).
 - **Upstream pattern:** <https://kritika.home-operations.com/database/> (CNPG 1.30, verified 2026-11-04)
 - **Desk-spike evidence:** `ai-sandbox/home-ops-agent/specs/003-kritika-review-service/results/001-vectorchord-compat.md`
 
@@ -31,7 +33,8 @@ app itself is deployed. Nothing consumes this database yet.
   anti-affinity (deliberate deviation from upstream's 2-instance example, which cannot schedule
   here). Node-local storage class is correct: Postgres replicates logically; the storage layer
   need not (upstream database.md).
-- **Security & IAM:** `enableSuperuserAccess: false`. Two roles per upstream: owner `kritika`
+- **Security & IAM:** `enableSuperuserAccess: false`, `enablePDB: false` (single instance — a
+  primary PDB would block node drains). Two roles per upstream: owner `kritika`
   (initdb, runs migrations, NOT superuser) and app `kritika_app` via `DatabaseRole` (no table
   ownership, no BYPASSRLS — Kritika's startup assertion refuses anything else). Both credentials
   come from **one Bitwarden login item** `6472239d-…` (operator decision 2026-11-04: no runtime

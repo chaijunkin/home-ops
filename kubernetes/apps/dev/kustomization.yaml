@@ -8,4 +8,4 @@ components:
 resources:
   - ./namespace.yaml
   - ./forgejo/ks.yaml
-  - ./kritika-postgres/ks.yaml
+  - ./kritika/ks.yaml
