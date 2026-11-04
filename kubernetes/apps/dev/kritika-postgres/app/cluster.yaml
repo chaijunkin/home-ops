@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/postgresql.cnpg.io/cluster_v1.json
+# Kritika review-service database — spike of home-ops-agent spec 003 SC-001.
+# Pattern: https://kritika.home-operations.com/database/ (upstream, verified 2026-11-04)
+#   with two deliberate deviations for this cluster:
+#   1. instances: 1 — single node; upstream's 2-instance anti-affinity example is unschedulable
+#      here. Durability rests on backup (see README), not replicas; the index is regenerable.
+#   2. images digest-pinned per repo invariant (chart/app bumps go through the PR, never :latest).
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: kritika-postgres
+  annotations:
+    fluxcd.io/ignore: "true"
+    kyverno.io/ignore: "true"
+spec:
+  instances: 1
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6-standard-bookworm@sha256:fedcc3ff1abb4024997e065f449c2201d92cbf093dca238efbc9147004023ab9
+  # Kritika refuses a superuser owner role and refuses to start unless BOTH extensions below
+  # exist (internal/store/store.go ErrNoVectorExtension); vchord must be preloaded.
+  enableSuperuserAccess: false
+  postgresql:
+    extensions:
+      - name: vchord
+        image:
+          reference: ghcr.io/tensorchord/vchord-scratch:pg18-v1.1.1@sha256:bdea43bed2a414e21bbf71767bf6f0739747ac480b267b51772dc214ac28dcb3
+        # The vchord-scratch image keeps Debian's paths rather than CNPG's /extensions/vchord/...
+        dynamic_library_path:
+          - /usr/lib/postgresql/18/lib/
+        extension_control_path:
+          - /usr/share/postgresql/18/
+    shared_preload_libraries:
+      - vchord
+    parameters:
+      max_connections: "100"
+      shared_buffers: 256MB
+  resources:
+    requests:
+      cpu: 200m
+      memory: 512Mi
+    limits:
+      memory: 1Gi
+  storage:
+    size: 10Gi
+    storageClass: miroir-local
+  monitoring:
+    enablePodMonitor: true
+  bootstrap:
+    initdb:
+      database: kritika
+      owner: kritika
+      secret:
+        name: kritika-postgres-owner
