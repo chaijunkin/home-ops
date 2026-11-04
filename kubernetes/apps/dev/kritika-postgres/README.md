@@ -12,9 +12,14 @@ app itself is deployed. Nothing consumes this database yet.
 
 ## Notes (the five pillars)
 
-- **DR & bootstrapping:** Spike-grade: `bootstrap.initdb`, no barman/backup wiring yet — that is
-  FR-009 of spec `003` and lands with the app PR (barman → garage, like `database/cloudnative-pg`).
-  Accepted data-loss stance: the index is regenerable from the repos; reviews live on GitHub.
+- **DR & bootstrapping:** Manual pipeline (user decision 2026-11-04, same posture as the shared
+  `database/cloudnative-pg`): daily `pg_dump` CronJob (`prodrigestivill/postgres-backup-local`,
+  same digest as the shared job) → NFS `smb.cloudjur.com:/tank/Backup/Database`; the tool's
+  host-named subdirectory (`kritika-postgres-rw`) keeps these dumps separate from the shared
+  cluster's. Credentials map from the owner Secret via `valueFrom` — nothing new to store.
+  Barman/CNPG-native backup deliberately NOT used (mirrors the folder convention the operator
+  set for Postgres). Accepted stance: the vector index is regenerable from the repos; reviews
+  live on GitHub.
 - **Network:** cluster-internal only. Consumers connect to the **direct** `-rw` service;
   transaction-mode pooling (`Pooler`) is FORBIDDEN for this database (breaks advisory locks/LISTEN
   per upstream). No ingress, no external exposure.
