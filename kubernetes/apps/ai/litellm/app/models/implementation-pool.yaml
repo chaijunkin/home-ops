@@ -30,7 +30,7 @@ spec:
   modelName: implementation-pool
   proxyRef: litellm
   params:
-    model: gemini/gemini-2.5-flash
+    model: gemini/gemini-2.5-flash-lite
     apiKeyRef:
       name: litellm
       key: GEMINI_API_KEY
@@ -43,25 +43,25 @@ spec:
     maxOutputTokens: 16384
     supportsFunctionCalling: true
     supportsVision: true
----
-apiVersion: litellm.home-operations.com/v1alpha1
-kind: LiteLLMModel
-metadata:
-  name: implementation-pool-openrouter
-spec:
-  modelName: implementation-pool
-  proxyRef: litellm
-  params:
-    model: openrouter/openrouter/free
-    apiKeyRef:
-      name: litellm
-      key: OPENROUTER_API_KEY
-    dropParams: true
-    additional:
-      order: 3
-  info:
-    mode: chat
-    maxInputTokens: 200000
-    maxOutputTokens: 16384
-    supportsFunctionCalling: true
-    supportsVision: true
+# ---
+# apiVersion: litellm.home-operations.com/v1alpha1
+# kind: LiteLLMModel
+# metadata:
+#   name: implementation-pool-openrouter
+# spec:
+#   modelName: implementation-pool
+#   proxyRef: litellm
+#   params:
+#     model: openrouter/openrouter/free
+#     apiKeyRef:
+#       name: litellm
+#       key: OPENROUTER_API_KEY
+#     dropParams: true
+#     additional:
+#       order: 3
+#   info:
+#     mode: chat
+#     maxInputTokens: 200000
+#     maxOutputTokens: 16384
+#     supportsFunctionCalling: true
+#     supportsVision: true

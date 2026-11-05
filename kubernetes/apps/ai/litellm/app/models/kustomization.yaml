@@ -3,21 +3,21 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./auto.yaml
-  - ./cerebras-wildcard.yaml
+  # - ./cerebras-wildcard.yaml
   - ./frontier-pool.yaml
   - ./gemini-wildcard.yaml
-  - ./groq-wildcard.yaml
-  - ./hf-wildcard.yaml
-  - ./ilmu-wildcard.yaml
+  # - ./groq-wildcard.yaml
+  # - ./hf-wildcard.yaml
+  # - ./ilmu-wildcard.yaml
   - ./lmstudio-embed.yaml
   - ./embed.yaml
   - ./memini-rerank.yaml
   - ./memini-summary.yaml
-  - ./mistral-wildcard.yaml
-  - ./nvidia-wildcard.yaml
-  - ./openrouter-wildcard.yaml
+  # - ./mistral-wildcard.yaml
+  # - ./nvidia-wildcard.yaml
+  # - ./openrouter-wildcard.yaml
   - ./reasoning-pool.yaml
-  - ./vercel-wildcard.yaml
+  # - ./vercel-wildcard.yaml
   # Inactive OpenCode Go cloud models (unsubscribed)
   # - ./glm-5.3-flash.yaml
   # - ./opencode-embed.yaml
