@@ -177,7 +177,7 @@
         "--cache-disk-bytes" "17179869184"
         "--context" "200000"
         "--sessions" "2"
-        "--prefill-chunk" "512"
+        "--prefill-chunk" "2048"
         "--max-pending" "16"
         "--stall-timeout-ms" "90000"
       ];

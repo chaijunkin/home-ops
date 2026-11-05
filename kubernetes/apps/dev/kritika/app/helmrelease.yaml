@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# kritika serve: the review service, the dashboard, and the egress gateway its runner Jobs
+# go through. It starts only once the sibling cluster is Ready and the Database resource has
+# installed vector + vchord — the binary refuses to boot without them (internal/store).
+#
+# What is deliberately NOT here:
+#   review.approve / confidence.gate — Kritika reviews and comments, never approves or merges
+#     (user decision 2026-11-05, spec FR-005). Upstream defaults them off (configfile/resolve.go
+#     Settings()); an admin cannot turn them off for a repository whose own .kritika.yaml turns
+#     them on, so every repository Kritika may review declares `review: {approve: false}`.
+#   gatewayCache — the S3 backend needs an ObjectBucket CRD this cluster does not have; the
+#     default in-memory + emptyDir cache is what bjw-s and onedr0p run without S3 too.
+#   image.digest — the chart derives the runner's `-tools` image from `image.repository` and
+#     Chart.AppVersion and pins it with the digest the upstream release workflow writes into
+#     Chart.yaml (templates/_helpers.tpl `kritika.runnerImage`). A manually pinned
+#     `image.digest` would desync serve from tools. No home-operations chart release in this
+#     repository pins a digest either.
+#   config keys addr / metricsAddr / gatewayAddr / gatewayUrl / databaseAppRole / executor /
+#     runner — the chart injects them from its deployment values and fails the render otherwise.
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -8,107 +26,209 @@ spec:
     kind: OCIRepository
     name: kritika
   interval: 1h
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
   values:
-    replicas: 1
     deploymentAnnotations:
-      secret.reloader.stakater.com/auto: "true"
+      # Both Secrets are read at process start (config values from env, the database URIs on
+      # every open), so a rotated credential needs a rollout, not just a Secret update.
+      secret.reloader.stakater.com/auto: 'true'
+
     config:
       webUrl: https://kritika.cloudjur.com
       auth:
         admin:
           password:
             env: KRITIKA_AUTH_ADMIN_PASSWORD
+
+      # The one GitHub identity for the whole fleet (spec FR-007): the same cjk-bot App konflate
+      # and renovate use. clientId is the App's numeric App ID, because Kritika signs its App JWT
+      # with it as issuer (forge/github/app.go appJWT) — exactly what konflate does with the same
+      # item (KONFLATE_APP_CLIENT_ID). Upstream's `Iv1.example` is an OAuth client id, which is
+      # the wrong credential for this field. The webhook is therefore /hooks/github.
       apps:
         github:
-          accounts:
-            - chaijunkin
+          accounts: [chaijunkin]
           clientId:
             env: KRITIKA_GITHUB_CLIENT_ID
           privateKey:
             env: KRITIKA_GITHUB_PRIVATE_KEY
           webhookSecret:
             env: KRITIKA_GITHUB_WEBHOOK_SECRET
+
+      # LiteLLM is the one gateway for every model (spec FR-004), so this is an `openai` server
+      # pointing at the in-cluster proxy: Kritika calls {baseUrl}/chat/completions and
+      # {baseUrl}/embeddings, so /v1 is part of the base. apiKey is required by the schema even
+      # for a server that would accept a keyless call, so the proxy's virtual key is used — the
+      # same one open-webui, hermes and opencode use. The model ids are LiteLLMModel modelNames
+      # (ai/litellm/app/models): frontier-pool is a tool-calling pool, which the review agent
+      # needs (a model that cannot call tools fails at plan time), and embed is the 1024-dim
+      # memini embedder already serving open-webui. No confidence model: it re-scores each
+      # finding through a second model (docs/confidence.md), which is a second full call per
+      # finding on a single-node box that already OOMed.
       providers:
         litellm:
           type: openai
           baseUrl: http://litellm.ai.svc.cluster.local:4000/v1
           apiKey:
             env: KRITIKA_LITELLM_API_KEY
-          pricing:
-            frontier-pool:
-              input: 0.3
-              output: 1.2
-            reasoning-pool:
-              input: 0.3
-              output: 1.2
-            embed:
-              input: 0.05
-              output: 0.0
-      review:
-        model: litellm/frontier-pool
-        fallback: litellm/reasoning-pool
-        approve: false
+          models:
+            # One slot, so the pool's own rotation (qwen / gemini / openrouter) is LiteLLM's job.
+            # The pool's members price themselves, so the frontier model is deliberately absent
+            # from `pricing` below and its cost is recorded as unpriced (model/pricing.go
+            # returns unpriced=true, and only a zero-valued entry counts as free).
+            frontier:
+              id: frontier-pool
+              family: auto
+              maxContext: 245760
+              maxOutput: 24576
+              supports: [tools]
+              limits:
+                # Two at a time across the account (upstream's own default), which on a single
+                # node also bounds how many runner Jobs exist at once.
+                concurrency: 2
+
       embedding:
         model: litellm/embed
         dims: 1024
+        # The memini embedder has no prompts of its own and does not echo dimensions back, so
+        # both are declared explicitly (a wrong guess rebuilds every repository's index, so the
+        # pair is verified on the first indexing pass — see the folder README).
+        documentPrompt: 'Represent the document for retrieval: '
+        queryPrompt: 'Represent the query for retrieving supporting documents: '
+        similarFloor: 0.3
+        limits:
+          # The documented bound for an OpenAI-compatible embedder without an echoed dimension,
+          # and under memini's own 8 x 1024-float batch (internal/model/openai.go).
+          maxBatch: 8
+          maxItemChars: 8000
+
+      # Explicit zero price: the local embedder reports no cost of its own, and an unpriced model
+      # is recorded as unpriced, which makes the dashboard's spend useless. Tokens are still
+      # counted, so the cost is only the money column.
+      pricing:
+        embed:
+          input: 0
+          output: 0
+
+      # Runner traffic only: the gateway in the serve pod is the runner's HTTPS proxy, and this
+      # list is what it admits beyond the forge hosts it adds from `apps` (github.com and
+      # api.github.com) and the model endpoint it adds from `providers`. `*` is public
+      # internet, not private space: egresspolicy.Rules refuses a private, loopback or metadata
+      # address unless an explicit prefix covers it, which is what keeps a runner off the node
+      # metadata service and off the cluster's own subnets.
       egress:
         allow:
-          - "*"
-        deny:
-          - 10.0.0.0/8
-          - 172.16.0.0/12
-          - 192.168.0.0/16
-          - "*.internal"
+          - '*'
+          # Only the storage-provisioner CIDR, and only for a runner that installs a tool from a
+          # self-hosted registry. Nothing here needs it today; it is the one address an
+          # aqua-registry mirror would need, so drop it if you would rather keep runners
+          # strictly public.
+          - 10.10.30.0/24
+        deny: []
+
+      # Cheap guards first, and the repo's own .kritika.yaml is the per-PR opt-in (the account's
+      # repositories start off in the dashboard; enabling one is a click, these are the defaults
+      # once it is on).
       trigger:
-        exclude:
+        filters:
+          - name: drafts
+            expr: pr.draft
           - name: forks
             expr: pr.fork
-    envFrom:
-      - secretRef:
-          name: kritika-secret
-    database:
-      app:
-        existingSecret: kritika-postgres-approle
-      owner:
-        existingSecret: kritika-postgres-owner
-    runner:
-      podTemplate:
-        spec:
-          resources:
-            requests:
-              cpu: 10m
-              memory: 128Mi
-            limits:
-              memory: 1Gi
-    httpRoute:
-      enabled: true
-      annotations:
-        gatus.home-operations.com/endpoint: |-
-          conditions: ["[STATUS] == 200"]
-          path: /api/v1/meta
-      parentRefs:
-        - name: envoy-external
-          namespace: network
-          sectionName: https
-      hostnames:
-        - kritika.cloudjur.com
-    monitoring:
-      dashboards:
+        settle: 15s
+
+      # Kritika's agent installs the tools a repository declares (aqua-registry only) instead of
+      # letting it run arbitrary install commands.
+      agent:
+        installTools: true
+
+      # Pod resources. The LimitRange in `dev` only sets a memory default *request* (64Mi), so
+      # without limits here a review would be able to take the node's remaining memory: the same
+      # shape as the 002-agent-blueprint-convention FR-008 rule and this node's OOM history.
+      # A runner Job's resources are NOT set here — the chart's runner.podTemplate is injected
+      # from deployment values, so a runner takes the cluster's own scheduling defaults plus
+      # activeDeadlineSeconds below. Recorded as a follow-up in the README.
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          memory: 1Gi
+
+      # One review cannot run past 20 minutes, and its Job is cleaned up rather than kept.
+      runner:
+        activeDeadlineSeconds: 1200
+        ttlSecondsAfterFinished: 3600
+
+      # Single node: a second serve replica would only wait for the same leader lock, and the
+      # chart skips its PodDisruptionBudget under two replicas anyway (templates/pdb.tpl).
+      replicas: 1
+
+      # Public exposure with admin-password sign-in only for this first PR — no SSO front door
+      # yet, so the dashboard is reachable but empty to anyone without the password (the web
+      # routes all require a session; only /api/v1/meta and /healthz are public). The NetworkPolicy
+      # below is what makes "public" mean the gateway and the GitHub webhook and nothing else;
+      # Authentik or GitHub sign-in is the documented next step (see the README).
+      networkPolicy:
         enabled: true
-        grafanaOperator:
-          enabled: true
-          matchLabels:
-            dashboards: grafana
-      prometheusRule:
+        enableDNS: true
+        ingress:
+          # The Envoy data plane reaches app pods through Cilium's own bridge rather than as a
+          # pod-selector match, so `ingress` is left open to the cluster's ingress path and the
+          # exposure that matters is the HTTPRoute below. Same posture as the apps that sit
+          # behind envoy-external without a per-app policy.
+          []
+        extraEgress:
+          # The serve pod calls the LiteLLM proxy for every model and embedding request. Selector
+          # form on purpose: the chart's own `egressPorts` is ports-only and would open 4000 to
+          # the whole cluster, and this rule covers the proxy's control-plane sidecar port too,
+          # which the data path reaches through the same Service.
+          - selector:
+              matchLabels:
+                app.kubernetes.io/name: litellm
+                app.kubernetes.io/instance: litellm
+            ports:
+              - { port: 4000, protocol: TCP }
+              - { port: 4001, protocol: TCP }
+
+      httpRoute:
         enabled: true
+        annotations:
+          gethomepage.dev/enabled: 'true'
+          gethomepage.dev/group: Platform Infrastructure
+          gethomepage.dev/name: Kritika
+          gethomepage.dev/description: AI Pull Request Review
+          gethomepage.dev/icon: sh-kritika.svg
+        parentRefs:
+          - group: gateway.networking.k8s.io
+            kind: Gateway
+            name: envoy-external
+            # The HTTPS listener terminates cloudjur-com-tls and external-dns publishes the
+            # hostname from this route (--gateway-name=envoy-external), which is how
+            # konflate.cloudjur.com exists today. Without the sectionName the route lands on the
+            # plain-HTTP :80 listener instead.
+            sectionName: https
+        hostnames:
+          - kritika.cloudjur.com
+
       serviceMonitor:
         enabled: true
-    networkPolicy:
-      enabled: false
-    resources:
-      requests:
-        cpu: 50m
-        memory: 128Mi
-      limits:
-        memory: 512Mi
+        # kube-prometheus-stack selects ServiceMonitors with empty selectors, so no extra label
+        # is needed for this to be scraped; the CNPG PodMonitor for the database comes from the
+        # Cluster in ../database.
+        interval: 60s
 
+      prometheusRule:
+        enabled: true
+        # The chart's own alerts: no leader / more than one leader, a configuration the leader
+        # failed to apply, configuration drift, delayed queues, unavailable queue metrics,
+        # vector-search errors and gateway-cache storage errors. Alertmanager is deployed and
+        # Prometheus picks rules up with an empty ruleSelector.
+        additionalRuleLabels:
+          team: home-ops
