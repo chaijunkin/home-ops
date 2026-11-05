@@ -104,22 +104,7 @@ spec:
       serviceMonitor:
         enabled: true
     networkPolicy:
-      type: default
-      postgres:
-        namespace: dev
-        podSelector:
-          cnpg.io/cluster: kritika-postgres
-      extraEgress:
-        - to:
-            - namespaceSelector:
-                matchLabels:
-                  kubernetes.io/metadata.name: ai
-              podSelector:
-                matchLabels:
-                  app.kubernetes.io/name: litellm
-          ports:
-            - port: 4000
-              protocol: TCP
+      enabled: false
     resources:
       requests:
         cpu: 50m
