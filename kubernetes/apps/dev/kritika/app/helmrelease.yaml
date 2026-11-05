@@ -104,7 +104,7 @@ spec:
       serviceMonitor:
         enabled: true
     networkPolicy:
-      type: cilium
+      type: default
       postgres:
         namespace: dev
         podSelector:
