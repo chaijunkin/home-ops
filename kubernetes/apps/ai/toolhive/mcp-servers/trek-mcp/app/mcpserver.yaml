@@ -4,7 +4,7 @@ kind: MCPServer
 metadata:
   name: trek-mcp
 spec:
-  image: node:24-alpine
+  image: node:26-alpine
   transport: stdio
   groupRef:
     name: mcp-tools
