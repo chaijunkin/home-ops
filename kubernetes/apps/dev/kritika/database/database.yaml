@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/postgresql.cnpg.io/database_v1.json
+# Extensions are declared declaratively so the OPERATOR installs them as superuser — the
+# Kritika owner role never needs that privilege (upstream database.md). When the vchord
+# version changes here, move the vchord-scratch image tag in cluster.yaml with it.
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: kritika
+spec:
+  cluster:
+    name: kritika-postgres
+  name: kritika
+  owner: kritika
+  # ensure: present (schema allows only present|absent) — this database exists for Kritika.
+  ensure: present
+  extensions:
+    - name: vector
+      ensure: present
+    - name: vchord
+      version: "1.1.1"
+      ensure: present
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/postgresql.cnpg.io/databaseroles_v1.json
+# Kritika's second role: application runtime only. Upstream refuses an app role that owns a
+# table, is superuser, or has BYPASSRLS (all three would disable row-level security); none is
+# set here. Kritika's own migrations grant this role what it needs.
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: kritika-app
+spec:
+  cluster:
+    name: kritika-postgres
+  name: kritika_app
+  login: true
+  ensure: present
+  # Must match the ExternalSecret, which deliberately avoids CNPG's reserved `<cluster>-app`.
+  passwordSecret:
+    name: kritika-postgres-approle
+  # Deleting this resource must not drop the role out from under running connections.
+  databaseRoleReclaimPolicy: retain

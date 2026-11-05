@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./grafanadashboard.yaml
+configMapGenerator:
+  - name: postgresql-database-observability
+    files:
+      - database-observability-overview.json
+  - name: postgresql-cluster-overview
+    files:
+      - postgresql-cluster-overview.json
+  - name: postgresql-instance-overview
+    files:
+      - postgresql-instance-overview.json
+  - name: postgresql-logs
+    files:
+      - postgresql-logs.json
+  - name: postgresql-query-performance
+    files:
+      - postgresql-query-performance.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

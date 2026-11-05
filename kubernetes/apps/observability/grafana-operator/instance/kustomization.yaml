@@ -12,3 +12,4 @@ resources:
   - ./grafanadashboard.yaml
   - ./grafanaalertrulegroup.yaml
   - ./grafananotificationpolicy.yaml
+  - ./dashboards/postgresql
