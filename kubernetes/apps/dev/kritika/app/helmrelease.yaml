@@ -1,0 +1,129 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kritika
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kritika
+  interval: 1h
+  values:
+    replicas: 1
+    deploymentAnnotations:
+      secret.reloader.stakater.com/auto: "true"
+    config:
+      webUrl: https://kritika.cloudjur.com
+      auth:
+        admin:
+          password:
+            env: KRITIKA_AUTH_ADMIN_PASSWORD
+      apps:
+        github:
+          accounts:
+            - chaijunkin
+          clientId:
+            env: KRITIKA_GITHUB_CLIENT_ID
+          privateKey:
+            env: KRITIKA_GITHUB_PRIVATE_KEY
+          webhookSecret:
+            env: KRITIKA_GITHUB_WEBHOOK_SECRET
+      providers:
+        litellm:
+          type: openai
+          baseUrl: http://litellm.ai.svc.cluster.local:4000/v1
+          apiKey:
+            env: KRITIKA_LITELLM_API_KEY
+          pricing:
+            frontier-pool:
+              input: 0.3
+              output: 1.2
+            reasoning-pool:
+              input: 0.3
+              output: 1.2
+            embed:
+              input: 0.05
+              output: 0.0
+      review:
+        model: litellm/frontier-pool
+        fallback: litellm/reasoning-pool
+        approve: false
+      embedding:
+        model: litellm/embed
+        dims: 1024
+      egress:
+        allow:
+          - "*"
+        deny:
+          - 10.0.0.0/8
+          - 172.16.0.0/12
+          - 192.168.0.0/16
+          - "*.internal"
+      trigger:
+        exclude:
+          - name: forks
+            expr: pr.fork
+    envFrom:
+      - secretRef:
+          name: kritika-secret
+    database:
+      app:
+        existingSecret: kritika-postgres-approle
+      owner:
+        existingSecret: kritika-postgres-owner
+    runner:
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+    httpRoute:
+      enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          conditions: ["[STATUS] == 200"]
+          path: /api/v1/meta
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+          sectionName: https
+      hostnames:
+        - kritika.cloudjur.com
+    monitoring:
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+      prometheusRule:
+        enabled: true
+      serviceMonitor:
+        enabled: true
+    networkPolicy:
+      type: cilium
+      postgres:
+        namespace: dev
+        podSelector:
+          cnpg.io/cluster: kritika-postgres
+      extraEgress:
+        - to:
+            - namespaceSelector:
+                matchLabels:
+                  kubernetes.io/metadata.name: ai
+              podSelector:
+                matchLabels:
+                  app.kubernetes.io/name: litellm
+          ports:
+            - port: 4000
+              protocol: TCP
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
+

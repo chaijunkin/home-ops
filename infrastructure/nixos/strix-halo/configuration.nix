@@ -154,7 +154,7 @@
 
   virtualisation.oci-containers = {
     containers."qwen38-flash-next" = {
-      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.27.0";
+      image = "ghcr.io/gufo-org/toolboxes/gufo-runtime:0.30.0";
       autoStart = true;
       ports = [ "8732:8080" ];
       volumes = [
@@ -172,9 +172,10 @@
         "--served-model-name" "qwen3.8-flash-next"
         "--speculative" "mtp"
         "--mtp-model" "/models/mtp-Qwen3.8-Flash-Next-shared-Q8_0.gguf"
+        "--cache-ram-bytes" "4294967296"
         "--cache-disk" "/models/cache"
         "--cache-disk-bytes" "17179869184"
-        "--context" "245760"
+        "--context" "200000"
         "--sessions" "2"
         "--prefill-chunk" "512"
         "--max-pending" "16"

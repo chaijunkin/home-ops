@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: postgresql-database-observability
+spec:
+  allowCrossNamespaceImport: true
+  folderUID: integration---postgresql
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+    - datasourceName: loki
+      inputName: DS_LOKI
+  configMapRef:
+    name: postgresql-database-observability
+    key: database-observability-overview.json
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: postgresql-cluster-overview
+spec:
+  allowCrossNamespaceImport: true
+  folderUID: integration---postgresql
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: postgresql-cluster-overview
+    key: postgresql-cluster-overview.json
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: postgresql-instance-overview
+spec:
+  allowCrossNamespaceImport: true
+  folderUID: integration---postgresql
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: postgresql-instance-overview
+    key: postgresql-instance-overview.json
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: postgresql-logs
+spec:
+  allowCrossNamespaceImport: true
+  folderUID: integration---postgresql
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: loki
+      inputName: DS_LOKI
+  configMapRef:
+    name: postgresql-logs
+    key: postgresql-logs.json
+---
+# yaml-language-server: $schema=https://crd.cloudjur.com/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  labels:
+    dashboards: grafana
+  name: postgresql-query-performance
+spec:
+  allowCrossNamespaceImport: true
+  folderUID: integration---postgresql
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  configMapRef:
+    name: postgresql-query-performance
+    key: postgresql-query-performance.json

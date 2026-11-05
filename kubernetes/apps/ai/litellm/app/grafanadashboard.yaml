@@ -5,6 +5,7 @@ metadata:
   name: litellm
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -22,6 +23,7 @@ metadata:
   name: litellm-economics
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -39,6 +41,7 @@ metadata:
   name: llm-rocm-node
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -56,6 +59,7 @@ metadata:
   name: llm-nvidia-node
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -73,6 +77,7 @@ metadata:
   name: llama-server
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -93,6 +98,7 @@ metadata:
   name: litellm-all-metrics
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -113,6 +119,7 @@ metadata:
   name: litellm-v2
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -130,6 +137,7 @@ metadata:
   name: llm-end-to-end
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -147,6 +155,7 @@ metadata:
   name: agent-observability
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -166,6 +175,7 @@ metadata:
   name: agent-analytics
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -183,6 +193,7 @@ metadata:
   name: agent-tools
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -202,6 +213,7 @@ metadata:
   name: agent-conversations
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -221,6 +233,7 @@ metadata:
   name: agent-fleet
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -238,6 +251,7 @@ metadata:
   name: agent-evaluations
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -255,6 +269,7 @@ metadata:
   name: agent-experiments
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -272,6 +287,7 @@ metadata:
   name: agent-coding
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -289,6 +305,7 @@ metadata:
   name: genai-observability
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -308,6 +325,7 @@ metadata:
   name: genai-agent-observability
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -327,6 +345,7 @@ metadata:
   name: genai-evaluations
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -344,6 +363,7 @@ metadata:
   name: mcp-observability
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -363,6 +383,7 @@ metadata:
   name: vectordb-observability
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -382,6 +403,7 @@ metadata:
   name: gpu-monitoring
 spec:
   allowCrossNamespaceImport: true
+  folderUID: integration---aiobservability
   instanceSelector:
     matchLabels:
       dashboards: grafana

@@ -88,7 +88,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "count(count by (instance) (pg_stat_statements_calls_total{instance=~\"$instance\"} or mysql_perf_schema_events_statements_total{instance=~\"$instance\"} or database_observability_connection_info{server_id!=\"\"})) or count(count by (instance) (pg_stat_database_xact_commit{instance=~\"$instance\"}))",
+          "expr": "count(count by (instance) (pg_stat_statements_calls_total{instance=~\"$instance\"} or mysql_perf_schema_events_statements_total{instance=~\"$instance\"} or database_observability_connection_info{server_id!=\"\"})) or count(count by (instance) (cnpg_pg_stat_database_xact_commit or pg_stat_database_xact_commit{instance=~\"$instance\"}))",
           "instant": true,
           "range": false,
           "refId": "Instances"
@@ -151,7 +151,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "last_over_time((count((count by (schema, instance) (mysql_perf_schema_events_statements_total{instance=~\"$instance\"}) or count by (datname, instance) (pg_stat_statements_calls_total{instance=~\"$instance\"} or pg_stat_database_xact_commit{instance=~\"$instance\"}))))[$__range:])",
+          "expr": "last_over_time((count((count by (schema, instance) (mysql_perf_schema_events_statements_total{instance=~\"$instance\"}) or count by (datname, instance) (pg_stat_statements_calls_total{instance=~\"$instance\"} or cnpg_pg_stat_database_xact_commit or pg_stat_database_xact_commit{instance=~\"$instance\"}))))[$__range:])",
           "instant": true,
           "range": false,
           "refId": "Databases"
@@ -277,7 +277,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "round(sum((increase(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__range]) or increase(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__range]) or increase(pg_stat_database_xact_commit{instance=~\"$instance\", datname=~\"$database\"}[$__range]))))",
+          "expr": "round(sum((increase(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__range]) or increase(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__range]) or increase(cnpg_pg_stat_database_xact_commit or pg_stat_database_xact_commit{instance=~\"$instance\", datname=~\"$database\"}[$__range]))))",
           "instant": true,
           "range": false,
           "refId": "TotalQueries"
@@ -340,7 +340,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "last_over_time((sum((rate(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__rate_interval]) or rate(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval]) or rate(pg_stat_database_xact_commit{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval]))))[$__range:])",
+          "expr": "last_over_time((sum((rate(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__rate_interval]) or rate(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval]) or rate(cnpg_pg_stat_database_xact_commit or pg_stat_database_xact_commit{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval]))))[$__range:])",
           "instant": true,
           "range": false,
           "refId": "CurrentRate"
@@ -562,7 +562,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "clamp_min(((sum((rate(mysql_perf_schema_events_statements_errors_total{instance=~\"$instance\"}[$__rate_interval:]) or rate(database_observability_pg_errors_total{instance=~\"$instance\"}[$__rate_interval:]) or rate(pg_stat_database_conflicts_deadlock{instance=~\"$instance\"}[$__rate_interval:])))) / (sum((rate(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__rate_interval:]) or (rate(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval:]) or rate(database_observability_pg_errors_total{instance=~\"$instance\"}[$__rate_interval:]) or 0.001))))) * 100, 0)",
+          "expr": "clamp_min(((sum((rate(mysql_perf_schema_events_statements_errors_total{instance=~\"$instance\"}[$__rate_interval:]) or rate(database_observability_pg_errors_total{instance=~\"$instance\"}[$__rate_interval:]) or rate(cnpg_pg_stat_database_deadlocks or pg_stat_database_conflicts_deadlock{instance=~\"$instance\"}[$__rate_interval:])))) / (sum((rate(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__rate_interval:]) or (rate(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval:]) or rate(database_observability_pg_errors_total{instance=~\"$instance\"}[$__rate_interval:]) or 0.001))))) * 100, 0)",
           "legendFormat": "Query Errors %",
           "range": true,
           "refId": "ErrorRate"
@@ -658,7 +658,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum((rate(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__rate_interval:]) or rate(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval:]) or rate(pg_stat_database_xact_commit{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval:])))",
+          "expr": "sum((rate(mysql_perf_schema_events_statements_total{instance=~\"$instance\"}[$__rate_interval:]) or rate(pg_stat_statements_calls_total{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval:]) or rate(cnpg_pg_stat_database_xact_commit or pg_stat_database_xact_commit{instance=~\"$instance\", datname=~\"$database\"}[$__rate_interval:])))",
           "legendFormat": "Throughput",
           "range": true,
           "refId": "Rate"
@@ -1201,7 +1201,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(pg_stat_statements_calls_total, datname)",
+        "definition": "label_values(cnpg_pg_stat_database_xact_commit, datname)",
         "hide": 0,
         "includeAll": true,
         "label": "Database",
@@ -1209,7 +1209,7 @@
         "name": "database",
         "options": [],
         "query": {
-          "query": "label_values(pg_stat_statements_calls_total, datname)",
+          "query": "label_values(cnpg_pg_stat_database_xact_commit, datname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -1229,7 +1229,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(pg_stat_statements_calls_total, instance)",
+        "definition": "label_values(cnpg_pg_stat_database_xact_commit, instance)",
         "hide": 0,
         "includeAll": true,
         "label": "Instance",
@@ -1237,7 +1237,7 @@
         "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values(pg_stat_statements_calls_total, instance)",
+          "query": "label_values(cnpg_pg_stat_database_xact_commit, instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,

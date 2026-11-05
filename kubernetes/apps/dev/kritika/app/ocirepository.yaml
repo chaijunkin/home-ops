@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/source.toolkit.fluxcd.io/ocirepository_v1.json
+# Kritika's chart, published by home-operations as an OCI artifact. Tag ref follows this repo's
+# OCIRepository convention (dev/forgejo); renovate moves the tag and the HelmRelease together.
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: kritika
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  # renovate: datasource=docker depName=ghcr.io/home-operations/charts/kritika
+  ref:
+    tag: 0.0.117
+  url: oci://ghcr.io/home-operations/charts/kritika
