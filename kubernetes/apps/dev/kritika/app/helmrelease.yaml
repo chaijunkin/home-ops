@@ -166,6 +166,7 @@ spec:
         - group: gateway.networking.k8s.io
           kind: Gateway
           name: envoy-external
+          namespace: network
           # The HTTPS listener terminates cloudjur-com-tls and external-dns publishes the
           # hostname from this route (--gateway-name=envoy-external).
           sectionName: https
