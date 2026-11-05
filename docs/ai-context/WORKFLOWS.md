@@ -64,14 +64,15 @@ task fly:app:deploy APP=gatus
 ### Capsule: ContinuousIntegration
 
 **Invariant**
-Every Pull Request is automatically validated by GitHub Actions using `flux-local` to ensure manifests are valid and to provide a diff of the planned changes.
+Every Pull Request is automatically analyzed by in-cluster `konflate` (posting rendered manifest diffs) and validated by GitHub Actions using `flate` to extract and pre-pull new container images.
 
 **Example**
-You create a PR updating a HelmRelease. The `Flux Local - Diff` action runs and posts a comment to the PR showing exactly which fields in the rendered Kubernetes manifests will change.
+You create a PR updating a HelmRelease. The in-cluster `konflate` webhook service receives the GitHub webhook and posts a comment to the PR showing exactly which fields in the rendered Kubernetes manifests will change. GitHub Actions runs `flate diff images` to detect newly referenced images and pre-pulls them across the cluster nodes.
 
 **Depth**
-- **Validation**: CI runs `flux-local test` to ensure all Helm charts in the repo render successfully.
-- **Confidence**: Agents should always create Pull Requests rather than pushing to main, as CI provides a safety net against malformed YAML or invalid Helm values.
+- **PR Diffs**: Handled by `konflate` (`https://konflate.cloudjur.com`) running in the `flux-system` namespace.
+- **Image Pre-pull**: GitHub Actions extracts new images with `flate diff images -p ./kubernetes/apps -o json` and pre-pulls them to Talos nodes before merge.
+- **Local Validation**: Agents can test manifests locally with `flate build hr <name> -n <namespace>` or `just k8s render-local-ks <ns> <ks>`.
 
 ---
 

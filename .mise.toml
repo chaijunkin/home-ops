@@ -1,5 +1,6 @@
 [env]
 # File paths
+FLATE_PATH = "{{config_root}}/kubernetes/apps"
 KUBECONFIG = "{{config_root}}/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
@@ -15,4 +16,4 @@ _.file = [
 [tools]
 "python" = "latest"
 "uv" = "latest"
-"pipx:flux-local" = "latest"
+"github:home-operations/flate" = "0.6.5"
