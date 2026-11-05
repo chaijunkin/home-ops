@@ -181,22 +181,9 @@ spec:
     # chart skips its PodDisruptionBudget under two replicas anyway (templates/pdb.tpl).
     replicas: 1
 
-    # Public exposure with admin-password sign-in only for this first PR — no SSO front door
-    # yet, so the dashboard is reachable but empty to anyone without the password (the web
-    # routes all require a session; only /api/v1/meta and /healthz are public).
+    # NetworkPolicy is disabled to match dev namespace defaults (Cilium handles cluster routing).
     networkPolicy:
-      enabled: true
-      enableDNS: true
-      ingress: []
-      extraEgress:
-        # The serve pod calls the LiteLLM proxy for every model and embedding request.
-        - selector:
-            matchLabels:
-              app.kubernetes.io/name: litellm
-              app.kubernetes.io/instance: litellm
-          ports:
-            - { port: 4000, protocol: TCP }
-            - { port: 4001, protocol: TCP }
+      enabled: false
 
     httpRoute:
       enabled: true
