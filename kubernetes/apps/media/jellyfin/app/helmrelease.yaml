@@ -24,7 +24,7 @@ spec:
           disable-problematic-plugins:
             image:
               repository: alpine
-              tag: 3.21
+              tag: 3.24
             command: ["/bin/sh", "-c"]
             args:
               - |
