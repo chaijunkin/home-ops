@@ -39,6 +39,16 @@ spec:
       # every open), so a rotated credential needs a rollout, not just a Secret update.
       secret.reloader.stakater.com/auto: 'true'
 
+    database:
+      app:
+        existingSecret: kritika-postgres-approle
+      owner:
+        existingSecret: kritika-postgres-owner
+
+    envFrom:
+      - secretRef:
+          name: kritika-secret
+
     config:
       webUrl: https://kritika.cloudjur.com
       auth:
@@ -108,14 +118,6 @@ spec:
           maxBatch: 8
           maxItemChars: 8000
 
-      # Explicit zero price: the local embedder reports no cost of its own, and an unpriced model
-      # is recorded as unpriced, which makes the dashboard's spend useless. Tokens are still
-      # counted, so the cost is only the money column.
-      pricing:
-        embed:
-          input: 0
-          output: 0
-
       # Runner traffic only: the gateway in the serve pod is the runner's HTTPS proxy, and this
       # list is what it admits beyond the forge hosts it adds from `apps` (github.com and
       # api.github.com) and the model endpoint it adds from `providers`. `*` is public
@@ -147,88 +149,80 @@ spec:
       # letting it run arbitrary install commands.
       agent:
         installTools: true
+        timeout: 45m
 
-      # Pod resources. The LimitRange in `dev` only sets a memory default *request* (64Mi), so
-      # without limits here a review would be able to take the node's remaining memory: the same
-      # shape as the 002-agent-blueprint-convention FR-008 rule and this node's OOM history.
-      # A runner Job's resources are NOT set here — the chart's runner.podTemplate is injected
-      # from deployment values, so a runner takes the cluster's own scheduling defaults plus
-      # activeDeadlineSeconds below. Recorded as a follow-up in the README.
-      resources:
-        requests:
-          cpu: 200m
-          memory: 512Mi
-        limits:
-          memory: 1Gi
+    # Pod resources. The LimitRange in `dev` only sets a memory default *request* (64Mi), so
+    # without limits here a review would be able to take the node's remaining memory: the same
+    # shape as the 002-agent-blueprint-convention FR-008 rule and this node's OOM history.
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        memory: 1Gi
 
-      # One review cannot run past 20 minutes, and its Job is cleaned up rather than kept.
-      runner:
-        activeDeadlineSeconds: 1200
-        ttlSecondsAfterFinished: 3600
+    # Runner Jobs: activeDeadlineSeconds bounds the Kubernetes Job execution.
+    # Set to 1 hour (3600s) to give multi-step reviews plenty of headroom.
+    runner:
+      jobTemplate:
+        spec:
+          activeDeadlineSeconds: 3600
+          ttlSecondsAfterFinished: 3600
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
 
-      # Single node: a second serve replica would only wait for the same leader lock, and the
-      # chart skips its PodDisruptionBudget under two replicas anyway (templates/pdb.tpl).
-      replicas: 1
+    # Single node: a second serve replica would only wait for the same leader lock, and the
+    # chart skips its PodDisruptionBudget under two replicas anyway (templates/pdb.tpl).
+    replicas: 1
 
-      # Public exposure with admin-password sign-in only for this first PR — no SSO front door
-      # yet, so the dashboard is reachable but empty to anyone without the password (the web
-      # routes all require a session; only /api/v1/meta and /healthz are public). The NetworkPolicy
-      # below is what makes "public" mean the gateway and the GitHub webhook and nothing else;
-      # Authentik or GitHub sign-in is the documented next step (see the README).
-      networkPolicy:
-        enabled: true
-        enableDNS: true
-        ingress:
-          # The Envoy data plane reaches app pods through Cilium's own bridge rather than as a
-          # pod-selector match, so `ingress` is left open to the cluster's ingress path and the
-          # exposure that matters is the HTTPRoute below. Same posture as the apps that sit
-          # behind envoy-external without a per-app policy.
-          []
-        extraEgress:
-          # The serve pod calls the LiteLLM proxy for every model and embedding request. Selector
-          # form on purpose: the chart's own `egressPorts` is ports-only and would open 4000 to
-          # the whole cluster, and this rule covers the proxy's control-plane sidecar port too,
-          # which the data path reaches through the same Service.
-          - selector:
-              matchLabels:
-                app.kubernetes.io/name: litellm
-                app.kubernetes.io/instance: litellm
-            ports:
-              - { port: 4000, protocol: TCP }
-              - { port: 4001, protocol: TCP }
+    # Public exposure with admin-password sign-in only for this first PR — no SSO front door
+    # yet, so the dashboard is reachable but empty to anyone without the password (the web
+    # routes all require a session; only /api/v1/meta and /healthz are public).
+    networkPolicy:
+      enabled: true
+      enableDNS: true
+      ingress: []
+      extraEgress:
+        # The serve pod calls the LiteLLM proxy for every model and embedding request.
+        - selector:
+            matchLabels:
+              app.kubernetes.io/name: litellm
+              app.kubernetes.io/instance: litellm
+          ports:
+            - { port: 4000, protocol: TCP }
+            - { port: 4001, protocol: TCP }
 
-      httpRoute:
-        enabled: true
-        annotations:
-          gethomepage.dev/enabled: 'true'
-          gethomepage.dev/group: Platform Infrastructure
-          gethomepage.dev/name: Kritika
-          gethomepage.dev/description: AI Pull Request Review
-          gethomepage.dev/icon: sh-kritika.svg
-        parentRefs:
-          - group: gateway.networking.k8s.io
-            kind: Gateway
-            name: envoy-external
-            # The HTTPS listener terminates cloudjur-com-tls and external-dns publishes the
-            # hostname from this route (--gateway-name=envoy-external), which is how
-            # konflate.cloudjur.com exists today. Without the sectionName the route lands on the
-            # plain-HTTP :80 listener instead.
-            sectionName: https
-        hostnames:
-          - kritika.cloudjur.com
+    httpRoute:
+      enabled: true
+      annotations:
+        gethomepage.dev/enabled: 'true'
+        gethomepage.dev/group: Platform Infrastructure
+        gethomepage.dev/name: Kritika
+        gethomepage.dev/description: AI Pull Request Review
+        gethomepage.dev/icon: sh-kritika.svg
+      parentRefs:
+        - group: gateway.networking.k8s.io
+          kind: Gateway
+          name: envoy-external
+          # The HTTPS listener terminates cloudjur-com-tls and external-dns publishes the
+          # hostname from this route (--gateway-name=envoy-external).
+          sectionName: https
+      hostnames:
+        - kritika.cloudjur.com
 
+    monitoring:
       serviceMonitor:
         enabled: true
-        # kube-prometheus-stack selects ServiceMonitors with empty selectors, so no extra label
-        # is needed for this to be scraped; the CNPG PodMonitor for the database comes from the
-        # Cluster in ../database.
+        # kube-prometheus-stack selects ServiceMonitors with empty selectors.
         interval: 60s
 
       prometheusRule:
         enabled: true
-        # The chart's own alerts: no leader / more than one leader, a configuration the leader
-        # failed to apply, configuration drift, delayed queues, unavailable queue metrics,
-        # vector-search errors and gateway-cache storage errors. Alertmanager is deployed and
-        # Prometheus picks rules up with an empty ruleSelector.
         additionalRuleLabels:
           team: home-ops

@@ -23,30 +23,30 @@ spec:
     supportsVision: true
     extra:
       supports_reasoning: true
----
-apiVersion: litellm.home-operations.com/v1alpha1
-kind: LiteLLMModel
-metadata:
-  name: reasoning-pool-2
-spec:
-  modelName: reasoning-pool
-  proxyRef: litellm
-  params:
-    model: gemini/gemini-2.5-flash-lite
-    apiKeyRef:
-      name: litellm
-      key: GEMINI_API_KEY
-    dropParams: true
-    additional:
-      order: 2
-  info:
-    mode: chat
-    maxInputTokens: 1000000
-    maxOutputTokens: 16384
-    supportsFunctionCalling: true
-    supportsVision: true
-    extra:
-      supports_reasoning: true
+# ---
+# apiVersion: litellm.home-operations.com/v1alpha1
+# kind: LiteLLMModel
+# metadata:
+#   name: reasoning-pool-2
+# spec:
+#   modelName: reasoning-pool
+#   proxyRef: litellm
+#   params:
+#     model: gemini/gemini-2.5-flash-lite
+#     apiKeyRef:
+#       name: litellm
+#       key: GEMINI_API_KEY
+#     dropParams: true
+#     additional:
+#       order: 2
+#   info:
+#     mode: chat
+#     maxInputTokens: 1000000
+#     maxOutputTokens: 16384
+#     supportsFunctionCalling: true
+#     supportsVision: true
+#     extra:
+#       supports_reasoning: true
 # ---
 # apiVersion: litellm.home-operations.com/v1alpha1
 # kind: LiteLLMModel
