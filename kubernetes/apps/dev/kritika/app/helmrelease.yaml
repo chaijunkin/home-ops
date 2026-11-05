@@ -73,82 +73,51 @@ spec:
 
       # LiteLLM is the one gateway for every model (spec FR-004), so this is an `openai` server
       # pointing at the in-cluster proxy: Kritika calls {baseUrl}/chat/completions and
-      # {baseUrl}/embeddings, so /v1 is part of the base. apiKey is required by the schema even
-      # for a server that would accept a keyless call, so the proxy's virtual key is used — the
-      # same one open-webui, hermes and opencode use. The model ids are LiteLLMModel modelNames
-      # (ai/litellm/app/models): frontier-pool is a tool-calling pool, which the review agent
-      # needs (a model that cannot call tools fails at plan time), and embed is the 1024-dim
-      # memini embedder already serving open-webui. No confidence model: it re-scores each
-      # finding through a second model (docs/confidence.md), which is a second full call per
-      # finding on a single-node box that already OOMed.
+      # {baseUrl}/embeddings, so /v1 is part of the base.
       providers:
         litellm:
           type: openai
           baseUrl: http://litellm.ai.svc.cluster.local:4000/v1
           apiKey:
             env: KRITIKA_LITELLM_API_KEY
-          models:
-            # One slot, so the pool's own rotation (qwen / gemini / openrouter) is LiteLLM's job.
-            # The pool's members price themselves, so the frontier model is deliberately absent
-            # from `pricing` below and its cost is recorded as unpriced (model/pricing.go
-            # returns unpriced=true, and only a zero-valued entry counts as free).
-            frontier:
-              id: frontier-pool
-              family: auto
-              maxContext: 245760
-              maxOutput: 24576
-              supports: [tools]
-              limits:
-                # Two at a time across the account (upstream's own default), which on a single
-                # node also bounds how many runner Jobs exist at once.
-                concurrency: 2
+
+      review:
+        approve: false
+        model: litellm/frontier-pool
+        fallback: litellm/reasoning-pool
+
+      limits:
+        concurrency: 2
 
       embedding:
         model: litellm/embed
         dims: 1024
-        # The memini embedder has no prompts of its own and does not echo dimensions back, so
-        # both are declared explicitly (a wrong guess rebuilds every repository's index, so the
-        # pair is verified on the first indexing pass — see the folder README).
         documentPrompt: 'Represent the document for retrieval: '
         queryPrompt: 'Represent the query for retrieving supporting documents: '
         similarFloor: 0.3
-        limits:
-          # The documented bound for an OpenAI-compatible embedder without an echoed dimension,
-          # and under memini's own 8 x 1024-float batch (internal/model/openai.go).
-          maxBatch: 8
-          maxItemChars: 8000
+        maxBatch: 8
+        maxItemChars: 8000
 
       # Runner traffic only: the gateway in the serve pod is the runner's HTTPS proxy, and this
       # list is what it admits beyond the forge hosts it adds from `apps` (github.com and
       # api.github.com) and the model endpoint it adds from `providers`. `*` is public
-      # internet, not private space: egresspolicy.Rules refuses a private, loopback or metadata
-      # address unless an explicit prefix covers it, which is what keeps a runner off the node
-      # metadata service and off the cluster's own subnets.
+      # internet, not private space.
       egress:
         allow:
           - '*'
-          # Only the storage-provisioner CIDR, and only for a runner that installs a tool from a
-          # self-hosted registry. Nothing here needs it today; it is the one address an
-          # aqua-registry mirror would need, so drop it if you would rather keep runners
-          # strictly public.
           - 10.10.30.0/24
         deny: []
 
-      # Cheap guards first, and the repo's own .kritika.yaml is the per-PR opt-in (the account's
-      # repositories start off in the dashboard; enabling one is a click, these are the defaults
-      # once it is on).
+      # Cheap guards first, and the repo's own .kritika.yaml is the per-PR opt-in.
       trigger:
-        filters:
+        exclude:
           - name: drafts
             expr: pr.draft
           - name: forks
             expr: pr.fork
         settle: 15s
 
-      # Kritika's agent installs the tools a repository declares (aqua-registry only) instead of
-      # letting it run arbitrary install commands.
       agent:
-        installTools: true
         timeout: 45m
 
     # Pod resources. The LimitRange in `dev` only sets a memory default *request* (64Mi), so
