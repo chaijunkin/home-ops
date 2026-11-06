@@ -26,14 +26,7 @@ route:
       mute_time_intervals:
         - kopiur_ssd_backup_window
       repeat_interval: 24h
-    - receiver: "null"
-      matchers:
-        - alertname =~ "etcdDatabaseHighFragmentationRatio"
-      # Kept black-holed deliberately, unlike the backup alerts above: it is firing
-      # right now at 0.628 against a 0.5 threshold and will keep firing until an
-      # etcd defrag maintenance window is run. Routing it to Discord would produce a
-      # permanent alert that no on-call action can clear. Tracked as a scheduled
-      # maintenance item, not an incident.
+
     - receiver: "null"
       matchers:
         - severity = "none"
