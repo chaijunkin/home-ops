@@ -213,7 +213,7 @@ spec:
 
   grafanaCom:
     id: 4260
-    revision: 19
+    revision: 20
   instanceSelector:
     matchLabels:
       dashboards: grafana
