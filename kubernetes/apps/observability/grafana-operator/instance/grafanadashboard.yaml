@@ -193,7 +193,7 @@ spec:
 
   grafanaCom:
     id: 1860
-    revision: 45
+    revision: 46
   instanceSelector:
     matchLabels:
       dashboards: grafana
