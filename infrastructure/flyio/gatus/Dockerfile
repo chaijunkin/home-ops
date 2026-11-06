@@ -29,7 +29,7 @@ RUN wget "$OVERMIND_URL" && gunzip ${OVERMIND_FILE} && chmod +x "$OVERMIND"
 #
 # Fly app
 #
-FROM caddy:2.11.8-alpine
+FROM caddy:2.11.9-alpine
 
 ARG OVERMIND
 
