@@ -43,7 +43,6 @@ spec:
   labels:
     role: master
 
-  networkPolicyEnabled: false
   resources:
     requests:
       memory: 128Mi
