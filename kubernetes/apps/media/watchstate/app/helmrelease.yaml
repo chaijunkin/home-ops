@@ -23,19 +23,14 @@ spec:
             image:
               repository: ghcr.io/arabcoders/watchstate
               tag: v1.10.11@sha256:2433ee5fb699390d1b2f551d6f6735f5733586459510bd907addc610e247d519
+            command:
+              - sleep
+              - infinity
             probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /v1/api/system/healthcheck
-                    port: &port 8080
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -56,7 +51,7 @@ spec:
       app:
         ports:
           http:
-            port: *port
+            port: &port 8080
     route:
       app:
         hostnames:
