@@ -13,7 +13,7 @@ spec:
 
   grafanaCom:
     id: 22604
-    revision: 2
+    revision: 4
   instanceSelector:
     matchLabels:
       dashboards: grafana
@@ -33,7 +33,7 @@ spec:
 
   grafanaCom:
     id: 22604
-    revision: 2
+    revision: 4
   instanceSelector:
     matchLabels:
       dashboards: grafana
