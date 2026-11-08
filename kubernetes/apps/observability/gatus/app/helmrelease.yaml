@@ -133,7 +133,7 @@ spec:
           type: ClusterRole
           rules:
             - apiGroups: [""]
-              resources: [configmaps, secrets]
+              resources: [configmaps]
               verbs: [get, watch, list]
             - apiGroups:
                 - ""
