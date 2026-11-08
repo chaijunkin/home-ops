@@ -22,10 +22,12 @@
           clients: "10.10.30.0/24(rw,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash) 10.10.10.0/24(ro,sync,no_subtree_check,anongid=2000,anonuid=2000,all_squash)",
         }
       - {
+          # Audit exception: wildcard export is intentional for Default/trusted network clients across mixed LAN segments
           path: "/tank/Shared",
           clients: "*(rw,sync,no_subtree_check,no_root_squash)",
         }
       - {
+          # Audit exception: wildcard export is intentional for Default/trusted network clients across mixed LAN segments
           path: "/tank/Default",
           clients: "*(rw,sync,no_subtree_check,no_root_squash)",
         }
