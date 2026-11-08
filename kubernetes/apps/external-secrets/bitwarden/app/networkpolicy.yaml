@@ -9,17 +9,16 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: bitwarden
       app.kubernetes.io/name: bitwarden
-  # 1. Allow External Secrets to pull secrets from this pod
+  # 1. Allow External Secrets to pull secrets from this pod on port 8087
   ingress:
     - fromEndpoints:
         - matchLabels:
             app.kubernetes.io/instance: external-secrets
-            app.kubernetes.io/name:
-              external-secrets
-              # toPorts:
-              #   - ports:
-              #       - port: "8087"
-              #         protocol: TCP
+            app.kubernetes.io/name: external-secrets
+      toPorts:
+        - ports:
+            - port: "8087"
+              protocol: TCP
   egress:
     - toEntities:
         - world
