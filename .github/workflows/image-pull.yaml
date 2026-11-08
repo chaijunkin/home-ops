@@ -65,8 +65,23 @@ jobs:
     env:
       MATRIX_IMAGE: ${{ matrix.image }}
     steps:
-      - name: Install talosctl
-        run: curl -fsSL https://talos.dev/install | sh
+      - name: Setup talosctl
+        run: |
+          if ! command -v talosctl >/dev/null 2>&1; then
+            ARCH=$(uname -m)
+            case "$ARCH" in
+              x86_64) TALOS_ARCH="amd64" ;;
+              aarch64|arm64) TALOS_ARCH="arm64" ;;
+              *) echo "Unsupported architecture: $ARCH"; exit 1 ;;
+            esac
+            # renovate: datasource=github-releases depName=siderolabs/talos
+            TALOS_VERSION="v1.13.0"
+            mkdir -p "$HOME/.local/bin"
+            curl -fsSL "https://github.com/siderolabs/talos/releases/download/${TALOS_VERSION}/talosctl-linux-${TALOS_ARCH}" -o "$HOME/.local/bin/talosctl"
+            chmod +x "$HOME/.local/bin/talosctl"
+            echo "$HOME/.local/bin" >> $GITHUB_PATH
+          fi
+          talosctl version --client
 
       - name: Pull Image
         run: talosctl --nodes $NODE image pull "${MATRIX_IMAGE}"

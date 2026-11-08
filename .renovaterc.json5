@@ -33,9 +33,9 @@
       matchManagers: ["github-actions"],
       matchUpdateTypes: ["minor", "patch", "digest"],
       automerge: true,
-      automergeType: "branch",
-      minimumReleaseAge: "3 days",
-      ignoreTests: true,
+      automergeType: "pr",
+      minimumReleaseAge: "7 days",
+      ignoreTests: false,
     },
     {
       description: "Auto-merge trusted GitHub Actions",
@@ -43,9 +43,9 @@
       matchPackageNames: ["/^actions\\//", "/^renovatebot\\//"],
       matchUpdateTypes: ["minor", "patch", "digest"],
       automerge: true,
-      automergeType: "branch",
-      minimumReleaseAge: "1 minute",
-      ignoreTests: true,
+      automergeType: "pr",
+      minimumReleaseAge: "3 days",
+      ignoreTests: false,
     },
     {
       description: "Auto-merge Grafana dashboards",
@@ -68,7 +68,10 @@
       description: "Actions Runner Controller Group",
       groupName: "actions-runner-controller",
       matchDatasources: ["docker"],
-      matchPackageNames: ["/gha-runner-scale-set-controller/", "/gha-runner-scale-set/"],
+      matchPackageNames: [
+        "/gha-runner-scale-set-controller/",
+        "/gha-runner-scale-set/",
+      ],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
@@ -152,6 +155,6 @@
     {
       matchDatasources: ["github-releases"],
       addLabels: ["renovate/github-release"],
-    }
+    },
   ],
 }

@@ -1,0 +1,6 @@
+talos_image = {
+  version               = "v1.13.4"
+  update_version        = "v1.13.4"
+  schematic_path        = "talos/image/schematic.yaml"
+  proxmox_datastore     = "vm-store"
+}
