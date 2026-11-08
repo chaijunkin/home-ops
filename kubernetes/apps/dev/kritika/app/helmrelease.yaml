@@ -101,11 +101,11 @@ spec:
       # Runner traffic only: the gateway in the serve pod is the runner's HTTPS proxy, and this
       # list is what it admits beyond the forge hosts it adds from `apps` (github.com and
       # api.github.com) and the model endpoint it adds from `providers`. `*` is public
-      # internet, not private space. Narrowed from whole 10.10.30.0/24 subnet to git.cloudjur.com.
+      # internet, not private space. 10.10.30.0/24 admits local forge (git.cloudjur.com) on LAN.
       egress:
         allow:
           - '*'
-          - git.cloudjur.com
+          - 10.10.30.0/24
         deny: []
 
       # Cheap guards first, and the repo's own .kritika.yaml is the per-PR opt-in.
