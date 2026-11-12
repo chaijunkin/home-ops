@@ -1,3 +1,8 @@
 .private
 .vscode
 *.sops.*
+# Digest-addressed generated records. Their bytes are their identity: `plan --check`
+# compares them exactly and a plan's filename is the digest of its contents, so a
+# formatter reformatting one turns a passing tree red for a reason no one authored.
+.adoption/plans/
+adoption/catalogs/*/pins.lock.yaml
