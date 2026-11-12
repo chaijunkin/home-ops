@@ -4,7 +4,7 @@ local function host_matches(host)
   end
 
   host = string.match(host, "([^:]+)") or host
-  return host == "wiki.cloudjur.com" or host == "schema.cloudjur.com"
+  return host == "wiki.cloudjur.com" or host == "schema.cloudjur.com" or host == "read.cloudjur.com"
 end
 
 local function is_extensionless_html_path(path)
