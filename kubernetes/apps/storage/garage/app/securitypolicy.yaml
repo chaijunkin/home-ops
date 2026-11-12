@@ -1,10 +1,12 @@
 # yaml-language-server: $schema=https://crd.cloudjur.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
-# Authentik gate for the private Obsidian reader (read.cloudjur.com → garage
-# bucket notes-web). Serves the WHOLE vault including pages without
-# `publish: true`, so this extAuth boundary is the security line — never
-# downgrade it to the wiki-web Referer-hiding pattern.
-# Prerequisite (manual, authentik admin UI): Application "Notes Reader" +
-# Proxy Provider, External URL https://read.cloudjur.com.
+# DETACHED (private-first staging): read.cloudjur.com serves LAN-only via
+# envoy-internal, no SSO. Re-attach in kustomization.yaml AND move the
+# notes-web route back to envoy-external only together, once the authentik
+# proxy app is live — codified as slug "read" in
+# infrastructure/terraform/authentik/applications.tf.
+# Serves the WHOLE vault including pages without `publish: true`, so this
+# extAuth boundary is the security line for any non-internal exposure —
+# never downgrade it to the wiki-web Referer-hiding pattern.
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:

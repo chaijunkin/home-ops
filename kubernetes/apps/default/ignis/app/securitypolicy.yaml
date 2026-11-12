@@ -1,10 +1,11 @@
 # yaml-language-server: $schema=https://crd.cloudjur.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
-# Authentik gate for the browser-Obsidian editor (notes.cloudjur.com).
-# The vault served here is READ-WRITE over NFS, so this gate protects the whole
-# vault, not just a snapshot. Prerequisite (manual, authentik admin UI — the
-# authentik-operator is not deployed, same as for the prometheus-ext family in
-# observability/external-access): create Application "Ignis" with a Proxy
-# Provider whose External URL is https://notes.cloudjur.com.
+# DETACHED (private-first staging): Ignis serves LAN-only via envoy-internal,
+# no SSO. Re-attach in kustomization.yaml once the authentik proxy app is
+# live — codified as slug "notes" in
+# infrastructure/terraform/authentik/applications.tf (stack re-enable:
+# kubernetes/apps/security/authentik/terraforms/kustomization.yaml).
+# The vault served here is READ-WRITE over NFS, so this gate protects the
+# whole vault, not just a snapshot.
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:

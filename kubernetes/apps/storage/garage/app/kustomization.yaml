@@ -4,7 +4,10 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./securitypolicy.yaml
+  # Private-first staging (route on envoy-internal = LAN-only). Re-attach the
+  # extAuth gate when the authentik proxy apps are live — entries already
+  # codified in infrastructure/terraform/authentik/applications.tf.
+  # - ./securitypolicy.yaml
 configMapGenerator:
   - name: garage-configmap
     files:

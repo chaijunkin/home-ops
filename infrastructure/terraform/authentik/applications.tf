@@ -29,6 +29,28 @@ locals {
       slug        = "echo-server-int-auth"
       auth_groups = [authentik_group.default["public"].id]
     },
+    # Notes surfaces (DefaultVault). Slugs MUST equal the hostnames: the module
+    # builds external_host = https://<slug>.<domain> (proxy_application/main.tf).
+    # Both routes are currently private-first (envoy-internal, SecurityPolicy
+    # detached); these apps are what the detached gates bind to when re-armed.
+    # auth bound to superusers — the vault is personal; loosen to "private"
+    # or "users" if family should read it.
+    {
+      name        = "Ignis"
+      icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/obsidian.png"
+      description = "In-browser Obsidian editor (read-write vault)"
+      group       = "private"
+      slug        = "notes"
+      auth_groups = [authentik_group.default["superusers"].id]
+    },
+    {
+      name        = "Notes Reader"
+      icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/obsidian.png"
+      description = "Private Quartz reader of the whole vault"
+      group       = "private"
+      slug        = "read"
+      auth_groups = [authentik_group.default["superusers"].id]
+    },
     # {
     #   name        = "prometheus-ext"
     #   icon_url    = "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/refs/heads/main/png/prometheus.png"

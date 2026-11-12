@@ -171,8 +171,11 @@ spec:
       notes-web:
         hostnames:
           - read.cloudjur.com
+        # Private-first: internal gateway only (LAN). Flipping this to
+        # envoy-external is an explicit publish event, gated by the
+        # notes-web SecurityPolicy + its authentik app (see runbook).
         parentRefs:
-          - name: envoy-external
+          - name: envoy-internal
             namespace: network
         rules:
           # Hashed Quartz engine files: cache in the browser only ("private" —

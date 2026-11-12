@@ -3,4 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
-  - ./securitypolicy.yaml
+  # Private-first staging (route is on envoy-internal = LAN-only). Re-attach
+  # the extAuth gate when the authentik proxy apps are live — entries already
+  # codified in infrastructure/terraform/authentik/applications.tf.
+  # - ./securitypolicy.yaml
