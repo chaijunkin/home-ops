@@ -75,7 +75,7 @@ jobs:
               *) echo "Unsupported architecture: $ARCH"; exit 1 ;;
             esac
             # renovate: datasource=github-releases depName=siderolabs/talos
-            TALOS_VERSION="v1.13.0"
+            TALOS_VERSION="v1.14.6"
             mkdir -p "$HOME/.local/bin"
             curl -fsSL "https://github.com/siderolabs/talos/releases/download/${TALOS_VERSION}/talosctl-linux-${TALOS_ARCH}" -o "$HOME/.local/bin/talosctl"
             chmod +x "$HOME/.local/bin/talosctl"
