@@ -197,6 +197,16 @@ spec:
               - path:
                   type: PathPrefix
                   value: /
+            # Garage sends no Cache-Control, so browsers heuristic-cache HTML
+            # and contentIndex.json — stale explorer trees (deleted/renamed
+            # notes kept linking, new notes invisible) survive republishes.
+            # no-cache = always revalidate; garage answers 304 unchanged.
+            filters:
+              - type: ResponseHeaderModifier
+                responseHeaderModifier:
+                  set:
+                    - name: Cache-Control
+                      value: private, no-cache
             backendRefs:
               - identifier: app
                 port: s3-web
