@@ -12,5 +12,5 @@ spec:
     operation: copy
   # renovate: datasource=docker depName=ghcr.io/home-operations/charts/kritika
   ref:
-    tag: 0.0.117
+    tag: 0.0.120
   url: oci://ghcr.io/home-operations/charts/kritika
