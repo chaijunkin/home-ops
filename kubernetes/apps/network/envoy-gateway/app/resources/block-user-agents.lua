@@ -7,7 +7,19 @@ local function host_matches(host)
   return host == "wiki.cloudjur.com" or host == "schema.cloudjur.com" or host == "read.cloudjur.com"
 end
 
-local function is_extensionless_html_path(path)
+-- Garage only serves the emitted `<slug>.html`, so URL slugs must be suffixed
+-- here. Slugs may legitimately contain dots ("fly.io-…", Obsidian ".base"
+-- pages), so decide by whether the LAST dot-segment is a real static-asset
+-- extension — not by the mere presence of a dot.
+local static_asset_extensions = {
+  css = true, js = true, mjs = true, map = true, json = true, xml = true,
+  txt = true, ico = true, png = true, jpg = true, jpeg = true, gif = true,
+  svg = true, webp = true, avif = true, webmanifest = true, woff = true,
+  woff2 = true, ttf = true, otf = true, eot = true, mp4 = true, pdf = true,
+  rss = true, atom = true
+}
+
+local function needs_html_suffix(path)
   if not path or path == "" then
     return false
   end
@@ -21,7 +33,12 @@ local function is_extensionless_html_path(path)
     return false
   end
 
-  return string.find(path_only, "%.[^/]+$") == nil
+  local ext = string.match(path_only, "%.([^/.]+)$")
+  if ext and static_asset_extensions[string.lower(ext)] then
+    return false
+  end
+
+  return true
 end
 
 function envoy_on_request(request_handle)
@@ -50,7 +67,7 @@ function envoy_on_request(request_handle)
   end
 
   local path = request_handle:headers():get(":path") or ""
-  if not is_extensionless_html_path(path) then
+  if not needs_html_suffix(path) then
     return
   end
 
