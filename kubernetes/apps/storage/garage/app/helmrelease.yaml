@@ -165,6 +165,38 @@ spec:
             backendRefs:
               - identifier: app
                 port: s3-web
+      # Private Obsidian reader (Quartz, authentik-gated via notes-web
+      # SecurityPolicy). Bucket `notes-web` — publish pipeline and first-time
+      # bucket setup: vault runbook "Private Notes Reader Rollout".
+      notes-web:
+        hostnames:
+          - read.cloudjur.com
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          # Hashed Quartz engine files: cache in the browser only ("private" —
+          # this site is authenticated, shared caches must not retain it).
+          - matches:
+              - path:
+                  type: RegularExpression
+                  value: .*-[0-9a-f]{8}\.(css|js)$
+            filters:
+              - type: ResponseHeaderModifier
+                responseHeaderModifier:
+                  set:
+                    - name: Cache-Control
+                      value: private, max-age=31536000, immutable
+            backendRefs:
+              - identifier: app
+                port: s3-web
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            backendRefs:
+              - identifier: app
+                port: s3-web
     persistence:
       config:
         type: secret

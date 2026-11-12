@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
+# Authentik gate for the private Obsidian reader (read.cloudjur.com → garage
+# bucket notes-web). Serves the WHOLE vault including pages without
+# `publish: true`, so this extAuth boundary is the security line — never
+# downgrade it to the wiki-web Referer-hiding pattern.
+# Prerequisite (manual, authentik admin UI): Application "Notes Reader" +
+# Proxy Provider, External URL https://read.cloudjur.com.
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: notes-web
+spec:
+  extAuth:
+    failOpen: false
+    headersToExtAuth:
+      - X-Forwarded-Proto
+      - cookie
+    http:
+      backendRefs:
+        - name: authentik-server
+          namespace: security
+          port: 80
+      path: /outpost.goauthentik.io/auth/envoy
+      headersToBackend:
+        - Set-Cookie
+        - X-authentik-username
+        - X-authentik-groups
+        - X-authentik-email
+        - X-authentik-name
+        - X-authentik-uid
+        - authorization
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: garage-notes-web

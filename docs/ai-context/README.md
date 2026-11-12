@@ -9,6 +9,7 @@ Rather than relying on a monolithic `AGENTS.md` file, context is split into doma
 - [ARCHITECTURE.md](./ARCHITECTURE.md) - Physical topology, cluster architecture, and cloud dependencies.
 - [CONVENTIONS.md](./CONVENTIONS.md) - Coding standards, YAML sorting rules, image pinning, and PR standards.
 - [DOMAIN.md](./DOMAIN.md) - Core domain rules, state machines, and operational invariants.
+- [DOCUMENTATION.md](./DOCUMENTATION.md) - Vault-repo documentation contract and generated-file rules.
 - [Ethos.md](./Ethos.md) - Documentation philosophy, hard rules, and values.
 - [NETWORKING.md](./NETWORKING.md) - Traffic flow, DNS (AdGuard/Unbound), and Gateway API configurations.
 - [PLANNING.md](./PLANNING.md) - Collaborative planning lifecycle for AI-assisted work.
