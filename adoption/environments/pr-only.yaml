@@ -1,0 +1,27 @@
+---
+# Where a Run may act, and how far its claims reach.
+#
+# The lane is a ceiling on claims, not a preference. `proposed` means the engine
+# may push a branch and open a pull request, and the strongest true statement is
+# "proposed and CI-green" — never "deployed", "reconciled", or "healthy", because
+# nothing here looked at a cluster.
+#
+# `clusterWrites: none` is validated at load: any other value is a schema error, so
+# an adoption goal cannot quietly acquire cluster authority by editing this file's
+# neighbour. Credential entries are references to where a secret lives, never the
+# secret, and are excluded from desired-state identity.
+apiVersion: home-ops.chaijunkin.com/environment/v1
+kind: AdoptionEnvironment
+metadata:
+  name: pr-only
+description: Compile, render, verify against Git, push a branch, open a pull request.
+lane: proposed
+authority:
+  clusterWrites: none
+  git: branch-and-pr
+  branchPrefix: adoption/
+  labels:
+    adoption: "true"
+    lane: proposed
+credentialRefs:
+  - github-app-installation

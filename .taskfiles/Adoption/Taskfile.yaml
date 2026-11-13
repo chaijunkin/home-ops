@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+#
+# Declarative adoption engine: Definition -> Plan -> (later) Run -> evidence.
+#
+# Phase A is compile-and-inspect. Nothing here opens anything against the cluster:
+# the lane this repo ships is PR-only, and the engine has no cluster-write path at
+# all — `task adoption:test` asserts that rather than trusting it.
+version: "3"
+
+vars:
+  ADOPTION_BIN: "{{.ROOT_DIR}}/scripts/adoption/adoption.py"
+  ADOPTION_TESTS: "{{.ROOT_DIR}}/scripts/adoption/tests"
+  PYTHON_BIN: python3
+
+tasks:
+  plan:
+    desc: Compile the Definition into a canonical plan under .adoption/plans/
+    cmds:
+      - "{{.PYTHON_BIN}} {{.ADOPTION_BIN}} plan {{.CLI_ARGS}}"
+    preconditions:
+      - {msg: "yq (mikefarah v4) is required", sh: "command -v yq"}
+
+  check:
+    desc: Fail (exit 3) if the committed plan is stale or hand-edited
+    cmds:
+      - "{{.PYTHON_BIN}} {{.ADOPTION_BIN}} plan --check {{.CLI_ARGS}}"
+    preconditions:
+      - {msg: "yq (mikefarah v4) is required", sh: "command -v yq"}
+
+  graph:
+    desc: Render the dependency graph (mermaid | dot | json)
+    cmds:
+      - "{{.PYTHON_BIN}} {{.ADOPTION_BIN}} graph {{.CLI_ARGS}}"
+    preconditions:
+      - {msg: "yq (mikefarah v4) is required", sh: "command -v yq"}
+
+  pin:
+    desc: Regenerate the catalog lock from tracked state
+    cmds:
+      - "{{.PYTHON_BIN}} {{.ADOPTION_BIN}} catalog pin {{.CLI_ARGS}}"
+    preconditions:
+      - {msg: "yq (mikefarah v4) is required", sh: "command -v yq"}
+
+  bump:
+    desc: Report lock members whose tracked state has moved
+    cmds:
+      - "{{.PYTHON_BIN}} {{.ADOPTION_BIN}} catalog bump {{.CLI_ARGS}}"
+    preconditions:
+      - {msg: "yq (mikefarah v4) is required", sh: "command -v yq"}
+
+  show:
+    desc: Summarise the catalog and its lock
+    cmds:
+      - "{{.PYTHON_BIN}} {{.ADOPTION_BIN}} catalog show --pretty {{.CLI_ARGS}}"
+    preconditions:
+      - {msg: "yq (mikefarah v4) is required", sh: "command -v yq"}
+
+  test:
+    desc: Run the acceptance suite, including the no-cluster-write assertions
+    cmds:
+      - "{{.PYTHON_BIN}} {{.ADOPTION_TESTS}}/test_phase_a.py"
+
+  hygiene:
+    desc: Static check for undefined and unused names in the engine
+    cmds:
+      - >-
+        {{.PYTHON_BIN}} {{.ADOPTION_TESTS}}/hygiene.py
+        {{.ROOT_DIR}}/scripts/adoption/engine
+        {{.ADOPTION_BIN}}
+        {{.ADOPTION_TESTS}}
+
+  verify:
+    desc: Everything CI needs from Phase A, in dependency order
+    cmds:
+      - task: hygiene
+      - task: test
+      - task: check

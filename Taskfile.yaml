@@ -63,6 +63,7 @@ includes:
   volsync: .taskfiles/volsync
   fly: .taskfiles/fly/tasks.yaml
   github: .taskfiles/github/tasks.yaml
+  adoption: .taskfiles/Adoption/Taskfile.yaml
 
 tasks:
   default:

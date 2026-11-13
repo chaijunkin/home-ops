@@ -1,6 +1,9 @@
 # Trash
 .DS_Store
 Thumbs.db
+# Python bytecode from the adoption engine's modules
+__pycache__/
+*.pyc
 # k8s
 *kubeconfig*
 talosconfig
