@@ -720,6 +720,91 @@ class TestLock(Runner):
         return yamlio.read_yaml("adoption/catalogs/test/pins.lock.yaml", cwd=root)
 
 
+class TestPathContainment(Runner):
+    """An authored file or flag must not be able to point the engine off the tree.
+
+    These close two escapes that existed and were measured: an absolute `environment`
+    reference resolved happily (and the schema error then named the fields of the
+    file it had just read), and `--out` wrote anywhere on the filesystem with exit 0.
+    Rejecting only `..` was not containment, and the caller of this tool may be an
+    agent assembling its own flags from text it was handed.
+    """
+
+    def scratch(self) -> str:
+        outside = tempfile.mkdtemp(prefix="adoption-outside-")
+        self.addCleanup(shutil.rmtree, outside, True)
+        return outside
+
+    def test_an_absolute_reference_is_refused_before_it_is_read(self):
+        outside = self.scratch()
+        canary = os.path.join(outside, "canary-env.yaml")
+        with open(canary, "w", encoding="utf-8") as handle:
+            handle.write("canonicalizeMe: yes\nsecretMarker: DO-NOT-ECHO-4711\n")
+        root = self.repo()
+        path = "adoption/definitions/test/adoption.yaml"
+        write(root, path, read(root, path).replace(
+            "environment: ../../environments/pr-only.yaml", f"environment: {canary}"))
+        git(root, "add", "-A")
+        git(root, "commit", "-q", "-m", "absolute reference")
+        code, text, err = invoke(root, "plan")
+        self.assertEqual(code, 12)
+        self.assertIn("absolute", text)
+        for leak in ("canonicalizeMe", "DO-NOT-ECHO-4711"):
+            self.assertNotIn(leak, text, f"{leak} leaked to stdout")
+            self.assertNotIn(leak, err, f"{leak} leaked to stderr")
+
+    def test_a_committed_symlink_cannot_escape_the_repository(self):
+        """A symlink is mode 120000 in git, so it survives a clone like any file."""
+        outside = self.scratch()
+        canary = os.path.join(outside, "real-env.yaml")
+        shutil.copy(os.path.join(self.repo(), "adoption/environments/pr-only.yaml"), canary)
+        root = self.repo()
+        link = os.path.join(root, "adoption/environments/sneaky.yaml")
+        os.symlink(canary, link)
+        path = "adoption/definitions/test/adoption.yaml"
+        write(root, path, read(root, path).replace(
+            "environment: ../../environments/pr-only.yaml",
+            "environment: ../../environments/sneaky.yaml"))
+        git(root, "add", "-A")
+        git(root, "commit", "-q", "-m", "symlink out")
+        code, text, _ = invoke(root, "plan")
+        self.assertEqual(code, 12)
+        self.assertIn("outside the repository", text)
+
+    def test_plan_out_cannot_write_outside_the_repository(self):
+        outside = self.scratch()
+        target = os.path.join(outside, "escaped-plan.json")
+        root = self.repo()
+        code, text, _ = invoke(root, "plan", "--out", target)
+        self.assertEqual(code, 2)
+        self.assertIn("inside the repository", text)
+        self.assertFalse(os.path.exists(target), "the file was written anyway")
+        self.assertEqual(os.listdir(outside), [])
+
+    def test_graph_out_cannot_write_outside_the_repository(self):
+        outside = self.scratch()
+        target = os.path.join(outside, "escaped-graph.mmd")
+        code, text, _ = invoke(self.repo(), "graph", "--format", "mermaid", "--out", target)
+        self.assertEqual(code, 2)
+        self.assertFalse(os.path.exists(target))
+
+    def test_diff_cannot_read_outside_the_repository(self):
+        outside = self.scratch()
+        planted = os.path.join(outside, "other.json")
+        with open(planted, "w", encoding="utf-8") as handle:
+            handle.write('{"planDigest":"sha256:1","lane":"private-value"}')
+        code, text, _ = invoke(self.repo(), "diff", "--before", planted, "--after", planted)
+        self.assertEqual(code, 2)
+        self.assertNotIn("private-value", text, "the diff echoed an outside file")
+
+    def test_a_relative_out_still_writes_inside_the_repository(self):
+        """Containment must not break the flag's legitimate use."""
+        root = self.repo()
+        code, text, _ = invoke(root, "plan", "--out", "reports/here.json")
+        self.assertEqual(code, 0, text)
+        self.assertTrue(os.path.exists(os.path.join(root, "reports/here.json")))
+
+
 class TestNoClusterWritePath(Runner):
     """Phase B's strongest guarantee, asserted now so it cannot arrive by accident."""
 

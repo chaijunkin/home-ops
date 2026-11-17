@@ -233,12 +233,39 @@ def load_lock(path: str | None, root: str, registry: Registry) -> Lock:
     return Lock(path, raw, stale=recorded != registry.digest)
 
 
-def resolve_ref(from_path: str, ref: str) -> str:
-    """Resolve a reference inside an authored file to a repo-relative path."""
+def resolve_ref(from_path: str, ref: str, root: str | None = None) -> str:
+    """Resolve a reference inside an authored file to a repo-relative path.
+
+    Two ways out of a repository exist, and rejecting only `..` catches one. An
+    absolute reference is passed through `normpath` untouched, so `/etc/hosts` used
+    to resolve happily and the engine read it — the schema error then named its
+    fields. A committed symlink (`catalog/base: ../escape` where `escape` is a
+    link) gets out too, so when a root is supplied containment is checked on
+    resolved paths.
+
+    This matters more than it would for a human-only CLI: an agent drives this tool,
+    and an agent can be talked into pointing it at a path it was shown.
+    """
+    if os.path.isabs(ref):
+        fail(
+            E_SCHEMA,
+            f"{from_path}: reference {ref!r} is absolute",
+            hint="references are relative to the referencing file, inside the repository",
+        )
     joined = os.path.normpath(os.path.join(os.path.dirname(from_path), ref))
     if joined.startswith(".."):
         fail(E_SCHEMA, f"{from_path}: reference {ref!r} escapes the repository")
-    return joined.replace(os.sep, "/")
+    rel = joined.replace(os.sep, "/")
+    if root:
+        root_real = os.path.realpath(root)
+        target = os.path.realpath(os.path.join(root_real, rel))
+        if target != root_real and not target.startswith(root_real + os.sep):
+            fail(
+                E_SCHEMA,
+                f"{from_path}: reference {ref!r} resolves outside the repository",
+                hint="a committed symlink can point off the work tree; keep it a real file",
+            )
+    return rel
 
 
 def write_lock(path: str, payload: str, root: str, expect: str | None) -> None:

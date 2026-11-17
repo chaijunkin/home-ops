@@ -65,9 +65,10 @@ class Context:
         self.library = load_slot_library(SLOT_LIBRARY, root)
         self.definition_path = definition_path or self._only_definition()
         self.definition = load_definition(self.definition_path, root, self.library)
-        self.environment_path = resolve_ref(self.definition_path, self.definition.raw["environment"])
+        self.environment_path = resolve_ref(
+            self.definition_path, self.definition.raw["environment"], root)
         self.environment = load_environment(self.environment_path, root)
-        base = resolve_ref(self.definition_path, self.definition.raw["catalog"]["base"])
+        base = resolve_ref(self.definition_path, self.definition.raw["catalog"]["base"], root)
         self.registry_path = f"{base}/registry.yaml"
         self.registry = load_registry(self.registry_path, root)
         # An authored `catalog.lock` is relative to the Definition; the default is
@@ -75,7 +76,7 @@ class Context:
         # would graft it onto the Definition's directory.
         authored_lock = self.definition.raw["catalog"].get("lock")
         self.lock_path = (
-            resolve_ref(self.definition_path, authored_lock) if authored_lock
+            resolve_ref(self.definition_path, authored_lock, root) if authored_lock
             else f"{base}/pins.lock.yaml"
         )
         self.lock: Lock = load_lock(self.lock_path, root, self.registry)
@@ -117,7 +118,7 @@ def verb_plan(ctx: Context, args) -> int:
         return EXIT_OK
 
     target = args.out or rel
-    full = os.path.join(ctx.root, target)
+    full = _within(ctx.root, target, "--out")
     existed = os.path.exists(full)
     if not existed or _read(full) != payload:
         _write(full, payload)
@@ -193,7 +194,7 @@ def verb_graph(ctx: Context, args) -> int:
     if not text.endswith("\n"):
         text += "\n"
     if args.out:
-        _write(os.path.join(ctx.root, args.out), text)
+        _write(_within(ctx.root, args.out, "--out"), text)
         _emit({"status": "written", "path": args.out, "format": args.format}, args.pretty)
     else:
         sys.stdout.write(text)
@@ -340,13 +341,36 @@ def _emit(payload: dict, pretty_output: bool) -> None:
     sys.stdout.write(text + "\n")
 
 
+def _within(root: str, target: str, what: str) -> str:
+    """Resolve an invocation path and require it to stay inside the work tree.
+
+    `--out` started as an absolute-path write: `plan --out ~/.zshrc` would have
+    written a JSON document there and exited 0. Nothing needs that. The cost is
+    that a report has to be written inside the repository and copied out, which is
+    the right trade for a tool whose caller may be an agent assembling its own flags
+    from text it was handed. Reads are held to the same rule so the interface has
+    one shape instead of two: every path an invocation supplies is a repository path.
+    """
+    if os.path.isabs(target):
+        fail(
+            E_USAGE,
+            f"{what} must be a path inside the repository, got {target!r}",
+            hint="write inside the work tree and copy it out afterwards",
+        )
+    root_real = os.path.realpath(root)
+    resolved = os.path.realpath(os.path.join(root_real, target))
+    if resolved != root_real and not resolved.startswith(root_real + os.sep):
+        fail(E_USAGE, f"{what} resolves outside the repository: {target!r}")
+    return os.path.join(root, target)
+
+
 def _read(path: str) -> str:
     with open(path, encoding="utf-8") as handle:
         return handle.read()
 
 
 def _read_json(path: str, root: str) -> dict:
-    full = path if os.path.isabs(path) else os.path.join(root, path)
+    full = _within(root, path, "--before/--after")
     if not os.path.exists(full):
         fail(E_INPUT_MISSING, f"no such plan file: {path}")
     try:
