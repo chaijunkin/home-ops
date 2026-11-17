@@ -28,6 +28,14 @@ MAP_DOC = 'select(type == "!!map")'
 
 
 def tracked_files(root: str, *prefixes: str) -> list[str]:
+    """Tracked YAML under the given prefixes. Uncommitted scratch is never read.
+
+    SOPS-encrypted files are excluded by name. They hold secrets, not workload
+    facts: no chart reference or image lives in one, Flux decrypts them at runtime,
+    and reading them could only ever put ciphertext into a lock where a reviewer
+    would read it as a real reference. Skipping them makes "no secret material
+    reaches a lock or plan" a rule rather than a coincidence of today's tree.
+    """
     proc = subprocess.run(
         ["git", "ls-tree", "-r", "HEAD", "--name-only"],
         cwd=root,
@@ -39,7 +47,9 @@ def tracked_files(root: str, *prefixes: str) -> list[str]:
     wanted = prefixes or (APPS_SCOPE,)
     return sorted(
         p for p in proc.stdout.splitlines()
-        if p.endswith((".yaml", ".yml")) and p.startswith(wanted)
+        if p.endswith((".yaml", ".yml"))
+        and ".sops." not in os.path.basename(p)
+        and p.startswith(wanted)
     )
 
 

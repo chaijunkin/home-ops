@@ -714,6 +714,26 @@ class TestLock(Runner):
         self.assertEqual(caught.exception.code, 17)
         self.assertIn("# someone else won", read(root, rel), "the other writer was clobbered")
 
+    def test_encrypted_files_contribute_nothing_to_the_lock(self):
+        """A secret is not a workload fact, and ciphertext must not pose as a reference."""
+        root = self.repo()
+        write(root, "kubernetes/apps/ai/alpha/secrets.sops.yaml", """\
+apiVersion: v1
+kind: Secret
+metadata:
+  name: alpha
+image: ENC[AES256_GCM,data:c2VjcmV0,iv:aaa,tag:bbb,type:str]
+stringData:
+  password: ENC[AES256_GCM,data:c2VjcmV0,iv:aaa,tag:bbb,type:str]
+""")
+        git(root, "add", "-A")
+        git(root, "commit", "-q", "-m", "encrypted secret in a unit")
+        code, _, _ = self.run_cli(root, "catalog", "pin")
+        self.assertEqual(code, 0)
+        text = json.dumps(self.lock_body(root))
+        self.assertNotIn("ENC[", text, "ciphertext reached the lock")
+        self.assertNotIn("c2VjcmV0", text, "encrypted material reached the lock")
+
     def lock_body(self, root: str) -> dict:
         import yamlio
 
