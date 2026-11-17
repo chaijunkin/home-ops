@@ -1,0 +1,35 @@
+---
+# Catalog registry — how things are produced, never what they currently resolve to.
+#
+# No digests live here. `adoption plan` rejects a registry containing `@sha256:`,
+# because a hand-edited digest is an unauditable claim: the machine-written
+# `pins.lock.yaml` beside this file is the record of what was pinned, generated
+# against the exact registry bytes it names.
+#
+# The units below are the ones an AgentBlueprint adoption touches first. Listing
+# them explicitly rather than selecting by pattern is deliberate: a selector that
+# silently grows turns someone else's service into this Definition's scope, and
+# then an adoption claim covers work nobody agreed to.
+apiVersion: home-ops.chaijunkin.com/catalog/v1
+kind: CatalogRegistry
+metadata:
+  owner: home-ops
+description: Units in scope for AgentBlueprint adoption.
+units:
+  - unit: kubernetes/apps/ai/litellm
+    tags:
+      - agent
+      - gateway
+  - unit: kubernetes/apps/ai/litellm-operator
+    tags:
+      - agent
+      - operator
+  - unit: kubernetes/apps/ai/openclaw
+    tags:
+      - agent
+  - unit: kubernetes/apps/ai/hermes
+    tags:
+      - agent
+  - unit: kubernetes/apps/ai/opencode
+    tags:
+      - agent

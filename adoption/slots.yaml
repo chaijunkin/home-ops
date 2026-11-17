@@ -1,0 +1,80 @@
+---
+# Slot library — the authored vocabulary of "what counts as done".
+#
+# This file is why a second Definition needs no engine change: a slot names a
+# node kind, the evidence item that closes it, and the slots that must close
+# first. Adding an adoption goal means adding outputs here and a Definition, not
+# new Python.
+#
+# `node` is the phase of work, and the Environment's lane decides whether any
+# node kind may appear at all. `observe` is deliberately absent from every slot
+# below: it needs live read access plus a policy, and that is the reconciled lane
+# this build does not ship.
+apiVersion: home-ops.chaijunkin.com/slots/v1
+kind: SlotLibrary
+metadata:
+  name: home-ops-adoption-slots
+slots:
+  - name: inventory
+    summary: the unit exists as a Flux Kustomization with a namespace
+    node: discover
+    evidence: unit-resolved
+
+  - name: readme
+    summary: the unit has a README.md whose first line is an H1
+    node: render
+    evidence: readme-h1-present
+    requires:
+      - inventory
+
+  - name: agent-blueprint
+    summary: blueprint.yaml exists for the unit and parses against the blueprint schema
+    node: render
+    evidence: blueprint-parses
+    requires:
+      - inventory
+
+  - name: runner-manifest
+    summary: the unit's agent runner renders and kustomize build is clean
+    node: render
+    evidence: kustomize-clean
+    requires:
+      - agent-blueprint
+
+  - name: route-homepage
+    summary: every hostname this unit publishes carries a homepage annotation
+    node: verify
+    evidence: homepage-annotated
+    requires:
+      - inventory
+
+  - name: route-gatus
+    summary: every hostname this unit publishes carries an external check
+    node: verify
+    evidence: gatus-endpoint
+    requires:
+      - inventory
+
+  - name: digest-pinned
+    summary: every container image reference in the unit carries a digest
+    node: verify
+    evidence: images-digest-pinned
+    requires:
+      - inventory
+
+  - name: proposal
+    summary: a branch was pushed and a pull request opened for the slots above
+    node: propose
+    evidence: pr-opened
+    # Nothing is proposed until every slot that could close has closed. A
+    # required slot the output does not name is simply not linked, so listing all
+    # of them is how "propose comes last" holds for every Definition without the
+    # engine knowing what any slot means.
+    requires:
+      - inventory
+      - readme
+      - agent-blueprint
+      - runner-manifest
+      - route-homepage
+      - route-gatus
+      - digest-pinned

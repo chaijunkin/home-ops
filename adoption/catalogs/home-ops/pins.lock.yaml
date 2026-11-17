@@ -1,0 +1,132 @@
+{
+  "generatedBy": "adoption/catalog",
+  "pins": [
+    {
+      "charts": [
+        {
+          "chartRef": "OCIRepository/app-template",
+          "definedIn": [
+            "kubernetes/apps/external-secrets/bitwarden/app/ocirepository.yaml",
+            "kubernetes/components/common/repos/app-template/ocirepository.yaml"
+          ],
+          "resolutionKind": "tag",
+          "resolved": "oci://ghcr.io/bjw-s-labs/helm/app-template@5.3.0"
+        }
+      ],
+      "derivedFrom": [
+        "OCIRepository/app-template"
+      ],
+      "images": [
+        {
+          "ref": "docker.io/library/alpine:3.24"
+        },
+        {
+          "ref": "ghcr.io/coder/code-server:4.145.0@sha256:992796b850b8b7ec6f7393b8dd2295840a65cf5071981990ff41ef52dd566c43"
+        },
+        {
+          "ref": "nousresearch/hermes-agent:v2026.9.24@sha256:fca358f12efd65bfaaca05884166f15c0e2788375ca30d77061ac1ebc96452b7"
+        }
+      ],
+      "pinnedBy": "platform",
+      "unit": "kubernetes/apps/ai/hermes"
+    },
+    {
+      "charts": [],
+      "images": [
+        {
+          "ref": "curlimages/curl:8.23.0"
+        },
+        {
+          "ref": "ghcr.io/berriai/litellm-database:v1.108.0@sha256:80c91fd00cc039e8880474f539544b919f14cd258a22f22ce4218b864c4ff14a"
+        }
+      ],
+      "pinnedBy": "none",
+      "unit": "kubernetes/apps/ai/litellm"
+    },
+    {
+      "charts": [
+        {
+          "chartRef": "OCIRepository/litellm-operator",
+          "definedIn": [
+            "kubernetes/apps/ai/litellm-operator/app/ocirepository.yaml"
+          ],
+          "resolutionKind": "tag",
+          "resolved": "oci://ghcr.io/home-operations/charts/litellm-operator@0.0.26"
+        }
+      ],
+      "images": [],
+      "pinnedBy": "unit",
+      "unit": "kubernetes/apps/ai/litellm-operator"
+    },
+    {
+      "charts": [
+        {
+          "chartRef": "OCIRepository/app-template",
+          "definedIn": [
+            "kubernetes/apps/external-secrets/bitwarden/app/ocirepository.yaml",
+            "kubernetes/components/common/repos/app-template/ocirepository.yaml"
+          ],
+          "resolutionKind": "tag",
+          "resolved": "oci://ghcr.io/bjw-s-labs/helm/app-template@5.3.0"
+        },
+        {
+          "chartRef": "OCIRepository/extended-memory",
+          "definedIn": [
+            "kubernetes/apps/ai/openclaw/extended-memory/ocirepository.yaml"
+          ],
+          "resolutionKind": "tag",
+          "resolved": "oci://ghcr.io/bjw-s-labs/helm/app-template@5.3.0"
+        }
+      ],
+      "derivedFrom": [
+        "OCIRepository/app-template"
+      ],
+      "images": [
+        {
+          "ref": "docker.io/curlimages/curl:8.23.0"
+        },
+        {
+          "ref": "docker.io/library/alpine:3.24"
+        },
+        {
+          "ref": "ghcr.io/coder/code-server:4.145.0@sha256:992796b850b8b7ec6f7393b8dd2295840a65cf5071981990ff41ef52dd566c43"
+        },
+        {
+          "ref": "ghcr.io/misospace/dispatch:0.5.74@sha256:776ce4dc11a3ab0b833d748a1021482a3aa07ac35e8c5d477ffdabdad3429415"
+        },
+        {
+          "ref": "ghcr.io/misospace/miso-chat:0.4.21@sha256:997f4cc3185c3b5674e944a64e033a191cf88dd6846b844540e4367ae946df7c"
+        },
+        {
+          "ref": "ghcr.io/openclaw/openclaw:2026.11.1@sha256:db0e0809fbd0df375445e9eea8daf2a278ac7ac3a263fa6bfce8fb344ad3ad77"
+        },
+        {
+          "ref": "python:3.15-alpine"
+        }
+      ],
+      "pinnedBy": "platform",
+      "unit": "kubernetes/apps/ai/openclaw"
+    },
+    {
+      "charts": [
+        {
+          "chartRef": "OCIRepository/opencode",
+          "definedIn": [
+            "kubernetes/apps/ai/opencode/app/ocirepository.yaml"
+          ],
+          "resolutionKind": "tag",
+          "resolved": "oci://ghcr.io/bjw-s-labs/helm/app-template@5.3.0"
+        }
+      ],
+      "images": [
+        {
+          "ref": "ghcr.io/chaijunkin/opencode:2.2.5"
+        }
+      ],
+      "pinnedBy": "unit",
+      "unit": "kubernetes/apps/ai/opencode"
+    }
+  ],
+  "registryDigest": "sha256:6f4a8a80aa3c2614efffc2991b378afc6e600ed7e056cc16da2233f7ba37c12a",
+  "schemaVersion": "adoption.lock/v1"
+}

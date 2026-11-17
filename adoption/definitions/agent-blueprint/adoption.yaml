@@ -1,0 +1,70 @@
+---
+# Definition: adopt an AgentBlueprint across the agent-facing units.
+#
+# Authored intent only. There is no schedule, no ordering, and no topology here:
+# the graph is derived from the slot library's `requires` plus the Flux `dependsOn`
+# relations that already exist in the manifests, so ordering stays a fact about the
+# estate rather than an opinion in this file.
+#
+# `slots: library` means every slot name below must exist in adoption/slots.yaml.
+# An unrecognised slot is `E-SLOT-UNKNOWN` before any manifest is read, because a
+# typo that quietly matches nothing would report success on work nobody asked for.
+apiVersion: home-ops.chaijunkin.com/adoption/v1
+kind: AdoptionDefinition
+metadata:
+  name: agent-blueprint-adoption
+description: >-
+  Give each agent-facing unit a blueprint, a runner manifest, documentation,
+  homepage and liveness routing annotations, and digest-pinned images; propose the
+  result as one pull request per Definition.
+catalog:
+  base: ../../catalogs/home-ops
+environment: ../../environments/pr-only.yaml
+slots: library
+outputs:
+  - name: litellm-operator-agent
+    unit: kubernetes/apps/ai/litellm-operator
+    slots:
+      - inventory
+      - readme
+      - digest-pinned
+      - proposal
+  - name: litellm-agent
+    unit: kubernetes/apps/ai/litellm
+    slots:
+      - inventory
+      - readme
+      - agent-blueprint
+      - route-homepage
+      - route-gatus
+      - digest-pinned
+      - proposal
+  - name: openclaw-agent
+    unit: kubernetes/apps/ai/openclaw
+    slots:
+      - inventory
+      - readme
+      - agent-blueprint
+      - runner-manifest
+      - route-homepage
+      - route-gatus
+      - digest-pinned
+      - proposal
+  - name: hermes-agent
+    unit: kubernetes/apps/ai/hermes
+    slots:
+      - inventory
+      - readme
+      - agent-blueprint
+      - runner-manifest
+      - digest-pinned
+      - proposal
+  - name: opencode-agent
+    unit: kubernetes/apps/ai/opencode
+    slots:
+      - inventory
+      - readme
+      - agent-blueprint
+      - runner-manifest
+      - digest-pinned
+      - proposal
