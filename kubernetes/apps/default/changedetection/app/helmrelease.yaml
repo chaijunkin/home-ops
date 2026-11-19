@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: ghcr.io/dgtlmoon/changedetection.io
-              tag: 0.70.1@sha256:72e761d84463553c4a276127df46a4967e9feea8878b88b05d8c058ddbe1a4c8
+              tag: 0.70.4@sha256:b6aae2572a0bf1a671b1b202365ddcfe16a31fa8a60be89df606705731b55f8b
             securityContext:
               runAsNonRoot: true
               runAsUser: 1000
