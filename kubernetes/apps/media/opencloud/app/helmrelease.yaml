@@ -34,7 +34,7 @@ spec:
           opencloud:
             image:
               repository: docker.io/opencloudeu/opencloud-rolling
-              tag: 9.0.0@sha256:bd57f039d0dd3df510fb25f178beefdf0b1f049097285feead607824460e6506
+              tag: 9.2.0@sha256:99698aea6bd88cf28004c773941cf69e2d24da136a3a45f9819b90b60506d14d
             command: [/bin/sh, -c, opencloud init || true; opencloud server]
             envFrom:
               - secretRef:
