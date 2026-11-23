@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: opnsense-exporter-rules
+spec:
+  groups:
+    - name: opnsense-exporter.rules
+      rules:
+        # The firewall is the single egress path for every VLAN and for the cluster
+        # itself. Losing its exporter means routing has gone unobservable, which is
+        # how the 2026-11-21 VPN_SERVICES_LAN egress outage sat undetected for ~50h:
+        # the earliest signal was this target going away, and nothing paged on it.
+        - alert: OpnsenseFirewallUnreachable
+          annotations:
+            summary: |-
+              The firewall {{ $labels.instance }} has stopped reporting metrics. Either it is
+              down or its path is broken; treat all site routing as suspect.
+          expr: up{job="node-exporter", instance=~"gateway.*"} == 0
+          for: 10m
+          labels:
+            severity: critical
+        # A stopped OPNsense service is silent by design. CrowdSec specifically keeps its
+        # bouncer pf tables loaded after the service dies, so remediations stop expiring
+        # while still dropping traffic -- a permanent blackhole with no symptom in the
+        # firewall's own health. 30m tolerates a deliberate short-lived restart.
+        - alert: OpnsenseServiceStopped
+          annotations:
+            summary: |-
+              {{ $value }} OPNsense service(s) are stopped on {{ $labels.opnsense_instance }}.
+              Check Services for one that should be running (e.g. CrowdSec, whose pf bouncer
+              keeps enforcing after it dies).
+          expr: opnsense_services_stopped_total > 0
+          for: 30m
+          labels:
+            severity: warning
