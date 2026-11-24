@@ -80,7 +80,7 @@ spec:
           qbop:
             image:
               repository: ghcr.io/clajiness/qbop
-              tag: v3.7.1@sha256:d653adf3f028be0f11eaf52882544961975f0817033ecbf2c0f7be1e4b5b88cf
+              tag: v3.7.3@sha256:330628e9eabb4b54a20670befe8efb403fe41e4442e0273f91465e1ba4a48421
             env:
               # 1. Direct Key-Value Pairs
               - name: PROTON_GATEWAY
