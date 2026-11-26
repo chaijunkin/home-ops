@@ -23,19 +23,27 @@ spec:
         # A stopped OPNsense service is silent by design. CrowdSec specifically keeps its
         # bouncer pf tables loaded after the service dies, so remediations stop expiring
         # while still dropping traffic -- a permanent blackhole with no symptom in the
-        # firewall's own health. 30m tolerates a deliberate short-lived restart.
+        # firewall's own health.
         #
         # Scoped by name rather than using opnsense_services_stopped_total, because that
         # counter also counts services that are deliberately left idle (iperf), and an
         # alert that is always firing is an alert nobody reads. Add a service to the
         # regex when it is intentionally stopped.
+        #
+        # min_over_time, not a bare comparison. The firewall reports crowdsec as running for a
+        # single scrape roughly every 15 minutes while it has in fact been stopped the whole time
+        # (measured over 6 h at 1 m: 31 of 361 samples were 1, 62 transitions). A bare `== 0`
+        # therefore goes false often enough to keep resetting the pending timer -- after this rule
+        # first shipped it sat pending for 5 h 40 m and never notified with CrowdSec down. Looking
+        # back 10 m lets the condition survive one flaky scrape, and it still clears as soon as
+        # every scrape in the window reports the service running.
         - alert: OpnsenseServiceStopped
           annotations:
             summary: |-
               The OPNsense service {{ $labels.description }} ({{ $labels.name }}) is not
               running on {{ $labels.opnsense_instance }}. Check Services for one that
               should be up -- CrowdSec's pf bouncer keeps enforcing after it dies.
-          expr: opnsense_services_status{name!~"iperf"} == 0
-          for: 30m
+          expr: min_over_time(opnsense_services_status{name!~"iperf"}[10m]) == 0
+          for: 15m
           labels:
             severity: warning

@@ -7,29 +7,38 @@ spec:
   groups:
     - name: litellm.rules
       rules:
+        # LiteLLM exports no *_fallbacks_total counters, so both rules below derive the same two
+        # facts from the per-deployment counters that do exist (litellm_deployment_success_responses_total
+        # and litellm_deployment_failure_responses_total, labelled by pool in model_group):
+        #   exhausted -> the pool is failing and serving nothing, so nothing is left to fall back to
+        #   failover  -> the pool is failing while it still answers, i.e. a deployment in it is unhealthy
+        # unless on (model_group) rather than a failure ratio, because an absent success series has to
+        # count as "nothing is working" and division by a missing denominator cannot express that.
+        # for: 10m is new: the old rule had none, and a cold proxy with no success traffic yet would
+        # otherwise page on its first failed request.
         - alert: LiteLLMFallbackChainExhausted
           expr: |-
-            sum by (requested_model, exception_status, exception_class) (
-              increase(litellm_deployment_failed_fallbacks_total[15m])
-            ) > 0
+            sum by (model_group) (increase(litellm_deployment_failure_responses_total[15m])) > 0
+            unless on (model_group)
+            sum by (model_group) (increase(litellm_deployment_success_responses_total[15m])) > 0
+          for: 10m
           annotations:
             summary: >-
-              LiteLLM {{ $labels.requested_model }} fallback chain exhausted — no working
-              deployment
-              ({{ $labels.exception_status }} {{ $labels.exception_class }})
+              LiteLLM pool {{ $labels.model_group }} is failing requests with nothing in it
+              succeeding — no deployment left to serve this traffic
           labels:
             severity: critical
         - alert: LiteLLMModelFailover
           expr: |-
-            sum by (requested_model, fallback_model, exception_status, exception_class) (
-              increase(litellm_deployment_successful_fallbacks_total[10m])
-            ) > 3
+            sum by (model_group, exception_status) (increase(litellm_deployment_failure_responses_total[10m])) > 3
+            and on (model_group)
+            sum by (model_group) (increase(litellm_deployment_success_responses_total[10m])) > 0
           for: 5m
           annotations:
             summary: >-
-              LiteLLM {{ $labels.requested_model }} failing over to {{ $labels.fallback_model
-              }}
-              ({{ $labels.exception_status }} {{ $labels.exception_class }})
+              LiteLLM pool {{ $labels.model_group }} failed {{ $value }} request(s) with
+              {{ $labels.exception_status }} in 10m while the pool still answered — one of its
+              deployments is unhealthy
           labels:
             severity: warning
         - alert:

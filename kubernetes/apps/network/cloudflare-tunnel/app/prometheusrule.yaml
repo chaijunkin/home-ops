@@ -8,8 +8,12 @@ spec:
   groups:
     - name: cloudflare-tunnel.rules
       rules:
+        # cloudflared exports ha_connections (connections held open to the Cloudflare edge), not
+        # user_connections. The old name never existed in Prometheus, so this alert was structurally
+        # unable to fire: a tunnel that dropped every edge connection would have stayed green.
+        # ha_connections currently reports 4, which is what the threshold is measured against.
         - alert: CloudflareTunnelOffline
-          expr: cloudflared_tunnel_user_connections == 0
+          expr: cloudflared_tunnel_ha_connections == 0
           for: 2m
           annotations:
             summary: Cloudflare tunnel on {{ $labels.instance }} has 0 connections
