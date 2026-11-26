@@ -57,3 +57,25 @@ spec:
           annotations:
             summary: |-
               The probe targeting {{ $labels.instance }} is currently having connectivity issues
+        # The 2026-11-21 outage was "tunnel up, no return traffic": handshakes completed every
+        # ~60 s and dpinger reached the tunnel end at 13 ms, while Proton forwarded nothing. That
+        # reads as VpnProbeFailed with no hint the tunnel itself looked healthy, so the search
+        # started at the firewall. Pairing handshake freshness with total probe failure names the
+        # provider-side fault directly. max(...) == 0 requires every probe to fail, so one sick
+        # endpoint cannot impersonate it; the two probes agreed on all 20 days checked.
+        # `and on()` is mandatory: these two metrics share no labels, so a bare `and` silently
+        # returns zero series (verified). Scoping to the exit peer is mandatory too: the
+        # inbound-only wg1 peers report last_handshake 0 and would match forever.
+        - alert: VpnTunnelUpButNoReturn
+          expr: |-
+            (time() - opnsense_wireguard_peer_last_handshake_seconds{device="wg2", peer_name="ProtonVPN_Singapore"} < 300)
+              and on()
+            (max(probe_success{service="blackbox-exporter-vpn"}) == 0)
+          for: 15m
+          labels:
+            severity: critical
+          annotations:
+            summary: |-
+              WireGuard peer {{ $labels.peer_name }} keeps re-keying but every egress probe through
+              it is failing, so the provider has the tunnel up and is forwarding nothing. Check
+              with the VPN provider before re-testing the firewall or the client config.

@@ -5,4 +5,5 @@ resources:
   - ./externalsecret.yaml
   - ./grafanadashboard.yaml
   - ./helmrelease.yaml
+  - ./prometheusrule-gateway.yaml
   - ./prometheusrule.yaml

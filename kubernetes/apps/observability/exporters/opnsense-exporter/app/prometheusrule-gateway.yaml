@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: opnsense-exporter-gateway-rules
+spec:
+  groups:
+    - name: opnsense-exporter.gateway.rules
+      rules:
+        # dpinger only probes a gateway when monitoring is enabled for it, so a gateway with
+        # monitoring off is invisible at the gateway layer: no RTT or loss series, the firewall
+        # never marks it down, and its states are never killed. WAN_PPPOE had monitor_disable set
+        # throughout the 2026-11-24/25 impairment, so the only gateway dpinger watched was the VPN
+        # one -- whose monitor address is Proton's tunnel end, reached over the sick ISP path.
+        # Nothing at the gateway layer could therefore report the access path.
+        - alert: OpnsenseGatewayMonitoringDisabled
+          annotations:
+            description: |-
+              Metric value 0 means the gateway's "Disable gateway monitoring" flag is set, so
+              dpinger is not running for it and the firewall will never detect that this gateway
+              is down or degraded.
+            summary: |-
+              Gateway {{ $labels.name }} on {{ $labels.opnsense_instance }} has gateway monitoring
+              disabled. Enable it and set latency and loss thresholds, otherwise this gateway
+              fails silently.
+          expr: opnsense_gateways_monitor_info == 0
+          for: 30m
+          labels:
+            severity: warning
+        # Threshold from measured behaviour, not guessed: over 22-26 Nov the monitored gateway ran
+        # at 12.8-24.7 ms on healthy days and 125-160 ms during the 24-25 Nov ISP episodes, so
+        # 60 ms falls in the empty band between them. for: 30m suppresses dpinger's transient
+        # spikes; both real episodes produced long unbroken runs above 60 ms.
+        - alert: OpnsenseGatewayDegraded
+          annotations:
+            description: |-
+              Sustained round-trip time to this gateway's monitor address. This circuit normally
+              shows 13-25 ms; the 2026-11-25 impairment sat at 125-160 ms. Steady high latency
+              with little loss points at the access/aggregation path, not at a local queue.
+            summary: |-
+              Gateway {{ $labels.name }} is at {{ $value | humanize }} ms RTT, far above this
+              circuit's normal 13-25 ms. Check the ISP path before blaming local traffic.
+          expr: opnsense_gateways_rtt_milliseconds > 60
+          for: 30m
+          labels:
+            severity: warning
