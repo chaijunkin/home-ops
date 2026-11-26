@@ -22,7 +22,6 @@ spec:
       name: *app
       namespace: *namespace
   # components:
-  #   # - ../../../../components/volsync
   #   - ../../../../components/kopiur/backup
   #   # - ../../../../components/kopiur/adhoc-snapshot
   path: ./kubernetes/apps/storage/garage/app
@@ -38,7 +37,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-  #     VOLSYNC_CAPACITY: 10Gi
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1

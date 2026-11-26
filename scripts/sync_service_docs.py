@@ -42,7 +42,7 @@ DEFAULT_VAULT_DIR = Path(
 CLOUD_NATIVE_NS = {
     "actions-runner-system", "cert-manager", "external-secrets", "flux-system",
     "jobs", "kube-system", "network", "observability", "renovate", "security",
-    "storage", "system-upgrade", "volsync-system",
+    "storage", "system-upgrade",
 }
 
 # Curated upstream knowledge: app -> (repo_url, docs_url, description).
@@ -258,7 +258,7 @@ APP_KNOWLEDGE: dict[str, tuple[str, str, str]] = {
                "S3-compatible object storage for self-hosting."),
     "kopia": ("https://github.com/kopia/kopia", "",
               "Fast incremental encrypted backup engine."),
-    "kopiur": ("", "", "VolSync backup orchestrator injected via reusable components."),
+    "kopiur": ("", "", "Kopia backup orchestrator injected via reusable components."),
     "miroir": ("https://github.com/home-operations/miroir", "https://miroir.home-operations.com",
                "Replicated block-storage CSI driver (LVM thin + DRBD9 sync replication)."),
     "openebs": ("https://github.com/openebs/openebs", "",
@@ -268,9 +268,6 @@ APP_KNOWLEDGE: dict[str, tuple[str, str, str]] = {
     # --- system-upgrade ---
     "tuppr": ("https://github.com/home-operations/tuppr", "",
               "Automated Talos and Kubernetes upgrade provider for Flux."),
-    # --- volsync-system ---
-    "volsync": ("https://github.com/backube/volsync", "",
-                "Asynchronous volume replication and backups."),
     # --- workadventure ---
     "coturn": ("https://github.com/coturn/coturn", "",
                "TURN/STUN relay for WebRTC connectivity."),

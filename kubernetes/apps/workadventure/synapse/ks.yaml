@@ -8,7 +8,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
       # - ../../../../components/kopiur/adhoc-snapshot
   interval: 1h
@@ -16,7 +15,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 10Gi
   prune: true
   sourceRef:
     kind: GitRepository

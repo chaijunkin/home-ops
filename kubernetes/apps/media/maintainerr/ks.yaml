@@ -9,7 +9,6 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   components:
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
       # - ../../../../components/kopiur/adhoc-snapshot
@@ -25,7 +24,6 @@ spec:
       APP: *appname
       APP_UID: "1000"
       APP_GID: "1000"
-      VOLSYNC_CLAIM: maintainerr-data
       KOPIUR_CLAIM: maintainerr-data
   prune: true
   sourceRef:

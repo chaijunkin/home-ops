@@ -1,6 +1,6 @@
 # Kopiur
 
-**Description:** VolSync backup orchestrator injected via reusable components.
+**Description:** Kopia backup orchestrator injected via reusable components.
 **Category:** storage
 
 ---

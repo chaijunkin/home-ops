@@ -75,12 +75,11 @@ Flux `Kustomization` and `HelmRelease` resources MUST explicitly define their de
 
 **Rules**
 - **Storage**: Apps using OpenEBS or Local Hostpath MUST depend on their respective storage provider in `storage`.
-- **Volsync**: Apps using the `volsync` component MUST depend on `openebs` in `storage`.
+- **Backups**: Apps using the `kopiur` components MUST depend on `kopiur` in `storage`.
 - **Secrets**: Apps using `ExternalSecret` SHOULD depend on `external-secrets-stores` in `kube-system` (Optional).
 - **Databases**: Apps using Postgres SHOULD depend on `cloudnative-pg-cluster` in `database` (Optional).
 - **Caching**: Apps using Redis/Dragonfly SHOULD depend on `dragonfly-cluster` in `database` (Optional).
 - **Authentication**: Apps using SSO (Authentik) SHOULD depend on `authentik` in `security` (Optional).
-- **Backups**: Apps using `volsync` SHOULD depend on `volsync` in `volsync-system` (Optional).
 - **Sub-Apps**: Sidecar or utility Kustomizations SHOULD depend on the main application Kustomization.
 
 
@@ -135,15 +134,16 @@ spec:
   path: ./kubernetes/apps/media/plex/app
   postBuild:
     substitute:
-      VOLSYNC_CAPACITY: 20Gi
+      KOPIUR_CAPACITY: 20Gi
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/remote
 ```
-//BOUNDARY: Do not manually scaffold `ReplicationSource` objects or manually add Envoy `ext-auth` filters to an app. Always use the predefined components in `kubernetes/components/`.
+//BOUNDARY: Do not manually scaffold kopiur `SnapshotSchedule`/`SnapshotPolicy` objects or manually add Envoy `ext-auth` filters to an app. Always use the predefined components in `kubernetes/components/`.
 
 **Depth**
-- **Available Components**: Common components include `volsync` (local/remote backups), `volsync-no-r2` (local only), `envoy-oidc` (Native OIDC client), `ext-auth` (ForwardAuth via Authentik Outpost), and `keda` (Autoscaling).
-- **Configuration**: Components use `postBuild.substitute` variables (like `VOLSYNC_CAPACITY` or `APP`) to accept dynamic configuration from the `ks.yaml`.
+- **Available Components**: Common components include `kopiur/backup` (local snapshots), `kopiur/remote` (offsite snapshots), `kopiur/adhoc-snapshot` (one-off snapshot), `envoy-oidc` (Native OIDC client), `ext-auth` (ForwardAuth via Authentik Outpost), and `keda` (Autoscaling).
+- **Configuration**: Components use `postBuild.substitute` variables (like `KOPIUR_CAPACITY` or `APP`) to accept dynamic configuration from the `ks.yaml`.
 - **Auth Choice**: Use `envoy-oidc` for applications that require their own dedicated Authentik app; use `ext-auth` for quick, generic protection of internal services via the shared outpost.
 
 ---

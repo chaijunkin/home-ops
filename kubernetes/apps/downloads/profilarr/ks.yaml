@@ -22,13 +22,11 @@ spec:
   postBuild:
     substitute:
       APP: profilarr
-      VOLSYNC_CAPACITY: 2Gi
       KOPIUR_PUID: "1000"
       KOPIUR_PGID: "1000"
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
-      # - ../../../../components/volsync
       # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
   dependsOn:

@@ -32,7 +32,6 @@ spec:
       KOPIUR_NONROOT: "true"
   components:
     - ../../../../components/kopiur/backup
-      # - ../../../../components/volsync-no-r2
       # - ../../../../components/kopiur/adhoc-snapshot
     - ../../../../components/zeroscaler
 ---
@@ -87,7 +86,6 @@ spec:
   postBuild:
     substitute:
       APP: plex-image-cleanup
-      VOLSYNC_CAPACITY: 2Gi
 ---
 # yaml-language-server: $schema=https://crd.cloudjur.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -122,10 +120,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/kopiur/backup
-      # - ../../../../components/volsync
       # - ../../../../components/kopiur/adhoc-snapshot
       # - ../../../../components/zeroscaler
 # ---

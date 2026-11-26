@@ -60,9 +60,6 @@ spec:
             memory: 432Mi
             # ephemeral-storage: "2Gi"
 
-    trivyOperator:
-      skipResourceByLabels: app.kubernetes.io/created-by=volsync
-
     # krr: controller=trivy-operator container=trivy-operator
     resources:
       requests:

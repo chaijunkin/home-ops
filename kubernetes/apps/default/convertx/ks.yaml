@@ -17,13 +17,11 @@ spec:
   retryInterval: 1m
 
   components:
-    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
       # - ../../../../components/kopiur/adhoc-snapshot
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
   dependsOn:
     - name: openebs
       namespace: storage
