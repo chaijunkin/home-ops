@@ -7,12 +7,10 @@ spec:
   kubernetes:
     # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
     version: v1.36.0
-  healthChecks:
-    - apiVersion: volsync.backube/v1alpha1
-      kind: ReplicationSource
-      expr: |-
-        status.conditions.filter(c, c.type == "Synchronizing").all(c, c.status == "False")
-      # - apiVersion: ceph.rook.io/v1
-      #   kind: CephCluster
-      #   expr: |-
-      #     status.ceph.health in ['HEALTH_OK']
+  # healthChecks:
+  # volsync ReplicationSource checks were removed with volsync itself; the only
+  # remaining candidate is the commented CephCluster check below.
+  # - apiVersion: ceph.rook.io/v1
+  #   kind: CephCluster
+  #   expr: |-
+  #     status.ceph.health in ['HEALTH_OK']
