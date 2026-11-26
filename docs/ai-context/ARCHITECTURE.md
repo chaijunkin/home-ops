@@ -29,7 +29,7 @@ persistence:
 
 **Depth**
 - **Bulk Storage (`/tank`)**: Managed natively by Proxmox. Ansible configures the NFS/SMB exports. Apps consume this via the `csi-driver-nfs` client or direct `nfs` volume mounts.
-- **`democratic-csi`**: Used for `volsync` snapshots and normal stateful storage. It runs on the host SSD boot drive.
+- **`democratic-csi`**: Used for volume snapshots and normal stateful storage. It runs on the host SSD boot drive.
 - **`openebs`**: Used on secondary drives. Used specifically for cache or heavy write workloads.
 - **`garage`**: Provides S3-compatible object storage.
 
@@ -115,6 +115,5 @@ The `kubernetes/apps` directory is organized into the following logical namespac
 | `observability` | Prometheus, Grafana, Loki, Alloy |
 | `renovate` | Dependency management |
 | `security` | Authentik, Authelia, Vault |
-| `storage` | CSI drivers (Democratic-CSI, OpenEBS, NFS Client) |
+| `storage` | CSI drivers (Democratic-CSI, OpenEBS, NFS Client), Kopia backups (kopiur) |
 | `system-upgrade` | Automated OS upgrades (Talos) |
-| `volsync-system` | Volume replication and backup |

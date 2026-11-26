@@ -32,7 +32,7 @@ categories: ["Domain[100%]", "Reference[90%]"]
 
 | Use Case | Storage Tool | Backed By | Notes |
 |----------|--------------|-----------|-------|
-| Normal stateful storage & VolSync snapshots | `democratic-csi` | Host SSD Boot Drive | The primary fast storage for stateful apps. |
+| Normal stateful storage & volume snapshots | `democratic-csi` | Host SSD Boot Drive | The primary fast storage for stateful apps. |
 | Cache & Heavy write workloads | `openebs` | Secondary Drives | Avoids burning out the primary boot SSD. |
 | Bulk storage (Media/Downloads) | `csi-driver-nfs` | Ansible-deployed NFS | Consumes the native Proxmox ZFS `/tank` exports. |
 
@@ -56,12 +56,12 @@ An app requires a TMDB API key. Instead of creating a Kubernetes Secret directly
 
 ---
 
-### Rule 5: Stateful PVCs Must Be Backed Up via VolSync
+### Rule 5: Stateful PVCs Must Be Backed Up via Kopiur
 
-**Rule**: Any application claiming a persistent volume (PVC) for critical state must have that state replicated via VolSync.
-**Enforced By**: Kustomize components (`components/volsync`).
+**Rule**: Any application claiming a persistent volume (PVC) for critical state must have that state backed up by Kopiur (Kopia).
+**Enforced By**: Kustomize components (`components/kopiur/backup`, `components/kopiur/remote`).
 **Example**:
-When an app requires backups, the `volsync` component is injected into its `ks.yaml`. This automatically provisions a `ReplicationSource` that uses Kopia to snapshot the PVC to a local Minio bucket and a remote Cloudflare R2 bucket.
+When an app requires backups, the `kopiur` components are injected into its `ks.yaml`. This provisions the Kopia `SnapshotPolicy`/`SnapshotSchedule` pair that snapshots the PVC to the local repository and a remote Cloudflare R2 bucket.
 
 ---
 
