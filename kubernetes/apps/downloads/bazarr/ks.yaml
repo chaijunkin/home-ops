@@ -25,10 +25,8 @@ spec:
   postBuild:
     substitute:
       APP: bazarr
-      VOLSYNC_CAPACITY: 2Gi
   components:
     - ../../../../components/zeroscaler
-      # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
       # - ../../../../components/kopiur/adhoc-snapshot

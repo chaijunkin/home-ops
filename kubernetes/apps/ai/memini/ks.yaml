@@ -10,7 +10,6 @@ spec:
     labels:
       app.kubernetes.io/name: memini
   components:
-    # - ../../../../components/volsync-no-r2
     - ../../../../components/kopiur/backup
       # - ../../../../components/kopiur/adhoc-snapshot
   path: ./kubernetes/apps/ai/memini/app
@@ -25,7 +24,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
   wait: false
   interval: 30m
   retryInterval: 1m

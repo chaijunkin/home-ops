@@ -22,9 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: filebrowser
-      VOLSYNC_CAPACITY: 5Gi
   components:
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
       # - ../../../../components/kopiur/adhoc-snapshot

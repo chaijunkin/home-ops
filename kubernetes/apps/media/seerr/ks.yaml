@@ -22,10 +22,8 @@ spec:
   postBuild:
     substitute:
       APP: seerr
-      VOLSYNC_CAPACITY: 2Gi
       SUBDOMAIN: requests
   components:
-    # - ../../../../components/volsync
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/remote
       # - ../../../../components/kopiur/adhoc-snapshot
