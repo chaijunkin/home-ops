@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://crd.cloudjur.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: opnsense-exporter-coverage-rules
+spec:
+  groups:
+    - name: opnsense-exporter.coverage.rules
+      rules:
+        # Monitors the monitoring. During the 2026-11-21 VLAN 31 egress outage nothing crossed a
+        # threshold to tell us the site was blind: the sources simply stopped producing data, and a
+        # missing series is not 0, it is no evaluation at all. Every rule here asserts that a source
+        # the egress path depends on is still reporting, so "exporter gone" can never read as
+        # "all fine". They live next to the gateway rules because the firewall exporter is the origin
+        # of the chain; the last two watch the blackbox VPN probes and the wg2 peer they depend on.
+        # Distinct from OpnsenseFirewallUnreachable, which watches node-exporter on the gateway and
+        # stays green when only the API exporter dies.
+        - alert: OpnsenseApiExporterAbsent
+          annotations:
+            summary: |-
+              The OPNsense API exporter has stopped reporting entirely. Gateway, service and
+              WireGuard state for the firewall are now unobserved, so treat every gateway and VPN
+              alert as unable to fire until this resolves.
+          expr: absent(up{job="opnsense-exporter"})
+          for: 15m
+          labels:
+            severity: critical
+        # The exporter keeps serving its other endpoints while individual OPNsense API calls fail,
+        # so up stays 1 and the data behind them silently goes stale rather than disappearing.
+        # Counter has been 0 across all 22 endpoints for the last 30 days, so >0 is a real change
+        # and not background noise.
+        - alert: OpnsenseExporterEndpointErrors
+          annotations:
+            summary: |-
+              {{ $value }} OPNsense API call(s) failed on endpoint {{ $labels.endpoint }} in 15m.
+              Metrics from that endpoint are stale even though the exporter itself looks healthy.
+          expr: increase(opnsense_exporter_endpoint_errors_total[15m]) > 0
+          for: 15m
+          labels:
+            severity: warning
+        # The egress probes are what prove VLAN 31 can actually reach the internet. If the probe
+        # exporter goes away, VpnProbeFailed and VpnTunnelUpButNoReturn both stop firing for the
+        # worst possible reason: they have nothing to say.
+        - alert: VpnEgressProbesAbsent
+          annotations:
+            summary: |-
+              No VLAN 31 egress probes are being reported. VPN and internet egress for the services
+              network are unobserved, and the probe-based VPN alerts cannot fire while this holds.
+          expr: absent(probe_success{service="blackbox-exporter-vpn"})
+          for: 15m
+          labels:
+            severity: critical
+        # Watches that the tunnel VLAN 31 exits through is still present and still exposing a peer.
+        # A renamed interface, a deleted VPN instance, or an exporter that loses the peer would make
+        # the handshake-based checks vacuously true; this is the only rule that notices the config
+        # itself changed. device="wg2" is the Proton exit interface (wg1 is the ingress-only home
+        # WireGuard server and is deliberately not covered here).
+        - alert: VpnEgressTunnelAbsent
+          annotations:
+            summary: |-
+              The WireGuard tunnel {{ $labels.device }} and its peer are no longer reported by the
+              firewall. Either VLAN 31 has no egress path at all or the monitoring for it was
+              removed; VpnTunnelUpButNoReturn cannot detect a tunnel that is not being exported.
+          expr: absent(opnsense_wireguard_peer_last_handshake_seconds{device="wg2"})
+          for: 15m
+          labels:
+            severity: critical

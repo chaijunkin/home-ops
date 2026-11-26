@@ -7,12 +7,19 @@ spec:
   groups:
     - name: autobrr.rules
       rules:
+        # autobrr counts IRC networks, not channels: autobrr_irc_enabled_total over
+        # autobrr_irc_healthy_total (healthy = connected and registered). The old channel_* names
+        # never existed in Prometheus, so the alert could not fire no matter how many networks
+        # stopped filtering. These are per-instance aggregates with no network label, which is why
+        # the summary no longer names one; find the dead one in the autobrr UI's IRC tab.
+        # With no networks configured both counters are 0 and the rule stays quiet.
         - alert: AutobrrNetworkUnmonitored
           expr: |
-            autobrr_irc_channel_enabled_total != autobrr_irc_channel_monitored_total
+            autobrr_irc_enabled_total > autobrr_irc_healthy_total
           for: 1h
           annotations:
             summary: >-
-              {{ $labels.network }} is not being monitored by Autobrr
+              Autobrr has more IRC networks enabled than healthy ({{ $value }} enabled) — at least
+              one is not connected or has lost its nick, so its channels are not being filtered
           labels:
             severity: critical

@@ -6,4 +6,5 @@ resources:
   - ./grafanadashboard.yaml
   - ./helmrelease.yaml
   - ./prometheusrule-gateway.yaml
+  - ./prometheusrule-monitoring-coverage.yaml
   - ./prometheusrule.yaml

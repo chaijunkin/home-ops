@@ -16,8 +16,12 @@ spec:
             description: Dragonfly/Redis cache node has been unresponsive for more than 2 minutes.
           labels:
             severity: critical
+        # Metric names as the exporter actually publishes them: dragonfly_memory_used_bytes over
+        # dragonfly_memory_max_bytes. The previous pair (used_memory / memory_limit) never existed,
+        # so a Dragonfly instance approaching its eviction limit would not have alerted. Live values
+        # are 15.4 MB used of a 2 GiB max, i.e. the rule is quiet for the right reason now.
         - alert: DragonflyHighMemoryUsage
-          expr: (dragonfly_used_memory_bytes / dragonfly_memory_limit_bytes) * 100 > 85
+          expr: (dragonfly_memory_used_bytes / dragonfly_memory_max_bytes) * 100 > 85
           for: 5m
           annotations:
             summary: Dragonfly memory usage > 85% on {{ $labels.instance }}
