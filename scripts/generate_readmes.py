@@ -7,7 +7,7 @@ repo_apps_dir = "/Users/jkchai/Developer/PUBLIC/chaijunkin-home-ops/kubernetes/a
 cloud_native_ns = [
     "actions-runner-system", "cert-manager", "external-secrets", "flux-system",
     "jobs", "kube-system", "network", "observability", "renovate", "security",
-    "storage", "system-upgrade", "volsync-system"
+    "storage", "system-upgrade"
 ]
 
 # Static knowledge mapping for popular applications
@@ -25,7 +25,6 @@ APP_KNOWLEDGE = {
     "cilium": {"url": "https://github.com/cilium/cilium", "desc": "eBPF-based Networking, Security, and Observability."},
     "authentik": {"url": "https://github.com/goauthentik/authentik", "desc": "The authentication glue you need."},
     "bitwarden": {"url": "https://github.com/bitwarden/server", "desc": "Open source password management solutions."},
-    "volsync": {"url": "https://github.com/backube/volsync", "desc": "Asynchronous data replication for Kubernetes volumes."},
     "renovate": {"url": "https://github.com/renovatebot/renovate", "desc": "Universal dependency update tool that fits into your workflows."},
     "cloudnative-pg": {"url": "https://github.com/cloudnative-pg/cloudnative-pg", "desc": "PostgreSQL Operator for Kubernetes."},
     "qbittorrent": {"url": "https://github.com/qbittorrent/qBittorrent", "desc": "Free and reliable P2P BitTorrent client."},

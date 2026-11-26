@@ -60,7 +60,6 @@ includes:
   user:
     taskfile: .taskfiles/user
     optional: true
-  volsync: .taskfiles/volsync
   fly: .taskfiles/fly/tasks.yaml
   github: .taskfiles/github/tasks.yaml
 

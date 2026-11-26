@@ -41,7 +41,6 @@
     { "icon": "git", "extensions": ["flux", "flux-system"], "format": "svg" },
     { "icon": "linux", "extensions": ["talos"], "format": "svg" },
     { "icon": "kubernetes", "extensions": ["kube-system"], "format": "svg" },
-    { "icon": "aws", "extensions": ["volsync-system"], "format": "svg" },
 
     // Networking & Observability
     { "icon": "api", "extensions": ["network"], "format": "svg" },
@@ -76,8 +75,7 @@
     "observability": "event",
     "openebs-system": "base",
     "rook-ceph": "dump",
-    "system-upgrade": "update",
-    "volsync-system": "aws"
+    "system-upgrade": "update"
   },
   "terminal.integrated.fontSize": 14,
   "vs-kubernetes": {

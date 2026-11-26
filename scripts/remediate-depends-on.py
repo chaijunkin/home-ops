@@ -9,7 +9,6 @@ yaml.indent(mapping=2, sequence=4, offset=2)
 
 APPS_DIR = "kubernetes/apps"
 ES_STORE_DEP = {"name": "external-secrets-stores", "namespace": "external-secrets"}
-VOLSYNC_DEP = {"name": "volsync", "namespace": "volsync-system"}
 PG_CLUSTER_DEP = {"name": "cloudnative-pg-cluster", "namespace": "database"}
 DRAGONFLY_DEP = {"name": "dragonfly-cluster", "namespace": "database"}
 AUTHENTIK_DEP = {"name": "authentik", "namespace": "security"}
@@ -99,15 +98,6 @@ def process_ks(file_path):
                         print(f"[{file_path}] Added local-hostpath dependency to {doc['metadata']['name']}")
                         changed = True
 
-            # Rule: Volsync component -> openebs (MANDATORY per user request)
-            components = spec.get("components", [])
-            has_volsync_comp = any("volsync" in c for c in components)
-            if has_volsync_comp:
-                if doc['metadata']['name'] != "openebs":
-                    if add_dependency(spec, OPENEBS_DEP):
-                        print(f"[{file_path}] Added openebs (via volsync component) dependency to {doc['metadata']['name']}")
-                        changed = True
-
             # --- EXCLUSIONS ---
             # Rule: Exclude NFS per user request
             if remove_dependency(spec, "csi-driver-nfs"):
@@ -143,12 +133,6 @@ def process_ks(file_path):
                 if has_content(abs_path, "dragonfly.database"):
                     if add_dependency(spec, DRAGONFLY_DEP):
                         print(f"[{file_path}] Added dragonfly-cluster dependency to {doc['metadata']['name']}")
-                        changed = True
-
-                # Rule: Volsync component -> volsync (Operator)
-                if has_volsync_comp:
-                    if add_dependency(spec, VOLSYNC_DEP):
-                        print(f"[{file_path}] Added volsync operator dependency to {doc['metadata']['name']}")
                         changed = True
 
                 # Rule: Authentik (SSO) -> authentik
