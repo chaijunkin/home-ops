@@ -22,13 +22,13 @@ spec:
           annotations:
             description:
               Internet download speed is averaging {{ humanize $value }}
-              Mbps.
-            summary:
-              SpeedTest slow internet download.
-              # home is 300mbps
+              bit/s.
+            summary: SpeedTest slow internet download.
+          # Thresholds are in bit/s because the metric is in bit/s (922324560 == 922 Mbps),
+          # so 200 Mbps is 200e6. Baseline measured 2026-11-26: 910-922 Mbps down.
           expr: |
             avg_over_time(speedtest_download_bits_per_second{job=~".*speedtest-exporter.*"}[4h])
-              < 200
+              < 200e6
           for: 0m
           labels:
             severity: warning
@@ -36,13 +36,12 @@ spec:
           annotations:
             description:
               Internet upload speed is averaging {{ humanize $value }}
-              Mbps.
-            summary:
-              SpeedTest slow internet upload.
-              # home is 50mbps
+              bit/s.
+            summary: SpeedTest slow internet upload.
+          # 30 Mbps is 30e6 bit/s. Baseline measured 2026-11-26: 521 Mbps up.
           expr: |
             avg_over_time(speedtest_upload_bits_per_second{job=~".*speedtest-exporter.*"}[4h])
-              < 30
+              < 30e6
           for: 0m
           labels:
             severity: warning
