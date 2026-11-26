@@ -1,4 +1,0 @@
----
-- id: volsync-remediation
-  execute-command: /config/volsync-remediation.sh
-  command-working-directory: /config
