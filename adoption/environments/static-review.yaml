@@ -1,0 +1,17 @@
+---
+# Review-only environment: nothing may be pushed.
+#
+# This exists to prove the lane ceiling is real rather than decorative. A
+# Definition that names the `proposal` slot compiles against `pr-only` and fails
+# `E-LANE-VIOLATION` against this one, because a `propose` node cannot be attested
+# at the `static` lane.
+apiVersion: home-ops.chaijunkin.com/environment/v1
+kind: AdoptionEnvironment
+metadata:
+  name: static-review
+description: Compile, render, and verify against Git. No push, no pull request.
+lane: static
+authority:
+  clusterWrites: none
+  git: none
+credentialRefs: []
