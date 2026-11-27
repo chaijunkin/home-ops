@@ -1,0 +1,55 @@
+===== WHY is each rule dead? =====
+
+-- smartctl-exporter
+   flagged 7, present 0, missing 7
+   live families starting 'smartctl': NONE
+   up{job=~.*smartctl.*}: no target
+
+-- volsync
+   flagged 1, present 0, missing 1
+   live families starting 'volsync': NONE
+   up{job=~.*volsync.*}: no target
+
+-- cloudflared
+   flagged 1, present 0, missing 1
+   live families starting 'cloudflared': ['cloudflared_config_local_config_pushes', 'cloudflared_config_local_config_pushes_errors', 'cloudflared_icmp_total_replies', 'cloudflared_icmp_total_requests', 'cloudflared_orchestration_config_version', 'cloudflared_proxy_connect_latency_bucket', 'cloudflared_proxy_connect_latency_count', 'cloudflared_proxy_connect_latency_sum']
+   up{job=~.*cloudflared.*}: no target
+
+-- autobrr
+   flagged 2, present 0, missing 2
+   live families starting 'autobrr': ['autobrr_feed_enabled_total', 'autobrr_feed_last_run_timestamp_seconds', 'autobrr_feed_next_run_timestamp_seconds', 'autobrr_feed_total', 'autobrr_filter_enabled_total', 'autobrr_filter_total', 'autobrr_info', 'autobrr_irc_connected_total']
+   up{job=~.*autobrr.*}: [('autobrr', '1')]
+
+-- dragonfly
+   flagged 2, present 0, missing 2
+   live families starting 'dragonfly': ['dragonfly_backups_total', 'dragonfly_blocked_clients', 'dragonfly_blocked_tasks', 'dragonfly_cmd_squash_commands_total', 'dragonfly_cmd_squash_hop_duration_seconds', 'dragonfly_cmd_squash_hop_reply_seconds', 'dragonfly_cmd_squash_hop_total', 'dragonfly_commands_duration_seconds']
+   up{job=~.*dragonfly.*}: [('database/dragonfly', '1')]
+
+-- litellm
+   flagged 3, present 0, missing 3
+   live families starting 'litellm': ['litellm_active_users', 'litellm_cache_hits_metric_created', 'litellm_cache_hits_metric_total', 'litellm_cache_misses_metric_created', 'litellm_cache_misses_metric_total', 'litellm_cached_tokens_metric_created', 'litellm_cached_tokens_metric_total', 'litellm_check_batch_cost_jobs_polled']
+   up{job=~.*litellm.*}: [('litellm', '1')]
+
+===== the stopped-service path (crowdsec has been down for days) =====
+   opnsense_services_stopped_total          -> [(None, '2')]
+   opnsense_services_status == 0            -> [('crowdsec', '0'), ('iperf', '0')]
+   ALERTS{alertname="OpnsenseServiceStopped"} -> [('pending', 'crowdsec')]
+   series labels on opnsense_services_stopped_total:
+      {'instance': '10.69.0.68:8080'} = 2
+
+===== the rule actually deployed in the cluster (vs Git) =====
+  opnsense-exporter-gateway-rules
+     OpnsenseGatewayMonitoringDisabled          opnsense_gateways_monitor_info == 0
+     OpnsenseGatewayDegraded                    opnsense_gateways_rtt_milliseconds > 60
+  opnsense-exporter-rules
+     OpnsenseFirewallUnreachable                up{job="node-exporter", instance=~"gateway.*"} == 0
+     OpnsenseServiceStopped                     opnsense_services_status{name!~"iperf"} == 0
+
+===== is anything else alerting that nobody is reading? (7d firing-hours) =====
+   KubeHpaMaxedOut                        22 series firing now
+   KubeJobFailed                          4 series firing now
+   BlackboxProbeFailed                    2 series firing now
+   VpnProbeFailed                         2 series firing now
+   AIObservabilityHighLatencyP95          1 series firing now
+   LinuxNodeHighMemoryUsage               1 series firing now
+   Watchdog                               1 series firing now

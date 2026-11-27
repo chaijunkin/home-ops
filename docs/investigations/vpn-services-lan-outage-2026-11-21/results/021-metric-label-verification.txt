@@ -1,0 +1,35 @@
+=== LITELLM: any fallback metric at all? ===
+  litellm metrics total: 72
+  with "fallback": NONE -> the two fallback rules cannot be repaired, only re-expressed
+  --- candidates for failure/failover signal ---
+      litellm_deployment_failure_responses_created
+      litellm_deployment_failure_responses_total
+      litellm_deployment_success_responses_created
+      litellm_deployment_success_responses_total
+      litellm_remaining_api_key_budget_metric
+      litellm_remaining_user_budget_metric
+
+=== LITELLM: label names on the failure + latency + requests series ===
+  litellm_deployment_failure_responses_total           api_base, api_key_alias, api_provider, app_kubernetes_io_instance, app_kubernetes_io_name, client_ip, container, endpoint, exception_class, exception_status, hashed_api_key, instance, job, litellm_model_name, model_group
+  litellm_proxy_total_requests_metric_total            api_key_alias, api_provider, app_kubernetes_io_instance, app_kubernetes_io_name, client_ip, container, end_user, endpoint, hashed_api_key, instance, job, model_id, namespace, org_alias, org_id, pod, requested_model, rout
+  litellm_request_total_latency_metric_bucket          api_key_alias, api_provider, app_kubernetes_io_instance, app_kubernetes_io_name, container, end_user, endpoint, hashed_api_key, instance, job, le, model, model_group, model_id, namespace, org_alias, org_id, pod, requeste
+  litellm_llm_api_latency_metric_bucket                api_key_alias, api_provider, app_kubernetes_io_instance, app_kubernetes_io_name, container, end_user, endpoint, hashed_api_key, instance, job, le, model, model_group, model_id, namespace, org_alias, org_id, pod, requeste
+
+=== LITELLM: does exception_status exist anywhere? what are status/http_status values ===
+  label exception_status     2 values: 408, 503
+  label status               61 values: 0x0, 200, 201, 202, 204, 2xx, 302, 400
+  label http_status          MISSING
+  label model_group          6 values: embed, frontier-pool, local-pool, local-pool-chat, qwen3.8-flash-next, reasoning-pool
+  label requested_model      6 values: embed, frontier-pool, local-pool, local-pool-chat, qwen3.8-flash-next, reasoning-pool
+  label litellm_model_name   2 values: memini-embed, qwen3.8-flash-next
+
+=== HOME ASSISTANT: how is its /metrics target labelled? ===
+  --- any target whose job mentions home-assistant ---
+    ['external-dns-adguard-home']
+
+=== AUTOBRR: metrics family (for the network-vs-monitored ratio) ===
+   autobrr_* -> ['autobrr_feed_enabled_total', 'autobrr_feed_last_run_timestamp_seconds', 'autobrr_feed_next_run_timestamp_seconds', 'autobrr_feed_total', 'autobrr_filter_enabled_total', 'autobrr_filter_total', 'autobrr_info', 'autobrr_irc_connected_total', 'autobrr_irc_enabled_total', 'autobrr_irc_healthy_total', 'autobrr_irc_total', 'autobrr_list_enabled_total', 'autobrr_list_total', 'autobrr_release_filter_rejected_total', 'autobrr_release_filtered_total', 'autobrr_release_push_approved_total', 'autobrr_release_push_error_total', 'autobrr_release_push_rejected_total', 'autobrr_release_total']
+
+=== CLOUDFLARED: full metric list + label names on ha_connections ===
+   cloudflared_* -> ['cloudflared_config_local_config_pushes', 'cloudflared_config_local_config_pushes_errors', 'cloudflared_icmp_total_replies', 'cloudflared_icmp_total_requests', 'cloudflared_orchestration_config_version', 'cloudflared_proxy_connect_latency_bucket', 'cloudflared_proxy_connect_latency_count', 'cloudflared_proxy_connect_latency_sum', 'cloudflared_proxy_connect_streams_errors', 'cloudflared_rpc_client_failures', 'cloudflared_rpc_client_latency_secs_bucket', 'cloudflared_rpc_client_latency_secs_count', 'cloudflared_rpc_client_latency_secs_sum', 'cloudflared_rpc_client_operations', 'cloudflared_tcp_active_sessions', 'cloudflared_tcp_total_sessions', 'cloudflared_tunnel_concurrent_requests_per_tunnel', 'cloudflared_tunnel_ha_connections', 'cloudflared_tunnel_request_errors', 'cloudflared_tunnel_response_by_code', 'cloudflared_tunnel_server_locations', 'cloudflared_tunnel_total_requests', 'cloudflared_tunnel_tunnel_register_fail', 'cloudflared_tunnel_tunnel_register_success', 'cloudflared_udp_active_sessions', 'cloudflared_udp_total_sessions']
+   labels: {'namespace': 'network', 'service': 'cloudflare-tunnel'} = 4

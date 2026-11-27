@@ -1,0 +1,20 @@
+=== job labels for the targets my new rules depend on ===
+  opnsense   -> ['external-dns-opnsense-unbound', 'opnsense-exporter']
+  blackbox   -> ['blackbox-exporter', 'blackbox-exporter-vpn']
+  speedtest  -> ['speedtest-exporter']
+  smartctl   -> NONE
+
+=== litellm_requests_metric_total labels (denominator for HighFailureRate) ===
+  exists: True | labels: api_key_alias, api_provider, app_kubernetes_io_instance, app_kubernetes_io_name, client_ip, container, end_user, endpoint, hashed_api_key, instance, job, model, model_id, namespace, org_alias, org_id,
+
+=== does the snapshot machinery kopiur depends on actually run? ===
+  (volsync-system/ks.yaml entries are commented out in git - check live)
+    kube-system             deployment.apps/snapshot-controller                1/1     1            1           116d
+  --- VolumeSnapshot CRDs ---
+    kopiamaintenances.volsync.backube                                             2026-06-13T19:14:39Z
+    replicationdestinations.volsync.backube                                       2026-06-13T19:14:39Z
+    replicationsources.volsync.backube                                            2026-06-13T19:14:39Z
+    volumesnapshotclasses.snapshot.storage.k8s.io                                 2026-08-01T16:46:52Z
+    volumesnapshotcontents.snapshot.storage.k8s.io                                2026-08-01T16:46:52Z
+    volumesnapshots.snapshot.storage.k8s.io                                       2026-08-01T16:46:52Z
+  --- kopiur snapshots: total, by phase (last 200) ---

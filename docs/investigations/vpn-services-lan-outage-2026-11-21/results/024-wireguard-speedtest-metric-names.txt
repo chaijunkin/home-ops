@@ -1,0 +1,20 @@
+=== every wireguard_* metric name (30d, so idle-but-real still shows) ===
+  distinct metric names: 0
+  labels on handshake metrics: []
+
+=== every speedtest_* metric name (30d) ===
+  distinct metric names: 6
+    speedtest_download_bits_per_second                   series=2
+    speedtest_jitter_latency_milliseconds                series=2
+    speedtest_ping_latency_milliseconds                  series=2
+    speedtest_server_id                                  series=2
+    speedtest_up                                         series=2
+    speedtest_upload_bits_per_second                     series=2
+
+=== the exact expressions PR #2604 deploys, and whether each subquery has data NOW ===
+  wireguard_peer_latest_handshake_seconds{device="wg2"}              series=0 ERR: None
+  wireguard_peer_recent_handshake_seconds{device="wg2"}              series=0 ERR: None
+  max by (device) (wireguard_peer_latest_handshake_seconds{device=   series=0 ERR: None
+  probe_success{service="blackbox-exporter-vpn"}                     series=2 val=0
+  up{job="opnsense-exporter"}                                        series=1 val=1
+  opnsense_gateway_status                                            series=0 ERR: None

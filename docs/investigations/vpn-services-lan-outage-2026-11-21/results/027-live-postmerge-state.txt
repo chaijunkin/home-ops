@@ -1,0 +1,17 @@
+=== #2594 rule still correct? OpnsenseServiceStopped over the last 8 h ===
+   labels: {'alertstate': 'firing', 'opnsense_instance': 'firewall'}
+   samples=29 first=1 last=1
+   labels: {'alertstate': 'pending', 'opnsense_instance': 'firewall'}
+   samples=67 first=1 last=1
+  --- raw inputs now ---
+    opnsense_services_stopped_total                2
+    opnsense_services_running_total                29
+    count(opnsense_services_status)                31
+    opnsense_services_status{name="crowdsec"}      0
+    opnsense_services_status{name="iperf"}         0
+  --- what values does opnsense_services_status take? ---
+     {} = 31
+
+=== speedtest exporter: when did it last actually push a result? ===
+   (unused)
+   last 3h download peak: 912544120 bit/s (913 Mbps)

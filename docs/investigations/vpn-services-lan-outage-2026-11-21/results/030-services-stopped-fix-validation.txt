@@ -1,0 +1,7 @@
+=== chosen fix: min_over_time 10m window, evaluated continuously over the last 45 m ===
+   samples=46/46 values=['0'] -> continuous, satisfies for: 15m
+   matched service: crowdsec
+
+=== false-positive control: a service that IS running must NOT match ===
+   matching services: ['crowdsec'] (expect only the genuinely stopped one, never the 29 running ones)
+   services continuously running in the last 10 m: 29

@@ -1,0 +1,311 @@
+
+====================================================================================================
+1. EVERY file mentioning volsync, classified
+====================================================================================================
+  ACTIVE include lines (would break if the component is deleted): 7 files
+     README.md
+        - [volsync](https://github.com/backube/volsync): backup and recovery of persistent volume claims
+     docs/ai-context/CONVENTIONS.md
+        - ../../../../components/volsync
+     kubernetes/apps/ai/toolhive/mcp-servers/kubectl-mcp/app/rbac.yaml
+        - volsync.backube
+     kubernetes/apps/observability/webhook/app/kustomization.yaml
+        - volsync-remediation.sh=./resources/volsync-remediation.sh
+     kubernetes/components/volsync-no-r2/kustomization.yaml
+        - ../volsync/kopia.yaml
+        - ../volsync/pvc.yaml
+     kubernetes/components/volsync-only-r2/kustomization.yaml
+        - ../volsync/pvc.yaml
+        - ../volsync/r2.yaml
+     scripts/populate_waf_prr.py
+        - {m_volsync} **Disaster Recovery**: Backups are configured and regularly tested via VolSync.
+  non-comment, non-list references: 107 files
+     .taskfiles/VolSync/Taskfile.yaml                                         VOLSYNC_RESOURCES_DIR: "{{.ROOT_DIR}}/.taskfiles/volsync/res
+     .taskfiles/VolSync/resources/list-snapshots.yaml.j2                      app.kubernetes.io/created-by: volsync | name: {{ ENV.APP }}-
+     .taskfiles/VolSync/resources/replicationdestination-r2.yaml.j2           apiVersion: volsync.backube/v1alpha1 | repository: {{ ENV.AP
+     .taskfiles/VolSync/resources/replicationdestination.yaml.j2              apiVersion: volsync.backube/v1alpha1 | path: /tank/Backup/Vo
+     .taskfiles/VolSync/resources/unlock-r2.yaml.j2                           name: volsync-unlock-{{ ENV.APP }}-r2 | name: {{ ENV.APP }}-
+     .taskfiles/VolSync/resources/unlock.yaml.j2                              name: volsync-unlock-{{ ENV.APP }} # -r2 | name: {{ ENV.APP 
+     .vscode/settings.json                                                    { "icon": "aws", "extensions": ["volsync-system"], "format":
+     Taskfile.yaml                                                            volsync: .taskfiles/volsync
+     docs/ai-context/ARCHITECTURE.md                                          - **`democratic-csi`**: Used for `volsync` snapshots and nor
+     docs/ai-context/DOMAIN.md                                                | Normal stateful storage & VolSync snapshots | `democratic-
+     docs/ai-context/SCHEDULES.md                                             The cluster utilizes several automated mechanisms (mostly `C
+     docs/cilium-ipam.md                                                      - `kopia.cloudjur.com` - volsync-system/kopia (parent: envoy
+     docs/investigations/vpn-services-lan-outage-2026-11-21/chat.md           2. **volsync - `volsync_volume_out_of_sync` does not exist**
+     docs/storage/volsync.md                                                  The volsync controller is repeatedly logging that a VolumeSn
+     infrastructure/ansible/playbooks/fileserver.yaml                         - /tank/Backup/Volsync
+     apps/actions-runner-system/namespace.yaml                                volsync.backube/privileged-movers: "true"
+     apps/ai/memini/ks.yaml                                                   VOLSYNC_CAPACITY: 2Gi
+     apps/ai/namespace.yaml                                                   volsync.backube/privileged-movers: "true"
+     apps/cert-manager/namespace.yaml                                         volsync.backube/privileged-movers: "true"
+     apps/database/namespace.yaml                                             volsync.backube/privileged-movers: "true"
+     apps/default/atuin/ks.yaml                                               VOLSYNC_CAPACITY: 5Gi
+     apps/default/convertx/ks.yaml                                            VOLSYNC_CAPACITY: 2Gi
+     apps/default/namespace.yaml                                              volsync.backube/privileged-movers: "true"
+     apps/default/odoo/ks.yaml                                                VOLSYNC_CAPACITY: 5Gi
+     apps/default/rustdesk/ks.yaml                                            VOLSYNC_CLAIM: rustdesk-data | VOLSYNC_CAPACITY: 20Gi
+     apps/default/sparkyfitness/ks.yaml                                       VOLSYNC_CAPACITY: 5Gi
+     apps/default/thelounge/ks.yaml                                           VOLSYNC_CAPACITY: 5Gi
+     apps/dev/forgejo/ks.yaml                                                 VOLSYNC_CAPACITY: 10Gi
+     apps/dev/namespace.yaml                                                  volsync.backube/privileged-movers: "true"
+     apps/downloads/autobangumi/ks.yaml                                       VOLSYNC_CAPACITY: 1Gi
+     apps/downloads/autobrr/ks.yaml                                           VOLSYNC_CAPACITY: 5Gi
+     apps/downloads/bazarr/ks.yaml                                            VOLSYNC_CAPACITY: 2Gi
+     apps/downloads/lidarr/ks.yaml                                            VOLSYNC_CAPACITY: 2Gi
+     apps/downloads/metube/ks.yaml                                            VOLSYNC_CAPACITY: 2Gi
+     apps/downloads/namespace.yaml                                            volsync.backube/privileged-movers: "true"
+     apps/downloads/profilarr/ks.yaml                                         VOLSYNC_CAPACITY: 2Gi
+     apps/downloads/prowlarr/ks.yaml                                          VOLSYNC_CAPACITY: 2Gi
+     apps/downloads/qbittorrent/ks.yaml                                       VOLSYNC_CAPACITY: 2Gi
+     apps/downloads/radarr/ks.yaml                                            VOLSYNC_CAPACITY: 2Gi
+     apps/downloads/recyclarr/ks.yaml                                         VOLSYNC_CAPACITY: 1Gi
+  commented-only references: 14 files (15 lines total)
+
+====================================================================================================
+2. Files/dirs that exist to run volsync (removal candidates)
+====================================================================================================
+  kubernetes/apps/volsync-system  (22 files)
+       kubernetes/apps/volsync-system/kopia/README.md
+       kubernetes/apps/volsync-system/kopia/app/externalsecret.yaml
+       kubernetes/apps/volsync-system/kopia/app/helmrelease.yaml
+       kubernetes/apps/volsync-system/kopia/app/kustomization.yaml
+       kubernetes/apps/volsync-system/kopia/ks.yaml
+       kubernetes/apps/volsync-system/kustomization.yaml
+       kubernetes/apps/volsync-system/namespace.yaml
+       kubernetes/apps/volsync-system/snapshot-controller/README.md
+       kubernetes/apps/volsync-system/snapshot-controller/app/helmrelease.yaml
+       kubernetes/apps/volsync-system/snapshot-controller/app/kustomization.yaml
+       kubernetes/apps/volsync-system/snapshot-controller/ks.yaml
+       kubernetes/apps/volsync-system/volsync/README.md
+       kubernetes/apps/volsync-system/volsync/app/grafanadashboard.yaml
+       kubernetes/apps/volsync-system/volsync/app/helmrelease.yaml
+       kubernetes/apps/volsync-system/volsync/app/kustomization.yaml
+       kubernetes/apps/volsync-system/volsync/app/mutatingadmissionpolicy.yaml
+       kubernetes/apps/volsync-system/volsync/app/prometheusrule.yaml
+       kubernetes/apps/volsync-system/volsync/ks.yaml
+       kubernetes/apps/volsync-system/volsync/maintenance/externalsecret.yaml
+       kubernetes/apps/volsync-system/volsync/maintenance/kopiamaintenance.yaml
+       kubernetes/apps/volsync-system/volsync/maintenance/kustomization.yaml
+       kubernetes/apps/volsync-system/volsync/maintenance/tbd.yaml
+  kubernetes/components/volsync  (4 files)
+       kubernetes/components/volsync/kopia.yaml
+       kubernetes/components/volsync/kustomization.yaml
+       kubernetes/components/volsync/pvc.yaml
+       kubernetes/components/volsync/r2.yaml
+  kubernetes/components/volsync-no-r2  (1 files)
+       kubernetes/components/volsync-no-r2/kustomization.yaml
+  kubernetes/components/volsync-only-r2  (2 files)
+       kubernetes/components/volsync-only-r2/kustomization.yaml
+       kubernetes/components/volsync-only-r2/replicationdestination.yaml
+
+====================================================================================================
+3. Is snapshot-controller (kopiur dependency) defined in the volsync tree?
+====================================================================================================
+   docs/investigations/vpn-services-lan-outage-2026-11-21/chat.md
+   docs/storage/volsync.md
+   kubernetes/apps/kube-system/kustomization.yaml
+   kubernetes/apps/kube-system/snapshot-controller/README.md
+   kubernetes/apps/kube-system/snapshot-controller/app/helmrelease.yaml
+   kubernetes/apps/kube-system/snapshot-controller/ks.yaml
+   kubernetes/apps/storage/kopiur/ks.yaml
+   kubernetes/apps/storage/openebs/app/helmrelease.yaml
+   kubernetes/apps/volsync-system/kustomization.yaml
+   kubernetes/apps/volsync-system/snapshot-controller/README.md
+   kubernetes/apps/volsync-system/snapshot-controller/app/helmrelease.yaml
+   kubernetes/apps/volsync-system/snapshot-controller/ks.yaml
+   kubernetes/apps/volsync-system/volsync/ks.yaml
+   scripts/migrate_to_oci.py
+   scripts/sync_service_docs.py
+
+  live snapshot-controller and its owner:
+    {"app.kubernetes.io/instance":"snapshot-controller","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"snapshot-controller","app.kubernetes.io/version":"v8.7.0","helm.sh/chart":"snapshot-controller-5.4.0","helm.toolkit.fluxcd.io/name":"snapshot-controller","helm.toolkit.fluxcd.io/namespace":"kube-system"} ||| {"deployment.kubernetes.io/revision":"2","meta.helm.sh/release-name":"snapshot-controller","meta.helm.sh/release-namespace":"kube-system"}
+
+====================================================================================================
+4. Live cluster state that Git removal will NOT delete
+====================================================================================================
+  namespace volsync-system:
+    volsync-system   Active   165d
+  workloads in volsync-system:
+    ERROR: error: the server doesn't have a resource type "ds -n volsync-system"
+  volsync CRD instances (any namespace):
+     replicationsources.volsync.backube         none
+     replicationdestinations.volsync.backube    none
+     kopiamaintenances.volsync.backube          none
+  volsync CRDs present (deleting these is a separate, mutating decision):
+     kopiamaintenances.volsync.backube                                             2026-06-13T19:14:39Z
+     replicationdestinations.volsync.backube                                       2026-06-13T19:14:39Z
+     replicationsources.volsync.backube                                            2026-06-13T19:14:39Z
+  Flux Kustomizations naming volsync:
+    actions-runner-system   actions-runner-controller           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    actions-runner-system   actions-runner-controller-runners   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      comfyui                             58d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      fli-mcp                             155d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      grafana-mcp                         76d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      ha-mcp                              151d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      hermes                              94d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      litellm                             94d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      litellm-operator                    93d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      llmkube                             93d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      memini                              118d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      open-webui                          165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      opencode                            54d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      rea-mcp                             37d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      sure-mcp                            83d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      toolhive-config                     165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      toolhive-operator                   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    ai                      toolhive-operator-crds              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    cert-manager            cert-manager                        165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    database                cloudnative-pg                      165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    database                cloudnative-pg-backup               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    database                cloudnative-pg-cluster              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    database                dragonfly-cluster                   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    database                dragonfly-operator                  165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    database                mosquitto                           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 atuin                               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 changedetection                     75d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 convertx                            165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 cyberchef                           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 freshrss                            75d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 glance                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 homepage                            165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 ignis                               88d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 it-tools                            165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 mealie                              75d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 odoo                                95d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 picoshare                           162d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 rustdesk                            165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 searxng                             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 sparkyfitness                       122d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 sure                                165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 thelounge                           94d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 tika                                165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    default                 trek                                155d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    dev                     forgejo                             112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    dev                     forgejo-runner                      112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    dev                     kritika                             21d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    dev                     kritika-database                    21d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    dev                     kritika-postgres-backup             21d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               autobangumi                         165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               autobrr                             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               bazarr                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               chaski                              82d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               flaresolverr                        165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               lidarr                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               metube                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               profilarr                           112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               prowlarr                            112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               qbittorrent                         165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               qui                                 112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               radarr                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               sabnzbd                             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               shelfmark                           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    downloads               sonarr                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    external-secrets        bitwarden                           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    external-secrets        bitwarden-sdk-server                165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    external-secrets        external-secrets                    165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    external-secrets        external-secrets-stores             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             cluster-apps                        165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             flux-instance                       165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             flux-operator                       165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             flux-system                         165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             headlamp                            165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             konflate                            123d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             kubernetes-schemas                  165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             tofu-controller                     165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    flux-system             tofu-controller-terraforms          165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    home-automation         frigate                             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    home-automation         home-assistant                      165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    jobs                    opnsense-backup                     162d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    jobs                    remediation                         165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    kube-system             cilium                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    kube-system             coredns                             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    kube-system             descheduler                         165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    kube-system             intel-gpu-resource-driver           149d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    kube-system             metrics-server                      165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    kube-system             reloader                            165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    kube-system             snapshot-controller                 117d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   calibre-web-automated               112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   filebrowser                         165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   jellyfin                            112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   kometa                              112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   opencloud                           112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   plex                                112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   plex-auto-languages                 112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   plex-image-cleanup                  112d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   seerr                               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   slskd                               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   soulsync                            82d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   syncthing                           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   tautulli                            165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    media                   watchstate                          165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 adguard-home-external-dns           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 certificates-export                 165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 certificates-import                 165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 cloudflare-tunnel                   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 echo-server                         165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 envoy-gateway                       165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 external-dns                        165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 external-services                   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 multus                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 multus-config                       165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    network                 unbound-external-dns                165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           blackbox-exporter                   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           blackbox-exporter-vpn               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           gatus                               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           grafana                             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           grafana-instance                    165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           k6-operator                         61d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           k8s-monitoring                      165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           kromgo                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           kube-prometheus-stack               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           loki                                165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           mcp-grafana                         76d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           nut-exporter                        165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           nut-exporter-dashboard              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           opnsense-exporter                   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           prometheus-adapter                  163d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           pyroscope                           64d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           remediation-webhook                 165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           silence-operator                    165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           silence-operator-silences           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           speedtest-exporter                  165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    observability           tempo                               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    renovate                renovate-operator                   165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    renovate                renovate-operator-jobs              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    security                authentik                           165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    security                authentik-terraforms                165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 garage                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 garage-webui                        165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 kopia                               114d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 kopiur                              123d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 kopiur-repository                   123d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 miroir                              82d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 miroir-config                       82d    True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 openebs                             165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    storage                 rclone                              165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    system-upgrade          tuppr                               165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    system-upgrade          tuppr-upgrades                      165d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    workadventure           coturn                              116d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    workadventure           synapse                             116d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+    workadventure           workadventure                       116d   True   Applied revision: refs/heads/main@sha1:b5a2ad206aaa38577cbf81658572ed266edd53ca
+
+====================================================================================================
+5. Secrets / SOPS rules / docs naming volsync
+====================================================================================================
+  [volsync] Taskfile.yaml
+  [volsync] docs/ai-context/ARCHITECTURE.md
+  [volsync] docs/ai-context/CONVENTIONS.md
+  [volsync] docs/ai-context/DOMAIN.md
+  [volsync] docs/ai-context/SCHEDULES.md
+  [volsync] docs/cilium-ipam.md
+  [volsync] docs/investigations/vpn-services-lan-outage-2026-11-21/chat.md
+  [volsync] docs/storage/volsync.md
+  [VOLSYNC] docs/ai-context/CONVENTIONS.md
+
+  r2/s3 secret refs still used by kopiur (must NOT be removed):
+     119 kopiur files
+        kubernetes/apps/external-secrets/namespace.yaml
+        kubernetes/apps/storage/kopiur/repository/externalsecret-remote.yaml
+        kubernetes/components/kopiur/secret/externalsecret-remote.yaml
+        kubernetes/components/kopiur/secret/externalsecret.yaml

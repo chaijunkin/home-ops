@@ -1,0 +1,27 @@
+=== final expressions, live (quiet = correct right now) ===
+ 1) sum by (model_group) (increase(litellm_deployment_failure_responses_total[15m])) > 0 unles
+    QUIET (no series)
+ 2) sum by (model_group, exception_status) (increase(litellm_deployment_failure_responses_tota
+    QUIET (no series)
+ 3) cloudflared_tunnel_ha_connections == 0
+    QUIET (no series)
+ 4) (dragonfly_memory_used_bytes / dragonfly_memory_max_bytes) * 100 > 85
+    QUIET (no series)
+ 5) autobrr_irc_enabled_total > autobrr_irc_healthy_total
+    QUIET (no series)
+ 6) absent(up{job="opnsense-exporter"})
+    QUIET (no series)
+ 7) increase(opnsense_exporter_endpoint_errors_total[15m]) > 0
+    QUIET (no series)
+ 8) absent(probe_success{service="blackbox-exporter-vpn"})
+    QUIET (no series)
+ 9) absent(opnsense_wireguard_peer_last_handshake_seconds{device="wg2"})
+    QUIET (no series)
+
+=== negative control: would these rules ever be able to fire? (force a match) ===
+    cloudflared_tunnel_ha_connections < 10
+      matchable: 1 series
+    (dragonfly_memory_used_bytes / dragonfly_memory_max_bytes) * 100 >= 0
+      matchable: 1 series
+    autobrr_irc_enabled_total >= autobrr_irc_healthy_total
+      matchable: 1 series

@@ -1,0 +1,14 @@
+kubeconform exit=0
+dirs validated: 229
+invalid lines: 0
+
+=== coverage of the dirs this PR changes ===
+  observability/exporters/opnsense-exporter/app  PrometheusRule opnsense-exporter-coverage-rules is valid
+  ai/litellm/app                                 PrometheusRule litellm is valid
+  downloads/autobrr/app                          PrometheusRule autobrr is valid
+  network/cloudflare-tunnel/app                  PrometheusRule cloudflare-tunnel-rules is valid
+  database/dragonfly-operator/cluster            PrometheusRule dragonfly-rules is valid
+
+=== the new resource by name ===
+  stdin - PrometheusRule opnsense-exporter-coverage-rules is valid
+  total valid resources: 1135

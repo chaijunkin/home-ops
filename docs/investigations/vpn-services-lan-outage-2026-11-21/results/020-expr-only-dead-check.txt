@@ -1,0 +1,76 @@
+flag alert                                          file                               missing metric
+--------------------------------------------------------------------------------------------------------------------------------
+DEAD LiteLLMFallbackChainExhausted                  app/prometheusrule.yaml            exception_class
+DEAD LiteLLMFallbackChainExhausted                  app/prometheusrule.yaml            exception_status
+DEAD LiteLLMFallbackChainExhausted                  app/prometheusrule.yaml            litellm_deployment_failed_fallbacks_total
+DEAD LiteLLMFallbackChainExhausted                  app/prometheusrule.yaml            requested_model
+DEAD LiteLLMModelFailover                           app/prometheusrule.yaml            exception_class
+DEAD LiteLLMModelFailover                           app/prometheusrule.yaml            exception_status
+DEAD LiteLLMModelFailover                           app/prometheusrule.yaml            fallback_model
+DEAD LiteLLMModelFailover                           app/prometheusrule.yaml            litellm_deployment_successful_fallbacks_total
+DEAD LiteLLMModelFailover                           app/prometheusrule.yaml            requested_model
+DEAD LiteLLMAuthOrQuotaFailures                     app/prometheusrule.yaml            exception_status
+DEAD LiteLLMAuthOrQuotaFailures                     app/prometheusrule.yaml            litellm_model_name
+DEAD AIObservabilityHighFailureRate                 app/prometheusrule.yaml            requested_model
+DEAD AIObservabilityHighLatencyP95                  app/prometheusrule.yaml            requested_model
+DEAD CertManagerCertNotReady                        app/prometheusrule.yaml            exported_namespace
+DEAD DragonflyHighMemoryUsage                       cluster/prometheusrule.yaml        dragonfly_memory_limit_bytes
+DEAD DragonflyHighMemoryUsage                       cluster/prometheusrule.yaml        dragonfly_used_memory_bytes
+DEAD AutobrrNetworkUnmonitored                      app/prometheusrule.yaml            autobrr_irc_channel_enabled_total
+DEAD AutobrrNetworkUnmonitored                      app/prometheusrule.yaml            autobrr_irc_channel_monitored_total
+DEAD FluxInstanceAbsent                             app/prometheusrule.yaml            exported_namespace
+DEAD FluxInstanceNotReady                           app/prometheusrule.yaml            exported_namespace
+DEAD HomeAssistantDown                              app/prometheusrule.yaml            app_kubernetes_io_name
+DEAD CloudflareTunnelOffline                        app/prometheusrule.yaml            cloudflared_tunnel_user_connections
+
+alerts loaded but permanently unable to fire: 12
+    AIObservabilityHighFailureRate
+    AIObservabilityHighLatencyP95
+    AutobrrNetworkUnmonitored
+    CertManagerCertNotReady
+    CloudflareTunnelOffline
+    DragonflyHighMemoryUsage
+    FluxInstanceAbsent
+    FluxInstanceNotReady
+    HomeAssistantDown
+    LiteLLMAuthOrQuotaFailures
+    LiteLLMFallbackChainExhausted
+    LiteLLMModelFailover
+
+===== deployed expression for each (what Prometheus is actually running) =====
+
+--- AIObservabilityHighFailureRate
+    sum by (requested_model) (rate(litellm_deployment_failure_responses_total[5m])) / (sum by (requested_model) (rate(litellm_requests_metric_total[5m])) + 0.001) * 100 > 10
+
+--- AIObservabilityHighLatencyP95
+    histogram_quantile(0.95, sum by (le, requested_model) (rate(litellm_request_total_latency_metric_bucket[5m]))) > 30
+
+--- AutobrrNetworkUnmonitored
+    autobrr_irc_channel_enabled_total != autobrr_irc_channel_monitored_total
+
+--- CertManagerCertNotReady
+    max by (name, exported_namespace, namespace, condition) (certmanager_certificate_ready_status{condition!="True"} == 1)
+
+--- CloudflareTunnelOffline
+    cloudflared_tunnel_user_connections == 0
+
+--- DragonflyHighMemoryUsage
+    (dragonfly_used_memory_bytes / dragonfly_memory_limit_bytes) * 100 > 85
+
+--- FluxInstanceAbsent
+    absent(flux_instance_info{exported_namespace="flux-system",name="flux"})
+
+--- FluxInstanceNotReady
+    flux_instance_info{exported_namespace="flux-system",name="flux",ready!="True"}
+
+--- HomeAssistantDown
+    up{app_kubernetes_io_name="home-assistant"} == 0
+
+--- LiteLLMAuthOrQuotaFailures
+    sum by (litellm_model_name, exception_status) (increase(litellm_deployment_failure_responses_total{exception_status=~"403|429"}[15m])) > 5
+
+--- LiteLLMFallbackChainExhausted
+    sum by (requested_model, exception_status, exception_class) (increase(litellm_deployment_failed_fallbacks_total[15m])) > 0
+
+--- LiteLLMModelFailover
+    sum by (requested_model, fallback_model, exception_status, exception_class) (increase(litellm_deployment_successful_fallbacks_total[10m])) > 3

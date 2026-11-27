@@ -1,0 +1,73 @@
+  kubernetes/apps/database/namespace.yaml                      movers=1
+  kubernetes/apps/flux-system/namespace.yaml                   movers=1
+  kubernetes/apps/home-automation/namespace.yaml               movers=1
+  kubernetes/apps/home-automation/frigate/ks.yaml              include=1, var=1
+  kubernetes/apps/home-automation/home-assistant/ks.yaml       include=1, var=1
+  kubernetes/apps/security/namespace.yaml                      movers=1
+  kubernetes/apps/cert-manager/namespace.yaml                  movers=1
+  kubernetes/apps/network/namespace.yaml                       movers=1
+  kubernetes/apps/default/namespace.yaml                       movers=1
+  kubernetes/apps/default/thelounge/ks.yaml                    include=1, var=1
+  kubernetes/apps/default/trek/ks.yaml                         include=1
+  kubernetes/apps/default/sure/ks.yaml                         include=1
+  kubernetes/apps/default/rustdesk/ks.yaml                     include=1, var=2
+  kubernetes/apps/default/odoo/ks.yaml                         var=1
+  kubernetes/apps/default/freshrss/ks.yaml                     include=1
+  kubernetes/apps/default/sparkyfitness/ks.yaml                include=1, var=1
+  kubernetes/apps/default/convertx/ks.yaml                     include=1, var=1
+  kubernetes/apps/default/atuin/ks.yaml                        include=1, var=1
+  kubernetes/apps/default/changedetection/ks.yaml              include=1
+  kubernetes/apps/default/picoshare/ks.yaml                    include=1
+  kubernetes/apps/observability/namespace.yaml                 movers=1
+  kubernetes/apps/observability/gatus/ks.yaml                  include=1
+  kubernetes/apps/storage/namespace.yaml                       movers=1
+  kubernetes/apps/storage/garage/ks.yaml                       include=1, var=1
+  kubernetes/apps/ai/namespace.yaml                            movers=1
+  kubernetes/apps/ai/openclaw/ks.yaml                          include=1
+  kubernetes/apps/ai/comfyui/ks.yaml                           include=1
+  kubernetes/apps/ai/memini/ks.yaml                            include=1, var=1
+  kubernetes/apps/ai/hermes/ks.yaml                            include=1
+  kubernetes/apps/ai/litellm/ks.yaml                           include=1
+  kubernetes/apps/ai/toolhive/mcp-servers/memory-mcp/ks.yaml   include=1
+  kubernetes/apps/dev/namespace.yaml                           movers=1
+  kubernetes/apps/dev/forgejo/ks.yaml                          include=1, var=1
+  kubernetes/apps/system-upgrade/namespace.yaml                movers=1
+  kubernetes/apps/kube-system/namespace.yaml                   movers=1
+  kubernetes/apps/jobs/namespace.yaml                          movers=1
+  kubernetes/apps/external-secrets/namespace.yaml              movers=1
+  kubernetes/apps/downloads/namespace.yaml                     movers=1
+  kubernetes/apps/downloads/bazarr/ks.yaml                     include=1, var=1
+  kubernetes/apps/downloads/prowlarr/ks.yaml                   include=1, var=1
+  kubernetes/apps/downloads/qbittorrent/ks.yaml                include=1, var=1
+  kubernetes/apps/downloads/profilarr/ks.yaml                  include=1, var=1
+  kubernetes/apps/downloads/metube/ks.yaml                     include=1, var=1
+  kubernetes/apps/downloads/sabnzbd/ks.yaml                    include=1, var=1
+  kubernetes/apps/downloads/autobangumi/ks.yaml                include=1, var=1
+  kubernetes/apps/downloads/radarr/ks.yaml                     include=1, var=1
+  kubernetes/apps/downloads/autobrr/ks.yaml                    include=1, var=1
+  kubernetes/apps/downloads/qui/ks.yaml                        include=1
+  kubernetes/apps/downloads/recyclarr/ks.yaml                  include=1, var=1
+  kubernetes/apps/downloads/lidarr/ks.yaml                     include=1, var=1
+  kubernetes/apps/downloads/shelfmark/ks.yaml                  include=1, var=1
+  kubernetes/apps/downloads/sonarr/ks.yaml                     include=1, var=1
+  kubernetes/apps/games/namespace.yaml                         movers=1
+  kubernetes/apps/games/minecraft/ks.yaml                      include=1, var=1
+  kubernetes/apps/renovate/namespace.yaml                      movers=1
+  kubernetes/apps/actions-runner-system/namespace.yaml         movers=1
+  kubernetes/apps/media/namespace.yaml                         movers=1
+  kubernetes/apps/media/syncthing/ks.yaml                      include=1, var=1
+  kubernetes/apps/media/watchstate/ks.yaml                     include=1, var=1
+  kubernetes/apps/media/maintainerr/ks.yaml                    include=1, var=1
+  kubernetes/apps/media/opencloud/ks.yaml                      include=1, var=2
+  kubernetes/apps/media/soulsync/ks.yaml                       var=1
+  kubernetes/apps/media/filebrowser/ks.yaml                    include=1, var=1
+  kubernetes/apps/media/plex/ks.yaml                           include=2, var=2
+  kubernetes/apps/media/tautulli/ks.yaml                       include=1, var=1
+  kubernetes/apps/media/romm/ks.yaml                           include=1, var=1
+  kubernetes/apps/media/seerr/ks.yaml                          include=1, var=1
+  kubernetes/apps/media/neko/ks.yaml                           include=1, var=2
+  kubernetes/apps/workadventure/namespace.yaml                 movers=1
+  kubernetes/apps/workadventure/synapse/ks.yaml                include=1, var=1
+
+  mode: APPLIED
+  files: 70 | includes: 48 | VOLSYNC_* vars: 41 | privileged-movers: 21 | empty keys dropped: 0

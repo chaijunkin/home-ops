@@ -1,0 +1,27 @@
+=== crowdsec status over 6 h at 1 m step: does the value flip, or is the series missing? ===
+   samples=361 distinct={'0': 330, '1': 31}
+   expected 360 samples at 1m -> missing slots = -1
+   value transitions: 62
+      01:24  0 -> 1
+      01:25  1 -> 0
+      01:35  0 -> 1
+      01:36  1 -> 0
+      01:48  0 -> 1
+      01:49  1 -> 0
+      02:04  0 -> 1
+      02:05  1 -> 0
+      02:06  0 -> 1
+      02:07  1 -> 0
+      02:19  0 -> 1
+      02:20  1 -> 0
+      02:34  0 -> 1
+      02:35  1 -> 0
+
+=== candidate fixes, evaluated live (want: fires and STAYS firing) ===
+   opnsense_services_status{name!~"iperf"} == 0                           MATCH: 1 series (['crowdsec'])
+   min_over_time(opnsense_services_status{name!~"iperf"}[30m]) == 0       MATCH: 1 series (['crowdsec'])
+   count(min_over_time(opnsense_services_status{name="crowdsec"}[30m])    MATCH: 1 series (['aggregate'])
+
+=== stability over 30 m of the fix candidate (1 m step) ===
+   fix candidate samples in last 30 m: 31 (30 = continuous, would satisfy for: 10m)
+   values: ['0']

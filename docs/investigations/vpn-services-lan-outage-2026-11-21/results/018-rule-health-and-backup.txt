@@ -1,0 +1,310 @@
+groups=82  rules=421 (alerting=271, recording=150)
+health: {'ok': 421}
+
+===== A. Rules that are ERRORING or never evaluated =====
+   none - every loaded rule evaluates cleanly
+
+===== B. Rules that are loaded but produce NOTHING, ever =====
+   (queried over the last 30 d; a rule here can be 'healthy' and still be blind)
+   LiteLLMDown                                  never pending/firing in 30 d
+   AIObservabilityLocalLLMDown                  never pending/firing in 30 d
+   AIObservabilityHighFailureRate               never pending/firing in 30 d
+   AIObservabilityHighLatencyP95                pending only, never fired
+   AIObservabilityAPUMemoryPressure             never pending/firing in 30 d
+   AIObservabilityGPUDeviceLost                 never pending/firing in 30 d
+   AIObservabilitySpecDecodeAcceptanceLow       never pending/firing in 30 d
+   LiteLLMFallbackChainExhausted                never pending/firing in 30 d
+   LiteLLMModelFailover                         never pending/firing in 30 d
+   LiteLLMDeploymentOutage                      never pending/firing in 30 d
+   LiteLLMAuthOrQuotaFailures                   never pending/firing in 30 d
+   LlamaCppRequestsDeferred                     pending only, never fired
+   MeminiDown                                   never pending/firing in 30 d
+   MeminiRestartCrashLoop                       never pending/firing in 30 d
+   CertManagerAbsent                            never pending/firing in 30 d
+   CertManagerCertNotReady                      never pending/firing in 30 d
+   CertManagerHittingRateLimits                 never pending/firing in 30 d
+   LongRunningTransaction                       never pending/firing in 30 d
+   BackendsWaiting                              never pending/firing in 30 d
+   PGDatabase                                   never pending/firing in 30 d
+   PGReplication                                never pending/firing in 30 d
+   LastFailedArchiveTime                        never pending/firing in 30 d
+   DatabaseDeadlockConflicts                    never pending/firing in 30 d
+   DragonflyDown                                never pending/firing in 30 d
+   DragonflyHighMemoryUsage                     never pending/firing in 30 d
+   DragonflyClientConnectionSpike               never pending/firing in 30 d
+   LiteLLMDown                                  never pending/firing in 30 d
+   AIObservabilityLocalLLMDown                  never pending/firing in 30 d
+   AIObservabilityHighFailureRate               never pending/firing in 30 d
+   AIObservabilityHighLatencyP95                pending only, never fired
+   AIObservabilityAPUMemoryPressure             never pending/firing in 30 d
+   AIObservabilityGPUDeviceLost                 never pending/firing in 30 d
+   AIObservabilitySpecDecodeAcceptanceLow       never pending/firing in 30 d
+   LiteLLMFallbackChainExhausted                never pending/firing in 30 d
+   LiteLLMModelFailover                         never pending/firing in 30 d
+   LiteLLMDeploymentOutage                      never pending/firing in 30 d
+   LiteLLMAuthOrQuotaFailures                   never pending/firing in 30 d
+   LlamaCppRequestsDeferred                     pending only, never fired
+   KritikaCacheStorageErrors                    never pending/firing in 30 d
+   KritikaConfigError                           never pending/firing in 30 d
+   KritikaConfigDrift                           never pending/firing in 30 d
+   KritikaNoLeader                              never pending/firing in 30 d
+   KritikaMultipleLeaders                       never pending/firing in 30 d
+   KritikaQueueDelayed                          pending only, never fired
+   KritikaQueueStatsUnavailable                 never pending/firing in 30 d
+   KritikaVectorSearchErrors                    never pending/firing in 30 d
+   AutobrrNetworkUnmonitored                    never pending/firing in 30 d
+   FluxInstanceAbsent                           never pending/firing in 30 d
+   FluxInstanceNotReady                         pending only, never fired
+   HomeAssistantDown                            never pending/firing in 30 d
+   HomeAssistantRestartCrashLoop                never pending/firing in 30 d
+   SyncthingEventsDropped                       never pending/firing in 30 d
+   SyncthingFolderOutOfSync                     never pending/firing in 30 d
+   CloudflareTunnelOffline                      never pending/firing in 30 d
+   CloudflareTunnelDown                         never pending/firing in 30 d
+   CloudflareTunnelHighErrorRate                never pending/firing in 30 d
+   ExternalDNSStale                             pending only, never fired
+   BlackboxSslCertificateWillExpireSoon         never pending/firing in 30 d
+   BlackboxSslCertificateExpired                never pending/firing in 30 d
+   BlackboxProbeFailed                          pending only, never fired
+   SlowResponseTime                             never pending/firing in 30 d
+   VpnProbeFailed                               pending only, never fired
+   VpnTunnelUpButNoReturn                       pending only, never fired
+   GatusEndpointDown                            never pending/firing in 30 d
+   GatusEndpointExposed                         never pending/firing in 30 d
+   AlertmanagerFailedReload                     never pending/firing in 30 d
+   AlertmanagerMembersInconsistent              never pending/firing in 30 d
+   AlertmanagerFailedToSendAlerts               never pending/firing in 30 d
+   AlertmanagerClusterFailedToSendAlerts        never pending/firing in 30 d
+   AlertmanagerClusterFailedToSendAlerts        never pending/firing in 30 d
+   AlertmanagerConfigInconsistent               never pending/firing in 30 d
+   AlertmanagerClusterDown                      never pending/firing in 30 d
+   AlertmanagerClusterCrashlooping              never pending/firing in 30 d
+   AlertmanagerClusterFailedPeers               never pending/firing in 30 d
+   ConfigReloaderSidecarErrors                  never pending/firing in 30 d
+   DockerhubRateLimitRisk                       never pending/firing in 30 d
+   etcdMembersDown                              never pending/firing in 30 d
+   etcdInsufficientMembers                      never pending/firing in 30 d
+   etcdNoLeader                                 never pending/firing in 30 d
+   etcdHighNumberOfLeaderChanges                never pending/firing in 30 d
+   etcdHighNumberOfFailedGRPCRequests           never pending/firing in 30 d
+   etcdHighNumberOfFailedGRPCRequests           never pending/firing in 30 d
+   etcdGRPCRequestsSlow                         never pending/firing in 30 d
+   etcdMemberCommunicationSlow                  never pending/firing in 30 d
+   etcdHighNumberOfFailedProposals              never pending/firing in 30 d
+   etcdHighFsyncDurations                       never pending/firing in 30 d
+   etcdHighFsyncDurations                       never pending/firing in 30 d
+   etcdHighCommitDurations                      never pending/firing in 30 d
+   etcdDatabaseQuotaLowSpace                    never pending/firing in 30 d
+   etcdExcessiveDatabaseGrowth                  never pending/firing in 30 d
+   etcdDatabaseHighFragmentationRatio           never pending/firing in 30 d
+   TargetDown                                   never pending/firing in 30 d
+   Watchdog                                     pending only, never fired
+   InfoInhibitor                                never pending/firing in 30 d
+   KubeAPIErrorBudgetBurn                       never pending/firing in 30 d
+   KubeAPIErrorBudgetBurn                       never pending/firing in 30 d
+   KubeAPIErrorBudgetBurn                       never pending/firing in 30 d
+   KubeAPIErrorBudgetBurn                       never pending/firing in 30 d
+   KubeStateMetricsListErrors                   never pending/firing in 30 d
+   KubeStateMetricsWatchErrors                  never pending/firing in 30 d
+   KubeStateMetricsShardingMismatch             never pending/firing in 30 d
+   KubeStateMetricsShardsMissing                never pending/firing in 30 d
+   KubePodCrashLooping                          never pending/firing in 30 d
+   KubePodNotReady                              never pending/firing in 30 d
+   KubeDeploymentGenerationMismatch             never pending/firing in 30 d
+   KubeDeploymentReplicasMismatch               never pending/firing in 30 d
+   KubeDeploymentRolloutStuck                   never pending/firing in 30 d
+   KubeStatefulSetReplicasMismatch              never pending/firing in 30 d
+   KubeStatefulSetGenerationMismatch            never pending/firing in 30 d
+   KubeStatefulSetUpdateNotRolledOut            never pending/firing in 30 d
+   KubeDaemonSetRolloutStuck                    never pending/firing in 30 d
+   KubeContainerWaiting                         never pending/firing in 30 d
+   KubeDaemonSetNotScheduled                    never pending/firing in 30 d
+   KubeDaemonSetMisScheduled                    never pending/firing in 30 d
+   KubeJobNotCompleted                          never pending/firing in 30 d
+   KubeJobFailed                                pending only, never fired
+   KubeHpaReplicasMismatch                      never pending/firing in 30 d
+   KubeHpaMaxedOut                              pending only, never fired
+   KubePdbNotEnoughHealthyPods                  never pending/firing in 30 d
+   KubeCPUOvercommit                            never pending/firing in 30 d
+   KubeMemoryOvercommit                         never pending/firing in 30 d
+   KubeCPUQuotaOvercommit                       never pending/firing in 30 d
+   KubeMemoryQuotaOvercommit                    never pending/firing in 30 d
+   KubeQuotaAlmostFull                          never pending/firing in 30 d
+   KubeQuotaFullyUsed                           never pending/firing in 30 d
+   KubeQuotaExceeded                            never pending/firing in 30 d
+   CPUThrottlingHigh                            pending only, never fired
+   KubePersistentVolumeFillingUp                never pending/firing in 30 d
+   KubePersistentVolumeFillingUp                never pending/firing in 30 d
+   KubePersistentVolumeInodesFillingUp          never pending/firing in 30 d
+   KubePersistentVolumeInodesFillingUp          never pending/firing in 30 d
+   KubePersistentVolumeErrors                   never pending/firing in 30 d
+   KubeVersionMismatch                          never pending/firing in 30 d
+   KubeClientErrors                             never pending/firing in 30 d
+   KubeClientCertificateExpiration              never pending/firing in 30 d
+   KubeClientCertificateExpiration              never pending/firing in 30 d
+   KubeAggregatedAPIErrors                      never pending/firing in 30 d
+   KubeAggregatedAPIDown                        never pending/firing in 30 d
+   KubeAPIDown                                  never pending/firing in 30 d
+   KubeAPIInstanceUnreachable                   never pending/firing in 30 d
+   KubeAPITerminatedRequests                    never pending/firing in 30 d
+   KubeControllerManagerDown                    never pending/firing in 30 d
+   KubeControllerManagerInstanceUnreachable     never pending/firing in 30 d
+   KubeNodeNotReady                             never pending/firing in 30 d
+   KubeNodePressure                             never pending/firing in 30 d
+   KubeNodeUnreachable                          never pending/firing in 30 d
+   KubeletTooManyPods                           never pending/firing in 30 d
+   KubeNodeReadinessFlapping                    never pending/firing in 30 d
+   KubeNodeEviction                             never pending/firing in 30 d
+   KubeletPlegDurationHigh                      never pending/firing in 30 d
+   KubeletPodStartUpLatencyHigh                 never pending/firing in 30 d
+   KubeletClientCertificateExpiration           never pending/firing in 30 d
+   KubeletClientCertificateExpiration           never pending/firing in 30 d
+   KubeletServerCertificateExpiration           never pending/firing in 30 d
+   KubeletServerCertificateExpiration           never pending/firing in 30 d
+   KubeletClientCertificateRenewalErrors        never pending/firing in 30 d
+   KubeletServerCertificateRenewalErrors        never pending/firing in 30 d
+   KubeletInstanceUnreachable                   never pending/firing in 30 d
+   KubeletDown                                  never pending/firing in 30 d
+   KubeSchedulerDown                            never pending/firing in 30 d
+   KubeSchedulerInstanceUnreachable             never pending/firing in 30 d
+   NodeFilesystemSpaceFillingUp                 never pending/firing in 30 d
+   NodeFilesystemSpaceFillingUp                 never pending/firing in 30 d
+   NodeFilesystemAlmostOutOfSpace               never pending/firing in 30 d
+   NodeFilesystemAlmostOutOfSpace               never pending/firing in 30 d
+   NodeFilesystemFilesFillingUp                 never pending/firing in 30 d
+   NodeFilesystemFilesFillingUp                 never pending/firing in 30 d
+   NodeFilesystemAlmostOutOfFiles               never pending/firing in 30 d
+   NodeFilesystemAlmostOutOfFiles               never pending/firing in 30 d
+   NodeNetworkReceiveErrs                       never pending/firing in 30 d
+   NodeNetworkTransmitErrs                      never pending/firing in 30 d
+   NodeHighNumberConntrackEntriesUsed           never pending/firing in 30 d
+   NodeTextFileCollectorScrapeError             never pending/firing in 30 d
+   NodeClockSkewDetected                        never pending/firing in 30 d
+   NodeClockNotSynchronising                    never pending/firing in 30 d
+   NodeRAIDDegraded                             never pending/firing in 30 d
+   NodeRAIDDiskFailure                          never pending/firing in 30 d
+   NodeFileDescriptorLimit                      never pending/firing in 30 d
+   NodeFileDescriptorLimit                      never pending/firing in 30 d
+   NodeCPUHighUsage                             never pending/firing in 30 d
+   NodeSystemSaturation                         pending only, never fired
+   NodeMemoryMajorPagesFaults                   pending only, never fired
+   NodeMemoryHighUtilization                    pending only, never fired
+   NodeDiskIOSaturation                         pending only, never fired
+   NodeSystemdServiceFailed                     never pending/firing in 30 d
+   NodeSystemdServiceCrashlooping               never pending/firing in 30 d
+   NodeBondingDegraded                          never pending/firing in 30 d
+   NodeNetworkInterfaceFlapping                 never pending/firing in 30 d
+   OomKilled                                    never pending/firing in 30 d
+   PrometheusBadConfig                          never pending/firing in 30 d
+   PrometheusSDRefreshFailure                   never pending/firing in 30 d
+   PrometheusKubernetesListWatchFailures        never pending/firing in 30 d
+   PrometheusNotificationQueueRunningFull       never pending/firing in 30 d
+   PrometheusErrorSendingAlertsToSomeAlertmanagers never pending/firing in 30 d
+   PrometheusNotConnectedToAlertmanagers        never pending/firing in 30 d
+   PrometheusTSDBReloadsFailing                 never pending/firing in 30 d
+   PrometheusTSDBCompactionsFailing             never pending/firing in 30 d
+   PrometheusNotIngestingSamples                never pending/firing in 30 d
+   PrometheusDuplicateTimestamps                never pending/firing in 30 d
+   PrometheusOutOfOrderTimestamps               never pending/firing in 30 d
+   PrometheusRemoteStorageFailures              never pending/firing in 30 d
+   PrometheusRemoteWriteBehind                  never pending/firing in 30 d
+   PrometheusRemoteWriteDesiredShards           never pending/firing in 30 d
+   PrometheusRuleFailures                       never pending/firing in 30 d
+   PrometheusMissingRuleEvaluations             never pending/firing in 30 d
+   PrometheusTargetLimitHit                     never pending/firing in 30 d
+   PrometheusLabelLimitHit                      never pending/firing in 30 d
+   PrometheusScrapeBodySizeLimitHit             never pending/firing in 30 d
+   PrometheusScrapeSampleLimitHit               never pending/firing in 30 d
+   PrometheusTargetSyncFailure                  never pending/firing in 30 d
+   PrometheusHighQueryLoad                      never pending/firing in 30 d
+   PrometheusErrorSendingAlertsToAnyAlertmanager never pending/firing in 30 d
+   PrometheusOperatorListErrors                 never pending/firing in 30 d
+   PrometheusOperatorWatchErrors                never pending/firing in 30 d
+   PrometheusOperatorSyncFailed                 never pending/firing in 30 d
+   PrometheusOperatorReconcileErrors            never pending/firing in 30 d
+   PrometheusOperatorStatusUpdateErrors         never pending/firing in 30 d
+   PrometheusOperatorNodeLookupErrors           never pending/firing in 30 d
+   PrometheusOperatorNotReady                   never pending/firing in 30 d
+   PrometheusOperatorRejectedResources          never pending/firing in 30 d
+   ZfsUnexpectedPoolState                       never pending/firing in 30 d
+   LinuxNodeHostDown                            never pending/firing in 30 d
+   LinuxNodeHighCpuLoad                         never pending/firing in 30 d
+   LinuxNodeHighMemoryUsage                     pending only, never fired
+   LinuxNodeDiskSpaceFillingUp                  never pending/firing in 30 d
+   LinuxNodeFilesystemAlmostFull                never pending/firing in 30 d
+   LokiRequestErrors                            never pending/firing in 30 d
+   LokiRequestPanics                            never pending/firing in 30 d
+   LokiRequestLatency                           never pending/firing in 30 d
+   LokiTooManyCompactorsRunning                 never pending/firing in 30 d
+   LokiCanaryLatency                            never pending/firing in 30 d
+   UpsOnBattery                                 never pending/firing in 30 d
+   UpsLowRuntime                                never pending/firing in 30 d
+   UpsShuttingDown                              never pending/firing in 30 d
+   UpsLowBattery                                never pending/firing in 30 d
+   UpsBatteryReplace                            never pending/firing in 30 d
+   OpnsenseGatewayMonitoringDisabled            pending only, never fired
+   OpnsenseGatewayDegraded                      never pending/firing in 30 d
+   OpnsenseFirewallUnreachable                  never pending/firing in 30 d
+   OpnsenseServiceStopped                       pending only, never fired
+   SpeedtestExporterAbsent                      pending only, never fired
+   SpeedtestSlowInternetDownload                never pending/firing in 30 d
+   SpeedtestSlowInternetUpload                  never pending/firing in 30 d
+   SpeedtestHighPingLatency                     pending only, never fired
+   SpeedtestHighJitterLatency                   pending only, never fired
+   NoWorkersConnected                           never pending/firing in 30 d
+   PendingMigrations                            never pending/firing in 30 d
+   FailedSystemTasks                            never pending/firing in 30 d
+   DisconnectedOutposts                         never pending/firing in 30 d
+   KopiurBackupConsecutiveFailures              never pending/firing in 30 d
+   KopiurBackupStale                            never pending/firing in 30 d
+   KopiurLastBackupFailed                       pending only, never fired
+   KopiurRepositoryNotReady                     never pending/firing in 30 d
+   KopiurSnapshotFailed                         pending only, never fired
+   KopiurRestoreFailed                          never pending/firing in 30 d
+   KopiurReconcileErrorsHigh                    never pending/firing in 30 d
+   KopiurLeaderElectionFlapping                 never pending/firing in 30 d
+   KopiurLeaderRenewSlow                        never pending/firing in 30 d
+   KopiurRepositoryBreakerOpen                  never pending/firing in 30 d
+   KopiurRepositoryConnectSlow                  never pending/firing in 30 d
+   KopiurSnapshotsGated                         never pending/firing in 30 d
+   KopiurSnapshotWaitingForSlot                 never pending/firing in 30 d
+   TupprUpgradeBlocked                          never pending/firing in 30 d
+   UpgradeJobRunningTooLong                     never pending/firing in 30 d
+   KubernetesUpgradeFailed                      never pending/firing in 30 d
+   KubernetesUpgradeStuck                       never pending/firing in 30 d
+   TupprOperatorAbsent                          never pending/firing in 30 d
+   TupprUpgradeFailureRate                      never pending/firing in 30 d
+   TalosUpgradeNodeFailed                       never pending/firing in 30 d
+   TalosUpgradeFailed                           never pending/firing in 30 d
+   TalosUpgradeStuck                            never pending/firing in 30 d
+
+===== C. Backup coverage after volsync (kopiur) =====
+   KopiurBackupConsecutiveFailures      health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: kopiur_snapshot_consecutive_failures >= 3
+   KopiurBackupStale                    health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: (time() - kopiur_policy_last_backup_success_timestamp_seconds > 172800) or (label_replace(kopiur_snapshot_consecutive_fa
+   KopiurLastBackupFailed               health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: min by (namespace, policy, repository) (kopiur_snapshotpolicy_last_backup_success) == 0
+   KopiurRepositoryNotReady             health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: max by (namespace, name) (kopiur_resource_phase{kind=~"Repository|ClusterRepository",phase=~"Degraded|Failed"}) == 1
+   KopiurSnapshotFailed                 health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: max by (namespace, name, policy) (kopiur_resource_phase{kind="Snapshot",phase="Failed"}) == 1 unless on (namespace, poli
+   KopiurRestoreFailed                  health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: max by (namespace, name) (kopiur_resource_phase{kind="Restore",phase="Failed"}) == 1
+   KopiurReconcileErrorsHigh            health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: sum by (kind) (rate(kopiur_controller_reconcile_errors_total[10m])) > 0.2
+   KopiurLeaderElectionFlapping         health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: increase(kopiur_leader_transitions_total[1h]) > 2
+   KopiurLeaderRenewSlow                health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: histogram_quantile(0.99, sum by (le) (rate(kopiur_leader_renew_duration_seconds_bucket[10m]))) > 2
+   KopiurRepositoryBreakerOpen          health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: max by (kind, namespace, name) (kopiur_repository_breaker_open{reason=~"unreachable|vanished|other"}) == 1
+   KopiurRepositoryConnectSlow          health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: max by (kind, namespace, name) (kopiur_repository_breaker_open{reason="timed_out"}) == 1
+   KopiurSnapshotsGated                 health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: sum by (namespace) (kopiur_snapshot_gated) > 0
+   KopiurSnapshotWaitingForSlot         health=ok    interval=None   lastEval=2026-11-26T06:59:52
+        expr: max by (repository_kind, repository, namespace, name) (kopiur_snapshot_waiting_for_slot) == 1
+
+===== D. Where do the backup rules live (file/group)? =====
+   group=kopiur.rules                                 file=/etc/prometheus/rules/prometheus-kube-prometheus-stack-rulefiles-0/storage-kopiur-controller-aeec266e-7e51-4a92-b517-6fe7f30e6f4a.yaml

@@ -1,0 +1,21 @@
+=== ALERTS history for OpnsenseServiceStopped (real timestamps, last 24 h) ===
+<string>:4: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+   firing   window 25 07:19 -> 26 01:40  samples=1102
+   pending  window 26 01:41 -> 26 07:18  samples=310
+
+=== stopped_total sampled every 5 min over 6 h (is the input flapping?) ===
+<string>:5: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+Traceback (most recent call last):
+  File "<string>", line 9, in <module>
+    gaps=[(vals[i][0], vals[i+1][0]) for i in range(len(vals)-1) if int(vals[i+1][0])-int(vals[i][0])>10]
+                                                                    ~~~^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: '01:24'
+   distinct values in 6 h: {'2': 67, '1': 6}
+   last 8 samples: 06:44=2, 06:49=1, 06:54=2, 06:59=2, 07:04=1, 07:09=2, 07:14=2, 07:19=1
+
+=== the loaded rule as it stands right now ===
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    d=json.load(sys.stdin)['data']['groups']
+      ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'data'

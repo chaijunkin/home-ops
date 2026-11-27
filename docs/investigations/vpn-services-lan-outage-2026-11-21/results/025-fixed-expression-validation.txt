@@ -1,0 +1,20 @@
+=== does the denominator carry model_group? ===
+  litellm_requests_metric_total                      series=25 | has model_group: False | has requested_model: False
+  litellm_deployment_success_responses_total         series=43 | has model_group: False | has requested_model: False
+  litellm_deployment_failure_responses_total         series=1 | has model_group: False | has requested_model: False
+
+=== candidate expressions, evaluated live ===
+  sum by (model_group) (rate(litellm_deployment_failure_responses_total[10m]))                     -> 1 series: {'model_group': 'reasoning-pool'}=0
+  sum by (model_group) (rate(litellm_deployment_success_responses_total[10m]))                     -> 5 series: {'model_group': 'local-pool-chat'}=0.027170093176521627; {'model_group': 'local-pool'}=0; {'model_group': 'frontier-pool'}=0
+  sum by (model_group) (rate(litellm_deployment_failure_responses_total[10m])) > 0 unless on (mo   -> no series (quiet)
+  sum by (model_group) (rate(litellm_deployment_failure_responses_total[10m])) > 0 and on (model   -> no series (quiet)
+  sum by (requested_model) (rate(litellm_deployment_failure_responses_total[5m])) / (sum by (req   -> 1 series: {'requested_model': 'reasoning-pool'}=0
+  sum by (model_group) (rate(litellm_deployment_failure_responses_total[5m])) / (sum by (model_g   -> no series (quiet)
+  cloudflared_tunnel_ha_connections == 0                                                           -> no series (quiet)
+  (dragonfly_memory_used_bytes / dragonfly_memory_max_bytes) * 100 > 85                            -> no series (quiet)
+  autobrr_irc_enabled_total != autobrr_irc_healthy_total                                           -> no series (quiet)
+  autobrr_irc_enabled_total > autobrr_irc_healthy_total                                            -> no series (quiet)
+  absent(up{job="opnsense-exporter"})                                                              -> no series (quiet)
+  absent(probe_success{service="blackbox-exporter-vpn"})                                           -> no series (quiet)
+  absent(opnsense_wireguard_peer_last_handshake_seconds{device="wg2"})                             -> no series (quiet)
+  increase(opnsense_exporter_endpoint_errors_total[15m]) > 0                                       -> no series (quiet)

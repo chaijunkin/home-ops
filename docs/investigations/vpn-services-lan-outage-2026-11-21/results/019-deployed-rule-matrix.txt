@@ -1,0 +1,30 @@
+metrics in Prometheus: 4856
+deployed alerting rules: 243 names
+repo PrometheusRule files: 19
+
+state  file                                                       rules  active dead metrics
+--------------------------------------------------------------------------------------------------------------------------------------------
+DEAD   ai/litellm/app/prometheusrule.yaml                         12     12     CODER_AGENT_SLOTS, deployment_state, exception_class, except
+DEAD   ai/memini/app/prometheusrule.yaml                          2      2      prometheusrule_v1
+DEAD   cert-manager/cert-manager/app/prometheusrule.yaml          3      3      _may_, exported_namespace, prometheusrule_v1, runbook_url
+DEAD   database/cloudnative-pg/cluster/prometheusrule.yaml        6      6      prometheusrule_v1
+DEAD   database/dragonfly-operator/cluster/prometheusrule.yaml    3      3      dragonfly_memory_limit_bytes, dragonfly_used_memory_bytes, p
+DEAD   downloads/autobrr/app/prometheusrule.yaml                  1      1      autobrr_irc_channel_enabled_total, autobrr_irc_channel_monit
+DEAD   flux-system/flux-instance/app/prometheusrule.yaml          2      2      prometheusrule_v1
+DEAD   home-automation/home-assistant/app/prometheusrule.yaml     2      2      prometheusrule_v1
+DEAD   media/syncthing/app/prometheusrule.yaml                    2      2      dashboard_url, prometheusrule_v1
+DEAD   network/cloudflare-tunnel/app/prometheusrule.yaml          3      3      cloudflared_tunnel_user_connections, prometheusrule_v1
+DEAD   network/external-dns/app/prometheusrule.yaml               1      1      prometheusrule_v1
+DEAD   observability/exporters/nut-exporter/app/prometheusrule.ya 5      5      prometheusrule_v1
+DEAD   observability/exporters/opnsense-exporter/app/prometheusru 2      2      WAN_PPPOE, monitor_disable, prometheusrule_v1
+DEAD   observability/exporters/opnsense-exporter/app/prometheusru 2      2      VPN_SERVICES_LAN, prometheusrule_v1
+DEAD   observability/exporters/speedtest-exporter/app/prometheusr 5      5      prometheusrule_v1
+DEAD   observability/gatus/app/prometheusrule.yaml                2      2      prometheusrule_v1
+DEAD   observability/kube-prometheus-stack/app/prometheusrule-lin 5      5      prometheusrule_v1
+absent observability/exporters/smartctl-exporter/app/prometheusru 6      0      prometheusrule_v1, smartctl_device_available_spare, smartctl
+absent volsync-system/volsync/app/prometheusrule.yaml             2      0      prometheusrule_v1, volsync_volume_out_of_sync
+
+===== what to do with each state =====
+  DEAD   = loaded in Prometheus AND references a nonexistent metric -> silent gap, fix now
+  absent = file is not loaded at all -> obsolete config, cleanup PR (not an alerting gap)
+  ok     = loaded and every metric it uses exists
